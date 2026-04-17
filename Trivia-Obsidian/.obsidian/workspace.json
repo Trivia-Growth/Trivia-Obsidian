@@ -229,8 +229,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "90a6729ad01844fe",
+  "active": "5a912b5540a11cd1",
   "lastOpenFiles": [
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/00 - Índice.md",
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech",
+    "Documentos Trivia/Clientes/Trivia",
+    "Documentos Trivia/Clientes",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
     "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Clientes/Heziom/HezionEdutech/00 - Índice.md",
@@ -247,24 +256,16 @@
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
     "Documentos Trivia/Padrão Projetos/09 - Migrações/Migrar Projeto Lovable para Padrão Trivia.md",
     "Documentos Trivia/Padrão Projetos/09 - Migrações",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/netlify.toml",
     "Documentos Trivia/Padrão Projetos/08 - Operações/Deploy Supabase.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/LGPD e Compliance.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md",
-    "Documentos Trivia/Padrão Projetos/08 - Operações",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Operações de Banco.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
-    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
-    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Base de Conhecimento Lovable.md",
-    "Documentos Trivia/Padrão Projetos/03 - Segurança/RLS Supabase — Template.md",
-    "Documentos Trivia/Padrão Projetos/03 - Segurança/Checklist de Segurança.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
-    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian"
+    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md"
   ]
 }
