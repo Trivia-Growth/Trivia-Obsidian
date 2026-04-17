@@ -99,19 +99,27 @@ Features **não importam entre si**. Compartilhar via `components/`, `hooks/`, `
 
 O Netlify publica **apenas o frontend** (automaticamente via git push). O backend precisa ser deployado separadamente no Supabase via CLI. Execute os comandos abaixo SEMPRE que a story envolver banco ou Edge Function.
 
-### Pré-requisitos (verificar antes de deployar)
+### Pré-requisitos obrigatórios (verificar antes do primeiro deploy)
+
+Sem esses três passos, nenhum comando de deploy funciona:
 
 ```bash
-supabase --version        # CLI instalada?
-supabase projects list    # Autenticado e linkado?
-```
+# 1. CLI instalada?
+supabase --version
+# Se não: npm install -g supabase
 
-Se não estiver linkado:
-```bash
-supabase login
+# 2. Autenticado?
+supabase projects list
+# Se não: supabase login  (abre browser para autenticar)
+
+# 3. Projeto linkado neste repositório?
+cat supabase/.temp/project-ref 2>/dev/null || echo "NÃO LINKADO"
+# Se não linkado:
 supabase link --project-ref [REF_DO_PROJETO]
 # REF: Supabase Dashboard → Project Settings → General → Reference ID
 ```
+
+> Se não tiver o `REF_DO_PROJETO`, encontrar em: **Supabase Dashboard → Project Settings → General → Reference ID** (sequência de letras e números, ex: `glarutjwjwqfmwyfqdug`)
 
 ### Se a story criou ou alterou tabelas (migrations)
 
