@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
+                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Workflow Diff Plan"
+              "title": "PROJECT_REQUIREMENTS"
             }
           }
         ],
@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
+                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +149,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para Workflow Diff Plan"
+              "title": "Links inversos para PROJECT_REQUIREMENTS"
             }
           },
           {
@@ -158,12 +158,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
+                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para Workflow Diff Plan"
+              "title": "Links de saída para PROJECT_REQUIREMENTS"
             }
           },
           {
@@ -201,13 +201,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
+                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de Workflow Diff Plan"
+              "title": "Sumário de PROJECT_REQUIREMENTS"
             }
           }
         ]
@@ -231,6 +231,11 @@
   },
   "active": "90a6729ad01844fe",
   "lastOpenFiles": [
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
     "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Base de Conhecimento Lovable.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
     "Documentos Trivia/Padrão Projetos/03 - Segurança/RLS Supabase — Template.md",
@@ -242,20 +247,15 @@
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/Dashboard Dataview.md",
-    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/SECURITY_DEBT.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/O que é o AIOX.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/_Template Story.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Colaborador.md",
-    "07 - Templates de Código/PROJECT_REQUIREMENTS.md",
     "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
-    "07 - Templates de Código",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Equipe de Agentes.md",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
-    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
     "Documentos Trivia/Padrão Projetos/03 - Segurança/Edge Functions Seguras.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian",
