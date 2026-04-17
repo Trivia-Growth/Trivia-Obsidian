@@ -20,8 +20,10 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[05 - Lovable e Claude/Base de Conhecimento Lovable\|05 - Lovable KB]] | Base de conhecimento para copiar na Lovable |
 | [[06 - Gestão do Projeto/Setup Colaborador\|06 - Como Colaborar]] | Como uma pessoa sem perfil técnico entra no projeto |
 | [[07 - Templates de Código/CLAUDE.md\|07 - Templates]] | Arquivos prontos para copiar no novo repositório |
+| [[08 - Operações/Deploy Supabase\|08 - Deploy Supabase]] | Como deployar Edge Functions, migrations e secrets no Supabase |
 | [[08 - Operações/Monitoramento sem Ferramentas\|08 - Monitoramento]] | Como monitorar produção usando Supabase, Netlify e DevTools |
 | [[08 - Operações/LGPD e Compliance\|08 - LGPD e Compliance]] | Checklist de conformidade para dados pessoais e financeiros |
+| [[09 - Migrações/Migrar Projeto Lovable para Padrão Trivia\|09 - Migrar da Lovable]] | Checklist para integrar projeto existente da Lovable ao padrão Trivia |
 
 **Leia na ordem acima.** O checklist de início conecta tudo.
 
