@@ -13,7 +13,7 @@
 
 **Stack:** React + Vite + Tailwind + TypeScript → Netlify | Supabase (PostgreSQL + Auth + Edge Functions Deno)
 
-**Arquitetura:** Bulletproof React (feature-based). Dois repositórios: `[VAULT]/` (vault Obsidian — specs) e `[REPO]-app/` (código).
+**Arquitetura:** Bulletproof React (feature-based). Dois repositórios: `[VAULT]/` (vault Obsidian — specs) e `[REPO]-app/` (código). A Lovable pode editar qualquer parte do código — frontend, Supabase migrations, Edge Functions, scripts Deno. Não alterar `CLAUDE.md` nem `.aiox-core/`.
 
 **Papéis:** `[papel1]` (admin), `[papel2]` (operacional), `[papel3]` (read-only).
 
