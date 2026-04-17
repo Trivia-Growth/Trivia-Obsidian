@@ -67,9 +67,10 @@ Para verificar: `claude --version`
 
 > O vault Obsidian é onde ficam specs, stories e o histórico de decisões do projeto.
 
-- [ ] Criar pasta em `Clientes/[Cliente]/[Projeto]/` neste vault
-- [ ] Copiar a estrutura de `Clientes/Heziom/HezionOS/` como referência
-- [ ] Criar `00 - Índice.md` com os links principais
+- [ ] Copiar a pasta `Documentos Trivia/_Template Projeto/` para `Clientes/[Cliente]/[Projeto]/`
+- [ ] Renomear a pasta copiada para o nome do projeto
+- [ ] Abrir `00 - Índice.md` e preencher todos os campos `[PREENCHER]`
+- [ ] No `Projeto/Dashboard do Projeto.md`, substituir os `[PREENCHER]` nos caminhos `FROM "Clientes/..."` pelo caminho real do projeto
 - [ ] Criar `Projeto/Desenvolvimento/PROJECT_REQUIREMENTS.md` a partir do [[07 - Templates de Código/PROJECT_REQUIREMENTS|template]]
 
 > **Importante:** o vault deve ficar na mesma pasta-pai do repositório de código. Exemplo:
