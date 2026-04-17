@@ -1,0 +1,49 @@
+# netlify.toml — Template de configuração Netlify
+# Copiar para a raiz do repositório de código e ajustar conforme necessário
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redireciona todas as rotas para index.html (necessário para React Router SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers aplicados a todas as respostas
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Impede o site de ser carregado em iframes (proteção contra clickjacking)
+    X-Frame-Options = "DENY"
+
+    # Impede sniffing de Content-Type pelo browser
+    X-Content-Type-Options = "nosniff"
+
+    # Força HTTPS por 1 ano (habilitar após confirmar que HTTPS funciona)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+    # Controla quais informações de origem são enviadas
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Desabilita funcionalidades do browser que o app não usa
+    # Ajustar conforme o que o projeto realmente usa
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # Content Security Policy — controla de onde recursos podem ser carregados
+    # ATENÇÃO: Esta é uma configuração base. Ajustar conforme os domínios reais do projeto.
+    # Adicionar domínios de CDN, APIs de vídeo, analytics, etc. conforme necessário.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-src 'none'; object-src 'none';"
+
+# Cache para assets estáticos com hash (Vite gera hash nos nomes dos arquivos)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sem cache para index.html (sempre buscar a versão mais recente)
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
