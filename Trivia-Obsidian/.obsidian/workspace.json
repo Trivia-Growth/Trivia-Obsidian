@@ -229,9 +229,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "90a6729ad01844fe",
+  "active": "5a912b5540a11cd1",
   "lastOpenFiles": [
+    "Clientes/Heziom/HezionEdutech",
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
     "Documentos Trivia/Padrão Projetos/09 - Migrações/Migrar Projeto Lovable para Padrão Trivia.md",
     "Documentos Trivia/Padrão Projetos/09 - Migrações",
@@ -241,7 +243,6 @@
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
-    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/LGPD e Compliance.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações",
@@ -259,7 +260,6 @@
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/Dashboard Dataview.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/SECURITY_DEBT.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian",
