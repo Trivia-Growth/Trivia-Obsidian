@@ -108,6 +108,39 @@ Para verificar: `claude --version`
 - [ ] URL, anon key e service_role anotados em local seguro
 - [ ] Connection string anotada
 
+### 3b. Supabase CLI — linkar o projeto (para deploy via Claude Code)
+
+> Necessário para que os agentes AIOX consigam deployar banco e Edge Functions via terminal.
+
+**Instalar a CLI (uma vez por máquina):**
+```bash
+npm install -g supabase
+```
+
+**Autenticar (uma vez por máquina):**
+```bash
+supabase login
+# → Abre o browser para autenticar com a conta Supabase
+```
+
+**Linkar ao projeto (uma vez por repositório):**
+```bash
+# Na raiz do repositório de código:
+supabase link --project-ref [REF_DO_PROJETO]
+```
+
+O `REF_DO_PROJETO` está em: **Supabase Dashboard → Project Settings → General → Reference ID**
+
+**Verificar que está tudo ok:**
+```bash
+supabase projects list
+# O projeto deve aparecer na lista com status "Active"
+```
+
+- [ ] Supabase CLI instalada (`supabase --version`)
+- [ ] CLI autenticada (`supabase login`)
+- [ ] Projeto linkado na raiz do repositório (`supabase link`)
+
 ---
 
 ### Passo 4 — Lovable
