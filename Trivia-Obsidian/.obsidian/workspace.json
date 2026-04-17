@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Leia me Antes de começar algo"
+              "title": "Workflow Diff Plan"
             }
           }
         ],
@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +149,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para Leia me Antes de começar algo"
+              "title": "Links inversos para Workflow Diff Plan"
             }
           },
           {
@@ -158,12 +158,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para Leia me Antes de começar algo"
+              "title": "Links de saída para Workflow Diff Plan"
             }
           },
           {
@@ -201,13 +201,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+                "file": "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de Leia me Antes de começar algo"
+              "title": "Sumário de Workflow Diff Plan"
             }
           }
         ]
@@ -231,41 +231,41 @@
   },
   "active": "90a6729ad01844fe",
   "lastOpenFiles": [
-    "Sem título 1.md",
+    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Base de Conhecimento Lovable.md",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
+    "Documentos Trivia/Padrão Projetos/03 - Segurança/RLS Supabase — Template.md",
+    "Documentos Trivia/Padrão Projetos/03 - Segurança/Checklist de Segurança.md",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade/TanStack Query e TypeScript.md",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade/Definition of Done.md",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
+    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/Dashboard Dataview.md",
+    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/SECURITY_DEBT.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/O que é o AIOX.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
+    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/_Template Story.md",
+    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Colaborador.md",
+    "07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
+    "07 - Templates de Código",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Equipe de Agentes.md",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
-    "Bem-vindo.md",
-    "Documentos Trivia/Padrão Projetos",
-    "Documentos Trivia/Sem título",
-    "Documentos Trivia",
-    "Clientes/Heziom/HezionOS/DDL Banco de dados Literarius.md",
-    "Clientes/Heziom/HezionOS/Bem-vindo.md",
-    "Clientes/Heziom/HezionOS/Integrações/Tray — Conciliação de Repasses.md",
-    "Clientes/Heziom/HezionOS/Integrações/Qive — NF-e Automática.md",
-    "Clientes/Heziom/HezionOS/Integrações/Bancos — CNAB e OFX.md",
-    "Clientes/Heziom/HezionOS/Integrações/Alertas e Notificações.md",
-    "Clientes/Heziom/HezionOS/Integrações",
-    "Clientes/Heziom/HezionOS/Agente Financeiro — Prompt.md",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Tarifas_Full_Jan2026.xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Tarifas_Full_Fev2026 (1).xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Pagamento_Faturas_Jan2026 (1).xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Faturamento_MercadoPago_Jan2026 (1).xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Faturamento_MercadoPago_Fev2026 (1).xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro HEziom 1-JANEIRO/DRE/mercado livre/Relatorio_Faturamento_MercadoLivre_Jan2026 (1).xlsx",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/_a mapear.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/Tray - Webhooks.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/Tray - Invoices.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Tray/Tray - Autenticação.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroRateio.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixaRateio.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroAgrupado.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/PlanoConta.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/PedidoVenda.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/NotaFiscal.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/FormaPagto.md",
-    "Clientes/Heziom/HezionOS/Financeiro/Fontes de Dados/Literarius/ContaBancariaLancamento.md"
+    "Documentos Trivia/Padrão Projetos/03 - Segurança/Edge Functions Seguras.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
+    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian",
+    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto",
+    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX",
+    "Documentos Trivia/Padrão Projetos/03 - Segurança",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura",
+    "Sem título 1.md",
+    "Documentos Trivia/Padrão Projetos"
   ]
 }
