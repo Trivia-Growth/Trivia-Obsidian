@@ -16,14 +16,14 @@
 
 ## Stack Técnico
 
-| Componente | Tecnologia |
-|-----------|-----------|
-| Frontend | React + Vite + Tailwind + TypeScript |
-| Backend | Supabase Edge Functions (Deno) |
-| Banco HeziomOS | Supabase PostgreSQL |
-| Deploy | Netlify (frontend) + Supabase (backend) |
-| Auth | Supabase Auth |
-| Alertas | [Microsoft Teams / Email / Outro] |
+| Componente | Tecnologia                              |
+| ---------- | --------------------------------------- |
+| Frontend   | React + Vite + Tailwind + TypeScript    |
+| Backend    | Supabase Edge Functions (Deno)          |
+| Banco      | Supabase PostgreSQL                     |
+| Deploy     | Netlify (frontend) + Supabase (backend) |
+| Auth       | Supabase Auth                           |
+| Alertas    | [Microsoft Teams / Email / Outro]       |
 
 ---
 
