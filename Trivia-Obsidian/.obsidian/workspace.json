@@ -229,8 +229,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "90a6729ad01844fe",
+  "active": "5a912b5540a11cd1",
   "lastOpenFiles": [
+    "Documentos Trivia/Padrão Projetos/08 - Operações/LGPD e Compliance.md",
+    "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md",
+    "Documentos Trivia/Padrão Projetos/08 - Operações",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Operações de Banco.md",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
@@ -253,10 +258,7 @@
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/_Template Story.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Colaborador.md",
-    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Equipe de Agentes.md",
-    "Documentos Trivia/Padrão Projetos/03 - Segurança/Edge Functions Seguras.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto",
@@ -264,8 +266,6 @@
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX",
     "Documentos Trivia/Padrão Projetos/03 - Segurança",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura",
-    "Sem título 1.md",
-    "Documentos Trivia/Padrão Projetos"
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura"
   ]
 }
