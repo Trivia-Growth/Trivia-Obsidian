@@ -20,18 +20,18 @@ Misturar os dois no mesmo repositório cria conflitos: a Lovable só deve tocar 
 ## Estrutura Recomendada
 
 ```
-[Cliente]/
+[Pasta raiz — ex: "Projetos" ou "Clientes/Heziom"]
 ├── [projeto]-app/          ← repositório de código (GitHub)
 │   ├── src/
 │   ├── supabase/
 │   ├── sync/               ← scripts Deno locais (se houver)
 │   ├── specs/technical/
-│   ├── CLAUDE.md           ← aponta para o vault
+│   ├── CLAUDE.md           ← aponta para o vault com caminho relativo
 │   ├── PROJECT_REQUIREMENTS.md
 │   ├── architecture.md
 │   └── SECURITY_DEBT.md
 │
-└── (este vault Obsidian)   ← documentação viva
+└── Trivia-Obsidian/        ← este vault (clonado ao lado do repositório)
     └── Clientes/[Cliente]/[Projeto]/
         ├── 00 - Índice.md
         ├── Projeto/
@@ -40,6 +40,57 @@ Misturar os dois no mesmo repositório cria conflitos: a Lovable só deve tocar 
         │   └── Roadmap.md
         └── [módulos específicos do projeto]
 ```
+
+---
+
+## Setup local (passo a passo)
+
+Para que os agentes AIOX consigam navegar entre código e documentação, os dois repositórios precisam estar na **mesma pasta pai** na máquina local.
+
+### 1. Criar a pasta raiz
+
+```bash
+mkdir ~/Projetos/[Cliente]
+cd ~/Projetos/[Cliente]
+```
+
+### 2. Clonar o repositório de código
+
+```bash
+git clone https://github.com/[org]/[projeto]-app.git
+```
+
+### 3. Clonar (ou mover) o vault Obsidian
+
+Se o vault já existe localmente, mova-o para a mesma pasta:
+```bash
+mv ~/Documents/Trivia-Obsidian ~/Projetos/[Cliente]/Trivia-Obsidian
+```
+
+Se precisar clonar do zero:
+```bash
+git clone https://github.com/[org]/Trivia-Obsidian.git
+```
+
+### 4. Confirmar a estrutura
+
+```bash
+ls ~/Projetos/[Cliente]/
+# Deve mostrar:
+# [projeto]-app/
+# Trivia-Obsidian/
+```
+
+### 5. Verificar o CLAUDE.md
+
+O `CLAUDE.md` na raiz do repositório de código deve referenciar o vault com caminho relativo:
+
+```markdown
+## Documentação (Obsidian Vault)
+Path relativo: ../Trivia-Obsidian/Clientes/[Cliente]/[Projeto]/
+```
+
+Se os caminhos não batem, o agente não vai encontrar as stories. Ajuste o path no `CLAUDE.md` conforme a estrutura real da sua máquina.
 
 ---
 

@@ -8,15 +8,20 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 
 | Seção | O que é |
 |-------|---------|
-| [[00 - Checklist de Início]] | Passo a passo do zero: ideia → primeiro deploy |
+| [[00 - Checklist de Início]] | Passo a passo do zero: ideia → primeiro deploy (inclui pré-requisitos para leigos) |
 | [[01 - Arquitetura/Stack Padrão\|01 - Stack Padrão]] | As tecnologias que usamos e por quê |
 | [[01 - Arquitetura/Estrutura de Código\|01 - Estrutura de Código]] | Como organizar o código (Bulletproof React) |
+| [[01 - Arquitetura/Dois Repositórios\|01 - Dois Repositórios]] | Como configurar código + vault lado a lado na máquina |
+| [[01 - Arquitetura/Operações de Banco\|01 - Operações de Banco]] | Migrações, backups e rollback no Supabase |
 | [[02 - Qualidade/Definition of Done\|02 - Definition of Done]] | Checklist antes de marcar qualquer coisa como pronto |
+| [[02 - Qualidade/Testes Automatizados\|02 - Testes Automatizados]] | Setup e exemplos de testes locais com Vitest |
 | [[03 - Segurança/Checklist de Segurança\|03 - Segurança]] | O mínimo de segurança que todo projeto deve ter |
 | [[04 - Agentes AIOX/O que é o AIOX\|04 - O que é o AIOX]] | Como usar a equipe de agentes de IA |
 | [[05 - Lovable e Claude/Base de Conhecimento Lovable\|05 - Lovable KB]] | Base de conhecimento para copiar na Lovable |
 | [[06 - Gestão do Projeto/Setup Colaborador\|06 - Como Colaborar]] | Como uma pessoa sem perfil técnico entra no projeto |
 | [[07 - Templates de Código/CLAUDE.md\|07 - Templates]] | Arquivos prontos para copiar no novo repositório |
+| [[08 - Operações/Monitoramento sem Ferramentas\|08 - Monitoramento]] | Como monitorar produção usando Supabase, Netlify e DevTools |
+| [[08 - Operações/LGPD e Compliance\|08 - LGPD e Compliance]] | Checklist de conformidade para dados pessoais e financeiros |
 
 **Leia na ordem acima.** O checklist de início conecta tudo.
 

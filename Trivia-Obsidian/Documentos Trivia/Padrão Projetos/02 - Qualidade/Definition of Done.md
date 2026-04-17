@@ -49,6 +49,15 @@ Uma story só está **concluída** quando todos os itens abaixo estão marcados.
 - [ ] Regras de negócio em `specs/technical/BUSINESS_LOGIC.md`
 - [ ] Código e docs commitados **juntos** no mesmo commit
 
+### Testes Automatizados
+
+> Rodar localmente antes de marcar como `em-review`. Ver [[Testes Automatizados]] para setup e exemplos.
+
+- [ ] `npm test` passa sem erros
+- [ ] Funções utilitárias com lógica de negócio têm testes cobrindo: caso normal, caso vazio, caso inválido
+- [ ] Schemas Zod das Edge Functions têm testes de input válido e inválido
+- [ ] Componentes críticos testados nos três estados: loading, error, dados
+
 ### Testes Manuais
 
 - [ ] Happy path testado (fluxo principal funciona)
