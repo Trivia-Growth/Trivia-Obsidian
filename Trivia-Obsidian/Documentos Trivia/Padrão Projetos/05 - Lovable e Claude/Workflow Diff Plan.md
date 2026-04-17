@@ -140,6 +140,30 @@ Só aprovar quando estiver satisfeito.
 - Atualizar o status da story no Obsidian para `em-review`
 - Se possível, pedir QA via Claude Code depois: `/qa — faça o QA da STORY-XXX`
 
+### 5. Executar o deploy no terminal (obrigatório se houve banco ou Edge Function)
+
+A Lovable faz commit do código no GitHub mas **não deploya banco nem Edge Functions automaticamente**. Após o commit da Lovable, abrir o terminal e rodar:
+
+**Se criou/alterou tabelas:**
+```bash
+cd caminho/para/[projeto]-app
+supabase db push
+```
+
+**Se criou/alterou Edge Functions:**
+```bash
+supabase functions deploy nome-da-funcao
+```
+
+**Se é a primeira vez que a função usa um secret externo (webhook, API):**
+```bash
+supabase secrets set MINHA_CHAVE=valor
+```
+
+> `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY` já estão disponíveis automaticamente — não precisam de `secrets set`.
+
+**Se não fizer isso:** a migration não vai ao banco, a Edge Function no preview da Lovable funciona mas em produção retorna 404.
+
 ---
 
 ## Usando o Claude Code (Fluxo com AIOX)

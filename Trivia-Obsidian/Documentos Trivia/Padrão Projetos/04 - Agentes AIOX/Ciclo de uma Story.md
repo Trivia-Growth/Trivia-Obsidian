@@ -110,10 +110,53 @@ Se CONCERNS ou FAIL: `@dev` corrige → volta para `em-review`
 
 ### 5. Deploy
 
-Com status `concluido`, o piloto pode:
+Com status `concluido`, o piloto executa na sequência:
+
+#### 5a. Migrations de banco (se a story criou ou alterou tabelas)
+
+```bash
+# Na raiz do repositório de código:
+supabase db push
+```
+
+Isso aplica todos os arquivos em `supabase/migrations/` que ainda não foram aplicados no banco de produção.
+
+> Antes de rodar: sempre fazer backup manual no Supabase Dashboard → Database → Backups.
+
+#### 5b. Deploy de Edge Functions (se a story criou ou alterou Edge Functions)
+
+```bash
+# Deployar uma função específica:
+supabase functions deploy nome-da-funcao
+
+# Ou todas de uma vez:
+supabase functions deploy
+```
+
+> **Importante:** criar o arquivo `supabase/functions/nome/index.ts` não deploya automaticamente. O comando acima é obrigatório para que a função fique acessível em produção.
+
+#### 5c. Configurar secrets das Edge Functions (apenas na primeira vez de cada secret)
+
+Se a Edge Function usa variáveis de ambiente além das do Supabase (webhooks, APIs externas):
+
+```bash
+supabase secrets set TEAMS_WEBHOOK_URL=https://...
+supabase secrets set OUTRA_CHAVE=valor
+```
+
+Para verificar o que já está configurado:
+```bash
+supabase secrets list
+```
+
+> `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY` já estão disponíveis automaticamente em toda Edge Function — não precisam de `secrets set`.
+
+#### 5d. Deploy do frontend (automático)
+
 - Fazer merge do PR no GitHub
-- Deploy automático no Netlify
-- Validar em produção
+- Netlify detecta o push e faz deploy automaticamente (2–3 minutos)
+- Acompanhar em **Netlify → Deploys**
+- Validar em produção após o deploy completar
 
 ---
 

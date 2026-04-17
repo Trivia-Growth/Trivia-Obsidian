@@ -164,3 +164,119 @@ Ou pelo Dashboard: **Database → Backups → Create a new backup**.
 - [ ] Script de rollback documentado na migration ou como arquivo separado
 - [ ] `supabase db diff` revisado antes de aplicar
 - [ ] RLS revisado: se nova tabela, policies criadas imediatamente após a migration
+
+---
+
+## Deploy de Edge Functions
+
+### Criar uma nova Edge Function
+
+A estrutura de arquivos é:
+```
+supabase/
+└── functions/
+    ├── nome-da-funcao/
+    │   └── index.ts
+    └── _shared/
+        ├── cors.ts      ← corsHeaders compartilhados entre funções
+        └── errors.ts    ← problemResponse compartilhado
+```
+
+Criar o arquivo **não** deploya automaticamente. É necessário rodar o comando abaixo.
+
+### Deployar uma Edge Function
+
+```bash
+# Deployar uma função específica (recomendado)
+supabase functions deploy nome-da-funcao
+
+# Deployar todas as funções de uma vez
+supabase functions deploy
+```
+
+Rode sempre que:
+- Criar uma nova Edge Function
+- Alterar código de uma Edge Function existente
+- Alterar os arquivos em `_shared/`
+
+> **Lovable e Claude Code escrevem o código, mas não deployam.** O deploy precisa ser rodado manualmente no terminal após o commit.
+
+### Verificar se o deploy funcionou
+
+```bash
+# Ver funções deployadas e versão
+supabase functions list
+```
+
+Ou no Dashboard: **Supabase → Edge Functions** — a função deve aparecer com status "Active" e a data do último deploy.
+
+---
+
+## Variáveis de Ambiente das Edge Functions (Secrets)
+
+### Variáveis automáticas (não precisam de configuração)
+
+Estas três estão disponíveis em toda Edge Function automaticamente:
+
+| Variável | Valor |
+|----------|-------|
+| `SUPABASE_URL` | URL do projeto Supabase |
+| `SUPABASE_ANON_KEY` | Chave pública (anon) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Chave de admin (bypass RLS) |
+
+Uso no código:
+```typescript
+Deno.env.get('SUPABASE_URL')!
+Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+```
+
+### Secrets customizados (webhooks, APIs externas)
+
+Para qualquer outra variável (Teams webhook, chave de API externa, etc.):
+
+```bash
+# Adicionar ou atualizar um secret
+supabase secrets set TEAMS_WEBHOOK_URL=https://outlook.office.com/webhook/...
+supabase secrets set API_EXTERNA_KEY=valor
+
+# Adicionar vários de uma vez
+supabase secrets set CHAVE_A=valor1 CHAVE_B=valor2
+
+# Ver quais secrets estão configurados (sem mostrar os valores)
+supabase secrets list
+
+# Remover um secret
+supabase secrets unset CHAVE_ANTIGA
+```
+
+> Secrets são configurados **por projeto Supabase**. Se tiver um projeto de dev e um de prod, configure em ambos.
+
+### CORS em produção
+
+Toda Edge Function tem o CORS configurado como `*` durante o desenvolvimento. Antes de ir para produção, atualizar para o domínio exato do Netlify:
+
+```typescript
+// Antes (dev):
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  ...
+};
+
+// Depois (produção):
+const corsHeaders = {
+  'Access-Control-Allow-Origin': 'https://nome-do-projeto.netlify.app',
+  ...
+};
+```
+
+O domínio Netlify está em: **Netlify → Site configuration → General → Site information → Site URL**.
+
+Após alterar o CORS, re-deployar a função:
+```bash
+supabase functions deploy nome-da-funcao
+```
+
+Se usar `_shared/cors.ts`, basta atualizar o arquivo compartilhado e re-deployar todas:
+```bash
+supabase functions deploy
+```
