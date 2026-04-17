@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+                "file": "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "PROJECT_REQUIREMENTS"
+              "title": "Stack Padrão"
             }
           }
         ],
@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+                "file": "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +149,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para PROJECT_REQUIREMENTS"
+              "title": "Links inversos para Stack Padrão"
             }
           },
           {
@@ -158,12 +158,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+                "file": "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para PROJECT_REQUIREMENTS"
+              "title": "Links de saída para Stack Padrão"
             }
           },
           {
@@ -201,13 +201,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+                "file": "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de PROJECT_REQUIREMENTS"
+              "title": "Sumário de Stack Padrão"
             }
           }
         ]
@@ -229,16 +229,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5a912b5540a11cd1",
+  "active": "90a6729ad01844fe",
   "lastOpenFiles": [
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
+    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
+    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
+    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/LGPD e Compliance.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Operações de Banco.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
-    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
     "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md",
     "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Base de Conhecimento Lovable.md",
@@ -250,14 +254,10 @@
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/Dashboard Dataview.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/SECURITY_DEBT.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/O que é o AIOX.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian/_Template Story.md",
-    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Colaborador.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Templates Obsidian",
