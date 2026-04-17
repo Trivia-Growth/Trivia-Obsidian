@@ -1,0 +1,116 @@
+"Codigo","Descricao","Grupo","ContaContabil","UsuarioAlt","DataAlt","PlanoContaPai","Nivel","TipoCategoria","GrupoDRE"
+6,GERAL,,"","",1900-01-01 00:00:00.000,,1,A,0
+90,Lanches e Refeições Comercial,,"212",ana,2025-12-22 12:57:53.073,,1,A,0
+102,DESPESAS OPERACIONAIS,,"4.3.1",rafael,2025-09-11 14:37:29.033,,1,A,0
+7,GERAL,,"","",1900-01-01 00:00:00.000,6,2,A,0
+103,DESPESAS ADMINISTRATIVAS,,"4.3.1.01",rafael,2025-09-11 14:38:33.673,102,2,A,0
+1,PADRÃO,,,IMPLANTAÇÃO,2016-05-20 11:03:33.117,7,3,A,0
+2,VENDA DE LIVROS,,"",master,2020-06-22 09:37:45.770,7,3,A,0
+3,AQUISIÇÃO DE LIVROS,,"28",ana,2025-12-22 12:47:24.077,7,3,A,0
+4,VENDA DE E-BOOK ,,"134",ana,2025-12-22 12:49:36.270,7,3,A,0
+5,AQUISIÇÃO DE E-BOOK,,"",master,2020-06-22 09:47:22.423,7,3,A,0
+8,A VERIFICAR,,"",master,2025-09-08 14:02:25.917,7,3,A,0
+10,"13º Salário",,"180 a 192",rafael,2025-09-08 16:53:11.677,7,3,A,0
+11,Despesas Editorial - Capa,,"752",rafael,2025-11-19 09:33:18.060,7,3,A,0
+12,Despesas Editorial - Conferência de Emendas,,"752",rafael,2025-11-19 09:33:37.510,7,3,A,0
+13,Despesas Editorial - Diagramação,,"752",rafael,2025-11-19 09:34:04.447,7,3,A,0
+14,Despesas Editorial - Edição,,"752",rafael,2025-11-19 09:34:22.023,7,3,A,0
+15,Despesas Editorial - Ilustração,,"752",rafael,2025-11-19 09:34:44.640,7,3,A,0
+16,Despesas Editorial - Preparação,,"752",rafael,2025-11-19 09:35:08.987,7,3,A,0
+17,Despesas Editorial - Produção Editorial,,"752",rafael,2025-11-19 09:35:32.133,7,3,A,0
+18,Despesas Editorial - Revisão de Prova,,"752",rafael,2025-11-19 09:35:49.733,7,3,A,0
+19,Despesas Editorial - Tradução,,"752",rafael,2025-11-19 09:36:09.963,7,3,A,0
+20,Materiais Para Revenda,,"80",rafael,2025-09-11 11:11:25.867,7,3,A,0
+21,Producao Material Proprio,,"80",rafael,2025-09-11 11:53:46.873,7,3,A,0
+22,Remuneração Autônomos - Comercial,,"805",rafael,2025-09-11 14:01:19.527,7,3,A,0
+23,Salarios A Pagar,,"68",rafael,2025-09-08 17:02:59.453,7,3,A,0
+24,Vale Cesta Basica,,"203",rafael,2025-09-08 17:03:37.767,7,3,A,0
+25,Vale Refeicao,,"202",rafael,2025-09-08 17:03:53.937,7,3,A,0
+26,Vale Transporte,,"201",rafael,2025-09-08 17:05:02.307,7,3,A,0
+27,Materiais Aplicados Venda Prod,,"224",rafael,2025-09-11 11:42:56.257,7,3,A,0
+28,Remuneração Autônomos - Marketing,,"181",rafael,2025-09-11 14:20:07.817,7,3,A,0
+29,Marketing E Publicidade,,"245",rafael,2025-09-11 14:27:46.270,7,3,A,0
+30,Frete Sobre Mercadorias,,"164",rafael,2025-10-16 14:55:19.837,7,3,A,0
+31,Despesas Postais e Fretes,,"222",rafael,2025-10-16 15:02:59.003,7,3,A,0
+32,Direitos Autorais,,"165",rafael,2025-09-08 17:08:59.160,7,3,A,0
+33,Remuneração Autônomos - Editorial,,"185",rafael,2025-09-11 14:21:20.293,7,3,A,0
+34,Combustivel,,"238",rafael,2025-09-08 17:10:04.960,7,3,A,0
+35,Comissao Vendedores,,"805",rafael,2026-03-20 10:36:05.237,7,3,A,0
+36,Agua,,"220",rafael,2025-09-08 17:35:22.810,7,3,A,0
+37,Aluguel,,"229",rafael,2025-11-19 09:40:00.507,7,3,A,0
+38,Antecipacao - Direito Autoral,,"165",rafael,2025-09-08 17:12:50.623,7,3,A,0
+39,Assistencia Medica,,"200",rafael,2025-09-08 17:13:07.697,7,3,A,0
+40,Benfeitoria Em Imoveis De 3º,,"40",rafael,2025-09-08 17:13:57.737,7,3,A,0
+41,Bens De Pequeno Valor,,"41",rafael,2025-09-08 17:14:25.433,7,3,A,0
+42,Bens Imobilizados Empresa,,"263",rafael,2025-09-08 17:14:51.227,7,3,A,0
+43,Bolsa De Estudos,,"211",rafael,2025-09-08 17:15:10.497,7,3,A,0
+44,Bonus,,"207",rafael,2025-09-08 17:15:30.920,7,3,A,0
+45,Brinde Para Claboradores,,"236",rafael,2025-09-08 17:15:46.743,7,3,A,0
+46,Brindes Clientes,,"239",rafael,2025-09-08 17:16:20.637,7,3,A,0
+47,Capacitacao Profissional,,"210",rafael,2025-09-08 17:16:47.027,7,3,A,0
+48,Cod 1082,,"62",ana,2025-12-22 17:01:09.027,7,3,A,0
+49,Cod 1138,,"62",ana,2025-12-22 17:01:58.410,7,3,A,0
+50,Cod 1170,,"62",ana,2025-12-22 17:02:21.030,7,3,A,0
+51,Cod 1176,,"62",ana,2025-12-22 17:02:47.667,7,3,A,0
+52,Cod 1191,,"62",ana,2025-12-22 17:03:53.530,7,3,A,0
+53,Cod 1196,,"62",ana,2025-12-22 17:04:20.053,7,3,A,0
+54,Cod 1200,,"62",ana,2025-12-22 17:05:06.457,7,3,A,0
+55,Cod 1646,,"62",ana,2025-12-22 17:05:49.810,7,3,A,0
+56,Cod 1708,,"67",rafael,2025-09-08 17:21:53.903,7,3,A,0
+57,Cod 3208,,"67",rafael,2025-09-08 17:22:12.527,7,3,A,0
+58,Cod 8031,,"66",rafael,2025-09-08 17:22:24.257,7,3,A,0
+59,Cod 8301,,"62",ana,2025-12-22 17:08:48.497,7,3,A,0
+60,Cofins/Csll A Recolher,,"73",rafael,2025-09-08 17:22:54.173,7,3,A,0
+61,Contabilidade,,"214",rafael,2025-09-11 14:39:26.687,103,3,A,0
+62,Contribuicao Sindical,,"198",rafael,2025-09-08 17:24:35.320,7,3,A,0
+63,Cursos E Treinamentos,,"211",rafael,2025-09-08 17:25:27.617,7,3,A,0
+64,Darf Pis/Cofins - Codigo 5952,,"73",rafael,2025-09-08 17:26:14.077,7,3,A,0
+65,Darf S/ Irrf - Codigo 1708,,"67",rafael,2025-09-08 17:26:33.593,7,3,A,0
+66,Desp Prest Serv Pf,,"218",rafael,2025-09-08 17:27:12.723,7,3,A,0
+67,Desp Prest Serv Pj,,"217",rafael,2025-09-08 17:27:42.030,7,3,A,0
+68,Despesas Cartorarias,,"234",rafael,2025-09-08 17:27:57.140,7,3,A,0
+69,Despesas Com Diretoria,,"200",rafael,2025-09-08 17:28:56.793,7,3,A,0
+70,Despesas Autor,,"165",rafael,2025-09-08 17:30:54.803,7,3,A,0
+71,Despesas Eventos Externos,,"247",rafael,2025-09-08 17:33:46.093,7,3,A,0
+72,Embalagens E Materiais Grafic,,"224",rafael,2025-09-08 17:34:08.140,7,3,A,0
+73,Energia Eletrica,,"219",rafael,2025-09-08 17:35:44.537,7,3,A,0
+74,Estacionamento,,"216",rafael,2025-09-08 17:36:30.203,7,3,A,0
+75,Fgts,,"196",rafael,2025-09-08 17:37:13.877,7,3,A,0
+76,Fgts Ferias,,"501",rafael,2025-09-08 17:37:29.083,7,3,A,0
+77,Impostos E Taxas,,"225",rafael,2025-09-08 17:37:56.773,7,3,A,0
+78,Estorno e Reembolso,,"231",ana,2025-12-22 13:12:30.683,7,3,A,0
+79,Internet,,"233",rafael,2025-09-08 17:40:16.903,7,3,A,0
+80,Monitoramento Sede,,"67",rafael,2025-09-08 17:41:40.597,7,3,A,0
+81,Royalties,,"165",rafael,2025-09-08 17:42:09.727,7,3,A,0
+82,Pis 8301,,"197",rafael,2025-09-08 17:42:32.067,7,3,A,0
+83,Terreno E Dependencias - Sede,,"255",rafael,2025-09-16 15:20:18.790,7,3,A,0
+84,Sistemas e Softwares -Adm Marketing,,"244",rafael,2025-10-08 09:11:02.853,7,3,A,0
+85,Sistemas e Softwares Comerciais,,"710",rafael,2025-09-11 11:16:05.697,7,3,A,0
+86,Devolução de Venda,,"166",rafael,2025-09-11 11:17:52.367,7,3,A,0
+87,Exames médicos,,"193",rafael,2025-09-11 11:28:37.297,7,3,A,0
+88,Juros pagos/passivos,,"251",rafael,2025-09-11 11:29:30.913,7,3,A,0
+89,Lanches e Refeições Equipe,,"215",rafael,2025-09-11 14:40:05.813,103,3,A,0
+91,Materiais de Escritório,,"227",rafael,2025-09-11 12:00:19.903,7,3,A,0
+92,Pedágio,,"711",rafael,2025-09-11 11:53:07.570,7,3,A,0
+93,Remuneração Autônomos - Expedição,,"186",rafael,2025-09-11 14:00:43.743,7,3,A,0
+94,Despesas Custos Eventos,,"247",rafael,2025-09-11 11:59:11.840,7,3,A,0
+95,Remuneração Autônomos - Financeiro,,"179",rafael,2025-09-11 13:59:54.747,7,3,A,0
+96,Remuneração Autonomos - Administração,,"180",rafael,2025-09-11 14:02:27.040,7,3,A,0
+97,Transporte - Taxi/Uber,,"238",rafael,2025-09-11 14:14:54.157,7,3,A,0
+98,Remuneração Autônomos - Livraria,,"184",rafael,2025-09-11 14:22:35.143,7,3,A,0
+99,Diretoria - PJ,,"187",rafael,2025-09-11 14:23:41.450,7,3,A,0
+100,Seguros,,"226",rafael,2025-09-11 14:33:53.570,7,3,A,0
+101,Condominio,,"237",rafael,2025-11-19 09:39:37.023,7,3,A,0
+104,Materiais Impressos,,"224",rafael,2025-09-12 15:35:35.470,7,3,A,0
+105,Cod 0561,,"62 e 67",ana,2025-12-22 12:51:39.247,7,3,A,0
+106,TRANSFERENCIA ENTRE CONTAS,,"00",rafael,2025-09-16 15:06:09.923,7,3,A,0
+107,Despesas Bancárias,,"252",rafael,2025-09-16 15:39:23.403,103,3,A,0
+108,Rescisões,,"188 a 192",ana,2025-12-22 12:50:57.060,103,3,A,0
+109,Cod 5952 ,,"73",rafael,2025-09-19 10:29:03.070,103,3,A,0
+110,"Móveis, Máquinas e Utensílios",,"41",rafael,2025-09-23 11:08:14.767,7,3,A,0
+111,Outras despesas,,"76",rafael,2025-09-26 17:19:01.473,103,3,A,0
+112,Receitas financeiras,,"135",rafael,2025-11-11 17:50:29.953,7,3,A,0
+113,Condomínio,,"237",rafael,2025-11-19 09:38:54.523,103,3,A,0
+114,Cod 1162,,"62",ana,2025-12-22 12:54:05.610,7,3,A,0
+115,Empréstimos e financiamentos,,"88",ana,2026-01-20 11:28:07.700,7,3,A,0
+116,Outras receitas,,"",ana,2026-03-16 17:40:05.323,7,3,A,0
