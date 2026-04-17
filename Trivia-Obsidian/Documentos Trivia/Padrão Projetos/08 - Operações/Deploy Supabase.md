@@ -1,17 +1,21 @@
 # Deploy Supabase — Banco e Edge Functions
 
-Referência completa de como deployar banco de dados e Edge Functions no Supabase. O Netlify cuida apenas do frontend — todo o backend é deployado separadamente aqui.
+Referência completa de como deployar banco de dados e Edge Functions no Supabase. O Netlify cuida apenas do frontend — todo o backend é deployado no Supabase.
 
 ---
 
 ## Visão Geral
 
-| Componente | Plataforma | Como deploya | Automático? |
-|------------|-----------|-------------|-------------|
-| Frontend (React) | Netlify | Push no GitHub | Sim |
-| Edge Functions | Supabase Cloud | `supabase functions deploy` | **Não** |
-| Migrations de banco | Supabase Cloud | `supabase db push` | **Não** |
-| Variáveis de Edge Function | Supabase Cloud | `supabase secrets set` | **Não** |
+| Componente | Plataforma | Via Lovable | Via Claude Code |
+|------------|-----------|-------------|-----------------|
+| Frontend (React) | Netlify | Automático (push GitHub) | Automático (push GitHub) |
+| Migrations (banco) | Supabase | **Automático** | `supabase db push` |
+| Edge Functions | Supabase | **Automático** | `supabase functions deploy` |
+| Secrets (variáveis) | Supabase | **Pela interface** | `supabase secrets set` |
+
+**Lovable** tem integração direta com o Supabase via Management API — ao aplicar mudanças, deploya migrations, Edge Functions e configura variáveis automaticamente, sem necessidade de CLI.
+
+**Claude Code** executa os mesmos deploys via CLI do Supabase no terminal. Os agentes AIOX leem o `CLAUDE.md` e rodam os comandos como parte do fluxo de conclusão de cada story.
 
 ---
 
