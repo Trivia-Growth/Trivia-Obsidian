@@ -1,0 +1,253 @@
+{
+  "main": {
+    "id": "2de2e47322bafbe0",
+    "type": "split",
+    "children": [
+      {
+        "id": "eeecbad51b5e1ca9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dd1eda0eea67de35",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Financeiro/Módulos/Aprovação de Pagamentos.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Aprovação de Pagamentos"
+            }
+          },
+          {
+            "id": "ddd60a9bb159581b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DDL Banco de dados Literarius.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "DDL Banco de dados Literarius"
+            }
+          },
+          {
+            "id": "567eac42b5a86066",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "00 - Índice.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "00 - Índice"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bb33ad385327b79b",
+    "type": "split",
+    "children": [
+      {
+        "id": "6ccccad063e25af0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9e5d652a491de4f2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de arquivos"
+            }
+          },
+          {
+            "id": "28c0d92adb5b5f64",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Procurar"
+            }
+          },
+          {
+            "id": "c044bf6ead5deae4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "29226449a375f61c",
+    "type": "split",
+    "children": [
+      {
+        "id": "1791c5d62fc1c83e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d82a483f64d35cba",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Financeiro/Módulos/Aprovação de Pagamentos.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Links inversos para Aprovação de Pagamentos"
+            }
+          },
+          {
+            "id": "7477b79146a160e4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Financeiro/Módulos/Aprovação de Pagamentos.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links de saída para Aprovação de Pagamentos"
+            }
+          },
+          {
+            "id": "3bd5b368f94bcd5f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "f230a413b3519321",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas as propriedades"
+            }
+          },
+          {
+            "id": "61a527e96a6eb31f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Financeiro/Módulos/Aprovação de Pagamentos.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumário de Aprovação de Pagamentos"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false
+    }
+  },
+  "active": "dd1eda0eea67de35",
+  "lastOpenFiles": [
+    "Projeto/Setup João.md",
+    "Projeto/Backlog.md",
+    "Projeto/Sprint Atual.md",
+    "Projeto/Roadmap.md",
+    "Projeto/Dashboard do Projeto.md",
+    "Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
+    "Projeto/Stories/STORY-005 — Dashboard CEO DRE MTD.md",
+    "Projeto/Stories/STORY-004 — Dashboard CEO Posição Financeira.md",
+    "Projeto/Stories/STORY-003 — Deno Sync NotaFiscal e PedidoVenda.md",
+    "Projeto/Stories/STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria.md",
+    "Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
+    "Projeto/Stories/_Template — Story.md",
+    "Projeto/Stories",
+    "Projeto",
+    "CEO Dashboard/KPIs e Métricas.md",
+    "CEO Dashboard/Dashboard CEO.md",
+    "Financeiro/Módulos/Contas a Pagar.md",
+    "Financeiro/Módulos/Comissões e Repasses.md",
+    "Financeiro/Dúvidas para Insights do CEO.md",
+    "Financeiro/Módulos/Gestão de Estoque e CMV.md",
+    "Integrações/Tray — Conciliação de Repasses.md",
+    "Integrações/Alertas e Notificações.md",
+    "Financeiro/Módulos/Aprovação de Pagamentos.md",
+    "Integrações/Bancos — CNAB e OFX.md",
+    "Financeiro/Módulos/Pedidos e Vendas.md",
+    "Financeiro/Módulos/DRE e Fluxo de Caixa.md",
+    "Financeiro/Módulos/Contas a Receber.md",
+    "Financeiro/Módulos/Conciliação Bancária.md",
+    "Financeiro HEziom 1-JANEIRO/Estoque Heziom.pdf",
+    "CEO Dashboard",
+    "Literarius",
+    "Financeiro HEziom 1-JANEIRO/DFC/Extratos/Extrato investimento 012026.pdf",
+    "Integrações",
+    "D. R. E.ACUMULADO2025 - 2026.xlsx",
+    "Financeiro HEziom 1-JANEIRO/DFC/CC 9094.pdf",
+    "Financeiro HEziom 1-JANEIRO/DFC/CC 7369.pdf"
+  ]
+}
