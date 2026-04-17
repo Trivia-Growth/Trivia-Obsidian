@@ -23,7 +23,10 @@ O AIOX é instalado dentro do **repositório de código** (não no vault Obsidia
 cd caminho/para/seu-projeto-app
 
 # 2. Instalar o AIOX
-npx aiox@latest install
+```shell
+npx aiox-core install
+```
+Durante a instalação terá conflito de .env escolha a opção que faz o merge entre o env atual incluindo as novas variaveis
 
 # 3. Verificar instalação
 cat .aiox-core/version.json
