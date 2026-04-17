@@ -95,6 +95,71 @@ Features **não importam entre si**. Compartilhar via `components/`, `hooks/`, `
 
 ---
 
+## Deploy — Comandos Obrigatórios
+
+O Netlify publica **apenas o frontend** (automaticamente via git push). O backend precisa ser deployado separadamente no Supabase via CLI. Execute os comandos abaixo SEMPRE que a story envolver banco ou Edge Function.
+
+### Pré-requisitos (verificar antes de deployar)
+
+```bash
+supabase --version        # CLI instalada?
+supabase projects list    # Autenticado e linkado?
+```
+
+Se não estiver linkado:
+```bash
+supabase login
+supabase link --project-ref [REF_DO_PROJETO]
+# REF: Supabase Dashboard → Project Settings → General → Reference ID
+```
+
+### Se a story criou ou alterou tabelas (migrations)
+
+```bash
+# Revisar o que será aplicado antes de executar
+supabase db diff
+
+# Aplicar as migrations no banco de produção
+supabase db push
+```
+
+> Fazer backup manual antes: Supabase Dashboard → Database → Backups → Create a new backup
+
+### Se a story criou ou alterou Edge Functions
+
+```bash
+# Deployar a função alterada (preferencial — mais seguro)
+supabase functions deploy [nome-da-funcao]
+
+# Verificar que o deploy foi bem-sucedido
+supabase functions list
+```
+
+### Se a Edge Function usa uma variável de ambiente nova
+
+```bash
+# Ver o que já está configurado
+supabase secrets list
+
+# Adicionar o secret que falta
+supabase secrets set NOME_DA_VARIAVEL=valor
+```
+
+Variáveis automáticas (não precisam de `secrets set`):
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+### Deploy do frontend (automático)
+
+```bash
+# O merge/push no GitHub aciona o Netlify automaticamente
+git push origin main   # ou merge do PR
+# Acompanhar: Netlify Dashboard → Deploys
+```
+
+---
+
 ## Definition of Done
 
 Ver [[../Padrão Projetos/02 - Qualidade/Definition of Done]] para checklist completo.
@@ -104,5 +169,7 @@ Resumo obrigatório:
 - Error Boundary + Loading/Error states
 - Rotas com `lazy()` + `Suspense`
 - RLS verificado (se DB) | Zod + JWT (se Edge Function)
+- `supabase db push` executado (se houve migration)
+- `supabase functions deploy [nome]` executado (se houve Edge Function)
 - Preview testado: happy path + erro + sem dados
 - Docs atualizadas e commitadas juntas
