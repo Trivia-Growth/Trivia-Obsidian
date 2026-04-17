@@ -1,0 +1,1 @@
+/Users/lucasazevedo/Documents/GitHub/Trivia-Obsidian/Trivia-Obsidian/Documentos Trivia
