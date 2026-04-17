@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Instalação"
+              "title": "STORY-001 — Setup Infraestrutura"
             }
           }
         ],
@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +149,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para Instalação"
+              "title": "Links inversos para STORY-001 — Setup Infraestrutura"
             }
           },
           {
@@ -158,12 +158,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para Instalação"
+              "title": "Links de saída para STORY-001 — Setup Infraestrutura"
             }
           },
           {
@@ -201,13 +201,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de Instalação"
+              "title": "Sumário de STORY-001 — Setup Infraestrutura"
             }
           }
         ]
@@ -229,8 +229,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5a912b5540a11cd1",
+  "active": "90a6729ad01844fe",
   "lastOpenFiles": [
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Stories",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto",
+    "Clientes/Trivia/TriviaEdutech/00 - Índice.md",
+    "Clientes/Trivia/TriviaEdutech",
+    "Clientes/Trivia",
     "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories",
     "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
@@ -247,25 +256,16 @@
     "Documentos Trivia/_Template Projeto/Projeto/Stories",
     "Documentos Trivia/_Template Projeto/Projeto/Roadmap.md",
     "Documentos Trivia/_Template Projeto/Projeto/Dashboard do Projeto.md",
-    "Documentos Trivia/_Template Projeto/Projeto",
     "Documentos Trivia/_Template Projeto/00 - Índice.md",
-    "Documentos Trivia/_Template Projeto",
     "Clientes/Heziom/HezionOS/00 - Índice.md",
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
-    "Clientes/Heziom/HezionEdutech",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
     "Documentos Trivia/Padrão Projetos/09 - Migrações/Migrar Projeto Lovable para Padrão Trivia.md",
-    "Documentos Trivia/Padrão Projetos/09 - Migrações",
     "Documentos Trivia/Padrão Projetos/08 - Operações/Deploy Supabase.md",
     "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/architecture.md",
     "Documentos Trivia/Padrão Projetos/07 - Templates de Código/CLAUDE.md",
     "Documentos Trivia/Padrão Projetos/08 - Operações/LGPD e Compliance.md",
-    "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Operações de Banco.md",
-    "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
-    "Documentos Trivia/Padrão Projetos/05 - Lovable e Claude/Workflow Diff Plan.md"
+    "Documentos Trivia/Padrão Projetos/08 - Operações/Monitoramento sem Ferramentas.md"
   ]
 }
