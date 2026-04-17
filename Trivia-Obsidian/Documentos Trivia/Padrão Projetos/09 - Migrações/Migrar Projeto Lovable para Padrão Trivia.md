@@ -152,33 +152,40 @@ supabase migration list
 
 ### Passo 6 — Confirmar Edge Functions deployadas
 
-Verificar quais funções estão deployadas em produção:
+Se o projeto foi desenvolvido inteiramente pela Lovable, as Edge Functions já estão deployadas automaticamente — a Lovable faz isso via integração direta com o Supabase.
 
+Para confirmar:
 ```bash
 supabase functions list
 ```
 
-Se alguma função existir no código mas não aparecer na lista, deployar:
+Se alguma função existir no código mas **não** aparecer na lista (ex: o projeto veio de um zip/export manual sem conexão Lovable), deployar manualmente:
 
 ```bash
 supabase functions deploy nome-da-funcao
 ```
 
-- [ ] Todas as Edge Functions em `supabase/functions/` estão deployadas
+- [ ] Todas as Edge Functions em `supabase/functions/` aparecem em `supabase functions list`
 
 ---
 
 ### Passo 7 — Confirmar secrets das Edge Functions
 
+Secrets configurados via Lovable já estão no Supabase. Para verificar:
+
 ```bash
 supabase secrets list
 ```
 
-Listar todas as variáveis que as Edge Functions usam (fazer `grep -r "Deno.env.get" supabase/functions/`) e confirmar que estão configuradas.
+Se alguma variável estiver faltando (ex: a Lovable não tinha interface para configurá-la):
+
+```bash
+supabase secrets set NOME_DA_VARIAVEL=valor
+```
 
 > `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY` são automáticos — não precisam de `secrets set`.
 
-- [ ] Todos os secrets necessários configurados
+- [ ] Todos os secrets necessários estão configurados
 
 ---
 
