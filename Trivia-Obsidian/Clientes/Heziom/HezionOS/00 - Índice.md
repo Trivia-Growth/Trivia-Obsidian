@@ -24,8 +24,10 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ## CEO Dashboard
 
-- [[Dashboard CEO]] — posição financeira, DRE MTD, faturamento por canal, alertas
+- [[Dashboard CEO]] — posição financeira, DRE MTD, faturamento por canal, alertas, score de saúde, fluxo de caixa 90d, aging visual
 - [[KPIs e Métricas]] — definições formais de cada indicador e fonte de dados
+- [[Assistente — Chat MCP]] — chat em linguagem natural integrado ao Literarius e Tray (Claude API)
+- [[Memória do Assistente]] — painel admin de contexto persistente do assistente (pgvector + Supabase)
 
 ---
 

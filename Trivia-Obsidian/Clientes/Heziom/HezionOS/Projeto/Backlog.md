@@ -34,6 +34,11 @@ Lista completa de stories organizadas por fase. Stories da Fase 2 e 3 serão det
 | Dashboard CEO — Painéis 3 e 4 | Faturamento por canal + alertas críticos | [[Dashboard CEO]] |
 | CNAB 240 | Geração de remessa para Santander | [[Aprovação de Pagamentos]] |
 | Integração Qive NF-e | Captura automática de NF-e recebidas | [[Qive — NF-e Automática]] |
+| **Assistente — Chat MCP** | Chat em linguagem natural: Literarius + Tray via Claude API | [[Assistente — Chat MCP]] |
+| **Memória do Assistente** | Painel admin de contexto persistente; injeção por embedding (pgvector) | [[Memória do Assistente]] |
+| **Score de Saúde Financeira** | Indicador executivo único 0–100 no header (caixa + margem + inadimplência + aprovações) | [[Dashboard CEO]] |
+| **Fluxo de Caixa Projetado** | Gráfico 12 semanas: entradas vs saídas por A/R e A/P com vencimento | [[Dashboard CEO]] |
+| **Aging Visual de Recebíveis** | Barras por bucket de vencimento; destaque >90d | [[Dashboard CEO]] |
 
 ---
 
