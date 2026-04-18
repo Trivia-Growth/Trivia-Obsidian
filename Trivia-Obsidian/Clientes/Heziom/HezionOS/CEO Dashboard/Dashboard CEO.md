@@ -19,6 +19,41 @@ Visão unificada da saúde financeira da Heziom para tomada de decisão do CEO. 
 
 ---
 
+## Navegação Global (4 telas)
+
+O HeziomOS é estruturado como um SPA com 4 telas acessíveis via nav no header:
+
+| Tab | Tela | Badge |
+|-----|------|-------|
+| Dashboard | Visão geral financeira (esta nota) | — |
+| Aprovações | Fila de pagamentos pendentes | ●N (qtde pendente) |
+| Conciliação | Extrato OFX × TituloFinanceiroBaixa | ●N (itens manuais) |
+| Memória | Admin do contexto do assistente | — |
+
+O **chat do assistente** (sidebar deslizável) está disponível em todas as telas.
+
+---
+
+## Score de Saúde Financeira
+
+Indicador executivo único exibido no header, composto de 4 dimensões:
+
+| Dimensão | Peso | Critério atual |
+|---------|------|---------------|
+| Posição de caixa | 30% | Caixa > R$1M → ✅ |
+| Margem operacional | 25% | Superávit MTD positivo → ✅ |
+| Inadimplência | 25% | 84% vencido → ⚠ |
+| Aprovações pendentes | 20% | 5 pendentes >24h → ⚠ |
+
+**Score atual: 74/100** (cor #d69e2e — atenção)
+- 🟢 100–80: Saúde OK
+- 🟡 79–60: Atenção — monitorar
+- 🔴 59–0: Crítico — ação necessária
+
+Tooltip ao hover detalha cada dimensão e o que está puxando o score para baixo.
+
+---
+
 ## Layout Principal (4 Painéis)
 
 ```
@@ -165,6 +200,48 @@ Canais (ordem por volume 2025):
 
 ---
 
+## Fluxo de Caixa Projetado (90 dias)
+
+Card full-width abaixo do grid 2×2. Responde à pergunta:
+> "Terei caixa suficiente nos próximos 3 meses?"
+
+### Visualização
+Gráfico de barras agrupadas por semana (12 semanas):
+- **Barras verdes** — entradas projetadas (A/R com vencimento definido)
+- **Barras vermelhas** — saídas projetadas (A/P com vencimento definido)
+- **Linha tracejada** — saldo mínimo operacional (R$ 800k)
+- **Linha de saldo acumulado** — curva sobre as barras
+
+### Fonte
+`TituloFinanceiro` Pago=0, agrupado por semana de vencimento.
+Não inclui receitas futuras não faturadas (conservador por definição).
+
+### Nota ao usuário
+> "Projeção baseada apenas em títulos já lançados no Literarius. Receitas futuras não faturadas não estão incluídas."
+
+---
+
+## Aging de Recebíveis (visual)
+
+Card lateral complementar ao Fluxo de Caixa. Responde:
+> "Quando vence o dinheiro que tenho a receber?"
+
+### Gráfico de barras horizontais por bucket
+
+| Bucket | Valor | % |
+|--------|-------|---|
+| A vencer (futuro) | R$ 384.000 | 16% |
+| Vencido 1–30d | R$ 264.000 | 11% |
+| Vencido 31–60d | R$ 182.000 | 8% |
+| Vencido 61–90d | R$ 498.000 | 21% |
+| Vencido >90d | R$ 1.040.000 | 44% |
+
+**Total carteira:** R$ 2.368.000 · **Inadimplência:** 84% · **Meta:** <20%
+
+Fonte: `TituloFinanceiro` TipoTitulo='R', Pago=0, agrupado por (HOJE − Vencimento).
+
+---
+
 ## Briefing Diário (Teams — 7h)
 
 Mensagem automática enviada todo dia útil às 7h via Teams webhook:
@@ -206,9 +283,13 @@ Mensagem automática enviada todo dia útil às 7h via Teams webhook:
 ## Módulos Relacionados
 
 - [[KPIs e Métricas]] — definições formais de cada indicador
-- [[DRE e Fluxo de Caixa]] — fonte do painel DRE
-- [[Contas a Receber]] — fonte do painel posição financeira
+- [[DRE e Fluxo de Caixa]] — fonte do painel DRE e gráfico de fluxo de caixa
+- [[Contas a Receber]] — fonte do painel posição financeira e aging visual
 - [[Contas a Pagar]] — fonte do painel posição financeira
 - [[Pedidos e Vendas]] — fonte do painel faturamento por canal
 - [[Alertas e Notificações]] — engine de alertas do painel 4
+- [[Assistente — Chat MCP]] — sidebar de chat com Literarius + Tray
+- [[Memória do Assistente]] — contexto persistente do assistente
+- [[Aprovação de Pagamentos]] — tela 2 do sistema (nav tab)
+- [[Conciliação Bancária]] — tela 3 do sistema (nav tab)
 - [[HeziomOS — Arquitetura]] — visão geral do sistema

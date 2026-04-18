@@ -42,12 +42,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
+                "file": "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "STORY-003 — Blog melhorias de experiência"
+              "title": "STORY-006 — Alertas Teams Briefing 7h"
             }
           }
         ],
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
+                "file": "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para STORY-003 — Blog melhorias de experiência"
+              "title": "Links inversos para STORY-006 — Alertas Teams Briefing 7h"
             }
           },
           {
@@ -160,12 +160,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
+                "file": "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para STORY-003 — Blog melhorias de experiência"
+              "title": "Links de saída para STORY-006 — Alertas Teams Briefing 7h"
             }
           },
           {
@@ -203,13 +203,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
+                "file": "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de STORY-003 — Blog melhorias de experiência"
+              "title": "Sumário de STORY-006 — Alertas Teams Briefing 7h"
             }
           }
         ]
@@ -231,10 +231,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "90a6729ad01844fe",
+  "active": "5a912b5540a11cd1",
   "lastOpenFiles": [
-    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
+    "Clientes/Heziom/HezionOS/CEO Dashboard/Memória do Assistente.md",
+    "Clientes/Heziom/HezionOS/CEO Dashboard/Assistente — Chat MCP.md",
+    "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria.md",
+    "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-002 — Ajuste texto tela de login.md",
     "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
@@ -264,10 +268,6 @@
     "Documentos Trivia/_Template Projeto/Projeto/Dashboard do Projeto.md",
     "Documentos Trivia/_Template Projeto/00 - Índice.md",
     "Clientes/Heziom/HezionOS/00 - Índice.md",
-    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Stack Padrão.md",
-    "Documentos Trivia/Padrão Projetos/09 - Migrações/Migrar Projeto Lovable para Padrão Trivia.md",
-    "Documentos Trivia/Padrão Projetos/08 - Operações/Deploy Supabase.md",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md"
+    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md"
   ]
 }
