@@ -15,8 +15,8 @@ inicio: 2026-04-17
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status das stories) | [[Projeto/Dashboard do Projeto]] |
-| Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
+| Dashboard (status das stories) | [[Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto]] |
+| Roadmap (fases e milestones) | [[Clientes/Trivia/TriviaEdutech/Projeto/Roadmap]] |
 | Stories | [[Projeto/Stories/]] |
 | Requisitos do sistema | *(no repositório de código: `PROJECT_REQUIREMENTS.md`)* |
 | Arquitetura | *(no repositório de código: `architecture.md`)* |

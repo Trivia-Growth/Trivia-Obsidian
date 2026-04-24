@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
+                "file": "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Transição de carreira - Misa Antonini"
+              "title": "00 - Checklist de Início"
             }
           }
         ],
@@ -137,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
+                "file": "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para Transição de carreira - Misa Antonini"
+              "title": "Links inversos para 00 - Checklist de Início"
             }
           },
           {
@@ -156,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
+                "file": "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para Transição de carreira - Misa Antonini"
+              "title": "Links de saída para 00 - Checklist de Início"
             }
           },
           {
@@ -199,21 +199,20 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
+                "file": "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de Transição de carreira - Misa Antonini"
+              "title": "Sumário de 00 - Checklist de Início"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -229,8 +228,22 @@
   },
   "active": "14b7b44a32666bbc",
   "lastOpenFiles": [
-    "Novos Negócios Bruno Nardon/A mente Empreendedora - Bruno Nardon.md",
+    "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+    "Clientes/Trivia/LandingPageTrivia/00 - Índice.md",
+    "Clientes/Trivia/TriviaEdutech/00 - Índice.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
+    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
+    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories",
+    "Clientes/Trivia/LandingPageTrivia/Projeto",
+    "Clientes/Trivia/LandingPageTrivia",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
+    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
     "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
+    "Novos Negócios Bruno Nardon/A mente Empreendedora - Bruno Nardon.md",
     "Sem título.md",
     "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
     "Sem título 2",
@@ -240,30 +253,16 @@
     "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria.md",
     "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-002 — Ajuste texto tela de login.md",
-    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Testes Automatizados.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Definition of Done.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Instalação.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
     "Clientes/Trivia/TriviaEdutech/Projeto",
-    "Clientes/Trivia/TriviaEdutech/00 - Índice.md",
     "Clientes/Trivia/TriviaEdutech",
     "Clientes/Trivia",
     "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Stories",
-    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
-    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
-    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto",
-    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/00 - Índice.md",
-    "Documentos Trivia/Clientes/Trivia/TriviaEdutech",
-    "Documentos Trivia/Clientes/Trivia",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
-    "Clientes/Heziom/HezionEdutech/00 - Índice.md",
-    "Documentos Trivia/Padrão Projetos/07 - Templates de Código/PROJECT_REQUIREMENTS.md",
-    "Documentos Trivia/_Template Projeto/Projeto/Roadmap.md"
+    "Documentos Trivia/Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md"
   ]
 }

@@ -1,13 +1,13 @@
 ---
-projeto: "[PREENCHER — Nome do Projeto]"
-cliente: "[PREENCHER — Nome do Cliente]"
-status: "em andamento"
-inicio: YYYY-MM-DD
+projeto: "[Landingpage Trivia]"
+cliente: "[Trivia]"
+status: em andamento
+inicio: 2026-04-23
 ---
 
-# [PREENCHER — Nome do Projeto]
+# [LandingPage Trivia]
 
-> [PREENCHER — Uma frase descrevendo o que o sistema faz e para quem.]
+> [Landing Page da Trivia]
 
 ---
 
@@ -15,8 +15,8 @@ inicio: YYYY-MM-DD
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status das stories) | [[Documentos Trivia/_Template Projeto/Projeto/Dashboard do Projeto]] |
-| Roadmap (fases e milestones) | [[Documentos Trivia/_Template Projeto/Projeto/Roadmap]] |
+| Dashboard (status das stories) | [[Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto]] |
+| Roadmap (fases e milestones) | [[Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap]] |
 | Stories | [[Projeto/Stories/]] |
 | Requisitos do sistema | *(no repositório de código: `PROJECT_REQUIREMENTS.md`)* |
 | Arquitetura | *(no repositório de código: `architecture.md`)* |
@@ -27,7 +27,7 @@ inicio: YYYY-MM-DD
 ## Repositório de Código
 
 ```
-GitHub: https://github.com/[PREENCHER]/[nome-do-projeto]-app
+GitHub: [https://github.com/[PREENCHER]/[nome-do-projeto]-app](https://github.com/Trivia-Growth/pixel-perfect-view)
 Clone local: [PREENCHER — caminho na máquina]
 ```
 
