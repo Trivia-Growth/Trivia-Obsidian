@@ -8,8 +8,8 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ## Acompanhamento do Projeto
 
-- [[Dashboard do Projeto]] — status das stories em tempo real (requer plugin Dataview)
-- [[Roadmap]] — 3 fases com milestones e critérios de saída
+- [[Clientes/Heziom/HezionOS/Projeto/Dashboard do Projeto]] — status das stories em tempo real (requer plugin Dataview)
+- [[Clientes/Heziom/HezionOS/Projeto/Roadmap]] — 3 fases com milestones e critérios de saída
 - [[Sprint Atual]] — o que está sendo construído agora
 - [[Backlog]] — todas as stories por fase e prioridade
 - [[Setup João]] — como acessar e contribuir com este vault
