@@ -1,4 +1,4 @@
-# Dashboard — [PREENCHER: Nome do Projeto]
+# Dashboard — trivia.studio
 
 *Atualizado automaticamente a partir do frontmatter das stories.*
 
@@ -8,7 +8,7 @@
 
 ```dataview
 TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "em-progresso"
 SORT atualizado DESC
 ```
@@ -19,7 +19,7 @@ SORT atualizado DESC
 
 ```dataview
 TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "em-review"
 SORT atualizado DESC
 ```
@@ -30,7 +30,7 @@ SORT atualizado DESC
 
 ```dataview
 TABLE modulo AS "Módulo", prioridade AS "Prioridade"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "pronto" AND fase = 1
 SORT prioridade ASC
 ```
@@ -41,7 +41,7 @@ SORT prioridade ASC
 
 ```dataview
 TABLE modulo AS "Módulo", prioridade AS "Prioridade"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "backlog" AND fase = 1
 SORT prioridade ASC
 ```
@@ -52,7 +52,7 @@ SORT prioridade ASC
 
 ```dataview
 TABLE modulo AS "Módulo", atualizado AS "Atualizado"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "bloqueado"
 SORT atualizado DESC
 ```
@@ -63,7 +63,7 @@ SORT atualizado DESC
 
 ```dataview
 TABLE modulo AS "Módulo", atualizado AS "Concluído em"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status = "concluido"
 SORT atualizado DESC
 ```
@@ -74,7 +74,7 @@ SORT atualizado DESC
 
 ```dataview
 TABLE rows.file.link AS "Stories", length(rows) AS "Total"
-FROM "Clientes/[PREENCHER]/[PREENCHER]/Projeto/Stories"
+FROM "Clientes/Trivia/LandingPageTrivia/Projeto/Stories"
 WHERE status != "_Template Story"
 GROUP BY fase
 ```
