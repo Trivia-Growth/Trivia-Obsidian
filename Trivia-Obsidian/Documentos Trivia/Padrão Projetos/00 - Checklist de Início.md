@@ -191,7 +191,7 @@ supabase projects list
 ```bash
 # No Terminal, dentro da pasta do repositório:
 cd caminho/para/[nome-do-projeto]-app
-npx aiox@latest install
+npx aiox-core install
 ```
 
 > **Se aparecer "permission denied":** tente com `sudo npx aiox@latest install`
