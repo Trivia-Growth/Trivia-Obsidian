@@ -1,13 +1,13 @@
 ---
-projeto: "[Landingpage Trivia]"
-cliente: "[Trivia]"
+projeto: "trivia.studio"
+cliente: "Trivia"
 status: em andamento
 inicio: 2026-04-23
 ---
 
-# [LandingPage Trivia]
+# trivia.studio — Landing Page
 
-> [Landing Page da Trivia]
+> Site institucional da Trivia com landing page, admin e agente Jimmy (IA).
 
 ---
 
@@ -27,8 +27,8 @@ inicio: 2026-04-23
 ## Repositório de Código
 
 ```
-GitHub: [https://github.com/[PREENCHER]/[nome-do-projeto]-app](https://github.com/Trivia-Growth/pixel-perfect-view)
-Clone local: [PREENCHER — caminho na máquina]
+GitHub: https://github.com/LmAzevedo94/pixel-perfect-view
+Clone local: ~/Documents/GitHub/pixel-perfect-view
 ```
 
 ---
@@ -36,8 +36,8 @@ Clone local: [PREENCHER — caminho na máquina]
 ## Supabase
 
 ```
-Project URL: https://[REF].supabase.co
-Reference ID: [PREENCHER]
+Project URL: https://lcqlgnxzyrddshmdsjpt.supabase.co
+Reference ID: lcqlgnxzyrddshmdsjpt
 ```
 
 ---
@@ -45,7 +45,7 @@ Reference ID: [PREENCHER]
 ## Netlify
 
 ```
-URL de produção: https://[PREENCHER].netlify.app
+URL de produção: (configurado no Netlify — verificar dashboard)
 ```
 
 ---
@@ -54,11 +54,12 @@ URL de produção: https://[PREENCHER].netlify.app
 
 | Componente | Tecnologia |
 |-----------|-----------|
-| Frontend | React + Vite + TypeScript + Tailwind |
-| Backend | Supabase Edge Functions (Deno) |
+| Frontend | TanStack Start v1.167 (React 19 SSR) + TanStack Router v1.168 |
+| Backend | Netlify Functions (esbuild) |
 | Banco | Supabase PostgreSQL |
-| Deploy | Netlify (frontend) + Supabase (backend) |
-| Agentes | AIOX v5+ |
+| AI Agent | OpenRouter → Gemini 2.0 Flash |
+| Deploy | Netlify (frontend + SSR) |
+| Agentes | AIOX v5.0.7 |
 
 ---
 
@@ -66,9 +67,8 @@ URL de produção: https://[PREENCHER].netlify.app
 
 | Papel | Acesso |
 |-------|--------|
-| `[papel1]` | [descrição] |
-| `[papel2]` | [descrição] |
-| `[papel3]` | [descrição] |
+| `visitante` | Landing page pública, chat com Jimmy |
+| `admin` | Painel `/admin` — leads, conversas, conteúdo, blog, imagens, configs, agente |
 
 ---
 
@@ -76,5 +76,5 @@ URL de produção: https://[PREENCHER].netlify.app
 
 | Papel | Nome | Contato |
 |-------|------|---------|
-| Piloto / Responsável | [PREENCHER] | [PREENCHER] |
-| Cliente / Stakeholder | [PREENCHER] | [PREENCHER] |
+| Piloto / Responsável | Lucas Azevedo | lm.azeved@gmail.com |
+| Cliente / Stakeholder | Trivia | — |
