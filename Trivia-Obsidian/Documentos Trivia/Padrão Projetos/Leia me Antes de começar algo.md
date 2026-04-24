@@ -24,6 +24,8 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[08 - Operações/Monitoramento sem Ferramentas\|08 - Monitoramento]] | Como monitorar produção usando Supabase, Netlify e DevTools |
 | [[08 - Operações/LGPD e Compliance\|08 - LGPD e Compliance]] | Checklist de conformidade para dados pessoais e financeiros |
 | [[09 - Migrações/Migrar Projeto Lovable para Padrão Trivia\|09 - Migrar da Lovable]] | Checklist para integrar projeto existente da Lovable ao padrão Trivia |
+| [[10 - Sync Lovable e Claude\|10 - Sync Lovable + Claude]] | Protocolo de sincronismo entre Lovable e Claude Code via docs/stories/ |
+| [[06 - Gestão do Projeto/Setup Dev Técnico\|06 - Setup Dev Técnico]] | Onboarding para devs que trabalham via Claude Code + AIOX |
 
 **Leia na ordem acima.** O checklist de início conecta tudo.
 
