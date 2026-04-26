@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Roadmap"
+              "title": "STORY-001 — Fix ChatModal boot sequence"
             }
           }
         ],
@@ -137,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para Roadmap"
+              "title": "Links inversos para STORY-001 — Fix ChatModal boot sequence"
             }
           },
           {
@@ -156,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para Roadmap"
+              "title": "Links de saída para STORY-001 — Fix ChatModal boot sequence"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de Roadmap"
+              "title": "Sumário de STORY-001 — Fix ChatModal boot sequence"
             }
           }
         ]
@@ -228,37 +228,37 @@
   },
   "active": "14b7b44a32666bbc",
   "lastOpenFiles": [
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
-    "Clientes/Trivia/LandingPageTrivia/00 - Índice.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-013 — Página de listagem de casos.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-012 — Bugs de segurança e qualidade no chat.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-011 — Admin conteúdo real (não mais mock).md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-010 — Rotas públicas de caso, diário e privacidade.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-009 — Analytics e consent LGPD.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-008 — CAPTCHA invisível na captura de lead.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-007 — Streaming SSE no chat do Jimmy.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-006 — Jimmy avisa equipe ao fechar briefing.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-005 — Infraestrutura de descoberta (SEO + OG).md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-004 — Error boundary com identidade Trivia.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-003b — Admin service-role refactor.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-003 — Admin server-side + RLS + rate limit.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-002 — Lead no banco + linkar conversation.md",
+    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
+    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
+    "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
+    "Clientes/Trivia/LandingPageTrivia/00 - Índice.md",
     "Documentos Trivia/Padrão Projetos/10 - Sync Lovable e Claude.md",
     "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Dev Técnico.md",
-    "Documentos Trivia/Padrão Projetos/00 - Checklist de Início.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Equipe de Agentes.md",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
     "Clientes/Trivia/TriviaEdutech/00 - Índice.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Dashboard do Projeto.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Roadmap.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories",
     "Clientes/Trivia/LandingPageTrivia/Projeto",
     "Clientes/Trivia/LandingPageTrivia",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Estrutura de Código.md",
-    "Documentos Trivia/Padrão Projetos/01 - Arquitetura/Dois Repositórios.md",
-    "Novos Negócios Bruno Nardon/Transição de carreira - Misa Antonini.md",
-    "Novos Negócios Bruno Nardon/A mente Empreendedora - Bruno Nardon.md",
-    "Sem título.md",
-    "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-006 — Alertas Teams Briefing 7h.md",
     "Sem título 2",
     "Sem título 1",
-    "Clientes/Heziom/HezionOS/CEO Dashboard/Memória do Assistente.md",
-    "Clientes/Heziom/HezionOS/CEO Dashboard/Assistente — Chat MCP.md",
-    "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria.md",
-    "Clientes/Heziom/HezionOS/Projeto/Stories/STORY-001 — Setup Infraestrutura.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-003 — Blog melhorias de experiência.md",
-    "Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-002 — Ajuste texto tela de login.md",
     "Clientes/Trivia/TriviaEdutech/Projeto/Stories",
     "Clientes/Trivia/TriviaEdutech/Projeto",
     "Clientes/Trivia/TriviaEdutech",
