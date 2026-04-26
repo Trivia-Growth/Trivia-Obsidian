@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "STORY-001 — Fix ChatModal boot sequence"
+              "title": "STORY-014 — Jimmy consultor com contador de progresso"
             }
           }
         ],
@@ -137,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para STORY-001 — Fix ChatModal boot sequence"
+              "title": "Links inversos para STORY-014 — Jimmy consultor com contador de progresso"
             }
           },
           {
@@ -156,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para STORY-001 — Fix ChatModal boot sequence"
+              "title": "Links de saída para STORY-014 — Jimmy consultor com contador de progresso"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de STORY-001 — Fix ChatModal boot sequence"
+              "title": "Sumário de STORY-014 — Jimmy consultor com contador de progresso"
             }
           }
         ]
@@ -228,6 +228,7 @@
   },
   "active": "14b7b44a32666bbc",
   "lastOpenFiles": [
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-013 — Página de listagem de casos.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-012 — Bugs de segurança e qualidade no chat.md",
@@ -246,7 +247,6 @@
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
     "Clientes/Trivia/LandingPageTrivia/00 - Índice.md",
