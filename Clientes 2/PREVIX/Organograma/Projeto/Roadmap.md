@@ -41,11 +41,11 @@
 
 **Objetivo:** Previx envia organograma atualizado a clientes finais sem ciclo do designer. PDF fiel à identidade visual institucional.
 
-**Stories planejadas (sem refinamento ainda):**
-- **STORY-008 — Compartilhamento via token público.** Tabela `tokens_publicos`, Edge Function `get-organograma-public` (somente colunas seguras, sem email/telefone), página pública `/p/[token]` com leitura. ADR-006 já registrado.
-- **STORY-009 — Exportação PDF.** Decide ADR-002 (puppeteer server vs html2canvas) + implementa Edge Function `export-pdf` com 3 páginas (institucional, organograma, contatos). Bloqueador conhecido: dependência de Docker/Cloud Run se puppeteer não couber em Edge Function Supabase.
-- **STORY-010 — Exportação PNG.** Captura do canvas do organograma (engine de viz da STORY-007 já tem método `toImage()`).
-- **STORY-011 — Auditoria.** Tabela `audit_log`, triggers genéricos para INSERT/UPDATE/DELETE em `pessoas` e `departamentos`, página `/admin/auditoria` (admin only) com filtros e diff visual.
+**Stories da Fase 2:**
+- ✅ **STORY-008 — Compartilhamento via token público.** Tabela `tokens_publicos`, Edge Function `get-organograma-public` (somente colunas seguras, sem email/telefone), página pública `/p/[token]` com leitura. **Mergeada PR #7 em 2026-04-27.**
+- ✅ **STORY-009 — Exportação PDF.** ADR-002 fechado em `@react-pdf/renderer` client-side (3 páginas: institucional + organograma + contatos). **Mergeada PR #8 em 2026-04-27** (commit `ec0b1c7`).
+- 🟡 **STORY-010 — Exportação PNG.** Captura do canvas do organograma via `html-to-image` em `.react-flow__viewport` (xyflow não tem método nativo `toImage()`, ao contrário do que esta linha dizia originalmente). **Em progresso.**
+- ⚪ **STORY-011 — Auditoria.** Tabela `audit_log`, triggers genéricos para INSERT/UPDATE/DELETE em `pessoas` e `departamentos`, página `/admin/auditoria` (admin only) com filtros e diff visual.
 
 **Critério de saída da Fase 2:** Previx envia link público a um cliente final e/ou exporta um PDF de qualidade comercial sem assistência técnica.
 
