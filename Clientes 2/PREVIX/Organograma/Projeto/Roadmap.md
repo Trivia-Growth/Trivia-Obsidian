@@ -11,11 +11,11 @@
 **Postura:** Operacional (CRUD completo).
 
 **Módulos:**
-- [ ] Autenticação e três papéis (`admin`, `editor`, `visualizador`)
-- [ ] CRUD de departamentos com cor customizável
-- [ ] CRUD de colaboradores (nome, cargo, depto, foto, e-mail, telefone, status)
+- [ ] Autenticação e três papéis (`admin`, `editor`, `visualizador`) — STORY-003
+- [~] CRUD de departamentos com cor customizável — schema ✅ (STORY-002), UI pendente (STORY-004)
+- [~] CRUD de colaboradores (nome, cargo, depto, foto, e-mail, telefone, status) — schema ✅ (STORY-002), UI pendente (STORY-005)
 - [ ] Upload de foto com crop e Supabase Storage
-- [ ] Hierarquia com `manager_id` + validação anti-loop (cliente + servidor)
+- [ ] Hierarquia com `manager_id` + validação anti-loop (cliente + servidor) — schema parcial ✅ (auto-loop CHECK em STORY-002), CTE recursiva pendente (STORY-006)
 - [ ] Visualização do organograma (zoom, pan, mini-mapa)
 - [ ] Filtro por departamento e busca por nome (debounced)
 - [ ] Drag-and-drop para reorganização hierárquica
@@ -80,3 +80,4 @@
 - `2026-04-23` — Briefing recebido (ver [[../Briefing Inicial]]). Escopo dividido em 3 fases (MVP, Compartilhamento, Diferenciais).
 - `2026-04-23` — **ADR-002 pendente:** decisão sobre engine de PDF (puppeteer server vs html2canvas client) postergada para início da Fase 2 — não bloqueia o MVP.
 - `2026-04-23` — **ADR-003 pendente:** decisão sobre engine de visualização (`@xyflow/react` provável) postergada para a primeira story de visualização.
+- `2026-04-23` — STORY-002 implementada: tabelas `departamentos` + `pessoas` com RLS por papel, 8 policies, 4 índices, 2 triggers, 6 deptos seedados. **ADR-008 fixou `app_metadata.user_role`** como mecanismo do JWT (mais seguro que `user_metadata`).
