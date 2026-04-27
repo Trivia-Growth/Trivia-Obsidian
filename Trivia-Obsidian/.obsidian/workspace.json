@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-022 — Editor rich text Tiptap.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "STORY-014 — Jimmy consultor com contador de progresso"
+              "title": "STORY-022 — Editor rich text Tiptap"
             }
           }
         ],
@@ -137,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-022 — Editor rich text Tiptap.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para STORY-014 — Jimmy consultor com contador de progresso"
+              "title": "Links inversos para STORY-022 — Editor rich text Tiptap"
             }
           },
           {
@@ -156,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-022 — Editor rich text Tiptap.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Links de saída para STORY-014 — Jimmy consultor com contador de progresso"
+              "title": "Links de saída para STORY-022 — Editor rich text Tiptap"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+                "file": "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-022 — Editor rich text Tiptap.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumário de STORY-014 — Jimmy consultor com contador de progresso"
+              "title": "Sumário de STORY-022 — Editor rich text Tiptap"
             }
           }
         ]
@@ -229,8 +229,14 @@
   "active": "14b7b44a32666bbc",
   "lastOpenFiles": [
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-015 — Hardening de segurança.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-022 — Editor rich text Tiptap.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-021 — Redesign visual LPs seções full-width.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-020 — Upload de imagens Supabase Storage.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-019 — Editor de blocos drag-and-drop.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-018 — Admin listagem e criação de campanhas.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-017 — DB Migration + Rota pública campanha.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-014 — Jimmy consultor com contador de progresso.md",
+    "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-001 — Fix ChatModal boot sequence.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-013 — Página de listagem de casos.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-012 — Bugs de segurança e qualidade no chat.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories/STORY-011 — Admin conteúdo real (não mais mock).md",
@@ -248,12 +254,6 @@
     "Documentos Trivia/Padrão Projetos/Leia me Antes de começar algo.md",
     "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Ciclo de uma Story.md",
     "Documentos Trivia/Padrão Projetos/02 - Qualidade/Componentes React.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Dashboard do Projeto.md",
-    "Clientes/Trivia/LandingPageTrivia/Projeto/Roadmap.md",
-    "Clientes/Trivia/LandingPageTrivia/00 - Índice.md",
-    "Documentos Trivia/Padrão Projetos/10 - Sync Lovable e Claude.md",
-    "Documentos Trivia/Padrão Projetos/06 - Gestão do Projeto/Setup Dev Técnico.md",
-    "Documentos Trivia/Padrão Projetos/04 - Agentes AIOX/Equipe de Agentes.md",
     "Clientes/Trivia/LandingPageTrivia/Projeto/Stories",
     "Clientes/Trivia/LandingPageTrivia/Projeto",
     "Clientes/Trivia/LandingPageTrivia",
