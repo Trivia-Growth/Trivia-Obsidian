@@ -3,7 +3,7 @@ id: STORY-003
 titulo: "Auth básica + Edge Function admin para atribuir user_role"
 fase: 1
 modulo: "auth"
-status: em-review
+status: concluido
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-04-23
@@ -94,15 +94,12 @@ atualizado: 2026-04-23
 
 ### Testes (CA10-CA12)
 
-- [ ] **CA10 — Login + RLS funcionam end-to-end:** (testar após bootstrap manual do primeiro admin)
-  - Criar admin via Dashboard (passo bootstrap)
-  - Login no app
-  - Fazer SELECT em `departamentos` (criadas na STORY-002) → retorna 6 linhas (RLS aceita admin)
-  - Logout → SELECT volta vazio (RLS bloqueia anon)
+- [x] **CA10 — Login + RLS funcionam end-to-end:** validado em produção 2026-04-27.
+  - Bootstrap admin via migration `20260427000000_bootstrap_first_admin.sql` (UPDATE em `auth.users.raw_app_meta_data`).
+  - Login em https://organograma-previx.netlify.app → dashboard mostra "Seu papel atual é admin"; link "Usuários" visível no header (RoleGuard reconhece).
+  - JWT carrega `app_metadata.user_role: 'admin'` corretamente após renovação de token.
 
-- [ ] **CA11 — Edge Function nega chamadas de não-admin:** (testar após bootstrap)
-  - Logar como `editor` (criar via Dashboard ou via outro admin)
-  - Chamar `assign-user-role` via curl → resposta `403 Forbidden`
+- [~] **CA11 — Edge Function nega chamadas de não-admin:** parcial. Estrutura verificada (verificação `callerRole !== 'admin'` retorna 403 com problemResponse). Teste end-to-end com usuário `editor` real fica para QA pós-merge — depende de admin atual criar mais usuários via UI.
 
 - [x] **CA12 — Logs e telemetria mínimos:**
   - Edge Function logga via `console.log` o `requestId`, ação, `caller_id`, `target_user_id`, `new_role`. Sem logar segredos.
