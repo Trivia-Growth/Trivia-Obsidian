@@ -158,12 +158,14 @@ atualizado: 2026-04-23
 **Notas de implementação:**
 
 - **TanStack Router file-based:** layouts protegidos usam underscore prefix (`_authenticated.tsx`). Sub-rotas em `_authenticated/dashboard.tsx`, `_authenticated/admin/usuarios.tsx`. URL final não inclui o segmento com `_`.
-- **Auth pattern:** sessão é carregada client-side via `supabase.auth.getSession()` no `beforeLoad`. Para SSR estrito, refatorar futuramente para passar via context. MVP: client-side é aceitável.
+- **Auth pattern:** sessão é carregada client-side via `supabase.auth.getSession()` no `beforeLoad`. SPA puro (ver ADR-011) — sem SSR.
 - **Anti-enumeration na recovery:** mensagem de sucesso é a mesma se o e-mail existe ou não.
 - **Edge Functions deployed e ativas:**
   - `assign-user-role` (ID `939f70e2-e124-4afe-bf00-bc9bb3c57be9`, version 1)
   - `list-users` (ID `c7f29ac6-94e8-4021-a933-31f88ba2ae86`, version 1)
 - **Validação:** typecheck OK; build OK; lint 0 errors (7 warnings pré-existentes shadcn); audit 0 critical/high.
+- **Migração para SPA puro durante a story (ADR-011):** Lovable refatorou o scaffold de TanStack Start (Cloudflare Workers SSR) para SPA puro com TanStack Router, porque TanStack Start não tem adapter Netlify nativo na v1.167. Removidos `@tanstack/react-start`, `@lovable.dev/vite-tanstack-config`, `@cloudflare/vite-plugin`, `wrangler`. Adicionados `index.html` raiz + `src/main.tsx`. Mergeou clean com nossa branch.
+- **Deploy verde em produção:** https://organograma-previx.netlify.app/ retorna HTTP 200 com `index.html` correto. SPA fallback funcionando (rotas `/login`, `/dashboard`, etc. resolvem).
 - **CA10/CA11 não validados pelo @dev** porque exigem o passo de bootstrap manual (criar admin via Dashboard) que precisa ser feito pelo piloto. Após bootstrap, esses dois CAs viram testes manuais de QA.
 
 ---

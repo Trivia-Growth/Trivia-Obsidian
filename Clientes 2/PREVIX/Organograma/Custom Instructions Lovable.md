@@ -10,7 +10,9 @@
 
 **Organograma PREVIX** é um sistema web SaaS onde o **Grupo Previx** (segurança patrimonial, eletrônica e serviços integrados) gerencia autonomamente o organograma corporativo, mantendo a identidade visual institucional e exportando PDF on-demand. Substitui o ciclo "PDF estático + designer" pelo ciclo "edita e vê na hora".
 
-**Stack:** React + Vite + Tailwind + TypeScript → Netlify | Supabase (PostgreSQL + Auth + Storage + Edge Functions Deno)
+**Stack:** React + Vite + Tailwind v4 + TypeScript + TanStack Router (file-based, **SPA puro** — sem TanStack Start/SSR) → Netlify estático | Supabase (PostgreSQL + Auth + Storage + Edge Functions Deno)
+
+**Build & deploy:** `npm run build` gera `dist/index.html` + chunks code-split em `dist/assets/`. Netlify serve `dist` direto com SPA fallback redirect (`/* → /index.html 200` em `netlify.toml`). **Não reintroduzir** `@tanstack/react-start`, `@lovable.dev/vite-tanstack-config`, `@cloudflare/vite-plugin` ou `wrangler` — ver ADR-011 em `architecture.md`.
 
 **Arquitetura:** Bulletproof React (feature-based). Dois repositórios: `trivia-obsidian/Clientes 2/PREVIX/Organograma/` (vault Obsidian — specs) e `organograma-previx-app/` (código). A Lovable pode editar qualquer parte do código — frontend, Supabase migrations, Edge Functions. Não alterar `CLAUDE.md` nem `.aiox-core/`.
 
