@@ -3,9 +3,9 @@ id: STORY-002
 titulo: "Modelo de dados inicial — pessoas e departamentos com RLS"
 fase: 1
 modulo: "data"
-status: pronto
+status: em-review
 prioridade: alta
-agente_responsavel: "@sm"
+agente_responsavel: "@dev"
 criado: 2026-04-23
 atualizado: 2026-04-23
 ---
@@ -34,7 +34,7 @@ atualizado: 2026-04-23
 
 ### Schema
 
-- [ ] **CA1 — Tabela `departamentos`** criada com colunas:
+- [x] **CA1 — Tabela `departamentos`** criada com colunas:
   - `id uuid primary key default gen_random_uuid()`
   - `nome text not null unique`
   - `cor_hex text not null check (cor_hex ~ '^#[0-9A-Fa-f]{6}$')`
@@ -42,7 +42,7 @@ atualizado: 2026-04-23
   - `criado_em timestamptz not null default now()`
   - `atualizado_em timestamptz not null default now()`
 
-- [ ] **CA2 — Tabela `pessoas`** criada com colunas:
+- [x] **CA2 — Tabela `pessoas`** criada com colunas:
   - `id uuid primary key default gen_random_uuid()`
   - `nome text not null`
   - `cargo text not null`
@@ -58,19 +58,19 @@ atualizado: 2026-04-23
   - `atualizado_em timestamptz not null default now()`
   - **Constraint anti-self-loop simples:** `check (manager_id is null or manager_id <> id)` — validação transitiva fica para STORY-006.
 
-- [ ] **CA3 — Índices** criados para queries comuns:
+- [x] **CA3 — Índices** criados para queries comuns:
   - `pessoas(departamento_id)` — filtro por depto
   - `pessoas(manager_id)` — recursão hierárquica
   - `pessoas(status)` — filtro padrão "só ativos"
   - `pessoas(nome) using gin (nome gin_trgm_ops)` — busca por nome com `ilike` (extensão `pg_trgm` habilitada)
 
-- [ ] **CA4 — Triggers** criados:
+- [x] **CA4 — Triggers** criados:
   - `set_atualizado_em()` genérica que atualiza coluna `atualizado_em = now()` em update; aplicada via `BEFORE UPDATE` em ambas as tabelas
   - `set_inativado_em()` em `pessoas` que preenche `inativado_em = now()` quando `status` muda de `ativo` para `inativo` (e zera para null se voltar para `ativo`)
 
 ### Segurança (RLS)
 
-- [ ] **CA5 — RLS habilitado + FORCE** em `departamentos` e `pessoas`:
+- [x] **CA5 — RLS habilitado + FORCE** em `departamentos` e `pessoas`:
   ```sql
   ALTER TABLE departamentos ENABLE ROW LEVEL SECURITY;
   ALTER TABLE departamentos FORCE ROW LEVEL SECURITY;
@@ -78,16 +78,17 @@ atualizado: 2026-04-23
   ALTER TABLE pessoas FORCE ROW LEVEL SECURITY;
   ```
 
-- [ ] **CA6 — Policies por papel** (`auth.jwt() ->> 'user_role'`):
+- [x] **CA6 — Policies por papel** (ADR-008 fixou `auth.jwt() -> 'app_metadata' ->> 'user_role'`):
   - `SELECT` em ambas: `to authenticated` com `user_role in ('admin', 'editor', 'visualizador')`
   - `INSERT/UPDATE/DELETE` em ambas: `to authenticated` com `user_role in ('admin', 'editor')`
-  - **`anon` NÃO tem nenhuma policy** — confirmado por teste explícito (CA9 abaixo)
+  - **`anon` NÃO tem nenhuma policy** — confirmado via curl (CA9 abaixo)
+  - Wrap `(SELECT ...)` aplicado para caching do PG
 
-- [ ] **CA7 — Atribuição de papel** documentada: como o `user_role` chega no JWT do Supabase (custom claim via `raw_app_meta_data` ou via Auth Hook). Esta story **não** implementa o sign-up de usuários (vem na STORY-003 — Auth), mas precisa deixar claro qual mecanismo será usado para o claim no JWT, registrado em `architecture.md` como ADR-008.
+- [x] **CA7 — Atribuição de papel documentada (ADR-008):** decidido `app_metadata.user_role` (server-only, via `auth.admin.updateUserById`). Justificativa em `architecture.md`. Edge Function admin para atribuição programática vem na STORY-003.
 
 ### Seed inicial
 
-- [ ] **CA8 — 6 departamentos default** inseridos na migration de seed, com cores da paleta institucional (de `architecture.md`):
+- [x] **CA8 — 6 departamentos default** inseridos via migration `20260423120200_seed_departamentos.sql` com `ON CONFLICT DO UPDATE` (idempotente):
   | Nome | cor_hex | ordem |
   |------|---------|-------|
   | Diretoria | `#1AB6E8` | 1 |
@@ -99,7 +100,7 @@ atualizado: 2026-04-23
 
 ### Validação e tipagem
 
-- [ ] **CA9 — Teste de bloqueio anônimo** documentado em comentário SQL na migration:
+- [x] **CA9 — Teste de bloqueio anônimo** validado via curl: SELECT anon retorna `[]` em ambas tabelas; POST anon retorna `{"code":"42501","message":"new row violates row-level security policy ..."}` em ambas. Documentado em comentário SQL no fim de cada migration:
   ```sql
   -- Teste manual após migration:
   -- 1. Conectar como anon (psql com chave anon ou via curl)
@@ -107,16 +108,17 @@ atualizado: 2026-04-23
   -- 3. INSERT INTO pessoas → deve falhar com "new row violates row-level security policy"
   ```
 
-- [ ] **CA10 — Tipos TypeScript** gerados em `src/types/database.ts` (via `supabase gen types typescript --linked > src/types/database.ts`) e arquivos derivados em `src/types/pessoa.ts` e `src/types/departamento.ts` re-exportando os types relevantes. Build TypeScript passa sem erro.
+- [x] **CA10 — Tipos TypeScript** gerados em `src/types/database.ts` (273 linhas; helpers `Tables<>`, `TablesInsert<>`, `TablesUpdate<>`). Derivados criados em `src/types/pessoa.ts` (`Pessoa`, `PessoaInsert`, `PessoaUpdate`, `StatusPessoa`) e `src/types/departamento.ts` (`Departamento`, `DepartamentoInsert`, `DepartamentoUpdate`). Cliente Supabase tipado como `SupabaseClient<Database>`. `npm run typecheck` passa.
 
 ### Deploy
 
-- [ ] **CA11 — Migration aplicada em produção** via `supabase db push`. Confirmar com `supabase migration list` que aparece como `Applied`.
+- [x] **CA11 — Migrations aplicadas em produção** via `supabase db push --linked --include-all`. `supabase migration list --linked` confirma 3 linhas (`20260423120000`, `120100`, `120200`) com timestamps preenchidos na coluna Remote.
 
-- [ ] **CA12 — Documentação atualizada** no mesmo PR:
-  - `architecture.md`: marcar tabelas `pessoas` e `departamentos` como ✅ na seção "Próximos Passos"; adicionar ADR-008 (mecanismo de `user_role` no JWT)
-  - `PROJECT_REQUIREMENTS.md`: na seção "Fontes de Dados" → "Tabelas próprias", remover o `[PREENCHER — listar conforme forem criadas]` e listar `departamentos` e `pessoas` como concluídas
-  - `Roadmap.md` no vault: marcar checklist ✅ dos itens "CRUD departamentos" e "CRUD colaboradores" — somente a parte de schema; a UI vem nas STORIES-004 e 005
+- [x] **CA12 — Documentação atualizada** no mesmo PR:
+  - `architecture.md`: ADR-008 inserido com justificativa completa (`app_metadata` vs `user_metadata`); seção "Próximos Passos" com STORY-001/002 marcadas ✅
+  - `PROJECT_REQUIREMENTS.md`: tabela `Tabelas próprias` agora lista `departamentos` ✅ e `pessoas` ✅ com colunas reais
+  - `SECURITY_DEBT.md`: SEC-005 (Edge Function admin para atribuir papel — depende de STORY-003) e SEC-006 (validação anti-loop transitiva — STORY-006)
+  - `Roadmap.md` no vault: itens "CRUD departamentos" e "CRUD colaboradores" marcados como `[~]` (schema feito, UI pendente nas STORIES-004 e 005); decisão registrada no histórico
 
 ---
 
@@ -124,22 +126,40 @@ atualizado: 2026-04-23
 
 > Preenchido pelo `@dev` após concluir. Piloto não edita esta seção.
 
-**Status:** —
+**Status:** `em-review` (aguardando @qa via PR)
 
-**Branch/PR:** —
+**Branch/PR:** `feat/story-002-modelo-dados` → PR a ser aberto após commit
 
-**Arquivos alterados:**
-- `supabase/migrations/<timestamp>_create_departamentos.sql`
-- `supabase/migrations/<timestamp>_create_pessoas.sql`
-- `supabase/migrations/<timestamp>_seed_departamentos.sql`
-- `src/types/database.ts` (gerado)
-- `src/types/pessoa.ts`
-- `src/types/departamento.ts`
-- `architecture.md`
-- `PROJECT_REQUIREMENTS.md`
-- `Projeto/Roadmap.md` (no vault)
+**Arquivos criados:**
+- `supabase/config.toml` (gerado por `supabase init`)
+- `supabase/.gitignore` (gerado por `supabase init`)
+- `supabase/migrations/20260423120000_create_departamentos.sql` (87 linhas — schema + RLS + 4 policies + trigger)
+- `supabase/migrations/20260423120100_create_pessoas.sql` (118 linhas — schema + soft delete + 4 índices + 2 triggers + RLS + 4 policies)
+- `supabase/migrations/20260423120200_seed_departamentos.sql` (16 linhas — 6 deptos institucionais com `ON CONFLICT`)
+- `src/types/database.ts` (273 linhas — gerado via `supabase gen types typescript --linked`)
+- `src/types/departamento.ts` (`Departamento`, `DepartamentoInsert`, `DepartamentoUpdate`)
+- `src/types/pessoa.ts` (`Pessoa`, `PessoaInsert`, `PessoaUpdate`, `StatusPessoa`)
+- `.env.local` (gitignored — vars locais para dev/curl)
+
+**Arquivos modificados:**
+- `src/lib/supabase.ts` — tipado como `SupabaseClient<Database>`
+- `package.json` — scripts `typecheck`, `db:diff`, `db:push`, `db:reset`, `db:backup`, `gen:types`
+- `eslint.config.js` — ignores adicionados para `.aiox-core/`, `.codex/`, etc. e `database.ts`/`routeTree.gen.ts` gerados
+- `architecture.md` — ADR-008 (`app_metadata.user_role`) + checklist "Próximos Passos"
+- `PROJECT_REQUIREMENTS.md` — seção "Fontes de Dados" com tabelas reais
+- `SECURITY_DEBT.md` — SEC-005 e SEC-006 adicionados
+- `Projeto/Roadmap.md` (no vault) — checklist parcial + entrada no histórico
 
 **Notas de implementação:**
+
+- **Sem Docker local:** `supabase db lint` e `supabase db diff` exigem Postgres local em Docker. Ambiente de dev do piloto não tem Docker instalado. Validação foi feita aplicando direto em produção (DB estava vazio, migrations idempotentes, baixo risco) e validando RLS via curl anon. Sugerido em `architecture.md` instalar Docker Desktop a partir da STORY-005 quando schema ficar mais complexo.
+- **DB push aplicou os 3 arquivos sem erro.** NOTICEs durante apply (ex: "trigger does not exist, skipping") foram esperados pelos `DROP IF EXISTS` idempotentes.
+- **Validação RLS por curl** (CA9):
+  - `GET /rest/v1/pessoas` (anon) → `[]` (silent block ok)
+  - `GET /rest/v1/departamentos` (anon) → `[]` (silent block — mesmo com 6 linhas no DB)
+  - `POST /rest/v1/pessoas` e `/departamentos` (anon) → `{"code":"42501","message":"new row violates row-level security policy ..."}`
+- **Atribuição manual de papel para futuros testes auth:** até STORY-003 entregar Edge Function admin, atribuir via Supabase Dashboard → Authentication → Users → Edit user → "Raw user app metadata" = `{"user_role": "admin"}`.
+- **Lovable preview:** `.env.local` foi criada localmente. A Lovable já tinha as vars no preview cloud delas. Sync bidirecional GitHub vai puxar nossos commits sem conflitar.
 
 ---
 
