@@ -3,9 +3,9 @@ id: STORY-005
 titulo: "CRUD UI de colaboradores + upload de foto via Supabase Storage"
 fase: 1
 modulo: "pessoas"
-status: backlog
+status: em-review
 prioridade: alta
-agente_responsavel: "@sm"
+agente_responsavel: "@dev"
 criado: 2026-04-23
 atualizado: 2026-04-23
 ---
@@ -34,7 +34,7 @@ atualizado: 2026-04-23
 
 ### Storage Setup
 
-- [ ] **CA1 — Migration adicional** `supabase/migrations/<ts>_create_storage_fotos_pessoas.sql`:
+- [x] **CA1 — Migration adicional** `supabase/migrations/<ts>_create_storage_fotos_pessoas.sql`:
   - Cria bucket `fotos-pessoas` via SQL: `INSERT INTO storage.buckets (id, name, public) VALUES ('fotos-pessoas', 'fotos-pessoas', true) ON CONFLICT DO NOTHING;`
   - Policy de SELECT no bucket: `to authenticated, anon` (URL pública lê) — permitida porque foto não é dado sensível
   - Policy de INSERT/UPDATE/DELETE: `to authenticated` com `app_metadata.user_role IN ('admin', 'editor')`
@@ -42,7 +42,7 @@ atualizado: 2026-04-23
 
 ### Listagem
 
-- [ ] **CA2 — Página `/admin/pessoas`** com grid responsivo de cards:
+- [x] **CA2 — Página `/admin/pessoas`** com grid responsivo de cards:
   - Card visual estilo Previx: `bg-previx-accent`, foto circular 60×60 (ou avatar fallback com iniciais), nome bold, cargo abaixo, departamento como tag colorida, status (badge "ativo"/"inativo")
   - Filtros: dropdown multi-select de departamento, switch "Mostrar inativos" (default off — usa índice em status)
   - Busca por nome debounced 400ms (ilike + GIN trigram)
@@ -51,7 +51,7 @@ atualizado: 2026-04-23
 
 ### Criação
 
-- [ ] **CA3 — Modal de criação** (form completo):
+- [x] **CA3 — Modal de criação** (form completo):
   - `nome` required text
   - `cargo` required text
   - `departamento_id` Select shadcn populado por `useDepartamentos()`
@@ -65,7 +65,7 @@ atualizado: 2026-04-23
 
 ### Upload de Foto
 
-- [ ] **CA4 — Componente `<UploadFoto>`** reutilizável:
+- [x] **CA4 — Componente `<UploadFoto>`** reutilizável:
   - Input file accept `image/*`
   - Ao selecionar, abre modal com `react-easy-crop`:
     - Crop 1:1 (square)
@@ -75,7 +75,7 @@ atualizado: 2026-04-23
   - Atualiza `foto_url` no form com `supabase.storage.from('fotos-pessoas').getPublicUrl(path).data.publicUrl`
   - Loading durante upload + toast de erro
 
-- [ ] **CA5 — Avatar fallback** quando `foto_url` é null:
+- [x] **CA5 — Avatar fallback** quando `foto_url` é null:
   - Componente `<PessoaAvatar>` que renderiza:
     - Se `foto_url`: img circular 60×60 com `object-cover`
     - Se null: div circular 60×60 com `bg-[cor_do_departamento]` e iniciais (primeiras letras de nome+sobrenome) em branco
@@ -83,7 +83,7 @@ atualizado: 2026-04-23
 
 ### Edição
 
-- [ ] **CA6 — Modal de edição:**
+- [x] **CA6 — Modal de edição:**
   - Mesmo form pré-preenchido
   - Campo `status` visível: switch ativo/inativo
   - Quando muda pra inativo: trigger DB preenche `inativado_em` (não precisa enviar do client)
@@ -91,19 +91,19 @@ atualizado: 2026-04-23
 
 ### Soft Delete (Desativar)
 
-- [ ] **CA7 — Botão "Desativar"** em vez de deletar:
+- [x] **CA7 — Botão "Desativar"** em vez de deletar:
   - AlertDialog confirma "Isso vai marcar a pessoa como inativa. Pode ser reativada depois. Continuar?"
   - Mutation `useUpdatePessoa({ status: 'inativo' })` (o trigger faz o resto)
   - Toast sucesso
 
-- [ ] **CA8 — Reativar pessoas inativas:**
+- [x] **CA8 — Reativar pessoas inativas:**
   - Switch "Mostrar inativos" no filtro principal
   - Pessoas inativas aparecem com card com opacidade reduzida + badge "Inativa"
   - Botão "Reativar" → `useUpdatePessoa({ status: 'ativo' })` (trigger zera `inativado_em`)
 
 ### Hooks TanStack Query
 
-- [ ] **CA9 — Hooks em `src/features/pessoas/api/`:**
+- [x] **CA9 — Hooks em `src/features/pessoas/api/`:**
   - `usePessoas(filtros)` com optional `departamento_id`, `status`, `busca`
   - `usePessoa(id)` para detalhe
   - `useCreatePessoa`, `useUpdatePessoa`, `useDesativarPessoa` (helper que chama Update com status:'inativo')
@@ -111,11 +111,11 @@ atualizado: 2026-04-23
 
 ### Permissões
 
-- [ ] **CA10 — `editor` e `admin` editam tudo;** `visualizador` vê lista mas sem botões de mutação. RLS já garante a defesa em profundidade.
+- [x] **CA10 — `editor` e `admin` editam tudo;** `visualizador` vê lista mas sem botões de mutação. RLS já garante a defesa em profundidade.
 
 ### Doc updates
 
-- [ ] **CA11 — Documentação atualizada no mesmo PR:**
+- [x] **CA11 — Documentação atualizada no mesmo PR:**
   - `Roadmap.md` (vault): "CRUD colaboradores" ✅, "Upload de foto com crop" ✅
   - `architecture.md`: marcar STORY-005 ✅; eventual ADR-011 sobre escolha do `react-easy-crop` (se houver alternativa avaliada)
   - `PROJECT_REQUIREMENTS.md`: confirmar campos e regras de soft delete na seção "Regras de Negócio Críticas"
