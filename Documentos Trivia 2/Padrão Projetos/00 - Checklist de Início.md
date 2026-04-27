@@ -4,6 +4,14 @@ Use esta lista do zero. Cada item é um pré-requisito do próximo.
 
 > **Se você nunca fez isso antes:** leia cada passo com atenção. Nenhum conhecimento técnico prévio é exigido até o Passo 6.
 
+> [!warning] Atualizado em 2026-04-23 — fluxo Lovable mudou
+> A Lovable **não importa mais repos existentes do GitHub** (confirmado na [doc oficial](https://docs.lovable.dev/integrations/github)). O fluxo correto hoje é:
+> 1. **Criar o projeto na Lovable primeiro** (Passo 4)
+> 2. Conectar à conta GitHub da Lovable → ela **cria um repo novo** automaticamente
+> 3. Clonar esse repo localmente e adicionar os 5 templates (`CLAUDE.md`, `architecture.md`, etc.)
+>
+> **Consequência:** o Passo 1 (criar repo no GitHub manualmente) virou **opcional**. Recomendado pular pra evitar lixo no GitHub. Veja nota no Passo 1 e o Passo 4 reescrito.
+
 ---
 
 ## Antes de qualquer código
@@ -40,9 +48,16 @@ Para verificar: `claude --version`
 
 ## Infraestrutura (Fase 0)
 
-### Passo 1 — Repositório GitHub
+### Passo 1 — Repositório GitHub *(opcional — pular recomendado)*
 
-> O GitHub é onde o código fica armazenado e versionado.
+> [!note] Mudança em 2026-04
+> Como a Lovable cria o repo sozinha no Passo 4, **criar o repo manualmente aqui é redundante**. As únicas razões pra fazer este passo agora são:
+> 1. Você quer subir docs (`CLAUDE.md`, etc.) antes de envolver a Lovable, **e está OK em deletar/recriar o repo depois** (a Lovable não consegue adotar um repo existente).
+> 2. Você não vai usar Lovable neste projeto — todo o desenvolvimento será via Claude Code direto.
+>
+> Se nenhum desses casos se aplica, **pule pro Passo 2** e volte aqui depois do Passo 4 só pra anotar a URL final.
+
+Se for fazer mesmo assim:
 
 1. Acesse [github.com](https://github.com) e faça login
 2. Clique em **"New"** (botão verde no canto superior esquerdo)
@@ -58,8 +73,8 @@ Para verificar: `claude --version`
    cd [nome-do-projeto]-app
    ```
 
-- [ ] Repositório criado no GitHub
-- [ ] Clonado localmente
+- [ ] Repositório criado no GitHub *(ou pulado intencionalmente)*
+- [ ] Clonado localmente *(idem)*
 
 ---
 
@@ -146,17 +161,77 @@ supabase projects list
 
 ### Passo 4 — Lovable
 
-> A Lovable é a ferramenta visual de geração de código. Ela escreve o frontend conectado ao Supabase.
+> A Lovable é a ferramenta visual de geração de código. Ela escreve o frontend conectado ao Supabase. **Hoje, ela é o ponto de partida do código** — cria o projeto e o repo GitHub.
+
+> [!info] Por que a Lovable é o Passo 4 e não o 1
+> Apesar de criar o repo, a Lovable depende dos dados do Passo 3 (Supabase) pra configurar o cliente. Por isso entra aqui na ordem.
+
+#### 4a. Criar o projeto na Lovable
 
 1. Acesse [lovable.dev](https://lovable.dev) e faça login com GitHub
-2. Clique em **"New project"** → escolha **"Import from GitHub"**
-3. Selecione o repositório `[nome-do-projeto]-app`
-4. Após criar o projeto, vá em **Settings → Custom Instructions**
-5. Cole o conteúdo de [[05 - Lovable e Claude/Base de Conhecimento Lovable|Base de Conhecimento Lovable]]
-6. Substitua todos os campos `[PREENCHER]` pelos dados reais do projeto
+2. Clique em **"Create project"** (na home ou via "+" no header)
+3. Cole o seguinte prompt inicial (substituir `[PREENCHER]`):
 
-- [ ] Projeto criado na Lovable conectado ao GitHub
-- [ ] Base de conhecimento preenchida nas Custom Instructions
+   ```
+   Crie o scaffold inicial do projeto [Nome do Projeto] seguindo Bulletproof React:
+   Vite + React + TypeScript + Tailwind + shadcn/ui + TanStack Query + React Router.
+   Configure o cliente Supabase em src/lib/supabase.ts usando
+   import.meta.env.VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY (não hardcoded).
+   Crie a estrutura de pastas src/app/, src/features/, src/components/, src/hooks/,
+   src/lib/, src/types/, src/config/. Não crie features ainda — só o scaffold base.
+   Apresente o Diff Plan antes de implementar.
+   ```
+
+4. Aprove o Diff Plan que a Lovable propor.
+5. Aguarde a Lovable gerar o scaffold (1-2 min). O preview deve mostrar uma página inicial.
+
+#### 4b. Colar as Custom Instructions
+
+1. **Settings (engrenagem) → Custom Instructions** (pode estar como "Knowledge" ou "Project Context" dependendo da versão da UI)
+2. Cole o conteúdo de [[05 - Lovable e Claude/Base de Conhecimento Lovable|Base de Conhecimento Lovable]]
+3. Substitua todos os campos `[PREENCHER]` pelos dados reais do projeto
+4. Save
+
+#### 4c. Conectar ao GitHub (a Lovable cria o repo)
+
+1. Na Lovable: **Settings → GitHub → Connect to GitHub**
+2. Autorize o GitHub App da Lovable na sua conta/organização
+3. A Lovable vai oferecer criar um repo novo:
+   - **Owner:** organização do cliente (ex: `Trivia-Growth`)
+   - **Repository name:** `[nome-do-projeto]-app`
+   - **Visibility:** Private
+4. Confirme. A Lovable cria o repo, faz o primeiro commit e ativa sync bidirecional.
+
+> ⚠️ **Não renomear nem mover** o repo depois disso, ou a sync quebra.
+
+#### 4d. Clonar localmente e adicionar os 5 templates
+
+```bash
+# Clone o repo que a Lovable criou (use o caminho-pai do vault Obsidian):
+cd ~/Projetos/[Cliente]   # ou ~/Documents/Obsidian se vault estiver lá
+git clone https://github.com/[org]/[nome-do-projeto]-app.git
+cd [nome-do-projeto]-app
+
+# Copie os 5 templates de [[07 - Templates de Código]] para a raiz:
+# - CLAUDE.md
+# - architecture.md
+# - PROJECT_REQUIREMENTS.md
+# - SECURITY_DEBT.md
+# - netlify.toml
+
+# Preencha [PREENCHER] em cada um, depois:
+git add CLAUDE.md architecture.md PROJECT_REQUIREMENTS.md SECURITY_DEBT.md netlify.toml
+git commit -m "chore: add Trivia pattern docs and netlify config"
+git push origin main
+```
+
+A Lovable detecta o pull e atualiza seu lado.
+
+- [ ] Projeto criado na Lovable e scaffold gerado
+- [ ] Custom Instructions coladas e preenchidas
+- [ ] Conectado ao GitHub (repo criado pela Lovable)
+- [ ] Repo clonado localmente
+- [ ] 5 templates do padrão Trivia commitados e pushados
 
 ---
 
@@ -164,16 +239,24 @@ supabase projects list
 
 > O Netlify publica o frontend automaticamente sempre que o código for atualizado no GitHub.
 
+> [!tip] Lovable já pode ter integrado o Netlify
+> Algumas versões da Lovable oferecem deploy direto via Netlify durante o setup do projeto. Se isso aconteceu no Passo 4, pule pra etapa **5b** (env vars) — o site já existe.
+
+#### 5a. Criar o site (se a Lovable não criou)
+
 1. Acesse [netlify.com](https://netlify.com) e faça login com GitHub
 2. Clique em **"Add new site" → "Import an existing project"**
-3. Selecione GitHub → autorize o acesso → selecione o repositório
+3. Selecione GitHub → autorize o acesso → selecione o repositório criado pela Lovable
 4. Em **"Build settings":**
    - Build command: `npm run build`
    - Publish directory: `dist`
-5. Antes de fazer o deploy, vá em **Site configuration → Environment variables** e adicione:
+
+#### 5b. Configurar env vars (obrigatório antes do primeiro deploy)
+
+5. Vá em **Site configuration → Environment variables** e adicione:
    - `VITE_SUPABASE_URL` = Project URL do Supabase
    - `VITE_SUPABASE_ANON_KEY` = anon key do Supabase
-6. Clique em **"Deploy site"** e aguarde (≈ 2-3 minutos)
+6. Clique em **"Deploy site"** (ou Trigger deploy → Clear cache and deploy site) e aguarde (≈ 2-3 minutos)
 7. Ao final, o Netlify mostrará uma URL pública do projeto
 
 - [ ] Site criado no Netlify
