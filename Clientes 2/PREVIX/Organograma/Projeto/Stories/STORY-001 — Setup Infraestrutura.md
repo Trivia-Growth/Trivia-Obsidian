@@ -27,10 +27,10 @@ atualizado: 2026-04-23
 - [x] CA2 — Templates de código preenchidos (`CLAUDE.md`, `PROJECT_REQUIREMENTS.md`, `architecture.md`, `SECURITY_DEBT.md`, `netlify.toml`)
 - [x] CA3 — Repositório criado no GitHub (Trivia-Growth/organograma-previx-app) e push do commit inicial feito
 - [x] CA4 — Projeto Supabase `organograma-previx` (ref `yqexjddpotlaqraljwvl`, região São Paulo), CLI v2.95.4 logada e linkada
-- [ ] CA5 — Projeto Lovable importado do GitHub com Custom Instructions preenchidas
-- [~] CA6 — Site Netlify `organograma-previx` criado, env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) configuradas em All scopes, CLI v25.6.1 logada e linkada. **Pendente:** primeiro deploy verde (depende da Lovable gerar `package.json`)
+- [x] CA5 — Projeto Lovable criado, Custom Instructions preenchidas com domínio PREVIX (paleta, papéis, anti-loop), GitHub conectado e repo recriado pela Lovable
+- [x] CA6 — Site Netlify `organograma-previx` criado, env vars configuradas, CLI v25.6.1 logada e linkada, **primeiro deploy verde** (commit `4b508f4`, framework `tanstack-start`) em https://organograma-previx.netlify.app
 - [ ] CA7 — AIOX instalado (`.aiox-core/version.json` mostra v5+)
-- [ ] CA8 — `00 - Índice.md` do vault preenchido com URLs reais (GitHub, Supabase, Netlify)
+- [x] CA8 — `00 - Índice.md` do vault preenchido com URLs reais: GitHub `Trivia-Growth/organograma-previx-app`, Supabase ref `yqexjddpotlaqraljwvl`, Netlify `organograma-previx.netlify.app`
 
 ---
 
