@@ -3,9 +3,9 @@ id: STORY-007
 titulo: "POC visual do organograma — cards estilizados, zoom, pan, mini-mapa, busca, filtro"
 fase: 1
 modulo: "organograma"
-status: backlog
+status: em-review
 prioridade: alta
-agente_responsavel: "@sm"
+agente_responsavel: "@dev"
 criado: 2026-04-23
 atualizado: 2026-04-23
 ---
@@ -40,7 +40,7 @@ atualizado: 2026-04-23
 
 ### Decisão arquitetural (ADR-003)
 
-- [ ] **CA1 — ADR-003 fechado** em `architecture.md`:
+- [x] **CA1 — ADR-003 fechado** em `architecture.md`:
   - Avaliação dos 3 candidatos (`@xyflow/react`, `d3-hierarchy + react-zoom-pan-pinch`, `reaflow`)
   - Spike de 30min com cada na primeira semana, antes de implementar
   - Critérios: customização de nodes em React, layout dagre, performance com 50+ nodes, comunidade ativa
@@ -49,14 +49,14 @@ atualizado: 2026-04-23
 
 ### Engine + Layout
 
-- [ ] **CA2 — Engine instalada e configurada** com:
+- [x] **CA2 — Engine instalada e configurada** com:
   - `@xyflow/react` ou alternativa decidida em CA1
   - Layout automático top-down via `dagre` (ou equivalente nativo)
   - Detecção dinâmica de raízes múltiplas (briefing menciona "Sócio Investidor + Presidente" no topo — dois nós sem manager)
 
 ### Cards de pessoa (custom node)
 
-- [ ] **CA3 — Componente `<PessoaCard>` como custom node:**
+- [x] **CA3 — Componente `<PessoaCard>` como custom node:**
   - Background `bg-previx-accent` (#1AB6E8)
   - Border-radius 12px, padding consistente
   - Foto circular 60×60 (`<PessoaAvatar>` da STORY-005)
@@ -68,39 +68,39 @@ atualizado: 2026-04-23
 
 ### Faixas de departamento
 
-- [ ] **CA4 — Agrupamento visual por departamento:**
+- [x] **CA4 — Agrupamento visual por departamento:**
   - Pessoas do mesmo departamento aparecem em proximidade (layout dagre + customização ou cluster manual)
   - Faixa horizontal `bg-dept-<nome>` abaixo do grupo, com nome do depto em branco uppercase, `tracking-wider`
   - Não distorcer hierarquia — agrupamento é estético, hierarquia continua sendo via `manager_id`
 
 ### Interação
 
-- [ ] **CA5 — Zoom + Pan:**
+- [x] **CA5 — Zoom + Pan:**
   - Mouse wheel = zoom (limite min 0.3, max 2.0)
   - Drag no canvas = pan
   - Touch: pinch zoom + pan (mobile/tablet)
   - Botões UI: `+`, `-`, "Centralizar" (reset zoom)
 
-- [ ] **CA6 — Mini-mapa:**
+- [x] **CA6 — Mini-mapa:**
   - Canto inferior direito
   - Mostra posição atual da viewport
   - Click no mini-mapa = pan para aquela área
 
-- [ ] **CA7 — Busca por nome:**
+- [x] **CA7 — Busca por nome:**
   - Input de busca no header da página
   - Debounced 400ms
   - Match parcial (`ilike` via TanStack Query) — usa GIN trigram criado na STORY-002
   - Ao encontrar match, scrolla/centraliza viewport na pessoa, e destaca o card com glow `ring-2 ring-yellow-400`
   - Resultados múltiplos: paginação simples ou navegar entre matches com setas
 
-- [ ] **CA8 — Filtro por departamento:**
+- [x] **CA8 — Filtro por departamento:**
   - Dropdown multi-select (Radix Popover + Checkbox)
   - Pessoas de departamentos não selecionados ficam em opacidade 0.2 (não somem — manter contexto visual)
   - URL params (TanStack Router search params): `?dept=diretoria,operacional` (compartilhável)
 
 ### Performance
 
-- [ ] **CA9 — Testar com 50+ pessoas:**
+- [x] **CA9 — Testar com 50+ pessoas:**
   - Seed temporário de 75 pessoas via SQL
   - Métricas alvo: render inicial < 2s, FPS pan/zoom > 30, CPU < 60% durante interação
   - Se performance ruim com 50: aplicar optimizations (memo nodes, viewport culling)
@@ -108,7 +108,7 @@ atualizado: 2026-04-23
 
 ### Rota principal
 
-- [ ] **CA10 — Rota `/dashboard`** torna-se a visualização do organograma:
+- [x] **CA10 — Rota `/dashboard`** torna-se a visualização do organograma:
   - Substitui o placeholder atual ("Organograma em construção")
   - Acessível por `admin`, `editor`, `visualizador`
   - Toolbar superior: busca, filtro, botões de zoom, "Exportar PDF" (botão **placeholder** — exportação real é Fase 2)
@@ -116,14 +116,14 @@ atualizado: 2026-04-23
 
 ### Acessibilidade
 
-- [ ] **CA11 — Acessibilidade básica:**
+- [x] **CA11 — Acessibilidade básica:**
   - Cards de pessoa têm `role="button"`, `aria-label`, são focáveis via Tab
   - Ações de zoom/pan têm equivalentes via teclado (setas para pan, +/- para zoom)
   - Filtros têm labels visíveis e relacionados aos checkboxes
 
 ### Doc updates
 
-- [ ] **CA12 — Documentação atualizada:**
+- [x] **CA12 — Documentação atualizada:**
   - `architecture.md`: ADR-003 fechado com decisão final + métricas de performance
   - `Roadmap.md` (vault): "Visualização do organograma", "Filtro por departamento", "Busca por nome" todos ✅; **Fase 1 marcada como concluída**
   - `PROJECT_REQUIREMENTS.md`: confirmar critérios de saída da Fase 1 atendidos
