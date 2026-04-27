@@ -17,7 +17,7 @@
 | 1 | [[../Stories/STORY-001 — Setup Infraestrutura\|STORY-001]] | ✅ concluido | — | todas | Infra: Lovable + Supabase + Netlify + AIOX + repo + docs |
 | 2 | [[../Stories/STORY-002 — Modelo de Dados Inicial\|STORY-002]] | 🟡 em-review | STORY-001 | 003-007 | Schema `pessoas` + `departamentos` + RLS + seed |
 | 3 | [[../Stories/STORY-003 — Auth e Edge Function Admin\|STORY-003]] | ✅ concluido | STORY-002 | 004-007 | Auth + Edge Function admin para `app_metadata.user_role` |
-| 4 | [[../Stories/STORY-004 — CRUD Departamentos UI\|STORY-004]] | ⚪ backlog | STORY-003 | — | UI CRUD de departamentos com seletor de cor |
+| 4 | [[../Stories/STORY-004 — CRUD Departamentos UI\|STORY-004]] | 🟡 em-review | STORY-003 | — | UI CRUD de departamentos com seletor de cor |
 | 5 | [[../Stories/STORY-005 — CRUD Pessoas e Storage Fotos\|STORY-005]] | ⚪ backlog | STORY-003 + 004 | 006, 007 | UI CRUD pessoas + upload foto com crop + soft delete |
 | 6 | [[../Stories/STORY-006 — Hierarquia Anti-Loop Transitiva\|STORY-006]] | ⚪ backlog | STORY-005 | 007 | Anti-loop transitivo (CTE) + drag-and-drop |
 | 7 | [[../Stories/STORY-007 — POC Visual do Organograma\|STORY-007]] | ⚪ backlog | STORY-005 + 006 | — | Cards estilizados + zoom/pan/mini-mapa + busca + filtro (conclui Fase 1) |
