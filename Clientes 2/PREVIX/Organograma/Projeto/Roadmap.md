@@ -41,17 +41,15 @@
 
 **Objetivo:** Previx envia organograma atualizado a clientes finais sem ciclo do designer. PDF fiel à identidade visual institucional.
 
-**Stories da Fase 2:**
-- ✅ **STORY-008 — Compartilhamento via token público.** Tabela `tokens_publicos`, Edge Function `get-organograma-public` (somente colunas seguras, sem email/telefone), página pública `/p/[token]` com leitura. **Mergeada PR #7 em 2026-04-27.**
-- ✅ **STORY-009 — Exportação PDF.** ADR-002 fechado em `@react-pdf/renderer` client-side (3 páginas: institucional + organograma + contatos). **Mergeada PR #8 em 2026-04-27** (commit `ec0b1c7`).
-- 🟡 **STORY-010 — Exportação PNG.** Captura do canvas do organograma via `html-to-image` em `.react-flow__viewport` (xyflow não tem método nativo `toImage()`, ao contrário do que esta linha dizia originalmente). **Em progresso.**
-- ⚪ **STORY-011 — Auditoria.** Tabela `audit_log`, triggers genéricos para INSERT/UPDATE/DELETE em `pessoas` e `departamentos`, página `/admin/auditoria` (admin only) com filtros e diff visual.
+**Stories da Fase 2 (todas concluídas em 2026-04-27):**
+- ✅ **STORY-008 — Compartilhamento via token público.** Mergeada PR #7.
+- ✅ **STORY-009 — Exportação PDF.** ADR-002 fechado em `@react-pdf/renderer` client-side. Mergeada PR #8 (`ec0b1c7`).
+- ✅ **STORY-010 — Exportação PNG.** Captura via `html-to-image` em `.react-flow` (filtra Controls/MiniMap). ADR-012 (proposta). Mergeada PR #9 (`f64212c`).
+- ✅ **STORY-011 — Auditoria.** Tabela `audit_log` + função genérica `audit_trigger()` SECURITY DEFINER + triggers em `pessoas` e `departamentos`. Página `/admin/auditoria` com filtros (entidade/ação/datas), paginação 50/página e Sheet lateral com diff visual. Detecção de soft-delete e reativação no frontend. ADR-013 (proposta). Mergeada PR #10 (`3aeaa1c`).
 
 **Critério de saída da Fase 2:** Previx envia link público a um cliente final e/ou exporta um PDF de qualidade comercial sem assistência técnica.
 
-**Status:** `planejada` — escopo refinado em stories quando Fase 1 estiver concluída.
-
-> Bloqueador conhecido: **ADR-002** (engine de PDF) precisa ser decidida no início da STORY-009.
+**Status:** ✅ `concluída em 2026-04-27` — todas as 4 stories mergeadas em main.
 
 ---
 
