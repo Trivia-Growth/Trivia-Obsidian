@@ -57,13 +57,13 @@
 
 **Objetivo:** Aprofundar a proposta de valor com features que o PDF estático nunca poderia entregar. Estabilizar a Previx como referência de cliente "satisfeito que continua expandindo".
 
-**Stories planejadas (alto nível — refinar após Fase 2):**
-- **STORY-012 — Histórico com diff visual.** Timeline lateral mostrando mudanças por pessoa (combina com `audit_log` da STORY-011). Renderização visual antes/depois.
-- **STORY-013 — Múltiplas unidades/contratos.** Coluna `unidade_id` em `pessoas` e `departamentos`, cada organograma escopado por unidade. Multi-tenancy intra-Previx.
-- **STORY-014 — Campos customizáveis.** Tabela `campos_customizados` (admin define) + valores em `pessoas_campos`. Form de pessoa renderiza dinamicamente.
-- **STORY-015 — Modo de impressão otimizado.** CSS `@media print` específico, layout otimizado para A3/A4.
+**Stories da Fase 3:**
+- ✅ **STORY-012 — Histórico com diff visual.** Tabs "Editar | Histórico" no Sheet de edição de pessoa. Timeline reverse-chronológica + resumo curto via `summarizeChange` + DiffSheet on-demand. Editor passou a ler audit_log também. Mergeada PR #11 (`a807a1d`) em 2026-04-27.
+- ⚪ **STORY-013 — Múltiplas unidades/contratos.** Coluna `unidade_id` em `pessoas` e `departamentos`, cada organograma escopado por unidade. Multi-tenancy intra-Previx.
+- ⚪ **STORY-014 — Campos customizáveis.** Tabela `campos_customizados` (admin define) + valores em `pessoas_campos`. Form de pessoa renderiza dinamicamente.
+- ⚪ **STORY-015 — Modo de impressão otimizado.** CSS `@media print` específico, layout otimizado para A3/A4.
 
-**Status:** `planejada`
+**Status:** `em andamento` (1 de 4 concluídas)
 
 > Escopo de Fase 3 será refinado durante Fase 2 — pode ser que "Múltiplas unidades" vire produto separado caso a Previx peça organogramas dos clientes finais (e não da própria estrutura interna).
 
