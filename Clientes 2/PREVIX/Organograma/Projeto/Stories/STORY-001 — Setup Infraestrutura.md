@@ -3,7 +3,7 @@ id: STORY-001
 titulo: "Setup de Infraestrutura — GitHub, Supabase, Netlify, Lovable, AIOX"
 fase: 1
 modulo: "infra"
-status: em-progresso
+status: concluido
 prioridade: alta
 agente_responsavel: "@piloto"
 criado: 2026-04-23
@@ -29,7 +29,7 @@ atualizado: 2026-04-23
 - [x] CA4 — Projeto Supabase `organograma-previx` (ref `yqexjddpotlaqraljwvl`, região São Paulo), CLI v2.95.4 logada e linkada
 - [x] CA5 — Projeto Lovable criado, Custom Instructions preenchidas com domínio PREVIX (paleta, papéis, anti-loop), GitHub conectado e repo recriado pela Lovable
 - [x] CA6 — Site Netlify `organograma-previx` criado, env vars configuradas, CLI v25.6.1 logada e linkada, **primeiro deploy verde** (commit `4b508f4`, framework `tanstack-start`) em https://organograma-previx.netlify.app
-- [ ] CA7 — AIOX instalado (`.aiox-core/version.json` mostra v5+)
+- [x] CA7 — AIOX v5.0.7 instalado (22 agents, 205 tasks, 12/12 IDE-synced, 2 hooks Claude Code, npm deps OK com 0 critical/high). Doctor: 11 PASS / 3 WARN / 1 FAIL — warns são populadas pelo wizard interativo, não bloqueiam uso
 - [x] CA8 — `00 - Índice.md` do vault preenchido com URLs reais: GitHub `Trivia-Growth/organograma-previx-app`, Supabase ref `yqexjddpotlaqraljwvl`, Netlify `organograma-previx.netlify.app`
 
 ---
@@ -38,9 +38,9 @@ atualizado: 2026-04-23
 
 > Preenchido pelo `@dev` após concluir. Piloto não edita esta seção.
 
-**Status:** `em-progresso`
+**Status:** `concluido`
 
-**Branch/PR:** —
+**Branch/PR:** main (commits `2595fe2`, `678ea1b`, `4b508f4` merge, `145f779` AIOX)
 
 **Arquivos alterados:**
 - `~/Documents/Obsidian/organograma-previx-app/CLAUDE.md`
