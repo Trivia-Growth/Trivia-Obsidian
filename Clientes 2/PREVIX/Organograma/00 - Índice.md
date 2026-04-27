@@ -7,7 +7,7 @@ inicio: 2026-04-23
 
 # Organograma PREVIX
 
-> Sistema de gestão e visualização do organograma corporativo da PREVIX. [PREENCHER — refinar a frase com o escopo real definido com o cliente.]
+> Sistema web SaaS onde o **Grupo Previx** (segurança patrimonial, eletrônica e serviços integrados) gerencia autonomamente o organograma corporativo, mantendo a identidade visual institucional e exportando PDF on-demand. Substitui o ciclo "PDF estático + designer" pelo ciclo "edita e vê na hora". Briefing completo: [[Briefing Inicial]].
 
 ---
 
@@ -68,9 +68,10 @@ Project ID: 2b8a0650-467c-4b93-a5e9-0b5658ec6c7e
 
 | Papel | Acesso |
 |-------|--------|
-| `[PREENCHER]` | [descrição] |
-| `[PREENCHER]` | [descrição] |
-| `[PREENCHER]` | [descrição] |
+| `admin` | Edita tudo, gerencia usuários, vê logs de auditoria |
+| `editor` | Edita colaboradores e hierarquia |
+| `visualizador` | Somente leitura, pode exportar PDF/PNG |
+| `público (sem login)` | Read-only via link com token, sem ver telefone/e-mail |
 
 ---
 

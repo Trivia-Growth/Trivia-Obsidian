@@ -2,22 +2,63 @@
 
 > Este conteúdo deve ser colado em **Lovable → Settings → Custom Instructions**.
 > Sempre que algo aqui mudar (papéis, fases, regras), atualizar tanto este arquivo quanto a Lovable.
+> Briefing fonte: [[Briefing Inicial]].
 
 ---
 
 ## Identidade do Projeto
 
-**Organograma PREVIX** é um sistema de gestão e visualização do organograma corporativo para **PREVIX** ([PREENCHER — CNPJ ou tipo jurídico]).
+**Organograma PREVIX** é um sistema web SaaS onde o **Grupo Previx** (segurança patrimonial, eletrônica e serviços integrados) gerencia autonomamente o organograma corporativo, mantendo a identidade visual institucional e exportando PDF on-demand. Substitui o ciclo "PDF estático + designer" pelo ciclo "edita e vê na hora".
 
-**Stack:** React + Vite + Tailwind + TypeScript → Netlify | Supabase (PostgreSQL + Auth + Edge Functions Deno)
+**Stack:** React + Vite + Tailwind + TypeScript → Netlify | Supabase (PostgreSQL + Auth + Storage + Edge Functions Deno)
 
-**Arquitetura:** Bulletproof React (feature-based). Dois repositórios: `trivia-obsidian/Clientes 2/PREVIX/Organograma/` (vault Obsidian — specs) e `organograma-previx-app/` (código). A Lovable pode editar qualquer parte do código — frontend, Supabase migrations, Edge Functions, scripts Deno. Não alterar `CLAUDE.md` nem `.aiox-core/`.
+**Arquitetura:** Bulletproof React (feature-based). Dois repositórios: `trivia-obsidian/Clientes 2/PREVIX/Organograma/` (vault Obsidian — specs) e `organograma-previx-app/` (código). A Lovable pode editar qualquer parte do código — frontend, Supabase migrations, Edge Functions. Não alterar `CLAUDE.md` nem `.aiox-core/`.
 
-**Papéis:** `[PREENCHER — papel1]` (admin), `[PREENCHER — papel2]` (operacional), `[PREENCHER — papel3]` (read-only).
+**Papéis:**
+- `admin` — edita tudo, gerencia usuários, vê logs de auditoria, gerencia tokens públicos
+- `editor` — edita colaboradores e hierarquia, sem acesso a logs nem usuários
+- `visualizador` — read-only, pode exportar PDF/PNG
+- `público (sem login)` — acesso read-only via link com token, **sem** ver telefone/e-mail
 
-**Fase atual:** Fase 1 — Visualização do Organograma. [PREENCHER — refinar objetivo com a PREVIX, ex: "Liderança visualiza estrutura hierárquica em árvore navegável."]
+**Fase atual:** Fase 1 — MVP Interno. Liderança da Previx gerencia o organograma com autonomia, internamente. Módulos: auth + 3 papéis, CRUD departamentos com cor, CRUD colaboradores com upload de foto, hierarquia com anti-loop, visualização (zoom/pan/mini-mapa), filtro e busca, drag-and-drop. Fase 2 (futura): compartilhamento via token público + exportação PDF/PNG + auditoria. Fase 3: histórico com diff, múltiplas unidades, campos customizáveis.
 
-**Domínio crítico:** [PREENCHER — descrever as tabelas centrais e regras de negócio. Ex: "tabela `pessoas` é central, ligada a `cargos` e `areas`. Hierarquia modelada via `relacionamentos_hierarquicos` (gestor_id → subordinado_id). Pessoas desligadas filtradas por padrão (`ativo=true`)."]
+**Domínio crítico:**
+- Tabela central: `pessoas` (id, nome, cargo, departamento_id, foto_url, email, telefone, manager_id, status, data_admissao, criado_em, atualizado_em).
+- Hierarquia via `manager_id` (auto-referência). **Validação anti-loop obrigatória** em update de `manager_id` — implementar via CTE recursiva no Postgres + check no cliente para UX.
+- `departamentos` (id, nome, cor_hex, ordem) — colorem visualmente os agrupamentos no organograma.
+- **Soft delete:** colaboradores nunca são apagados — `status='inativo'` + `inativado_em`. Filtros padrão escondem inativos.
+- **Dados privados:** `email` e `telefone` **nunca** retornam no acesso público via token. Edge Function dedicada (`get-organograma-public`) seleciona apenas colunas seguras.
+- **PDF é o ponto técnico mais sensível** (3 páginas, fidelidade tipográfica) — ADR-002 em `architecture.md` recomenda `puppeteer` server-side, mas a decisão final é no início da Fase 2.
+
+---
+
+## Identidade Visual (Tailwind theme)
+
+**Tokens em `tailwind.config.ts` → `theme.extend.colors`:**
+
+```js
+previx: {
+  bg: '#0A1A2F',           // background principal
+  'bg-secondary': '#14233D', // cards, modais
+  accent: '#1AB6E8',        // cards de pessoa, botões primários
+  text: '#FFFFFF',
+  'text-muted': '#B8C5D6',
+},
+dept: {
+  diretoria: '#1AB6E8',
+  operacional: '#C73E5C',
+  rh: '#2DB39A',
+  financeiro: '#7B5FB8',
+  analistas: '#8BC34A',
+  seguranca: '#D946EF',
+}
+```
+
+**Tipografia:** Inter via Google Fonts. Peso 600 para nomes; peso 400 para cargos/labels. Fallback `system-ui`.
+
+**Cards de pessoa:** fundo `previx.accent`, border-radius 12px, foto circular 60×60px no topo, sombra `shadow-md`.
+
+**Faixa de departamento:** barra horizontal `bg-dept-[nome]`, texto branco uppercase com `tracking-wider`.
 
 ---
 
@@ -36,17 +77,18 @@
 ```
 src/
 ├── app/           → rotas, App.tsx, provider.tsx, router.tsx
-├── features/      → um módulo por feature
-│   └── [feature]/
-│       ├── api/        → hooks TanStack Query + chamadas Supabase
-│       ├── components/ → componentes (< 300 linhas cada)
-│       ├── hooks/      → estado local e formulários
-│       ├── types/      → types da feature
-│       └── utils/      → utilitários
+├── features/
+│   ├── auth/          → login, recuperação senha, contexto de papel
+│   ├── pessoas/       → CRUD, upload de foto, validação anti-loop
+│   ├── departamentos/ → CRUD com seletor de cor
+│   ├── organograma/   → visualização (zoom, pan, mini-mapa, filtros)
+│   ├── compartilhamento/ → tokens públicos (Fase 2)
+│   ├── exportacao/    → PDF + PNG (Fase 2)
+│   └── auditoria/     → log de alterações (Fase 2)
 ├── components/    → ui/ (shadcn) + layout/
 ├── hooks/         → hooks compartilhados
 ├── lib/           → query-client.ts, supabase.ts, utils.ts
-├── types/         → types compartilhados
+├── types/         → types compartilhados (Pessoa, Departamento, Token, Acesso)
 └── config/env.ts  → variáveis de ambiente tipadas e validadas
 ```
 
@@ -58,16 +100,14 @@ src/
 
 **RLS em toda tabela com dados sensíveis:**
 ```sql
-ALTER TABLE nome ENABLE ROW LEVEL SECURITY;
-ALTER TABLE nome FORCE ROW LEVEL SECURITY;
-CREATE POLICY "acesso_por_papel" ON nome FOR SELECT TO authenticated
-  USING (auth.jwt() ->> 'user_role' IN ('[papel1]', '[papel2]'));
-```
-
-**Dados calculados SEMPRE no backend:**
-```typescript
-const { data } = await supabase.from('tabela')
-  .select('valor').eq('id', registroId).single();
+ALTER TABLE pessoas ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pessoas FORCE ROW LEVEL SECURITY;
+CREATE POLICY "leitura_autenticada" ON pessoas FOR SELECT TO authenticated
+  USING (auth.jwt() ->> 'user_role' IN ('admin', 'editor', 'visualizador'));
+CREATE POLICY "escrita_admin_editor" ON pessoas FOR ALL TO authenticated
+  USING (auth.jwt() ->> 'user_role' IN ('admin', 'editor'))
+  WITH CHECK (auth.jwt() ->> 'user_role' IN ('admin', 'editor'));
+-- ATENÇÃO: anon NÃO tem nenhuma policy aqui. Acesso público é via Edge Function dedicada.
 ```
 
 **JWT validado na Edge Function (user.id do token, nunca do body):**
@@ -82,8 +122,20 @@ if (error || !user) return problemResponse(401, 'Unauthorized', requestId);
 
 **Zod obrigatório em toda Edge Function:**
 ```typescript
-const Schema = z.object({ id: z.string().uuid(), valor: z.number().positive() });
+const Schema = z.object({ id: z.string().uuid(), manager_id: z.string().uuid().nullable() });
 const input = Schema.parse(await req.json());
+```
+
+**Anti-loop hierárquico (CTE recursiva no servidor):**
+```sql
+WITH RECURSIVE chain AS (
+  SELECT id, manager_id FROM pessoas WHERE id = $manager_id
+  UNION ALL
+  SELECT p.id, p.manager_id FROM pessoas p
+  JOIN chain c ON p.id = c.manager_id
+)
+SELECT 1 FROM chain WHERE id = $pessoa_id;
+-- se retorna linha → loop → reject 422
 ```
 
 ---
@@ -94,17 +146,22 @@ const input = Schema.parse(await req.json());
 |-----|-----|-----|
 | < 2.5s | < 200ms | < 0.1 |
 
+**Meta específica:** organograma com 100 pessoas renderiza em < 2s.
+
 **TanStack Query para dados remotos** (nunca `useEffect` + `useState` para fetching):
 ```typescript
-export function usePessoas() {
+export function usePessoas(filtros?: { departamento_id?: string; busca?: string }) {
   return useQuery({
     queryKey: ['pessoas', filtros],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let q = supabase
         .from('pessoas')
-        .select('id, nome, cargo_id, area_id, ativo')
-        .eq('ativo', true)
+        .select('id, nome, cargo, departamento_id, foto_url, manager_id, status')
+        .eq('status', 'ativo')
         .order('nome');
+      if (filtros?.departamento_id) q = q.eq('departamento_id', filtros.departamento_id);
+      if (filtros?.busca) q = q.ilike('nome', `%${filtros.busca}%`);
+      const { data, error } = await q;
       if (error) throw error;
       return data;
     },
@@ -221,7 +278,7 @@ Aguardando OK para implementar.
 ```
 organograma-previx-app/
 ├── PROJECT_REQUIREMENTS.md   ← fonte da verdade de funcionalidades
-├── architecture.md           ← visão arquitetural + decisões
+├── architecture.md           ← visão arquitetural + ADRs
 ├── SECURITY_DEBT.md          ← vulnerabilidades conhecidas
 └── specs/technical/
     ├── API_SPECIFICATION.md  ← Edge Functions documentadas (criar quando surgir a primeira)
