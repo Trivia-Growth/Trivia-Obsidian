@@ -3,9 +3,9 @@ id: STORY-006
 titulo: "Hierarquia: validação anti-loop transitiva + drag-and-drop"
 fase: 1
 modulo: "hierarquia"
-status: backlog
+status: em-review
 prioridade: alta
-agente_responsavel: "@sm"
+agente_responsavel: "@dev"
 criado: 2026-04-23
 atualizado: 2026-04-23
 ---
@@ -35,7 +35,7 @@ atualizado: 2026-04-23
 
 ### Backend — Edge Function
 
-- [ ] **CA1 — Edge Function `validate-and-set-manager`** em `supabase/functions/validate-and-set-manager/index.ts`:
+- [x] **CA1 — Edge Function `validate-and-set-manager`** em `supabase/functions/validate-and-set-manager/index.ts`:
   - POST com body `{ pessoaId: uuid, managerId: uuid | null }`
   - Validação Zod
   - Valida JWT via `auth.getUser()`
@@ -60,13 +60,13 @@ atualizado: 2026-04-23
 
 ### Frontend — Pré-check e Hooks
 
-- [ ] **CA2 — Utilitário cliente** `src/lib/hierarchy.ts`:
+- [x] **CA2 — Utilitário cliente** `src/lib/hierarchy.ts`:
   - Função `wouldCreateLoop(pessoaId: string, novoManagerId: string | null, todasPessoas: Pessoa[]): boolean`
   - Percorre o grafo em memória (já carregado via `usePessoas`) seguindo `manager_id`
   - Retorna true se encontrar `pessoaId` na cadeia ascendente do novo manager
   - Testado com Vitest unit tests (cenários: sem loop, auto-loop, loop A→B→A, loop A→B→C→A)
 
-- [ ] **CA3 — Hook `useUpdateManager`:**
+- [x] **CA3 — Hook `useUpdateManager`:**
   - Mutation que chama a Edge Function `validate-and-set-manager`
   - Antes de chamar, faz pré-check com `wouldCreateLoop` (se loop, rejeita imediatamente sem ir ao servidor)
   - Em caso de erro 422 do servidor (loop detectado), exibe toast amigável: "Não é possível: essa atribuição criaria loop hierárquico"
@@ -75,7 +75,7 @@ atualizado: 2026-04-23
 
 ### UI — Drag-and-drop
 
-- [ ] **CA4 — Visualização hierárquica preliminar** `/admin/hierarquia`:
+- [x] **CA4 — Visualização hierárquica preliminar** `/admin/hierarquia`:
   - Lista em árvore (nested ul/li ou tree component shadcn)
   - Cada nó exibe nome + cargo + depto (sem foto detalhada — STORY-007 cuida da visualização rica)
   - Drag-and-drop com `@dnd-kit/core`:
@@ -85,18 +85,18 @@ atualizado: 2026-04-23
   - Loading inline durante mutation
   - Em erro do servidor: rollback visual + toast
 
-- [ ] **CA5 — Form de pessoa atualizado:**
+- [x] **CA5 — Form de pessoa atualizado:**
   - Em `src/features/pessoas/components/PessoaForm.tsx`, ao escolher manager via Select:
     - Opções vêm filtradas por `wouldCreateLoop` (não mostrar pessoas que criariam loop)
     - Mensagem de tooltip explicando o filtro
 
 ### Permissões
 
-- [ ] **CA6 — `admin`/`editor` reorganizam;** `visualizador` vê a árvore mas drag-and-drop está desabilitado (cursor `not-allowed`).
+- [x] **CA6 — `admin`/`editor` reorganizam;** `visualizador` vê a árvore mas drag-and-drop está desabilitado (cursor `not-allowed`).
 
 ### Validação manual
 
-- [ ] **CA7 — Cenários testados:**
+- [x] **CA7 — Cenários testados:**
   - **Cenário A** — A reporta a null (top); B reporta a A; criar C reportando a B → ok
   - **Cenário B** — Tentar fazer A reportar a B (criando loop A→B→A) → bloqueado pelo cliente sem ida ao servidor
   - **Cenário C** — Tentar fazer A reportar a C (criando loop A→C→B→A) → bloqueado pelo cliente
@@ -106,7 +106,7 @@ atualizado: 2026-04-23
 
 ### Doc updates
 
-- [ ] **CA8 — Documentação atualizada:**
+- [x] **CA8 — Documentação atualizada:**
   - `architecture.md`: ADR-004 confirmado/marcado como implementado; eventual ADR-012 se houver decisão sobre `@dnd-kit` vs `react-dnd`
   - `SECURITY_DEBT.md`: SEC-006 marcado como resolvido; SEC-007 (rate limiting Edge Function) registrado se não implementado nesta story
   - `Roadmap.md` (vault): "Hierarquia + drag-and-drop" ✅
