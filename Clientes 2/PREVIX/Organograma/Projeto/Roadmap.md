@@ -53,19 +53,19 @@
 
 ---
 
-## Fase 3 — Diferenciais *(futura)*
+## Fase 3 — Diferenciais ✅ concluída em 2026-04-28
 
 **Objetivo:** Aprofundar a proposta de valor com features que o PDF estático nunca poderia entregar. Estabilizar a Previx como referência de cliente "satisfeito que continua expandindo".
 
-**Stories da Fase 3:**
+**Stories da Fase 3 (todas concluídas):**
 - ✅ **STORY-012 — Histórico com diff visual.** Tabs "Editar | Histórico" no Sheet de edição de pessoa. Timeline reverse-chronológica + resumo curto via `summarizeChange` + DiffSheet on-demand. Editor passou a ler audit_log também. Mergeada PR #11 (`a807a1d`) em 2026-04-27.
 - ✅ **STORY-013 — Múltiplas unidades.** Tabela `unidades` + junção `pessoa_unidades` + árvore livre de departamentos via `parent_id`. Visualizador escopado a uma unidade; admin/editor cross-unidade. ADRs 014-015. Mergeada PR #14 (`f714073`) em 2026-04-28.
 - ✅ **STORY-014 — Campos customizáveis.** `campos_customizados` (def) + `pessoas_campos` (valores JSONB). 5 tipos (text/number/date/boolean/select). PessoaForm renderiza dinâmico, validação de obrigatorio. ADR-016. Mergeada PR #15 (`56c105e`) em 2026-04-28.
 - ✅ **STORY-015 — Modo de impressão otimizado.** `@media print` global + Tailwind `print:` prefix + PrintButton em ambas as páginas. A3 landscape, vetorial nativo. Coexiste com PDF (formal) e PNG (raster). Mergeada PR #12 (`a8f4002`) em 2026-04-27.
 
-**Status:** `em andamento` (2 de 4 concluídas — restam STORY-013 multi-tenancy e STORY-014 campos custom)
+**Status:** ✅ `concluída em 2026-04-28` — 4 de 4 stories mergeadas em main.
 
-> Escopo de Fase 3 será refinado durante Fase 2 — pode ser que "Múltiplas unidades" vire produto separado caso a Previx peça organogramas dos clientes finais (e não da própria estrutura interna).
+> Decisão de escopo da Previx (durante Fase 2): multi-unidade é INTERNO (filiais do Grupo Previx), não multi-tenant externo. Documentado em ADR-014.
 
 ---
 
