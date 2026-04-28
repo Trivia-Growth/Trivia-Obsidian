@@ -59,7 +59,7 @@
 
 **Stories da Fase 3:**
 - ✅ **STORY-012 — Histórico com diff visual.** Tabs "Editar | Histórico" no Sheet de edição de pessoa. Timeline reverse-chronológica + resumo curto via `summarizeChange` + DiffSheet on-demand. Editor passou a ler audit_log também. Mergeada PR #11 (`a807a1d`) em 2026-04-27.
-- ⚪ **STORY-013 — Múltiplas unidades/contratos.** Coluna `unidade_id` em `pessoas` e `departamentos`, cada organograma escopado por unidade. Multi-tenancy intra-Previx.
+- ✅ **STORY-013 — Múltiplas unidades.** Tabela `unidades` + junção `pessoa_unidades` + árvore livre de departamentos via `parent_id`. Visualizador escopado a uma unidade; admin/editor cross-unidade. ADRs 014-015. Mergeada PR #14 (`f714073`) em 2026-04-28.
 - ⚪ **STORY-014 — Campos customizáveis.** Tabela `campos_customizados` (admin define) + valores em `pessoas_campos`. Form de pessoa renderiza dinamicamente.
 - ✅ **STORY-015 — Modo de impressão otimizado.** `@media print` global + Tailwind `print:` prefix + PrintButton em ambas as páginas. A3 landscape, vetorial nativo. Coexiste com PDF (formal) e PNG (raster). Mergeada PR #12 (`a8f4002`) em 2026-04-27.
 
