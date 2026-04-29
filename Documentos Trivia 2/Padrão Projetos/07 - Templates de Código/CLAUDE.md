@@ -48,6 +48,15 @@ Antes de implementar:
 5. **Valores no backend** — nenhum cálculo financeiro/sensível no frontend
 6. **Commitar juntos** — código e docs sempre no mesmo commit
 
+## Protocolo Anti-Conflito (ambientes colaborativos)
+
+> Quando há mais de um dev ou agente no mesmo repositório:
+
+1. **Antes de qualquer implementação:** `git pull --rebase origin main` — sem exceção
+2. **Após testar e aprovar a story:** push imediato — não acumular commits locais
+3. **Se o pull tiver conflito:** resolver via rebase (nunca merge commit), preservando ambos os lados
+4. **IDs de story em conflito:** renumerar os locais para o próximo ID livre antes de commitar
+
 ---
 
 ## Arquitetura
@@ -168,16 +177,43 @@ git push origin main   # ou merge do PR
 
 ---
 
+## Testes
+
+```bash
+npm test                # todos os testes
+npm run test:node       # funções de servidor (ambiente node)
+npm run test:browser    # componentes React (jsdom)
+npm run test:coverage   # relatório de cobertura
+npm run test:watch      # modo watch
+```
+
+**Estrutura:**
+- `netlify/functions/**/*.test.ts` → projeto `node` (sem jsdom)
+- `src/**/*.test.ts` / `src/**/*.test.tsx` → projeto `browser` (jsdom + RTL)
+- `vitest.setup.ts` — polyfills jsdom, jest-dom, `beforeEach` com `localStorage.clear()`
+
+**Mocking:**
+- Supabase server: `vi.mock("@/lib/supabase-server")` com chain thenable
+- fetch / APIs externas: `vi.stubGlobal("fetch", vi.fn())`
+- Env vars: `vi.stubEnv("NOME_VAR", "valor")`
+
+Ver [[../02 - Qualidade/Testes Automatizados]] para setup completo e exemplos.
+
+---
+
 ## Definition of Done
 
-Ver [[../Padrão Projetos/02 - Qualidade/Definition of Done]] para checklist completo.
+Ver [[../02 - Qualidade/Definition of Done]] para checklist completo.
 
 Resumo obrigatório:
 - Build OK, TypeScript strict (sem `any`)
+- `npm test` passa sem erros
 - Error Boundary + Loading/Error states
 - Rotas com `lazy()` + `Suspense`
 - RLS verificado (se DB) | Zod + JWT (se Edge Function)
 - `supabase db push` executado (se houve migration)
 - `supabase functions deploy [nome]` executado (se houve Edge Function)
 - Preview testado: happy path + erro + sem dados
+- `git pull --rebase origin main` antes do push
+- Push imediato após aprovação
 - Docs atualizadas e commitadas juntas
