@@ -21,35 +21,61 @@ Testes de integração com Supabase **não** são feitos localmente — use o Su
 ### 1. Instalar dependências
 
 ```bash
-npm install -D vitest @vitest/ui jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom
+npm install -D vitest @vitest/coverage-v8 jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom
 ```
 
-### 2. Configurar Vite para testes
+### 2. Configurar Vitest com múltiplos projetos
 
-No `vite.config.ts`, adicione a seção `test`:
+Projetos com Netlify Functions (ou qualquer servidor Node.js) precisam de dois ambientes separados — `node` para funções de servidor e `jsdom` para componentes React. Crie `vitest.config.ts` na raiz:
 
 ```typescript
-/// <reference types="vitest" />
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths()],
   test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-    css: false,
+    projects: [
+      {
+        // Netlify Functions / server code
+        test: {
+          name: "node",
+          include: ["netlify/functions/**/*.test.ts"],
+          environment: "node",
+          globals: true,
+        },
+      },
+      {
+        // Componentes React e hooks
+        plugins: [react(), tsconfigPaths()],
+        test: {
+          name: "browser",
+          include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+          environment: "jsdom",
+          globals: true,
+          setupFiles: ["./vitest.setup.ts"],
+        },
+      },
+    ],
   },
 });
 ```
 
+> Se o projeto usar apenas React (sem funções de servidor), um único projeto jsdom é suficiente — simplesmente remova o bloco `node` e passe `include` direto na raiz do `test`.
+
 ### 3. Criar arquivo de setup
 
-Crie `src/test/setup.ts`:
+Crie `vitest.setup.ts` na raiz:
 
 ```typescript
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
+import { beforeEach } from "vitest";
+
+// limpa localStorage entre testes (evita estado vazando entre suítes)
+beforeEach(() => {
+  localStorage.clear();
+});
 ```
 
 ### 4. Adicionar scripts no `package.json`
@@ -58,8 +84,10 @@ import '@testing-library/jest-dom';
 {
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:node": "vitest run --project node",
+    "test:browser": "vitest run --project browser",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
   }
 }
 ```
@@ -81,6 +109,10 @@ src/features/financeiro/
 └── components/
     ├── TabelaTitulos.tsx
     └── TabelaTitulos.test.tsx
+
+netlify/functions/
+├── lead.ts
+└── lead.test.ts                ← projeto node (sem jsdom)
 ```
 
 ---
@@ -197,17 +229,61 @@ describe('TabelaTitulos', () => {
 
 ---
 
+## Padrões de Mock
+
+### Supabase server (Netlify Functions)
+
+```typescript
+vi.mock("@/lib/supabase-server", () => ({
+  supabaseServer: {
+    from: vi.fn(() => ({
+      insert: vi.fn(() => ({
+        select: vi.fn(() => ({
+          single: vi.fn().mockResolvedValue({ data: { id: "1" }, error: null }),
+        })),
+      })),
+    })),
+  },
+}));
+```
+
+### fetch / APIs externas
+
+```typescript
+vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+  ok: true,
+  json: async () => ({ id: "resp-1" }),
+}));
+```
+
+### Variáveis de ambiente
+
+```typescript
+vi.stubEnv("TURNSTILE_SECRET_KEY", "test-secret");
+vi.stubEnv("RESEND_API_KEY", "re_test_key");
+```
+
+> `vi.stubEnv` restaura automaticamente o valor original após cada teste quando usado com `afterEach(() => vi.unstubAllEnvs())`.
+
+---
+
 ## Como rodar
 
 ```bash
-# Rodar uma vez (antes de commitar)
+# Todos os testes (antes de commitar)
 npm test
+
+# Só funções de servidor (node)
+npm run test:node
+
+# Só componentes React (browser/jsdom)
+npm run test:browser
+
+# Relatório de cobertura
+npm run test:coverage
 
 # Modo watch (enquanto desenvolve)
 npm run test:watch
-
-# Interface visual no browser
-npm run test:ui
 ```
 
 > **Antes de marcar a story como `em-review`:** rodar `npm test` e confirmar que todos os testes passam. Se algum falhar, corrigir antes de continuar.
