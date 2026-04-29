@@ -58,6 +58,15 @@ Uma story só está **concluída** quando todos os itens abaixo estão marcados.
 - [ ] Schemas Zod das Edge Functions têm testes de input válido e inválido
 - [ ] Componentes críticos testados nos três estados: loading, error, dados
 
+### Sincronização Git (ambientes colaborativos)
+
+> Obrigatório quando há mais de um dev ou agente trabalhando no mesmo repositório.
+
+- [ ] `git pull --rebase origin main` executado **antes** de começar a implementação
+- [ ] Push feito **imediatamente** após a story passar no DoD — não acumular commits locais
+- [ ] Se o pull gerou conflito: resolvido via rebase (nunca merge commit), preservando ambos os lados
+- [ ] Se houve colisão de IDs de story: IDs locais renumerados para o próximo livre antes de commitar
+
 ### Testes Manuais
 
 - [ ] Happy path testado (fluxo principal funciona)
