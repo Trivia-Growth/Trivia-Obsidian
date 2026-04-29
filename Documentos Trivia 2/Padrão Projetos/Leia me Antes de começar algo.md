@@ -1,6 +1,6 @@
 # Padrão de Projetos — Leia Antes de Começar
 
-Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como todos os projetos de software são construídos aqui. Se você vai iniciar um projeto novo, este é o ponto de partida.
+Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como todos os projetos de software são construídos aqui. Se você vai iniciar um projeto novo, este é o ponto de partida...
 
 ---
 
