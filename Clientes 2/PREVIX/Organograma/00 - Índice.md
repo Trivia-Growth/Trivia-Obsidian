@@ -28,7 +28,7 @@ inicio: 2026-04-23
 
 ```
 GitHub: https://github.com/Trivia-Growth/organograma-previx-app
-Clone local: ~/Documents/Obsidian/organograma-previx-app
+Clone local: ~/Documents/Obsidian/Github/organograma-previx-app
 ```
 
 ---
