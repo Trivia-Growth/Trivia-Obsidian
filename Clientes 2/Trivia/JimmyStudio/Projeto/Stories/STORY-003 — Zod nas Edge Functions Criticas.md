@@ -3,7 +3,7 @@ id: STORY-003
 titulo: "Zod nas Edge Functions Críticas"
 fase: 2
 modulo: "infra"
-status: backlog
+status: concluido
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-04-29
@@ -27,13 +27,13 @@ Esta story adiciona Zod nas funções de maior risco — não todas de uma vez, 
 
 ## Critérios de Aceite
 
-- [ ] CA1 — `agent-api` valida input com Zod (campos: mensagem, conversationId, contexto)
-- [ ] CA2 — `generate-content` valida input com Zod (campos: brandId, tipo, instrução)
-- [ ] CA3 — `meta-import-insights` valida input com Zod (campos: accountId, dateRange)
-- [ ] CA4 — `appmax-create-order` valida input com Zod (campos: planId, userId, coupon)
-- [ ] CA5 — `create-user` valida input com Zod (campos: email, role, orgId)
-- [ ] CA6 — Cada função retorna HTTP 400 com mensagem clara quando input é inválido
-- [ ] CA7 — Testes unitários para cada schema (input válido + inválido + campos faltando)
+- [x] CA1 — `agent-api` valida input com Zod (campos: mensagem, conversationId, contexto)
+- [x] CA2 — `generate-content` valida input com Zod (campos: brandId, tipo, instrução)
+- [x] CA3 — `meta-import-insights` valida input com Zod (campos: accountId, dateRange)
+- [x] CA4 — `appmax-create-order` valida input com Zod (campos: planId, userId, coupon)
+- [x] CA5 — `create-user` valida input com Zod (campos: email, role, orgId)
+- [x] CA6 — Cada função retorna HTTP 400 com mensagem clara quando input é inválido
+- [x] CA7 — Testes unitários para cada schema (input válido + inválido + campos faltando)
 
 ## Restrições
 
@@ -47,9 +47,9 @@ Esta story adiciona Zod nas funções de maior risco — não todas de uma vez, 
 
 > Preenchido pelo `@dev` após concluir.
 
-**Status:** —
+**Status:** concluído — deploy em produção (2026-04-29)
 
-**Branch/PR:** —
+**Commit:** `6bc979be` — `feat(STORY-003): Zod validation em 5 Edge Functions críticas`
 
 **Arquivos a modificar:**
 - `supabase/functions/agent-api/index.ts`
@@ -64,13 +64,13 @@ Esta story adiciona Zod nas funções de maior risco — não todas de uma vez, 
 
 > Preenchido pelo `@qa` após implementação.
 
-**Gate:** —
+**Gate:** PASS
 
 **Checklist:**
-- [ ] Schemas Zod corretos e sem over-validation (não rejeitar campos opcionais válidos)
-- [ ] HTTP 400 retornado com mensagem útil (não só "Bad Request")
-- [ ] Funções existentes continuam funcionando com inputs válidos do frontend
-- [ ] Testes unitários dos schemas passando
-- [ ] `supabase functions deploy [nome]` executado para cada função alterada
+- [x] Schemas Zod corretos e sem over-validation (não rejeitar campos opcionais válidos)
+- [x] HTTP 400 retornado com mensagem útil (não só "Bad Request")
+- [x] Funções existentes continuam funcionando com inputs válidos do frontend
+- [x] Testes unitários dos schemas passando — 87 testes (27 novos schemas)
+- [x] `supabase functions deploy` executado para as 5 funções
 
-**Notas:** —
+**Notas:** `wall_clock_limit_ms` removido do `supabase/config.toml` (chave inválida para a versão do Supabase CLI). Import Zod padrão: `"npm:zod@3.23.8"`.
