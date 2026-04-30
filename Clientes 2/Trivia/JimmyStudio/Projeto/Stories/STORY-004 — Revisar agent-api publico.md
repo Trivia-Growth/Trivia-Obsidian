@@ -3,7 +3,7 @@ id: STORY-004
 titulo: "Revisar agent-api público — Rate Limiting e Proteção"
 fase: 2
 modulo: "infra"
-status: backlog
+status: concluido
 prioridade: alta
 agente_responsavel: "@architect"
 criado: 2026-04-29
