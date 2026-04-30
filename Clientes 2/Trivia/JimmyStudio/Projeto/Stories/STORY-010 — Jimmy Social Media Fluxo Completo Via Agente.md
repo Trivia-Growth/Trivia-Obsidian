@@ -3,7 +3,7 @@ id: STORY-010
 titulo: "Jimmy Social Media: Fluxo Completo Via Agente"
 fase: 3
 modulo: "agencia"
-status: em-progresso
+status: concluido
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-04-30
@@ -36,8 +36,8 @@ O objetivo desta story é que **todo conteúdo seja criado diretamente pelo agen
 - [x] CA5 — "Confirmar e gerar" não chama a edge function — transição local para generating_copy
 - [x] CA6 — Geração via useContentGeneration com researchSummary injetado no topicDescription
 - [x] CA7 — Navegação automática para /agencia/conteudo/:contentId após geração
-- [ ] CA8 — Histórico de conversas visível no painel lateral (ConversationHistoryPanel)
-- [ ] CA9 — Teste E2E golden path passando end-to-end (STORY-010 concluída quando este CA passar)
+- [x] CA8 — Histórico de conversas visível no painel lateral (ConversationHistoryPanel)
+- [x] CA9 — Teste E2E golden path passando end-to-end (2 passed, 49s)
 
 ## Restrições
 
@@ -98,12 +98,14 @@ A edge function retornava `action.type='ask_format'` ao processar a seleção de
 
 ## QA
 
-**Gate:** em andamento
+**Gate:** PASS
 
 **Checklist:**
 - [x] TypeScript sem erros (npx tsc --noEmit)
 - [x] Build OK
-- [x] STEPs 1-3 do E2E passando
-- [ ] STEPs 4-9 do E2E passando (golden path completo)
-- [ ] Edge Function deployada com Perplexity integrado
-- [ ] Verificado em produção: jimmystudio.com.br/agencia/assistente
+- [x] Todos os 9 STEPs do E2E passando (2 passed, 49s)
+- [x] Edge Function content-creation-agent com Perplexity integrado (7 fontes recebidas)
+- [x] Verificado em produção: jimmystudio.com.br/agencia/assistente
+- [x] Conteúdo real criado no banco: 8209bb41-b52b-45c2-abc8-e36127c5ee79
+
+**Notas:** A causa raiz dos bugs era que `selectBrand`, `selectFormat`, `confirmResearch` e `confirmParams` chamavam `sendMessage` (edge function), e as respostas assíncronas chegavam depois que o usuário já tinha avançado no fluxo, sobrescrevendo o estado. Solução: todas essas transições passaram a usar mensagens locais sem chamada à API.
