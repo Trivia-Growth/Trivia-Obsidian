@@ -1,71 +1,54 @@
 ---
 tipo: handoff
 projeto: Jimmy Studio
-data: 2026-04-29
-de: Claude (@dev / @sm)
+data: 2026-04-30
+de: Claude (@dev)
 para: Lucas
 ---
 
 # Handoff — Jimmy Studio
 
-## O que foi feito nesta sessão
-
-Partimos do zero: o repositório existia em produção mas sem nenhum padrão Trivia aplicado. Ao final desta sessão o projeto está completamente mapeado e estruturado.
+> Atualizado em 2026-04-30 após STORY-004.
 
 ---
 
-## Estado atual do repositório
+## Estado atual
 
 **Repo:** `https://github.com/Triviastudio/triviadash-analytics`
-**Clone local:** `/Users/joaogabrielnovais/Documents/Obsidian/Github/triviadash-analytics`
-**Deploy:** `https://jimmystudio.com.br` (Netlify — auto-deploy ao push em `main`)
+**Clone local (João):** `/Users/joaogabrielnovais/Documents/Obsidian/Github/triviadash-analytics`
+**Produção:** `https://jimmystudio.com.br` (Netlify — auto-deploy ao push em `main`)
+**Supabase:** `https://supabase.com/dashboard/project/kjixezlzateraihxltfa`
 
-### Estrutura criada nesta sessão
+---
 
+## Stories concluídas
+
+| Story | O que foi feito | Commit |
+|-------|----------------|--------|
+| STORY-001 | Padrão Trivia aplicado: CLAUDE.md, architecture.md, PROJECT_REQUIREMENTS.md, SECURITY_DEBT.md, netlify.toml, docs/ completo, AIOX v5.0.7 | vários |
+| STORY-002 | Setup de testes: 87 testes unitários (Vitest) + 6 testes E2E (Playwright) — todos passando | `d7e30954` |
+| STORY-003 | Zod adicionado em 5 Edge Functions críticas — 27 novos testes de schema | `6bc979be` |
+| STORY-004 | Rate limiting 20 req/min por IP no agent-api — ADR-009 documentado | `e3619403` |
+
+---
+
+## Pendência manual — CRÍTICA (STORY-004)
+
+O CLI do Supabase não consegue fazer `db push` porque o remote tem 400+ migrations históricas que não existem no repo local. Isso é um problema herdado — não foi causado por nenhuma mudança desta sessão.
+
+**O que falta:** criar a tabela de rate limiting no banco. Sem ela, o rate limiting está em fail-open (funciona normalmente, mas sem limitar).
+
+**Como resolver:** entrar no [Supabase Dashboard → SQL Editor](https://supabase.com/dashboard/project/kjixezlzateraihxltfa/sql) e rodar:
+
+```sql
+CREATE TABLE IF NOT EXISTS public.agent_api_rate_limits (
+  ip           text        PRIMARY KEY,
+  calls_count  integer     NOT NULL DEFAULT 1,
+  window_start timestamptz NOT NULL DEFAULT now()
+);
 ```
-triviadash-analytics/
-├── CLAUDE.md                  ← instruções para agentes, regras invioláveis, stack, deploy
-├── architecture.md            ← ADRs, diagrama do sistema, padrões de código
-├── PROJECT_REQUIREMENTS.md    ← todos os módulos, integrações, restrições operacionais
-├── SECURITY_DEBT.md           ← template de débito de segurança (preencher conforme identificado)
-├── netlify.toml               ← security headers, CSP, cache, SPA redirect
-├── vitest.config.ts           ← configuração Vitest (alias @, environment node)
-├── playwright.config.ts       ← configuração Playwright (reescrito — estava quebrado)
-├── playwright-fixture.ts      ← re-exports de @playwright/test (estava quebrado)
-├── .env.test.example          ← template de credenciais E2E
-├── .gitignore                 ← atualizado: .env.test e tests/.auth/user.json ignorados
-│
-├── docs/
-│   ├── stories/
-│   │   ├── README.md          ← protocolo de sync Lovable ↔ Claude
-│   │   ├── _TEMPLATE.md       ← template padrão de story
-│   │   └── STORY-002.md       ← story ativa (status: concluido)
-│   ├── SYSTEM_OVERVIEW.md     ← visão geral do sistema
-│   ├── INTEGRATIONS.md        ← 12 integrações externas com detalhes
-│   ├── EDGE_FUNCTIONS.md      ← catálogo das 132 edge functions
-│   ├── DATABASE.md            ← 227 tabelas, views, 95+ funções SQL
-│   ├── CRONS.md               ← 17 CRONs com monitoramento
-│   ├── TESTING.md             ← guia completo de testes
-│   └── TECHNICAL_DEBT.md      ← 15 itens de débito técnico com scorecard
-│
-├── src/
-│   ├── lib/
-│   │   ├── utils.test.ts          ← 9 testes: cn(), parseLocalDate()
-│   │   ├── aov-utils.test.ts      ← 19 testes: toNumberBRL, calcularTicketMedio, etc.
-│   │   └── image-compressor.test.ts ← 4 testes: path de skip sem DOM
-│   └── test/
-│       ├── setup.ts               ← setup global Vitest
-│       ├── schemas/
-│       │   └── agent-api.test.ts  ← 9 testes do schema Zod do agent-api
-│       └── meta-ads-7items.test.ts ← arquivo original (19 testes, mantido)
-│
-└── tests/                     ← Playwright E2E
-    ├── global-setup.ts        ← faz login uma vez, salva sessão em storageState
-    ├── auth.spec.ts           ← 3 testes de login (skip sem credenciais)
-    └── dashboard.spec.ts      ← 2 testes do dashboard (skip sem credenciais)
 
-└── .aiox-core/                ← AIOX v5.0.7 instalado
-```
+O arquivo de migration já está no repo em `supabase/migrations/20260430172505_agent_api_rate_limits.sql`.
 
 ---
 
@@ -74,85 +57,70 @@ triviadash-analytics/
 ```bash
 cd /Users/joaogabrielnovais/Documents/Obsidian/Github/triviadash-analytics
 
-# Instalar dependências (se necessário)
-npm install
+# Sempre puxar antes de qualquer coisa
+git pull --rebase origin main
 
-# Testes unitários (60 testes — roda sem internet)
+# Testes unitários (87 testes — roda sem internet, sem credenciais)
 npm test
 
-# Testes unitários em modo watch
-npm run test:watch
-
-# Testes E2E (precisa do .env.test configurado)
+# Testes E2E (credenciais já estão em .env.test — não commitar)
 npx playwright test
 
 # E2E com interface visual
 npx playwright test --ui
 ```
 
----
-
-## Pendência crítica — Credenciais E2E
-
-Os testes E2E (auth + dashboard) precisam de uma conta de teste dedicada. Crie o arquivo:
-
-```
-triviadash-analytics/.env.test
-```
-
-Com o conteúdo:
+O `.env.test` já existe na máquina do João com as credenciais do usuário de teste `jimmy@triviastudio.com.br`. Se Lucas precisar rodar os E2E em outra máquina, criar o arquivo:
 
 ```env
-PLAYWRIGHT_TEST_EMAIL=<email da conta de teste>
-PLAYWRIGHT_TEST_PASSWORD=<senha da conta de teste>
+PLAYWRIGHT_TEST_EMAIL=jimmy@triviastudio.com.br
+PLAYWRIGHT_TEST_PASSWORD=T3st3@#$
 PLAYWRIGHT_BASE_URL=https://jimmystudio.com.br
 ```
 
-> **Atenção:** `.env.test` está no `.gitignore` — não commitar nunca.
-> A conta deve ser dedicada para testes, **nunca uma conta de cliente real**.
+---
 
-Sem o `.env.test` configurado, os testes E2E **pulam automaticamente** (não falham). Os 60 testes unitários continuam rodando normalmente.
+## Como deployar
+
+```bash
+# Frontend (Netlify detecta automaticamente)
+git push origin main
+
+# Edge Functions (quando alterar alguma função)
+supabase functions deploy nome-da-funcao
+
+# Para linkar o projeto primeiro (se necessário)
+supabase link --project-ref kjixezlzateraihxltfa
+```
+
+**Atenção:** `supabase db push` não funciona por causa do histórico de migrations desincronizado. Migrações novas precisam ser aplicadas manualmente via SQL Editor no Dashboard.
 
 ---
 
-## Problema que apareceu — CSP bloqueando Analytics (já corrigido)
+## Impacto do que foi implementado
 
-O `netlify.toml` inicial bloqueava Google Fonts, GTM, Facebook Pixel, Clarity e Bing Ads em produção. Foi corrigido no commit `16f4ecb0` e já está em produção.
+**STORY-003 — Zod nas Edge Functions:**
+- Antes: body malformado chegava até o banco ou a Claude API
+- Agora: HTTP 400 com mensagem clara antes de executar qualquer lógica
+- Funções protegidas: `agent-api`, `generate-content`, `meta-import-insights`, `appmax-create-order`, `create-user`
 
-Se aparecer erros de CSP no console do browser, verificar o `netlify.toml` e adicionar o domínio necessário em `script-src` ou `style-src`.
+**STORY-004 — Rate Limiting:**
+- Antes: API key válida = chamadas ilimitadas à Claude API (custo irrestrito)
+- Agora: máximo 20 chamadas/min por IP (requer a tabela criada manualmente — ver seção acima)
+- `verify_jwt = false` no agent-api é **intencional**: auth é feita via `X-API-Key` contra `org_api_keys`
 
 ---
 
 ## Próximas stories (backlog priorizado)
 
-| Story | Título | Prioridade | Pré-requisito |
-|-------|--------|------------|---------------|
-| **STORY-003** | Zod nas Edge Functions Críticas | P0 | STORY-002 ✅ |
-| **STORY-004** | Revisar agent-api público (JWT + rate limiting) | P0 | — |
-| **STORY-005** | Ativar Sentry em Produção | P1 | — |
-| **STORY-006** | Lazy Loading nas Páginas | P1 | STORY-002 ✅ |
-| **STORY-007** | TypeScript Strict Mode Progressivo | P1 | STORY-002 ✅ |
-| **STORY-008** | Substituir select('*') nos Hooks Principais | P1 | STORY-002 ✅ |
+| Story | Título | Prioridade | O que fazer |
+|-------|--------|------------|-------------|
+| **STORY-005** | Ativar Sentry em Produção | P1 | Instalar `@sentry/react`, configurar DSN, Error Boundary global |
+| **STORY-006** | Lazy Loading nas Páginas | P1 | `React.lazy()` + `Suspense` nas 52 rotas do React Router |
+| **STORY-007** | TypeScript Strict Mode Progressivo | P1 | Ativar strict em `src/features/` primeiro, depois expandir |
+| **STORY-008** | Substituir select('*') nos Hooks Principais | P1 | Identificar os hooks mais usados e especificar colunas |
 
-Todas as stories estão no vault em `Projeto/Stories/` e no repositório em `docs/stories/`.
-
-**Próxima ação recomendada:** implementar STORY-003 (Zod nas Edge Functions) com `@dev`.
-
----
-
-## Regras invioláveis do projeto (ler CLAUDE.md antes de qualquer coisa)
-
-- **console.log é intencional** — o piloto usa para debug em produção. Não remover.
-- **Quebra de componentes grandes requer testes** — o projeto está em produção sem staging.
-- **Sem ambiente de staging** — toda mudança vai direto para produção. Mudanças pequenas e reversíveis.
-- **`git pull --rebase` antes de qualquer implementação** — sem exceção.
-- **Testes obrigatórios antes de qualquer refactor** — `npm test` deve passar.
-
----
-
-## Arquitetura em uma linha
-
-SPA React 18 monolítica (779 componentes) + Supabase (227 tabelas, 132 Edge Functions, 17 CRONs) + Netlify. Multi-tenant com RLS FORCE em todas as tabelas. Claude API via OpenRouter para o Jimmy Agent. Novas features em `src/features/` (Bulletproof React progressivo).
+Todas as stories com spec completa estão em `Projeto/Stories/` (este vault).
 
 ---
 
@@ -160,11 +128,30 @@ SPA React 18 monolítica (779 componentes) + Supabase (227 tabelas, 132 Edge Fun
 
 | O que | Onde |
 |-------|------|
-| Documentação completa do sistema | `docs/` no repositório |
-| Stories e roadmap | Este vault — `Projeto/Stories/` |
-| Arquitetura e ADRs | `architecture.md` no repositório |
-| Módulos e integrações | `PROJECT_REQUIREMENTS.md` no repositório |
+| Instruções para agentes (ler primeiro) | `CLAUDE.md` no repo |
+| Arquitetura e ADRs | `architecture.md` no repo |
+| Módulos e integrações | `PROJECT_REQUIREMENTS.md` no repo |
+| Visão geral do sistema | `docs/SYSTEM_OVERVIEW.md` |
 | 132 Edge Functions catalogadas | `docs/EDGE_FUNCTIONS.md` |
+| Guia de testes | `docs/TESTING.md` |
 | Débito técnico | `docs/TECHNICAL_DEBT.md` |
+| Stories e roadmap | `Projeto/Stories/` neste vault |
 | Painel Supabase | `https://supabase.com/dashboard/project/kjixezlzateraihxltfa` |
-| Deploy Netlify | `https://app.netlify.com` — projeto `jimmystudio` |
+
+---
+
+## Regras invioláveis (resumo — ler CLAUDE.md completo antes de implementar)
+
+- `git pull --rebase origin main` antes de qualquer implementação — sem exceção
+- `npm test` deve passar antes de qualquer commit
+- `console.log` é intencional — não remover (o piloto usa para debug em produção)
+- Sem staging: toda mudança vai direto para produção — mudanças pequenas e reversíveis
+- `supabase db push` está quebrado — usar SQL Editor no Dashboard para migrations novas
+- Zod obrigatório em toda Edge Function nova ou modificada
+- `supabase functions deploy [nome]` após qualquer alteração em Edge Function
+
+---
+
+## Arquitetura em uma linha
+
+SPA React 18 monolítica (779 componentes) + Supabase (227 tabelas, 132 Edge Functions, 17 CRONs) + Netlify. Multi-tenant com RLS FORCE em todas as tabelas. Claude API via OpenRouter para o Jimmy Agent. Novas features em `src/features/` (Bulletproof React progressivo).

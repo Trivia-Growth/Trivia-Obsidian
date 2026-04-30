@@ -43,11 +43,11 @@ atualizado: 2026-04-23
 **Branch/PR:** main (commits `2595fe2`, `678ea1b`, `4b508f4` merge, `145f779` AIOX)
 
 **Arquivos alterados:**
-- `~/Documents/Obsidian/organograma-previx-app/CLAUDE.md`
-- `~/Documents/Obsidian/organograma-previx-app/PROJECT_REQUIREMENTS.md`
-- `~/Documents/Obsidian/organograma-previx-app/architecture.md`
-- `~/Documents/Obsidian/organograma-previx-app/SECURITY_DEBT.md`
-- `~/Documents/Obsidian/organograma-previx-app/netlify.toml`
+- `~/Documents/Obsidian/Github/organograma-previx-app/CLAUDE.md`
+- `~/Documents/Obsidian/Github/organograma-previx-app/PROJECT_REQUIREMENTS.md`
+- `~/Documents/Obsidian/Github/organograma-previx-app/architecture.md`
+- `~/Documents/Obsidian/Github/organograma-previx-app/SECURITY_DEBT.md`
+- `~/Documents/Obsidian/Github/organograma-previx-app/netlify.toml`
 - `Clientes 2/PREVIX/Organograma/00 - Índice.md`
 - `Clientes 2/PREVIX/Organograma/Projeto/Dashboard do Projeto.md`
 - `Clientes 2/PREVIX/Organograma/Projeto/Roadmap.md`
@@ -79,5 +79,6 @@ Setup local concluído pelo Claude Code. Passos externos (GitHub/Supabase/Netlif
 ## Notas e Decisões
 
 - `2026-04-23` — Decidido manter vault e repo de código como irmãos em `~/Documents/Obsidian/` em vez de mover para `~/Projetos/`.
+- `2026-04-30` — Repositório migrado para `~/Documents/Obsidian/Github/organograma-previx-app/` como parte da pasta unificadora de repos `Github/`.
 - `2026-04-23` — Não fazer scaffold manual de Vite/React; deixar a Lovable gerar a estrutura inicial ao importar o repo do GitHub (padrão Trivia).
 - `2026-04-23` — **Lovable não importa mais repos do GitHub.** A doc oficial confirma que o fluxo é só de exportação. O checklist do padrão Trivia (`Documentos Trivia 2/Padrão Projetos/00 - Checklist de Início.md`) foi atualizado nesta data com banner de aviso, Passo 1 marcado como opcional e Passo 4 reescrito (criar projeto Lovable → Custom Instructions → Connect GitHub que cria repo novo → Clone + 5 docs). Para este projeto, decidido deletar `Trivia-Growth/organograma-previx-app` (que tem só nosso commit inicial) e deixar a Lovable recriar com mesmo nome — Netlify e Supabase ficam preservados.

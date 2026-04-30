@@ -29,11 +29,11 @@ A Edge Function `agent-api` está configurada com `verify_jwt = false` no `confi
 
 ## Critérios de Aceite
 
-- [ ] CA1 — Investigação: documentar por que `agent-api` está sem JWT (comentário no código ou ADR)
-- [ ] CA2 — Se intencional (widget público): adicionar rate limiting por IP (`X-Forwarded-For`) — máximo N requisições por minuto por IP
-- [ ] CA3 — Se não intencional: adicionar JWT validation e atualizar `config.toml`
-- [ ] CA4 — Adicionar log de cada chamada com IP, timestamp e custo estimado (já existe `ai_usage_costs`?)
-- [ ] CA5 — Documentar a decisão em `architecture.md` como ADR
+- [x] CA1 — Investigação: verify_jwt=false é intencional — auth via X-API-Key contra org_api_keys
+- [x] CA2 — Rate limiting: 20 req/min por IP, fail-open se tabela não existir
+- [x] CA3 — N/A: auth intencional, não é bug
+- [x] CA4 — Custo já rastreado: help-agent-chat → logAiCost → ai_usage_costs
+- [x] CA5 — ADR-009 adicionado em architecture.md
 
 ## Restrições
 
@@ -46,9 +46,11 @@ A Edge Function `agent-api` está configurada com `verify_jwt = false` no `confi
 
 > Preenchido pelo `@dev` após concluir.
 
-**Status:** —
+**Status:** concluído — deploy em produção (2026-04-30)
 
-**Branch/PR:** —
+**Commit:** `e3619403` — `feat(STORY-004): agent-api — rate limiting por IP + ADR-009`
+
+**Pendente manual:** aplicar migration `20260430172505_agent_api_rate_limits.sql` via Supabase Dashboard → SQL Editor (CLI não consegue `db push` por dessincronia de histórico de migrations herdadas)
 
 **Arquivos potencialmente modificados:**
 - `supabase/config.toml` (se mudar verify_jwt)
