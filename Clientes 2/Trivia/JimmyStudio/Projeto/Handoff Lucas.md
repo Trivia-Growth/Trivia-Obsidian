@@ -8,7 +8,7 @@ para: Lucas
 
 # Handoff — Jimmy Studio
 
-> Atualizado em 2026-04-30 após STORY-004.
+> Atualizado em 2026-04-30 após STORY-009.
 
 ---
 
@@ -29,7 +29,7 @@ para: Lucas
 | STORY-002 | Setup de testes: 87 testes unitários (Vitest) + 6 testes E2E (Playwright) — todos passando | `d7e30954` |
 | STORY-003 | Zod adicionado em 5 Edge Functions críticas — 27 novos testes de schema | `6bc979be` |
 | STORY-004 | Rate limiting 20 req/min por IP no agent-api — ADR-009 documentado | `e3619403` |
-| STORY-009 | Luna — assistente conversacional em `/agencia/assistente`. Bulletproof React, Edge Function Zod+JWT, aprendizado em brand_preferences. 97 testes. | `c6667617` |
+| STORY-009 | Jimmy Social Media — assistente conversacional em `/agencia/assistente`. Bulletproof React, Edge Function Zod+JWT, aprendizado em brand_preferences. 97 testes unitários + 9 E2E. | `c6667617` |
 
 ---
 
@@ -120,18 +120,6 @@ supabase link --project-ref kjixezlzateraihxltfa
 | **STORY-006** | Lazy Loading nas Páginas | P1 | `React.lazy()` + `Suspense` nas 52 rotas do React Router |
 | **STORY-007** | TypeScript Strict Mode Progressivo | P1 | Ativar strict em `src/features/` primeiro, depois expandir |
 | **STORY-008** | Substituir select('*') nos Hooks Principais | P1 | Identificar os hooks mais usados e especificar colunas |
-
-### STORY-009 — Deploy pendente
-
-A Edge Function `content-creation-agent` precisa ser deployada manualmente:
-
-```bash
-cd /Users/joaogabrielnovais/Documents/Obsidian/Github/triviadash-analytics
-supabase link --project-ref kjixezlzateraihxltfa  # se necessário
-supabase functions deploy content-creation-agent
-```
-
-Após deploy, testar em `/agencia/assistente`.
 
 Todas as stories com spec completa estão em `Projeto/Stories/` (este vault).
 
