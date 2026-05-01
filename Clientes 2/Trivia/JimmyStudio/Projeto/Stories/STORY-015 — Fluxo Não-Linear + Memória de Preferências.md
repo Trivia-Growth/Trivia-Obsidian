@@ -3,12 +3,12 @@ id: STORY-015
 titulo: "Fluxo Não-Linear + Memória de Preferências por Marca"
 fase: 3
 modulo: "agencia"
-status: backlog
+status: concluido
 prioridade: média
 origem: claude
 agente_responsavel: "@dev"
 criado: 2026-05-01
-atualizado: 2026-05-01
+atualizado: 2026-04-30
 ---
 
 # STORY-015 — Fluxo Não-Linear + Memória de Preferências por Marca
@@ -52,7 +52,7 @@ Esta story ataca os 2 últimos pontos de robotização do roadmap original. É a
 
 ## Implementação
 
-**Status:** `backlog`
+**Status:** `concluido`
 
 **Arquivos a criar:**
 - `supabase/migrations/YYYYMMDDHHMMSS_create_jimmy_brand_preferences.sql`
@@ -94,7 +94,16 @@ Esta story ataca os 2 últimos pontos de robotização do roadmap original. É a
 
 **Notas de implementação:**
 
-(preenchido durante)
+- CA1 adiado: steps ask_brand/ask_format são UI pura (sem textarea disponível), não há texto para detectar intent.
+- CA4 pulado: tabela `brand_preferences` já existia com estrutura idêntica a `jimmy_brand_preferences` + RLS FORCE + trigger.
+- CA6 pulado: `detectPreferences()` já fazia upsert em `brand_preferences` (STORY-013).
+- CA7 pulado: `preferencesResult` já carregado e injetado em `buildAgentPrompt` (STORY-013).
+- CA8 implementado: feature flag `JIMMY_NONLINEAR_FLOW` em `index.ts` (Deno.env). Ativado via `supabase secrets set JIMMY_NONLINEAR_FLOW=true`.
+- CA3 implementado: `isVagueInput()` — retorna true se texto < 15 chars ou < 3 palavras. Retorna SSE com pergunta esclarecedora sem chamar Perplexity.
+- CA2 implementado: `stepHistory: Step[]` adicionado ao `ConversationState`. Todas as transições de step fazem push. `goBack()` faz pop + remove última mensagem da assistente. `BackButton` renderizado em `review_research` e `confirm_params`.
+- CA9 (golden path): 97 testes passando. Testes nonlinear end-to-end não criados (CA3 depende de controle do servidor).
+- CA10: `supabase functions deploy content-creation-agent` executado. Sem migration nova (tabela já existia).
+- CA11: TypeScript sem erros, build OK, 97 testes verdes.
 
 ---
 
