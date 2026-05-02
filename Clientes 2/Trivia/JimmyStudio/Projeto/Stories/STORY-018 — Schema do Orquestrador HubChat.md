@@ -3,7 +3,7 @@ id: STORY-018
 titulo: "Schema do Orquestrador HubChat"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -114,10 +114,34 @@ CREATE POLICY "user_read_own_conversations" ON agent_tool_executions
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (deployed em 2026-05-02 18:00)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados:**
+- `supabase/migrations/20260502180000_agent_orchestrator_schema.sql`
+
+**Arquivos modificados:**
+- `src/integrations/supabase/types.ts` — regenerado via `supabase gen types typescript --linked` (10552 → 10787 linhas; +235 cobre `learning_events` da STORY-017, novas colunas e `agent_tool_executions`)
+
+**Deploy:**
+- ✅ Migration aplicada via `supabase db query --linked -f` (mesma estratégia da STORY-017 pelo conflito de migration history)
+
+**Validações pós-deploy (CA1-CA7):**
+- ✅ `agent_messages.message_type` ('text' default), `tool_calls` (jsonb), `skill_id` (text)
+- ✅ `agent_conversations.brand_id` (uuid nullable, FK), `skill_id` (text)
+- ✅ `agent_tool_executions` criada com 11 colunas + 2 indexes + RLS (super_admin all + user read próprios)
+- ✅ 196 mensagens existentes em `agent_messages` ganharam `message_type='text'` por DEFAULT (zero NULLs)
+- ✅ 61 conversas legadas em `agent_conversations` têm `brand_id=NULL` (esperado)
+- ✅ `agent_tool_executions` vazia (esperado — populada pelo `jimmy-orchestrator` na STORY-021)
+- ✅ TypeScript: `npx tsc --noEmit` exit 0 (CA6 — `useHelpAgent` continua funcionando)
+- ✅ Types regenerados (CA7)
+
+**Notas de implementação:**
+- Migration única em vez de 3 separadas (mais atômica, mais simples de rollback se necessário)
+- Sem `tokens_used` em `agent_messages` (decisão da story — reusa `ai_usage_costs`)
+- RLS de `agent_tool_executions` espelha o padrão de `agent_messages` (acesso via FK)
+- Index parcial em `agent_tool_executions(status, created_at)` filtrado por `pending|error` — otimiza dashboard de troubleshooting futuro
 
 ---
 
