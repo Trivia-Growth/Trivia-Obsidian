@@ -3,7 +3,7 @@ id: STORY-017
 titulo: "Foundation do Aprendizado Contínuo Multi-Sinal"
 fase: 3
 modulo: jimmy-learning
-status: pronto
+status: em-progresso
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -189,16 +189,51 @@ SELECT cron.schedule(
 
 ## Implementação
 
-> Preenchido pelo `@dev` após concluir.
+**Status:** `em-progresso` (deploy bloqueado por conflito de migration history — aguarda `supabase db pull`)
 
-**Status:** `pronto`
+**Branch/PR:** sem branch (mudanças locais aguardando)
 
-**Branch/PR:**
+**Arquivos criados:**
+- `supabase/migrations/20260502120000_learning_events.sql`
+- `supabase/migrations/20260502120100_brand_preferences_v2.sql`
+- `supabase/migrations/20260502120200_cron_process_learning_events.sql`
+- `supabase/functions/_shared/preference-analyzers.ts`
+- `supabase/functions/log-learning-event/index.ts`
+- `supabase/functions/log-public-learning-event/index.ts`
+- `supabase/functions/process-learning-events/index.ts`
 
-**Arquivos alterados:**
--
+**Arquivos modificados:**
+- `supabase/functions/analyze-content-edit/index.ts` (emit event antes do INSERT direto — mantido em paralelo)
+- `supabase/functions/content-creation-agent/index.ts` (substituído INSERT direto por emit event)
+- `src/pages/PublicApproval.tsx` (emit `link_feedback` event quando rejeição com feedback)
+- `src/hooks/useContentGeneration.ts` (emit `regen_copy_instruction` event)
+
+**Validações OK:**
+- TypeScript strict: `npx tsc --noEmit` sem erros
+- Migrations válidas sintaticamente
+- Edge functions seguem padrão do projeto (auth/Zod/CORS)
+
+**Edge functions deployadas (2026-05-02):**
+- ✅ `log-learning-event` (com JWT)
+- ✅ `log-public-learning-event` (--no-verify-jwt — público com share_token)
+- ✅ `process-learning-events` (worker para o cron)
+- ✅ `analyze-content-edit` (modificada — emit event)
+- ✅ `content-creation-agent` (modificada — emit event)
+
+**Pendente (manual):**
+- Aplicar SQL das 3 migrations via **Supabase Dashboard SQL Editor** (CLI inviável — 600+ comandos repair)
+  - Conteúdo concatenado em `/tmp/story-017-deploy.sql`
+  - Ou copiar individualmente das migrations criadas em `supabase/migrations/202605021201*`
+- Smoke test ponta-a-ponta (CA11) após SQL aplicado
+
+**Por que SQL Editor em vez de CLI:**
+Conflito profundo de migration history — local tem ~250 IDs que o remoto não tem; remoto tem ~400 IDs que o local não tem (Lovable aplicou via web UI em paralelo ao team). Tentativas tanto de `db push` quanto `db pull` falharam exigindo 600+ comandos `repair` individuais. Aplicar SQL direto é mais seguro nesse cenário e não impacta o histórico de migrations.
 
 **Notas de implementação:**
+- Decisão: criar `log-public-learning-event` separada (em vez de unificar com `log-learning-event` aceitando ambos os modos de auth) — mais limpa, mais segura
+- Wire-up de `analyze-content-edit` mantém INSERT direto em paralelo durante 1 sprint (validação de equivalência) — TODO criar STORY-017.1 pra remover depois
+- Worker usa "claim pattern" simples (UPDATE processed=true antes de processar) em vez de FOR UPDATE SKIP LOCKED — at-most-once é aceitável dado interval de 5min
+- `confidence_score` inicia em 0.5 para novas prefs e cresce +0.05 por evidência (cap em 1.0)
 
 ---
 
