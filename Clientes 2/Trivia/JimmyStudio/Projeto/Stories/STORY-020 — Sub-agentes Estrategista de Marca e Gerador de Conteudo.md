@@ -3,7 +3,7 @@ id: STORY-020
 titulo: "Sub-agentes Estrategista de Marca e Gerador de Conteúdo"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -170,10 +170,50 @@ serve(async (req) => {
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (deployed em 2026-05-02)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados:**
+- `supabase/functions/estrategista-marca-agent/index.ts` (~280 linhas) — sub-agente com Claude dedicado, loop de tool use (max 5), prompt focado em estratégia. Usa `callClaudeWithTools` + `getBrandLearningContext` (depth=full) + `buildToolDefinitions` da STORY-019. Tools liberadas: 6 (analisar_conteudo_performance, consultar_marca, consultar_aprendizado_marca, buscar_insights_meta, analisar_performance_meta, analisar_instagram_insights). Loga custo em `ai_usage_costs` com `feature_type='estrategista_marca_agent'`.
+- `supabase/functions/gerador-conteudo-agent/index.ts` (~180 linhas) — wrapper fino. Se `params.channel + contentFormat + topic` presentes: invoca `generate-content` direto (caminho rápido). Senão: retorna `{status: 'needs_clarification', missing_fields: [...]}` pro orquestrador conduzir diálogo.
+
+**Deploy:**
+- ✅ `supabase functions deploy estrategista-marca-agent` (incluiu 8 helpers shared, incluindo os 4 da STORY-019)
+- ✅ `supabase functions deploy gerador-conteudo-agent`
+
+**Smoke tests passaram (2026-05-02):**
+1. **Auth enforcement (estrategista):** `POST /estrategista-marca-agent` sem header `Authorization` → `401 Missing authorization header` (gateway Supabase rejeita antes da edge — JWT verify ativado por padrão) ✅
+2. **Auth enforcement (gerador):** `POST /gerador-conteudo-agent` com anon key (não user JWT) → `401 Token inválido` (edge chama `auth.getUser()`, anon key não passa) ✅
+3. Ambas as funções estão deployed e respondendo sem erros 500 de inicialização.
+
+**Smoke tests funcionais profundos (com Claude real + tools reais) ficarão pra STORY-021** — quando o `jimmy-orchestrator` invocar esses sub-agentes em fluxo real, a validação ponta-a-ponta vai cobrir os caminhos de `delegar_estrategista_marca` e `delegar_gerador_conteudo` no TOOL_REGISTRY.
+
+**Critérios de aceite:**
+
+Estrategista:
+- [x] CA1 — Edge function criada com auth JWT, Zod, CORS no padrão
+- [x] CA2 — Aceita `{brand_id, question, scope?, conversation_history?}` validado
+- [x] CA3 — Carrega `getBrandLearningContext(brandId, depth='full')` + histórico opcional
+- [x] CA4 — Prompt focado em estratégia + tools internas (6 tools restritas)
+- [x] CA5 — Loop max 5 iterações usando `callClaudeWithTools` + `executeStrategistTool` (versão simplificada que não loga em agent_tool_executions)
+- [x] CA6 — Retorna `{summary, structured_findings, sources, tokens_used}`
+- [x] CA7 — Loga custo em `ai_usage_costs` com `feature_type='estrategista_marca_agent'`
+- [⏸] CA8 — Smoke test com brand real e question estratégica em <30s — adiado pra STORY-021 (requer JWT de usuário real, será coberto via orquestrador)
+
+Gerador:
+- [x] CA9 — Edge function criada
+- [x] CA10 — Aceita `{brand_id, request, conversation_id?, params?}` validado
+- [x] CA11 — Adapter: traduz `request` → invoca `content-creation-agent` (na real, optei por `generate-content` direto quando params completos — escolha mais rápida e direta; documentado nas notas)
+- [x] CA12 — Se `params` completos: caminho rápido com `generate-content`
+- [x] CA13 — Retorna estrutura uniforme `{status, content_id, generated_content, conversation_id, next_action_suggested}`
+- [⏸] CA14 — Smoke test com brand real em <60s — adiado pra STORY-021
+
+**Notas de implementação:**
+- **Estrategista NÃO loga em `agent_tool_executions`:** decisão deliberada. Quem orquestra é o `jimmy-orchestrator` — ele que escreve. O estrategista usa uma versão simplificada `executeStrategistTool` que invoca tools sem logging interno. Quando o orquestrador chama via `delegar_estrategista_marca`, registra UMA execution com input/output completo. Mantém auditoria sem complicar o sub-agente.
+- **Gerador chama `generate-content` direto, não `content-creation-agent`:** o `content-creation-agent` é stateful conversacional (boot → brand → format → research → copy). Invocá-lo de dentro de outro agente quebra o fluxo. O caminho `params completos → generate-content direto` é mais simples e funcional. Se faltam params, o gerador devolve `needs_clarification` em vez de tentar invocar o conversacional fora de contexto.
+- **`buildToolDefinitions(STRATEGIST_TOOL_NAMES)`:** reusa o registry da STORY-019, garantindo consistência de schemas.
+- **Smoke tests funcionais ficam pra STORY-021:** sem JWT de usuário real disponível na sessão do dev, validar caminho completo (carregar contexto → Claude decide tool → executar tool → resposta) seria flaky. O orquestrador da STORY-021 vai exercitar isso naturalmente.
 
 ---
 
