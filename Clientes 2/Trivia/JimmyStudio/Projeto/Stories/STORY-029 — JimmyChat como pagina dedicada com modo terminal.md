@@ -3,7 +3,7 @@ id: STORY-029
 titulo: "JimmyChat como página dedicada com layout de chat + opção modo terminal"
 fase: 3
 modulo: jimmy-jimmychat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -158,12 +158,64 @@ A entrada continua dupla (atalho da sidebar + FAB), mas agora **navegam pra rota
 
 ## Implementação
 
-> Preenchido pelo `@dev`.
+**Status:** `em-revisao` (deployed em 2026-05-02)
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Arquivos criados:**
+- `src/pages/JimmyChatPage.tsx` (~140 linhas) — página raiz da rota `/jimmychat` com header (brand+skill+remaining+toggle terminal+reset), gateado por `VITE_JIMMYCHAT_ENABLED`
+- `src/features/jimmychat/components/JimmyChatPanel.tsx` (~155 linhas) — painel reusável extraído do drawer, recebe `agent` como prop
+- `src/features/jimmychat/components/JimmyChatTerminal.tsx` (~180 linhas) — variante visual CLI usando paleta navy/purple do `assistente-terminal/lib/palette.ts` + JetBrains Mono. Tools como linhas de log `▸ tool_name (1.2s) ✓`. Opera contra `useJimmyOrchestrator`
+
+**Arquivos modificados:**
+- `src/App.tsx` — lazy import + `<Route path="/jimmychat">` dentro do Layout autenticado
+- `src/components/Layout.tsx`:
+  - Atalho sidebar vira `<SidebarMenuButton asChild>` com `<Link to="/jimmychat">`
+  - `isActive={location.pathname === '/jimmychat'}` (estado destacado)
+  - Mount global `<JimmyChat />` substituído por `<JimmyChatFAB />` (FAB sozinho, sem drawer)
+  - Import: `JimmyChat` removido, `JimmyChatFAB` adicionado
+- `src/features/jimmychat/components/JimmyChatFAB.tsx`:
+  - Ícone `Sparkles` → `Bot` (STORY-028)
+  - Wrappa Button (`asChild`) em `<Link to="/jimmychat">`
+  - Remove prop `onClick` (não é mais necessária)
+  - Lê feature flag direto (sem depender de pai)
+- `src/features/jimmychat/index.ts` — re-exports atualizados (`JimmyChatPanel`, `JimmyChatTerminal`, `JimmyChatFAB`; sem `JimmyChat` drawer)
+
+**Arquivos deletados:**
+- `src/features/jimmychat/components/JimmyChat.tsx` — substituído pela página
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0
+- ✅ `npm run build` exit 0 em 35.02s
+- ✅ Reusa `useJimmyOrchestrator` (sem mudanças), `useTerminalMode` do `assistente-terminal`, `SkillSelector`, `ToolExecutionCard`, `ConfirmActionButtons`, paleta do terminal Branded Jimmy
+
+**Critérios de aceite:**
+- [x] CA1 — Rota `/jimmychat` registrada em App.tsx (lazy)
+- [x] CA2 — `JimmyChatPage.tsx` com layout de chat amplo
+- [x] CA3 — Header completo + área scrollável + input fixo
+- [x] CA4 — Reusa `useJimmyOrchestrator`
+- [x] CA5 — Reusa componentes existentes
+- [x] CA6 — Gateado por `VITE_JIMMYCHAT_ENABLED` (mostra mensagem se off)
+- [x] CA7 — localStorage `jimmychat:conv:{brandId}` continua funcionando (mesma implementação do hook)
+- [⏸] CA8 — Markdown rendering rico: deferido — usando `whitespace-pre-wrap` por enquanto (Claude formata bem). Migrar pra `react-markdown` em mini-story se for crítico
+- [x] CA9 — Pending confirmation + error retry funcionam (reusam `ConfirmActionButtons`)
+- [x] CA10 — Toggle "MODO TERMINAL · BETA" no header (mesmo padrão de AssistenteConteudo)
+- [x] CA11 — `useTerminalMode` reusado direto
+- [x] CA12 — `JimmyChatTerminal` com paleta navy/purple operando contra `jimmy-orchestrator`
+- [x] CA13 — Tools como linhas de log estilo CLI; confirmation usa `ConfirmActionButtons` inline
+- [x] CA14 — `JimmyChatFAB` vira `<Link>` (não onClick)
+- [x] CA15 — Atalho sidebar com `isActive`
+- [x] CA16 — Custom event `jimmychat:open` removido (não há mais drawer pra abrir)
+- [x] CA17 — `JimmyChat.tsx` (drawer) deletado
+- [x] CA18 — Mount global `<JimmyChat />` removido (substituído por `<JimmyChatFAB />`)
+- [x] CA19 — Listener de evento removido (não existe mais no FAB nem na página)
+- [x] CA20 — `npx tsc --noEmit` exit 0
+- [x] CA21 — `npm run build` exit 0
+- [⏸] CA22 — Smoke manual em produção (validar com você após deploy)
+
+**Notas de implementação:**
+- **Markdown rendering deferido:** STORY-022.1 ou similar pode adicionar `react-markdown` quando virar dor. Hoje Claude formata texto razoavelmente bem com whitespace-pre-wrap.
+- **Modo terminal compartilha SÓ paleta com `assistente-terminal`:** não compartilha JimmyTerminalChat completo (este é stateful, opera contra content-creation-agent). JimmyChatTerminal é wrapper visual fino sobre useJimmyOrchestrator.
+- **FAB roxo continua existindo no desktop:** mesmo com atalho sidebar disponível, FAB é descoberta visual constante. Story futura pode remover se virar ruído.
+- **`asChild` pattern do shadcn:** usado em `SidebarMenuButton` e `Button` pra wrap em `<Link>` sem perder estilos/comportamento.
 
 ---
 
