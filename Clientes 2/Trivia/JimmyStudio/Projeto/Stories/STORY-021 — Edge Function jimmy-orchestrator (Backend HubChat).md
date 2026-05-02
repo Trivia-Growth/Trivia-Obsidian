@@ -3,7 +3,7 @@ id: STORY-021
 titulo: "Edge Function jimmy-orchestrator (Backend HubChat)"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -218,10 +218,50 @@ serve(async (req) => {
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (deployed em 2026-05-02)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados:**
+- `supabase/functions/jimmy-orchestrator/index.ts` (~440 linhas) — orquestrador conversacional completo
+
+**Configuração:**
+- ✅ Secret `JIMMY_HUBCHAT_ENABLED=true` setado no Supabase via `supabase secrets set`
+
+**Deploy:**
+- ✅ `supabase functions deploy jimmy-orchestrator` — bundled com 9 helpers shared (incluindo agent-skills, agent-tools, anthropic-tools, brand-learning das STORY-019)
+
+**Smoke tests passaram (auth/feature flag):**
+1. **Sem auth:** `POST /jimmy-orchestrator` sem `Authorization` header → `401 Missing authorization header` (gateway Supabase) ✅
+2. **Anon key não-user:** com anon key como Bearer → `401 Token inválido` (orquestrador chama `auth.getUser()` e rejeita anon) ✅
+3. **Feature flag ativa:** edge não retornou `503` em nenhum teste, confirmando que `JIMMY_HUBCHAT_ENABLED=true` foi lido corretamente
+
+**Smoke tests funcionais profundos (CA15) ficam pra STORY-022** — quando o frontend (`useJimmyOrchestrator` + `JimmyHubChat`) estiver em produção, os 5 cenários (conversa simples, skill ads com tool, delegação estrategista, delegação gerador, confirmação destrutiva) serão exercitados naturalmente pelo usuário.
+
+**Critérios de aceite:**
+- [x] CA1 — Edge function com auth JWT, Zod, CORS no padrão
+- [x] CA2 — Aceita `{message, conversation_id?, brand_id, forced_skill_id?, confirmed?, confirmed_tool_call?}` validado
+- [x] CA3 — Rate limit via `check_agent_interaction_limit` RPC
+- [x] CA4 — Cria `agent_conversations` populando `brand_id`, `skill_id` (se forçada), `org_id`
+- [x] CA5 — Carrega últimas 20 mensagens via `loadHistory` + `getBrandLearningContext` em paralelo
+- [x] CA6 — `forced_skill_id` OR `selectSkill` (auto via Claude leve)
+- [x] CA7 — Loop max 8 iterações, `PER_TOOL_TIMEOUT_MS=30s` (Promise.race), `TOTAL_TIMEOUT_MS=120s` guard antes de cada iteração
+- [x] CA8 — `requires_confirmation` intercepta loop, retorna `pending_confirmation: {tool_use_id, tool_name, params, summary}`. Próxima request com `confirmed: true, confirmed_tool_call` executa direto e cai no loop normal pra Claude formular resposta final
+- [x] CA9 — Persiste `agent_messages` com `message_type` (`tool_call` quando há pending), `tool_calls` (array de execuções), `skill_id`
+- [x] CA10 — `executeAgentTool` (STORY-019) persiste cada execução em `agent_tool_executions`
+- [x] CA11 — Loga custo total em `ai_usage_costs` com `feature_type='jimmy_orchestrator'`, `reference_type='agent_message'`, `reference_id=message_id`
+- [x] CA12 — `detectsInlineFeedback` heurística com 5 patterns regex; emite `learning_event` `event_type='inline_feedback'` quando detecta
+- [x] CA13 — Feature flag `JIMMY_HUBCHAT_ENABLED` retorna 503 quando off (testado: flag está on → não 503)
+- [x] CA14 — Retorna `{response, conversation_id, message_id, skill_id, action, pending_confirmation, remaining_interactions, tool_executions, delegation_suggested, reqId}`
+- [⏸] CA15 — Smoke tests funcionais ponta-a-ponta — adiados pra STORY-022 (frontend exercita)
+
+**Notas de implementação:**
+- **`resolveSkill` mapeia delegações suggeridas pra skill `analista_conteudo`:** quando `selectSkill` retorna `delegate_strategist` ou `delegate_generator`, uso a skill que tem essas tools de delegação no array (analista_conteudo). Campo `delegation_suggested` na response indica ao frontend que pode UX-mente sinalizar "conectando com Estrategista..." enquanto o tool é executado pelo Claude no próximo turno.
+- **`pendingConfirmation` é stateless:** estado fica no histórico de mensagens (persistido em `agent_messages`). Próxima request precisa enviar `confirmed: true, confirmed_tool_call: {...}` explícito — sem servidor stateful, sem race conditions.
+- **Caminho confirmado pula `selectSkill`:** quando `confirmed_tool_call` está presente, executa direto sem re-classificar intenção. Mais rápido, menos custo.
+- **Per-tool timeout via `Promise.race`:** garante que tool individual travada (Meta API lenta, etc.) não estoura o limite total de 150s do edge runtime.
+- **Guard de timeout total:** verifica `Date.now() - startTime > 115s` antes de cada iteração — se vai estourar, sai do loop graciosamente em vez de morrer com timeout do runtime.
+- **`tool_executions` no response retornado pra UI:** array com `{tool_name, status, duration_ms, error?}` permite UI mostrar quais tools rodaram e quanto demoraram (`ToolExecutionCard` da STORY-022).
 
 ---
 
