@@ -3,7 +3,7 @@ id: STORY-026
 titulo: "Acesso ao HubChat: atalho no topo da sidebar + remoção do FAB no mobile"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: média
 origem: claude
 agente_responsavel: ""
@@ -147,12 +147,40 @@ const enabled = import.meta.env.VITE_JIMMY_HUBCHAT_ENABLED === 'true';
 
 ## Implementação
 
-> Preenchido pelo `@dev`.
+**Status:** `em-revisao` (deployed em 2026-05-02)
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Branch/PR:** sem branch (push direto em main)
+
+**Arquivos modificados:**
+- `src/features/hubchat/components/HubChatFAB.tsx` — adicionada classe `hidden md:flex` (oculta < 768px)
+- `src/features/hubchat/components/JimmyHubChat.tsx` — useEffect ouvindo `window event 'hubchat:open'` → `setOpen(true)`
+- `src/components/Layout.tsx` — bloco SidebarMenu com item HubChat (Sparkles roxo + Badge "Beta") como PRIMEIRO item da `BaseSidebarContent`, dispara `CustomEvent('hubchat:open')` no click. Gateado por `import.meta.env.VITE_JIMMY_HUBCHAT_ENABLED === 'true'`
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0
+- ✅ `npm run build` exit 0 em 3m41s
+- ✅ Reusa `Sparkles`, `Badge`, `Separator`, `SidebarMenu*` já importados em Layout.tsx (zero novos imports)
+- ✅ Custom event pattern alinhado com `jimmy:reset-conversation` em AssistenteConteudo.tsx
+
+**Critérios de aceite:**
+- [x] CA1 — Item HubChat é o primeiro do `BaseSidebarContent`, antes do "Jimmy Ads Group"
+- [x] CA2 — Visual: Sparkles roxo (`text-purple-600`) + label "HubChat" + Badge "Beta" outline roxo
+- [x] CA3 — Click dispara `CustomEvent('hubchat:open')` que abre o drawer via listener
+- [x] CA4 — Respeita `isCollapsed` (mostra só ícone + tooltip "HubChat") e expansão mobile (Sheet do shadcn)
+- [⏸] CA5 — Estado "ativo" quando drawer aberto: NÃO implementado (`SidebarMenuButton` aceita `isActive` mas exigiria expor estado do drawer; não-bloqueante; pode entrar como mini-fix se necessário)
+- [x] CA6 — Visível somente quando `VITE_JIMMY_HUBCHAT_ENABLED=true`
+- [x] CA7 — `HubChatFAB` com `hidden md:flex` — oculto em < 768px
+- [x] CA8 — Desktop continua mostrando o FAB
+- [x] CA9 — Mobile: atalho da sidebar é a única entrada
+- [x] CA10 — `npx tsc --noEmit` exit 0
+- [x] CA11 — `npm run build` exit 0
+- [⏸] CA12 — Smoke manual mobile/desktop — fica pra você validar no Netlify após deploy
+
+**Notas de implementação:**
+- **Custom event vs Context (escolhido A da story):** funciona perfeitamente — Layout dispara, JimmyHubChat ouve. Zero refactor extra.
+- **`hidden md:flex` substitui `flex`:** no FAB original tinha apenas `flex items-center justify-center`. Agora `hidden md:flex` faz papel duplo (display + breakpoint).
+- **Item da sidebar segue padrão de `SidebarMenuButton`:** mantém UX consistente (tooltip, hover, etc) mas com paleta roxa pra reforçar identidade do HubChat.
+- **CA5 deixado pendente:** marcar item como ativo enquanto drawer está aberto exige expor estado via segundo CustomEvent ou Context. Não-bloqueante. Se virar pedido, ~10 linhas pra resolver.
 
 ---
 
