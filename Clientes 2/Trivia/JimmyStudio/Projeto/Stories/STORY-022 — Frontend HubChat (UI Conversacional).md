@@ -3,7 +3,7 @@ id: STORY-022
 titulo: "Frontend HubChat (UI Conversacional)"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -213,10 +213,65 @@ export function JimmyHubChat() {
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (criado em 2026-05-02)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados (`src/features/hubchat/`):**
+- `types/index.ts` (~45 linhas) — `HubChatMessage`, `ToolExecution`, `PendingConfirmation`, `OrchestratorResponse`, `SkillId`, `ForcedSkillSelection`
+- `lib/tool-display-names.ts` (~50 linhas) — `TOOL_DISPLAY` mapping de 19 tools com label + ícone emoji + categoria
+- `hooks/useJimmyOrchestrator.ts` (~190 linhas) — hook completo com state, persistência de `conversation_id` em localStorage por brand, `sendMessage`, `confirmAction`, `cancelAction`, `resetConversation`
+- `components/SkillSelector.tsx` (~40 linhas) — pills com 3 opções (Auto, Mídia Paga, Conteúdo)
+- `components/ToolExecutionCard.tsx` (~70 linhas) — card visual de execução: ícone, label, status (success/error/pending), duração
+- `components/ConfirmActionButtons.tsx` (~60 linhas) — card amber com summary do backend + botões Confirmar/Cancelar
+- `components/HubChatFAB.tsx` (~35 linhas) — FAB roxo com Sparkles em `bottom-24 right-6` (acima do help-agent)
+- `components/JimmyHubChat.tsx` (~210 linhas) — componente raiz: Sheet (side=right), header com brand select + skill selector + remaining badge + reset/close, ScrollArea com mensagens + tool cards + pending confirmation + error retry, Textarea + Send com Enter handler
+- `index.ts` — re-exports públicos
+
+**Arquivos modificados:**
+- `src/components/Layout.tsx` — adiciona `import { JimmyHubChat }` + renderiza `<JimmyHubChat />` ao lado do `<HelpAgentWidget />`
+- `.env` — adiciona `VITE_JIMMY_HUBCHAT_ENABLED="true"` (Netlify env precisará setar igual em produção)
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0 (TypeScript strict, zero `any`)
+- ✅ `npm run build` exit 0 em 24.65s — sem erros de Vite/build
+- ✅ Reusa shadcn (Sheet, Button, Textarea, Badge, Skeleton, ScrollArea, Card, Tooltip)
+- ✅ Reusa `useAuth`, `useAgencyBrands` (padrão do projeto)
+- ✅ Reusa cliente `supabase` de `@/integrations/supabase/client`
+
+**Critérios de aceite:**
+- [x] CA1 — Hook exporta `{messages, sendMessage, isLoading, error, conversationId, pendingConfirmation, confirmAction, cancelAction, remainingInteractions, toolExecutions, resetConversation, forcedSkill, setForcedSkill, delegationSuggested}`
+- [x] CA2 — Hook chama `jimmy-orchestrator` via `supabase.functions.invoke`, persiste `conversation_id` em `localStorage` por brand (`hubchat:conv:{brandId}`)
+- [x] CA3 — Drawer renderiza `Sheet side="right"` com `w-full sm:max-w-md`
+- [x] CA4 — Header com nome "HubChat · Jimmy" + select de marca + SkillSelector + badge de interações restantes + botão reset/close
+- [x] CA5 — `SkillSelector` com 3 opções (Auto/Mídia Paga/Conteúdo). Delegações (Estrategista/Gerador) NÃO aparecem como opção pq são tools chamadas pelo agente, não modos do orquestrador
+- [x] CA6 — `ToolExecutionCard` mostra ícone + label + status + duração
+- [x] CA7 — `ConfirmActionButtons` aparece quando `pendingConfirmation` está presente
+- [⏸] CA8 — Tabelas markdown → shadcn Table: NÃO implementado nessa story (whitespace-pre-wrap renderiza markdown raw mas tabelas ficam como texto). Recomendo abrir mini-story se for crítico — requer `react-markdown` ou parser custom
+- [⏸] CA9 — Imagens inline lazy load: NÃO implementado (depende do CA8 — markdown rendering)
+- [x] CA10 — Textarea + botão Send (Enter envia, Shift+Enter quebra linha)
+- [x] CA11 — Badge de interações restantes no header; input desabilitado se `remainingInteractions === 0`
+- [x] CA12 — Erro com botão "Tentar novamente" que reenvia última mensagem do user
+- [x] CA13 — Feature flag `VITE_JIMMY_HUBCHAT_ENABLED` gateia render — se off, `JimmyHubChat` retorna null
+- [x] CA14 — FAB no canto direito (`bottom-24 right-6`) acima do help-agent (`bottom-6 right-6`), ícone `Sparkles` roxo pra distinguir
+- [⏸] CA15 — Smoke tests manuais: precisam ser executados pelo usuário no preview (instruções abaixo)
+
+**Smoke tests manuais a fazer (CA15):**
+1. Abrir `/agencia` (qualquer página com Layout) → ver FAB roxo em `bottom-24 right-6`
+2. Clicar FAB → drawer abre à direita com select de marca + skill pills
+3. Selecionar marca + skill "Auto" + perguntar "Como estão minhas campanhas Meta essa semana?" → ver resposta + tool cards
+4. Pedir "pausa essa campanha X" → `ConfirmActionButtons` aparece com summary do backend → confirmar → ver execução
+5. Pedir "cria post sobre Y" → ver delegação pro Gerador (skill="analista_conteudo" + delegation_suggested="gerador" no response)
+6. Trocar de skill mid-conversation → próxima mensagem usa nova skill
+7. Fechar e reabrir → conversa persiste do `conversation_id` em localStorage
+8. Clicar reset (RefreshCw no header) → começa nova conversa
+
+**Notas de implementação:**
+- **`auto-select primeira marca` no mount:** UX melhora, evita estado vazio sem brand selecionado. Usuário pode trocar via select.
+- **`whitespace-pre-wrap` em vez de markdown parser:** decisão pragmática pra Fase 1 — Claude já formata texto razoavelmente bem com quebras de linha. Tabelas vêm como markdown raw (sintaticamente corretas mas sem render visual). Migrar pra `react-markdown` pode ser STORY-022.1.
+- **FAB roxo distinto do help-agent (azul/primary):** distingue visualmente os dois agentes — help é suporte do produto, hub é orquestrador de marketing.
+- **Sem error boundary local explícito:** depende do error boundary global do app. Se virar problema, encapsular `<JimmyHubChat />` em `<ErrorBoundary>` no Layout.
+- **Feature flag também precisa ser setada no Netlify** pra produção: `VITE_JIMMY_HUBCHAT_ENABLED=true` nas env vars do Netlify Dashboard.
 
 ---
 
