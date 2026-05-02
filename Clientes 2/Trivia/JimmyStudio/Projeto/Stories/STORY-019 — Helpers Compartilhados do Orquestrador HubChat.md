@@ -3,7 +3,7 @@ id: STORY-019
 titulo: "Helpers Compartilhados do Orquestrador HubChat"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -201,10 +201,40 @@ export async function getBrandLearningContext(
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (criados em 2026-05-02)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados:**
+- `supabase/functions/_shared/anthropic-tools.ts` (~330 linhas) — `callClaudeWithTools` aceitando interface estilo Anthropic, traduzindo internamente pro formato OpenAI usado pelo OpenRouter (consistência com `anthropic.ts`). Helpers `buildAssistantMessage` e `buildToolResultsMessage` pra construir histórico multi-turno.
+- `supabase/functions/_shared/agent-skills.ts` (~180 linhas) — 2 skills (`analista_ads`, `analista_conteudo`) com system_prompt template + tools[] + temperature. `renderSystemPrompt(skill, ctx)` substitui placeholders. `selectSkill(message)` faz 1 chamada Claude leve (max 20 tokens, temp 0.1) pra inferir intenção e retornar skill OU delegação OU none.
+- `supabase/functions/_shared/agent-tools.ts` (~480 linhas) — `TOOL_REGISTRY` com **17 tools**: 6 Meta Ads, 4 Google Ads, 5 social orgânico, 2 leitura direta DB (`consultar_marca`, `consultar_aprendizado_marca`), 2 delegações (`delegar_estrategista_marca`, `delegar_gerador_conteudo`). `executeAgentTool` valida Zod, intercepta `requires_confirmation`, INSERT em `agent_tool_executions` (status=running) → invoca edge OR inline_handler → UPDATE com status final + duration_ms + output.
+- `supabase/functions/_shared/brand-learning.ts` (~210 linhas) — `getBrandLearningContext(supabase, brandId, options)` agrega DNA (lean ou full) + top N preferências + detecção de contradições simples (3 pares conhecidos: tone, emoji, length). `renderLearningBlock(ctx)` formata pra injeção em system prompt.
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0 (TypeScript strict, zero `any` nos helpers)
+- ✅ Reusa `DEFAULT_CLAUDE_MODEL` e `ClaudeMessage` de `anthropic.ts` (sem duplicar constantes)
+- ✅ Reusa `getLeanBrandDNA` em `brand-learning.ts` quando `depth='lean'`
+- ✅ TOOL_REGISTRY mapeia somente edges existentes em produção (exceção: `delegar_*` apontam pras edges criadas na STORY-020 — esperado)
+
+**Critérios de aceite:**
+- [x] CA1 — `callClaudeWithTools` retorna `{content, stopReason, toolUses, text, usage, raw_id}`
+- [x] CA2 — Tools enviadas via OpenRouter no formato OpenAI (function_calling), interface externa em formato Anthropic
+- [x] CA3 — `SKILLS` array tipado com 2 skills
+- [x] CA4 — `selectSkill` retorna `{kind: 'skill'|'delegate_*'|'none'}` via 1 chamada Claude leve
+- [x] CA5 — `TOOL_REGISTRY` com 17 tools (excede a meta de 12-15)
+- [x] CA6 — `executeAgentTool` valida Zod, persiste em `agent_tool_executions`, captura duração
+- [x] CA7 — Tools com `requires_confirmation: true` retornam `{kind: 'requires_confirmation', summary}` se `!ctx.confirmed`
+- [x] CA8 — `getBrandLearningContext` retorna 5 campos + stats
+- [x] CA9 — Reaproveita `getLeanBrandDNA` quando `depth='lean'`
+- [ ] CA10 — Testes unitários: NÃO escritos nesta story (sem framework de teste pra Deno edge functions configurado no repo). Recomendo abrir mini-story se for crítico.
+- [x] CA11 — TypeScript strict, zero `any` nos novos arquivos
+
+**Notas de implementação:**
+- **Decisão chave: usar formato OpenAI internamente.** O `anthropic.ts` existente já usa OpenRouter no formato OpenAI. Manter consistência com isso (em vez de migrar pra `/messages` da Anthropic) evita refatorar 3 edges em produção. Interface externa fica em formato Anthropic (mais natural pra Claude tool use) com tradução transparente.
+- **`selectSkill` adiciona ~1-2s de latência no primeiro turno** — aceitável pra Fase 1. Orquestrador pode pular essa chamada quando `forced_skill_id` é fornecido pelo usuário.
+- **Tools de delegação (`delegar_*`) já estão no registry** apesar das edges não existirem ainda — vão ser criadas na STORY-020. Chamar antes vai dar erro 404 capturado pelo `executeAgentTool` (status='error', error_message persistido).
+- **Detecção de contradições é heurística leve (3 pares)** — Fase 2 pode evoluir pra algo LLM-based ou mais granular.
 
 ---
 
