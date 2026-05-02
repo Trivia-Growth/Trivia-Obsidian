@@ -3,7 +3,7 @@ id: STORY-028
 titulo: "Trocar ícone do FAB do JimmyChat de Sparkles para Bot"
 fase: 3
 modulo: jimmy-jimmychat
-status: pronto
+status: em-revisao
 prioridade: baixa
 origem: claude
 agente_responsavel: ""
@@ -67,12 +67,12 @@ Mudança 1-line:
 
 ## Implementação
 
-> Preenchido pelo `@dev`.
+**Status:** `em-revisao` (entregue junto com STORY-029 no mesmo commit)
 
-**Status:** `pronto`
-**Branch/PR:**
 **Arquivos alterados:**
-**Notas:**
+- `src/features/jimmychat/components/JimmyChatFAB.tsx` — `Sparkles` → `Bot` no import e no JSX
+
+**Notas:** Mudança incluída na refatoração maior da STORY-029. Sidebar mantém `Sparkles` conforme decisão da story.
 
 ---
 
