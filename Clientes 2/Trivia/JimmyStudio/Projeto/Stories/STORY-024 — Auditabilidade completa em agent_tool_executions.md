@@ -3,7 +3,7 @@ id: STORY-024
 titulo: "Auditabilidade completa em agent_tool_executions"
 fase: 3
 modulo: jimmy-hubchat
-status: pronto
+status: em-revisao
 prioridade: baixa
 origem: claude
 agente_responsavel: ""
@@ -123,10 +123,44 @@ ALTER TABLE agent_tool_executions ADD CONSTRAINT agent_tool_executions_status_ch
 
 ## Implementação
 
-**Status:** `pronto`
-**Branch/PR:**
-**Arquivos alterados:**
-**Notas:**
+**Status:** `em-revisao` (deployed em 2026-05-02)
+
+**Branch/PR:** sem branch (mudanças diretas)
+
+**Arquivos criados:**
+- `supabase/migrations/20260502190000_agent_tool_executions_status_v2.sql` — DROP + ADD CHECK constraint incluindo `requires_confirmation`
+
+**Arquivos modificados:**
+- `supabase/functions/_shared/agent-tools.ts:490-575` — refactor de `executeAgentTool`: INSERT movido pra ANTES de Zod e do gate de confirmação. UPDATEs adicionados nos 2 early-returns (Zod fail, requires_confirmation). Status pending → running antes da execução de fato. Comportamento externo preservado (return shapes idênticos).
+
+**Deploy:**
+- ✅ Migration aplicada via `supabase db query --linked -f`
+- ✅ `supabase functions deploy jimmy-orchestrator` (rebundle com agent-tools.ts atualizado)
+- ✅ `npx tsc --noEmit` exit 0
+
+**Smoke tests passaram (2026-05-02):**
+
+| Caso | Conv ID | Persistido em agent_tool_executions |
+|---|---|---|
+| **CA5 — Zod fail** (Claude tentou `consultar_marca` com brand_id não-UUID) | `efc285cc-...` | `tool_name=consultar_marca, status=error, duration_ms=29, error="Parâmetros inválidos..."` ✅ |
+| **CA6 — requires_confirmation** (Claude invocou `pausar_campanha_meta` com `forced_skill_id=analista_ads`) | `657aea57-...` | `tool_name=pausar_campanha_meta, status=requires_confirmation, duration_ms=22` ✅ |
+
+Antes da story essas linhas NÃO existiriam — confirmando que o fix entregou auditabilidade completa.
+
+**Critérios de aceite:**
+- [x] CA1 — INSERT antes da validação Zod com `status='pending'`
+- [x] CA2 — Se Zod fail: UPDATE com `status='error'`, `error_message`, `duration_ms`
+- [x] CA3 — Se requires_confirmation: UPDATE com `status='requires_confirmation'`, `duration_ms`
+- [x] CA4 — Tools que executam de fato preservam UPDATE final pra success/error (status pending → running → success/error)
+- [x] CA5 — Smoke test Zod fail validado em produção
+- [x] CA6 — Smoke test requires_confirmation validado em produção
+- [x] CA7 — TypeScript strict + redeploy OK
+
+**Notas de implementação:**
+- **3 estados extras** agora possíveis em `agent_tool_executions.status`: `pending` (transiente — input recebido, ainda não validado), `requires_confirmation` (parou no gate destrutivo), `error` agora também cobre Zod fail (não só falha de execução)
+- **`input_params` em duas formas:** quando Zod fail, persistimos o input cru `{_raw: params}`. Quando passa Zod, atualizamos pra `validParams` no UPDATE de pending → running. Permite auditar exatamente o que Claude mandou mesmo se for inválido
+- **`duration_ms` em early-returns** mede só até o gate (29ms Zod, 22ms confirmação). Mesmo pequeno é útil pra detectar Zod patológicos ou checks pesados no futuro
+- **Sub-agentes não afetados:** o `estrategista-marca-agent` usa sua própria `executeStrategistTool` (sem logging) — fora do escopo dessa story
 
 ---
 
