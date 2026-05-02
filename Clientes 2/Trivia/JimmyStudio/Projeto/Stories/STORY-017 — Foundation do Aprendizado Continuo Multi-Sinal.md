@@ -3,7 +3,7 @@ id: STORY-017
 titulo: "Foundation do Aprendizado Contínuo Multi-Sinal"
 fase: 3
 modulo: jimmy-learning
-status: em-progresso
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -220,14 +220,34 @@ SELECT cron.schedule(
 - ✅ `analyze-content-edit` (modificada — emit event)
 - ✅ `content-creation-agent` (modificada — emit event)
 
-**Pendente (manual):**
-- Aplicar SQL das 3 migrations via **Supabase Dashboard SQL Editor** (CLI inviável — 600+ comandos repair)
-  - Conteúdo concatenado em `/tmp/story-017-deploy.sql`
-  - Ou copiar individualmente das migrations criadas em `supabase/migrations/202605021201*`
-- Smoke test ponta-a-ponta (CA11) após SQL aplicado
+**Migrations aplicadas (2026-05-02 15:51):**
+Aplicadas via `supabase db query --linked -f /tmp/story-017-deploy.sql` (não via `db push` por conflito de migration history). Validações pós-deploy:
+- ✅ `learning_events` com 14 colunas + indexes + RLS confirmadas via `information_schema`
+- ✅ `brand_preferences.confidence_score` (DEFAULT 0.5), `validation_status` (DEFAULT 'detected'), `evidence_event_ids` (DEFAULT [])
+- ✅ Cron `process-learning-events-5min` ativo com schedule `*/5 * * * *`
 
-**Por que SQL Editor em vez de CLI:**
-Conflito profundo de migration history — local tem ~250 IDs que o remoto não tem; remoto tem ~400 IDs que o local não tem (Lovable aplicou via web UI em paralelo ao team). Tentativas tanto de `db push` quanto `db pull` falharam exigindo 600+ comandos `repair` individuais. Aplicar SQL direto é mais seguro nesse cenário e não impacta o histórico de migrations.
+**Smoke test ponta-a-ponta (CA11) — PASSOU:**
+1. INSERT manual em `learning_events` com `event_type='regen_copy_instruction'` e payload `"deixa mais informal e tira os emojis, prefiro texto curto e direto"` (event id `069680f0-019e-4566-8d3b-85cd797ab67f`)
+2. POST ao worker `process-learning-events` retornou `{processed:1, preferences_created:2, failed:0}`
+3. `learning_events.processed=true, processed_at='2026-05-02 15:53:05'` confirmado
+4. `brand_preferences` ganhou 2 registros pra brand `9953c2ba-...` (Urânia):
+   - `category=emoji`, `preference="sem emojis"`, `confidence=0.5`, `evidence_event_ids=[069680f0-...]`
+   - `category=tone`, `preference="tom informal e descontraído"`, `confidence=0.5`, `evidence_event_ids=[069680f0-...]`
+5. Limitação conhecida da heurística regex: padrão "texto curto" não foi capturado (regex requer "mais X" e o input usou "prefiro X"). Esperado pra Fase 1 — Fase 2 implementa analyzer LLM-based.
+
+**Critérios de aceite:**
+- [x] CA1 — Tabela `learning_events` criada
+- [x] CA2 — `brand_preferences` estendida sem quebrar leitura atual
+- [x] CA3 — `log-learning-event` deployado (auth+Zod+202)
+- [x] CA4 — `process-learning-events` deployado e funcional (claim pattern + UPSERT)
+- [x] CA5 — Cron pg_cron ativo
+- [x] CA6 — Helper `_shared/preference-analyzers.ts` com 4 analyzers + router
+- [x] CA7 — `analyze-content-edit` emite event (mantém INSERT direto em paralelo)
+- [x] CA8 — `content-creation-agent.detectPreferences` substitui INSERT por event
+- [x] CA9 — `PublicApproval` emite `link_feedback` via `log-public-learning-event`
+- [x] CA10 — `useContentGeneration` emite `regen_copy_instruction` event
+- [x] CA11 — Smoke test passou (com limitação documentada)
+- [ ] CA12 — Backlog monitorado: cron de alerta NÃO foi configurado nesta story (sem ferramenta de monitoramento ativa) — recomendado em STORY futura
 
 **Notas de implementação:**
 - Decisão: criar `log-public-learning-event` separada (em vez de unificar com `log-learning-event` aceitando ambos os modos de auth) — mais limpa, mais segura
