@@ -9,7 +9,7 @@ tags: [projeto, dashboard, acompanhamento]
 
 ---
 
-## 🔴 Em Progresso
+## Em Progresso
 
 ```dataview
 TABLE titulo, modulo, agente_responsavel, atualizado AS "Atualizado"
@@ -20,7 +20,7 @@ SORT atualizado DESC
 
 ---
 
-## 🟡 Em Review (aguardando QA)
+## Em Review (aguardando QA)
 
 ```dataview
 TABLE titulo, modulo, agente_responsavel
@@ -30,40 +30,29 @@ WHERE status = "em-review"
 
 ---
 
-## 🟢 Prontas para iniciar — Fase 1
+## Backlog
 
 ```dataview
-TABLE titulo, modulo, prioridade
+TABLE titulo, modulo, prioridade, fase
 FROM "Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories"
-WHERE status = "pronto" AND fase = 1
-SORT prioridade ASC
+WHERE status = "backlog"
+SORT fase ASC, prioridade ASC
 ```
 
 ---
 
-## 📋 Backlog — Fase 1
+## Concluídas
 
 ```dataview
-TABLE titulo, modulo, prioridade
+TABLE titulo, modulo, fase, atualizado AS "Concluída em"
 FROM "Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories"
-WHERE status = "backlog" AND fase = 1
-SORT prioridade ASC
+WHERE status = "done"
+SORT fase ASC, id ASC
 ```
 
 ---
 
-## ✅ Concluídas
-
-```dataview
-TABLE titulo, modulo, atualizado AS "Concluída em"
-FROM "Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories"
-WHERE status = "concluido"
-SORT atualizado DESC
-```
-
----
-
-## ⛔ Bloqueadas
+## Bloqueadas
 
 ```dataview
 TABLE titulo, modulo
@@ -81,3 +70,16 @@ FROM "Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories"
 WHERE file.name != "_Template — Story"
 GROUP BY fase
 ```
+
+---
+
+## Status Geral
+
+| Métrica | Valor |
+|---------|-------|
+| Total de stories | 12 |
+| Concluídas | 12 |
+| Em progresso | 0 |
+| Backlog | 0 |
+| Fase atual | 3 (próxima) |
+| Itens pendentes | pg_cron, Whisper, tools do agente |

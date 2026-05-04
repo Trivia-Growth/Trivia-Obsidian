@@ -1,15 +1,15 @@
 ---
 tags: [projeto, sprint]
-sprint: 1
+sprint: 3
 inicio: 2026-05-04
 fim: ""
-objetivo: "Infraestrutura + Auth + Agente Core básico"
+objetivo: "Inteligência Financeira + Canais Alternativos"
 ---
 
-# Sprint 1 — Fundação Técnica
+# Sprint 3 — Inteligência Financeira + Canais
 
-**Período:** A definir
-**Objetivo:** Base técnica no lugar, família cadastrada e agente conversando.
+**Período:** 2026-05-04 — em andamento
+**Objetivo:** Metas, investimentos, WhatsApp, inteligência proativa e config de LLMs.
 
 ---
 
@@ -17,31 +17,55 @@ objetivo: "Infraestrutura + Auth + Agente Core básico"
 
 | Story | Status | Agente |
 |-------|--------|--------|
-| [[STORY-001 — Setup Infraestrutura]] | pronto | — |
-| [[STORY-002 — Auth + Multi-família]] | backlog | — |
-| [[STORY-003 — Agente Core + Chat Web]] | backlog | — |
+| [[STORY-008 — Objetivos e Metas]] | done | @dev |
+| [[STORY-009 — Investimentos]] | done | @dev |
+| [[STORY-010 — WhatsApp Z-API]] | done | @dev |
+| [[STORY-011 — Inteligência Proativa]] | done | @dev |
+| [[STORY-012 — Config LLMs OpenRouter]] | done | @dev |
+
+---
+
+## Sprints Anteriores
+
+### Sprint 1 — Fundação Técnica ✅
+
+| Story | Status |
+|-------|--------|
+| [[STORY-001 — Setup Infraestrutura]] | done |
+| [[STORY-002 — Auth + Multi-família]] | done |
+| [[STORY-003 — Agente Core + Chat Web]] | done |
+
+### Sprint 2 — Extratos e Orçamento ✅
+
+| Story | Status |
+|-------|--------|
+| [[STORY-004 — Extratos Upload e Parser]] | done |
+| [[STORY-005 — Extratos Categorização e Revisão]] | done |
+| [[STORY-006 — Orçamento Mensal]] | done |
+| [[STORY-007 — Dashboard Central]] | done |
 
 ---
 
 ## Critério de conclusão do sprint
 
-- [ ] Supabase criado, AIOX instalado no repo, Netlify conectado
-- [ ] Lucas e Bianca conseguem fazer login via magic link
-- [ ] Família "Azevedo" criada com isolamento RLS validado
-- [ ] Chat com o agente funcionando no browser
-- [ ] Agente lembra de informações entre sessões (memória de longo prazo)
+- [x] Metas criadas com progresso e contribuições
+- [x] Investimentos cadastrados com dashboard de alocação
+- [x] WhatsApp webhook funcional com comandos rápidos
+- [x] Score de Saúde Financeira e Score de Decisão
+- [x] Config de LLMs com BYOK por família
+- [ ] pg_cron para automações semanais (dependência infra — Supabase Pro)
+- [ ] Mensagens proativas via WhatsApp (depende pg_cron)
+- [ ] Áudio via Whisper no WhatsApp (pendente)
 
 ---
 
 ## Impedimentos
 
-> Liste aqui qualquer bloqueador que esteja impedindo o progresso.
-
-- Aguardando criação do projeto no Supabase
-- Aguardando instalação do AIOX no repositório
+- pg_cron requer plano Supabase Pro — bloqueia automações proativas
+- Transcrição de áudio (Whisper) aguardando decisão de provider
 
 ---
 
 ## Próximo Sprint (previsão)
 
-Sprint 2 — Extratos e Orçamento (STORY-004, STORY-005, STORY-006)
+Sprint 4 — Integração Agente + Polimento (tools do agente, Open Finance, revisão mensal automatizada)

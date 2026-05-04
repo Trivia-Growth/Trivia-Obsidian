@@ -8,41 +8,50 @@ Lista completa de stories organizadas por fase.
 
 ---
 
-## Fase 1 — Fundação
+## Fase 1 — Fundação ✅
 
 | ID | Story | Módulo | Status | Prioridade |
 |----|-------|--------|--------|------------|
-| [[STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
-| [[STORY-002 — Auth + Multi-família\|002]] | Auth + Multi-família | M11 Segurança | backlog | 🔴 alta |
-| [[STORY-003 — Agente Core + Chat Web\|003]] | Agente Core + Chat Web | M1 Agente | backlog | 🔴 alta |
-| [[STORY-004 — Extratos Upload e Parser\|004]] | Extratos: Upload + Parser LLM | M2 Extratos | backlog | 🔴 alta |
-| [[STORY-005 — Extratos Categorização e Revisão\|005]] | Extratos: Categorização + Revisão | M2 Extratos | backlog | 🔴 alta |
-| [[STORY-006 — Orçamento Mensal\|006]] | Orçamento Mensal por Categoria | M3 Orçamento | backlog | 🟡 média |
-| [[STORY-007 — Dashboard Central\|007]] | Dashboard Central | M9 Dashboard | backlog | 🟡 média |
+| [[STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | done | 🔴 alta |
+| [[STORY-002 — Auth + Multi-família\|002]] | Auth + Multi-família | M11 Segurança | done | 🔴 alta |
+| [[STORY-003 — Agente Core + Chat Web\|003]] | Agente Core + Chat Web | M1 Agente | done | 🔴 alta |
+| [[STORY-004 — Extratos Upload e Parser\|004]] | Extratos: Upload + Parser LLM | M2 Extratos | done | 🔴 alta |
+| [[STORY-005 — Extratos Categorização e Revisão\|005]] | Extratos: Categorização + Revisão | M2 Extratos | done | 🔴 alta |
+| [[STORY-006 — Orçamento Mensal\|006]] | Orçamento Mensal por Categoria | M3 Orçamento | done | 🟡 média |
+| [[STORY-007 — Dashboard Central\|007]] | Dashboard Central | M9 Dashboard | done | 🟡 média |
 
 ---
 
-## Fase 2 — Inteligência Financeira (rascunho)
+## Fase 2 — Inteligência Financeira ✅
 
-> Stories serão detalhadas ao concluir a Fase 1.
-
-| Módulo | Descrição |
-|--------|-----------|
-| M4 Objetivos & Metas | Criação conversacional, projeções, metas compartilhadas |
-| M5 Investimentos | Cadastro manual, dashboard, análise pelo agente, simulador |
-| M6 WhatsApp Z-API | Webhook, comandos rápidos, mensagens proativas, transcrição de áudio |
-| M10 Inteligência Proativa | Detecção de padrões, Score de Decisão, Revisão Mensal Guiada |
+| ID | Story | Módulo | Status | Prioridade |
+|----|-------|--------|--------|------------|
+| [[STORY-008 — Objetivos e Metas\|008]] | Objetivos & Metas | M4 Metas | done | 🔴 alta |
+| [[STORY-009 — Investimentos\|009]] | Investimentos | M5 Investimentos | done | 🔴 alta |
+| [[STORY-010 — WhatsApp Z-API\|010]] | WhatsApp via Z-API | M6 WhatsApp | done | 🔴 alta |
+| [[STORY-011 — Inteligência Proativa\|011]] | Inteligência Proativa | M10 Proativo | done | 🟡 média |
+| [[STORY-012 — Config LLMs OpenRouter\|012]] | Config LLMs (OpenRouter BYOK) | M8 Config LLMs | done | 🟡 média |
 
 ---
 
-## Fase 3 — Automação e Ecossistema (rascunho)
+## Fase 3 — Automação e Ecossistema (backlog)
 
-> Escopo a definir durante a Fase 2.
+> Stories serão detalhadas conforme demanda.
 
-| Módulo | Descrição |
-|--------|-----------|
-| M7 Notion + Obsidian | Sincronização bidirecional Notion, export Obsidian |
-| M8 Config LLMs | BYOK por família, seleção de modelo por função, monitor de custo |
-| M10 Export IR | Agrupamento para declaração de imposto de renda |
-| Open Finance | Integração automática com corretoras |
-| Modelos locais | Suporte a Ollama para famílias com servidor local |
+| Módulo | Descrição | Status |
+|--------|-----------|--------|
+| M7 Notion + Obsidian | Sincronização bidirecional Notion, export Obsidian | backlog |
+| M10 Export IR | Agrupamento para declaração de imposto de renda | backlog |
+| Open Finance | Integração automática com corretoras | backlog |
+| Modelos locais | Suporte a Ollama para famílias com servidor local | backlog |
+
+---
+
+## Itens Pendentes (cross-cutting)
+
+| Item | Depende de | Impacto |
+|------|-----------|---------|
+| pg_cron automações | Supabase Pro | STORY-010 CA4, STORY-011 CA8/CA9 |
+| Áudio Whisper | Provider decision | STORY-010 CA5 |
+| Tools do agente | Sprint 4 | STORY-008 CA4/CA6, STORY-009 CA3/CA6 |
+| Revisão Mensal Guiada | pg_cron + tools | STORY-011 CA9 |
