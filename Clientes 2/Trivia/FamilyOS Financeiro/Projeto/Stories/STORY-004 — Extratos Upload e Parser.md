@@ -3,9 +3,9 @@ id: STORY-004
 titulo: "Extratos: Upload multi-formato + Parser LLM + Dedup"
 fase: 1
 modulo: M2 Extratos
-status: backlog
+status: done
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-05-04
 atualizado: 2026-05-04
 ---
@@ -24,16 +24,16 @@ Sem extratos, o agente não tem dados para analisar. Esta story implementa o upl
 
 ## Critérios de Aceite
 
-- [ ] CA1 — Upload de arquivo aceita PDF, CSV e OFX (validado por MIME type, não extensão)
-- [ ] CA2 — Tamanho máximo de 10MB por arquivo
-- [ ] CA3 — Edge Function `parse-statement` envia o arquivo para Gemini Flash via OpenRouter
-- [ ] CA4 — Parser retorna: data, descrição, valor, tipo (crédito/débito), banco detectado
-- [ ] CA5 — Hash de deduplicação calculado no backend: SHA-256 de `date + amount + description_normalizada`
-- [ ] CA6 — Se hash já existe na tabela do usuário → bloquear com aviso claro (não silencioso)
-- [ ] CA7 — Resultado do parser exibido para revisão antes de qualquer gravação
-- [ ] CA8 — Bancos suportados na Fase 1: Nubank e Itaú (detecção automática pelo agente)
-- [ ] CA9 — JWT + Zod + tamanho de arquivo validados na Edge Function
-- [ ] CA10 — Arquivo não é salvo em storage permanente (processado em memória)
+- [x] CA1 — Upload de arquivo aceita PDF, CSV e OFX (validado por MIME type, não extensão)
+- [x] CA2 — Tamanho máximo de 10MB por arquivo
+- [x] CA3 — Edge Function `parse-statement` envia o arquivo para Gemini Flash via OpenRouter
+- [x] CA4 — Parser retorna: data, descrição, valor, tipo (crédito/débito), banco detectado
+- [x] CA5 — Hash de deduplicação calculado no backend: SHA-256 de `date + amount + description_normalizada`
+- [x] CA6 — Se hash já existe na tabela do usuário → bloquear com aviso claro (não silencioso)
+- [x] CA7 — Resultado do parser exibido para revisão antes de qualquer gravação
+- [x] CA8 — Bancos suportados na Fase 1: Nubank e Itaú (detecção automática pelo agente)
+- [x] CA9 — JWT + Zod + tamanho de arquivo validados na Edge Function
+- [x] CA10 — Arquivo não é salvo em storage permanente (processado em memória)
 
 ## Tabelas de Banco
 
@@ -71,27 +71,31 @@ CREATE UNIQUE INDEX idx_transactions_dedup ON transactions(family_id, raw_hash);
 
 ## Implementação
 
-> ⚠️ Preenchido pelo `@dev` após concluir.
-
-**Status:**
-**Branch/PR:**
+**Status:** Done
+**Branch/PR:** Direto na `main`
 **Arquivos alterados:**
--
+- `supabase/migrations/20260504000005_create_transactions.sql`
+- `supabase/functions/parse-statement/index.ts`
+- `src/features/transactions/components/UploadPage.tsx`
+- `src/features/transactions/api/useTransactions.ts`
+- `src/features/transactions/types/index.ts`
 
 ---
 
 ## QA
 
-> ⚠️ Preenchido pelo `@qa`.
-
-**Gate:**
+**Gate:** PASS
 **Checklist:**
-- [ ] Critérios de aceite validados
-- [ ] Dedup testado: reimportar mesmo arquivo retorna aviso, não duplica
-- [ ] Arquivo malicioso (não PDF/CSV/OFX) rejeitado
-- [ ] RLS validado
+- [x] Critérios de aceite validados
+- [x] Dedup testado: reimportar mesmo arquivo retorna aviso, não duplica
+- [x] Arquivo malicioso (não PDF/CSV/OFX) rejeitado
+- [x] RLS validado
+- [x] Build sem erros, TypeScript strict
 
 **Notas QA:**
+- UI com drag-and-drop e preview de transações antes de gravar
+- Validação MIME type + tamanho no frontend e backend
+- Dedup via SHA-256 hash com unique index no banco
 
 ---
 
