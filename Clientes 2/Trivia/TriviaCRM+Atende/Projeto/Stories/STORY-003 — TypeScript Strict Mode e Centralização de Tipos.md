@@ -2,7 +2,7 @@
 id: STORY-003
 titulo: "TypeScript Strict Mode e Centralização de Tipos"
 modulo: "Qualidade"
-status: "backlog"
+status: "concluido"
 fase: 3
 prioridade: 1
 agente_responsavel: "—"
