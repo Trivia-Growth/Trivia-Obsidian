@@ -36,7 +36,24 @@ Lista completa de stories organizadas por fase.
 
 ## Fase 3 — Automação e Ecossistema (backlog)
 
-> Stories serão detalhadas conforme demanda.
+### Sprint 4
+
+| ID | Story | Módulo | Status | Prioridade |
+|----|-------|--------|--------|------------|
+| [[STORY-013 — Tools do Agente\|013]] | Tools do Agente (metas, invest., categorias) | M1 Agente | backlog | 🔴 alta |
+| [[STORY-014 — Calendário Financeiro\|014]] | Calendário Financeiro Visual | M3 Orçamento | backlog | 🔴 alta |
+| [[STORY-015 — OCR de Recibos\|015]] | OCR de Recibos (foto → transação) | M2 Extratos | backlog | 🟡 média |
+| [[STORY-016 — Pergunta da Semana\|016]] | Pergunta da Semana do Fin | M10 Proativo | backlog | 🟡 média |
+
+### Sprint 5
+
+| ID | Story | Módulo | Status | Prioridade |
+|----|-------|--------|--------|------------|
+| [[STORY-017 — Relatório Mensal Auto\|017]] | Relatório Mensal Automático (pg_cron) | M10 Proativo | backlog | 🟡 média |
+| [[STORY-018 — Projeção Patrimônio Líquido\|018]] | Projeção de Patrimônio Líquido | M9 Dashboard | backlog | 🟡 média |
+| [[STORY-019 — Score de Decisão\|019]] | Score de Decisão (antes de compra grande) | M10 Proativo | backlog | 🟢 baixa |
+
+### Sprint 6 (Ecossistema)
 
 | Módulo | Descrição | Status |
 |--------|-----------|--------|
