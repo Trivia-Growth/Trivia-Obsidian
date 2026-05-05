@@ -2,7 +2,7 @@
 id: STORY-006
 titulo: "Segurança de API Keys e Rate Limiting nas Edge Functions"
 modulo: "Segurança"
-status: "backlog"
+status: "concluido"
 fase: 3
 prioridade: 2
 agente_responsavel: "—"

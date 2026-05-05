@@ -2,7 +2,7 @@
 id: STORY-005
 titulo: "Zod e Auth nas Edge Functions"
 modulo: "Segurança"
-status: "backlog"
+status: "concluido"
 fase: 3
 prioridade: 1
 agente_responsavel: "—"

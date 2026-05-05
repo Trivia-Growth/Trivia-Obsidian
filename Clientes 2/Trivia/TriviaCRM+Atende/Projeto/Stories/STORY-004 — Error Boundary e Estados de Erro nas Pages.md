@@ -2,7 +2,7 @@
 id: STORY-004
 titulo: "Error Boundary e Estados de Erro nas Pages"
 modulo: "Qualidade"
-status: "backlog"
+status: "concluido"
 fase: 3
 prioridade: 2
 agente_responsavel: "—"
