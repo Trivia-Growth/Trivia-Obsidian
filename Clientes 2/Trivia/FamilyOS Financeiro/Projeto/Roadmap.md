@@ -68,20 +68,37 @@ Três fases progressivas. Cada fase entrega algo utilizável antes de avançar.
 
 ---
 
-## Fase 3 — Automação e Ecossistema *(próxima)*
+## Fase 3 — Automação e Ecossistema *(em planejamento)*
 
-**Objetivo:** Processos recorrentes rodam sozinhos. Integração com Notion, Obsidian. Open Finance.
+**Objetivo:** Processos recorrentes rodam sozinhos. Agente com tools completas. Calendário financeiro. Open Finance.
 **Postura:** IA age; humano monitora e excepciona.
-**Critério de saída:** Revisão mensal guiada gerada automaticamente, relatório no Notion publicado sem intervenção.
+**Critério de saída:** Revisão mensal guiada gerada automaticamente; OCR de recibos funcional; tools do agente para metas e investimentos ativas.
 
-### Módulos previstos
+### Sprint 4 — Tools + Calendário + OCR
 
-- Sincronização Notion (bidirecional) + Export Obsidian
-- Open Finance (integração automática com corretoras)
-- Score de Decisão avançado + Export para IR
-- Modelos locais via Ollama
+| Story | Módulo | Descrição | Status |
+|-------|--------|-----------|--------|
+| [[STORY-013 — Tools do Agente]] | M1 Agente | Tools para metas, investimentos, categorias | backlog |
+| [[STORY-014 — Calendário Financeiro]] | M3 Orçamento | Linha do tempo: vencimentos, salários, eventos | backlog |
+| [[STORY-015 — OCR de Recibos]] | M2 Extratos | Foto de nota fiscal → transação categorizada | backlog |
+| [[STORY-016 — Pergunta da Semana]] | M10 Proativo | Card semanal com reflexão proativa do Fin | backlog |
 
-*(Escopo detalhado da Fase 3 será definido conforme demanda)*
+### Sprint 5 — Automação + Visão Patrimonial
+
+| Story | Módulo | Descrição | Status |
+|-------|--------|-----------|--------|
+| [[STORY-017 — Relatório Mensal Auto]] | M10 Proativo | Narrativa mensal gerada pelo Fin (pg_cron) | backlog |
+| [[STORY-018 — Projeção Patrimônio Líquido]] | M9 Dashboard | Gráfico PL de longo prazo com projeções | backlog |
+| [[STORY-019 — Score de Decisão]] | M10 Proativo | Avaliação antes de compra grande | backlog |
+
+### Sprint 6 — Ecossistema
+
+| Story | Módulo | Descrição | Status |
+|-------|--------|-----------|--------|
+| M7 Notion + Obsidian | Relatório mensal e metas no Notion | backlog |
+| Open Finance | Sincronização automática com corretoras | backlog |
+| Export IR | Agrupamento para declaração de IR | backlog |
+| Ollama | Suporte a modelos locais | backlog |
 
 ---
 
@@ -93,8 +110,10 @@ Três fases progressivas. Cada fase entrega algo utilizável antes de avançar.
 | Agente conversando com dados reais | 2026-05-04 | ✅ concluído |
 | Fase 1 concluída | 2026-05-04 | ✅ concluído |
 | Fase 2 concluída | 2026-05-04 | ✅ concluído |
-| Tools do agente integradas | 2026-05 | pendente |
-| Fase 3 início | 2026-06 | pendente |
+| Tools do agente integradas | 2026-06 | pendente |
+| Fase 3 Sprint 4 início | 2026-05 | pendente |
+| Calendário + OCR + Pergunta da Semana | 2026-06 | pendente |
+| Fase 3 concluída | 2026-07 | pendente |
 
 ---
 
@@ -105,4 +124,5 @@ Três fases progressivas. Cada fase entrega algo utilizável antes de avançar.
 - `2026-05-04` — Decisão: auth via magic link (sem senha). Isolamento total por `family_id` + RLS.
 - `2026-05-04` — Decisão: conversa antes de tela. Toda feature deve funcionar via chat antes de virar UI.
 - `2026-05-04` — Fase 1 e Fase 2 implementadas. 12 stories concluídas. Frontend redesenhado com design system Trívia (Instrument Serif, Inter Tight, JetBrains Mono; petrol/coral/paper).
+- `2026-05-04` — **Redesign v2**: Análise por @analyst, @pm e @ux-design-expert. Design system atualizado para Montserrat + JetBrains Mono, paleta coral quente (#ff7e5f), radius 0.75rem, shadows com tint coral. Dashboard com card hero do agente. Fase 3 detalhada com 7 stories (STORY-013 a STORY-019).
 - `2026-05-04` — Config LLMs movida de Fase 3 para Fase 2 (requisito do Agente Core).

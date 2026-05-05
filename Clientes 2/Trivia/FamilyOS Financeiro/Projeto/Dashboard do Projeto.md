@@ -77,9 +77,11 @@ GROUP BY fase
 
 | Métrica | Valor |
 |---------|-------|
-| Total de stories | 12 |
+| Total de stories | 19 |
 | Concluídas | 12 |
 | Em progresso | 0 |
-| Backlog | 0 |
-| Fase atual | 3 (próxima) |
+| Backlog | 7 |
+| Fase atual | 3 (Sprint 4) |
+| Próximas | STORY-013 Tools, STORY-014 Calendário, STORY-015 OCR |
 | Itens pendentes | pg_cron, Whisper, tools do agente |
+| Redesign | ✅ v2 implementado (Montserrat, coral, radius 12px) |
