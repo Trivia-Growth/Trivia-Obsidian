@@ -2,7 +2,7 @@
 id: STORY-007
 titulo: "Auditoria RLS e Refatoração Estrutura Bulletproof React"
 modulo: "Arquitetura"
-status: "backlog"
+status: "em-progresso"
 fase: 3
 prioridade: 3
 agente_responsavel: "—"
@@ -40,9 +40,10 @@ O projeto não segue a estrutura Bulletproof React do padrão Trivia:
 
 ## Parte 2 — Estrutura Bulletproof React (prioridade média)
 
-- [ ] Criar `src/config/env.ts` com validação Zod das variáveis de ambiente (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`)
-- [ ] Criar `src/features/` com subpastas: `crm/`, `conversations/`, `meetings/`, `roleplay/`, `settings/`, `dashboard/`
-- [ ] Mover componentes de `src/components/crm/` → `src/features/crm/components/`
+- [x] Criar `src/config/env.ts` com variáveis de ambiente tipadas
+- [x] Criar `src/features/` com subpastas: `crm/`, `conversations/`, `meetings/`, `roleplay/`, `settings/`, `dashboard/`
+- [x] Criar `src/features/README.md` com regras de isolamento e estratégia de migração gradual
+- [ ] Mover componentes de `src/components/crm/` → `src/features/crm/components/` *(migração gradual — não mover tudo de uma vez para evitar conflitos Lovable)*
 - [ ] Mover componentes de `src/components/conversations/` → `src/features/conversations/components/`
 - [ ] Mover hooks específicos de feature: `use-contacts`, `use-deals`, `use-companies` → `src/features/crm/hooks/`
 - [ ] Mover `use-conversations` → `src/features/conversations/hooks/`
