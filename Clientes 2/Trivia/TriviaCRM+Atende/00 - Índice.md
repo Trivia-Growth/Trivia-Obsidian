@@ -38,14 +38,17 @@ Clone local: /Users/lucasazevedo/Documents/GitHub/supacreate-launchpad
 ```
 Project URL: https://jbtibnjkxwvjgfstjhsc.supabase.co
 Reference ID: jbtibnjkxwvjgfstjhsc
+Anon Key (pública): sb_publishable_6lY4V0ogIwsk-MUfHXzITQ_vGK8b11R
 ```
+
+> ⚠️ A service_role key NÃO deve ser documentada aqui — use Supabase Secrets e/ou 1Password.
 
 ---
 
 ## Netlify
 
 ```
-URL de produção: https://[PREENCHER].netlify.app
+URL de produção: https://triviacrmatende.netlify.app
 ```
 
 ---
