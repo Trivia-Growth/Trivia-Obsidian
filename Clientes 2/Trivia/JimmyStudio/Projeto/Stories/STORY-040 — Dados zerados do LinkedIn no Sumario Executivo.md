@@ -3,12 +3,12 @@ id: STORY-040
 titulo: "Investigar e corrigir dados zerados do LinkedIn no Sumário Executivo"
 fase: 2
 modulo: monthly-report
-status: Draft
+status: Done
 prioridade: alta
 origem: piloto
-agente_responsavel: ""
+agente_responsavel: dev
 criado: 2026-05-04
-atualizado: 2026-05-04
+atualizado: 2026-05-05
 ---
 
 # STORY-040 — Investigar e corrigir dados zerados do LinkedIn no Sumário Executivo
@@ -90,16 +90,64 @@ inconsistentes (ex: posts > 0 mas impressões = 0).
 
 ## Implementação
 
-> Preenchido pelo `@dev`.
+**Status:** `concluido`
 
-**Status:** `pendente`
-
-**Branch/PR:**
+**Branch/PR:** `main` — commit `6f241ae2`
 
 **Arquivos alterados:**
--
+- `supabase/functions/linkedin-sync-cron/index.ts` — fix do `syncAnalytics`
+  + nova função `syncFollowerStats`
+- `supabase/functions/_shared/monthly-report-aggregator.ts` — flag
+  `dataIncomplete`
+- `src/features/monthly-report/types/report.ts` — `LinkedInReport.dataIncomplete`
+- `src/features/monthly-report/components/ExecutiveSummary.tsx` — aviso
+  "Dados em coleta"
 
-**Notas de implementação:**
+**Diagnóstico:**
+- `linkedin_follower_stats` para Work Solution: 0 rows (coletor nunca
+  rodava no cron).
+- `linkedin_post_insights` abril, 5/5 brands com LinkedIn: 9-23 posts
+  cada, **todas** com `impressions_count=0, total_engagement=0`.
+- URN inspection revelou mistura de `urn:li:share:...` e
+  `urn:li:ugcPost:...`.
+
+**Causa raiz:**
+1. LinkedIn API exige parâmetro `ugcPosts=List(...)` para URNs do tipo
+   `ugcPost`. Código estava enviando todos os URNs em `shares=List(...)`,
+   o que faz a API ignorar silenciosamente os ugcPost.
+2. `linkedin-sync-cron` não chamava `linkedin-fetch-followers` →
+   `total_followers` ficava parado no initial sync.
+
+**Correções:**
+- `syncAnalytics`: separa URNs em 2 grupos (`shares` e `ugcPosts`),
+  chama o endpoint com o parâmetro correto para cada. Logging
+  estruturado quando API retorna erro/empty. Match por id numérico
+  como fallback.
+- `syncFollowerStats`: nova função invocada pelo cron para org accounts.
+  Apenas total + delta, sem demographics (mantido em `linkedin-fetch-followers`
+  para não pesar o cron).
+- Aggregator: flag `dataIncomplete = posts > 0 && totalImpressions === 0
+  && totalEngagement === 0`.
+- UI: prop `notice` no `ChannelBlock`, aviso amarelo "Dados em coleta —
+  atualizando na próxima sincronização" quando `dataIncomplete`.
+
+**Backfill:** `linkedin-sync-cron` invocado manualmente, **12/17 contas
+processadas, ~470 post-analytics atualizados**.
+
+| Brand | Antes | Depois |
+|-------|-------|--------|
+| Work Solution | 0 seguidores, 0 impressões | 2.845 seguidores, 1.257 impressões/abr |
+| Grupo Previx | 0 imp | 81 analytics atualizados |
+| Francescato | 0 imp | 63 analytics atualizados |
+| Traduzzo | 0 imp | 56 analytics atualizados |
+| Jimmy Studio | 0 imp | 9 analytics atualizados |
+
+5 contas falharam — 4 com `Posts API error: 400` (personal accounts
+com problemas de escopo OAuth) e 1 com refresh token expirado. **Não
+relacionado** a essa story.
+
+Próximos crons (6/11/17/23h UTC) mantêm os números atualizados
+automaticamente.
 
 ---
 

@@ -3,12 +3,12 @@ id: STORY-041
 titulo: "Remover card de Stories do relatório mensal de Instagram"
 fase: 2
 modulo: monthly-report
-status: Draft
+status: Done
 prioridade: baixa
 origem: piloto
-agente_responsavel: ""
+agente_responsavel: dev
 criado: 2026-05-04
-atualizado: 2026-05-04
+atualizado: 2026-05-05
 ---
 
 # STORY-041 — Remover card de Stories do relatório mensal de Instagram
@@ -54,16 +54,19 @@ outro formato.
 
 ## Implementação
 
-> Preenchido pelo `@dev`.
+**Status:** `concluido`
 
-**Status:** `pendente`
-
-**Branch/PR:**
+**Branch/PR:** `main` — commit `c05bb071`
 
 **Arquivos alterados:**
--
+- `src/features/monthly-report/components/InstagramSection.tsx`
+- `src/features/monthly-report/pdf/PdfInstagramSection.tsx`
 
 **Notas de implementação:**
+- Apenas remoções (39 linhas). Tipo `InstagramReport.stories` e query no
+  aggregator preservados intencionalmente para não invalidar payloads em
+  cache.
+- TypeScript limpo após remoção (sem imports órfãos).
 
 ---
 

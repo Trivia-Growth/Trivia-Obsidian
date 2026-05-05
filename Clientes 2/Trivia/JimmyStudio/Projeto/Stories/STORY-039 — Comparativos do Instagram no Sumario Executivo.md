@@ -3,12 +3,12 @@ id: STORY-039
 titulo: "Corrigir comparativos do Instagram no Sumário Executivo (Seguidores e Crescimento)"
 fase: 2
 modulo: monthly-report
-status: Draft
+status: Done
 prioridade: alta
 origem: piloto
-agente_responsavel: ""
+agente_responsavel: dev
 criado: 2026-05-04
-atualizado: 2026-05-04
+atualizado: 2026-05-05
 ---
 
 # STORY-039 — Corrigir comparativos do Instagram no Sumário Executivo (Seguidores e Crescimento)
@@ -65,16 +65,28 @@ A mesma correção precisa ser feita no PDF (`PdfExecutiveSummary.tsx`).
 
 ## Implementação
 
-> Preenchido pelo `@dev` após concluir.
+**Status:** `concluido`
 
-**Status:** `pendente`
-
-**Branch/PR:**
+**Branch/PR:** `main` — commit `42eba50a`
 
 **Arquivos alterados:**
--
+- `supabase/functions/_shared/monthly-report-aggregator.ts` — query nova
+  do snapshot de início do mês anterior + cálculo de
+  `prevFollowersGrowth`
+- `src/features/monthly-report/types/report.ts` — tipo `comparison` com
+  os 2 campos novos
+- `src/features/monthly-report/components/ExecutiveSummary.tsx` (web)
+- `src/features/monthly-report/pdf/PdfExecutiveSummary.tsx` (PDF)
 
 **Notas de implementação:**
+- `prevEndFollowers = startFollowers` (current month) — o snapshot
+  imediatamente antes do `range.start` IS o fim do mês anterior.
+- `prevStartFollowers` busca o snapshot mais recente antes de
+  `prevRange.start`.
+- `safePct` retorna `null` quando `previous = 0` (brand nova ou crescimento
+  nulo no mês anterior). UI exibe "vs. mês anterior: —".
+- Edge functions redeployadas: `aggregate-monthly-report`,
+  `get-shared-report`, `generate-report-analysis`.
 
 ---
 
