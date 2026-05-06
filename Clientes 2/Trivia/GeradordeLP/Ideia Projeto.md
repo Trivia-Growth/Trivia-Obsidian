@@ -1,0 +1,1 @@
+Estou pensando num mecanismos de agentes autonomos que buscam no google empresas em uma localização que nao possuem sites, gera o site, envia pr
