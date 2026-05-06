@@ -3,7 +3,7 @@ id: STORY-043
 titulo: "JimmyChat: streaming SSE token-by-token + tool progress em tempo real"
 fase: 3
 modulo: jimmy-jimmychat
-status: em-progresso
+status: em-revisao
 prioridade: alta
 origem: claude
 agente_responsavel: ""
@@ -163,14 +163,67 @@ A STORY-042 corrige a lógica de continuidade (narrativa, tool_results, history 
 
 ## Implementação
 
-> Preenchido por @dev após concluir.
+**Status:** `em-revisao` (deployed em 2026-05-06)
 
-**Status:** `pronto`
+**Arquivos novos:**
+- `supabase/functions/_shared/anthropic-tools-stream.ts` (~245 linhas) — `callClaudeWithToolsStream` AsyncGenerator emitindo `text_delta`, `tool_use_complete`, `stop`. Acumula tool_calls fragmentados via OpenAI SSE format.
+- `supabase/functions/_shared/jimmy-stream.ts` (~340 linhas) — `runJimmyStream` cria ReadableStream SSE; eventos `meta`, `text_delta`, `narrative_complete`, `tool_start`, `tool_progress` (interval 2s), `tool_end`, `pending_confirmation`, `done`, `error`; keepalive a cada 15s; persiste estado igual STORY-042
+- `src/features/jimmychat/lib/sse-client.ts` (~190 linhas) — `streamOrchestrator(body, handlers)` via fetch + ReadableStream + parsing manual SSE; AbortController exposto
 
-**Arquivos alterados:**
--
+**Arquivos modificados:**
+- `supabase/functions/jimmy-orchestrator/index.ts` — detecta `Accept: text/event-stream` e branch `runJimmyStream` antes do loop JSON; confirm/cancel mantêm JSON
+- `src/features/jimmychat/types/index.ts` — `ToolExecution.status` aceita `'running'`
+- `src/features/jimmychat/hooks/useJimmyOrchestrator.ts` — `STREAM_ENABLED` flag (`VITE_JIMMYCHAT_STREAM`); novo `sendMessageStream` consumindo eventos SSE; expõe `isStreaming`, `streamingText`, `streamingToolExecutions`, `cancelStream`; `resetConversation` aborta stream em vôo
+- `src/features/jimmychat/components/JimmyChatPanel.tsx` — bubble streaming com cursor `▍ pulsando` + tool list running com Loader spinning; auto-scroll throttled via rAF; `inputDisabled` inclui `isStreaming`
+- `src/features/jimmychat/components/JimmyChatTerminal.tsx` — bubble streaming com cursor blink + ToolLine com glyph `↻` rotacionando; injeta keyframes `jimmyBlink` + `jimmyToolSpin` localmente; auto-scroll throttled
+- `src/features/jimmychat/components/ToolExecutionCard.tsx` — branch `running` com Loader spinning + counter (segundos)
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0
+- ✅ `npm run build` exit 0 em 32.28s
+- ✅ `supabase functions deploy jimmy-orchestrator` deployed
+
+**Critérios de aceite:**
+- [x] CA1 — `callClaudeWithToolsStream` em `_shared/anthropic-tools-stream.ts` com AsyncGenerator
+- [x] CA2 — Branch SSE no orchestrator quando `Accept: text/event-stream`; JSON path inalterado
+- [x] CA3 — Eventos SSE no formato `event: <type>\ndata: <json>\n\n`: meta, text_delta, narrative_complete, tool_start, tool_progress, tool_end, pending_confirmation, done, error
+- [x] CA4 — Tools dentro do stream: `tool_start` → `tool_progress` (interval 2s) → `tool_end`
+- [x] CA5 — Interval cancelado em resolve/abort (clearInterval no fim do executeAgentTool)
+- [x] CA6 — Avisos de max_iter/timeout/max_tokens via `text_delta` antes do done (alinhado STORY-042 CA12)
+- [x] CA7 — Persistência DB independente do stream (mesmas funções `insertMessage` da STORY-042)
+- [x] CA8 — `streamOrchestrator(body, handlers)` em `lib/sse-client.ts` via fetch + ReadableStream
+- [x] CA9 — `VITE_JIMMYCHAT_STREAM` env flag no hook; default off
+- [x] CA10 — `isStreaming`, `streamingText`, `streamingToolExecutions` expostos
+- [x] CA11 — `done` move texto pra messages, limpa streaming state
+- [x] CA12 — `cancelStream` exposto + chamado em `resetConversation`
+- [x] CA13 — Panel: bubble streaming com cursor pulsando + ToolExecutionCard com `running`
+- [x] CA14 — Terminal: cursor blink + ToolLine com glyph `↻` rotacionando
+- [x] CA15 — Auto-scroll throttled via `requestAnimationFrame` durante stream
+- [x] CA16 — Erro de stream: `setError` + limpa state; UX preservada
+- [x] CA17 — `npx tsc --noEmit` exit 0
+- [x] CA18 — `npm run build` exit 0
+- [x] CA19 — `supabase functions deploy jimmy-orchestrator` deployed
+- [ ] CA20 — Smoke desktop com tool (validar em prod com `VITE_JIMMYCHAT_STREAM=true`)
+- [ ] CA21 — Smoke mobile (validar em prod)
+- [ ] CA22 — Smoke modo terminal (validar em prod)
+- [ ] CA23 — Smoke abort (F5 / reset durante stream)
+- [ ] CA24 — Smoke fallback `VITE_JIMMYCHAT_STREAM=false`
 
 **Notas de implementação:**
+
+- **Confirm e cancel mantêm JSON:** ações curtas e síncronas, streaming não agrega valor; reduz superfície de bugs
+- **Single SSE branch é "stream loop":** mesma lógica do JSON path (alinhado STORY-042) mas emitindo eventos em vez de acumular `narrative_messages` no response. Persiste em DB exatamente igual.
+- **`tool_progress` a cada 2s:** suficiente pra UX percebida; flood de eventos desnecessário em frequência maior. Counter visível no UI.
+- **Keepalive `: keepalive\n\n` a cada 15s:** previne corte por proxies/CDN/Cloudflare em tools longas (>30s)
+- **Frontend AbortController:** `streamOrchestrator` retorna `{ abort, promise }`. `resetConversation` aborta + limpa state.
+- **rAF throttle pra scroll:** `text_delta` chega 50+/seg; sem throttle, smooth scroll pisca. rAF garante max 60fps reflows.
+- **Glyph `↻` no Terminal usa keyframes injetados localmente** porque `jimmyBlink` original era injetado pelo `JimmyTerminalChat` do `assistente-terminal` que pode não estar montado.
+- **Migration STORY-042 ainda pendente:** orchestrator stream usa `'tool_call'` como veículo das narrativas (não insere `'narrative'` directly), igual ao JSON path — então funciona sem aplicar a migration. Migration fica pra forward-compat.
+
+**Como ativar em prod:**
+1. Variável de env do front (Netlify): `VITE_JIMMYCHAT_STREAM=true` + redeploy
+2. Edge function já está rodando em modo dual (Accept header decide)
+3. Depois de validar, considerar tornar streaming default removendo a flag
 
 ---
 
