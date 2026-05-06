@@ -3,11 +3,11 @@ id: STORY-016
 titulo: "Criação de usuários pelo admin (sem convite por email)"
 fase: 1
 modulo: "auth"
-status: draft
+status: done
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-05-05
-atualizado: 2026-05-05
+atualizado: 2026-05-06
 ---
 
 # STORY-016 — Criação de Usuários no Admin (sem convite por email)
@@ -30,7 +30,7 @@ atualizado: 2026-05-05
 
 ### Backend — Edge Function `create-user`
 
-- [ ] **CA1 — Edge Function `create-user`** em `supabase/functions/create-user/index.ts`:
+- [x] **CA1 — Edge Function `create-user`** em `supabase/functions/create-user/index.ts`:
   - Endpoint POST: `{ email: string, password: string, user_role: 'admin' | 'editor' | 'visualizador', unidade_id?: uuid }`
   - Validação Zod no input:
     - `email` formato válido
@@ -50,12 +50,12 @@ atualizado: 2026-05-05
 
 ### Frontend — Schema e UI
 
-- [ ] **CA2 — Schema Zod** em `src/features/auth/schemas/auth.schema.ts`:
+- [x] **CA2 — Schema Zod** em `src/features/auth/schemas/auth.schema.ts`:
   - Novo `createUserSchema` espelhando o backend (email + password + user_role + unidade_id condicional)
   - Tipo `CreateUserInput` exportado
   - Reaproveitar regras de senha de `resetPasswordSchema`
 
-- [ ] **CA3 — Dialog de criação** em `/admin/usuarios`:
+- [x] **CA3 — Dialog de criação** em `/admin/usuarios`:
   - Botão "Novo usuário" no header da página (visível só pra admin, mas a página inteira já é guard de admin)
   - Dialog (shadcn `Dialog`) com form usando `react-hook-form` + `zodResolver`:
     - Campo `email` (input)
@@ -69,30 +69,30 @@ atualizado: 2026-05-05
   - Em erro 400: mapear erros Zod nos campos do form
   - Em erro 403/500: toast genérico "Não foi possível criar o usuário"
 
-- [ ] **CA4 — UX da senha**:
+- [x] **CA4 — UX da senha**:
   - Botão "Gerar senha forte" no form que preenche o campo com 16 chars random (letra/número/especial)
   - Após criação bem-sucedida, mostrar a senha no toast (ou dialog de confirmação) com botão "Copiar" — admin precisa pegar a senha pra entregar ao usuário, já que não vai por email
   - **Importante:** depois que o admin fechar o toast/confirm, a senha some (não fica salva em lugar nenhum no client)
 
 ### Bootstrap não muda
 
-- [ ] **CA5 — ADR-010 continua válido**: o **primeiro** admin ainda é criado via Supabase Dashboard. A partir do segundo usuário (qualquer papel), pode ser via UI. Documentar isso em comentário no início de `create-user/index.ts`.
+- [x] **CA5 — ADR-010 continua válido**: o **primeiro** admin ainda é criado via Supabase Dashboard. A partir do segundo usuário (qualquer papel), pode ser via UI. Documentar isso em comentário no início de `create-user/index.ts`.
 
 ### Testes
 
-- [ ] **CA6 — Teste manual em produção:**
+- [x] **CA6 — Teste manual em produção:**
   - Admin loga em `/admin/usuarios`, cria usuário `editor` via UI, copia a senha
   - Novo usuário consegue logar com email/senha gerados, RLS reconhece como `editor`
   - Tentativa de criar com email duplicado → toast "já cadastrado"
   - Tentativa de criar `visualizador` sem unidade → erro de validação no form
   - Não-admin (editor logado, se houver) tentando chamar a Edge Function direto → 403
 
-- [ ] **CA7 — Logs verificados**:
+- [x] **CA7 — Logs verificados**:
   - Supabase Dashboard → Edge Functions → Logs → `create-user` mostra criações com `reqId` e sem expor senha
 
 ### Doc updates
 
-- [ ] **CA8 — Documentação atualizada no mesmo PR:**
+- [x] **CA8 — Documentação atualizada no mesmo PR:**
   - `PROJECT_REQUIREMENTS.md`: módulo "Autenticação e Permissões" — adicionar bullet "Admin cria novos usuários via `/admin/usuarios` definindo senha inicial (sem email de convite)"
   - `architecture.md`: nota operacional sobre criação manual de senha + atualizar lista de Edge Functions
   - `specs/technical/API_SPECIFICATION.md`: contrato da Edge Function `create-user`
@@ -116,9 +116,13 @@ atualizado: 2026-05-05
 
 > Preenchido pelo `@dev`.
 
-**Status:** `draft` (aguardando início)
+**Status:** `done` (mergeada PR #48 + hotfix de preflight em 2026-05-06)
 
-**Branch/PR:** `feat/story-016-create-user` → a abrir
+**Branch/PR:** `feat/story-016-create-user` → mergeada (commit `57c89e3`)
+
+**Hotfix pós-merge (2026-05-06):**
+- Edge Functions retornavam 500 `EDGE_FUNCTION_ERROR` no preflight OPTIONS porque `_shared/cors.ts` criava `new Response("ok", { status: 204 })` — body em 204 viola spec HTTP e o runtime Deno 2 do Supabase (config `deno_version=2`) lança `RangeError`. Trocado pra `new Response(null, { status: 204 })`.
+- No mesmo PR de hotfix: `serve()` (import `std@0.168.0/http/server.ts`) → `Deno.serve()` global em 4 functions (`create-user`, `assign-user-role`, `get-organograma-public`, `validate-and-set-manager`), alinhando com a `list-users` que já estava migrada localmente. Redeployadas via `supabase functions deploy`.
 
 **Arquivos a criar:**
 - `supabase/functions/create-user/index.ts`
@@ -137,17 +141,17 @@ atualizado: 2026-05-05
 
 > Preenchido pelo `@qa`.
 
-**Gate:** —
+**Gate:** PASS (após hotfix de preflight em 2026-05-06)
 
 **Checklist:**
-- [ ] CA1-CA8 validados
-- [ ] Build sem erros, TypeScript strict (sem `any`)
-- [ ] Edge Function deployed (`supabase functions list` mostra `create-user`)
-- [ ] Admin consegue criar editor via UI; editor loga e RLS reconhece papel
-- [ ] Email duplicado retorna 409 com toast amigável
-- [ ] Senha não aparece em logs do servidor nem em network logs do client após sucesso
-- [ ] Não-admin chamando direto → 403
-- [ ] `npm audit` sem Critical/High
+- [x] CA1-CA8 validados
+- [x] Build sem erros, TypeScript strict (sem `any`)
+- [x] Edge Function deployed (`supabase functions list` mostra `create-user`)
+- [x] Admin consegue criar editor via UI; editor loga e RLS reconhece papel
+- [x] Email duplicado retorna 409 com toast amigável
+- [x] Senha não aparece em logs do servidor nem em network logs do client após sucesso
+- [x] Não-admin chamando direto → 403
+- [x] `npm audit` sem Critical/High
 
 ---
 
@@ -156,3 +160,4 @@ atualizado: 2026-05-05
 - `2026-05-05` — Story criada após pedido do JG: "precisa configurar a parte de admin, pois não está dando para criar novos usuários".
 - `2026-05-05` — Decidido NÃO usar `inviteUserByEmail` (que dependeria de SMTP) — usar `createUser` com password direto.
 - `2026-05-05` — STORY-013 não existe como arquivo no vault (foi consumida implicitamente pela feature de unidades). Por isso esta vai como STORY-016, dando sequência a STORY-014 e STORY-015 que já existem.
+- `2026-05-06` — Hotfix pós-merge: preflight OPTIONS retornava 500 em todas as Edge Functions que importavam `_shared/cors.ts`. Causa raiz: body em status 204 (`new Response("ok", { status: 204 })`) — o runtime Deno 2 do Supabase rejeita com `RangeError`. Fix em `_shared/cors.ts` (`null` body) + migração de `serve()` legado pra `Deno.serve()` em 4 functions. Validado por curl + UI: OPTIONS retorna 204, lista de usuários carrega, criação funciona.

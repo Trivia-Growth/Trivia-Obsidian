@@ -3,7 +3,7 @@ id: STORY-043
 titulo: "JimmyChat: streaming SSE token-by-token + tool progress em tempo real"
 fase: 3
 modulo: jimmy-jimmychat
-status: pronto
+status: em-progresso
 prioridade: alta
 origem: claude
 agente_responsavel: ""

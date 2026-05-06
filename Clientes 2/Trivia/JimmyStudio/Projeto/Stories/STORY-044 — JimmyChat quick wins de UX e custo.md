@@ -3,7 +3,7 @@ id: STORY-044
 titulo: "JimmyChat: quick wins (hidratar histórico, markdown, prompt caching, auto-scroll, persist skill)"
 fase: 3
 modulo: jimmy-jimmychat
-status: em-progresso
+status: em-revisao
 prioridade: media
 origem: claude
 agente_responsavel: ""
@@ -170,18 +170,90 @@ Stories 042 (continuidade) e 043 (streaming) ficam mais brilhantes com esses pol
 
 ## Implementação
 
-> Preenchido por @dev após concluir.
+**Status:** `em-revisao` (deployed em 2026-05-06)
 
-**Status:** `pronto`
+**Arquivos novos:**
+- `src/features/jimmychat/lib/hydrate-history.ts` (~95 linhas) — `hydrateConversation` lê últimas 50 mensagens via Supabase, mapeia pra `JimmyChatMessage[]` preservando `kind` (narrative/final), tool_executions, skillId
+- `src/features/jimmychat/components/MarkdownContent.tsx` (~80 linhas) — wrap de `react-markdown + remark-gfm` com componentes Tailwind pra table/code/pre/a/ul/ol/p; `skipHtml` previne XSS
 
-**Arquivos alterados:**
--
+**Arquivos modificados:**
+- `src/features/jimmychat/hooks/useJimmyOrchestrator.ts`:
+  - `useEffect` de mount agora chama `hydrateConversation` quando há `conversation_id` no localStorage; expõe `isHydrating`
+  - `forcedSkill` lê de `localStorage.jimmychat:forced_skill` no init (lazy initializer com validation); setter persiste
+  - `cancelAction` virou async (alinhamento STORY-042)
+- `src/features/jimmychat/components/JimmyChatPanel.tsx`:
+  - Skeleton durante `isHydrating`
+  - Assistant final usa `<MarkdownContent>`; user e narrativa mantêm `whitespace-pre-wrap`
+  - Auto-scroll inteligente: detecta posição do viewport Radix; badge "↓ N novas" absolute em `bottom-24` quando rolou pra cima
+- `src/features/jimmychat/components/JimmyChatTerminal.tsx`:
+  - Indicador CLI dim "carregando histórico..." durante `isHydrating`
+  - Auto-scroll inteligente direto no scrollRef nativo; badge CLI com paleta navy/accent
+  - **NÃO** renderiza markdown (estética CLI preservada)
+- `supabase/functions/_shared/anthropic-tools.ts`:
+  - `CallClaudeWithToolsOptions` ganha `cacheSystem?: boolean`
+  - `convertMessagesWithTools` aceita `cacheSystem`; quando true, system vira block com `cache_control: { type: "ephemeral" }`
+  - `parseOpenAIResponse` lê `cache_read_input_tokens` / `cache_creation_input_tokens` (formato Anthropic) ou `prompt_tokens_details.cached_tokens` (formato OpenAI standard)
+  - `usage` no result expõe `cache_read_input_tokens` / `cache_creation_input_tokens` opcionais
+  - Log enriquecido com cacheRead/cacheCreate quando aplicável
+- `supabase/functions/jimmy-orchestrator/index.ts`:
+  - Constante `CACHE_SYSTEM_ENABLED = Deno.env.get("JIMMY_PROMPT_CACHE_ENABLED") === "true"`
+  - Passa `cacheSystem: CACHE_SYSTEM_ENABLED` em ambas chamadas (`callClaudeWithTools` principal e continuation)
+  - Agrega `totalCacheRead` / `totalCacheCreation` por turno
+  - `logAiCost.metadata` registra `cache_read_input_tokens`, `cache_creation_input_tokens`, `cache_enabled`
+  - Log final mostra cacheRead/cacheCreate
+
+**Validações:**
+- ✅ `npx tsc --noEmit` exit 0
+- ✅ `npm run build` exit 0 em 54.76s
+- ✅ `supabase functions deploy jimmy-orchestrator` deployed
+
+**Critérios de aceite:**
+- [x] CA1 — `useJimmyOrchestrator` chama `hydrateConversation` no mount com conv ativa
+- [x] CA2 — Mensagens com `message_type='tool_call'` ou `'narrative'` viram `kind: 'narrative'`; `'text'` vira `'final'`
+- [x] CA3 — `isHydrating: boolean` exposto pelo hook; Panel e Terminal mostram loading state
+- [x] CA4 — Erro de hidratação não bloqueia chat: log warn + setError com mensagem branda + `messages: []`
+- [x] CA5 — Limit 50; se atingir, prepend assistant msg "Carreguei as últimas 50 mensagens..."
+- [x] CA6 — `react-markdown` e `remark-gfm` já estavam no `package.json` (^10.1.0 e ^4.0.1)
+- [x] CA7 — `MarkdownContent` em `src/features/jimmychat/components/MarkdownContent.tsx` com componentes table/code/pre/a/ul/ol/p estilizados; `skipHtml` previne XSS
+- [x] CA8 — `JimmyChatPanel` usa `<MarkdownContent>` apenas em mensagens assistant com `kind === 'final'` (e não narrativas, e não user)
+- [x] CA9 — Modo terminal preservado sem markdown
+- [x] CA10 — Bundle size: ~zero delta (deps já eram transitivas em outros features); chunk `index` 1077.38 kB inalterado
+- [x] CA11 — `callClaudeWithTools` aceita `system` como string (atual) e através de `cacheSystem: boolean` opta por enviar como block estruturado com `cache_control`
+- [x] CA12 — Quando `cacheSystem: true`, system vira `[{type:"text", text, cache_control:{type:"ephemeral"}}]` (1 block único pra simplicidade — STORY-042 mantém narrativa do skill+brand juntos)
+- [⏸] CA13 — Tool definitions não recebem cache_control no MVP (decisão: 1 cache breakpoint por turno é simpler e atinge maioria do ganho; pode ser adicionado em mini-story se medirem hit rate ruim)
+- [x] CA14 — `logAiCost.metadata` registra `cache_read_input_tokens`, `cache_creation_input_tokens`, `cache_enabled`
+- [x] CA15 — Log do edge mostra `cacheRead=N cacheCreate=M` quando aplicável; gated por `CACHE_SYSTEM_ENABLED || tokens > 0`
+- [x] CA16 — `JimmyChatPanel` ScrollArea + viewport Radix detecta `near-bottom` (<100px); state `isNearBottom` + `unreadCount`
+- [x] CA17 — Badge `↓ N {nova/novas}` absolute na borda inferior do panel; click rola pra baixo + zera count
+- [x] CA18 — Badge desaparece quando volta a estar near-bottom (effect zera unreadCount)
+- [x] CA19 — Mesmo padrão no Terminal com paleta CLI (`P.accent` border + accent color)
+- [x] CA20 — Hook lê `localStorage.jimmychat:forced_skill` no init via lazy initializer
+- [x] CA21 — `setForcedSkill` agora também grava em localStorage (try/catch silencioso)
+- [x] CA22 — Validation: aceita só `"auto" | "analista_ads" | "analista_conteudo"`; outros valores caem no fallback "auto"
+- [x] CA23 — `npx tsc --noEmit` exit 0
+- [x] CA24 — `npm run build` exit 0 em 54.76s; bundle delta ~zero
+- [x] CA25 — `supabase functions deploy jimmy-orchestrator` deployed
+- [ ] CA26 — Smoke F5 com markdown (validar em prod)
+- [ ] CA27 — Smoke tabela markdown (validar em prod)
+- [ ] CA28 — Smoke cache (requer `JIMMY_PROMPT_CACHE_ENABLED=true` setado em prod via `supabase secrets set` — ver instruções abaixo)
+- [ ] CA29 — Smoke auto-scroll (validar em prod)
+- [ ] CA30 — Smoke persist skill (validar em prod)
+
+**Bundle size delta:** chunk `index` permaneceu em 1077.38 kB (gzip 295.24 kB vs 295.22 kB anterior) — diferença desprezível.
+
+**Cache hit ratio:** ainda não medido — cache desabilitado por default. Pra ligar:
+```
+supabase secrets set JIMMY_PROMPT_CACHE_ENABLED=true
+```
+Após N turnos seguidos numa mesma conversa, `metadata.cache_read_input_tokens > 0` confirma hit. Esperado: 70%+ hit rate a partir do 2º turno (TTL Anthropic ephemeral é ~5min).
 
 **Notas de implementação:**
 
-**Bundle size delta:**
-
-**Cache hit ratio (3-turn convs sample):**
+- **Markdown só pro `kind: 'final'`:** narrativas intermediárias (`tool_call` da STORY-042) também vêm como `kind: 'narrative'` e mantêm `whitespace-pre-wrap` pra preservar a sensação de "passo intermediário".
+- **Hidratação respeita ordem narrative→final:** `hydrate-history.ts` filtra `tool_result` (são internos) e mapeia `tool_call` pra `kind: 'narrative'` — alinha com como `useJimmyOrchestrator` empilha mensagens em runtime.
+- **Prompt caching gated por env flag:** OpenRouter→Claude suporta `cache_control` mas comportamento real depende do modelo. Default off pra rollout seguro; user liga via `supabase secrets set` após validar.
+- **Auto-scroll com viewport Radix:** Radix ScrollArea esconde o scroll nativo; querySelector em `[data-radix-scroll-area-viewport]` é a forma idiomática de acessar o viewport real.
+- **Badge unreadCount com effect simples:** quando `messages.length` muda E NOT near-bottom, increment. Volta a near-bottom (scroll manual ou click no badge) zera. Sem race conditions complexas.
 
 ---
 
