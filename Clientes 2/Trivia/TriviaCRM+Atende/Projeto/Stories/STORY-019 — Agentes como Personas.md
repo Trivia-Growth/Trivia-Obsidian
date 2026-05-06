@@ -2,10 +2,10 @@
 id: STORY-019
 titulo: "Agentes como Personas — Identidade, Memória e Base de Conhecimento"
 modulo: "Atendimento / IA"
-status: "backlog"
+status: "implementado"
 fase: 7
 prioridade: 1
-agente_responsavel: "—"
+agente_responsavel: "TRIVIAIOX"
 atualizado: 2026-05-06
 ---
 
