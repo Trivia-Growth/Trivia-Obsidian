@@ -2,7 +2,7 @@
 id: STORY-008
 titulo: "MVP 3 Fechamento — ICP Tier, Deal Monitor e Routing Integration"
 modulo: "Gestão Comercial"
-status: "em-progresso"
+status: "concluido"
 fase: 3
 prioridade: 1
 agente_responsavel: "Claude Code"
