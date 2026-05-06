@@ -44,12 +44,14 @@ atualizado: 2026-05-06
 
 ## Sub-projetos e estado
 
-### 1. Organograma PREVIX 🟢
+### 1. Organograma PREVIX 🟢 (congelado por ora)
 
 - **O que é:** SaaS web onde a liderança da Previx gerencia colaboradores, hierarquia, departamentos. Exporta PDF/PNG, compartilha via token público, audita alterações.
 - **Estado:** em produção, 17 stories entregues, 3 fases concluídas + 2 hotfixes.
-- **Stack:** Vite + React + TS + Supabase (padrão Trívia canônico).
+- **Stack:** Vite + React + TS + Supabase (padrão Trívia canônico) + **AIOX** (não Triviaiox — sistema legado).
 - **Detalhe:** [[Organograma/00 - Índice]]
+- **Status do projeto:** **congelado durante o ciclo do Site PREVIX** (decisão JG, 2026-05-06). Sistema já entrega; sem mudanças até feature nova ou integração SSO com Portal/Site exigir. Ver [Memory feedback Organograma freeze].
+- **Gap consciente de docs (não é bug):** o `CLAUDE.md` e `architecture.md` do `organograma-previx-app` ainda não mencionam (a) Supabase compartilhado entre sub-projetos, (b) `app_metadata.user_role` como array, (c) regra de schema isolation. Esses ajustes só serão feitos quando o Organograma voltar a ser tocado.
 
 ### 2. Site PREVIX 🟡
 
