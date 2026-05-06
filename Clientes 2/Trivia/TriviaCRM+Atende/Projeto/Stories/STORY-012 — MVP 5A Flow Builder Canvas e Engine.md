@@ -2,11 +2,11 @@
 id: STORY-012
 titulo: "MVP 5A — Flow Builder Canvas Visual + Engine"
 modulo: "Flow Builder"
-status: "backlog"
+status: "concluido"
 fase: 5
 prioridade: 1
-agente_responsavel: "—"
-atualizado: 2026-05-06
+agente_responsavel: "Claude Code"
+atualizado: 2026-05-07
 ---
 
 # STORY-012 — MVP 5A: Flow Builder Canvas + Engine

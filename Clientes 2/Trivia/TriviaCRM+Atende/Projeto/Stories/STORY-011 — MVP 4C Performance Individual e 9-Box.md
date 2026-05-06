@@ -2,11 +2,11 @@
 id: STORY-011
 titulo: "MVP 4C — Performance Individual e 9-Box de Performance"
 modulo: "Analytics"
-status: "backlog"
+status: "concluido"
 fase: 4
 prioridade: 3
-agente_responsavel: "—"
-atualizado: 2026-05-06
+agente_responsavel: "Claude Code"
+atualizado: 2026-05-07
 ---
 
 # STORY-011 — MVP 4C: Performance Individual + 9-Box
