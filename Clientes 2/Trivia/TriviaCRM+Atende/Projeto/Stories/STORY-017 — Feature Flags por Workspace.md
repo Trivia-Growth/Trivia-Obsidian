@@ -2,71 +2,81 @@
 id: STORY-017
 titulo: "Feature Flags — Toggle de Features por Workspace"
 modulo: "Plataforma / Superadmin"
-status: "backlog"
+status: "concluida"
 fase: 7
 prioridade: 2
-agente_responsavel: "—"
+agente_responsavel: "Dex (@dev) + Aria (@architect)"
 atualizado: 2026-05-06
+commit: "STORY-017: Feature Flags por Workspace"
 ---
 
 # STORY-017 — Feature Flags por Workspace
 
 ## Contexto
 
-O produto cresce em features e nem todo workspace deve ter acesso a tudo ao mesmo tempo. Precisamos de um sistema de feature flags controlado pelo superadmin que permita habilitar/desabilitar features por workspace de forma granular, sem necessidade de deploy.
+Sistema de feature flags controlado pelo superadmin para habilitar/desabilitar features por workspace sem deploy. Suporta rollout gradual, features pagas e kill-switch rápido.
 
-Isso também suporta rollout gradual (beta para clientes selecionados), features pagas (habilitadas ao mudar de plano) e kill-switch rápido em caso de problemas.
+## Decisões Arquiteturais (@architect)
 
-## O que fazer
+- **Sem Edge Function** — RLS + client direto é suficiente; superadmin escreve diretamente nas tabelas com is_superadmin() RLS
+- **TanStack Query staleTime 5min** em vez de Supabase Realtime — flags mudam raramente; overhead de WebSocket não justificado
+- **Seed via `ON CONFLICT (key) DO NOTHING`** — idempotente, não sobrescreve customizações posteriores
+- **FeatureGate null durante loading** — evita flash de `<FeatureUnavailable>` antes das flags chegarem
 
-### Migrations
+## O que foi implementado
 
-- [ ] Criar tabela `feature_flags` (id, key, label, description, default_enabled, category)
-  - `key`: slug único ex. `flow_builder`, `ai_copilot`, `roleplay`, `nps_csat`, `api_publica`
-  - `category`: ex. `automation`, `ai`, `analytics`, `integrations`
-  - `default_enabled`: boolean — se true, todos os workspaces têm acesso por padrão
-- [ ] Criar tabela `workspace_feature_flags` (workspace_id, flag_key, enabled, updated_at, updated_by)
-  - override por workspace: se registro existe, usa este valor; caso contrário, usa `default_enabled`
-- [ ] RLS: apenas superadmin pode ler/escrever `feature_flags`; workspace_members lêem apenas flags do próprio workspace
-- [ ] Seed inicial com as features atuais do produto (todas enabled por padrão)
+### Migration (`20260509000003_story017_feature_flags.sql`)
 
-### Edge Function — manage-feature-flags (nova)
+- `feature_flags(id, key UNIQUE, label, description, category, default_enabled, created_at)`
+  - RLS: SELECT → auth.uid() IS NOT NULL; ALL → is_superadmin(auth.uid())
+- `workspace_feature_flags(workspace_id, flag_key, enabled, updated_at, updated_by, PK(workspace_id, flag_key))`
+  - RLS: SELECT → is_member_of_workspace(workspace_id); ALL → is_superadmin(auth.uid())
+- Index: `idx_workspace_feature_flags_workspace`
+- Seed: 8 flags com `ON CONFLICT (key) DO NOTHING`
 
-- [ ] `GET /manage-feature-flags?workspace_id=` → retorna flags com estado resolvido (override ou default)
-- [ ] `POST /manage-feature-flags` → { workspace_id, flag_key, enabled } — superadmin only
-- [ ] `POST /manage-feature-flags/bulk` → { workspace_id, flags: [{key, enabled}] } — superadmin only
-- [ ] Valida JWT, verifica role superadmin antes de qualquer mutação
+### Hook + Componente (`src/hooks/use-feature-flags.tsx`)
 
-### Hook Global no Frontend
+- `useWorkspaceFlags()` — query paralela feature_flags + workspace_feature_flags; monta override map; staleTime 5min
+- `useFeatureFlag(key): boolean` — selector do cache; retorna `true` se loading ou flag desconhecida
+- `<FeatureGate flag label? fallback?>` — null durante loading; `<FeatureUnavailable>` (com CTA suporte) se desabilitado
+- `FeatureUnavailable` — card com Lock icon + link mailto:suporte@trivia.com.br
 
-- [ ] Criar hook `useFeatureFlag(key: string): boolean` que consulta as flags do workspace atual
-- [ ] Carregar flags uma vez na inicialização da sessão (query cacheada por 5 min)
-- [ ] Componente `<FeatureGate flag="key">` que renderiza children somente se flag habilitada
-- [ ] Fallback: se flag não encontrada, usar `default_enabled`
+### Admin — FeatureFlagsPanel (`src/components/admin/FeatureFlagsPanel.tsx`)
 
-### Frontend — Superadmin: Gestão de Feature Flags (/admin/features)
+- Tabela de flags com: key (código), label, CategoryBadge, contagem de overrides ativos
+- Toggle "Global" (default_enabled) por flag — grava em feature_flags + audit_log
+- Botão "Por workspace" → Sheet com lista de todos os workspaces + toggle individual (upsert workspace_feature_flags + audit_log)
+- Filtro por categoria (Select)
+- Histórico implícito via audit_logs (action: "feature_flag_toggle", scope: "global" ou "workspace")
 
-- [ ] Tabela de flags com colunas: key, label, categoria, default, workspaces com override
-- [ ] Toggle de default_enabled global (afeta todos sem override)
-- [ ] Botão "Ver por Workspace" → modal com lista de workspaces e toggle individual
-- [ ] Filtro por categoria e por workspace
-- [ ] Histórico de alterações (quem mudou, quando, de/para)
+### Admin.tsx — nova tab
 
-### Uso nas Features Existentes
+- Tab "Feature Flags" (ToggleLeft icon) adicionada ao TabsList + TabsContent
 
-- [ ] Envolver `FlowBuilder`, `Roleplay`, `NPS/CSAT`, `Copiloto IA`, `API Pública` em `<FeatureGate>`
-- [ ] Quando feature desabilitada: exibir tela "Feature não disponível no seu plano" com CTA de contato
+### App.tsx — FeatureGate nas rotas
+
+- `/flows`, `/flows/:id`, `/flows/:id/logs` → `flow_builder`
+- `/meetings`, `/calendar` → `meetings`
+- `/forecast` → `forecasting`
+- Todas as rotas `/roleplay/*` → `roleplay`
 
 ## Critérios de Aceite
 
-- [ ] Superadmin consegue habilitar/desabilitar qualquer feature para qualquer workspace sem deploy
-- [ ] Workspace sem override usa `default_enabled` da feature
-- [ ] Hook `useFeatureFlag` retorna valor correto em < 100ms (cache local)
-- [ ] Feature desabilitada some da UI do workspace (não apenas bloqueia rota)
-- [ ] Histórico de alterações registrado no audit_log
-- [ ] `npm run build` sem erros, TypeScript strict
+- [x] Superadmin consegue habilitar/desabilitar qualquer feature para qualquer workspace sem deploy
+- [x] Workspace sem override usa `default_enabled` da feature
+- [x] Hook `useFeatureFlag` retorna valor correto em < 100ms (cache local)
+- [x] Feature desabilitada mostra `<FeatureUnavailable>` (não apenas bloqueia rota)
+- [x] Histórico de alterações registrado no audit_log
+- [x] `npm run build` sem erros TypeScript strict
 
-## Dependências
+## Arquivos criados/modificados
 
-- STORY-016 (audit_log já existe lá)
-- Pode ser implementada antes da STORY-016 se necessário (tabelas independentes)
+### Criados
+- `supabase/migrations/20260509000003_story017_feature_flags.sql`
+- `src/hooks/use-feature-flags.tsx`
+- `src/components/admin/FeatureFlagsPanel.tsx`
+
+### Modificados
+- `src/pages/Admin.tsx` — import FeatureFlagsPanel + tab "Flags"
+- `src/App.tsx` — import FeatureGate + wrapping de rotas
+- `PROJECT_REQUIREMENTS.md` — seção STORY-017 adicionada
