@@ -107,6 +107,7 @@
 
 > Decisões de escopo. Decisões técnicas profundas vão em `architecture.md` (ADRs) — mirror narrativo em [[../Decisões Arquiteturais]].
 
-- `2026-05-06` — Projeto Site PREVIX iniciado. Pasta `Clientes 2/PREVIX/Site/` criada espelhando o padrão do Organograma. ADRs 001-006 aceitos. ADR-003 (Supabase compartilhado) com pendência de confirmação do JG.
+- `2026-05-06` — Projeto Site PREVIX iniciado. Pasta `Clientes 2/PREVIX/Site/` criada espelhando o padrão do Organograma. ADRs 001-006 aceitos.
+- `2026-05-06` — **ADR-003 confirmado por JG (cliente-wide):** Supabase compartilhado entre TODOS os sub-projetos da Previx (Organograma, Site, Portal, PX One, Postes IA). Project ref `yqexjddpotlaqraljwvl`. Schemas isolados por prefixo. Decisão registrada em [[../00 - Índice PREVIX|00 - Índice PREVIX]] e [[../../Visão Estratégica de Produtos]].
 - `2026-05-06` — Artigo do Jimmy Studio (`SEO, AEO e GEO 2026`) arquivado em [[../Referências/Jimmy Studio — AEO GEO 2026]] como fonte primária da Metodologia Jimmy 3.0 (Article IV — No Invention).
 - `2026-05-06` — 10 stories esboçadas (5 da Fase 1, 2 da Fase 2, 1 da Fase 3, 1 da Fase 4, 1 da Fase 5). Fase 6 mapeada sem stories ainda.

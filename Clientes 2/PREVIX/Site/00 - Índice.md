@@ -39,13 +39,13 @@ Clone local: ~/Documents/Obsidian/Github/previx-site-app    (a criar — STORY-0
 ## Supabase
 
 ```
-Projeto: compartilhado com Organograma PREVIX (default — pendente confirmação JG)
+Projeto: compartilhado com TODOS os sub-projetos Previx (decisão cliente-wide)
 Project URL: https://yqexjddpotlaqraljwvl.supabase.co
 Reference ID: yqexjddpotlaqraljwvl
 Schemas próprios do Site: site_leads, site_blog_admin
 ```
 
-> **Pendência:** confirmar com JG se Site usa este projeto ou um novo. Decisão registrada em [[Decisões Arquiteturais|ADR-003]].
+> **Decisão fechada:** este projeto Supabase é o único usado por toda a Previx (Organograma, Site, Portal futuro, apps de produto). Cada sub-projeto isola seus dados via prefixo de schema. Detalhe em [[Decisões Arquiteturais|ADR-003]] e em [[../00 - Índice PREVIX#Princípios cliente-wide|Princípios cliente-wide]].
 
 ---
 

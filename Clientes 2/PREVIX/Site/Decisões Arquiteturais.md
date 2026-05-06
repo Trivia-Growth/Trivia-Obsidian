@@ -35,16 +35,19 @@ atualizado: 2026-05-06
   - Onboarding de devs já familiarizados com Heziom/Organograma é instantâneo.
   - **Trade-off:** stack mista no ecossistema. Mitigação: cada sub-projeto tem seu próprio repo, e o limite arquitetural é claro (LP/conteúdo = Astro, app = Vite).
 
-## ADR-003 — Supabase compartilhado entre sub-projetos
+## ADR-003 — Supabase compartilhado entre TODOS os sub-projetos Previx
 
-- **Status:** proposta (2026-05-06) — aguarda confirmação do JG
-- **Contexto:** O Organograma PREVIX já tem um projeto Supabase em produção (`yqexjddpotlaqraljwvl`). Site precisa de Supabase para captura de leads e admin do blog. Portal do Cliente, quando vier, precisará de auth e dados. **Manter projetos separados** complica SSO; **compartilhar** simplifica integração mas mistura responsabilidades.
-- **Decisão proposta:** Usar o **mesmo projeto Supabase** do Organograma para todos os sub-projetos da Previx. Cada sub-projeto tem schemas isolados via prefixo (`organograma_*` já existe; criar `site_*`, `portal_*`, etc.). RLS garante que cada schema só é lido/escrito pelo seu próprio sub-projeto.
-- **Consequências (se aceita):**
-  - SSO trivial: o `supabase.auth` é compartilhado entre Site, Portal, Organograma.
-  - Custos do Supabase concentrados em 1 projeto (mais barato em escala).
-  - Risco: incidente de banco afeta todos os sub-projetos. Mitigação: backups regulares + monitoramento por schema.
-  - **Pendência:** confirmar com JG antes de iniciar STORY-001.
+- **Status:** **aceita** (2026-05-06, confirmada por JG)
+- **Escopo:** **decisão cliente-wide** — vale para Site, Portal do Cliente, futuras integrações, apps PX One, apps Postes IA e qualquer sub-projeto novo da Previx que precisar de Supabase. Documentação espelhada em [[../Visão Estratégica de Produtos|Visão Estratégica de Produtos]] e [[../00 - Índice PREVIX|00 - Índice PREVIX]] como princípio do cliente.
+- **Contexto:** O Organograma PREVIX já tem um projeto Supabase em produção (`yqexjddpotlaqraljwvl`). Cada sub-projeto novo precisaria de Supabase próprio. **Manter projetos separados** complica SSO, fragmenta auth, multiplica custo e bloqueia integrações futuras.
+- **Decisão:** **Todos** os sub-projetos da Previx usam o **mesmo projeto Supabase** do Organograma (`yqexjddpotlaqraljwvl`). Cada sub-projeto tem schemas isolados via prefixo (`organograma_*` já existe; criar `site_*`, `portal_*`, `pxone_*`, `postesai_*`, etc.). RLS garante que cada schema só é lido/escrito pelo seu próprio sub-projeto. Auth é único — usuário logado no Site é o mesmo logado no Organograma e (futuramente) no Portal.
+- **Consequências:**
+  - **SSO automático** entre todos os sub-projetos. Cliente Previx loga uma vez e circula entre apps.
+  - **Custo Supabase concentrado** em 1 projeto (escala única, plano Pro paga por todos).
+  - **Backups e monitoramento centralizados** — JG/Trívia monitora um único projeto.
+  - **Risco:** incidente de banco afeta todos os sub-projetos. **Mitigação obrigatória:** backups diários automatizados (Supabase Pro), staging de migrations, runbook de rollback documentado em `SECURITY_DEBT.md` de cada sub-projeto.
+  - **Regra cross-projeto:** toda nova migration usa **prefixo de schema** (`site_*`, `portal_*`, etc.). Tabelas no schema `public` são exclusivamente do Organograma (legado). Documentar em `architecture.md` de cada novo repo.
+  - **Auth compartilhado:** `app_metadata.user_role` pode ter múltiplos valores quando um usuário pertence a vários sub-projetos (ex: `["admin-organograma","admin-site"]`). Roles novas adicionam, não substituem.
 
 ## ADR-004 — Triviaiox no lugar do AIOX
 
