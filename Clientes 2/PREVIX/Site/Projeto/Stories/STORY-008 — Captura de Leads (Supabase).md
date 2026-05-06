@@ -20,12 +20,12 @@ Implementa o pipeline completo de captura de leads: form em `/orcamento` e `/con
 
 - [[../../Briefing Inicial]] (seção "Captura de leads")
 - [[../../Custom Instructions Triviaiox]] (Segurança)
-- [[../../Decisões Arquiteturais|ADR-003]] (Supabase compartilhado — confirmar antes)
+- [[../../Decisões Arquiteturais|ADR-003]] (Supabase compartilhado — aceito: usar `yqexjddpotlaqraljwvl`, schema `site_*`)
 
 ## Critérios de Aceite
 
-- [ ] CA1 — Schema `site_*` criado no Supabase (ou novo projeto, conforme ADR-003 final). Migração SQL com tabela `site_leads`: `id`, `criado_em`, `atualizado_em`, `nome`, `email`, `telefone`, `empresa` (nullable), `motivo` (`vigilancia|eletronica|facilities|outro`), `mensagem`, `origem` (`/orcamento` ou `/contato`), `utm_source`, `utm_medium`, `utm_campaign`, `status` (`novo|qualificado|contatado|fechado|descartado`), `notas_internas`
-- [ ] CA2 — RLS habilitada com FORCE: anon **não** lê `site_leads`. Apenas usuários com `app_metadata.user_role = 'admin-site'` podem `SELECT/UPDATE`. INSERT vem **só** via Edge Function (service_role).
+- [ ] CA1 — Schema `site` criado **no Supabase compartilhado** (`yqexjddpotlaqraljwvl`) — `CREATE SCHEMA IF NOT EXISTS site;`. Migração SQL com tabela `site.leads`: `id`, `criado_em`, `atualizado_em`, `nome`, `email`, `telefone`, `empresa` (nullable), `motivo` (`vigilancia|eletronica|facilities|outro`), `mensagem`, `origem` (`/orcamento` ou `/contato`), `utm_source`, `utm_medium`, `utm_campaign`, `status` (`novo|qualificado|contatado|fechado|descartado`), `notas_internas`. **Não tocar no schema `public`** (Organograma).
+- [ ] CA2 — RLS habilitada com FORCE em `site.leads`: anon **não** lê. Apenas usuários com `'admin-site'` em `app_metadata.user_role` (que é **array** — Princípio cliente-wide #1, item Auth) podem `SELECT/UPDATE`. INSERT vem **só** via Edge Function (service_role). Policy verifica via `auth.jwt()->'app_metadata'->'user_role' ? 'admin-site'`.
 - [ ] CA3 — Edge Function `submit-lead` em Deno com validação Zod (campos obrigatórios + formato de e-mail/telefone), rate limit (10 req/min/IP), honeypot (`field_meta` invisível com timestamp de render — rejeita se preenchido ou se tempo < 1s)
 - [ ] CA4 — Edge Function dispara webhook para Microsoft Teams (canal Previx) com nome, motivo, telefone — sem expor o resto do payload
 - [ ] CA5 — Edge Function envia e-mail de notificação para `previx@grupoprevix.com.br` (provedor a definir em ADR-007 — placeholder Resend até decisão)
