@@ -3,7 +3,7 @@ id: STORY-044
 titulo: "JimmyChat: quick wins (hidratar histórico, markdown, prompt caching, auto-scroll, persist skill)"
 fase: 3
 modulo: jimmy-jimmychat
-status: pronto
+status: em-progresso
 prioridade: media
 origem: claude
 agente_responsavel: ""
