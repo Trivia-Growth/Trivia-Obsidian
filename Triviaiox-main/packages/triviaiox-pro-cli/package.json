@@ -1,0 +1,36 @@
+{
+  "name": "triviaiox-pro",
+  "version": "0.1.0",
+  "description": "CLI for TRIVIAIOX Pro — install, activate and manage your license",
+  "bin": {
+    "triviaiox-pro": "bin/triviaiox-pro.js"
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "dependencies": {
+    "open": "^10.0.0"
+  },
+  "keywords": [
+    "triviaiox",
+    "pro",
+    "license",
+    "cli",
+    "triviagrowth"
+  ],
+  "author": "Trivia-Growth",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trivia-Growth/Triviaiox.git",
+    "directory": "packages/triviaiox-pro-cli"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

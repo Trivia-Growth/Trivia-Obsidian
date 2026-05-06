@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "triviaiox-core": ["./.triviaiox-core/core"],
+      "triviaiox-core/*": ["./.triviaiox-core/core/*"]
+    }
+  },
+  "include": [
+    "types/**/*.d.ts",
+    ".triviaiox-core/**/*",
+    "tools/**/*",
+    "scripts/**/*",
+    "src/**/*",
+    "common/**/*",
+    "bin/**/*",
+    "*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".tsbuildinfo",
+    "coverage",
+    ".test-temp",
+    "**/*-tmpl.*",
+    "**/*.tmpl.*",
+    "**/*-template.*",
+    ".triviaiox-core/development/templates/**",
+    ".triviaiox-core.backup*/**",
+    "triviaiox-core.backup*/**",
+    "triviaiox-core-deprecated/**",
+    "triviaiox-core-depracated/**",
+    "eslint.config.js"
+  ]
+}
