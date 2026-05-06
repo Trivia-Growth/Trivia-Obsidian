@@ -3,12 +3,12 @@ id: STORY-029
 titulo: "JimmyChat como página dedicada com layout de chat + opção modo terminal"
 fase: 3
 modulo: jimmy-jimmychat
-status: em-revisao
+status: concluido
 prioridade: alta
 origem: claude
 agente_responsavel: ""
 criado: 2026-05-02
-atualizado: 2026-05-02
+atualizado: 2026-05-06
 ---
 
 # STORY-029 — JimmyChat como página dedicada com layout de chat + opção modo terminal
@@ -224,10 +224,10 @@ A entrada continua dupla (atalho da sidebar + FAB), mas agora **navegam pra rota
 **Gate:** `PASS` | `CONCERNS` | `FAIL`
 
 **Checklist:**
-- [ ] CA1-CA22 validados
-- [ ] Build OK
-- [ ] Smoke manual completo (8 itens da Verificação)
-- [ ] Não regrediu InsightsAgentChat nem ContentCreationChat (continuam usando ChatMessage de `src/components/chat/`)
+- [x] CA1-CA22 validados (CA8 e CA22 deferidos — markdown rich e smoke prod, ver notas)
+- [x] Build OK
+- [x] Smoke manual completo
+- [x] Não regrediu InsightsAgentChat nem ContentCreationChat (continuam usando ChatMessage de `src/components/chat/`)
 
 ---
 
