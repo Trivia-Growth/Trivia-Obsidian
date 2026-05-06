@@ -2,11 +2,11 @@
 id: STORY-013
 titulo: "MVP 5B — E-mail, Clusterização e Logs do Flow Builder"
 modulo: "Flow Builder"
-status: "backlog"
+status: "concluido"
 fase: 5
 prioridade: 2
-agente_responsavel: "—"
-atualizado: 2026-05-06
+agente_responsavel: "Claude Code"
+atualizado: 2026-05-07
 ---
 
 # STORY-013 — MVP 5B: E-mail + Clusterização + Logs
