@@ -2,11 +2,11 @@
 id: STORY-010
 titulo: "MVP 4B — MTD Tracking (Ritmo vs. Meta)"
 modulo: "Analytics"
-status: "backlog"
+status: "concluido"
 fase: 4
 prioridade: 2
-agente_responsavel: "—"
-atualizado: 2026-05-06
+agente_responsavel: "Claude Code"
+atualizado: 2026-05-07
 ---
 
 # STORY-010 — MVP 4B: MTD Tracking
