@@ -3,12 +3,12 @@ id: STORY-027
 titulo: "Rename HubChat → JimmyChat + Aposentar help-agent (chat antigo)"
 fase: 3
 modulo: jimmy-jimmychat
-status: em-revisao
+status: concluido
 prioridade: alta
 origem: claude
 agente_responsavel: ""
 criado: 2026-05-02
-atualizado: 2026-05-02
+atualizado: 2026-05-06
 ---
 
 # STORY-027 — Rename HubChat → JimmyChat + Aposentar help-agent (chat antigo)

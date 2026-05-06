@@ -69,6 +69,12 @@
 
 ---
 
+## Hotfixes pós-Fase 3
+
+- 🟡 **STORY-016 — Criação de usuários no admin.** Edge Function `create-user` + botão "Novo usuário" em `/admin/usuarios`. Sem convite por e-mail — admin define senha inicial e entrega pelo canal interno. Criada em 2026-05-05.
+
+---
+
 ## Milestones
 
 | Marco | Data prevista | Status |
