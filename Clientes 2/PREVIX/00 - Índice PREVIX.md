@@ -29,6 +29,15 @@ Veja o mapa completo do ecossistema (relação entre os sub-projetos, dependênc
 
 ---
 
+## Princípios cliente-wide (decisões que valem para todos os sub-projetos Previx)
+
+1. **Supabase único compartilhado** — Project Reference `yqexjddpotlaqraljwvl` para Organograma, Site, Portal, PX One, Postes IA e qualquer sub-projeto futuro. Schemas isolados por prefixo (`organograma_*`, `site_*`, `portal_*`, etc.). Auth único, SSO automático entre todos os apps Previx. Detalhe em [[Visão Estratégica de Produtos#Princípios cross-projeto]].
+2. **Identidade visual unificada** — Paleta `#00AEEF` / `#0A1F3C`. Tipografia Inter. Logos oficiais em `OneDrive/.../Previx/Site/WP/previx-assets/logos/`.
+3. **Padrão Trívia para sistemas, Astro para LP/conteúdo** — Vite+React+Supabase para apps autenticados; Astro quando SEO/AEO/GEO for o produto.
+4. **Triviaiox no lugar do AIOX** em todo repo novo da Previx.
+
+---
+
 ## Contatos do Cliente
 
 | Papel | Nome | Contato |
