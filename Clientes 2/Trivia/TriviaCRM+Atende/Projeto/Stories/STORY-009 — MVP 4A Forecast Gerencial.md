@@ -2,11 +2,11 @@
 id: STORY-009
 titulo: "MVP 4A — Forecast Gerencial"
 modulo: "Analytics"
-status: "backlog"
+status: "concluido"
 fase: 4
 prioridade: 1
-agente_responsavel: "—"
-atualizado: 2026-05-06
+agente_responsavel: "Claude Code"
+atualizado: 2026-05-07
 ---
 
 # STORY-009 — MVP 4A: Forecast Gerencial
