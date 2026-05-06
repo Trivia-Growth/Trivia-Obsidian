@@ -1,1 +1,1 @@
-Estou pensando num mecanismos de agentes autonomos que buscam no google empresas em uma localização que nao possuem sites, gera o site, envia pr
+Estou pensando num mecanismos de agentes autonomos que buscam no google empresas em uma localização que nao possuem sites, gera o site, envia por email e whatsapp se tiver contato cadastro a proposta de venda. Ou seja um ecossistema de agentes, um busca clientes, outro é o dev que cria outro é o vendedor que vende full IA
