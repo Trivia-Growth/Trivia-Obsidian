@@ -2,11 +2,12 @@
 id: STORY-015
 titulo: "MVP 6B — Roleplay Completo (fechamento de gaps)"
 modulo: "Roleplay"
-status: "backlog"
+status: "concluida"
 fase: 6
 prioridade: 2
-agente_responsavel: "—"
+agente_responsavel: "Dex (@dev) + Aria (@architect)"
 atualizado: 2026-05-06
+commit: "STORY-015: MVP 6B Roleplay Completo — processo seletivo público, planos IA, integração performance"
 ---
 
 # STORY-015 — MVP 6B: Roleplay Completo
@@ -66,8 +67,36 @@ com o performance_snapshots (usado no 9-Box da STORY-011).
 
 ## Critérios de Aceite
 
-- [ ] `/selecao/:slug` acessível sem login; candidato completa roleplay e gestor vê ranking
-- [ ] Plano de treinamento gerado por IA com base nas lacunas reais do vendedor
-- [ ] Score de roleplay aparece na tabela de Performance (STORY-011) 
-- [ ] `supabase functions deploy generate-training-plan roleplay-evaluate` passa
-- [ ] `npm run build` sem erros
+- [x] `/selecao/:slug` acessível sem login; candidato completa roleplay e gestor vê ranking
+- [x] Plano de treinamento gerado por IA com base nas lacunas reais do vendedor
+- [x] Score de roleplay aparece na tabela de Performance (STORY-011) 
+- [x] `supabase functions deploy generate-training-plan performance-calculator` passa
+- [x] `npm run build` sem erros
+
+---
+
+## Notas de Implementação (2026-05-06)
+
+### Arquivos criados
+- `supabase/migrations/20260509000001_story015_roleplay_complete.sql` — public_slug, ai_training_plans, candidate_email
+- `supabase/functions/generate-training-plan/index.ts` — Edge Function nova
+- `src/pages/PublicSelection.tsx` — formulário de entrada do candidato
+- `src/pages/PublicSelectionSession.tsx` — wrapper público da sessão
+- `src/pages/PublicSelectionResult.tsx` — resultado público do candidato
+- `src/components/roleplay/PublicSelectionSessionChat.tsx` — chat sem AuthProvider
+- `src/components/roleplay/SelectionPanel.tsx` — ranking + export CSV para gestor
+- `src/components/roleplay/AITrainingPlansTab.tsx` — tab de planos IA por vendedor
+- `src/hooks/use-ai-training-plans.ts` — hook TanStack Query + mutation
+
+### Arquivos modificados
+- `supabase/functions/performance-calculator/index.ts` — últimos 3 scores, exclui seleção
+- `src/components/roleplay/TrainingConfig.tsx` — campo public_slug com gerador e link copiável
+- `src/components/roleplay/RoleplayHub.tsx` — tab "Planos IA" + link "Painel de Seleção"
+- `src/App.tsx` — rotas públicas `/selecao/*` + `/roleplay/selecao/:trainingId`
+- `PROJECT_REQUIREMENTS.md` — status STORY-015 atualizado
+
+### Decisões técnicas
+- `ai_training_plans` como tabela separada de `training_plans` (PDI manual) para não quebrar fluxo existente
+- `user_id` nullable em `roleplay_sessions` para permitir candidatos externos
+- Rotas `/selecao/sessao` e `/selecao/resultado` declaradas antes de `/selecao/:slug` para evitar conflito React Router
+- performance-calculator usa `slice(0,3)` após order desc para pegar últimos 3 scores
