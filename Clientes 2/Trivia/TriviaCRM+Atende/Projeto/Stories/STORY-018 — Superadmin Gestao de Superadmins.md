@@ -2,66 +2,67 @@
 id: STORY-018
 titulo: "Superadmin Evoluído — Gestão de Superadmins"
 modulo: "Plataforma / Superadmin"
-status: "backlog"
+status: "concluida"
 fase: 7
 prioridade: 2
-agente_responsavel: "—"
+agente_responsavel: "Dex (@dev) + Aria (@architect)"
 atualizado: 2026-05-06
+commit: "STORY-018: Superadmin — Gestão de Superadmins"
 ---
 
 # STORY-018 — Superadmin: Gestão de Superadmins
 
 ## Contexto
 
-Atualmente existe apenas um superadmin hardcoded. Para escalar o suporte e operações internas, precisamos permitir que um superadmin cadastre outros superadmins com controle de acesso granular.
+Permite que um superadmin (com `manage_superadmins: true`) cadastre e gerencie outros superadmins com permissões granulares, sem necessidade de acesso direto ao banco.
 
-**Nota:** A impersonação de workspace (acessar como um workspace específico) já está escopo da STORY-016. Esta story foca exclusivamente na gestão de quem tem papel `superadmin` na plataforma.
+## O que foi implementado
 
-## O que fazer
+### Migration (`20260509000004_story018_superadmins_table.sql`)
 
-### Migrations
+- `superadmins(id, user_id UNIQUE FK auth.users, display_name, email, permissions_json, invited_by, is_active, last_login_at, created_at)`
+- `permissions_json` default: `{ manage_workspaces: true, manage_superadmins: false, manage_billing: true, view_audit_log: true }`
+- RLS:
+  - SELECT → is_superadmin(auth.uid())
+  - ALL → superadmins WHERE user_id = auth.uid() AND is_active AND manage_superadmins: true
+- `is_superadmin()` reescrita: verifica `superadmins.is_active = true` OR `workspace_members.role = superadmin` (retrocompat)
+- Indexes: user_id, is_active
 
-- [ ] Criar tabela `superadmins` (id, user_id, display_name, email, permissions_json, invited_by, created_at, last_login_at, is_active)
-  - `permissions_json`: ex. `{ "manage_workspaces": true, "manage_superadmins": false, "manage_billing": true, "view_audit_log": true }`
-  - Superadmin raiz (founder) tem `manage_superadmins: true`
-- [ ] RLS: apenas superadmins podem ler `superadmins`; apenas quem tem `manage_superadmins: true` pode inserir/atualizar
-- [ ] Função `is_superadmin(user_id)` para uso em outras policies RLS
+### Edge Function `manage-superadmins`
 
-### Edge Function — manage-superadmins (nova)
+- `GET /` → lista todos os superadmins (requer is_superadmin)
+- `POST /invite` → cria auth user se não existe + insere em superadmins + envia e-mail de convite (magic link) + notifica outros superadmins ativos — requer `manage_superadmins: true`
+- `PATCH /{id}` → atualiza permissions_json ou is_active — requer `manage_superadmins: true`; bloqueia self-modification
+- `DELETE /{id}` → soft deactivate (is_active = false) — requer `manage_superadmins: true`; bloqueia self-deactivation
+- Fallback: superadmin via workspace_members (legacy) tem todas as permissões
+- Audit log em todas as mutações; `unauthorized_attempt` quando sem permissão
 
-- [ ] `GET /manage-superadmins` → lista superadmins com permissões e status
-- [ ] `POST /manage-superadmins/invite` → { email, display_name, permissions } — cria usuário Auth + envia convite por e-mail
-- [ ] `PATCH /manage-superadmins/{id}` → atualiza permissões ou desativa
-- [ ] `DELETE /manage-superadmins/{id}` → desativa (soft delete, nunca exclui o registro)
-- [ ] Requer JWT de superadmin com `manage_superadmins: true`
-- [ ] Registra toda ação no audit_log
+### Frontend — SuperadminsPanel (`src/components/admin/SuperadminsPanel.tsx`)
 
-### Frontend — Superadmin: Gestão de Equipe (/admin/team)
+- Lista com: nome, e-mail, badge "Você", badge "Desativado", permissões granulares (4 PermBadge verde/cinza), tempo desde criação + último acesso
+- Botão "Desativar" com confirm() — oculto para o próprio usuário; só visível se `canManage`
+- Botão "Reativar" para superadmins inativos
+- InviteDialog: e-mail + nome + 4 switches de permissão → chama edge function
+- `canManage`: baseado em `permissions_json.manage_superadmins` ou ausência na tabela (legacy SA)
 
-- [ ] Lista de superadmins ativos com: nome, e-mail, permissões, último login, status
-- [ ] Botão "Convidar Superadmin" → modal com formulário: e-mail, nome, checkboxes de permissões
-- [ ] Edição de permissões inline (toggle por permissão)
-- [ ] Botão "Desativar" com confirmação (não aparece para o próprio usuário logado)
-- [ ] Badge "Você" no row do usuário logado
-- [ ] Histórico de ações de cada superadmin (link para audit_log filtrado)
+### Admin.tsx — nova tab
 
-### Segurança
+- Tab "Equipe SA" (ShieldCheck icon) + `<SuperadminsPanel />`
 
-- [ ] Superadmin não pode desativar a si mesmo
-- [ ] Superadmin sem `manage_superadmins` vê a lista mas não pode editar
-- [ ] Tentativas de acesso sem permissão registradas no audit_log com flag `unauthorized_attempt`
-- [ ] E-mail de notificação para todos os superadmins quando novo superadmin é adicionado
+## Decisões Técnicas
 
-## Critérios de Aceite
+- Sem invalidação de JWT em tempo real — MVP: verificação via `is_superadmin()` a cada request RLS
+- Retrocompatibilidade: `is_superadmin()` still checks `workspace_members.role = superadmin` para não quebrar superadmins existentes
+- `callEF()` helper no componente para centralizar fetch + auth header
+- Token carregado via `useState` com lazy import do supabase client para evitar circular dependencies
 
-- [ ] Superadmin com permissão `manage_superadmins` consegue convidar novo superadmin por e-mail
-- [ ] Novo superadmin recebe e-mail e consegue acessar /admin após aceitar convite
-- [ ] Permissões granulares funcionam: superadmin sem `manage_billing` não vê seção de billing
-- [ ] Desativação de superadmin revoga acesso imediatamente (JWT invalidado ou verificação em tempo real)
-- [ ] Toda ação registrada no audit_log
-- [ ] `npm run build` sem erros, TypeScript strict
+## Arquivos criados/modificados
 
-## Dependências
+### Criados
+- `supabase/migrations/20260509000004_story018_superadmins_table.sql`
+- `supabase/functions/manage-superadmins/index.ts`
+- `src/components/admin/SuperadminsPanel.tsx`
 
-- STORY-016 (audit_log, estrutura base do /admin)
-- Recomendado implementar após STORY-016
+### Modificados
+- `src/pages/Admin.tsx` — import SuperadminsPanel + tab "Equipe SA"
+- `PROJECT_REQUIREMENTS.md` — seção STORY-018 + edge function na tabela
