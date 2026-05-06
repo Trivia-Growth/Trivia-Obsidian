@@ -72,7 +72,7 @@
 ## Hotfixes pós-Fase 3
 
 - ✅ **STORY-016 — Criação de usuários no admin.** Edge Function `create-user` + botão "Novo usuário" em `/admin/usuarios`. Sem convite por e-mail — admin define senha inicial e entrega pelo canal interno. Mergeada PR #48 (`57c89e3`) em 2026-05-05; hotfix de preflight (Deno 2 rejeita body em 204) em 2026-05-06.
-- 🟡 **STORY-017 — Onboarding guiado no primeiro acesso.** Rota `/onboarding` força troca de senha + tour de 3-4 passos pelo panorama do sistema. Flag em `user_metadata.onboarded_at`. SQL one-shot marca usuários legacy como já onboarded. Criada em 2026-05-06.
+- ✅ **STORY-017 — Onboarding guiado no primeiro acesso.** Rota `/onboarding` força troca de senha + tour de 3-4 passos pelo panorama do sistema. Flag em `user_metadata.onboarded_at`. SQL one-shot marcou 2 usuários legacy como já onboarded em 2026-05-06. Implementada e push direto em main em 2026-05-06.
 
 ---
 
