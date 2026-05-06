@@ -30,8 +30,9 @@ inicio: 2026-05-06
 ## Repositório de Código
 
 ```
-GitHub: https://github.com/Trivia-Growth/previx-site-app   (a criar — STORY-001)
-Clone local: ~/Documents/Obsidian/Github/previx-site-app    (a criar — STORY-001)
+GitHub: https://github.com/Trivia-Growth/previx-site-app
+Clone local: ~/Documents/Obsidian/Github/previx-site-app
+Branch principal: main (push direto autorizado a Claude)
 ```
 
 ---
@@ -52,8 +53,11 @@ Schemas próprios do Site: site_leads, site_blog_admin
 ## Netlify
 
 ```
-URL de produção: https://previx-site.netlify.app   (a criar — STORY-001)
-Domínio final: https://grupoprevix.com.br          (cutover — STORY-010)
+Site ID: f95cfc51-9cf1-4f00-912b-a57755b7107f
+URL temporária Netlify: https://previx-site-app.netlify.app
+Admin: https://app.netlify.com/projects/previx-site-app
+Domínio final: https://grupoprevix.com.br (cutover — STORY-010)
+Account: Trívia (slug: triviastudio)
 ```
 
 ---
