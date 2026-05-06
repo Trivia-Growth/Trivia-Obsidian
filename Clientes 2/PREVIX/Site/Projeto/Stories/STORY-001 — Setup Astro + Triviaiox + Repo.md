@@ -30,8 +30,8 @@ Story zero do projeto Site PREVIX. Cria toda a infraestrutura de código que as 
 - [ ] CA3 — Scaffold Astro 4+ inicializado com `npm create astro@latest`, integrações `@astrojs/react`, `@astrojs/tailwind`, `@astrojs/sitemap`, `@astrojs/mdx` adicionadas
 - [ ] CA4 — `npx triviaiox-core install` rodado com sucesso; `.triviaiox-core/version.json` confirma versão `4.x` ou superior
 - [ ] CA5 — 5 templates do padrão Trívia (`CLAUDE.md`, `architecture.md`, `PROJECT_REQUIREMENTS.md`, `SECURITY_DEBT.md`, `netlify.toml`) copiados de `Documentos Trivia 2/Padrão Projetos/07 - Templates de Código/` para a raiz, **preenchidos** com os 6 ADRs do projeto
-- [ ] CA6 — Confirmação **com JG** sobre ADR-003 (Supabase compartilhado vs novo). Configurar `.env.example` e `astro.config.mjs` conforme decisão final
-- [ ] CA7 — Cliente Supabase em `src/lib/supabase.ts` lendo `import.meta.env.PUBLIC_SUPABASE_URL` e `PUBLIC_SUPABASE_ANON_KEY` (não hardcoded)
+- [ ] CA6 — Configurar `.env.example` com `PUBLIC_SUPABASE_URL=https://yqexjddpotlaqraljwvl.supabase.co` e `PUBLIC_SUPABASE_ANON_KEY=<obter no console>` (decisão fechada — [[../../Decisões Arquiteturais|ADR-003]] aceito: Supabase compartilhado com todos os sub-projetos Previx)
+- [ ] CA7 — Cliente Supabase em `src/lib/supabase.ts` lendo `import.meta.env.PUBLIC_SUPABASE_URL` e `PUBLIC_SUPABASE_ANON_KEY` (não hardcoded). Confirmar que `supabase.auth` aponta ao mesmo provider do Organograma (mesma anon key)
 - [ ] CA8 — Site Netlify `previx-site` criado e linkado ao repo, env vars configuradas, primeiro deploy passa (mesmo com página padrão do Astro)
 - [ ] CA9 — Push inicial para `main` passa nos hooks (lint, typecheck, prettier do Triviaiox)
 - [ ] CA10 — `Site/00 - Índice.md` atualizado com URLs reais (Netlify, Supabase, GitHub) substituindo os "(a criar)"
