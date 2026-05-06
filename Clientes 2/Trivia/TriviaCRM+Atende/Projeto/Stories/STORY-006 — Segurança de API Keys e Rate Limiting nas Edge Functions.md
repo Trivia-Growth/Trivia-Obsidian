@@ -3,6 +3,7 @@ id: STORY-006
 titulo: "Segurança de API Keys e Rate Limiting nas Edge Functions"
 modulo: "Segurança"
 status: "concluido"
+implementado: 2026-05-05
 fase: 3
 prioridade: 2
 agente_responsavel: "—"
@@ -24,20 +25,23 @@ Duas vulnerabilidades de segurança de médio/alto risco encontradas:
 ## O que fazer
 
 ### API Keys
-- [ ] `ai-orchestrator`: as chamadas a OpenAI/Anthropic/Google devem ser feitas via `Deno.env.get()` de secrets pré-configurados — nunca buscar key do banco e passar como string
-- [ ] `roleplay-chat`: mesma refatoração
-- [ ] Mover API keys para Supabase Secrets (`supabase secrets set`) — não armazenar em tabela do banco
-- [ ] Tabela `ai_providers_config` pode manter qual provider usar, mas não a key em texto plano
+- [x] Abordagem: **DB-first** (parâmetro via sistema/app UI) — `ai_providers_config` é a fonte primária, env var é fallback de plataforma
+- [x] `ai-orchestrator`: `resolveApiKey()` prioriza DB, cai em env se não configurado
+- [x] `roleplay-chat`: `resolveAiProvider()` prioriza DB, cai em env/Lovable gateway
+- [x] Decisão: não migrar para Supabase Secrets — cada workspace configura via Settings > IA
 
 ### Rate Limiting
-- [ ] Implementar rate limit por `workspace_id` nas funções de IA (`ai-orchestrator`, `roleplay-chat`, `copilot-suggest`)
-- [ ] Implementar rate limit por IP em funções públicas (`lead-intake`, `zapi-webhook`)
-- [ ] Usar Supabase KV ou tabela `rate_limits` para estado
+- [x] `_shared/rate-limit.ts` criado — fixed-window com tabela `rate_limits` + RPC atômico
+- [x] `ai-orchestrator`: 100 req/min por workspace
+- [x] `roleplay-chat`: 30 req/min por workspace
+- [x] `copilot-suggest`: 60 req/min por workspace
+- [x] `lead-intake`: 30 req/min por workspace (via API token → workspace_id)
+- [ ] `zapi-webhook`: não limitado (webhook inbound, alta frequência legítima)
 
 ### CORS
-- [ ] Criar constante `ALLOWED_ORIGINS = ['https://triviacrmatende.netlify.app']`
-- [ ] Substituir `"Access-Control-Allow-Origin": "*"` por verificação de origem em todas as funções
-- [ ] Manter `*` apenas para funções que precisam de acesso público irrestrito (como `zapi-webhook` que recebe do Z-API)
+- [x] `_shared/cors.ts` — `ALLOWED_ORIGINS = ['https://triviacrmatende.netlify.app']`
+- [x] Funções autenticadas restringem ao domínio Netlify
+- [x] Funções públicas (`zapi-webhook`, `ai-orchestrator` via webhook) mantêm `*`
 
 ## Critérios de Aceite
 

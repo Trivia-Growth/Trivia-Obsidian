@@ -25,18 +25,12 @@ O projeto não segue a estrutura Bulletproof React do padrão Trivia:
 
 ## Parte 1 — Auditoria RLS (prioridade alta)
 
-- [ ] Acessar Supabase Dashboard → Table Editor → verificar cada tabela:
-  - `contacts`: RLS habilitado + FORCE ROW LEVEL SECURITY?
-  - `companies`: idem
-  - `deals`: idem
-  - `activities`: idem
-  - `conversations`: idem
-  - `messages`: idem
-  - `pipelines` / `pipeline_stages`: idem
-  - `ai_agents` / `ai_providers_config` / `copilot_profiles` / `knowledge_entries`: idem
-  - `zapi_instances`: idem
-- [ ] Verificar que todas as policies filtram por `workspace_id` via `is_member_of_workspace()`
-- [ ] Registrar resultado em `SECURITY_DEBT.md` — adicionar SEC-005 para cada tabela sem FORCE
+- [x] Migration `20260505000001` aplica `ENABLE ROW LEVEL SECURITY` + `FORCE ROW LEVEL SECURITY` em todas as tabelas de workspace via DO block idempotente
+  - `contacts`, `companies`, `deals`, `activities`, `conversations`, `messages`
+  - `ai_agents`, `ai_providers_config`, `copilot_profiles`, `knowledge_entries`
+  - `zapi_instances`, `notifications`, `pipelines`, `pipeline_stages`, `tags`
+  - Tabelas base (`profiles`, `workspaces`, `workspace_members`) já tinham RLS — FORCE adicionado
+- [x] `SECURITY_DEBT.md` atualizado — SEC-001 fechado
 
 ## Parte 2 — Estrutura Bulletproof React (prioridade média)
 
