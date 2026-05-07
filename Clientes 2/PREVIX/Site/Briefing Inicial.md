@@ -104,7 +104,7 @@ fonte: "JG Novais (piloto), em conversa de 2026-05-06; pacote de migração WP e
 - **Migração WordPress → Astro:** preservar slugs antigos via redirects 301 (`netlify.toml`) para não perder ranking SEO existente. O `.xml` exportado em `Site/WP/grupoprevix.WordPress.2026-05-05.xml` é a fonte do conteúdo de migração.
 - **Lint do gerador AEO/GEO** precisa ser rigoroso. Sem isso, posts violadores entram em produção e degradam o sinal estrutural. Ver STORY-009.
 - **Performance de imagens.** Usar `<Image />` do Astro com `format="webp"` + `widths={[...]}`. Fotos da operação (`Site/WP/previx-assets/fotos-servico/`) chegam em até 950 KB — comprimir e gerar variantes.
-- **Coleta de estatísticas** (sinal de Verificação Jimmy 3.0). Antes de escrever conteúdo, montar base em [[Referências/Estatísticas Setor Segurança SP]] com dados de ABREVIS, FENAVIST, Sebrae, IBGE, IPEA, Folha, Estadão. Sem essa base, posts não passam no lint de "≥3 estatísticas com fonte".
+- **Coleta de estatísticas** (sinal de Verificação Jimmy 3.0). ✅ **Concluída em 2026-05-07** — base com 17 estatísticas verificáveis arquivada em [[Referências/Estatísticas Setor Segurança SP]] (FENAVIST, ABRAFAC, ABESE, SSP-SP, FBSP, Polícia Federal, Mordor). Lacuna conhecida: dado quantitativo sobre impacto de mesa 24h em redução de incidentes (registrado como TODO). Próximo passo é criar o componente `<Estatistica />` na STORY-009.
 
 ---
 

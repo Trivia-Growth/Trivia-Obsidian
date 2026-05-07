@@ -3,12 +3,14 @@ id: STORY-007
 titulo: "Página de FAQ AEO-otimizada"
 fase: 2
 modulo: "Conteúdo"
-status: backlog
+status: concluido
 prioridade: média
-agente_responsavel: ""
+agente_responsavel: "Claude (auto)"
 criado: 2026-05-06
-atualizado: 2026-05-06
+atualizado: 2026-05-07
 ---
+
+> ✅ **Concluída em 2026-05-07** (commit `fef6271`). 16 perguntas reais (sem inventar dados) em 7 categorias: Sobre, Patrimonial, Eletrônica, Facilities, PX One, Postes IA, Atendimento. Coleção `faq` em `src/content/faq/faq.json` com schema Zod (categoria enum + ordem + pergunta + resposta 40-600 chars). Acordeão nativo via `<details>/<summary>` (acessível, sem JS). FAQPage Schema com TODAS as perguntas (IAs leem o JSON-LD inteiro). Bonus: bot WhatsApp flutuante incluído no BaseLayout (vinha como TODO do HANDOFF do Claude Design).
 
 # STORY-007 — Página de FAQ AEO-otimizada
 

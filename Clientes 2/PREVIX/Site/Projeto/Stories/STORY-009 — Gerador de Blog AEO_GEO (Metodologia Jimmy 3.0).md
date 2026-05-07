@@ -3,12 +3,24 @@ id: STORY-009
 titulo: "Gerador de Blog AEO/GEO (Metodologia Jimmy 3.0)"
 fase: 4
 modulo: "Conteúdo Blog"
-status: backlog
+status: concluido
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "Claude (auto)"
 criado: 2026-05-06
-atualizado: 2026-05-06
+atualizado: 2026-05-07
 ---
+
+> ✅ **Concluída em 2026-05-07** — Fase 4 do projeto fechada.
+>
+> **Stack entregue:**
+> - Schema Zod estrito em `src/content.config.ts` (lede 40-60 palavras, conclusoesPrincipais 3-5, estatisticas≥3 com fonte+URL obrigatórias, faq 4-8 com resposta 40-150 palavras)
+> - 3 componentes em `src/components/content/`: `Estatistica.astro` (inline+destaque), `ConclusoesPrincipais.astro` (atomic facts no topo), `PostFAQ.astro` (accordion nativo)
+> - `scripts/lint-content.ts` encadeado em `npm run build` (`astro build && validate:schema && lint:content`). Falha o build se: `<Estatistica />` < 3 ocorrências OU seção H2 fora de 50-150 palavras OU JSON-LD inválido. Warning (sem fail) se H2 não for pergunta.
+> - Layout `noticias/[slug].astro` reescrito com pirâmide invertida (lede → conclusões → corpo → FAQ)
+> - 4 posts existentes reescritos com 3+ stats reais da base setorial coletada
+> - 1 post-gabarito novo: "Como funciona o monitoramento 24h de uma central de segurança em São Paulo" (4 stats, 5 FAQ) — referência viva da Metodologia
+>
+> **Build em produção:** 14 páginas, 10 validadas pelo postbuild gate (validate-schema), 5 posts conforme lint AEO/GEO. Posts agora servem `BlogPosting` + `FAQPage` Schema simultâneos no head.
 
 # STORY-009 — Gerador de Blog AEO/GEO (Metodologia Jimmy 3.0)
 
