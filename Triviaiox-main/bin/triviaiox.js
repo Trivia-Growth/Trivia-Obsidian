@@ -791,10 +791,12 @@ async function initProject() {
   }
 
   // 8. Run the initialization wizard with options
+  const isNonInteractiveInit = !process.stdin.isTTY || process.env.CI === 'true';
   await runWizard({
     template,
     skipInstall,
     force: isForce,
+    quiet: isNonInteractiveInit,
   });
 }
 
@@ -841,9 +843,10 @@ async function main() {
         showInstallHelp();
         break;
       }
+      const isNonInteractive = !process.stdin.isTTY || process.env.CI === 'true';
       const installOptions = {
         force: installArgs.includes('--force'),
-        quiet: installArgs.includes('--quiet'),
+        quiet: installArgs.includes('--quiet') || isNonInteractive,
         dryRun: installArgs.includes('--dry-run'),
         forceMerge: installArgs.includes('--merge'),
         noMerge: installArgs.includes('--no-merge'),
@@ -920,11 +923,17 @@ async function main() {
       showHelp();
       break;
 
-    case undefined:
+    case undefined: {
       // No arguments - run wizard directly (npx default behavior)
-      console.log('TRIVIAIOX-FullStack Installation\n');
-      await runWizard();
+      const isNonInteractiveDefault = !process.stdin.isTTY || process.env.CI === 'true';
+      if (isNonInteractiveDefault) {
+        await runWizard({ quiet: true });
+      } else {
+        console.log('TRIVIAIOX-FullStack Installation\n');
+        await runWizard();
+      }
       break;
+    }
 
     default:
       console.error(`❌ Unknown command: ${command}`);
