@@ -16,11 +16,13 @@
 |---|-------|--------|--------------|----------|--------|
 | 1 | [[../Stories/STORY-001 — Setup Astro + Triviaiox + Repo\|STORY-001]] | ✅ concluido (2026-05-06) | — | todas | Repo + Astro 6 + Triviaiox v5 + Netlify (https://previx-site-app.netlify.app) + Supabase shared + 5 templates |
 | 2 | [[../Stories/STORY-002 — Estrutura Bulletproof + UI Tokens\|STORY-002]] | ✅ concluido (2026-05-06) | 001 | 003-007 | empresa.ts + seo.ts (schema-dts) + Header + Footer + BaseLayout c/ Org+LocalBusiness+WebSite + /styleguide |
-| 3 | [[../Stories/STORY-003 — Migração de Conteúdo do WordPress\|STORY-003]] | ⚪ backlog | 002 | 004 | Extrair textos do `.xml` WP para `src/content/*` |
-| 4 | [[../Stories/STORY-004 — Páginas Institucionais\|STORY-004]] | ⚪ backlog | 003 | 005, 008, 010 | Home, Sobre, Serviços (+3 sub), Contato, Orçamento, 404 |
-| 5 | [[../Stories/STORY-005 — Schema Markup + Sitemap + robots.txt + llms.txt\|STORY-005]] | ⚪ backlog | 004 | 006-010 | JSON-LD base, sitemap automático, robots permitindo IAs, llms.txt |
+| 3 | [[../Stories/STORY-003 — Migração de Conteúdo do WordPress\|STORY-003]] | ✅ concluido (2026-05-07) | 002 | 004 | 6 collections + 35 clientes + 2 depoimentos reais + 4 números + 6 diferenciais + 3 servicos.md + sobre.md + assets (logos, fotos, bgs) + ServiceIcons SVG |
+| 4 | [[../Stories/STORY-004 — Páginas Institucionais\|STORY-004]] | ✅ concluido (2026-05-07) | 003 | 005, 008, 010 | Home (Hero+Servicos+Numeros+Diferenciais+Depoimentos+Carrossel+CTA), Sobre, /servicos/index, /servicos/[slug] (3 rotas), Contato, Orçamento, 404. Service+BreadcrumbList JSON-LD nas internas |
+| 5 | [[../Stories/STORY-005 — Schema Markup + Sitemap + robots.txt + llms.txt\|STORY-005]] | ✅ concluido (2026-05-07) | 004 | 006-010 | robots.txt com 16 user-agents (12 IA), llms.txt spec llmstxt.org, scripts/validate-schema.ts (postbuild gate), Maps link em /contato |
 
 **Critério de saída da Fase 1:** Site no ar (em URL Netlify temporária) com todas as páginas institucionais navegáveis e Schema válido em todas. Conteúdo migrado do WP. **Sem blog ainda.** **Sem captura de leads ainda.**
+
+> ✅ **Fase 1 concluída em 2026-05-07.** Site live em https://previx-site-app.netlify.app com 10 páginas (Home + Sobre + Servicos + 3 sub + Contato + Orçamento + 404 + Styleguide), JSON-LD validado em build (`scripts/validate-schema.ts`), robots.txt permitindo 12 IA crawlers, llms.txt na raiz, sitemap automático, headers de segurança aplicados. Pronta para Fase 2 (conteúdo migrado e FAQ).
 
 ---
 
@@ -95,7 +97,7 @@
 | Documentação inicial do projeto Site no vault | 2026-05-06 | ✅ concluído |
 | Setup de infraestrutura (STORY-001) | 2026-05-06 | ✅ concluído |
 | Primeiro deploy verde em produção | 2026-05-06 | ✅ concluído (https://previx-site-app.netlify.app) |
-| LP institucional no ar em URL Netlify (Fase 1) | [PREENCHER] | 🟡 em andamento (2 de 5 stories concluídas) |
+| LP institucional no ar em URL Netlify (Fase 1) | 2026-05-07 | ✅ concluído (5 de 5 stories) |
 | Conteúdo WP migrado + FAQ (Fase 2) | [PREENCHER] | ⚪ pendente |
 | Captura de leads ativa (Fase 3) | [PREENCHER] | ⚪ pendente |
 | Gerador Jimmy 3.0 + lint enforce (Fase 4) | [PREENCHER] | ⚪ pendente |
@@ -113,4 +115,7 @@
 - `2026-05-06` — Artigo do Jimmy Studio (`SEO, AEO e GEO 2026`) arquivado em [[../Referências/Jimmy Studio — AEO GEO 2026]] como fonte primária da Metodologia Jimmy 3.0 (Article IV — No Invention).
 - `2026-05-06` — 10 stories esboçadas (5 da Fase 1, 2 da Fase 2, 1 da Fase 3, 1 da Fase 4, 1 da Fase 5). Fase 6 mapeada sem stories ainda.
 - `2026-05-06` — **STORY-001 concluída.** Repo `Trivia-Growth/previx-site-app` (renomeado de `previx`) com Astro 6 + Triviaiox v5 + 5 templates Trívia. Site no ar em https://previx-site-app.netlify.app. Commit inicial `b2be209`. Push direto em `main` autorizado por JG. Triviaiox instalado manualmente via `cp -R` (issue de pacote não publicado registrada em SEC-005).
-- `2026-05-06` — **STORY-002 concluída.** UI base e SEO foundation prontas: `src/lib/seo.ts` com 8 builders tipados via schema-dts (Organization, LocalBusiness, WebSite/SearchAction, Service, Article, BlogPosting, HowTo, FAQPage, BreadcrumbList), Header/Footer com dados de `empresa.ts`, BaseLayout injeta Organization+LocalBusiness+WebSite em todas as páginas, `/styleguide` interna (noindex). Commit `66397db`. 9 `@type` confirmados em produção. Próxima: STORY-003 (migração WP).
+- `2026-05-06` — **STORY-002 concluída.** UI base e SEO foundation prontas: `src/lib/seo.ts` com 8 builders tipados via schema-dts (Organization, LocalBusiness, WebSite/SearchAction, Service, Article, BlogPosting, HowTo, FAQPage, BreadcrumbList), Header/Footer com dados de `empresa.ts`, BaseLayout injeta Organization+LocalBusiness+WebSite em todas as páginas, `/styleguide` interna (noindex). Commit `66397db`. 9 `@type` confirmados em produção.
+- `2026-05-07` — **STORY-003 concluída.** Conteúdo institucional do WordPress migrado: 6 Astro Content Collections (35 clientes, 2 depoimentos reais [Afeet+Munir Abbud], 4 números [+500 colab/24h/+100 empresas/10+ anos], 6 diferenciais, 3 serviços, sobre.md). Assets copiados (6 logos Previx + 35 logos clientes em `public/`, 15 fotos + 3 bgs em `src/assets/` para otimização Astro). 3 GIFs do WP substituídos por SVG inline (`ServiceIcon.astro`) com animação CSS no hover. Logo Previx aplicado em Header (colorido) e Footer (branco). Header agora exibe logo PNG. Commit `b629bb9`.
+- `2026-05-07` — **STORY-004 concluída.** Páginas institucionais publicadas: Home com 7 seções (Hero+Servicos+Numeros+Diferenciais+Depoimentos+Carrossel+CTA), `/sobre` consumindo `paginas/sobre.md`, `/servicos` (mãe) + 3 rotas dinâmicas via `getStaticPaths` injetando `Service` Schema + `BreadcrumbList`, `/contato` e `/orcamento` com UI completa de formulários (desabilitada até STORY-008), `/404` com atalhos. 10 páginas no build. Otimização automática de imagens: Carrossel_01 (674KB) → 45-86KB webp + srcset; bg-pb04 (190KB) → 9-40KB. Typecheck verde. Commit `6f8b958`.
+- `2026-05-07` — **STORY-005 concluída — Fase 1 fechada.** AEO/GEO foundation: `robots.txt` com 16 user-agents declarados explicitamente (12 IA + tradicionais), `llms.txt` na raiz seguindo spec llmstxt.org com autorização explícita de uso e Política de citação, `scripts/validate-schema.ts` (postbuild gate, falha o build se schemas obrigatórios faltarem em qualquer página-alvo), `/contato` com link "Ver no Google Maps" (sem iframe — preserva CSP). Commit `adab236`. **Próxima: STORY-006 (migração dos 4 posts WP) — abre a Fase 2.**
