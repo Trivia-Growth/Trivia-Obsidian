@@ -267,29 +267,37 @@ A Lovable detecta o pull e atualiza seu lado.
 
 ---
 
-### Passo 6 — AIOX (Agentes)
+### Passo 6 — TRIVIAIOX (Agentes)
 
-> O AIOX instala os agentes de IA dentro do repositório de código. Requer Node.js instalado (Passo de pré-requisitos).
+> [!warning] Atualizado em 2026-05-06
+> O framework migrou de AIOX para **TRIVIAIOX**. O pacote **não está no npm** — instalar via repo local.
+
+> O TRIVIAIOX instala os agentes de IA dentro do repositório de código. Requer Node.js instalado (Passo de pré-requisitos) e o repo `~/Documents/GitHub/Triviaiox/` clonado.
 
 ```bash
-# No Terminal, dentro da pasta do repositório:
+# 1. Garantir dependências do TRIVIAIOX (uma vez por máquina)
+cd ~/Documents/GitHub/Triviaiox && npm install
+
+# 2. Instalar no repositório do projeto
 cd caminho/para/[nome-do-projeto]-app
-npx aiox-core install
+node ~/Documents/GitHub/Triviaiox/bin/triviaiox.js install --quiet
 ```
 
-> **Se aparecer "permission denied":** tente com `sudo npx aiox@latest install`
-> **Se aparecer "command not found: npx":** o Node.js não está instalado. Volte ao passo de pré-requisitos.
+> ⚠️ **NÃO usar** `npx triviaiox-core install` — o pacote não está no npm e o npx vai falhar com erro confuso ("Missing script" ou "404 Not Found"). Usar sempre `node ... bin/triviaiox.js install`.
+
+> **Se aparecer "command not found: node":** o Node.js não está instalado. Volte ao passo de pré-requisitos.
 
 Para verificar que funcionou:
 ```bash
-cat .aiox-core/version.json
+cat .triviaiox-core/version.json
 ```
 Deve mostrar `{"version": "5.x.x"}`. Se sim, está pronto.
 
-- [ ] AIOX instalado com sucesso
-- [ ] Versão confirmada com `cat .aiox-core/version.json`
+- [ ] Repo TRIVIAIOX clonado em `~/Documents/GitHub/Triviaiox/`
+- [ ] TRIVIAIOX instalado com sucesso no projeto
+- [ ] Versão confirmada com `cat .triviaiox-core/version.json`
 
-Ver [[04 - Agentes AIOX/Instalação|Instalação AIOX]] para detalhes.
+Ver [[04 - Agentes AIOX/Instalação|Instalação TRIVIAIOX]] para detalhes e erros conhecidos.
 
 ---
 
