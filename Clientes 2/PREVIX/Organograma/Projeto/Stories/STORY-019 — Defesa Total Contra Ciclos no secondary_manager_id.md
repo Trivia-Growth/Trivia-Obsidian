@@ -3,7 +3,7 @@ id: STORY-019
 titulo: "Defesa total contra ciclos no secondary_manager_id (DB trigger + Edge Function)"
 fase: 1
 modulo: "hierarquia"
-status: backlog
+status: done
 prioridade: baixa
 agente_responsavel: "@dev"
 criado: 2026-05-08
