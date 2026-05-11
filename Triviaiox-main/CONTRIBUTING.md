@@ -664,7 +664,7 @@ For the complete developer workflow guide, see [Pro Developer Workflow](docs/gui
 - [Community Guide](COMMUNITY.md) - How to participate
 - [Squads Guide](docs/guides/squads-guide.md) - Create agent teams
 - [Architecture](docs/architecture/) - System design
-- [Roadmap](ROADMAP.md) - Project direction
+- [Roadmap](Triviaiox-main/docs/roadmap.md) - Project direction
 
 ---
 

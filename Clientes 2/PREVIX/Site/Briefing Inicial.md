@@ -121,7 +121,7 @@ fonte: "JG Novais (piloto), em conversa de 2026-05-06; pacote de migração WP e
 
 ## Fora do escopo deste projeto (vão para sub-projetos próprios)
 
-- Portal do Cliente logado (Fase 6 mapeada no [[Projeto/Roadmap]]).
+- Portal do Cliente logado (Fase 6 mapeada no [[Clientes 2/PREVIX/Site/Projeto/Roadmap]]).
 - Apps PX One e Postes IA (frentes futuras quando priorizadas).
 - Migração de conteúdo do **Organograma** (sistema isolado, em produção).
 - SSO entre Site e Organograma (entra na Fase 6, junto do Portal).

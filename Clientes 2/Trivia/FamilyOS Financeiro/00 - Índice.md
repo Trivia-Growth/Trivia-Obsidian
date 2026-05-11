@@ -15,10 +15,10 @@ inicio: 2026-05-04
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status das stories) | [[Projeto/Dashboard do Projeto]] |
-| Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
-| Sprint Atual | [[Projeto/Sprint Atual]] |
-| Backlog completo | [[Projeto/Backlog]] |
+| Dashboard (status das stories) | [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Dashboard do Projeto]] |
+| Roadmap (fases e milestones) | [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Roadmap]] |
+| Sprint Atual | [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Sprint Atual]] |
+| Backlog completo | [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Backlog]] |
 | Ideia original do projeto | [[FamilyOS Financeiro  - Ideia de Projeto]] |
 | Requisitos do sistema | *(repositório de código: `PROJECT_REQUIREMENTS.md`)* |
 | Arquitetura | *(repositório de código: `architecture.md`)* |

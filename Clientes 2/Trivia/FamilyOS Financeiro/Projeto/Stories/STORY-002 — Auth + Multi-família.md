@@ -18,7 +18,7 @@ O FamilyOS é multi-família: cada família é um universo isolado. Esta story c
 
 ## Spec de Referência
 
-- [[00 - Índice]] — papéis de usuário (`admin` e `viewer`)
+- [[Clientes 2/PREVIX/Site/00 - Índice]] — papéis de usuário (`admin` e `viewer`)
 - Repositório: `PROJECT_REQUIREMENTS.md` — Módulo M11
 
 ## Critérios de Aceite

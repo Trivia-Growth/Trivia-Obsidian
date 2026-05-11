@@ -12,7 +12,7 @@ Lista completa de stories organizadas por fase.
 
 | ID | Story | Módulo | Status | Prioridade |
 |----|-------|--------|--------|------------|
-| [[STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | done | 🔴 alta |
+| [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories/STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | done | 🔴 alta |
 | [[STORY-002 — Auth + Multi-família\|002]] | Auth + Multi-família | M11 Segurança | done | 🔴 alta |
 | [[STORY-003 — Agente Core + Chat Web\|003]] | Agente Core + Chat Web | M1 Agente | done | 🔴 alta |
 | [[STORY-004 — Extratos Upload e Parser\|004]] | Extratos: Upload + Parser LLM | M2 Extratos | done | 🔴 alta |

@@ -18,7 +18,7 @@ Sem extratos, o agente não tem dados para analisar. Esta story implementa o upl
 
 ## Spec de Referência
 
-- [[00 - Índice]] — Módulo M2
+- [[Clientes 2/PREVIX/Site/00 - Índice]] — Módulo M2
 - Repositório: `PROJECT_REQUIREMENTS.md` — Módulo M2
 - Repositório: `specs/technical/BUSINESS_LOGIC.md` — Detecção de duplicatas
 

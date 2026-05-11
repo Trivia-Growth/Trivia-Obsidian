@@ -15,8 +15,8 @@ inicio: 2026-05-06
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status das stories) | [[Projeto/Dashboard do Projeto]] |
-| Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
+| Dashboard (status das stories) | [[Clientes 2/PREVIX/Site/Projeto/Dashboard do Projeto]] |
+| Roadmap (fases e milestones) | [[Clientes 2/PREVIX/Site/Projeto/Roadmap]] |
 | Stories | [[Projeto/Stories/]] |
 | Decisões Arquiteturais (ADRs) | [[Decisões Arquiteturais]] |
 | Custom Instructions Triviaiox | [[Custom Instructions Triviaiox]] |

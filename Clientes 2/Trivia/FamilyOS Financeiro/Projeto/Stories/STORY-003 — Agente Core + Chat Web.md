@@ -18,7 +18,7 @@ O agente é o coração do FamilyOS. Esta story entrega o chat web funcional int
 
 ## Spec de Referência
 
-- [[00 - Índice]] — Módulo M1
+- [[Clientes 2/PREVIX/Site/00 - Índice]] — Módulo M1
 - Repositório: `PROJECT_REQUIREMENTS.md` — Módulo M1 (personalidade, memória, onboarding, tool registry)
 
 ## Critérios de Aceite

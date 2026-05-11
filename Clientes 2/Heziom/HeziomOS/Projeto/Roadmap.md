@@ -25,8 +25,12 @@ Três fases progressivas de valor. Cada fase entrega algo utilizável antes de a
 
 | Story | Módulo | Status | Prioridade |
 |-------|--------|--------|------------|
+<<<<<<< HEAD:Clientes 2/Heziom/HezionOS/Projeto/Roadmap.md
 | [[STORY-007 — Mapeamento de Processos Financeiros]] | Docs | concluido | alta |
 | [[STORY-001 — Setup Infraestrutura]] | Infra | pronto | alta |
+=======
+| [[Clientes 2/Heziom/HeziomOS/Projeto/Stories/STORY-001 — Setup Infraestrutura]] | Infra | pronto | alta |
+>>>>>>> e6fbc1ae1c89fa190704bae09f15922dd809f684:Clientes 2/Heziom/HeziomOS/Projeto/Roadmap.md
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria]] | Sync | backlog | alta |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda]] | Sync | backlog | alta |
 | [[STORY-004 — Dashboard CEO Posição Financeira]] | Dashboard | backlog | alta |
