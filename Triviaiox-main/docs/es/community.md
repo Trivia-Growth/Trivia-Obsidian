@@ -164,7 +164,7 @@ Reporta violaciones a: conduct@Trivia-Growth.com
 
 ¿Quieres saber hacia dónde se dirige TRIVIAIOX? Consulta nuestra hoja de ruta pública:
 
-- [ROADMAP.md](ROADMAP.md) - Visión de alto nivel y características planificadas
+- [ROADMAP.md](Triviaiox-main/docs/es/roadmap.md) - Visión de alto nivel y características planificadas
 - [GitHub Project](https://github.com/orgs/Trivia-Growth/projects/1) - Tablero de seguimiento detallado
 
 La hoja de ruta se actualiza mensualmente y refleja la opinión de la comunidad. Puedes influir en nuestra dirección mediante:

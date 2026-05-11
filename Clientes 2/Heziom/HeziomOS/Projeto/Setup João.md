@@ -84,8 +84,8 @@ Dentro do Obsidian:
 | O que você quer ver | Onde está |
 |--------------------|-----------| 
 | Status do projeto | [[Clientes/Heziom/HezionOS/Projeto/Dashboard do Projeto]] |
-| O que está sendo feito agora | [[Sprint Atual]] |
-| Próximas entregas | [[Backlog]] |
+| O que está sendo feito agora | [[Clientes 2/Heziom/HeziomOS/Projeto/Sprint Atual]] |
+| Próximas entregas | [[Clientes 2/Heziom/HeziomOS/Projeto/Backlog]] |
 | Visão geral das fases | [[Clientes/Heziom/HezionOS/Projeto/Roadmap]] |
 | Especificações técnicas | `Financeiro/` e `CEO Dashboard/` |
 

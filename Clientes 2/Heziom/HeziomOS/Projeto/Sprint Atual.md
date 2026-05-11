@@ -17,7 +17,7 @@ objetivo: "Infraestrutura + sync básico Literarius → Supabase"
 
 | Story | Status | Agente |
 |-------|--------|--------|
-| [[STORY-001 — Setup Infraestrutura]] | pronto | — |
+| [[Clientes 2/Heziom/HeziomOS/Projeto/Stories/STORY-001 — Setup Infraestrutura]] | pronto | — |
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria]] | backlog | — |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda]] | backlog | — |
 

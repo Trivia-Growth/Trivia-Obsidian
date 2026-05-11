@@ -31,7 +31,7 @@ objetivo: "Inteligência Financeira + Canais Alternativos"
 
 | Story | Status |
 |-------|--------|
-| [[STORY-001 — Setup Infraestrutura]] | done |
+| [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories/STORY-001 — Setup Infraestrutura]] | done |
 | [[STORY-002 — Auth + Multi-família]] | done |
 | [[STORY-003 — Agente Core + Chat Web]] | done |
 
