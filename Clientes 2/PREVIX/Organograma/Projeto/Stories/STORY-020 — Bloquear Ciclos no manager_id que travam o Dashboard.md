@@ -3,7 +3,7 @@ id: STORY-020
 titulo: "Bloquear ciclos no manager_id (trigger DB + Edge Function obrigatória em todos os writes)"
 fase: 1
 modulo: "hierarquia"
-status: backlog
+status: done
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-05-11
@@ -152,26 +152,44 @@ atualizado: 2026-05-11
 
 ## Implementação
 
-> Preenchido pelo `@dev` quando a story for retomada.
+**Status:** `done` (2026-05-11)
 
-**Status:** `backlog`
+**Commit:** `4cf06b4` em `main` do `organograma-previx-app`.
 
-**Branch/PR:** *(pendente)*
+**Arquivos criados:**
+- `supabase/migrations/20260511150000_check_manager_no_cycle_trigger.sql` — trigger `trg_pessoas_manager_no_cycle` BEFORE INSERT/UPDATE chamando `check_hierarchy_loop` (função SQL da STORY-006). Sanity check inicial + smoke test inline (ciclo depth-1, depth-2, no-op, NULL).
+- `supabase/migrations/20260511150100_secondary_cycle_unified_graph.sql` — `CREATE OR REPLACE` em `check_secondary_manager_cycle` agora desce no grafo unificado (primary + secondary) com proteção via path array. Sanity check + smoke test cobrindo ciclo puro entre secondaries e misto.
 
-**Arquivos a criar:**
-- `supabase/migrations/[timestamp]_check_manager_no_cycle_trigger.sql`
+**Arquivos modificados:**
+- `src/features/pessoas/components/PessoasPage.tsx`:
+  - `toDbInput` agora retorna `Omit<PessoaInsert, "manager_id" | "secondary_manager_id">` — ambos saem do UPDATE/INSERT direto.
+  - Helper `invokeWithProblem(fn, body)` factorizado pra parsear problem+json de Edge Functions.
+  - Nova `saveManager(pessoaId, newValue, oldValue)` chama `validate-and-set-manager`.
+  - `saveSecondaryManager` refatorada pra usar o mesmo helper.
+  - `handleSubmit` agora encadeia: INSERT/UPDATE base → saveManager → saveSecondaryManager → syncUnidades → syncCampos. Toast amigável pra `HIERARCHY_LOOP` e `HIERARCHY_SELF_LOOP`.
 
-**Arquivos a modificar:**
-- `src/features/pessoas/components/PessoasPage.tsx` (extrair `saveManager`, ajustar `toDbInput`, ordenar saves)
-- `src/features/organograma/components/OrganogramaView.tsx` (pass 1 com cycle detection + pass 2 considerando secondaries já adicionadas)
-- `supabase/migrations/[timestamp]_check_secondary_manager_no_cycle_v2.sql` (CA8 — opcional, podemos só atualizar a função via CREATE OR REPLACE numa migration nova)
-- `architecture.md`
-- `CLAUDE.md` (seção Segurança)
-- Vault: `Roadmap.md`
+- `src/features/organograma/components/OrganogramaView.tsx`:
+  - `wouldCreateCycle(source, target)` + `addEdgeChecked(source, target, idPrefix)` substituem o builder antigo. BFS reverso a partir de `target` usando adjacency map mantida ao longo dos dois passes.
+  - Pass 1 (primary) agora valida ciclo ANTES de adicionar — era o gap do incidente Ricardo↔Ana.
+  - Pass 2 (secondary) reusa o mesmo `addEdgeChecked` e enxerga edges já adicionadas (primary + secondaries anteriores) — fecha gap CA9.
+  - Nova prop `onCyclesDetected?: (count: number) => void`. Disparada uma vez por re-render via `useEffect` com ref pra prop callback.
 
-**Deploy:**
-- `supabase db push` (migration com trigger + sanity check)
-- Frontend: `git push origin main` (Netlify auto-deploy)
+- `src/features/organograma/components/OrganogramaPage.tsx`:
+  - Passa `onCyclesDetected` que dispara `toast.warning` com `id: "organograma-cycles"` (dedup natural do sonner), mensagem amigável "Encontramos inconsistência na hierarquia — N vínculos não foram desenhados. Avise um admin pra revisar."
+
+- `architecture.md`:
+  - Bullet `STORY-020` adicionado em Próximos Passos.
+  - Seção Segurança ganhou bullet sobre as 2 triggers de hierarquia + roteamento obrigatório pelas Edge Functions.
+
+- `CLAUDE.md` (raiz do repo):
+  - Checklist "Segurança (Checklist por Feature)" ganhou bullet "Hierarquia: writes em manager_id via validate-and-set-manager; writes em secondary_manager_id via validate-and-set-secondary-manager."
+
+**Deploy (2026-05-11):**
+- `supabase db push --linked --include-all` aplicou ambas as migrations em prod; smoke tests inline retornaram OK (`STORY-020 manager_id cycle trigger smoke test OK`, `STORY-020 secondary cycle v2 (grafo unificado) smoke test OK`).
+- `git push origin main` disparou Netlify auto-deploy do frontend.
+- Verificação pós-deploy: query `SELECT tgname FROM pg_trigger WHERE tgname LIKE 'trg_pessoas_%cycle%'` retorna `trg_pessoas_manager_no_cycle` + `trg_pessoas_secondary_no_cycle`.
+
+**Edge Functions:** não houve mudança em código de Edge Function — só os triggers e o frontend. `validate-and-set-manager` já existia desde STORY-006 e está sendo reutilizada.
 
 ---
 
