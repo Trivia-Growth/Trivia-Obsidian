@@ -1,6 +1,6 @@
 # Roadmap do TRIVIAIOX
 
-> 🇺🇸 [English Version](ROADMAP.md)
+> 🇺🇸 [English Version](Triviaiox-main/docs/pt/roadmap.md)
 
 Este documento descreve a direção de desenvolvimento planejada para o TRIVIAIOX.
 

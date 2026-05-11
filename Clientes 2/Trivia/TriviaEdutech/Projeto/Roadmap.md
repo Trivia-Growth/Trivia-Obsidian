@@ -8,7 +8,7 @@
 
 | Story | Módulo | Status |
 |-------|--------|--------|
-| [[Stories/STORY-001 — Setup Infraestrutura]] | Infraestrutura | concluido |
+| [[Clientes 2/Trivia/TriviaEdutech/Projeto/Stories/STORY-001 — Setup Infraestrutura]] | Infraestrutura | concluido |
 
 ---
 

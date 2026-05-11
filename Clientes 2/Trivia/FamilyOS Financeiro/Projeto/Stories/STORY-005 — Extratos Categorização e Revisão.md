@@ -18,7 +18,7 @@ Após o parser extrair as transações (STORY-004), o usuário precisa categoriz
 
 ## Spec de Referência
 
-- [[00 - Índice]] — Módulo M2
+- [[Clientes 2/PREVIX/Site/00 - Índice]] — Módulo M2
 - Repositório: `specs/technical/BUSINESS_LOGIC.md` — Regras de categorização
 
 ## Critérios de Aceite

@@ -26,7 +26,7 @@ Três fases progressivas. Cada fase entrega algo utilizável antes de avançar.
 
 | Story | Módulo | Status |
 |-------|--------|--------|
-| [[STORY-001 — Setup Infraestrutura]] | Infra | done |
+| [[Clientes 2/Trivia/FamilyOS Financeiro/Projeto/Stories/STORY-001 — Setup Infraestrutura]] | Infra | done |
 | [[STORY-002 — Auth + Multi-família]] | M11 Segurança | done |
 | [[STORY-003 — Agente Core + Chat Web]] | M1 Agente | done |
 | [[STORY-004 — Extratos Upload e Parser]] | M2 Extratos | done |

@@ -164,7 +164,7 @@ Report violations to: conduct@Trivia-Growth.com
 
 Want to know where TRIVIAIOX is headed? Check out our public roadmap:
 
-- [ROADMAP.md](ROADMAP.md) - High-level vision and planned features
+- [ROADMAP.md](Triviaiox-main/docs/roadmap.md) - High-level vision and planned features
 - [GitHub Project](https://github.com/orgs/Trivia-Growth/projects/1) - Detailed tracking board
 
 The roadmap is updated monthly and reflects community input. You can influence our direction by:

@@ -18,7 +18,7 @@ Antes de qualquer desenvolvimento, a base técnica precisa estar no lugar: proje
 
 ## Spec de Referência
 
-- [[00 - Índice]] — stack completa e repositório
+- [[Clientes 2/PREVIX/Site/00 - Índice]] — stack completa e repositório
 - Padrão Trivia: `Documentos Trivia 2/Padrão Projetos/00 - Checklist de Início`
 
 ## Critérios de Aceite
