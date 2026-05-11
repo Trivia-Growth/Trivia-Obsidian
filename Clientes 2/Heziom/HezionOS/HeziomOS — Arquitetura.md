@@ -142,11 +142,12 @@ Edge Functions rodam na nuvem do Supabase e **não alcançam IPs privados** (`19
 | Integração | Direção | Propósito |
 |-----------|---------|-----------|
 | [[Qive — NF-e Automática]] | IN | Captura NF-e recebidas da SEFAZ; cria fila de aprovação |
-| [[Bancos — CNAB e OFX]] | IN/OUT | Importa extratos; gera remessa de pagamento |
-| [[Tray — Conciliação de Repasses]] | IN | Pedidos e repasses do e-commerce |
+| [[Bancos — CNAB e OFX]] | IN/OUT | Importa extratos OFX (Santander + Stone); gera remessa de pagamento CNAB 240 |
+| [[Tray — Conciliação de Repasses]] | IN | Pedidos e repasses do e-commerce (gateway: **APPMAX**, substituiu Pagar.me) |
 | [[Alertas e Notificações]] | OUT | Teams + email para eventos críticos |
 | SEFAZ | OUT (via Qive) | Manifestação do destinatário (210210, 210200) |
-| Mercado Livre / Amazon | IN | Fase 2 — reconciliação de pedidos marketplace |
+| Mercado Livre / Amazon | IN | Fase 2 — reconciliação de pedidos marketplace (Mercado Pago + Amazon Seller) |
+| Bookwire | IN (manual) | Distribuidora de eBooks; relatório externo mensal → NFs emitidas manualmente; Fase 3: upload relatório → sugestão de NFs |
 
 ---
 

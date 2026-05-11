@@ -1,7 +1,7 @@
 ---
 projeto: "Site PREVIX"
 tipo: "ADR-index"
-atualizado: 2026-05-06
+atualizado: 2026-05-08
 ---
 
 # Decisões Arquiteturais — Site PREVIX
@@ -93,13 +93,65 @@ atualizado: 2026-05-06
   - Vault concentra a visão estratégica e o roadmap cross-repo.
   - **Custo:** alguma duplicação de código compartilhado (componentes UI). Mitigação: pacote npm interno se a duplicação ficar dolorosa (não no MVP).
 
+## ADR-007 — Resend como provedor de e-mail transacional
+
+- **Status:** aceita (2026-05-07)
+- **Contexto:** STORY-008 precisa enviar notificação de lead novo para o e-mail comercial. Necessita provedor confiável com domínio próprio e API simples para Edge Function Deno.
+- **Decisão:** **Resend**. Free tier 3.000 e-mails/mês cobre o volume previsto. API REST via `fetch` direto na Edge Function. Domínio `grupoprevix.com.br` precisa verificação DKIM+SPF+Return-Path no painel Resend (pendência SEC-009).
+- **Consequências:** `RESEND_API_KEY` em `supabase secrets`. Notificação é best-effort — se Resend falhar, lead já está no banco e operador vê pelo painel `/admin/leads`. Detalhe completo em `architecture.md` ADR-007.
+
+## ADR-008 — Sentry + Plausible (monitoramento)
+
+- **Status:** aceita (2026-05-07, implementada na STORY-010 prep)
+- **Contexto:** Cutover de DNS exige observabilidade de erros JS e tráfego antes de apontar `grupoprevix.com.br`. Critério: privacy-first (LGPD), free tier suficiente, gating por consent.
+- **Decisão:** **Sentry** (erros JS) + **Plausible** (tráfego), ambos gateados pelo consent banner LGPD via custom event `previx:consent`. Sentry sem replay/tracing por padrão.
+- **Consequências:** Plausible só carrega se localStorage `previx-consent-v1 === 'accepted'`. Sentry replay desligado por LGPD. Detalhe em `architecture.md` ADR-008.
+
+## ADR-009 — GA4 + GTM (placeholder)
+
+- **Status:** pendente — decisão final na STORY-011
+- **Contexto:** Plausible cobre tráfego básico; JG pediu camada GA4+GTM com foco AEO/GEO (referrers de IA classificados, scroll depth, dataLayer events) antes do cutover.
+- **Direção:** GTM como container único, GA4 dentro do GTM, gating LGPD via mesmo `previx:consent`. Server-side tagging fica para fase 2.
+
+## ADR-010 — Conteúdo do site no Supabase + rebuild Netlify on publish
+
+- **Status:** **aceita** (2026-05-08, decisão JG no EPIC-001)
+- **Contexto:** Hoje o conteúdo do site (posts, FAQ, copies, depoimentos, números, diferenciais, clientes) vive em `src/content/` como MDX/MD/JSON e é editado via commit. Volume esperado: 5+ posts/mês com pico inicial maior pra alimentar IAs generativas. Editar via commit não escala.
+- **Alternativas avaliadas:**
+  - **A. Decap CMS (Git-backed):** rejeitado — não escala pra fluxo editorial sério (rascunho/agendamento/preview).
+  - **B. DB + rebuild Netlify on publish** ⭐ aceita — mantém HTML estático no edge (AEO preservado), painel ganha rascunho/agendamento/audit, lint vira validação no save.
+  - **C. SSR puro (`output:'server'`):** rejeitado — perde HTML estático, degrada AEO/GEO.
+  - **D. TinaCMS:** rejeitado — dependência externa + custos.
+- **Decisão:** Migrar conteúdo do Git para tabelas no schema `site` do Supabase compartilhado. Astro consome DB no build (via `service_role` em `getStaticPaths`). Cada publicação dispara webhook do Netlify Build Hook → site rebuilda. **AEO/GEO foundation preservada.**
+- **Fluxo edit → publish:** Editor salva → Edge Function valida (Zod + lint Jimmy 3.0) → INSERT/UPDATE em `site.posts`/`faq`/etc. → audit_log → se status='publicado', POST no Build Hook → Astro rebuilda consumindo DB → deploy estático.
+- **Rollback:** toda edição grava `payload_before` (JSONB) em `site.audit_log`. Restaurar = UPDATE com payload_before + novo rebuild. Soft delete em todas as tabelas (deletado_em); hard delete só por admin-previx após retenção LGPD (~90 dias).
+- **Consequências:** Conteúdo deixa de viver no Git (cutover na STORY-024); `lint:content` script de build vira no-op (lint roda em Edge Function `validate-post`). Supabase Storage habilitado para assets. Throttle no Build Hook: max 1 rebuild/60s.
+- Detalhe completo em `architecture.md` ADR-010.
+
+## ADR-011 — Painel admin embutido em `/admin/*` + RBAC dinâmico
+
+- **Status:** **aceita** (2026-05-08, decisão JG no EPIC-001)
+- **Contexto:** ADR-010 estabelece painel admin como novo locus de edição. Duas decisões dependentes: (1) onde o painel mora; (2) como modelar perfis de acesso.
+- **Alternativas rejeitadas:**
+  - Sub-projeto separado `previx-admin-app` em `admin.grupoprevix.com.br` — rejeitado por JG ("admin é só do site, não justifica repo isolado").
+  - Roles hardcoded em enum — rejeitado por JG (quer poder criar/editar perfis pelo painel sem deploy).
+- **Decisão (localização):** Painel vive em `/admin/*` no próprio `previx-site-app`. Astro modo `output: 'hybrid'`: rotas públicas estáticas (AEO preservado), `/admin/*` server-rendered. SPA React montada via `<AdminApp client:only="react" />`. Stack canônica Trívia (Vite-in-Astro: shadcn/ui, TanStack Query, React Router) embutida em `src/admin/`.
+- **Decisão (RBAC dinâmico):**
+  - `app_metadata.roles[]` continua array de IDs de role.
+  - Tabela `site.role_definitions` armazena perfis editáveis (id, nome, permissoes JSONB, sistema boolean).
+  - Função `site.has_permission(resource, action)` substitui `has_role` em policies novas. Faz UNION das permissões dos roles do usuário (multi-papel).
+  - Função antiga `site.has_role` mantida pra retrocompat com `/admin/leads` (STORY-008); migra na STORY-019.
+- **Seed de 5 perfis iniciais:** `admin-previx` (sistema), `editor-blog`, `editor-copy`, `comercial`, `viewer`. Editáveis via painel pelo `admin-previx`.
+- **CSP impactada:** `/admin/*` ganha CSP separada em `netlify.toml` (allow `unsafe-eval` se Monaco MDX precisar, allow `blob:` para preview). `noindex,nofollow` + `Disallow: /admin/` no robots.txt mantidos (defesa em profundidade).
+- **Consequências:** Astro adapter Netlify (`@astrojs/netlify`) vira dependência. Login com SSO Supabase Auth (mesmas credenciais do Organograma). Painel filtra UI por `usePermission(resource, action)`. Convite de usuários via Edge Function que dispara email Resend.
+- Detalhe completo em `architecture.md` ADR-011.
+
 ---
 
-## ADRs futuros (placeholders)
+## ADRs futuros (placeholders renumerados)
 
 | ID | Tema | Quando decidir |
 |----|------|---------------|
-| ADR-007 | Provedor de e-mail transacional para confirmação de leads (Resend? SendGrid? Supabase SMTP?) | Início da STORY-008 |
-| ADR-008 | Ferramenta de monitoramento (Sentry? Plausible? Netlify Analytics?) | Antes da STORY-010 (deploy produção) |
-| ADR-009 | Estratégia de internacionalização (PT-BR é único idioma? abrir EN no futuro?) | Quando a Previx pedir expansão fora do Brasil |
-| ADR-010 | Engine de busca interna (Pagefind? Algolia? servidor próprio?) | Quando o catálogo de posts crescer (>30) |
+| ADR-012 | Editor MDX do painel admin (Monaco vs TipTap vs textarea+preview) | STORY-020 |
+| ADR-013 | Estratégia de internacionalização (PT-BR é único idioma? abrir EN no futuro?) | Quando a Previx pedir expansão fora do Brasil |
+| ADR-014 | Engine de busca interna (Pagefind? Algolia? servidor próprio?) | Quando o catálogo de posts crescer (>30) |

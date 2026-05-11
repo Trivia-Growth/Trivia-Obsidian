@@ -3,12 +3,33 @@ id: STORY-010
 titulo: "Deploy Produção + Domínio grupoprevix.com.br"
 fase: 5
 modulo: "Infraestrutura"
-status: backlog
+status: em-review
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "Claude (auto)"
 criado: 2026-05-06
-atualizado: 2026-05-06
+atualizado: 2026-05-07
 ---
+
+> 🟡 **Preparação concluída em 2026-05-07.** Cutover de DNS é operação manual do JG (sistema produção do cliente, não automatizada).
+>
+> **Pronto no repo:**
+> - **ADR-008 fechado:** Sentry (erros JS, opcional via DSN) + Plausible (analytics privacy-first, **gateado pelo consent banner LGPD** via custom event)
+> - `astro.config.mjs`: integração Sentry condicional ao DSN, replay/tracing desligados por padrão (LGPD)
+> - `src/components/layout/Plausible.astro`: script só injeta se `localStorage previx-consent-v1 === 'accepted'`; reage ao evento `previx:consent` (sem reload)
+> - `netlify.toml`: CSP atualizado para permitir Sentry e Plausible; **redirects 301 expandidos** mapeando 30+ paths típicos do WP → rotas Astro (incluindo `/sobre-nos`, `/seguranca-patrimonial`, slugs longos de posts, `/category/*`, `/tag/*`, `/feed`, **410 Gone** em `/wp-admin`, `/wp-login.php`, etc. para bloquear varredura)
+> - `docs/CUTOVER_CHECKLIST.md`: runbook passo-a-passo com pré-requisitos (snapshot SEO via Search Console, Lighthouse via PageSpeed Insights, backend ativo, backups), execução (DNS, validação, submissão Google), pós-cutover (24h/48h/72h) e plano de rollback (mantendo WP 30 dias)
+> - `.env.example`: documentadas vars de Sentry e Plausible
+>
+> **Para executar o cutover (JG, em janela aprovada com Previx):**
+> 1. Validar pré-requisitos do checklist
+> 2. Netlify Domain management → adicionar `grupoprevix.com.br`
+> 3. Atualizar DNS no registrador (A records apex + CNAME www)
+> 4. Validar propagação (`dig`, whatsmydns.net)
+> 5. Submeter sitemap ao Google Search Console
+> 6. Monitorar 72h
+> 7. Após 30d estável, desligar instância WP
+
+> **Nota:** Lighthouse audit via CLI não foi possível neste ambiente (Chrome headless indisponível). Roteiro alternativo: rodar [PageSpeed Insights](https://pagespeed.web.dev/) manualmente em cada rota-chave antes do cutover.
 
 # STORY-010 — Deploy Produção + Domínio grupoprevix.com.br
 

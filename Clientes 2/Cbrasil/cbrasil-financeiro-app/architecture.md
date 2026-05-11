@@ -136,7 +136,13 @@ client_users (user_id, client_id, role)
 client_categories (client_id, tipo, categoria, item, conta_debito, conta_credito, historico_template)
 client_bank_accounts (client_id, banco, conta, conta_contabil)
 import_mappings (client_id, nome, mapeamento JSONB)
-export_logs (client_id, tipo, periodo, total_lancamentos, arquivo_url)
+export_logs (client_id, tipo, periodo, total_lancamentos, ultimo_numero_lancamento, arquivo_url, api_response)
+```
+
+### Novas Tabelas (Fase 2)
+
+```sql
+integration_credentials (client_id, provider, credential_data JSONB)
 ```
 
 ### Campos Adicionais em `transactions`
@@ -146,7 +152,18 @@ tipo (entrada/saida)
 categoria_id → client_categories
 bank_account_id → client_bank_accounts
 fornecedor, cpf_cnpj, forma_pagamento
+centro_custo, documento
+observacao_rejeicao
+numero_lancamento
 import_batch_id, created_by
+```
+
+### Campos Adicionais em `clients`
+
+```sql
+contmatic_codigo INTEGER     -- codigo numerico do cliente no Contmatic (ex: 507)
+contmatic_apelido TEXT       -- apelido usado na API (ex: "IPP")
+api_integration_enabled BOOLEAN DEFAULT false
 ```
 
 ---
@@ -264,13 +281,37 @@ sequenceDiagram
 
 ## Edge Functions
 
-| Funcao | Metodo | Descricao |
-|--------|--------|-----------|
-| `register-transaction` | POST | Recebe dados do formulario, resolve categoria, insere lancamento |
-| `import-spreadsheet` | POST | Recebe Excel, valida, parseia, insere em lote |
-| `generate-ods` | POST | Gera arquivo ODS no formato Contmatic para download |
-| `export-contmatic-api` | POST | Envia lancamentos revisados para API Contmatic (Fase 2) |
-| `sync-chart-of-accounts` | POST | Consulta plano de contas na API e sincroniza local (Fase 2) |
+| Funcao | Metodo | Descricao | Fase |
+|--------|--------|-----------|------|
+| `register-transaction` | POST | Recebe dados do formulario, resolve categoria, insere lancamento | 1 |
+| `import-spreadsheet` | POST | Recebe Excel, valida, parseia, insere em lote | 1 |
+| `generate-ods` | POST | Gera arquivo ODS no formato Contmatic para download | 1 |
+| `sync-contmatic` | POST | Envia lancamentos revisados para API Contmatic | 2 |
+| `sync-chart-of-accounts` | GET/POST | Consulta plano de contas na API e sincroniza local | 2 |
+
+---
+
+## Roadmap de Fases
+
+### Fase 1 — MVP (Sprints 1-3)
+- Auth + multi-tenancy
+- Categorias e mapeamento contabil
+- Registro de lancamentos
+- Importacao de planilhas
+- Painel do contador (revisao)
+- Exportacao ODS
+- Dashboard do cliente
+
+### Fase 2 — Integracao (Sprint 4)
+- API Contmatic direta (POST lancamentos)
+- Sync plano de contas automatico
+- Fallback ODS quando API indisponivel
+
+### Fase 3 — Inteligencia (Sprint 5+)
+- Sugestao de categoria por IA (historico de fornecedor)
+- Deteccao de anomalias e duplicatas
+- Relatorios comparativos mensais
+- Dashboard financeiro avancado
 
 ---
 
@@ -278,5 +319,7 @@ sequenceDiagram
 
 - [ ] Obter plano de contas completo da IPP para popular client_categories
 - [ ] Definir categorias e itens para o cliente-piloto com o sogro
-- [ ] Token API Contmatic (credenciais do responsavel financeiro)
+- [ ] Token API Contmatic (credenciais do responsavel financeiro — ConnectCont)
 - [ ] Decidir dominio do sistema para deploy producao
+- [ ] Validar se fluxo funciona para empresas de servico e ONGs (alem de igrejas)
+- [ ] Criar repo dedicado no GitHub (Trivia-Growth/cbrasil-financeiro-app)

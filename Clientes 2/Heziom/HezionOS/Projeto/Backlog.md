@@ -12,6 +12,7 @@ Lista completa de stories organizadas por fase. Stories da Fase 2 e 3 serão det
 
 | ID | Story | Módulo | Status | Prioridade |
 |----|-------|--------|--------|------------|
+| [[STORY-007 — Mapeamento de Processos Financeiros\|007]] | Mapeamento de Processos Financeiros | Docs | concluido | 🔴 alta |
 | [[STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria\|002]] | Sync TituloFinanceiro + ContaBancaria | Sync | backlog | 🔴 alta |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda\|003]] | Sync NotaFiscal + PedidoVenda | Sync | backlog | 🔴 alta |

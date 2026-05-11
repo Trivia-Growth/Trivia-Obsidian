@@ -16,6 +16,16 @@ Tudo que entendi e estou assumindo como verdadeiro para montar as análises fina
 - [x] **Literarius é o software ERP** contratado pela Heziom para gestão editorial, estoque, notas fiscais e financeiro — não é a empresa, é a ferramenta
 - [x] **Tray é um canal de vendas** da Heziom — o site próprio da editora (e-commerce) — não é o único canal
 - [x] Existem outros canais de venda cadastrados na tabela `CanalVenda` do Literarius (marketplaces, B2B, consignação, PDV, etc.) — domínio completo a levantar
+
+### Canais de pagamento/recebimento confirmados (2026-05-07)
+
+- [x] **APPMAX** é o gateway de pagamento atual da Tray (substituiu o Pagar.me) — toda referência a "Pagar.me" no projeto deve ser lida como APPMAX
+- [x] **Mercado Pago** = gateway de recebimentos do Mercado Livre (marketplace) — não tem relação com a Tray
+- [x] **Stone** = maquininhas POS da livraria física — recebimentos presenciais
+- [x] **Santander** = banco principal (conta corrente + aplicação financeira)
+- [x] **Bookwire** = distribuidora de eBooks da Heziom nas plataformas digitais (Kindle, Kobo, etc.) — **não gera entrada automática no Literarius**; equipe recebe relatório mensal do Bookwire e emite NFs manualmente
+- [x] **Consignação** tem módulo dedicado no Literarius — HeziomOS lê direto, sem construir módulo do zero
+- [x] **Direitos autorais** têm funcionalidade nativa no Literarius para geração automática do relatório e envio por e-mail
 - [x] Existe uma única empresa no banco — `Empresa = 1` em todas as contas bancárias e registros
 - [x] **Heziom é juridicamente a ASSOCIAÇÃO EDITORA PRESBITERIANA DE PINHEIROS** (CNPJ 40.804.477/0001-44) — entidade vinculada ao IPP. Usa "Superávit" no DRE (não "Lucro"). Contabilidade conduzida pela **CONTABIL RIBEIRO LTDA**.
 - [ ] O HeziomOS está sendo construído para substituir ou complementar o Literarius como sistema de gestão da Heziom

@@ -3,12 +3,37 @@ id: STORY-008
 titulo: "Captura de Leads (Supabase)"
 fase: 3
 modulo: "Backend"
-status: backlog
+status: em-review
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "Claude (auto)"
 criado: 2026-05-06
-atualizado: 2026-05-06
+atualizado: 2026-05-07
 ---
+
+> 🟡 **Código pronto em 2026-05-07 (commit `349be6e`). Aguardando ativação do backend.**
+>
+> **Frontend (no ar):**
+> - `/contato` com form ativo: validação no client, captura UTM, honeypot, formRenderedAt anti-bot, estados loading/sucesso/erro com aria-live
+> - Tabs SAC/Trabalhe Conosco preservadas; RH muda motivo padrão para "outro" e mostra nota com e-mail para currículo
+> - `/admin/leads` (noindex) com ilha React: login Supabase Auth → listagem 200 leads recentes com filtros (busca + status) + atualização inline de status. Feedback claro se faltar role `admin-site`.
+>
+> **Backend (commitado, aguardando keys do JG):**
+> - `supabase/migrations/20260507120000_create_site_schema_leads.sql`: schema `site` + tabela `leads` + RLS+FORCE + função `has_role` array-aware + trigger atualizado_em
+> - `supabase/functions/submit-lead/index.ts`: validação manual, rate limit 10/min/IP, honeypot, insert via service_role, webhook Teams + e-mail Resend best-effort
+> - ADR-007 fechado: Resend escolhido (free 3k/mês, API simples, deliverabilidade alta)
+>
+> **Para ativar o backend** (4 passos do JG):
+> 1. `supabase login && supabase link --project-ref yqexjddpotlaqraljwvl`
+> 2. `supabase db push` — aplica a migration
+> 3. `supabase secrets set TEAMS_WEBHOOK_URL=... RESEND_API_KEY=... NOTIFY_EMAIL=previx@grupoprevix.com.br`
+> 4. `supabase functions deploy submit-lead`
+> 5. Criar admin user no Supabase Dashboard → adicionar `admin-site` em `app_metadata.user_role` (SQL no commit message)
+> 6. Verificar domínio `grupoprevix.com.br` no Resend (DKIM/SPF) — SEC-009
+>
+> **Pendências externas que JG precisa fornecer:**
+> - URL do webhook do canal Teams da Previx (Power Automate / Teams Connector)
+> - API key do Resend (criar conta em https://resend.com)
+> - Decidir e-mail do primeiro admin (sugestão: `admin@grupoprevix.com.br`)
 
 # STORY-008 — Captura de Leads (Supabase)
 

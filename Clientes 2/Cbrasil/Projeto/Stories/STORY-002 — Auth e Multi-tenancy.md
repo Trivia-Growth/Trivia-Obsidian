@@ -1,8 +1,9 @@
 ---
-status: backlog
+status: pronto
 tipo: feature
 sprint: 1
 prioridade: alta
+concluido: 2026-05-07
 ---
 
 # STORY-002 — Auth e Multi-tenancy
@@ -13,15 +14,15 @@ Implementar autenticacao com Supabase Auth e isolamento de dados por cliente via
 
 ## Criterios de Aceite
 
-- [ ] Login com email/senha funcionando
-- [ ] Tabela `client_users` criada com vinculo user_id ↔ client_id
-- [ ] RLS em todas as tabelas filtrando por client_id via client_users
-- [ ] Papel admin ve todos os dados (bypass no policy)
-- [ ] Papel contador ve apenas clientes designados
-- [ ] Papel cliente ve apenas seus dados
-- [ ] Rota protegida: redireciona para login se nao autenticado
-- [ ] Pagina de login com estados: loading, erro, sucesso
-- [ ] JWT claim `user_metadata.role` usado nas policies
+- [x] Login com email/senha funcionando
+- [x] Tabela `client_users` criada com vinculo user_id ↔ client_id
+- [x] RLS em todas as tabelas filtrando por client_id via client_users
+- [x] Papel admin ve todos os dados (bypass no policy)
+- [x] Papel contador ve apenas clientes designados
+- [x] Papel cliente ve apenas seus dados
+- [x] Rota protegida: redireciona para login se nao autenticado
+- [x] Pagina de login com estados: loading, erro, sucesso
+- [x] Role resolvido via client_users (nao via user_metadata — mais flexivel)
 
 ## Banco de Dados
 

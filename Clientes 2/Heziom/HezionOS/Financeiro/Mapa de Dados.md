@@ -15,7 +15,7 @@ Visão cruzada entre módulos do financeiro e suas fontes de dados no Literarius
 | [[Aprovação de Pagamentos]] | [[TituloFinanceiro]] (`TipoTitulo='P'`, `Pago=0`), `Parceiro` | — | HeziomOS DB (`payment_approvals`, `cnab_batches`) |
 | [[Conciliação Bancária]] | [[TituloFinanceiroBaixa]], [[ContaBancaria]], [[ContaBancariaLancamento]] | — | Extrato OFX Santander, [[Bancos — CNAB e OFX]] |
 | [[Gestão de Estoque e CMV]] | `vwProdutoEstoque`, `vwProdutoCusto`, `NotaFiscalItens` | — | [[Qive — NF-e Automática]] (custo via NF gráfica) |
-| [[Comissões e Repasses]] | [[PedidoVenda]] (`SiteIdPedido`), [[ComissaoParametro]] | [[Tray - Pedidos]], [[Tray - Pagamentos]] | HeziomOS DB (`repasse_tracking`) |
+| [[Comissões e Repasses]] | [[PedidoVenda]] (`SiteIdPedido`), [[ComissaoParametro]] | [[Tray - Pedidos]], [[Tray - Pagamentos]] (gateway: APPMAX) | HeziomOS DB (`repasse_tracking`); Stone POS (OFX); Mercado Pago/ML (API); Bookwire (relatório manual) |
 | [[Dashboard CEO]] | Todas as tabelas acima | — | HeziomOS DB (alertas, aprovações) |
 
 ### Chave de conciliação Tray ↔ Literarius

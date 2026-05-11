@@ -25,6 +25,7 @@ Três fases progressivas de valor. Cada fase entrega algo utilizável antes de a
 
 | Story | Módulo | Status | Prioridade |
 |-------|--------|--------|------------|
+| [[STORY-007 — Mapeamento de Processos Financeiros]] | Docs | concluido | alta |
 | [[STORY-001 — Setup Infraestrutura]] | Infra | pronto | alta |
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria]] | Sync | backlog | alta |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda]] | Sync | backlog | alta |
