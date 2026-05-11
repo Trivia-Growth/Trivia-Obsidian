@@ -12,12 +12,9 @@ Lista completa de stories organizadas por fase. Stories da Fase 2 e 3 serão det
 
 | ID | Story | Módulo | Status | Prioridade |
 |----|-------|--------|--------|------------|
-<<<<<<< HEAD:Clientes 2/Heziom/HezionOS/Projeto/Backlog.md
-| [[STORY-007 — Mapeamento de Processos Financeiros\|007]] | Mapeamento de Processos Financeiros | Docs | concluido | 🔴 alta |
-| [[STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
-=======
+| [[Clientes 2/Heziom/HeziomOS/Projeto/Stories/STORY-007 — Mapeamento de Processos Financeiros\|007]] | Mapeamento de Processos Financeiros | Docs | concluido | 🔴 alta |
+| [[Clientes 2/Heziom/HeziomOS/Projeto/Stories/STORY-008 — Documentação Robusta com Passo a Passo e Links de Vídeo\|008]] | Documentação Robusta — Passo a Passo + Vídeos | Docs | concluido | 🔴 alta |
 | [[Clientes 2/Heziom/HeziomOS/Projeto/Stories/STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
->>>>>>> e6fbc1ae1c89fa190704bae09f15922dd809f684:Clientes 2/Heziom/HeziomOS/Projeto/Backlog.md
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria\|002]] | Sync TituloFinanceiro + ContaBancaria | Sync | backlog | 🔴 alta |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda\|003]] | Sync NotaFiscal + PedidoVenda | Sync | backlog | 🔴 alta |
 | [[STORY-004 — Dashboard CEO Posição Financeira\|004]] | Dashboard CEO — Posição Financeira | Dashboard | backlog | 🔴 alta |
