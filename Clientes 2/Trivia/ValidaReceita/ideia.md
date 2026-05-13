@@ -101,3 +101,5 @@ SaaS para farmacias que automatiza a validacao de receitas medicas usando IA, in
 - [x] Preview HTML criado
 - [x] Plano de desenvolvimento completo
 - [ ] Implementacao (proximo passo)
+
+pasta para projeto git: /Users/lucasazevedo/Documents/GitHub/
