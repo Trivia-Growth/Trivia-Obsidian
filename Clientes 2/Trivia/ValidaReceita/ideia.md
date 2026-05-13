@@ -80,11 +80,10 @@ SaaS para farmacias que automatiza a validacao de receitas medicas usando IA, in
 
 ## Modelo de Negocio
 
-| Plano | Preco | Inclui |
-|-------|-------|--------|
-| Free | R$0 | 1 agente, 100 msgs/mes, 10 receitas/mes |
-| Pro | ~R$1.200/mes | 3 agentes, msgs ilimitadas, receitas ilimitadas, relatorios |
-| Enterprise | ~R$2.400/mes | Agentes ilimitados, qualidade IA, CSAT, SLA, API key propria, suporte prioritario |
+| Plano      | Preco        | Inclui                                       |
+| ----- | ----- | -------------------------------------------- |
+| Free       | R$0          | 100 agente, 1000 msgs/mes, 1000 receitas/mes |
+|            |              |                                              |
 
 ---
 
