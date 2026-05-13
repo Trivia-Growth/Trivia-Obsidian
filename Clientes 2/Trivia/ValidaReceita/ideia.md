@@ -100,7 +100,16 @@ SaaS para farmacias que automatiza a validacao de receitas medicas usando IA, in
 - [x] Ideia definida
 - [x] Preview HTML criado
 - [x] Plano de desenvolvimento completo
-- [ ] Implementacao (proximo passo)
+- [x] Implementacao — MVP entregue em 2026-05-12
+- [x] 35 testes passando (Vitest)
+- [x] Deploy produção: https://validareceita-platform.netlify.app
+- [x] Supabase migration aplicada (22 tabelas, RLS completo)
+
+## Documentação
+
+- [[architecture]] — stack, estrutura, banco, Edge Functions, decisões técnicas
+- [[SECURITY_DEBT]] — débitos de segurança, LGPD checklist, itens críticos
+- [[stories]] — user stories entregues + backlog priorizado + ADRs
 
 pasta para projeto git: /Users/lucasazevedo/Documents/GitHub/
 
