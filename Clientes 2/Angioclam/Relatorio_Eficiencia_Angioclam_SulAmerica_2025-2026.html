@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Eficiência Clínica — Angioclam × SulAmérica</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1A1A1A; font-family: 'Poppins', sans-serif; padding: 40px 0; }
+.slide { width: 1100px; margin: 30px auto; background: #F5EEDC; border-radius: 16px; padding: 50px 60px; position: relative; overflow: hidden; }
+.slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: #771F1F; }
+h1 { color: #771F1F; font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+h2 { color: #771F1F; font-size: 22px; font-weight: 600; margin-bottom: 20px; }
+h3 { color: #2D2D2D; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+.subtitle { color: #666666; font-size: 14px; margin-bottom: 30px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 30px; }
+.kpi { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.kpi-value { font-size: 24px; font-weight: 700; color: #771F1F; }
+.kpi-label { font-size: 11px; color: #666666; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-small .kpi-value { font-size: 18px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table th { background: #771F1F; color: white; padding: 10px 12px; text-align: left; font-weight: 500; }
+.table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+.table tr:last-child td { border-bottom: none; font-weight: 600; }
+.badge { display: inline-block; background: #771F1F; color: white; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.badge-green { background: #2E7D32; }
+.insight { background: white; border-left: 4px solid #771F1F; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 20px; font-size: 13px; color: #2D2D2D; }
+.versions { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.version-card { background: white; border-radius: 12px; padding: 20px; border: 2px solid #eee; }
+.version-card.primary { border-color: #771F1F; }
+.version-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.version-label.a { color: #771F1F; }
+.version-label.b { color: #666666; }
+.capa-box { background: white; border-radius: 12px; padding: 20px 24px; margin: 8px 0; }
+.capa-box h4 { color: #771F1F; font-size: 13px; margin-bottom: 6px; }
+.capa-box p { font-size: 12px; color: #2D2D2D; line-height: 1.5; }
+.footer { text-align: center; color: #666666; font-size: 11px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; }
+.slide-number { position: absolute; bottom: 20px; right: 30px; font-size: 11px; color: #666666; }
+.consolidado-box { background: #771F1F; color: white; border-radius: 12px; padding: 24px; text-align: center; }
+.consolidado-box .big { font-size: 32px; font-weight: 700; }
+.consolidado-box .label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: CAPA -->
+<div class="slide">
+<div style="text-align:center; margin-bottom: 30px;">
+<h1 style="font-size:32px; margin-bottom:4px;">ANGIOCLAM</h1>
+<p style="color:#771F1F; font-size:14px; font-weight:500;">× SulAmérica Saúde</p>
+</div>
+<h2 style="text-align:center; color:#2D2D2D; font-size:20px;">Relatório de Eficiência Clínica e Impacto Econômico</h2>
+<p class="subtitle" style="text-align:center;">Período: 12/05/2025 a 11/05/2026</p>
+<div class="three-col" style="margin-top:30px;">
+<div class="capa-box">
+<h4>Missão</h4>
+<p>Demonstrar o impacto da gestão clínica inteligente na redução de procedimentos desnecessários e custos para a operadora.</p>
+</div>
+<div class="capa-box">
+<h4>Visão</h4>
+<p>Medicina baseada em evidência como motor de eficiência: tratar o necessário, evitar o desnecessário.</p>
+</div>
+<div class="capa-box">
+<h4>Escopo</h4>
+<p>2.037 pacientes únicos | 4.092 atendimentos | 5 indicadores de eficiência clínica calculados.</p>
+</div>
+</div>
+<span class="slide-number">1/9</span>
+</div>
+
+<!-- SLIDE 2: PERFIL EPIDEMIOLÓGICO -->
+<div class="slide">
+<h2>Perfil Epidemiológico da População</h2>
+<p class="subtitle">Caracterização dos 2.037 pacientes atendidos no período</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">2.037</div><div class="kpi-label">Pacientes Únicos</div></div>
+<div class="kpi"><div class="kpi-value">46.8 anos</div><div class="kpi-label">Idade Média</div></div>
+<div class="kpi"><div class="kpi-value">46 anos</div><div class="kpi-label">Idade Mediana</div></div>
+<div class="kpi"><div class="kpi-value">1187 (58%)</div><div class="kpi-label">Feminino</div></div>
+<div class="kpi"><div class="kpi-value">844 (41%)</div><div class="kpi-label">Masculino</div></div>
+</div>
+<div class="two-col">
+<div class="card">
+<h3>Distribuição por Faixa Etária</h3>
+<svg width="500" height="220" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="151.48626817447496" width="45" height="38.51373182552504" rx="4" fill="#771F1F" opacity="0.7"/><text x="62" y="146.48626817447496" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">149</text><text x="62" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">0-19</text><rect x="97" y="156.39741518578353" width="45" height="33.60258481421648" rx="4" fill="#771F1F" opacity="0.7"/><text x="119" y="151.39741518578353" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">130</text><text x="119" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">20-29</text><rect x="154" y="106.51050080775445" width="45" height="83.48949919224555" rx="4" fill="#771F1F" opacity="0.7"/><text x="176" y="101.51050080775445" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">323</text><text x="176" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">30-39</text><rect x="211" y="30.0" width="45" height="160.0" rx="4" fill="#771F1F" opacity="1"/><text x="233" y="25.0" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">619</text><text x="233" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">40-49</text><rect x="268" y="96.4297253634895" width="45" height="93.5702746365105" rx="4" fill="#771F1F" opacity="0.7"/><text x="290" y="91.4297253634895" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">362</text><text x="290" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">50-59</text><rect x="325" y="126.93053311793216" width="45" height="63.06946688206785" rx="4" fill="#771F1F" opacity="0.7"/><text x="347" y="121.93053311793216" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">244</text><text x="347" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">60-69</text><rect x="382" y="147.09208400646204" width="45" height="42.90791599353796" rx="4" fill="#771F1F" opacity="0.7"/><text x="404" y="142.09208400646204" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">166</text><text x="404" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">70-79</text><rect x="439" y="178.62681744749597" width="45" height="11.37318255250404" rx="4" fill="#771F1F" opacity="0.7"/><text x="461" y="173.62681744749597" text-anchor="middle" font-family="Poppins" font-size="10" font-weight="600" fill="#2D2D2D">44</text><text x="461" y="210" text-anchor="middle" font-family="Poppins" font-size="10" fill="#666666">80+</text></svg>
+</div>
+<div class="card">
+<h3>Prevalência de Comorbidades</h3>
+<svg width="420" height="253" xmlns="http://www.w3.org/2000/svg"><text x="152" y="51" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Sedentarismo</text><rect x="160" y="35" width="200.0" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="366.0" y="51" font-family="Poppins" font-size="11" fill="#2D2D2D">706</text><text x="152" y="80" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Dislipidemia</text><rect x="160" y="64" width="172.23796033994333" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="338.23796033994336" y="80" font-family="Poppins" font-size="11" fill="#2D2D2D">608</text><text x="152" y="109" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">HAS</text><rect x="160" y="93" width="163.45609065155807" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="329.45609065155804" y="109" font-family="Poppins" font-size="11" fill="#2D2D2D">577</text><text x="152" y="138" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Obesidade</text><rect x="160" y="122" width="151.27478753541078" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="317.2747875354108" y="138" font-family="Poppins" font-size="11" fill="#2D2D2D">534</text><text x="152" y="167" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">DM2</text><rect x="160" y="151" width="78.18696883852692" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="244.18696883852692" y="167" font-family="Poppins" font-size="11" fill="#2D2D2D">276</text><text x="152" y="196" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">DAC/IAM</text><rect x="160" y="180" width="32.29461756373937" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="198.29461756373937" y="196" font-family="Poppins" font-size="11" fill="#2D2D2D">114</text><text x="152" y="225" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">AVC</text><rect x="160" y="209" width="15.29745042492918" height="25" rx="4" fill="#771F1F" opacity="0.85"/><text x="181.29745042492917" y="225" font-family="Poppins" font-size="11" fill="#2D2D2D">54</text></svg>
+</div>
+</div>
+<div class="insight">
+<strong>Insight:</strong> Faixa 40-49 é a mais prevalente (619 pacientes). 706 pacientes sedentários e 608 com dislipidemia reforçam a importância do rastreio cardiovascular ativo.
+</div>
+<span class="slide-number">2/9</span>
+</div>
+
+<!-- SLIDE 3: INDICADOR 4 — CONTROLE DE SOLICITAÇÕES -->
+<div class="slide">
+<h2>Controle de Solicitações — Consulta Angiologia</h2>
+<p class="subtitle">Indicador 4: AngioTC (10%) + Cateterismo (1%) a partir de 1.075 consultas</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">1.075</div><div class="kpi-label">Consultas Angiologia</div></div>
+<div class="kpi"><div class="kpi-value">108</div><div class="kpi-label">AngioTC Esperadas (10%)</div></div>
+<div class="kpi"><div class="kpi-value">11</div><div class="kpi-label">Cateterismos Esperados (1%)</div></div>
+<div class="kpi"><div class="kpi-value">R$ 272 mil</div><div class="kpi-label">Economia Bruta (A)</div></div>
+</div>
+<div class="versions">
+<div class="version-card primary">
+<div class="version-label a">Versão A — vs Realizadas pela Angioclam</div>
+<table class="table">
+<tr><th>Procedimento</th><th>Esperado</th><th>Realizado</th><th>Evitados</th><th>Economia</th></tr>
+<tr><td>AngioTC</td><td>108</td><td>0</td><td>108</td><td>R$ 162 mil</td></tr>
+<tr><td>Cateterismo</td><td>11</td><td>0</td><td>11</td><td>R$ 110 mil</td></tr>
+<tr><td><strong>Total</strong></td><td>119</td><td>0</td><td>119</td><td><strong>R$ 272 mil</strong></td></tr>
+</table>
+</div>
+<div class="version-card">
+<div class="version-label b">Versão B — vs Solicitadas pelos Médicos</div>
+<table class="table">
+<tr><th>Procedimento</th><th>Esperado</th><th>Solicitado</th><th>Evitados</th><th>Economia</th></tr>
+<tr><td>AngioTC</td><td>108</td><td>27</td><td>81</td><td>R$ 122 mil</td></tr>
+<tr><td>Cateterismo</td><td>11</td><td>2</td><td>9</td><td>R$ 90 mil</td></tr>
+<tr><td><strong>Total</strong></td><td>119</td><td>29</td><td>90</td><td><strong>R$ 212 mil</strong></td></tr>
+</table>
+</div>
+</div>
+<div class="insight">
+<strong>ROI:</strong> Para cada R$ 1 investido em consultas angiológicas (R$ 123.625), a operadora economiza R$ 2.2 em procedimentos invasivos evitados.
+</div>
+<span class="slide-number">3/9</span>
+</div>
+
+<!-- SLIDE 4: INDICADOR 5 — DOPPLER CARÓTIDAS -->
+<div class="slide">
+<h2>Doppler de Carótidas → Endarterectomia/Angioplastia</h2>
+<p class="subtitle">Indicador 5: Taxa benchmark de 2% sobre 1.172 dopplers de carótidas</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">1.172</div><div class="kpi-label">Dopplers Carótidas</div></div>
+<div class="kpi"><div class="kpi-value">23</div><div class="kpi-label">Cirurgias Esperadas (2%)</div></div>
+<div class="kpi"><div class="kpi-value">23</div><div class="kpi-label">Evitadas</div></div>
+<div class="kpi"><div class="kpi-value">R$ 690 mil</div><div class="kpi-label">Economia Bruta</div></div>
+<div class="kpi"><div class="kpi-value">2.5x</div><div class="kpi-label">ROI</div></div>
+</div>
+<div class="two-col">
+<div class="card">
+<h3>Esperado vs Realizado</h3>
+<svg width="400" height="90" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" font-family="Poppins" font-size="11" fill="#666666">Esperado (benchmark 2%)</text><rect x="0" y="25" width="260.0" height="22" rx="4" fill="#666666" opacity="0.3"/><text x="268.0" y="40" font-family="Poppins" font-size="12" font-weight="600" fill="#2D2D2D">23</text><text x="0" y="62" font-family="Poppins" font-size="11" fill="#771F1F">Realizado Angioclam</text><rect x="0" y="67" width="0.0" height="22" rx="4" fill="#771F1F"/><text x="8.0" y="82" font-family="Poppins" font-size="12" font-weight="600" fill="#771F1F">0</text></svg>
+<p style="margin-top:15px; font-size:12px; color:#666666;">Custo unitário endarterectomia/angioplastia: <strong>R$ 30.000</strong></p>
+</div>
+<div class="card">
+<h3>Detalhamento Financeiro</h3>
+<table class="table">
+<tr><td>Dopplers realizados</td><td style="text-align:right;"><strong>1.172</strong></td></tr>
+<tr><td>Custo unitário doppler</td><td style="text-align:right;">R$ 236</td></tr>
+<tr><td>Investimento em rastreio</td><td style="text-align:right;">R$ 277 mil</td></tr>
+<tr><td>Cirurgias evitadas (A)</td><td style="text-align:right;">23</td></tr>
+<tr><td>Economia bruta (A)</td><td style="text-align:right;"><strong>R$ 690 mil</strong></td></tr>
+<tr><td>Economia líquida (A)</td><td style="text-align:right; color:#771F1F;"><strong>R$ 413 mil</strong></td></tr>
+</table>
+</div>
+</div>
+<span class="slide-number">4/9</span>
+</div>
+
+<!-- SLIDE 5: PANORAMA DOS ATENDIMENTOS -->
+<div class="slide">
+<h2>Panorama dos Atendimentos</h2>
+<p class="subtitle">Visão geral da produção no período analisado</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">14.549</div><div class="kpi-label">Total Procedimentos</div></div>
+<div class="kpi"><div class="kpi-value">3.855</div><div class="kpi-label">Consultas</div></div>
+<div class="kpi"><div class="kpi-value">43</div><div class="kpi-label">Profissionais</div></div>
+<div class="kpi"><div class="kpi-value">R$ 3.1M</div><div class="kpi-label">Faturamento Total</div></div>
+</div>
+<div class="two-col">
+<div class="card">
+<h3>Volume por Tipo de Exame</h3>
+<svg width="450" height="298" xmlns="http://www.w3.org/2000/svg"><text x="152" y="52" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">ECG</text><rect x="160" y="35" width="230.0" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="396.0" y="52" font-family="Poppins" font-size="11" fill="#2D2D2D">1.821</text><text x="152" y="83" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Ecocardiograma</text><rect x="160" y="66" width="198.92915980230643" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="364.92915980230646" y="83" font-family="Poppins" font-size="11" fill="#2D2D2D">1.575</text><text x="152" y="114" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Doppler Carótidas</text><rect x="160" y="97" width="148.02855573860518" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="314.0285557386052" y="114" font-family="Poppins" font-size="11" fill="#2D2D2D">1.172</text><text x="152" y="145" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Doppler Venoso MMII</text><rect x="160" y="128" width="127.3146622734761" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="293.3146622734761" y="145" font-family="Poppins" font-size="11" fill="#2D2D2D">1.008</text><text x="152" y="176" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Doppler Arterial MMII</text><rect x="160" y="159" width="122.00988467874795" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="288.00988467874794" y="176" font-family="Poppins" font-size="11" fill="#2D2D2D">966</text><text x="152" y="207" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Ergometria</text><rect x="160" y="190" width="94.60186710598572" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="260.6018671059857" y="207" font-family="Poppins" font-size="11" fill="#2D2D2D">749</text><text x="152" y="238" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">Doppler MMS</text><rect x="160" y="221" width="79.06644700713893" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="245.06644700713895" y="238" font-family="Poppins" font-size="11" fill="#2D2D2D">626</text><text x="152" y="269" text-anchor="end" font-family="Poppins" font-size="11" fill="#2D2D2D">MAPA</text><rect x="160" y="252" width="59.86820428336079" height="27" rx="4" fill="#771F1F" opacity="0.85"/><text x="225.8682042833608" y="269" font-family="Poppins" font-size="11" fill="#2D2D2D">474</text></svg>
+</div>
+<div class="card">
+<h3>Distribuição por Categoria</h3>
+<table class="table">
+<tr><th>Categoria</th><th style="text-align:right;">Volume</th><th style="text-align:right;">Faturamento</th></tr>
+<tr><td>Consultas</td><td style="text-align:right;">3.855</td><td style="text-align:right;">R$ 455 mil</td></tr>
+<tr><td>ECG</td><td style="text-align:right;">1.821</td><td style="text-align:right;">R$ 42 mil</td></tr>
+<tr><td>Ecocardiograma</td><td style="text-align:right;">1.575</td><td style="text-align:right;">R$ 390 mil</td></tr>
+<tr><td>Doppler Carótidas</td><td style="text-align:right;">1.172</td><td style="text-align:right;">R$ 277 mil</td></tr>
+<tr><td>Doppler Venoso MMII</td><td style="text-align:right;">1.008</td><td style="text-align:right;">R$ 612 mil</td></tr>
+<tr><td>Ergometria</td><td style="text-align:right;">749</td><td style="text-align:right;">R$ 78 mil</td></tr>
+<tr><td><strong>Total geral</strong></td><td style="text-align:right;"><strong>14.549</strong></td><td style="text-align:right;"><strong>R$ 3.1M</strong></td></tr>
+</table>
+</div>
+</div>
+<span class="slide-number">5/9</span>
+</div>
+
+<!-- SLIDE 6: INDICADOR 1 — ERGOMETRIA → CINTILOGRAFIA -->
+<div class="slide">
+<h2>Ergometria → Cintilografia Miocárdica</h2>
+<p class="subtitle">Indicador 1: Taxa benchmark de 15% sobre 749 ergometrias</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">749</div><div class="kpi-label">Ergometrias Realizadas</div></div>
+<div class="kpi"><div class="kpi-value">112</div><div class="kpi-label">Cintilografias Esperadas (15%)</div></div>
+<div class="kpi"><div class="kpi-value">112</div><div class="kpi-label">Evitadas (A)</div></div>
+<div class="kpi"><div class="kpi-value">R$ 280 mil</div><div class="kpi-label">Economia Bruta (A)</div></div>
+</div>
+<div class="versions">
+<div class="version-card primary">
+<div class="version-label a">Versão A — vs Realizadas pela Angioclam</div>
+<table class="table">
+<tr><td>Cintilografias esperadas (benchmark)</td><td style="text-align:right;">112</td></tr>
+<tr><td>Cintilografias realizadas na Angioclam</td><td style="text-align:right;">0</td></tr>
+<tr><td>Evitadas</td><td style="text-align:right;"><strong>112</strong></td></tr>
+<tr><td>Custo unitário cintilografia</td><td style="text-align:right;">R$ 2.500</td></tr>
+<tr><td>Economia bruta</td><td style="text-align:right;"><strong>R$ 280 mil</strong></td></tr>
+<tr><td>Investimento (ergometrias)</td><td style="text-align:right;">R$ 78 mil</td></tr>
+<tr><td>Economia líquida</td><td style="text-align:right; color:#771F1F;"><strong>R$ 202 mil</strong></td></tr>
+</table>
+</div>
+<div class="version-card">
+<div class="version-label b">Versão B — vs Solicitadas pelos Médicos</div>
+<table class="table">
+<tr><td>Cintilografias esperadas (benchmark)</td><td style="text-align:right;">112</td></tr>
+<tr><td>Cintilografias solicitadas</td><td style="text-align:right;">26</td></tr>
+<tr><td>Evitadas</td><td style="text-align:right;"><strong>86</strong></td></tr>
+<tr><td>Economia bruta</td><td style="text-align:right;"><strong>R$ 215 mil</strong></td></tr>
+</table>
+</div>
+</div>
+<div class="insight">
+<strong>Interpretação:</strong> A Angioclam realizou 0 cintilografias no período (referenciou para fora quando necessário). Das 112 esperadas pelo benchmark, apenas 26 foram efetivamente solicitadas — evidência de filtro clínico rigoroso.
+</div>
+<span class="slide-number">6/9</span>
+</div>
+
+<!-- SLIDE 7: INDICADOR 2 — ERGOMETRIA → CATETERISMO -->
+<div class="slide">
+<h2>Ergometria → Cateterismo Cardíaco</h2>
+<p class="subtitle">Indicador 2: Taxa benchmark de 5% sobre 749 ergometrias</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">749</div><div class="kpi-label">Ergometrias Realizadas</div></div>
+<div class="kpi"><div class="kpi-value">37</div><div class="kpi-label">Cateterismos Esperados (5%)</div></div>
+<div class="kpi"><div class="kpi-value">37</div><div class="kpi-label">Evitados (A)</div></div>
+<div class="kpi"><div class="kpi-value">R$ 370 mil</div><div class="kpi-label">Economia Bruta (A)</div></div>
+</div>
+<div class="versions">
+<div class="version-card primary">
+<div class="version-label a">Versão A — vs Realizadas pela Angioclam</div>
+<table class="table">
+<tr><td>Cateterismos esperados (benchmark)</td><td style="text-align:right;">37</td></tr>
+<tr><td>Cateterismos realizados na Angioclam</td><td style="text-align:right;">0</td></tr>
+<tr><td>Evitados</td><td style="text-align:right;"><strong>37</strong></td></tr>
+<tr><td>Custo unitário cateterismo</td><td style="text-align:right;"><strong>R$ 10.000</strong></td></tr>
+<tr><td>Economia bruta</td><td style="text-align:right;"><strong>R$ 370 mil</strong></td></tr>
+<tr><td>Investimento (ergometrias)</td><td style="text-align:right;">R$ 78 mil</td></tr>
+<tr><td>Economia líquida</td><td style="text-align:right; color:#771F1F;"><strong>R$ 292 mil</strong></td></tr>
+</table>
+</div>
+<div class="version-card">
+<div class="version-label b">Versão B — vs Solicitadas pelos Médicos</div>
+<table class="table">
+<tr><td>Cateterismos esperados (benchmark)</td><td style="text-align:right;">37</td></tr>
+<tr><td>Cateterismos solicitados</td><td style="text-align:right;">2</td></tr>
+<tr><td>Evitados</td><td style="text-align:right;"><strong>35</strong></td></tr>
+<tr><td>Economia bruta</td><td style="text-align:right;"><strong>R$ 350 mil</strong></td></tr>
+</table>
+</div>
+</div>
+<div class="insight">
+<strong>Destaque:</strong> Custo do cateterismo cardíaco = R$ 10.000. Zero cateterismos realizados na Angioclam, apenas 2 solicitados de 37 esperados. Filtro clínico altamente conservador.
+</div>
+<span class="slide-number">7/9</span>
+</div>
+
+<!-- SLIDE 8: INDICADOR 3 — DOPPLER VENOSO MMII → VARIZES -->
+<div class="slide">
+<h2>Doppler Venoso MMII → Cirurgia de Varizes</h2>
+<p class="subtitle">Indicador 3: Taxa benchmark de 5% sobre 1.008 dopplers venosos MMII</p>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-value">1.008</div><div class="kpi-label">Dopplers Venosos MMII</div></div>
+<div class="kpi"><div class="kpi-value">50</div><div class="kpi-label">Cirurgias Esperadas (5%)</div></div>
+<div class="kpi"><div class="kpi-value">50</div><div class="kpi-label">Evitadas</div></div>
+<div class="kpi"><div class="kpi-value">R$ 500 mil</div><div class="kpi-label">Economia Bruta</div></div>
+</div>
+<div class="two-col">
+<div class="card">
+<h3>Esperado vs Realizado</h3>
+<svg width="400" height="90" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" font-family="Poppins" font-size="11" fill="#666666">Esperado (benchmark 5%)</text><rect x="0" y="25" width="260.0" height="22" rx="4" fill="#666666" opacity="0.3"/><text x="268.0" y="40" font-family="Poppins" font-size="12" font-weight="600" fill="#2D2D2D">50</text><text x="0" y="62" font-family="Poppins" font-size="11" fill="#771F1F">Realizado Angioclam</text><rect x="0" y="67" width="0.0" height="22" rx="4" fill="#771F1F"/><text x="8.0" y="82" font-family="Poppins" font-size="12" font-weight="600" fill="#771F1F">0</text></svg>
+<p style="margin-top:15px; font-size:12px; color:#666666;">Custo unitário cirurgia de varizes: <strong>R$ 10.000</strong></p>
+<p style="font-size:12px; color:#666666;">Convenção: 1 linha = 1 exame bilateral (Qtd=2)</p>
+</div>
+<div class="card">
+<h3>Detalhamento Financeiro</h3>
+<table class="table">
+<tr><td>Dopplers realizados (linhas)</td><td style="text-align:right;"><strong>1.008</strong></td></tr>
+<tr><td>Custo unitário doppler</td><td style="text-align:right;">R$ 309</td></tr>
+<tr><td>Investimento em rastreio</td><td style="text-align:right;">R$ 311 mil</td></tr>
+<tr><td>Cirurgias evitadas</td><td style="text-align:right;">50</td></tr>
+<tr><td>Economia bruta</td><td style="text-align:right;"><strong>R$ 500 mil</strong></td></tr>
+<tr><td>Economia líquida</td><td style="text-align:right; color:#771F1F;"><strong>R$ 189 mil</strong></td></tr>
+</table>
+</div>
+</div>
+<div class="insight">
+<strong>Nota:</strong> Zero cirurgias de varizes realizadas E zero solicitadas no período. Versões A e B convergem: 50 cirurgias evitadas, demonstrando conduta conservadora consistente.
+</div>
+<span class="slide-number">8/9</span>
+</div>
+
+<!-- SLIDE 9: CONSOLIDADO -->
+<div class="slide">
+<h2>Consolidado — Impacto Econômico Total</h2>
+<p class="subtitle">Síntese dos 5 indicadores de eficiência clínica no período</p>
+
+<table class="table" style="margin-bottom:30px;">
+<tr><th>Indicador</th><th style="text-align:right;">Base</th><th style="text-align:right;">Esperado</th><th style="text-align:right;">Evitados (A)</th><th style="text-align:right;">Economia (A)</th><th style="text-align:right;">Evitados (B)</th><th style="text-align:right;">Economia (B)</th></tr>
+<tr><td>1. Ergometria → Cintilografia</td><td style="text-align:right;">749</td><td style="text-align:right;">112</td><td style="text-align:right;">112</td><td style="text-align:right;">R$ 280 mil</td><td style="text-align:right;">86</td><td style="text-align:right;">R$ 215 mil</td></tr>
+<tr><td>2. Ergometria → Cateterismo</td><td style="text-align:right;">749</td><td style="text-align:right;">37</td><td style="text-align:right;">37</td><td style="text-align:right;">R$ 370 mil</td><td style="text-align:right;">35</td><td style="text-align:right;">R$ 350 mil</td></tr>
+<tr><td>3. Doppler Venoso → Varizes</td><td style="text-align:right;">1008</td><td style="text-align:right;">50</td><td style="text-align:right;">50</td><td style="text-align:right;">R$ 500 mil</td><td style="text-align:right;">50</td><td style="text-align:right;">R$ 500 mil</td></tr>
+<tr><td>4. Consulta Angio → AngioTC + Cat</td><td style="text-align:right;">1075</td><td style="text-align:right;">119</td><td style="text-align:right;">119</td><td style="text-align:right;">R$ 272 mil</td><td style="text-align:right;">90</td><td style="text-align:right;">R$ 212 mil</td></tr>
+<tr><td>5. Doppler Carótidas → Endarterectomia</td><td style="text-align:right;">1172</td><td style="text-align:right;">23</td><td style="text-align:right;">23</td><td style="text-align:right;">R$ 690 mil</td><td style="text-align:right;">23</td><td style="text-align:right;">R$ 690 mil</td></tr>
+<tr style="background:#f9f6ef;"><td><strong>TOTAL</strong></td><td></td><td></td><td style="text-align:right;"><strong>341</strong></td><td style="text-align:right;"><strong>R$ 2.1M</strong></td><td style="text-align:right;"><strong>284</strong></td><td style="text-align:right;"><strong>R$ 2.0M</strong></td></tr>
+</table>
+
+<div class="three-col">
+<div class="consolidado-box">
+<div class="big">R$ 1.3M</div>
+<div class="label">Economia Líquida (Versão A)</div>
+</div>
+<div class="consolidado-box">
+<div class="big">341</div>
+<div class="label">Procedimentos Evitados (A)</div>
+</div>
+<div class="consolidado-box">
+<div class="big">R$ 323</div>
+<div class="label">Economia por Atendimento</div>
+</div>
+</div>
+
+<div class="versions" style="margin-top:20px;">
+<div class="version-card primary">
+<div class="version-label a">Versão A (Otimista)</div>
+<p style="font-size:12px;">Compara esperado vs <strong>realizados pela Angioclam</strong>. Inclui economias de procedimentos que a clínica filtrou e que podem ter sido feitos em outras unidades.</p>
+<p style="font-size:14px; font-weight:600; margin-top:8px; color:#771F1F;">R$ 2.11M bruto | R$ 1.32M líquido</p>
+</div>
+<div class="version-card">
+<div class="version-label b">Versão B (Conservadora)</div>
+<p style="font-size:12px;">Compara esperado vs <strong>solicitados pelos médicos</strong>. Desconta procedimentos que foram solicitados (e potencialmente realizados fora).</p>
+<p style="font-size:14px; font-weight:600; margin-top:8px;">R$ 2.0M bruto | 284 evitados</p>
+</div>
+</div>
+
+<div class="footer">
+Relatório gerado em 14/05/2026 14:13 | Motor Angioclam v2.0 | Dados: Sistema Klingo<br>
+Período: 12/05/2025 a 11/05/2026 | Operadora: SulAmérica
+</div>
+<span class="slide-number">9/9</span>
+</div>
+
+</body>
+</html>
