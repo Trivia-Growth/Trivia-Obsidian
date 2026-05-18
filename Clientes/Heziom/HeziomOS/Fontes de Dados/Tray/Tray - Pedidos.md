@@ -122,4 +122,4 @@ Tray taxes          ≈  NotaFiscal.TotalImpostos
 - [[Contas a Receber]]
 - [[Mapa de Dados]]
 
-Ver: [[_a mapear]] · [[Tray - Pagamentos]]
+Ver: [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]] · [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]]

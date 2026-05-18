@@ -17,9 +17,9 @@ Define o rateio contábil de um título financeiro por plano de contas e centro 
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `idTituloFinanceiroRateio` | bigint | PK |
-| `idTituloFinanceiro` | bigint | FK → [[TituloFinanceiro]] |
-| `PlanoConta` | int | FK → [[PlanoConta]] |
-| `CentroResultado` | int | FK → [[CentroResultado]] |
+| `idTituloFinanceiro` | bigint | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] |
+| `PlanoConta` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] |
+| `CentroResultado` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] |
 | `Percentual` | money | Percentual do valor total a ratear |
 | `Valor` | money | Valor absoluto rateado |
 | `Sinal` | varchar(1) | Sinal do lançamento (`D` = débito, `C` = crédito) |
@@ -37,6 +37,6 @@ Define o rateio contábil de um título financeiro por plano de contas e centro 
 
 ## Relações
 
-- FK → [[TituloFinanceiro]] via `idTituloFinanceiro`
-- FK → [[PlanoConta]] via `PlanoConta`
-- FK → [[CentroResultado]] via `CentroResultado`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] via `idTituloFinanceiro`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] via `PlanoConta`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] via `CentroResultado`

@@ -7,7 +7,7 @@ status: especificação
 
 ## Objetivo
 
-Consolidar receitas e despesas por período para gerar a Demonstração de Resultado do Exercício (DRE) e o Fluxo de Caixa. A estrutura contábil é definida pelo [[PlanoConta]] com `GrupoDRE` e `TipoCategoria`, e os lançamentos vêm das baixas de títulos e lançamentos bancários.
+Consolidar receitas e despesas por período para gerar a Demonstração de Resultado do Exercício (DRE) e o Fluxo de Caixa. A estrutura contábil é definida pelo [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] com `GrupoDRE` e `TipoCategoria`, e os lançamentos vêm das baixas de títulos e lançamentos bancários.
 
 ---
 
@@ -15,11 +15,11 @@ Consolidar receitas e despesas por período para gerar a Demonstração de Resul
 
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[TituloFinanceiroBaixaRateio]] | `PlanoConta`, `CentroResultado`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros` | Base de todos os lançamentos realizados (receitas e despesas pagas) |
-| [[PlanoConta]] | `Codigo`, `Descricao`, `TipoCategoria`, `GrupoDRE`, `Nivel`, `PlanoContaPai` | Estrutura hierárquica da DRE; `GrupoDRE` agrupa linhas do demonstrativo |
-| [[CentroResultado]] | `Codigo`, `Descricao` | Dimensão de análise por área/unidade de negócio |
-| [[ContaBancariaLancamento]] | `DataLancto`, `TipoLancto`, `Valor`, `PlanoConta`, `CentroResultado`, `Liquidado` | Lançamentos diretos (não via título): tarifas, transferências, etc. |
-| [[TituloFinanceiro]] | `TipoTitulo`, `Vencimento`, `Valor`, `Pago` | Base para fluxo de caixa projetado (títulos em aberto) |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixaRateio]] | `PlanoConta`, `CentroResultado`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros` | Base de todos os lançamentos realizados (receitas e despesas pagas) |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] | `Codigo`, `Descricao`, `TipoCategoria`, `GrupoDRE`, `Nivel`, `PlanoContaPai` | Estrutura hierárquica da DRE; `GrupoDRE` agrupa linhas do demonstrativo |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] | `Codigo`, `Descricao` | Dimensão de análise por área/unidade de negócio |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]] | `DataLancto`, `TipoLancto`, `Valor`, `PlanoConta`, `CentroResultado`, `Liquidado` | Lançamentos diretos (não via título): tarifas, transferências, etc. |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] | `TipoTitulo`, `Vencimento`, `Valor`, `Pago` | Base para fluxo de caixa projetado (títulos em aberto) |
 
 ---
 
@@ -133,8 +133,8 @@ Consolidar receitas e despesas por período para gerar a Demonstração de Resul
 - Base: **regime de caixa** (data das baixas); para regime de competência usar datas de emissão dos títulos
 
 ### Fluxo de Caixa
-- **Realizado**: baixas de [[TituloFinanceiroBaixa]] + lançamentos de [[ContaBancariaLancamento]]
-- **Projetado**: títulos em aberto de [[TituloFinanceiro]] agrupados por vencimento
+- **Realizado**: baixas de [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] + lançamentos de [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]]
+- **Projetado**: títulos em aberto de [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] agrupados por vencimento
 - `ContaBancariaLancamento.Liquidado` indica se o lançamento direto já foi confirmado no extrato
 
 ---

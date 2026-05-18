@@ -62,6 +62,6 @@ Cadastro das contas bancárias da empresa. Referenciada por títulos e lançamen
 
 ## Relações
 
-- 1:N → [[TituloFinanceiro]] via `ContaBancaria`
-- 1:N → [[TituloFinanceiroBaixa]] via `ContaBancaria`
-- 1:N → [[ContaBancariaLancamento]] via `ContaBancaria`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] via `ContaBancaria`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] via `ContaBancaria`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]] via `ContaBancaria`

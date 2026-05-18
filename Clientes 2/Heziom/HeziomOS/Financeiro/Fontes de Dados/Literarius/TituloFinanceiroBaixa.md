@@ -17,12 +17,12 @@ Registra cada evento de baixa (recebimento ou pagamento) de um título financeir
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `idTituloFinanceiroBaixa` | bigint | PK |
-| `idTituloFinanceiro` | bigint | FK → [[TituloFinanceiro]] |
+| `idTituloFinanceiro` | bigint | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] |
 | `Item` | int | Sequência da baixa para o mesmo título |
 | `DataBaixa` | datetime | Data em que o pagamento/recebimento ocorreu |
 | `DataBanco` | datetime | Data de crédito/débito no banco |
-| `FormaPagto` | int | FK → [[FormaPagto]] (pode diferir do título) |
-| `ContaBancaria` | int | FK → [[ContaBancaria]] |
+| `FormaPagto` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/FormaPagto]] (pode diferir do título) |
+| `ContaBancaria` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancaria]] |
 | `ValorBaixa` | money | Valor principal baixado |
 | `ValorDesconto` | money | Desconto concedido |
 | `ValorAbatimento` | money | Abatimento aplicado |
@@ -51,7 +51,7 @@ Registra cada evento de baixa (recebimento ou pagamento) de um título financeir
 
 ## Relações
 
-- FK → [[TituloFinanceiro]] via `idTituloFinanceiro`
-- FK → [[FormaPagto]] via `FormaPagto`
-- FK → [[ContaBancaria]] via `ContaBancaria`
-- 1:N → [[TituloFinanceiroBaixaRateio]] via `idTituloFinanceiroBaixa`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] via `idTituloFinanceiro`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/FormaPagto]] via `FormaPagto`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancaria]] via `ContaBancaria`
+- 1:N → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixaRateio]] via `idTituloFinanceiroBaixa`

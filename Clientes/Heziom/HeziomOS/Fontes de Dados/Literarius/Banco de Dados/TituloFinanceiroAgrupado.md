@@ -17,7 +17,7 @@ Registra o agrupamento de múltiplos títulos em um único boleto ou instrumento
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `idTituloFinanceiroAgrupado` | bigint | PK |
-| `idTituloFinanceiro` | bigint | FK → [[TituloFinanceiro]] (título agrupador) |
+| `idTituloFinanceiro` | bigint | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] (título agrupador) |
 | `Numero` | int | Número do título agrupado |
 | `Vencimento` | datetime | Vencimento da parcela agrupada |
 | `Valor` | money | Valor da parcela agrupada |
@@ -34,4 +34,4 @@ Registra o agrupamento de múltiplos títulos em um único boleto ou instrumento
 
 ## Relações
 
-- FK → [[TituloFinanceiro]] via `idTituloFinanceiro`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] via `idTituloFinanceiro`

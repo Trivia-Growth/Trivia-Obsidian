@@ -244,5 +244,5 @@ O job pode automatizar: ao criar o `TituloFinanceiro`, emite automaticamente a *
 
 - [[Contas a Pagar]] — destino dos títulos criados automaticamente
 - [[DRE e Fluxo de Caixa]] — despesas capturadas automaticamente melhoram o DRE
-- [[TituloFinanceiro]] — tabela que recebe os lançamentos
-- [[PlanoConta]] — classificação contábil das despesas
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] — tabela que recebe os lançamentos
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] — classificação contábil das despesas

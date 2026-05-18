@@ -8,14 +8,14 @@ Visão cruzada entre módulos do financeiro e suas fontes de dados no Literarius
 
 | Módulo | Literarius | Tray API | Outros |
 |--------|------------|----------|--------|
-| [[Pedidos e Vendas]] | [[PedidoVenda]], [[NotaFiscal]], [[FormaPagto]] | [[Tray - Pedidos]], [[Tray - Invoices]] | — |
-| [[Contas a Receber]] | [[TituloFinanceiro]] (`TipoTitulo='R'`), [[TituloFinanceiroBaixa]], [[ContaBancaria]] | [[Tray - Pagamentos]] (`status=aprovado`) | — |
-| [[Contas a Pagar]] | [[TituloFinanceiro]] (`TipoTitulo='P'`), [[TituloFinanceiroBaixa]], [[ContaBancaria]] | — | [[Qive — NF-e Automática]] (fila de NF-e) |
-| [[DRE e Fluxo de Caixa]] | [[TituloFinanceiroBaixaRateio]], [[PlanoConta]], [[CentroResultado]], [[ContaBancariaLancamento]] | [[Tray - Pagamentos]] (`price_seller`) | — |
-| [[Aprovação de Pagamentos]] | [[TituloFinanceiro]] (`TipoTitulo='P'`, `Pago=0`), `Parceiro` | — | HeziomOS DB (`payment_approvals`, `cnab_batches`) |
-| [[Conciliação Bancária]] | [[TituloFinanceiroBaixa]], [[ContaBancaria]], [[ContaBancariaLancamento]] | — | Extrato OFX Santander, [[Bancos — CNAB e OFX]] |
+| [[Pedidos e Vendas]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PedidoVenda]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/NotaFiscal]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/FormaPagto]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Invoices]] | — |
+| [[Contas a Receber]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] (`TipoTitulo='R'`), [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancaria]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos]] (`status=aprovado`) | — |
+| [[Contas a Pagar]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] (`TipoTitulo='P'`), [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancaria]] | — | [[Qive — NF-e Automática]] (fila de NF-e) |
+| [[DRE e Fluxo de Caixa]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixaRateio]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PlanoConta]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/CentroResultado]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancariaLancamento]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos]] (`price_seller`) | — |
+| [[Aprovação de Pagamentos]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] (`TipoTitulo='P'`, `Pago=0`), `Parceiro` | — | HeziomOS DB (`payment_approvals`, `cnab_batches`) |
+| [[Conciliação Bancária]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancaria]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancariaLancamento]] | — | Extrato OFX Santander, [[Bancos — CNAB e OFX]] |
 | [[Gestão de Estoque e CMV]] | `vwProdutoEstoque`, `vwProdutoCusto`, `NotaFiscalItens` | — | [[Qive — NF-e Automática]] (custo via NF gráfica) |
-| [[Comissões e Repasses]] | [[PedidoVenda]] (`SiteIdPedido`), [[ComissaoParametro]] | [[Tray - Pedidos]], [[Tray - Pagamentos]] | HeziomOS DB (`repasse_tracking`) |
+| [[Comissões e Repasses]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PedidoVenda]] (`SiteIdPedido`), [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ComissaoParametro]] | [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos]] | HeziomOS DB (`repasse_tracking`) |
 | [[Dashboard CEO]] | Todas as tabelas acima | — | HeziomOS DB (alertas, aprovações) |
 
 ### Chave de conciliação Tray ↔ Literarius
@@ -110,11 +110,11 @@ PedidoVenda (canal direto)
 
 ## Tray API — Notas mapeadas
 
-- [[Tray - Autenticação]]
-- [[Tray - Pedidos]] — `GET /orders`, campos financeiros, conciliação
-- [[Tray - Pagamentos]] — `GET /payments`, status, taxas, price_seller
-- [[Tray - Invoices]] — vinculação NF ↔ pedido Tray
-- [[Tray - Webhooks]] — eventos em tempo real
+- [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Autenticação]]
+- [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]] — `GET /orders`, campos financeiros, conciliação
+- [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos]] — `GET /payments`, status, taxas, price_seller
+- [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Invoices]] — vinculação NF ↔ pedido Tray
+- [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Webhooks]] — eventos em tempo real
 - [[Tray — Conciliação de Repasses]] — rastreamento de repasses financeiros
 
 ---

@@ -37,9 +37,9 @@ Módulo que rastreia a receita líquida real por canal de venda, calculando comi
 ### Literarius (leitura)
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[PedidoVenda]] | SiteIdPedido, CanalVenda, ValorPedido, DataPedido | Base de pedidos |
-| [[NotaFiscal]] | TotalNota, CanalVenda, DataEmissao, Frete | Faturamento por canal |
-| [[ComissaoParametro]] | Vendedor, PercComissao, CanalVenda, TipoCalculo | Regras de comissão interna |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] | SiteIdPedido, CanalVenda, ValorPedido, DataPedido | Base de pedidos |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] | TotalNota, CanalVenda, DataEmissao, Frete | Faturamento por canal |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ComissaoParametro]] | Vendedor, PercComissao, CanalVenda, TipoCalculo | Regras de comissão interna |
 | `CanalVenda` | Codigo, Descricao | 13 canais cadastrados |
 
 ### Tray API (leitura)

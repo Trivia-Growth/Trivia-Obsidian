@@ -23,7 +23,7 @@ tipo: endpoint
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | `id` | int | ID da invoice na Tray |
-| `order_id` | int | FK → [[Tray - Pedidos]] |
+| `order_id` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]] |
 | `invoice_number` | string | Número da NF |
 | `series` | string | Série da NF |
 | `issue_date` | date | Data de emissão |
@@ -52,4 +52,4 @@ Tray invoice.value       ≈  NotaFiscal.TotalNota
 
 - [[Pedidos e Vendas]]
 
-Ver: [[_a mapear]] · [[Tray - Pedidos]]
+Ver: [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/_a mapear]] · [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]]

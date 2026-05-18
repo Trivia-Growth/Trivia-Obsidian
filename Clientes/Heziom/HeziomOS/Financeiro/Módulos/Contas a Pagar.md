@@ -15,11 +15,11 @@ Gestão de todos os valores a pagar pela Literarius: fornecedores, despesas oper
 
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[TituloFinanceiro]] | `TipoTitulo='P'`, `Valor`, `Vencimento`, `Situacao`, `Pago`, `idContasPagarConfig` | Títulos a pagar |
-| [[TituloFinanceiroBaixa]] | `DataBaixa`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros`, `TipoBaixa` | Registro do pagamento realizado |
-| [[TituloFinanceiroBaixaRateio]] | `PlanoConta`, `CentroResultado`, `ValorBaixa` | Rateio contábil do pagamento |
-| [[ContaBancaria]] | `Descricao`, `BancoNumero`, `ContaNumero` | Conta de origem do pagamento |
-| [[FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio de pagamento (boleto, TED, PIX) |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] | `TipoTitulo='P'`, `Valor`, `Vencimento`, `Situacao`, `Pago`, `idContasPagarConfig` | Títulos a pagar |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] | `DataBaixa`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros`, `TipoBaixa` | Registro do pagamento realizado |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixaRateio]] | `PlanoConta`, `CentroResultado`, `ValorBaixa` | Rateio contábil do pagamento |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] | `Descricao`, `BancoNumero`, `ContaNumero` | Conta de origem do pagamento |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio de pagamento (boleto, TED, PIX) |
 | `ContasPagarConfiguracao` | `FormaPagamento`, `Convenio`, `ContaBancaria`, `NossoNumero` | Configuração de convênio bancário para remessa |
 
 ---

@@ -8,7 +8,7 @@ tipo: tabela
 
 ## Descrição
 
-Notas fiscais emitidas e recebidas pela Literarius. As NFs de saída (`EntSai = 'S'`) com `GeraFinanceiro = 1` disparam a criação de títulos em [[TituloFinanceiro]]. Contém os valores totais da operação e informações fiscais completas.
+Notas fiscais emitidas e recebidas pela Literarius. As NFs de saída (`EntSai = 'S'`) com `GeraFinanceiro = 1` disparam a criação de títulos em [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]]. Contém os valores totais da operação e informações fiscais completas.
 
 ---
 
@@ -39,12 +39,12 @@ Notas fiscais emitidas e recebidas pela Literarius. As NFs de saída (`EntSai = 
 | `CBSValor` | money | CBS (reforma tributária) |
 | `IBSUFValor` | money | IBS estadual |
 | `IBSMUNValor` | money | IBS municipal |
-| `GeraFinanceiro` | bit | `1` = gera título em [[TituloFinanceiro]] |
+| `GeraFinanceiro` | bit | `1` = gera título em [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] |
 | `MoveEstoque` | bit | `1` = movimenta estoque |
 | `Cancelada` | bit | `1` = nota cancelada |
 | `CanalVenda` | int | FK → CanalVenda |
-| `FormaPagto` | int | FK → [[FormaPagto]] |
-| `idPedidoVenda` | bigint | FK → [[PedidoVenda]] |
+| `FormaPagto` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/FormaPagto]] |
+| `idPedidoVenda` | bigint | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PedidoVenda]] |
 | `SiteIdPedido` | varchar(60) | ID do pedido no e-commerce (chave Tray) |
 | `OperacaoFiscal` | int | FK → OperacaoFiscal — define o CFOP e se gera financeiro |
 | `NFeChave` | varchar(50) | Chave de acesso da NF-e (44 dígitos) |
@@ -75,7 +75,7 @@ Campo crítico: `GeraFinanceiro` por operação determina se a NF gera título f
 
 ## Relações
 
-- FK → [[PedidoVenda]] via `idPedidoVenda`
-- FK → [[FormaPagto]] via `FormaPagto`
-- 1:N → [[TituloFinanceiro]] (via `Origem` + `OrigemIdRegistro` no título)
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PedidoVenda]] via `idPedidoVenda`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/FormaPagto]] via `FormaPagto`
+- 1:N → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiro]] (via `Origem` + `OrigemIdRegistro` no título)
 - Conciliação Tray: `SiteIdPedido` = chave de match

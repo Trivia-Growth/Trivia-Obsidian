@@ -16,8 +16,8 @@ atualizado: 2026-04-16
 Faturamento por canal e DRE dependem de NotaFiscal e PedidoVenda. Este sync complementa a STORY-002, trazendo os dados de vendas para o Supabase. A chave de conciliação com a Tray (`SiteIdPedido`) também deve ser preservada.
 
 ## Spec de Referência
-- [[NotaFiscal]] — campos principais (TotalNota, DataEmissao, EntSai, GeraFinanceiro, SiteIdPedido, NFeChave)
-- [[PedidoVenda]] — campos (SiteIdPedido, CanalVenda, DataPedido, ValorPedido)
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] — campos principais (TotalNota, DataEmissao, EntSai, GeraFinanceiro, SiteIdPedido, NFeChave)
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] — campos (SiteIdPedido, CanalVenda, DataPedido, ValorPedido)
 - [[Mapa de Dados]] — chave de conciliação Tray ↔ Literarius
 - [[Pedidos e Vendas]] — módulo de faturamento multi-canal
 

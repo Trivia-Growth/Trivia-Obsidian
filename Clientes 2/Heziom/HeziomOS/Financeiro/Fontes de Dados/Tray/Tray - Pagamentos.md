@@ -25,7 +25,7 @@ tipo: endpoint
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | `id` | int | ID do registro de pagamento |
-| `order_id` | int | FK → [[Tray - Pedidos]] (`order.id`) |
+| `order_id` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]] (`order.id`) |
 | `payment_method_id` | int | ID da forma de pagamento |
 | `payment_method` | string | Nome da forma (ex: "Boleto Bancário", "Cartão Visa") |
 | `display_name` | string | Nome exibido ao cliente |
@@ -118,4 +118,4 @@ Tray price_seller  (valor líquido pós-taxa)
 - [[DRE e Fluxo de Caixa]]
 - [[Mapa de Dados]]
 
-Ver: [[_a mapear]] · [[Tray - Pedidos]]
+Ver: [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/_a mapear]] · [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]]

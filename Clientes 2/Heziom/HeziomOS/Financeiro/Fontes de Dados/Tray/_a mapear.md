@@ -16,11 +16,11 @@ Rate limit: 180 req/min · 10.000 req/dia (padrão) · 50.000 req/dia (corporati
 
 | Nota | Endpoint | Relevância financeira |
 |------|----------|-----------------------|
-| [[Tray - Pedidos]] | `GET /orders`, `GET /orders/:id/complete` | Receita bruta, descontos, frete |
-| [[Tray - Pagamentos]] | `GET /payments`, `GET /payment-options` | Status de liquidação, parcelas, taxas |
-| [[Tray - Invoices]] | `GET /invoices` | NFs emitidas pelo e-commerce |
-| [[Tray - Webhooks]] | notificações POST | Eventos em tempo real |
-| [[Tray - Autenticação]] | `POST /auth`, `GET /auth?refresh_token=` | Credenciais de acesso |
+| [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pedidos]] | `GET /orders`, `GET /orders/:id/complete` | Receita bruta, descontos, frete |
+| [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Pagamentos]] | `GET /payments`, `GET /payment-options` | Status de liquidação, parcelas, taxas |
+| [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Invoices]] | `GET /invoices` | NFs emitidas pelo e-commerce |
+| [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Webhooks]] | notificações POST | Eventos em tempo real |
+| [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Tray/Tray - Autenticação]] | `POST /auth`, `GET /auth?refresh_token=` | Credenciais de acesso |
 
 ---
 

@@ -75,38 +75,38 @@ Mapa central do projeto **HeziomEdutech**. Use o Graph View para visualizar as c
 - [[Views — Camada de Acesso HeziomOS]] — 6 views otimizadas (−70% queries)
 
 **Títulos Financeiros**
-- [[TituloFinanceiro]]
-- [[TituloFinanceiroBaixa]]
-- [[TituloFinanceiroRateio]]
-- [[TituloFinanceiroBaixaRateio]]
-- [[TituloFinanceiroAgrupado]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixaRateio]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroAgrupado]]
 
 **Contas Bancárias**
-- [[ContaBancaria]]
-- [[ContaBancariaLancamento]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]]
 
 **Plano de Contas**
-- [[PlanoConta]]
-- [[CentroResultado]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]]
 
 **Pagamentos**
-- [[FormaPagto]]
-- [[CondicaoPagto]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CondicaoPagto]]
 
 **Pedidos e Faturamento**
-- [[PedidoVenda]]
-- [[NotaFiscal]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]]
 
 **Comissões**
-- [[ComissaoParametro]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ComissaoParametro]]
 
 ### Tray (API)
-- [[_a mapear]] — índice Tray
-- [[Tray - Autenticação]]
-- [[Tray - Pedidos]]
-- [[Tray - Pagamentos]]
-- [[Tray - Invoices]]
-- [[Tray - Webhooks]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]] — índice Tray
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]]
 
 ---
 

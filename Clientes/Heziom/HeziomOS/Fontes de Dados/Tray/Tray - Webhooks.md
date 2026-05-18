@@ -60,4 +60,4 @@ Tray → POST webhook (order.update, status = aprovado)
 
 ---
 
-Ver: [[_a mapear]] · [[Tray - Pedidos]] · [[Tray - Pagamentos]]
+Ver: [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]] · [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] · [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]]

@@ -87,4 +87,4 @@ Plano de contas contábil/gerencial da empresa. Define a estrutura hierárquica 
 ## Relações
 
 - Hierarquia recursiva: `PlanoContaPai` → `Codigo` da mesma tabela
-- Referenciada por [[TituloFinanceiroRateio]], [[TituloFinanceiroBaixaRateio]], [[ContaBancariaLancamento]]
+- Referenciada por [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroRateio]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixaRateio]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancariaLancamento]]

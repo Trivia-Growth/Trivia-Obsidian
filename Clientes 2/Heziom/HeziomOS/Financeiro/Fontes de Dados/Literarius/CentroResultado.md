@@ -8,7 +8,7 @@ tipo: tabela
 
 ## Descrição
 
-Centros de resultado (cost centers) para análise de receitas e despesas por área, departamento ou unidade de negócio. Dimensão analítica ortogonal ao [[PlanoConta]].
+Centros de resultado (cost centers) para análise de receitas e despesas por área, departamento ou unidade de negócio. Dimensão analítica ortogonal ao [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PlanoConta]].
 
 ---
 
@@ -33,4 +33,4 @@ Centros de resultado (cost centers) para análise de receitas e despesas por ár
 
 ## Relações
 
-- Referenciada por [[TituloFinanceiroRateio]], [[TituloFinanceiroBaixaRateio]], [[ContaBancariaLancamento]]
+- Referenciada por [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroRateio]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixaRateio]], [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/ContaBancariaLancamento]]

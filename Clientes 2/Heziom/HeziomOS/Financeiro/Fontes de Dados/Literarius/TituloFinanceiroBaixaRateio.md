@@ -8,7 +8,7 @@ tipo: tabela
 
 ## Descrição
 
-Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[TituloFinanceiroRateio]] classifica o título em competência, esta tabela classifica o caixa realizado por plano de contas e centro de resultado.
+Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroRateio]] classifica o título em competência, esta tabela classifica o caixa realizado por plano de contas e centro de resultado.
 
 É a principal fonte para DRE por regime de caixa.
 
@@ -19,9 +19,9 @@ Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Tit
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `idTituloFinanceiroBaixaRateio` | bigint | PK |
-| `idTituloFinanceiroBaixa` | bigint | FK → [[TituloFinanceiroBaixa]] |
-| `PlanoConta` | int | FK → [[PlanoConta]] |
-| `CentroResultado` | int | FK → [[CentroResultado]] |
+| `idTituloFinanceiroBaixa` | bigint | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa]] |
+| `PlanoConta` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PlanoConta]] |
+| `CentroResultado` | int | FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/CentroResultado]] |
 | `ValorBaixa` | money | Valor principal rateado |
 | `ValorDesconto` | money | Desconto rateado |
 | `ValorAbatimento` | money | Abatimento rateado |
@@ -41,6 +41,6 @@ Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Tit
 
 ## Relações
 
-- FK → [[TituloFinanceiroBaixa]] via `idTituloFinanceiroBaixa`
-- FK → [[PlanoConta]] via `PlanoConta`
-- FK → [[CentroResultado]] via `CentroResultado`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/TituloFinanceiroBaixa]] via `idTituloFinanceiroBaixa`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/PlanoConta]] via `PlanoConta`
+- FK → [[Clientes 2/Heziom/HeziomOS/Financeiro/Fontes de Dados/Literarius/CentroResultado]] via `CentroResultado`

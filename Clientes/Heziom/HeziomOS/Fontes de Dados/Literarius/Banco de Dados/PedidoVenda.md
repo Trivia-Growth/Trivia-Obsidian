@@ -31,10 +31,10 @@ Pedidos de venda realizados pela Literarius, incluindo vendas diretas e pedidos 
 | `ValorFrete` | money | Valor do frete |
 | `TotalImpostos` | money | Total de impostos |
 | `TotalPedido` | money | Total líquido do pedido |
-| `FormaPagto` | int | FK → [[FormaPagto]] |
+| `FormaPagto` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] |
 | `SiteIdPedido` | varchar(60) | ID do pedido no e-commerce/marketplace (chave Tray) |
 | `SiteStatusPedido` | varchar(20) | Status no site de origem |
-| `cNF` | bigint | FK → [[NotaFiscal]] gerada |
+| `cNF` | bigint | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] gerada |
 | `Agrupado` | bit | `1` = pedido agrupado |
 | `PreFaturado` | bit | `1` = pré-faturado |
 
@@ -83,6 +83,6 @@ Os ~5% sem SiteId são pedidos manuais ou de canais sem integração direta com 
 
 ## Relações
 
-- 1:1 → [[NotaFiscal]] via `cNF` / `idPedidoVenda`
-- FK → [[FormaPagto]] via `FormaPagto`
+- 1:1 → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] via `cNF` / `idPedidoVenda`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] via `FormaPagto`
 - Conciliação Tray: `SiteIdPedido` = chave de match com API da Tray

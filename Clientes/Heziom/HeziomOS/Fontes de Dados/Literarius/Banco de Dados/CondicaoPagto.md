@@ -19,7 +19,7 @@ Condições de pagamento aplicadas a pedidos e títulos. Define o parcelamento, 
 | `idCondicaoPagto` | int | PK |
 | `Descricao` | varchar(150) | Nome da condição |
 | `CondicaoPagto` | varchar(250) | Expressão de parcelamento (ex: "30,60,90") |
-| `FormaPagto` | int | FK → [[FormaPagto]] |
+| `FormaPagto` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] |
 | `Avista` | bit | `1` = à vista |
 | `PermiteTroco` | bit | `1` = permite troco (PDV) |
 | `Cartao` | bit | `1` = pagamento via cartão |
@@ -39,4 +39,4 @@ Condições de pagamento aplicadas a pedidos e títulos. Define o parcelamento, 
 
 ## Relações
 
-- FK → [[FormaPagto]] via `FormaPagto`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] via `FormaPagto`

@@ -35,4 +35,4 @@ Cadastro dos meios de pagamento disponíveis (dinheiro, cartão, boleto, PIX, TE
 
 ## Relações
 
-- Referenciada por [[TituloFinanceiro]], [[TituloFinanceiroBaixa]], [[PedidoVenda]], [[NotaFiscal]], [[CondicaoPagto]]
+- Referenciada por [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CondicaoPagto]]

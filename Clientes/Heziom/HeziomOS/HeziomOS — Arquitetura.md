@@ -164,7 +164,7 @@ Edge Functions rodam na nuvem do Supabase e **não alcançam IPs privados** (`19
 - **Conexão:** SQL Server, `192.168.18.10:1433`, base `Literarius`, usuário `acessoExterno`
 - **Acesso:** read-only; HeziomOS **não escreve** no Literarius nesta fase
 - **Views:** 6 views otimizadas criadas pela equipe Literarius (ver [[Views — Camada de Acesso HeziomOS]])
-- **Tabelas principais:** [[TituloFinanceiro]], [[NotaFiscal]], [[PedidoVenda]], [[ContaBancaria]], [[PlanoConta]]
+- **Tabelas principais:** [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]]
 
 ### HeziomOS PostgreSQL (leitura + escrita)
 Tabelas próprias do HeziomOS:

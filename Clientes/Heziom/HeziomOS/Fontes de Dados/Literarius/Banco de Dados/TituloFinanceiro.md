@@ -26,8 +26,8 @@ Tabela central do financeiro. Armazena todos os títulos financeiros da empresa 
 | `VencimentoOriginal` | datetime | Vencimento antes de renegociação |
 | `Portador` | int | FK → Portador (banco cobrador) |
 | `Situacao` | int | Estado do título |
-| `FormaPagto` | int | FK → [[FormaPagto]] |
-| `ContaBancaria` | int | FK → [[ContaBancaria]] |
+| `FormaPagto` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] |
+| `ContaBancaria` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] |
 | `Valor` | money | Valor original do título |
 | `ValorPago` | money | Total já pago |
 | `ValorAbatido` | money | Valor abatido (crédito/desconto) |
@@ -60,9 +60,9 @@ Tabela central do financeiro. Armazena todos os títulos financeiros da empresa 
 
 ## Relações
 
-- FK → [[FormaPagto]] via `FormaPagto`
-- FK → [[ContaBancaria]] via `ContaBancaria`
-- 1:N → [[TituloFinanceiroBaixa]] via `idTituloFinanceiro`
-- 1:N → [[TituloFinanceiroRateio]] via `idTituloFinanceiro`
-- 1:N → [[TituloFinanceiroAgrupado]] via `idTituloFinanceiro`
-- Origem → [[NotaFiscal]] ou [[PedidoVenda]] via `Origem` + `OrigemIdRegistro`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] via `FormaPagto`
+- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] via `ContaBancaria`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] via `idTituloFinanceiro`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]] via `idTituloFinanceiro`
+- 1:N → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroAgrupado]] via `idTituloFinanceiro`
+- Origem → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] ou [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] via `Origem` + `OrigemIdRegistro`

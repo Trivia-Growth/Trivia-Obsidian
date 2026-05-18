@@ -16,10 +16,10 @@ atualizado: 2026-04-16
 O Dashboard CEO depende de dados financeiros em tempo quase real. Este script Deno roda na rede interna da Heziom, conecta no Literarius via `npm:mssql` e sincroniza as tabelas centrais de títulos e contas bancárias para o Supabase. É o coração do sistema de leitura de dados.
 
 ## Spec de Referência
-- [[TituloFinanceiro]] — estrutura, campos principais (TipoTitulo R/P, Pago, Vencimento)
-- [[TituloFinanceiroBaixa]] — baixas de títulos
-- [[ContaBancaria]] — contas bancárias cadastradas
-- [[ContaBancariaLancamento]] — lançamentos bancários
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] — estrutura, campos principais (TipoTitulo R/P, Pago, Vencimento)
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] — baixas de títulos
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] — contas bancárias cadastradas
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]] — lançamentos bancários
 - [[HeziomOS — Arquitetura]] — decisão de Deno local para sync
 
 ## Critérios de Aceite

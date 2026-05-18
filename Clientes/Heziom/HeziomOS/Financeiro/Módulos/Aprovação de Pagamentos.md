@@ -31,10 +31,10 @@ Hoje não há workflow formal de aprovação. Qualquer pessoa com acesso ao Lite
 ### Literarius (leitura)
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[TituloFinanceiro]] | TipoTitulo='P', Pago=0, Valor, Vencimento, Parceiro, PlanoConta | Lista de títulos a pagar |
-| [[TituloFinanceiroBaixa]] | idTitulo, DataBaixa, Valor, FormaPagto | Verificar se já foi baixado |
-| [[ContaBancaria]] | Codigo, Descricao, Banco, Agencia, Conta | Conta de débito |
-| [[FormaPagto]] | Codigo, Descricao | TED, PIX, boleto, cheque |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] | TipoTitulo='P', Pago=0, Valor, Vencimento, Parceiro, PlanoConta | Lista de títulos a pagar |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] | idTitulo, DataBaixa, Valor, FormaPagto | Verificar se já foi baixado |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] | Codigo, Descricao, Banco, Agencia, Conta | Conta de débito |
+| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] | Codigo, Descricao | TED, PIX, boleto, cheque |
 | `Parceiro` | Codigo, Nome, CNPJ, BancoFavorecido, AgenciaFavorecido, ContaFavorecido | Dados bancários do favorecido |
 
 ### HeziomOS DB (leitura + escrita)
