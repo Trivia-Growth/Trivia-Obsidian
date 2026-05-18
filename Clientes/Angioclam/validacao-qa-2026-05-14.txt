@@ -1,0 +1,37 @@
+================================================================================
+RELATÓRIO DE QA — MOTOR ANGIOCLAM v2.0
+================================================================================
+Execução: 2026-05-14T16:41:04.385308
+
+Cobertura taxonomia B2: 100.00% (mínimo 95%) ✓
+Cobertura taxonomia B1: 96.87% (mínimo 90%) ✓
+
+Período inferido: 12/05/2025 → 11/05/2026
+Operadora detectada: SulAmérica (cor #771F1F)
+
+Pacientes únicos: 2,037
+Atendimentos: 4,092
+
+Volumes-chave em B2:
+  ecg: 1,821 (R$ 42,101.52)
+  doppler_venoso_mmii: 1,008 (R$ 611,729.70)
+  ergometria: 749 (R$ 78,330.42)
+  mapa: 474 (R$ 38,972.28)
+  holter: 304 (R$ 26,037.60)
+  ecocardiograma: 1,575 (R$ 389,604.36)
+  doppler_carotidas: 1,172 (R$ 276,838.12)
+
+INDICADORES — Versão A (vs realizadas Angioclam):
+  Procedimentos evitados: 341
+  Economia bruta: R$ 2,112,000.00
+  Economia líquida: R$ 1,244,519.00
+
+INDICADORES — Versão B (vs solicitadas):
+  Procedimentos evitados: 284
+  Economia bruta: R$ 1,966,500.00
+  Economia líquida: R$ 1,099,019.00
+
+--------------------------------------------------------------------------------
+CHECKS DE INTEGRIDADE
+--------------------------------------------------------------------------------
+✓ Nenhum alerta crítico detectado

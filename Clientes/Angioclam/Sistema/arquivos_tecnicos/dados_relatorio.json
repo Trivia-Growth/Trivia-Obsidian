@@ -1,0 +1,184 @@
+{
+  "periodo": {
+    "inicio": "12/05/2025",
+    "fim": "11/05/2026"
+  },
+  "operadora": {
+    "nome": "SulAmérica",
+    "cor_primaria": "#771F1F"
+  },
+  "epidem": {
+    "pacientes": 2037,
+    "atendimentos": 4092,
+    "idade_media": 46.8,
+    "idade_mediana": 46,
+    "feminino": 1187,
+    "masculino": 844,
+    "pct_f": 58.3,
+    "pct_m": 41.4,
+    "faixas": {
+      "0-19": 149,
+      "20-29": 130,
+      "30-39": 323,
+      "40-49": 619,
+      "50-59": 362,
+      "60-69": 244,
+      "70-79": 166,
+      "80+": 44
+    },
+    "comorbidades": {
+      "HAS": {
+        "qtd": 577,
+        "pct": 28.3
+      },
+      "DM2": {
+        "qtd": 276,
+        "pct": 13.5
+      },
+      "Dislipidemia": {
+        "qtd": 608,
+        "pct": 29.8
+      },
+      "DAC/IAM": {
+        "qtd": 114,
+        "pct": 5.6
+      },
+      "Obesidade": {
+        "qtd": 534,
+        "pct": 26.2
+      },
+      "Sedentarismo": {
+        "qtd": 706,
+        "pct": 34.7
+      },
+      "AVC": {
+        "qtd": 54,
+        "pct": 2.7
+      }
+    }
+  },
+  "panorama": {
+    "total_proc": 14549,
+    "profissionais": 43,
+    "consultas": 3855,
+    "val_consultas": 455198.32,
+    "exames": 10646,
+    "faturamento_total": 3135098.1,
+    "volumes": {
+      "ecg": {
+        "qtd": 1821,
+        "valor": 42101.52
+      },
+      "doppler_venoso_mmii": {
+        "qtd": 1008,
+        "valor": 611729.7
+      },
+      "ergometria": {
+        "qtd": 749,
+        "valor": 78330.42
+      },
+      "mapa": {
+        "qtd": 474,
+        "valor": 38972.28
+      },
+      "holter": {
+        "qtd": 304,
+        "valor": 26037.6
+      },
+      "ecocardiograma": {
+        "qtd": 1575,
+        "valor": 389604.36
+      },
+      "doppler_carotidas": {
+        "qtd": 1172,
+        "valor": 276838.12
+      }
+    }
+  },
+  "indicadores": {
+    "ind1_cintilografia": {
+      "base_qtd": 749,
+      "base_custo": 77896.0,
+      "unit_base_real": 104.58,
+      "esperadas": 112,
+      "solicitadas": 26,
+      "realizadas_angioclam": 0,
+      "evitadas_vs_realizadas": 112,
+      "evitadas_vs_solicitadas": 86,
+      "custo_evitado_unit": 2500,
+      "econ_bruta_A": 280000.0,
+      "econ_liq_A": 202104.0,
+      "econ_bruta_B": 215000.0,
+      "econ_liq_B": 137104.0
+    },
+    "ind2_cateterismo": {
+      "base_qtd": 749,
+      "base_custo": 77896.0,
+      "esperados": 37,
+      "solicitados": 2,
+      "realizados_angioclam": 0,
+      "evitados_vs_realizadas": 37,
+      "evitados_vs_solicitadas": 35,
+      "custo_evitado_unit": 10000,
+      "econ_bruta_A": 370000.0,
+      "econ_liq_A": 292104.0,
+      "econ_bruta_B": 350000.0,
+      "econ_liq_B": 272104.0
+    },
+    "ind3_varizes": {
+      "base_qtd": 1008,
+      "base_custo": 311472.0,
+      "unit_declarado": 309,
+      "unit_faturado_real": 606.87,
+      "esperadas": 50,
+      "solicitadas": 0,
+      "realizadas_angioclam": 0,
+      "evitadas_vs_realizadas": 50,
+      "evitadas_vs_solicitadas": 50,
+      "custo_evitado_unit": 10000,
+      "econ_bruta_A": 500000.0,
+      "econ_liq_A": 188528.0,
+      "econ_bruta_B": 500000.0,
+      "econ_liq_B": 188528.0
+    },
+    "ind4_consulta_angio": {
+      "base_qtd": 1075,
+      "base_custo": 123625.0,
+      "unit_faturado_real": 118.08,
+      "angiotc_esperadas": 108,
+      "angiotc_solicitadas": 27,
+      "angiotc_realizadas_angioclam": 0,
+      "cat_esperados": 11,
+      "cat_solicitados": 2,
+      "econ_bruta_A": 272000.0,
+      "econ_liq_A": 148375.0,
+      "econ_bruta_B": 211500.0,
+      "econ_liq_B": 87875.0
+    },
+    "ind5_endarterectomia": {
+      "base_qtd": 1172,
+      "base_custo": 276592.0,
+      "unit_faturado_real": 236.21,
+      "esperadas": 23,
+      "solicitadas": 0,
+      "realizadas_angioclam": 0,
+      "evitadas_vs_realizadas": 23,
+      "evitadas_vs_solicitadas": 23,
+      "custo_evitado_unit": 30000,
+      "econ_bruta_A": 690000.0,
+      "econ_liq_A": 413408.0,
+      "econ_bruta_B": 690000.0,
+      "econ_liq_B": 413408.0
+    }
+  },
+  "consolidado_A_vs_realizadas": {
+    "proc_evitados": 341,
+    "econ_bruta": 2112000.0,
+    "econ_liq": 1244519.0
+  },
+  "consolidado_B_vs_solicitadas": {
+    "proc_evitados": 284,
+    "econ_bruta": 1966500.0,
+    "econ_liq": 1099019.0
+  }
+}

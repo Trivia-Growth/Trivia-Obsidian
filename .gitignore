@@ -1,3 +1,11 @@
 .DS_Store
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
+
+# Arquivos de mídia (ficam apenas localmente)
+*.webm
+*.mkv
+*.mp4
+*.mov
+*.avi
+*.zip
