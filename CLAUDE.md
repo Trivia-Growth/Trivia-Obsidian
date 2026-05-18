@@ -1,46 +1,42 @@
-# C Brasil Contabilidade — Workspace G4 OS
+# Vault Trivia-Obsidian
 
-## Quem sou eu
-**JG Novais** — Gestor/Executivo assumindo a C Brasil Contabilidade de seu sogro.
-Perfil: não-contador assumindo escritório tradicional com foco em modernização.
-Timezone: America/Sao_Paulo (GMT-3)
+## O que é este vault
+Vault de notas de trabalho da Trivia, **compartilhado entre JG Novais e Lucas**.
+Sincroniza automaticamente com o GitHub `Trivia-Growth/Trivia-Obsidian` via plugin
+obsidian-git (pull no boot/a cada ~10 min, commit/push automático a cada ~1 min).
 
-## Contexto do negócio
-- **Empresa:** C Brasil Contabilidade (São Paulo/SP)
-- **Nicho:** Terceiro setor + serviços, base de clientes por indicação
-- **Fase:** Transição de gestão (sogro → JG), modernização em andamento
-- **Sistema contábil:** Contmatic
-- **Hospedagem atual:** Locaweb
-- **Atendimento:** WhatsApp (números individuais por funcionário)
-- **Planilhas:** Excel
+Timezone: America/São_Paulo (GMT-3). Idioma: Português brasileiro.
 
-## Objetivos prioritários
-1. Modernizar processos internos
-2. Gestão administrativa do escritório
-3. Criar presença digital (site, redes sociais)
-4. Criar setor comercial do zero (CRM próprio, prospecção ativa)
-5. Mapear e automatizar processos repetitivos
-6. Criar sistema financeiro para clientes
-7. Consolidar gestão administrativa
-
-## Estrutura de pastas
+## Estrutura real de pastas
 ```
-/goals          → Metas e OKRs da C Brasil
-/context        → Contexto do negócio, clientes, equipe
-/people         → Perfis de colaboradores e clientes-chave
-/meetings       → Prep, notas e recorrentes
-/decisions      → Registro de decisões importantes
-/processes      → Processos mapeados e documentados
-/communications → Comunicados, e-mails, templates
-/strategy       → Planejamento estratégico, roadmap
-/projects       → Projetos ativos (CRM, site, financeiro, etc.)
-/research       → Pesquisas de ferramentas, mercado, etc.
-/clients        → Dados e contexto de clientes
-/inbox          → Entrada de tarefas e ideias brutas
+/Clientes                 → Trabalho por cliente. Subpastas:
+    Angioclam             → Sistema de relatório de eficiência (skill + motor Python)
+    Cbrasil               → C Brasil Contabilidade (projeto financeiro, site, supabase)
+    Heziom                → Heziom (HeziomEdutech, HeziomOS)
+    PREVIX                → Site PREVIX, Organograma
+    Trivia                → JimmyStudio, TriviaCRM+Atende, FamilyOS Financeiro,
+                            TriviaEdutech, GeradordeLP
+/Documentos Trivia        → Documentos internos da Trivia
+    Clientes              → Material de clientes
+    Padrão Projetos       → Padrões de projeto
+    _Template Projeto     → Template base para novos projetos
+/Clippings                → Recortes/artigos salvos (web clipper)
+/Novos Negócios Bruno Nardon → Notas de novos negócios / mentorias
+/Triviaiox-main           → Framework Triviaiox (código, NÃO é nota — ver aviso)
+/projects                 → /processos
+/research                 → Pesquisas (APIs contábeis, Contmatic, IA em contabilidade)
 ```
+
+## Aviso: projetos de software dentro do vault
+Há projetos de software completos versionados dentro do vault (ex.:
+`Clientes/Cbrasil/cbrasil-financeiro-app`, `Clientes/Heziom/HeziomOS`,
+`Clientes/Cbrasil/supabase`, `Triviaiox-main`). **Não tratá-los como notas** e não
+editá-los a partir daqui — cada um tem seu próprio fluxo. Eles deixam o vault pesado;
+mover para repositórios próprios é uma dívida técnica conhecida (decisão adiada por JG).
 
 ## Convenções
-- Idioma: Português brasileiro
-- Decisões importantes: registrar em `/decisions`
-- Processos novos: documentar em `/processes`
-- Projetos prioritários: CRM próprio, presença digital, sistema financeiro para clientes
+- Idioma: Português brasileiro.
+- Pastas de cliente seguem o padrão de `Documentos Trivia/_Template Projeto`
+  (00 - Índice, Projeto/Dashboard, Roadmap, Stories, etc.).
+- Não criar pastas de scaffold vazias no topo — poluem a navegação e não sincronizam.
+- Nomes de pasta sem sufixo " 2" (artefato de conflito do macOS) — manter limpos.
