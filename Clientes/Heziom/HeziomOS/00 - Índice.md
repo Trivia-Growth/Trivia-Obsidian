@@ -2,7 +2,10 @@
 
 Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conexões entre módulos e fontes de dados.
 
-**Arquitetura completa:** [[HeziomOS — Arquitetura e Fluxos]] — 🔴 proposta consolidada: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
+**Arquitetura completa (ATUAL):** [[HeziomOS — Arquitetura e Fluxos]] — 🔴 proposta consolidada: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
+**Arquitetura (histórico):** [[HeziomOS — Arquitetura]] — blueprint inicial do módulo financeiro (15/04/2026); consultar só como referência. O documento vigente é o de cima.
+
+> 🗺️ **Mapa estrutural do vault:** [[Mapa do Vault]] — inventário completo de pastas e notas + log de organização.
 
 ---
 

@@ -1,8 +1,10 @@
 ---
-tags: [arquitetura, heziomOS, visao-geral]
-status: especificação
+tags: [arquitetura, heziomOS, visao-geral, historico]
+status: histórico
 criado: 2026-04-15
 ---
+
+> ⚠️ **Documento histórico (15/04/2026).** Foi substituído pela versão consolidada e vigente: [[HeziomOS — Arquitetura e Fluxos]] (19/05/2026). Mantido apenas como registro da concepção inicial do módulo financeiro.
 
 # HeziomOS — Arquitetura do Módulo Financeiro
 
