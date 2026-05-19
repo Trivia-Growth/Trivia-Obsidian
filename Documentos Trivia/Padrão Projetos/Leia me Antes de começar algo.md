@@ -1,6 +1,6 @@
 # Padrão de Projetos — Leia Antes de Começar
 
-Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como todos os projetos de software são construídos aqui. Se você vai iniciar um projeto novo, este é o ponto de partida...
+Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como todos os projetos de software são construídos aqui. Se você vai iniciar um projeto novo ou executar qualquer tarefa, **leia este arquivo primeiro**.
 
 ---
 
@@ -17,6 +17,7 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[02 - Qualidade/Testes Automatizados\|02 - Testes Automatizados]] | Setup e exemplos de testes locais com Vitest |
 | [[03 - Segurança/Checklist de Segurança\|03 - Segurança]] | O mínimo de segurança que todo projeto deve ter |
 | [[04 - Agentes Triviaiox/O que é o Triviaiox\|04 - O que é o Triviaiox]] | Como usar a equipe de agentes de IA |
+| [[04 - Agentes Triviaiox/Equipe de Agentes\|04 - Equipe de Agentes]] | 15 agentes especializados e quando acionar cada um |
 | [[05 - Lovable e Claude/Base de Conhecimento Lovable\|05 - Lovable KB]] | Base de conhecimento para copiar na Lovable |
 | [[06 - Gestão do Projeto/Setup Colaborador\|06 - Como Colaborar]] | Como uma pessoa sem perfil técnico entra no projeto |
 | [[07 - Templates de Código/CLAUDE.md\|07 - Templates]] | Arquivos prontos para copiar no novo repositório |
@@ -31,6 +32,147 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 
 ---
 
+## Filosofia central
+
+> **"Documentação é código."**
+> Atualizar junto, commitar junto, tratar como bug quando estiver desatualizada.
+
+Quatro regras que nunca quebram:
+
+1. **Documentação é código** — specs existem antes do código, não depois.
+2. **Segurança não é opcional** — RLS, Zod, JWT validado, @security gate em features sensíveis. Sem atalhos.
+3. **Mudanças mínimas** — implementar o que foi pedido. Sem extras não solicitados.
+4. **Story-driven** — nenhum código sem story. Nenhuma story sem acceptance criteria.
+
+---
+
+## Ciclo de desenvolvimento (para agentes — executar nesta ordem)
+
+Todo trabalho começa em uma story e termina com push do @devops. O fluxo completo:
+
+```
+@po/@sm cria story
+    ↓
+@po valida (10-point checklist) → GO ou NO-GO
+    ↓
+@dev implementa (Diff Plan → aprovação → código)
+    ↓
+@security *security-gate [SE story toca segurança*]
+    ↓
+@qa *gate (7 quality checks)
+    ↓
+@devops push → deploy
+```
+
+### Quando acionar @security (gate obrigatório antes do @qa)
+
+A story **exige** @security se toca qualquer um destes pontos:
+
+- [ ] Autenticação ou autorização (login, JWT, OAuth, RBAC, permissões)
+- [ ] Dados pessoais: CPF, RG, email, telefone, endereço (LGPD/GDPR)
+- [ ] Dados financeiros: cartão, CVV, dados bancários, valores (PCI DSS)
+- [ ] Dados de saúde: prontuários, diagnósticos, CID (PHI)
+- [ ] Novos endpoints de API (qualquer método HTTP)
+- [ ] Integração com serviço de terceiro (Stripe, Supabase, Google, etc.)
+- [ ] Gestão de secrets ou chaves criptográficas
+- [ ] Mudanças em políticas de acesso ou RLS
+- [ ] Funcionalidade multi-tenant
+- [ ] Logging ou observabilidade (risco de PII em logs)
+
+**Se @security retornar FAIL (CRITICAL ou HIGH):** o merge é bloqueado. @dev corrige. Não há exceção.
+
+### Fluxo para features novas complexas (Spec Pipeline)
+
+Para features novas que envolvem múltiplas decisões técnicas:
+
+```
+@pm coleta requisitos
+    ↓
+@architect avalia complexidade
+    ↓
+@analyst pesquisa (se STANDARD/COMPLEX)
+    ↓
+@pm escreve spec
+    ↓
+@qa critica a spec
+    ↓
+@security threat model STRIDE (se STANDARD/COMPLEX ou toca segurança)
+    ↓
+@architect planeja implementação
+    ↓
+→ Ciclo de story normal acima
+```
+
+---
+
+## Autoridade dos agentes — quem pode fazer o quê
+
+| Operação | Agente | Outros |
+|----------|--------|--------|
+| `git push` para remote | **@devops** exclusivo | BLOQUEADO para todos |
+| Criar Pull Requests | **@devops** exclusivo | BLOQUEADO para todos |
+| Criar stories | **@sm** | — |
+| Validar stories (10-point) | **@po** | — |
+| Implementar código | **@dev** | — |
+| Security gate (PASS/FAIL) | **@security** | Autoridade máxima em segurança |
+| QA gate | **@qa** | — |
+| Schema/migrations/RLS | **@data-engineer** | Delegado pelo @architect |
+| Decisões de arquitetura | **@architect** | — |
+
+**Regra de escalação:** se um agente não consegue completar a tarefa → escalate para @triviaiox-master.
+
+---
+
+## Equipe de agentes (15 especializados)
+
+| Agente | Persona | Quando acionar |
+|--------|---------|----------------|
+| `@triviaiox-master` | Orion | Conflitos entre agentes, framework governance |
+| `@pm` | Morgan | Epics, roadmap, PRDs, coleta de requisitos |
+| `@po` | Pax | Validar stories, priorizar backlog |
+| `@sm` | River | Criar stories, gerenciar sprint |
+| `@architect` | Aria | Decisões técnicas, ADRs, design de sistema |
+| `@dev` | Dex | Implementar código |
+| `@qa` | Quinn | Validar critérios de aceite, gate de qualidade |
+| `@security` | Cipher | **Threat modeling, OWASP review, secrets scan, auth audit** |
+| `@devops` | Gage | Push, CI/CD, deploy — EXCLUSIVO para git push |
+| `@data-engineer` | Dara | Schema Supabase, migrations, RLS, sync |
+| `@ux-design-expert` | Uma | UI/UX, componentes, acessibilidade |
+| `@analyst` | Alex | Pesquisa, análise, FinOps |
+| `@reliability` | Rex | SRE, SLO/SLI, incident response |
+| `@prompt-engineer` | Pria | Prompt design, LLM eval, defesa contra injection |
+| `@squad-creator` | — | Montar equipe pré-configurada para projetos |
+
+Ver [[04 - Agentes Triviaiox/Equipe de Agentes]] para detalhes de cada agente e seus comandos `*`.
+
+---
+
+## Como instalar o Triviaiox em um projeto
+
+O Triviaiox está configurado via `npm link` na máquina do Lucas — instalar em qualquer projeto é um único comando:
+
+```bash
+cd /caminho/do/projeto-cliente
+triviaiox-core install
+```
+
+Para verificar que funcionou:
+```bash
+cat .triviaiox-core/version.json
+# deve mostrar {"version": "5.x.x"}
+```
+
+Para atualizar o framework quando houver melhorias:
+```bash
+cd ~/Documents/GitHub/Triviaiox
+git pull   # pega as melhorias mais recentes
+# pronto — todos os projetos novos já usam a versão atualizada
+```
+
+Ver [[00 - Checklist de Início]] passo 6 para detalhes completos.
+
+---
+
 ## Projeto de referência real
 
 O **HeziomOS** foi o primeiro projeto construído com este padrão. Todos os templates aqui foram extraídos do que funcionou lá.
@@ -39,21 +181,8 @@ O **HeziomOS** foi o primeiro projeto construído com este padrão. Todos os tem
 
 ---
 
-## Filosofia central
-
-> **"Documentação é código."**
-> Atualizar junto, commitar junto, tratar como bug quando estiver desatualizada.
-
-Três regras que nunca quebram:
-
-1. **Documentação é código** — specs existem antes do código, não depois.
-2. **Segurança não é opcional** — RLS, Zod, JWT validado. Sem atalhos.
-3. **Mudanças mínimas** — implementar o que foi pedido. Sem extras não solicitados.
-
----
-
 ## Quem usa este vault
 
 - **Lucas (piloto)** — define o que construir, aprova planos, revisa entregas
-- **Agentes Triviaiox** — implementam, testam, documentam via stories
+- **Agentes Triviaiox** — implementam, testam, documentam via stories, seguem o ciclo acima
 - **Colaboradores de negócio** — leem o Dashboard do Projeto e o Roadmap

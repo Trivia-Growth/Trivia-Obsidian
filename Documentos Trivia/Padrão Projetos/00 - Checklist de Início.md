@@ -126,7 +126,7 @@ Se for fazer mesmo assim:
 
 ### 3b. Supabase CLI — linkar o projeto (para deploy via Claude Code)
 
-> Necessário para que os agentes AIOX consigam deployar banco e Edge Functions via terminal.
+> Necessário para que os agentes Triviaiox consigam deployar banco e Edge Functions via terminal.
 
 **Instalar a CLI (uma vez por máquina):**
 ```bash
@@ -269,35 +269,37 @@ A Lovable detecta o pull e atualiza seu lado.
 
 ### Passo 6 — TRIVIAIOX (Agentes)
 
-> [!warning] Atualizado em 2026-05-06
-> O framework migrou de AIOX para **TRIVIAIOX**. O pacote **não está no npm** — instalar via repo local.
+> O TRIVIAIOX instala os 15 agentes de IA dentro do repositório de código. Requer Node.js instalado (Passo de pré-requisitos). O framework está instalado via `npm link` na máquina do Lucas — um único comando funciona em qualquer projeto.
 
-> O TRIVIAIOX instala os agentes de IA dentro do repositório de código. Requer Node.js instalado (Passo de pré-requisitos) e o repo `~/Documents/GitHub/Triviaiox/` clonado.
-
+**Setup inicial (uma vez por máquina):**
 ```bash
-# 1. Garantir dependências do TRIVIAIOX (uma vez por máquina)
-cd ~/Documents/GitHub/Triviaiox && npm install
-
-# 2. Instalar no repositório do projeto
-cd caminho/para/[nome-do-projeto]-app
-node ~/Documents/GitHub/Triviaiox/bin/triviaiox.js install --quiet
+# Clonar o repo do framework
+git clone git@github.com:Trivia-Growth/Triviaiox.git ~/Documents/GitHub/Triviaiox
+cd ~/Documents/GitHub/Triviaiox
+npm install
+npm link   # cria o atalho global triviaiox-core
 ```
 
-> ⚠️ **NÃO usar** `npx triviaiox-core install` — o pacote não está no npm e o npx vai falhar com erro confuso ("Missing script" ou "404 Not Found"). Usar sempre `node ... bin/triviaiox.js install`.
+**Instalar em qualquer projeto:**
+```bash
+cd caminho/para/[nome-do-projeto]-app
+triviaiox-core install
+```
 
-> **Se aparecer "command not found: node":** o Node.js não está instalado. Volte ao passo de pré-requisitos.
-
-Para verificar que funcionou:
+**Para verificar que funcionou:**
 ```bash
 cat .triviaiox-core/version.json
+# Deve mostrar {"version": "5.x.x"}
 ```
-Deve mostrar `{"version": "5.x.x"}`. Se sim, está pronto.
 
-- [ ] Repo TRIVIAIOX clonado em `~/Documents/GitHub/Triviaiox/`
-- [ ] TRIVIAIOX instalado com sucesso no projeto
+> **Se aparecer "command not found: triviaiox-core":** o npm link não foi feito nesta máquina. Execute o setup inicial acima.
+> **Se aparecer "command not found: node":** o Node.js não está instalado. Volte ao passo de pré-requisitos.
+
+- [ ] Setup inicial feito (uma vez por máquina): repo clonado + `npm install` + `npm link`
+- [ ] TRIVIAIOX instalado com sucesso no projeto (`triviaiox-core install`)
 - [ ] Versão confirmada com `cat .triviaiox-core/version.json`
 
-Ver [[04 - Agentes AIOX/Instalação|Instalação TRIVIAIOX]] para detalhes e erros conhecidos.
+Ver [[04 - Agentes Triviaiox/O que é o Triviaiox|O que é o Triviaiox]] para detalhes dos agentes.
 
 ---
 
@@ -323,13 +325,15 @@ Estes arquivos ficam na raiz do repositório de código e são lidos pelos agent
 
 ## Pronto para desenvolver
 
-A partir daqui, o ciclo é:
+A partir daqui, o ciclo padrão é:
 
 ```
-@sm cria a story → @dev implementa → @qa valida → status = concluido
+@sm cria story → @po valida → @dev implementa → @security gate* → @qa gate → @devops push
 ```
 
-Ver [[04 - Agentes AIOX/Ciclo de uma Story|Ciclo de uma Story]] para o fluxo completo.
+*@security gate obrigatório quando a story toca: autenticação, dados pessoais (CPF, email), dados financeiros (cartão), novos endpoints de API, RLS, secrets ou integrações de terceiros.
+
+Ver [[04 - Agentes Triviaiox/Equipe de Agentes|Equipe de Agentes]] para o fluxo completo e quando acionar cada agente.
 
 ---
 
@@ -338,10 +342,12 @@ Ver [[04 - Agentes AIOX/Ciclo de uma Story|Ciclo de uma Story]] para o fluxo com
 Antes de marcar qualquer story como concluída que envolva banco ou Edge Function:
 
 - [ ] RLS habilitado + FORCE na tabela criada
-- [ ] Policies definidas por papel
+- [ ] Policies definidas por papel (sem policy = acesso negado por padrão)
 - [ ] Nenhum segredo exposto no frontend (`VITE_` só URL e anon key)
 - [ ] Edge Function: JWT validado via `auth.getUser()`
 - [ ] Edge Function: input validado com Zod
 - [ ] `npm audit` sem Critical ou High
 
-Ver [[03 - Segurança/Checklist de Segurança|Checklist de Segurança]] completo.
+**Para features com auth, PII, pagamentos ou novos endpoints:** acionar `@security *security-gate` antes do merge. O @security cobre OWASP Top 10, IDOR, token abuse, over-fetching de dados, secrets em logs e multi-tenancy — muito além do checklist acima.
+
+Ver [[03 - Segurança/Checklist de Segurança|Checklist de Segurança]] completo e [[04 - Agentes Triviaiox/Equipe de Agentes|@security]] para o gate completo.
