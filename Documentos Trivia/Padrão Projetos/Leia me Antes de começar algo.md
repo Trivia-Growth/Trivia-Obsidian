@@ -27,6 +27,7 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[09 - Migrações/Migrar Projeto Lovable para Padrão Trivia\|09 - Migrar da Lovable]] | Checklist para integrar projeto existente da Lovable ao padrão Trivia |
 | [[10 - Sync Lovable e Claude\|10 - Sync Lovable + Claude]] | Protocolo de sincronismo entre Lovable e Claude Code via docs/stories/ |
 | [[06 - Gestão do Projeto/Setup Dev Técnico\|06 - Setup Dev Técnico]] | Onboarding para devs que trabalham via Claude Code + Triviaiox |
+| [[CHANGELOG]] | Histórico de mudanças no processo (versionado) |
 
 **Leia na ordem acima.** O checklist de início conecta tudo.
 
@@ -48,7 +49,7 @@ Quatro regras que nunca quebram:
 
 ## Ciclo de desenvolvimento (para agentes — executar nesta ordem)
 
-Todo trabalho começa em uma story e termina com push do @devops. O fluxo completo:
+Todo trabalho começa em uma story e termina com deploy validado. O fluxo completo:
 
 ```
 @po/@sm cria story
@@ -62,6 +63,11 @@ Todo trabalho começa em uma story e termina com push do @devops. O fluxo comple
 @qa *gate (7 quality checks)
     ↓
 @devops push → deploy
+    ↓
+@devops smoke test (≤ 5min)
+    ↓
+  PASS → @reliability monitora SLOs (15min) → DONE
+  FAIL → @devops rollback (≤ 10min) → story de investigação
 ```
 
 ### Quando acionar @security (gate obrigatório antes do @qa)

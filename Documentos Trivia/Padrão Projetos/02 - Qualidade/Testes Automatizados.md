@@ -324,3 +324,63 @@ describe('PagarTituloSchema', () => {
 - Integração real com Supabase — validar manualmente ou via Supabase local
 - Fluxo completo de autenticação — testar manualmente no preview
 - CSS e estilo visual — verificar no browser
+
+---
+
+## Smoke Tests pós-deploy
+
+Após cada deploy em produção, o `@devops` executa um smoke test manual antes de considerar o deploy concluído. Se o smoke falhar, acionar rollback imediatamente (ver [[../08 - Operações/Deploy Supabase#Rollback — Quando e Como Reverter|Rollback]]).
+
+### Checklist mínimo de smoke (executar em produção)
+
+- [ ] **Login:** usuário consegue autenticar com credenciais válidas
+- [ ] **Navegação principal:** todas as rotas do menu carregam sem erro 500/404
+- [ ] **CRUD principal:** criar, ler, editar e deletar o recurso core do projeto funciona
+- [ ] **Edge Function crítica:** a function mais usada responde 200 com payload válido
+- [ ] **Responsividade:** tela principal renderiza sem quebra em mobile (375px)
+
+### Tempo máximo
+
+O smoke test completo deve levar **≤ 5 minutos**. Se levar mais, a cobertura está grande demais — reduza ao happy path.
+
+### Caminho para E2E automatizado (Playwright)
+
+Quando o projeto justificar automação (> 5 deploys/semana ou > 3 fluxos críticos):
+
+```bash
+# Setup inicial
+npm install -D @playwright/test
+npx playwright install chromium
+```
+
+```typescript
+// e2e/smoke.spec.ts
+import { test, expect } from '@playwright/test';
+
+const BASE_URL = process.env.SMOKE_URL || 'https://seu-projeto.netlify.app';
+
+test('login e navegação principal', async ({ page }) => {
+  await page.goto(BASE_URL);
+  // login
+  await page.fill('[data-testid="email"]', process.env.SMOKE_USER!);
+  await page.fill('[data-testid="password"]', process.env.SMOKE_PASS!);
+  await page.click('[data-testid="login-button"]');
+  await expect(page.locator('[data-testid="dashboard"]')).toBeVisible({ timeout: 10000 });
+});
+
+test('edge function crítica responde', async ({ request }) => {
+  const resp = await request.post(`${BASE_URL}/api/health`);
+  expect(resp.status()).toBe(200);
+});
+```
+
+```json
+// package.json — adicionar script
+{
+  "scripts": {
+    "test:smoke": "playwright test e2e/smoke.spec.ts"
+  }
+}
+```
+
+> Até automatizar, o smoke manual é obrigatório. Nenhum deploy está "done" sem smoke passar.

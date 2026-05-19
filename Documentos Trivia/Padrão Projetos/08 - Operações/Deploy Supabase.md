@@ -251,3 +251,100 @@ supabase functions deploy nome-da-funcao
 ```bash
 npm install -g supabase
 ```
+
+---
+
+## Rollback — Quando e Como Reverter
+
+### Critérios para acionar rollback
+
+Reverter **imediatamente** se qualquer condição for verdadeira após o deploy:
+
+- [ ] Smoke test falhou (qualquer item do checklist)
+- [ ] Taxa de erro 5xx > 5% nos logs por mais de 2 minutos
+- [ ] Usuários reportando erro em funcionalidade core
+- [ ] Edge Function retornando 500 em massa (> 10 requests consecutivas com erro)
+- [ ] Migration causou perda de dados ou corrompeu schema
+
+### SLA de rollback
+
+| Etapa | Tempo máximo |
+|-------|-------------|
+| Decisão de reverter | ≤ 5 minutos após detecção |
+| Execução do rollback | ≤ 10 minutos |
+| Confirmação de estabilidade | ≤ 5 minutos após rollback |
+
+### Autoridade
+
+- **`@devops`** executa o rollback
+- **`@reliability`** ou **Lucas** pode acionar (solicitar ao @devops)
+- Não é necessário aprovação de @po ou @sm para reverter — segurança e estabilidade têm prioridade
+
+### Procedimento por componente
+
+#### Frontend (Netlify)
+
+```bash
+# Opção 1: Rollback instantâneo pelo Dashboard
+# Netlify → Deploys → clicar no deploy anterior com status "Published" → "Publish deploy"
+
+# Opção 2: Via CLI
+netlify deploy --prod --dir=.netlify/previous-build
+```
+
+O rollback de frontend no Netlify é instantâneo — basta republicar o deploy anterior.
+
+#### Edge Functions (Supabase)
+
+```bash
+# 1. Identificar o commit anterior
+git log --oneline supabase/functions/ -5
+
+# 2. Restaurar os arquivos da versão anterior
+git checkout <commit-anterior> -- supabase/functions/nome-da-funcao/
+
+# 3. Re-deployar a versão anterior
+supabase functions deploy nome-da-funcao
+
+# 4. Confirmar que voltou ao normal
+# Supabase → Edge Functions → [função] → Logs → verificar que erros pararam
+```
+
+#### Migrations de Banco (CUIDADO — irreversível por natureza)
+
+Migrations de banco **não têm rollback automático**. Procedimento:
+
+1. **Se a migration só adicionou colunas/tabelas (aditiva):**
+   ```sql
+   -- Criar migration reversa manualmente
+   ALTER TABLE nome_tabela DROP COLUMN IF EXISTS coluna_nova;
+   DROP TABLE IF EXISTS tabela_nova;
+   ```
+   ```bash
+   supabase migration new rollback-nome-descritivo
+   # Colar o SQL reverso no arquivo criado
+   supabase db push
+   ```
+
+2. **Se a migration alterou ou removeu dados (destrutiva):**
+   - Restaurar do backup manual criado antes do deploy
+   - Supabase Dashboard → Database → Backups → selecionar backup pré-deploy
+   - **ATENÇÃO:** restaurar backup substitui TODOS os dados — coordenar com o time
+
+3. **Se a migration falhou no meio:**
+   ```bash
+   # Ver estado das migrations
+   supabase migration list
+   # A migration parcial pode precisar de limpeza manual no banco
+   ```
+
+> **Regra de ouro:** toda migration destrutiva (DROP, ALTER TYPE, DELETE) deve ter o SQL reverso documentado **antes** do deploy, no próprio arquivo de migration como comentário no topo.
+
+### Pós-rollback
+
+Após reverter com sucesso:
+
+1. Comunicar no canal do time que houve rollback e o motivo
+2. Criar story de investigação: "Investigar falha no deploy de [data]"
+3. Não re-deployar a mesma versão sem fix confirmado e testado
+4. Atualizar o [[../08 - Operações/Monitoramento sem Ferramentas|log de incidentes]] se o erro impactou usuários
