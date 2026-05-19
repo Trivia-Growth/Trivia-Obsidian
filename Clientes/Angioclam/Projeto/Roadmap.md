@@ -111,7 +111,17 @@ Levantado no E2E Bradesco com o cliente:
 - ✅ Usabilidade: rótulos da área de upload indicam **como identificar**
   a planilha de cada slot pelo conteúdo (colunas).
 
-**Status:** `em andamento` — segue STORY-057 (indicadores configuráveis).
+- ✅ STORY-057 motor com indicadores configuráveis (Fase 5.2) — abordagem
+  aditiva: os 5 indicadores fixos e o consolidado travado seguem intocados
+  (paridade por construção); a operadora pode cadastrar indicadores extras
+  opcionais (ParametersPage), que geram slide próprio + consolidado adicional
+  no relatório e são recalculados no backend. migration aditiva
+  `report_parameters.indicadores_extra` jsonb default `[]`. 75 testes verdes.
+  Exame-base inédito (que exige recontar dados PII) segue diferido.
+
+**Status:** `concluída` (STORY-060 + STORY-057). Diferidas: STORY-058
+(API Klingo, aguardando externo), STORY-059 (fusão Lenira), exame-base
+inédito da STORY-057.
 
 ---
 

@@ -3,7 +3,7 @@ id: STORY-057
 titulo: "Motor com indicadores configuráveis (Fase 5.2 — diferida)"
 fase: 5
 modulo: "motor"
-status: backlog
+status: concluida
 prioridade: média
 agente_responsavel: ""
 criado: 2026-05-19
@@ -33,4 +33,4 @@ indicadores atuais como configuração default e a paridade.
 
 ## Implementação
 
-**Status:** `backlog` — planejar quando priorizado.
+**Status:** `concluida` (2026-05-19) — abordagem aditiva: os 5 fixos + consolidado travado intocados; indicadores extras opcionais por operadora (calcularExtras pós-calcularKpis, migration aditiva indicadores_extra jsonb default []), CRUD na ParametersPage, slides dinâmicos no buildHtml, recompute-report recalcula. 75 testes verdes (gate de paridade = no-op comprovado). Commits 2428a38 (057-A) + e1fc3ab (057-B); db push + functions deploy. Exame-base inédito (recontar dados) segue diferido.
