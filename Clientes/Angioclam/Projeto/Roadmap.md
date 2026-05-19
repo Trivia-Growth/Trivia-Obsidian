@@ -61,9 +61,23 @@ Fluxo `rascunho→calculado→em_revisao→aprovado` (Edge Function
 impressão do HTML print-ready (ADR-009), habilita só aprovado; cor travada por
 operadora. STORY-040, 52 testes, deploy + E2E OK. **Status:** `concluída`.
 
-## Fase 5 — Escala multi-operadora *(futura)*
+## Fase 5 — Multi-planilha + clínica + parâmetros extensíveis *(em andamento — 2026-05-19)*
 
-Isolamento RLS por operadora; N planilhas; histórico/comparativo; performance.
+Devolutiva do Sergio. Stories registradas:
+- STORY-050 multi-arquivo por slot + formatos (.csv/.xls=HTML)
+- STORY-051 parseDt 2 formatos de data
+- STORY-052 cadastro de clínicas (nome+CNPJ)
+- STORY-053 clínica no relatório (seleção + capa/CNPJ)
+- STORY-054 editar nome/cor da operadora
+- STORY-055 parâmetros extensíveis (add/remover exame)
+- STORY-056 verificação + deploy + E2E Bradesco
+- STORY-057 (Fase 5.2, diferida) motor com indicadores configuráveis
+
+Decisões: clínica = cadastrar+escolher no upload (cada lote = 1 clínica, sem
+filtrar por coluna) + nome/CNPJ no relatório; novos exames = valores editáveis
+agora, indicadores configuráveis depois. Paridade SulAmérica é gate.
+
+**Status:** `em andamento`.
 
 ---
 

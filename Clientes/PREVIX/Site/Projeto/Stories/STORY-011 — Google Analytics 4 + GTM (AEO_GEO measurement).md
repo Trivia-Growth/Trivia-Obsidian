@@ -62,8 +62,8 @@ Tudo gateado pelo **consent banner LGPD já existente** (`previx:consent` event)
   - `outbound_click` (clique em link externo, ex: redes sociais, Smart Sampa) — com `domain`
 - [x] CA7 — **dataLayer schema documentado** em `docs/ANALYTICS_DATALAYER.md`.
 - [x] CA8 — **AEO/GEO referrer detection** — `traffic_source_classified` com buckets de IA implementado em `GoogleTagManager.astro`.
-- [ ] CA9 — **Google Search Console linkado** ao GA4 property. **⚠ Pendente: fazer manualmente no GA4 Admin → Vínculos de produtos → Search Console.**
-- [ ] CA10 — **Goals/Conversions** configurados no GA4: **⚠ Pendente: configurar manualmente no GA4.**
+- [x] CA9 — **Google Search Console linkado** ao GA4 property. Propriedade `https://grupoprevix.com.br/` criada e verificada via Tag HTML (metatag adicionada ao `BaseLayout.astro`, deploy 2026-05-19). Vinculado ao fluxo "Site Grupo Previx" em GA4 Admin → Vínculos de produtos → Search Console.
+- [ ] CA10 — **Goals/Conversions** configurados no GA4: **⚠ Pendente: eventos customizados precisam ser disparados ≥1x antes de aparecerem na lista.** Após primeiros disparos reais, marcar como "Evento principal" em Admin → Eventos → Eventos recentes:
   - `lead_submit_success` (primary)
   - `whatsapp_click`
   - `phone_click`
