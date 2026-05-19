@@ -19,9 +19,11 @@ inicio: 2026-01-03
 |-------|------|
 | Dashboard (status das stories) | [[Projeto/Dashboard do Projeto]] |
 | Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
-| Stories | [[Projeto/Stories/]] |
-| Requisitos do sistema | *(no repositório de código — ainda não criado)* |
-| Arquitetura | *(no repositório de código — ainda não criado)* |
+| Stories | [[Projeto/Stories/]] · ativas em `docs/stories/` no repo |
+| Requisitos do sistema | *(no repositório: `PROJECT_REQUIREMENTS.md`)* |
+| Arquitetura | *(no repositório: `architecture.md`)* |
+| Dívida de segurança | *(no repositório: `SECURITY_DEBT.md`)* |
+| Padrão Trivia | Migrado em 2026-05-19 — ver [[Projeto/Stories/STORY-001]] |
 
 ---
 
