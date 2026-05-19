@@ -1,90 +1,204 @@
 ---
-tags: [literarius, tabela, financeiro]
-fonte: Literarius
-tipo: tabela
+tags: [literarius, schema, banco-de-dados, financeiro]
+status: mapeado
+criado: 2026-05-18
+fonte: pymssql direto — 192.168.18.10:1433
 ---
 
-# PlanoConta
+# Literarius DB — Módulo Financeiro — Plano de Contas
 
-## Descrição
-
-Plano de contas contábil/gerencial da empresa. Define a estrutura hierárquica de categorias de receita e despesa, usada no rateio de títulos e na geração da DRE. `GrupoDRE` agrupa as contas nas linhas do demonstrativo.
-
-> ⛔ **LIMITAÇÃO CRÍTICA:** `TipoCategoria = 'A'` em TODAS as 115 contas e `GrupoDRE = 0` em todas. Não é possível gerar DRE automático por categoria. Toda estrutura de DRE precisa ser construída com mapeamento manual das contas pelo nome.
-
----
-
-## Colunas Relevantes para o Financeiro
-
-| Coluna | Tipo | Descrição |
-|--------|------|-----------|
-| `Codigo` | int | PK |
-| `Descricao` | varchar(100) | Nome da conta |
-| `Grupo` | varchar(5) | Grupo analítico |
-| `ContaContabil` | varchar(20) | Código contábil (integração contábil) |
-| `PlanoContaPai` | int | FK → própria tabela (hierarquia) |
-| `Nivel` | smallint | Nível na hierarquia (1 = raiz) |
-| `TipoCategoria` | varchar(1) | `'R'` = Receita, `'D'` = Despesa |
-| `GrupoDRE` | int | Agrupador de linhas na DRE |
+> Schema mapeado diretamente do banco SQL Server em produção (2026-05-18).
+> Colunas, tipos reais e amostras de dados incluídos.
 
 ---
 
-## Usada por
+## `PlanoConta`
 
-- [[DRE e Fluxo de Caixa]] — estrutura da DRE
-- [[Contas a Receber]] — classificação contábil
-- [[Contas a Pagar]] — classificação contábil
+**Plano de contas (DRE)** · **115 linhas** · 10 colunas
+
+> Estrutura contábil. 115 registros. ⚠️ **BUG CRÍTICO**: campo `tipoCategoria = "A"` em todos os registros — deveria ser R=Receita ou D=Despesa. Bloqueia o DRE automático. Depende de correção pela equipe Literarius.
+
+| Coluna | Tipo SQL | Tipo PG | Nulo | Observação |
+|---|---|---|---|---|
+| `Codigo` | int | INTEGER | **não** |  |
+| `Descricao` | varchar(100) | TEXT | sim |  |
+| `Grupo` | varchar(5) | TEXT | sim |  |
+| `ContaContabil` | varchar(20) | TEXT | sim |  |
+| `UsuarioAlt` | varchar(20) | TEXT | sim |  |
+| `DataAlt` | datetime | TIMESTAMPTZ | sim | data |
+| `PlanoContaPai` | int | INTEGER | sim |  |
+| `Nivel` | smallint | INTEGER | sim |  |
+| `TipoCategoria` | varchar(1) | TEXT | sim | enum |
+| `GrupoDRE` | int | INTEGER | sim |  |
+
+**Campos-chave:**
+
+- Datas: `DataAlt`
+
+<details>
+<summary>Amostra de dados reais (3 linhas)</summary>
+
+```json
+[
+  {
+    "Codigo": 116,
+    "Descricao": "Outras receitas",
+    "Grupo": null,
+    "ContaContabil": "",
+    "UsuarioAlt": "ana",
+    "DataAlt": "2026-03-16T17:40:05.323000",
+    "PlanoContaPai": 7,
+    "Nivel": 3,
+    "TipoCategoria": "A",
+    "GrupoDRE": 0
+  },
+  {
+    "Codigo": 115,
+    "Descricao": "Empréstimos e financiamentos",
+    "Grupo": null,
+    "ContaContabil": "88",
+    "UsuarioAlt": "ana",
+    "DataAlt": "2026-01-20T11:28:07.700000",
+    "PlanoContaPai": 7,
+    "Nivel": 3,
+    "TipoCategoria": "A",
+    "GrupoDRE": 0
+  },
+  {
+    "Codigo": 114,
+    "Descricao": "Cod 1162",
+    "Grupo": null,
+    "ContaContabil": "62",
+    "UsuarioAlt": "ana",
+    "DataAlt": "2025-12-22T12:54:05.610000",
+    "PlanoContaPai": 7,
+    "Nivel": 3,
+    "TipoCategoria": "A",
+    "GrupoDRE": 0
+  }
+]
+```
+
+</details>
 
 ---
 
-## Mapeamento Manual de Contas (uso confirmado via DB)
+## `CentroResultado`
 
-### Receitas
-| Código | Nome | Valor histórico | % |
-|--------|------|-----------------|---|
-| 2 | VENDA DE LIVROS | R$ 5.123.091 | 97% |
-| 4 | VENDA DE E-BOOK | R$ 129.151 | 2% |
-| 112 | Receitas financeiras | R$ 6 | ~0% |
-| 116 | Outras receitas | — | — |
+**Centros de resultado** · **13 linhas** · 4 colunas
 
-### Principais Despesas (valor pago, últimos 12 meses)
-| Código | Nome | Valor pago (12m) |
-|--------|------|-----------------|
-| 21 | Produção Material Próprio | **R$ 962.000** |
-| 20 | Materiais Para Revenda | R$ 468.000 |
-| 29 | Marketing E Publicidade | R$ 426.000 |
-| 30 | Frete Sobre Mercadorias | R$ 257.000 |
-| 32 | Direitos Autorais | R$ 222.000 |
-| 96 | Remuneração Autônomos - Administração | R$ 302.727 |
-| 98 | Remuneração Autônomos - Livraria | R$ 177.700 |
-| 28 | Remuneração Autônomos - Marketing | R$ 190.145 |
-| 33 | Remuneração Autônomos - Editorial | R$ 121.522 |
-| 93 | Remuneração Autônomos - Expedição | R$ 120.002 |
-| 95 | Remuneração Autônomos - Financeiro | R$ 108.250 |
-| 99 | Diretoria - PJ | R$ 178.158 |
-| 84 | Sistemas e Softwares - Adm Marketing | R$ 160.285 |
-| 23 | Salários A Pagar | R$ 163.684 |
+> 13 centros de resultado. Permite segmentar DRE por área (editorial, e-commerce, livraria física, etc.).
 
-### Contas a EXCLUIR do DRE
-| Código | Nome | Motivo |
-|--------|------|--------|
-| 106 | TRANSFERENCIA ENTRE CONTAS | Não é despesa — movimentação interna. R$ 676.704 |
-| 115 | Empréstimos e financiamentos | Passivo — não operacional. R$ 60.000 |
-| 8 | A VERIFICAR | Sem classificação. R$ 132.015 — classificar urgente |
+| Coluna | Tipo SQL | Tipo PG | Nulo | Observação |
+|---|---|---|---|---|
+| `Codigo` | int | INTEGER | **não** |  |
+| `Descricao` | varchar(50) | TEXT | sim |  |
+| `UsuarioAlt` | varchar(20) | TEXT | sim |  |
+| `DataAlt` | datetime | TIMESTAMPTZ | sim | data |
 
-### Contas não identificadas ("Cod XXXX")
-| Código (ID) | Valor lançado | Hipótese |
-|-------------|--------------|---------|
-| Cod 1191 (52) | R$ 53.229 | Provável código DARF |
-| Cod 1138 (49) | R$ 24.587 | Idem |
-| Cod 3208 (57) | R$ 10.056 | Idem |
-| Cod 1082 (48) | R$ 10.150 | Idem |
-| Cod 5952 (109) | R$ 3.087 | Idem |
-| Cod 1170 (50) | R$ 3.073 | Idem |
+**Campos-chave:**
+
+- Datas: `DataAlt`
+
+<details>
+<summary>Amostra de dados reais (3 linhas)</summary>
+
+```json
+[
+  {
+    "Codigo": 13,
+    "Descricao": "Receita de vendas",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2025-09-23T16:02:56.587000"
+  },
+  {
+    "Codigo": 12,
+    "Descricao": "Investimento",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2025-09-23T11:09:38.953000"
+  },
+  {
+    "Codigo": 11,
+    "Descricao": "TRANSFERENCIAS ENTRE CONTAS",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2025-09-16T15:08:58.637000"
+  }
+]
+```
+
+</details>
 
 ---
 
-## Relações
+## `AjusteManualCusto`
 
-- Hierarquia recursiva: `PlanoContaPai` → `Codigo` da mesma tabela
-- Referenciada por [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixaRateio]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]]
+**Ajustes manuais de CMV** · **2,649 linhas** · 10 colunas
+
+> 2.649 ajustes manuais de CMV. Entram no cálculo de margem — sem isso o DRE de resultado tem distorção.
+
+| Coluna | Tipo SQL | Tipo PG | Nulo | Observação |
+|---|---|---|---|---|
+| `idAjusteCusto` | bigint | INTEGER | **não** | PK |
+| `Empresa` | int | INTEGER | **não** |  |
+| `Produto` | int | INTEGER | **não** |  |
+| `DataAjuste` | datetime | TIMESTAMPTZ | sim | data |
+| `CustoAnterior` | money | NUMERIC | sim |  |
+| `SaldoEstoque` | numeric | NUMERIC | sim |  |
+| `CustoAjuste` | money | NUMERIC | sim |  |
+| `Observacao` | varchar(255) | TEXT | sim |  |
+| `UsuarioAlt` | varchar(20) | TEXT | sim |  |
+| `DataAlt` | datetime | TIMESTAMPTZ | sim | data |
+
+**Campos-chave:**
+
+- PK: `idAjusteCusto`
+- Datas: `DataAjuste`, `DataAlt`
+- Valores: `SaldoEstoque`
+
+<details>
+<summary>Amostra de dados reais (3 linhas)</summary>
+
+```json
+[
+  {
+    "idAjusteCusto": 2651,
+    "Empresa": 1,
+    "Produto": 122,
+    "DataAjuste": "2026-05-01T23:59:59",
+    "CustoAnterior": 4.56,
+    "SaldoEstoque": 0.0,
+    "CustoAjuste": 0.0,
+    "Observacao": "",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2026-05-12T11:25:06.930000"
+  },
+  {
+    "idAjusteCusto": 2650,
+    "Empresa": 1,
+    "Produto": 2833,
+    "DataAjuste": "2026-04-01T23:59:59",
+    "CustoAnterior": 0.0,
+    "SaldoEstoque": 0.0,
+    "CustoAjuste": 12.5,
+    "Observacao": "",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2026-05-12T11:03:40.907000"
+  },
+  {
+    "idAjusteCusto": 2649,
+    "Empresa": 1,
+    "Produto": 1533,
+    "DataAjuste": "2026-04-01T23:59:59",
+    "CustoAnterior": 0.0,
+    "SaldoEstoque": 0.0,
+    "CustoAjuste": 25.95,
+    "Observacao": "",
+    "UsuarioAlt": "rafael",
+    "DataAlt": "2026-05-12T11:03:40.847000"
+  }
+]
+```
+
+</details>
+
+---
