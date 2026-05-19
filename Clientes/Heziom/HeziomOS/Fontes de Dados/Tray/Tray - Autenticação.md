@@ -6,17 +6,152 @@ tipo: autenticacao
 
 # Tray — Autenticação
 
-## Fluxo OAuth
+## Fluxo OAuth — Visão Geral
 
 ```
-1. POST /auth
-   → { access_token, refresh_token, date_expiration_access_token, api_host }
+PASSO 1 — Único, manual, feito uma vez por loja
+  Instalar app na loja → Tray gera um "code" (aparece na URL de callback)
 
-2. Usar access_token em todas as chamadas
+PASSO 2 — Programático, troca o "code" pelo primeiro token
+  POST https://{api_address}/web_api/v2/auth
+  Body: { consumer_key, consumer_secret, code }
+  → Retorna: { access_token, refresh_token, api_host, date_expiration_access_token }
 
-3. Antes de expirar → GET /auth?refresh_token={token}
-   → novo { access_token, refresh_token }
+PASSO 3 — Todas as chamadas da API
+  GET/POST https://{api_host}/web_api/v2/{endpoint}?access_token={token}
+
+PASSO 4 — Renovação antes de expirar (proativo)
+  GET https://{api_host}/web_api/v2/auth?consumer_key=…&consumer_secret=…&refresh_token=…
+  → Novo { access_token, refresh_token }
 ```
+
+## Fluxo OAuth — Detalhe Programático
+
+### Passo 1 — Obter o `code` (manual, uma vez)
+
+> ⚠️ Requer login humano — a Tray usa reCAPTCHA no painel.
+
+1. Acesse `https://loja-s.tray.com.br/adm/login.php?loja=1225878`
+2. Login: `atendimento@editoraheziom.com.br` / `Trayteste@321`
+3. Menu lateral → **Aplicativos** → **Instalar novos aplicativos**
+4. Pesquisar **Heziom OS** → instalar
+5. A Tray redireciona para a URL de callback — o `code` aparece como parâmetro na URL
+
+### Passo 2 — Trocar `code` por Access Token
+
+```python
+import requests
+
+CONSUMER_KEY    = "69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246"
+CONSUMER_SECRET = "0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6"
+CODE            = "<code_obtido_no_passo_1>"
+API_ADDRESS     = "loja-s.tray.com.br"  # host da loja de teste
+
+url = f"https://{API_ADDRESS}/web_api/v2/auth"
+payload = {
+    "consumer_key":    CONSUMER_KEY,
+    "consumer_secret": CONSUMER_SECRET,
+    "code":            CODE,
+}
+
+resp = requests.post(url, json=payload)
+data = resp.json()
+
+# Salvar para uso posterior
+access_token  = data["access_token"]
+refresh_token = data["refresh_token"]
+api_host      = data["api_host"]       # ⚠️ usar este host em todas as calls, não API_ADDRESS
+expires_at    = data["date_expiration_access_token"]
+store_id      = data["store_id"]
+
+print(f"Access Token: {access_token}")
+print(f"API Host:     {api_host}")
+print(f"Expira em:    {expires_at}")
+```
+
+> **Importante:** salvar `api_host` junto com os tokens — ele é único por loja e difere do endereço de login.
+
+### Passo 3 — Chamadas autenticadas
+
+```python
+# Padrão de chamada com access_token
+def tray_get(endpoint, params=None, access_token=None, api_host=None):
+    base = f"https://{api_host}/web_api/v2"
+    p = params or {}
+    p["access_token"] = access_token
+    resp = requests.get(f"{base}/{endpoint}", params=p)
+    resp.raise_for_status()
+    return resp.json()
+
+# Exemplo: listar pedidos aprovados de maio
+pedidos = tray_get(
+    "orders",
+    params={
+        "date":   "2026-05-01,2026-05-19",
+        "status": "aprovado",
+        "limit":  50,
+        "page":   1,
+    },
+    access_token=access_token,
+    api_host=api_host,
+)
+```
+
+### Passo 4 — Renovação do token (refresh)
+
+```python
+from datetime import datetime, timedelta
+
+def renovar_token_se_necessario(access_token, refresh_token, expires_at, api_host):
+    """Renova o access_token se estiver a menos de 1h de expirar."""
+    expira = datetime.fromisoformat(expires_at)
+    if datetime.now() < expira - timedelta(hours=1):
+        return access_token, refresh_token, expires_at  # ainda válido
+
+    url = f"https://{api_host}/web_api/v2/auth"
+    params = {
+        "consumer_key":    CONSUMER_KEY,
+        "consumer_secret": CONSUMER_SECRET,
+        "refresh_token":   refresh_token,
+    }
+    resp = requests.get(url, params=params)
+    data = resp.json()
+
+    return (
+        data["access_token"],
+        data["refresh_token"],
+        data["date_expiration_access_token"],
+    )
+```
+
+### Armazenamento dos tokens (recomendado para o sync agent)
+
+```python
+# Salvar em arquivo local seguro (não versionar)
+import json, os
+
+TOKEN_FILE = "/etc/heziom-sync/tray_tokens.json"  # fora do repositório
+
+def salvar_tokens(access_token, refresh_token, expires_at, api_host, store_id):
+    data = {
+        "access_token":  access_token,
+        "refresh_token": refresh_token,
+        "expires_at":    expires_at,
+        "api_host":      api_host,
+        "store_id":      store_id,
+        "updated_at":    datetime.now().isoformat(),
+    }
+    os.makedirs(os.path.dirname(TOKEN_FILE), exist_ok=True)
+    with open(TOKEN_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+    os.chmod(TOKEN_FILE, 0o600)  # leitura só pelo processo
+
+def carregar_tokens():
+    with open(TOKEN_FILE) as f:
+        return json.load(f)
+```
+
+> Para o Raspberry Pi, armazenar em `/etc/heziom-sync/` (fora do código, permissão 600). Ver [[Decisões/ADR-002 — Segurança do Sync Agent]].
 
 ## Campos do token
 
@@ -32,10 +167,43 @@ tipo: autenticacao
 | `date_expiration_refresh_token` | datetime | Expiração do refresh_token |
 | `store_id` | int | ID da loja na Tray |
 
+## Credenciais do Aplicativo Heziom OS
+
+> Recebidas via ticket #1615764 em 15/04/2026. Ambiente de **teste** (loja `1225878`).
+
+| Parâmetro | Valor |
+|-----------|-------|
+| **Nome do app** | Heziom OS |
+| **Consumer Key** | `69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246` |
+| **Consumer Secret** | `0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6` |
+| **URL da loja de teste** | `https://loja-s.tray.com.br/adm/login.php?loja=1225878` |
+| **Login (loja teste)** | `atendimento@editoraheziom.com.br` |
+| **Senha (loja teste)** | `Trayteste@321` |
+
+> ⚠️ As chaves são únicas por integração e valem em todas as lojas que instalam o app. Nunca expô-las ao usuário final.
+
+### Como obter o `code` para gerar o Access Token
+
+1. Acessar a loja de teste com as credenciais acima
+2. Menu lateral → **Aplicativos** → **Instalar novos aplicativos**
+3. Pesquisar por **Heziom OS** e instalar
+4. O `code` gerado + `consumer_key` + `consumer_secret` → `POST /auth` → retorna `access_token`
+
+### Rate limit
+
+- **180 requisições/minuto** — implementar controle de backoff obrigatório
+- Descumprimento desativa o acesso
+
+### Prazo de homologação
+
+- Máximo **120 dias** após envio das chaves (→ até **13/08/2026**)
+- Após esse prazo, integração e acesso podem ser inativados
+- Processo: abrir chamado [Homologação de Aplicativo] - Partner Tech na Tray
+
 ## Notas
 
 - `api_host` varia por loja — armazenar junto com o token, não usar URL fixa
-- Sem a key da Tray ainda — credenciais a obter: `consumer_key`, `consumer_secret`, `code`
+- Chaves permaneccem as mesmas em todas as lojas (não mudam por ambiente)
 
 ---
 

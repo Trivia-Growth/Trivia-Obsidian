@@ -106,11 +106,12 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ### Tray (API)
 - [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]] — índice Tray
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]] — credenciais reais recebidas 15/04/2026 ✅
 - [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]]
 - [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]]
 - [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]]
 - [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]]
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray — Correlação com Literarius]] — 🔴 mapa completo campo a campo, queries de conciliação, status
 
 ---
 
