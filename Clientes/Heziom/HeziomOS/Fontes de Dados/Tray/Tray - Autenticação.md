@@ -189,6 +189,8 @@ def carregar_tokens():
 3. Pesquisar por **Heziom OS** e instalar
 4. O `code` gerado + `consumer_key` + `consumer_secret` → `POST /auth` → retorna `access_token`
 
+> ⚠️ **Status 19/05/2026:** Usuário `atendimento@editoraheziom.com.br` **bloqueado por inatividade** na loja de teste (`1225878.commercesuite.com.br`). Desbloqueio solicitado à Tray/admin da loja — aguardando retorno. Retomar instalação do app após confirmação.
+
 ### Rate limit
 
 - **180 requisições/minuto** — implementar controle de backoff obrigatório
