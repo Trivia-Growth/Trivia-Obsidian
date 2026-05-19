@@ -47,7 +47,8 @@ CREATE TABLE lit_estoque (
   PRIMARY KEY (produto_id, empresa, setor)
 );
 ```
-Fonte: `TEstoqueController` / SQL: `SELECT produto, empresa, setor, saldo FROM Estoque`
+Fonte SQL recomendada: `SELECT * FROM vwProdutoEstoque WHERE DataAlt > @ultimo_sync`
+> Substitui JOIN manual entre Estoque + Produto + ProdutoAutor. Inclui autores, preço e imagem.
 
 ---
 

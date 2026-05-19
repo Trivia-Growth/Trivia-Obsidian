@@ -29,6 +29,22 @@ criado: 2026-05-18
 
 ---
 
+## Views SQL (61 views mapeadas)
+
+[[Views SQL — Mapeamento e Uso]] — documento completo com análise de uso no sync agent
+
+| View | Linhas | Por que usar |
+|---|---|---|
+| `vwProdutoEstoque` | 8.162 | Produto + Estoque + Autores + Preço em 1 query (85 cols) |
+| `vwTituloFinanceiroBaixasComRateio` | 30.849 | Baixas + rateio — a query mais complexa do DRE já pronta |
+| `vwTituloFinanceiroComRateio` | 50.723 | DRE por competência |
+| `vwPedidoVenda` | 22.856 | 86 colunas com cliente e canal JOINados |
+| `vwConsignacaoComItens` | 3.360 | R$1,15M em consignação completo |
+| `vwDireitoAutoralFechamento` | 14.039 | CMV editorial — autor + produto + royalties |
+| `vwMovimentoContaBancaria` | 26.966 | Extrato bancário consolidado |
+
+---
+
 ## Arquivo bruto
 
 - `Schema Detalhado.md` — todas as tabelas em um único arquivo (4.903 linhas)
