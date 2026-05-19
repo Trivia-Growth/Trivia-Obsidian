@@ -21,34 +21,50 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ---
 
-## Agente Financeiro
+## Departamentos (Módulos do OS)
 
+### 💰 Financeiro (Fase 1 — prioridade máxima)
+- [[Índice Financeiro]] — visão completa do módulo financeiro
+- [[Dashboard CEO]] — posição financeira, DRE MTD, faturamento por canal, alertas
+- [[KPIs e Métricas]] — definições formais de cada indicador
 - [[Agente Financeiro — Prompt]] — system prompt completo para uso no Claude
+- [[Assistente — Chat MCP]] — chat em linguagem natural (Claude API)
+- [[Pedidos e Vendas]] · [[Contas a Receber]] · [[Contas a Pagar]] · [[DRE e Fluxo de Caixa]]
+- [[Aprovação de Pagamentos]] · [[Conciliação Bancária]] · [[Gestão de Estoque e CMV]] · [[Comissões e Repasses]]
+
+### ✅ Tarefas e Projetos (Fase 2.1 — substitui ClickUp)
+- [[Tarefas e Projetos]] — boards por departamento, cross-triggers, sprints
+
+### 👥 Marketing e CRM (Fase 2.2 — substitui Flowbiz)
+- [[Índice Marketing e CRM]] — CRM unificado, 40k contatos, segmentação comportamental
+
+### 🏪 Comercial (Fase 2.3)
+- [[Índice Comercial]] — atacado B2B, pace vs. meta CPC, pipeline, agente WhatsApp
+
+### 📚 Editorial (Fase 2.4)
+- [[Índice Editorial]] — pipeline 9 etapas, orçamento por lauda, calendário de publicações
+
+### 💬 Atendimento (Fase 2.5 — substitui Unnichat)
+- [[Índice Atendimento]] — agente WhatsApp 24/7, escalação inteligente
+
+### 📦 Logística e Expedição (Fase 1 estoque + Fase 2 painel)
+- [[Índice Logística e Expedição]] — multi-ponto, Shipping Insights, consignação
+
+### 👤 Pessoas e Gestão (Fase 2.6)
+- [[Índice Pessoas e Gestão]] — comissões CPC, organograma, avaliação
 
 ---
 
-## CEO Dashboard
+## Sistemas a Substituir
 
-- [[Dashboard CEO]] — posição financeira, DRE MTD, faturamento por canal, alertas, score de saúde, fluxo de caixa 90d, aging visual
-- [[KPIs e Métricas]] — definições formais de cada indicador e fonte de dados
-- [[Assistente — Chat MCP]] — chat em linguagem natural integrado ao Literarius e Tray (Claude API)
-- [[Memória do Assistente]] — painel admin de contexto persistente do assistente (pgvector + Supabase)
-
----
-
-## Módulos Financeiros
-
-### Módulos Existentes
-- [[Pedidos e Vendas]] — faturamento multi-canal (Literarius + Tray)
-- [[Contas a Receber]] — títulos a receber, aging, inadimplência
-- [[Contas a Pagar]] — títulos a pagar, aprovação, remessa
-- [[DRE e Fluxo de Caixa]] — resultado mensal, projeção de caixa
-
-### Módulos Novos
-- [[Aprovação de Pagamentos]] — workflow de alçadas + geração CNAB 240
-- [[Conciliação Bancária]] — extrato OFX × TituloFinanceiroBaixa (meta: >95% automático)
-- [[Gestão de Estoque e CMV]] — posição por setor, cobertura, consignações, CMV real
-- [[Comissões e Repasses]] — receita líquida por canal, repasses Tray, comissões internas
+| Sistema | Módulo HeziomOS | Fase | Economia est. |
+|---|---|---|---|
+| ClickUp | Tarefas + Editorial | 2.1 + 2.4 | ~R$ 500/mês |
+| Flowbiz | CRM Unificado | 2.2 | ~R$ 300/mês |
+| Unnichat | Atendimento | 2.5 | ~R$ 400/mês |
+| Qive | Módulo Fiscal | 3 | ~R$ 200/mês |
+| POS Controle | Literarius novo app | Externo | ~R$ 150/mês |
+| Power BI | CEO Dashboard | 1 ✅ | R$ 3.500/mês |
 
 ---
 
