@@ -28,7 +28,7 @@ inicio: 2026-04-23
 
 ```
 GitHub: https://github.com/LmAzevedo94/pixel-perfect-view
-Clone local: ~/Documents/GitHub/pixel-perfect-view
+Clone local: ~/Documents/Obsidian/Github/pixel-perfect-view
 ```
 
 ---

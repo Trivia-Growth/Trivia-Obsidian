@@ -1,0 +1,85 @@
+# Roadmap — Sistema Angioclam
+
+> Insumo herdado de [[Clientes/Angioclam/Sistema/30 - Roadmap]] (briefing).
+> Aqui é a execução no padrão Trivia.
+
+---
+
+## Fase 1 — Fatia vertical: motor + upload + KPIs + HTML *(atual)*
+
+**Objetivo:** subir B1/B2/B3 → motor TS calcula → painel de KPIs → gera HTML dos
+9 slides, com paridade 100% provada contra `dados_relatorio.json`.
+
+**Postura:** Operacional (sem parâmetros editáveis ainda).
+
+**Módulos:**
+- [x] Bootstrap do repo no padrão Trivia (STORY-001)
+- [x] Porte do motor para TS + parsers + paridade (STORY-002) — 32/32 testes
+- [x] UI tela única: upload + KPIs + HTML (STORY-005) — mockup validado
+- [x] Edge Function `recompute-report` + Supabase (STORY-008) — código pronto, deploy pendente
+
+**Status:** `Fase 1 concluída` — Netlify conectado ao GitHub (deploy automático).
+
+> Feito: login Supabase + AuthGuard; wiring `useReport → recompute-report`
+> (grava oficial); HTML de export no padrão REFINADO (9 slides). Único passo
+> manual restante: criar o 1º superadmin (ver `supabase/seed_superadmin.sql`).
+
+---
+
+## Fase 2 — Parâmetros editáveis + audit log *(concluída — 2026-05-18)*
+
+Custos/benchmarks editáveis por operadora; audit log imutável. Default ==
+constantes (paridade preservada — 42 testes verdes).
+
+**Status:** `concluída` — motor aceita `MotorParams`; tabelas
+`report_parameters` (seed por operadora) + `report_audit_log` imutável (RLS+FORCE,
+sem UPDATE/DELETE); tela `/parametros` (editar + pré-visualizar impacto + salvar
+nova versão com auditoria). Deploy: commit `1e26714`, migration aplicada,
+Netlify publicado. Taxonomia editável e edição manual de campos: backlog futuro.
+
+**STORY-021 (ADR-007):** recálculo autoritativo movido para o backend via
+agregado PII-free — a Edge Function aplica os `report_parameters` da operadora
+no servidor (cliente não é mais fonte da economia). PII nunca trafega.
+Verificado em produção. SEC-003/004/005/006 resolvidos.
+
+## Fase 3 — Camada 2 IA *(backend concluído — 2026-05-18)*
+
+Edge Functions `ai-audit` (alertas) e `ai-copywriter` (textos dos 9 slides) via
+Claude API (`claude-opus-4-7`, structured outputs, prompt caching). IA nunca
+calcula (schemas só-texto + sanitização). `buildHtml(k, textos?)` aplica textos
+revisados; números só dos KPIs.
+
+**Status:** `concluída` — STORY-030: backend + UI de revisão (seção inline na
+tela do relatório: alertas + textos editáveis, aceitar → aplica no HTML).
+Deploy ACTIVE, 51 testes, ADR-008. Único passo do JG: ativar a chave
+(`supabase secrets set ANTHROPIC_API_KEY=...`) para a IA responder de verdade.
+
+## Fase 4 — Aprovação + PDF *(concluída — 2026-05-18)*
+
+Fluxo `rascunho→calculado→em_revisao→aprovado` (Edge Function
+`set-report-status`, só superadmin aprova, audit por transição); export PDF =
+impressão do HTML print-ready (ADR-009), habilita só aprovado; cor travada por
+operadora. STORY-040, 52 testes, deploy + E2E OK. **Status:** `concluída`.
+
+## Fase 5 — Escala multi-operadora *(futura)*
+
+Isolamento RLS por operadora; N planilhas; histórico/comparativo; performance.
+
+---
+
+## Milestones
+
+| Marco | Data prevista | Status |
+|-------|--------------|--------|
+| Bootstrap concluído | 2026-05-18 | concluído |
+| Paridade do motor (STORY-004) | a definir | pendente |
+| Primeiro deploy em produção | a definir | pendente |
+| Fase 1 concluída | a definir | pendente |
+
+---
+
+## Decisões e Histórico
+
+- `2026-05-18` — Decidido seguir o padrão Trivia à risca (app web React+Supabase),
+  portando o motor Python v2 para TypeScript com paridade como gate. Repo em
+  `github.com/Trivia-Growth/Angioclam`, código fora do vault.
