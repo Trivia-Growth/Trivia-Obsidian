@@ -2,8 +2,10 @@
 
 Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conexões entre módulos e fontes de dados.
 
-**Arquitetura completa (ATUAL):** [[HeziomOS — Arquitetura e Fluxos]] — 🔴 proposta consolidada: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
-**Arquitetura (histórico):** [[HeziomOS — Arquitetura]] — blueprint inicial do módulo financeiro (15/04/2026); consultar só como referência. O documento vigente é o de cima.
+**Mapeamento da Operação:** [[Mapeamento Completo da Operação Heziom]] — 🔴 documento-mãe: 7 departamentos, 11 sistemas integrados, 6 a substituir, fluxo editorial completo, regras de negócio, canais de venda, prioridades (19/05/2026) ✅
+**Módulos e Escopo Completo:** [[HeziomOS — Módulos e Escopo Completo]] — 🔴 proposta expandida: 6 novos módulos (Editorial, CRM, Atendimento, Comercial, Pessoas, Tarefas) + faseamento + decisões pendentes (19/05/2026) ✅
+**Arquitetura Fase 1 (Financeiro):** [[HeziomOS — Arquitetura e Fluxos]] — proposta técnica: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
+**Arquitetura (histórico):** [[HeziomOS — Arquitetura]] — blueprint inicial do módulo financeiro (15/04/2026); consultar só como referência.
 
 > 🗺️ **Mapa estrutural do vault:** [[Mapa do Vault]] — inventário completo de pastas e notas + log de organização.
 
