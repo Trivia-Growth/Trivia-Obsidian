@@ -32,6 +32,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 - [[Assistente — Chat MCP]] — chat em linguagem natural (Claude API)
 - [[Pedidos e Vendas]] · [[Contas a Receber]] · [[Contas a Pagar]] · [[DRE e Fluxo de Caixa]]
 - [[Aprovação de Pagamentos]] · [[Conciliação Bancária]] · [[Gestão de Estoque e CMV]] · [[Comissões e Repasses]]
+- [[Fechamento Mensal — Automação Completa]] — 🔴 mapeamento real da pasta OneDrive + 10 APIs externas + fluxo automatizado (19/05/2026) ✅
 
 ### ✅ Tarefas e Projetos (Fase 2.1 — substitui ClickUp)
 - [[Tarefas e Projetos]] — boards por departamento, cross-triggers, sprints
