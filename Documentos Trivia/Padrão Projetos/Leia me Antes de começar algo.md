@@ -16,7 +16,7 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[02 - Qualidade/Definition of Done\|02 - Definition of Done]] | Checklist antes de marcar qualquer coisa como pronto |
 | [[02 - Qualidade/Testes Automatizados\|02 - Testes Automatizados]] | Setup e exemplos de testes locais com Vitest |
 | [[03 - Segurança/Checklist de Segurança\|03 - Segurança]] | O mínimo de segurança que todo projeto deve ter |
-| [[04 - Agentes AIOX/O que é o AIOX\|04 - O que é o AIOX]] | Como usar a equipe de agentes de IA |
+| [[04 - Agentes Triviaiox/O que é o Triviaiox\|04 - O que é o Triviaiox]] | Como usar a equipe de agentes de IA |
 | [[05 - Lovable e Claude/Base de Conhecimento Lovable\|05 - Lovable KB]] | Base de conhecimento para copiar na Lovable |
 | [[06 - Gestão do Projeto/Setup Colaborador\|06 - Como Colaborar]] | Como uma pessoa sem perfil técnico entra no projeto |
 | [[07 - Templates de Código/CLAUDE.md\|07 - Templates]] | Arquivos prontos para copiar no novo repositório |
@@ -25,7 +25,7 @@ Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como to
 | [[08 - Operações/LGPD e Compliance\|08 - LGPD e Compliance]] | Checklist de conformidade para dados pessoais e financeiros |
 | [[09 - Migrações/Migrar Projeto Lovable para Padrão Trivia\|09 - Migrar da Lovable]] | Checklist para integrar projeto existente da Lovable ao padrão Trivia |
 | [[10 - Sync Lovable e Claude\|10 - Sync Lovable + Claude]] | Protocolo de sincronismo entre Lovable e Claude Code via docs/stories/ |
-| [[06 - Gestão do Projeto/Setup Dev Técnico\|06 - Setup Dev Técnico]] | Onboarding para devs que trabalham via Claude Code + AIOX |
+| [[06 - Gestão do Projeto/Setup Dev Técnico\|06 - Setup Dev Técnico]] | Onboarding para devs que trabalham via Claude Code + Triviaiox |
 
 **Leia na ordem acima.** O checklist de início conecta tudo.
 
@@ -55,5 +55,5 @@ Três regras que nunca quebram:
 ## Quem usa este vault
 
 - **Lucas (piloto)** — define o que construir, aprova planos, revisa entregas
-- **Agentes AIOX** — implementam, testam, documentam via stories
+- **Agentes Triviaiox** — implementam, testam, documentam via stories
 - **Colaboradores de negócio** — leem o Dashboard do Projeto e o Roadmap
