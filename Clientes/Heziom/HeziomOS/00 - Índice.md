@@ -53,6 +53,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 - [[Dúvidas para Insights do CEO]] — perguntas pendentes para Heziom e Literarius
 - [[Premissas e Entendimentos]] — o que está validado e o que ainda está a confirmar
 - [[Análise dos Dados Extraídos]] — achados críticos e bloqueadores do DRE
+- [[Fontes de Dados/Literarius/Estoque Heziom — Análise Mai 2026]] — 123 SKUs, 134k unidades, R$8,4M em estoque, top produtos, alertas ✅
 - [[Análise Conexão Direta DB]] — análise via conexão ao banco (abril 2026)
 - [[Análise Planilhas Janeiro 2026]] — faturamento, DRE, CMV, contas a pagar e DFC de janeiro
 - [[DRE Acumulado 2025-2026]] — DRE mensal completo jan/2025 a fev/2026 (arquivo oficial contábil)
