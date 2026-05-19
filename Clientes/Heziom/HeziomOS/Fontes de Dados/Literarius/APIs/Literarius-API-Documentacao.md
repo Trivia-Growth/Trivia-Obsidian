@@ -1,7 +1,21 @@
 # Literarius API — Documentação de Referência
 
-> Documentado em 2026-05-18 via chamadas exploratórias (GET only, produção).  
+> Documentado em 2026-05-18 via chamadas exploratórias. Atualizado 2026-05-19 (duplo-check).  
 > Base URL: `http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest`
+
+> ⚠️ **Não é 100% read-only!** O endpoint `PUT /TPedidoVendaController/PedidoVenda` permite **criar e atualizar pedidos**. O `GET /PedidoVendaStatus/{emp}/{num}/{status}` **altera status** do pedido em produção. Demais controllers são somente leitura.
+
+### Resumo de Capacidades (atualizado 19/05/2026)
+
+| Controller | Leitura | Escrita | Observação |
+|---|---|---|---|
+| **TPedidoVendaController** | ✅ GET pedidos | ✅ PUT criar/editar pedido · GET altera status | **Write disponível** |
+| **TParceiroController** | ✅ GET clientes/fornecedores | ❌ | Somente leitura |
+| **TProdutoController** | ✅ GET por código ou EAN | ❌ | Somente leitura |
+| **TEstoqueController** | ✅ GET saldo por setor/produto/box | ❌ | Somente leitura |
+| **TNotaFiscalController** | ✅ GET NF completa (112+ cols) | ❌ | Somente leitura |
+
+Ver: [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — inventário consolidado Literarius + Tray
 
 ---
 

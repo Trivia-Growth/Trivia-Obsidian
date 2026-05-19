@@ -16,18 +16,22 @@ fonte: Documentação pública Tray (developers.tray.com.br)
 
 A Tray oferece ~30+ categorias de endpoints REST. Para uma editora como a Heziom, os recursos mais relevantes se dividem em:
 
-| Categoria | Endpoints | Relevância HeziomOS |
-|---|---|---|
-| **Produtos** | CRUD completo + variações + imagens | 🔴 Sync catálogo Literarius → Tray |
-| **Estoque** | Por produto + Multi-CD | 🔴 Sync saldo Literarius → Tray |
-| **Pedidos** | CRUD + produtos do pedido | 🔴 Captura de vendas Tray → Literarius |
-| **Pagamentos** | Status + taxa gateway + `price_seller` | 🔴 DRE: receita líquida real |
-| **Notas Fiscais** | Vincular NF emitida ao pedido | 🔴 Ciclo fiscal completo |
-| **Clientes** | CRUD + endereços | 🟡 CRM básico e-commerce |
-| **Frete/Transportadoras** | Calcular + configurar + listar | 🟡 Automatizar logística |
-| **Cupons/Promoções** | CRUD | 🟡 Análise de campanhas |
-| **Webhooks** | Eventos em tempo real | 🔴 Reação imediata (pagamento, cancelamento) |
-| **Configurações da loja** | Leitura das configs | ⚪ Monitoramento |
+| Categoria | Endpoints | Relevância HeziomOS | Doc detalhada |
+|---|---|---|---|
+| **Produtos** | CRUD completo + variações + imagens | 🔴 Sync catálogo Literarius → Tray | [[Tray - Sync Agent — Endpoints e Estratégia]] |
+| **Estoque** | Por produto + Multi-CD | 🔴 Sync saldo Literarius → Tray | [[Tray - Sync Agent — Endpoints e Estratégia]] |
+| **Pedidos** | CRUD + produtos do pedido | 🔴 Captura de vendas Tray → Literarius | [[Tray - Pedidos]] |
+| **Pagamentos** | Status + taxa gateway + `price_seller` | 🔴 DRE: receita líquida real | [[Tray - Pagamentos]] |
+| **Notas Fiscais** | Vincular NF emitida ao pedido | 🔴 Ciclo fiscal completo | [[Tray - Invoices]] |
+| **Clientes** | CRUD + endereços | 🟡 CRM unificado com Literarius | [[Tray - Clientes]] |
+| **Frete/Transportadoras** | Calcular + configurar + rastrear | 🟡 Painel logística + separação | [[Tray - Frete e Logística]] |
+| **Cupons/Promoções** | CRUD | 🟡 ROI de campanhas | [[Tray - Cupons e Promoções]] |
+| **Categorias** | CRUD hierárquico (parent_id) | 🟡 Filtros por gênero editorial (BISAC) | [[Tray - Categorias e Marcas]] |
+| **Marcas** | CRUD | 🟡 Selos editoriais como filtro | [[Tray - Categorias e Marcas]] |
+| **Webhooks** | 10 eventos em tempo real | 🔴 Reação imediata (pagamento, cancelamento) | [[Tray - Webhooks]] |
+| **Scripts** | CRUD de scripts injetados | 🟡 Pixels, analytics, chat sem editar tema | [[Tray - Carrinho Abandonado e Scripts]] |
+| **Carrinho Abandonado** | Listar carrinhos incompletos | 🟡 Remarketing automático | [[Tray - Carrinho Abandonado e Scripts]] |
+| **Configurações da loja** | Leitura das configs | ⚪ Monitoramento | — |
 
 ---
 
@@ -35,12 +39,14 @@ A Tray oferece ~30+ categorias de endpoints REST. Para uma editora como a Heziom
 
 | O que não é possível via API | Alternativa |
 |---|---|
-| Criar/modificar temas e templates HTML/CSS da loja | Editar manualmente no painel admin da Tray |
+| Criar/modificar temas e templates HTML/CSS da loja | OpenCode CLI (programa parceiro separado) — ver [[Tray - OpenCode — Desenvolvimento de Temas]] |
 | Criar templates de e-mail transacional | Configurar no admin da loja |
 | Publicar direto no marketplace | Requer homologação → ticket Tray |
-| Injetar scripts no front-end | Painel admin → Scripts personalizados (similar a GTM) |
+| Alterar layout do checkout | Admin da loja (configuração fixa) |
 
-> **Impacto no HeziomOS:** a integração é 100% back-end e dados. Customização visual da loja Tray é responsabilidade da equipe da Heziom no painel admin.
+> **Nota:** Scripts no front-end provavelmente SÃO possíveis via `/scripts` endpoint (similar a GTM). Confirmar após desbloqueio da loja.
+
+> **Impacto no HeziomOS:** a integração é predominantemente back-end e dados. Customização visual da loja usa OpenCode (tema) ou Scripts (pixel/analytics).
 
 ---
 

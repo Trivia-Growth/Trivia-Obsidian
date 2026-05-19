@@ -98,23 +98,40 @@ PedidoVenda (canal direto)
 
 ---
 
-## Status por Fonte
+## Status por Fonte (atualizado 19/05/2026)
 
-| Fonte | Status |
-|-------|--------|
-| Literarius DB | Mapeado — 14 tabelas + 6 views |
-| Tray API | Mapeado — 5 notas de endpoint |
-| Qive API | Mapeado — [[Qive — NF-e Automática]] |
-| Bancos (CNAB/OFX) | Mapeado — [[Bancos — CNAB e OFX]] |
-| HeziomOS DB | Especificado — tabelas próprias documentadas em cada módulo |
+| Fonte | Status | Documentação |
+|-------|--------|---|
+| Literarius DB | ✅ Completo — 150 tabelas + 61 views | [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] |
+| Literarius REST API | ✅ Mapeado — 5 controllers (inclui write para pedidos) | [[Fontes de Dados/Literarius/APIs/Literarius-API-Documentacao]] |
+| Tray API | ✅ Completo — 18 categorias, ~100 endpoints | [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] |
+| Qive API | ✅ Mapeado | [[Qive — NF-e Automática]] |
+| Bancos (CNAB/OFX) | ✅ Mapeado | [[Bancos — CNAB e OFX]] |
+| HeziomOS DB | Especificado — tabelas Supabase próprias | Cada módulo documenta |
 
-## Tray API — Notas mapeadas
+## Tray API — Notas mapeadas (14 arquivos)
 
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] — `GET /orders`, campos financeiros, conciliação
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]] — `GET /payments`, status, taxas, price_seller
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]] — vinculação NF ↔ pedido Tray
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]] — eventos em tempo real
+**Infraestrutura:**
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]] — OAuth + credenciais
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Rate Limit e Paginação]] — 180 req/min + retry
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]] — 10 eventos em tempo real
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — matriz 14 categorias
+
+**Dados transacionais:**
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] — orders + conciliação
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]] — price_seller, taxas
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]] — vinculação NF-e
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Clientes]] — CRM + endereços 🆕
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Frete e Logística]] — rastreio + cálculo 🆕
+
+**Catálogo e marketing:**
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Categorias e Marcas]] — BISAC → categorias 🆕
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Cupons e Promoções]] — ROI campanhas 🆕
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Carrinho Abandonado e Scripts]] — remarketing 🆕
+
+**Integração e roadmap:**
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — Supabase schema
+- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray — Correlação com Literarius]] — mapa campo a campo
 - [[Tray — Conciliação de Repasses]] — rastreamento de repasses financeiros
 
 ---
@@ -146,8 +163,8 @@ bank_statements  Aprovação → CNAB gerado → upload manual
   ▼
 Conciliação automática (match vs. TituloFinanceiroBaixa)
 
-Literarius DB (SQL Server, read-only)
-  │ leitura contínua
+Literarius DB (SQL Server, read-only + REST write para pedidos)
+  │ leitura contínua (SQL) + PUT pedidos (REST)
   ▼
 Todos os módulos HeziomOS
 

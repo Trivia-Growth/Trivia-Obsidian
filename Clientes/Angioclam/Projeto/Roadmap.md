@@ -93,7 +93,24 @@ Decisões: clínica = cadastrar+escolher no upload (cada lote = 1 clínica, sem
 filtrar por coluna) + nome/CNPJ no relatório; novos exames = valores editáveis
 agora, indicadores configuráveis depois. Paridade SulAmérica é gate.
 
-**Status:** `em andamento`.
+**Status:** `concluída`. E2E backend com login real (superadmin) em
+2026-05-19: recálculo autoritativo no servidor bateu 100% com o local
+(econ. líq. A R$ 1.788.794), `reports` salvo com `clinica_id`+`operadora_id`,
+`report_audit_log` registrado.
+
+---
+
+## Fase 6 — Histórico + usabilidade *(backlog — 2026-05-19)*
+
+Levantado no E2E Bradesco com o cliente:
+- STORY-060 tela de histórico de relatórios (lista + filtros + auditoria).
+  Os dados já são persistidos (`reports` + `report_audit_log`); falta a
+  tela que os exibe.
+- Melhoria de usabilidade (sem story): rótulos da área de upload passam a
+  indicar **como identificar** a planilha de cada slot pelo conteúdo
+  (colunas), já que a Bradesco manda vários arquivos com nomes genéricos.
+
+**Status:** `backlog`.
 
 ---
 

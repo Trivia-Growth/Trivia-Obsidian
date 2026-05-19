@@ -10,16 +10,22 @@ Notificações enviadas por POST para uma URL do aplicativo quando eventos ocorr
 
 ---
 
-## Eventos financeiramente relevantes
+## Todos os Eventos Disponíveis (10 no total)
 
-| Scope | Action | Quando disparar |
-|-------|--------|-----------------|
-| `order` | `insert` | Novo pedido criado |
-| `order` | `update` | Status do pedido alterado — inclui aprovação de pagamento |
-| `order` | `delete` | Pedido removido |
-| `transaction` | `update` | Status da transação no gateway alterado (aprovado, cancelado, chargeback) |
-| `invoice` | `insert` | NF vinculada ao pedido |
-| `customer` | `insert` / `update` | Novo cliente ou atualização de dados |
+| Scope | Action | Quando dispara | Prioridade HeziomOS |
+|-------|--------|----------------|---------------------|
+| `order` | `insert` | Novo pedido criado | 🔴 Alta |
+| `order` | `update` | Status do pedido alterado (aprovação, envio, etc.) | 🔴 Alta |
+| `order` | `delete` | Pedido cancelado/removido | 🔴 Alta |
+| `transaction` | `update` | Status do gateway alterado (aprovado, recusado, estorno, chargeback) | 🔴 Alta |
+| `invoice` | `insert` | NF-e vinculada ao pedido | 🟡 Média |
+| `customer` | `insert` | Novo cliente cadastrado | 🟡 Média |
+| `customer` | `update` | Dados do cliente alterados | ⚪ Baixa |
+| `product` | `insert` | Produto criado (por outro integrador ou manualmente) | 🟡 Média |
+| `product` | `update` | Produto modificado (preço, estoque por outro canal) | 🟡 Média |
+| `product` | `delete` | Produto removido da loja | 🟡 Média |
+
+> **Total: 10 eventos.** Os 4 primeiros (order + transaction) são os mais críticos para o fluxo financeiro.
 
 ---
 
@@ -60,4 +66,50 @@ Tray → POST webhook (order.update, status = aprovado)
 
 ---
 
-Ver: [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]] · [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] · [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]]
+---
+
+## Endpoints para gerenciar webhooks
+
+```
+POST   /webhooks            → Registrar novo webhook
+GET    /webhooks            → Listar webhooks registrados
+GET    /webhooks/:id        → Detalhe
+DELETE /webhooks/:id        → Remover webhook
+```
+
+### Registrar um webhook
+
+```python
+# Exemplo: registrar webhook para pagamento aprovado
+payload = {
+    "url": "https://heziom-sync.trivia.com.br/webhooks/tray",
+    "event": "transaction",
+    "action": "update"
+}
+resp = requests.post(f"https://{api_host}/web_api/v2/webhooks?access_token={token}", json=payload)
+```
+
+> **Requisitos do receptor:**
+> - HTTPS obrigatório
+> - Responder HTTP 200 em < 5 segundos
+> - Tray reenvia até 3× se não receber 200
+
+---
+
+## Ações recomendadas por evento
+
+| Evento | Ação no HeziomOS |
+|---|---|
+| `order.insert` | Log + verificar se existe no Literarius |
+| `order.update` (status=aprovado) | Disparar faturamento se NF não emitida |
+| `order.update` (status=enviado) | Registrar sending_code |
+| `order.delete` | Cancelar NF + estornar título financeiro |
+| `transaction.update` (approved) | Confirmar título financeiro |
+| `transaction.update` (refunded) | Criar nota de crédito |
+| `transaction.update` (chargeback) | 🚨 Alerta urgente ao CEO |
+| `invoice.insert` | Confirmar vinculação NF ↔ pedido |
+| `product.update` | Verificar se estoque mudou por outro canal |
+
+---
+
+Ver: [[Tray - Pedidos]] · [[Tray - Pagamentos]] · [[Tray - Frete e Logística]] · [[Mapa Completo de APIs e Capacidades]]
