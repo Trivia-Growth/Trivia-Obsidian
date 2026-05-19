@@ -1,6 +1,6 @@
 # Equipe de Agentes Triviaiox
 
-14 agentes especializados. Cada um tem sua autoridade e não invade o papel do outro.
+15 agentes especializados. Cada um tem sua autoridade e não invade o papel do outro.
 
 ---
 
@@ -22,6 +22,7 @@
 | `@squad-creator` | Criador de Squads | Montar equipe pré-configurada para um projeto |
 | `@reliability` | SRE / Observabilidade | SLO/SLI, error budgets, OpenTelemetry, incident response |
 | `@prompt-engineer` | Prompt Ops / LLM | Design de prompts, eval, A/B testing, defesa contra injection |
+| `@security` | AppSec / Pentest | Threat modeling, code review OWASP, secrets scan, audit de auth |
 
 ---
 
@@ -99,6 +100,26 @@
 **Quando usar:**
 - "Como devo organizar o dashboard do CEO?"
 - "Revise a usabilidade do formulário de pagamento"
+
+---
+
+### `@security` — Application Security (Cipher)
+**O que faz:** Pensa como atacante, reporta como defensor. Executa threat modeling STRIDE, code review focado em OWASP Top 10 e OWASP API Top 10, scan de secrets, audit de CVEs, mapa de dados sensíveis, headers HTTP, auth review e security gate pré-merge.
+
+**Quando usar:**
+- "Faça o threat model do módulo de pagamentos"
+- "Revise a segurança desse endpoint de autenticação"
+- "Tem secrets no repositório?"
+- "Rode o security gate antes do merge"
+- Antes de qualquer feature com auth, pagamentos, PII ou novos endpoints de API
+
+**Dados que sempre requerem @security:**
+- CPF, RG, passaporte, biometria (LGPD PII sensível)
+- Número de cartão, CVV, dados bancários (PCI DSS)
+- Prontuários, CID, dados de saúde (PHI)
+- Senhas, tokens de API, private keys
+
+**Regra:** CRITICAL findings bloqueiam merge imediatamente. Não há exceção.
 
 ---
 
