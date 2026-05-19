@@ -27,7 +27,7 @@ Critérios não negociáveis: **segurança por padrão**, **resiliência operaci
 | Banco de dados | PostgreSQL via Supabase na AWS | Redundância gerenciada, failover automático, backups diários, criptografia em repouso e em trânsito |
 | Validação de dados | Zod (todas as Edge Functions) | Validação de schema em 100% das entradas, incluindo instruções aos agentes |
 | Orquestração de agentes | Edge Functions + OpenRouter | Roteamento entre modelos sem vendor lock-in (Claude + GPT-4o avaliados) |
-| Deploy | Lovable + CDN | Code splitting, lazy loading por rota, bundle analisado antes de release |
+| Deploy | GitHub → Netlify (CDN) | Code splitting, lazy loading por rota, bundle analisado antes de release. Lovable usado como builder de desenvolvimento, deploy via GitHub + Netlify |
 | Monitoramento | Audit logs + Web Vitals + alertas | Rastreabilidade completa de ações dos agentes |
 
 **Princípio central:** *"Se o código fosse público amanhã, o sistema ainda estaria seguro."*
