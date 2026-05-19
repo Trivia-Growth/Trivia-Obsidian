@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HeziomOS — Dashboard CEO · Posição de Estoque</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-900: #0f2318;
+      --green-800: #1a3a2a;
+      --green-700: #235236;
+      --green-600: #2e6b45;
+      --green-500: #3a8456;
+      --green-100: #e8f5ec;
+      --green-50:  #f2faf4;
+      --orange:    #c8714a;
+      --orange-lt: #f0e0d6;
+      --amber:     #e8a838;
+      --red:       #d64040;
+      --red-lt:    #fdeaea;
+      --gray-900:  #1a1d20;
+      --gray-700:  #3d4349;
+      --gray-500:  #6b7280;
+      --gray-300:  #d1d5db;
+      --gray-100:  #f3f4f6;
+      --gray-50:   #f9fafb;
+      --white:     #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+      --radius:    10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      min-height: 100vh;
+    }
+
+    /* ── TOP NAV ── */
+    header {
+      background: var(--green-800);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.3px;
+    }
+
+    .logo-badge {
+      background: var(--orange);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sync-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+
+    .user-chip {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── PAGE CONTAINER ── */
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 32px 48px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb span { color: var(--gray-300); }
+
+    .page-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gray-900);
+      letter-spacing: -.4px;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-top: 4px;
+    }
+
+    /* ── KPI CARDS ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-100);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .kpi-card.green::before  { background: var(--green-600); }
+    .kpi-card.orange::before { background: var(--orange); }
+    .kpi-card.amber::before  { background: var(--amber); }
+    .kpi-card.red::before    { background: var(--red); }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--gray-900);
+      line-height: 1;
+    }
+
+    .kpi-sub {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 6px;
+    }
+
+    .kpi-sub b {
+      color: var(--gray-700);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--gray-300);
+      background: var(--white);
+      color: var(--gray-700);
+      transition: all .15s;
+    }
+
+    .filter-btn.active {
+      background: var(--green-800);
+      border-color: var(--green-800);
+      color: var(--white);
+    }
+
+    .search-box {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--gray-300);
+      font-size: 12px;
+      color: var(--gray-700);
+      background: var(--white);
+      width: 200px;
+    }
+
+    /* ── STOCK TABLE ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: var(--gray-50);
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    thead th:last-child { text-align: right; }
+    thead th.num { text-align: right; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .1s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--gray-50); }
+
+    td {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      vertical-align: middle;
+    }
+
+    td.num { text-align: right; }
+
+    .product-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .product-thumb {
+      width: 36px;
+      height: 48px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: var(--gray-100);
+      flex-shrink: 0;
+      border: 1px solid var(--gray-200, #e5e7eb);
+    }
+
+    .product-thumb-placeholder {
+      width: 36px;
+      height: 48px;
+      border-radius: 4px;
+      background: var(--gray-100);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .product-name {
+      font-weight: 500;
+      color: var(--gray-900);
+      line-height: 1.3;
+    }
+
+    .product-isbn {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .type-badge.livro  { background: var(--green-100); color: var(--green-700); }
+    .type-badge.ebook  { background: #ede9fe; color: #6d28d9; }
+    .type-badge.biblia { background: #fef3c7; color: #92400e; }
+    .type-badge.kit    { background: #e0f2fe; color: #0369a1; }
+
+    .stock-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 140px;
+    }
+
+    .stock-bar {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--gray-100);
+      overflow: hidden;
+    }
+
+    .stock-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .4s ease;
+    }
+
+    .stock-num {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--gray-900);
+      min-width: 44px;
+      text-align: right;
+    }
+
+    .price-cell {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .stock-value-cell {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .status-badge.ok     { background: var(--green-100); color: var(--green-700); }
+    .status-badge.zero   { background: var(--red-lt);    color: var(--red); }
+    .status-badge.low    { background: #fef3c7;          color: #92400e; }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ── CHART SECTION ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .chart-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-100);
+      padding: 20px 24px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 16px;
+    }
+
+    .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar-label {
+      font-size: 12px;
+      color: var(--gray-700);
+      width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 22px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green-700), var(--green-500));
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      transition: width .5s ease;
+    }
+
+    .bar-fill-val {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* Donut */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    svg.donut { transform: rotate(-90deg); }
+
+    .donut-legend { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-label { color: var(--gray-700); }
+    .legend-val { margin-left: auto; font-weight: 600; color: var(--gray-900); }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-200, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    .footer-source {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .source-tag {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ──────────── HEADER ──────────── -->
+<header>
+  <div class="logo">
+    <!-- Simplified SVG leaf logo inspired by Heziom brand -->
+    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 4C12 4 6 12 8 22C10 30 18 36 20 36C22 36 30 30 32 22C34 12 28 4 20 4Z" fill="#3a8456"/>
+      <path d="M20 36C20 36 14 24 20 14C26 24 20 36 20 36Z" fill="rgba(255,255,255,0.25)"/>
+      <path d="M20 14L20 36" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="logo-text">HeziomOS</span>
+    <span class="logo-badge">CEO</span>
+  </div>
+
+  <div class="header-right">
+    <div class="sync-pill">
+      <span class="sync-dot"></span>
+      Literarius · ao vivo
+    </div>
+    <div class="user-chip">LA</div>
+  </div>
+</header>
+
+<!-- ──────────── PAGE ──────────── -->
+<div class="page">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      Dashboard CEO <span>›</span> Posição de Estoque
+    </div>
+    <div class="page-title">Posição de Estoque</div>
+    <div class="page-subtitle" id="timestamp">Sincronizado agora · Literarius ERP · Empresa 1 · Setor 1</div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card green">
+      <div class="kpi-label">Total em estoque</div>
+      <div class="kpi-value">22.773</div>
+      <div class="kpi-sub">unidades físicas</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Valor de estoque</div>
+      <div class="kpi-value">R$ 764K</div>
+      <div class="kpi-sub"><b>R$ 764.046</b> a preço de venda</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Títulos físicos</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">de 30 SKUs mapeados</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Sem estoque</div>
+      <div class="kpi-value">12</div>
+      <div class="kpi-sub">SKUs zerados (EBOOKs + esgotados)</div>
+    </div>
+  </div>
+
+  <!-- Table section -->
+  <div class="section-header">
+    <div class="section-title">Catálogo — Saldo por Produto</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="setFilter('fisicos', this)">Físicos</button>
+      <button class="filter-btn" onclick="setFilter('zerados', this)">Zerados</button>
+      <input class="search-box" type="text" placeholder="Buscar produto…" oninput="filterSearch(this.value)" />
+    </div>
+  </div>
+
+  <div class="card">
+    <table id="stockTable">
+      <thead>
+        <tr>
+          <th style="width:40%">Produto</th>
+          <th>Tipo</th>
+          <th class="num">Preço</th>
+          <th>Saldo</th>
+          <th class="num">Valor Estoque</th>
+          <th class="num">Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Charts -->
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chart-title">Top 8 — Maior Estoque Físico</div>
+      <div class="bar-chart" id="barChart"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Composição do Portfólio</div>
+      <div class="donut-wrap">
+        <svg class="donut" width="140" height="140" viewBox="0 0 140 140">
+          <!-- Donut segments — total 30 SKUs: 9 livros, 1 biblia, 3 kit/caderneta, 9 ebooks, remainder -->
+          <!-- Using stroke-dasharray trick -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#e5e7eb" stroke-width="22"/>
+          <!-- Livros físicos: 9 → 108° -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#2e6b45" stroke-width="22"
+                  stroke-dasharray="94 220" stroke-dashoffset="0" stroke-linecap="butt"/>
+          <!-- Bíblias: 5 → 60° -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#e8a838" stroke-width="22"
+                  stroke-dasharray="52 262" stroke-dashoffset="-94" stroke-linecap="butt"/>
+          <!-- Kits/Caderneta: 2 -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#c8714a" stroke-width="22"
+                  stroke-dasharray="21 293" stroke-dashoffset="-146" stroke-linecap="butt"/>
+          <!-- EBOOKs: 9 -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#a78bfa" stroke-width="22"
+                  stroke-dasharray="94 220" stroke-dashoffset="-167" stroke-linecap="butt"/>
+          <circle cx="70" cy="70" r="32" fill="white"/>
+          <text x="70" y="65" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1d20" transform="rotate(90 70 70)">30</text>
+          <text x="70" y="80" text-anchor="middle" font-size="10" fill="#6b7280" transform="rotate(90 70 70)">SKUs</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#2e6b45"></div>
+            <span class="legend-label">Livros físicos</span>
+            <span class="legend-val">9</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#e8a838"></div>
+            <span class="legend-label">Bíblias</span>
+            <span class="legend-val">5</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#c8714a"></div>
+            <span class="legend-label">Kits / Caderneta</span>
+            <span class="legend-val">3</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#a78bfa"></div>
+            <span class="legend-label">E-books</span>
+            <span class="legend-val">9</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#e5e7eb"></div>
+            <span class="legend-label">Outros</span>
+            <span class="legend-val">4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-source">
+      Fonte:
+      <span class="source-tag">Literarius ERP</span>
+      <span class="source-tag">TEstoqueController · /Estoque/1/1/{id}</span>
+    </div>
+    <span id="footerTs"></span>
+  </div>
+</div>
+
+<script>
+  const products = [
+    { id:1,  titulo:"Josué",                                    isbn:"9786552650504", preco:77.9,  saldo:1228, url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650504.jpg",  tipo:"livro"  },
+    { id:2,  titulo:"Bíblia ARA Solas",                         isbn:"7899938418079", preco:69.9,  saldo:0,    url:"",                                                                                               tipo:"biblia" },
+    { id:3,  titulo:"Bíblia ARA Flor",                          isbn:"7899938418086", preco:69.9,  saldo:0,    url:"",                                                                                               tipo:"biblia" },
+    { id:4,  titulo:"Bíblia ARA Cordeiro e Leão",               isbn:"7899938418093", preco:69.9,  saldo:0,    url:"",                                                                                               tipo:"biblia" },
+    { id:5,  titulo:"Bíblia ARA Sarca Preta",                   isbn:"7899938418109", preco:69.9,  saldo:0,    url:"",                                                                                               tipo:"biblia" },
+    { id:6,  titulo:"Bíblia ARA Sarca Amarela",                 isbn:"7899938418116", preco:69.9,  saldo:0,    url:"",                                                                                               tipo:"biblia" },
+    { id:7,  titulo:"Bíblia Mães da Aliança Vinho",             isbn:"7899938426203", preco:159.9, saldo:20,   url:"",                                                                                               tipo:"biblia" },
+    { id:8,  titulo:"Mães da Aliança 2025",                     isbn:"9786552650009", preco:89.9,  saldo:4,    url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650009.jpg",  tipo:"kit"    },
+    { id:9,  titulo:"Mães orando, Deus agindo 2025",            isbn:"9786552650016", preco:94.9,  saldo:0,    url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650016.jpg",  tipo:"kit"    },
+    { id:10, titulo:"Caderneta Mães da Aliança 2025",           isbn:"9786552650023", preco:19.9,  saldo:5981, url:"",                                                                                               tipo:"kit"    },
+    { id:11, titulo:"Ebook Mães da Aliança 2025",               isbn:"9786552650030", preco:89.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:12, titulo:"Ebook Não Abra Mão do Evangelho",          isbn:"9786552650047", preco:25.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:13, titulo:"Não abra mão do Evangelho",                isbn:"9786552650054", preco:37.9,  saldo:368,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650054.png", tipo:"livro"  },
+    { id:14, titulo:"A fé dos eleitos — Vol. 2",                isbn:"9786552650061", preco:29.9,  saldo:949,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650061.jpg",  tipo:"livro"  },
+    { id:15, titulo:"Ebook A fé dos eleitos Vol. II",           isbn:"9786552650085", preco:19.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:16, titulo:"Noivado e casamento",                      isbn:"9786552650092", preco:25.9,  saldo:792,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650092.jpg",  tipo:"livro"  },
+    { id:17, titulo:"A fé dos eleitos — Vol. 1",                isbn:"9786552650122", preco:29.9,  saldo:988,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650122.jpg",  tipo:"livro"  },
+    { id:18, titulo:"Ebook A fé dos eleitos Vol. I",            isbn:"9786552650139", preco:19.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:19, titulo:"Ebook Generosidade",                       isbn:"9786552650146", preco:29.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:20, titulo:"Generosidade",                             isbn:"9786552650153", preco:52.9,  saldo:3595, url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650153.jpg",  tipo:"livro"  },
+    { id:21, titulo:"O sacerdócio universal dos crentes",       isbn:"9786552650160", preco:17.9,  saldo:1116, url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650160.jpg",  tipo:"livro"  },
+    { id:22, titulo:"Meditações em Provérbios (Capa Dura)",     isbn:"9786552650177", preco:76.9,  saldo:0,    url:"",                                                                                               tipo:"livro"  },
+    { id:23, titulo:"Liderança Servidora",                      isbn:"9786552650184", preco:18.9,  saldo:2021, url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650184.jpg",  tipo:"livro"  },
+    { id:24, titulo:"Meditações em Provérbios",                 isbn:"9786552650191", preco:109.9, saldo:110,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650191.jpg",  tipo:"livro"  },
+    { id:25, titulo:"É Assim que a Felicidade Acontece",        isbn:"9786552650207", preco:39.9,  saldo:642,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650207.png", tipo:"livro"  },
+    { id:26, titulo:"Mordomia Cristã",                          isbn:"9786552650214", preco:25.9,  saldo:873,  url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650214.jpg",  tipo:"livro"  },
+    { id:27, titulo:"Ebook Mordomia Cristã",                    isbn:"9786552650221", preco:15.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:28, titulo:"Ebook Tratado sobre o Contentamento",      isbn:"9786552650238", preco:30.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+    { id:29, titulo:"Tratado sobre Contentamento Cristão",      isbn:"9786552650245", preco:47.9,  saldo:4086, url:"https://fl-storage.bookinfometadados.com.br/uploads/book/first_cover/thumb_9786552650245.jpg",  tipo:"livro"  },
+    { id:30, titulo:"Ebook Anônimas",                           isbn:"9786552650252", preco:27.9,  saldo:0,    url:"",                                                                                               tipo:"ebook"  },
+  ];
+
+  const maxSaldo = Math.max(...products.map(p => p.saldo));
+  const fmtBRL = n => n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+  const fmtNum = n => n.toLocaleString('pt-BR');
+
+  const typeLabel = { livro:'Livro', ebook:'E-book', biblia:'Bíblia', kit:'Kit / Devoc.' };
+
+  let activeFilter = 'todos';
+  let searchTerm  = '';
+
+  function setFilter(f, btn) {
+    activeFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable();
+  }
+
+  function filterSearch(v) {
+    searchTerm = v.toLowerCase();
+    renderTable();
+  }
+
+  function stockColor(saldo, max) {
+    if (saldo === 0) return '#ef4444';
+    const pct = saldo / max;
+    if (pct > .3) return '#2e6b45';
+    if (pct > .1) return '#e8a838';
+    return '#e8a838';
+  }
+
+  function stockStatus(saldo) {
+    if (saldo === 0) return `<span class="status-badge zero"><span class="status-dot"></span>Zerado</span>`;
+    if (saldo < 20)  return `<span class="status-badge low"><span class="status-dot"></span>Crítico</span>`;
+    return `<span class="status-badge ok"><span class="status-dot"></span>OK</span>`;
+  }
+
+  function renderTable() {
+    const filtered = products.filter(p => {
+      if (activeFilter === 'fisicos' && p.saldo === 0) return false;
+      if (activeFilter === 'zerados' && p.saldo > 0)  return false;
+      if (searchTerm && !p.titulo.toLowerCase().includes(searchTerm)) return false;
+      return true;
+    });
+
+    const body = document.getElementById('tableBody');
+    body.innerHTML = filtered.map(p => {
+      const pct = maxSaldo > 0 ? (p.saldo / maxSaldo * 100).toFixed(1) : 0;
+      const color = stockColor(p.saldo, maxSaldo);
+      const valorEstoque = p.saldo * p.preco;
+
+      const thumb = p.url
+        ? `<img class="product-thumb" src="${p.url}" alt="${p.titulo}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="product-thumb-placeholder" style="display:none">📖</div>`
+        : `<div class="product-thumb-placeholder">📖</div>`;
+
+      return `<tr>
+        <td>
+          <div class="product-cell">
+            ${thumb}
+            <div>
+              <div class="product-name">${p.titulo}</div>
+              <div class="product-isbn">ISBN ${p.isbn}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="type-badge ${p.tipo}">${typeLabel[p.tipo]}</span></td>
+        <td class="num price-cell">${fmtBRL(p.preco)}</td>
+        <td>
+          <div class="stock-bar-wrap">
+            <div class="stock-bar">
+              <div class="stock-bar-fill" style="width:${pct}%;background:${color}"></div>
+            </div>
+            <span class="stock-num">${fmtNum(p.saldo)}</span>
+          </div>
+        </td>
+        <td class="num stock-value-cell">${p.saldo > 0 ? fmtBRL(valorEstoque) : '—'}</td>
+        <td class="num">${stockStatus(p.saldo)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Bar chart — top 8 by saldo
+  function renderBarChart() {
+    const top8 = [...products].filter(p => p.saldo > 0).sort((a,b) => b.saldo - a.saldo).slice(0,8);
+    const maxVal = top8[0].saldo;
+    const el = document.getElementById('barChart');
+    el.innerHTML = top8.map(p => {
+      const pct = (p.saldo / maxVal * 100).toFixed(1);
+      return `<div class="bar-row">
+        <span class="bar-label" title="${p.titulo}">${p.titulo}</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%">
+            <span class="bar-fill-val">${fmtNum(p.saldo)}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Timestamp
+  function setTs() {
+    const now = new Date();
+    const opts = { dateStyle:'short', timeStyle:'short', timeZone:'America/Sao_Paulo' };
+    const ts = now.toLocaleString('pt-BR', opts);
+    document.getElementById('footerTs').textContent = `Gerado em ${ts} (America/São Paulo)`;
+    document.getElementById('timestamp').textContent = `Sincronizado em ${ts} · Literarius ERP · Empresa 1 · Setor 1`;
+  }
+
+  renderTable();
+  renderBarChart();
+  setTs();
+</script>
+</body>
+</html>
