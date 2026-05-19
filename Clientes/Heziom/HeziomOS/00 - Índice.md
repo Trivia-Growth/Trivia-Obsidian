@@ -160,6 +160,15 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ---
 
+## Ferramentas a Substituir (documentação completa)
+
+- [[ClickUp — Funcionalidades Mapeadas]] — inventário completo: tasks, views, automações, custom fields, API de migração ✅
+- [[Flowbiz — Funcionalidades Mapeadas]] — CRM, segmentação, réguas, e-commerce tracking, canais, plano de migração 40k contatos ✅
+- [[Unnichat — Funcionalidades Mapeadas]] — WhatsApp, chatbot, filas, agentes IA, CRM integrado, integrações ✅
+- [[Qive — Funcionalidades Mapeadas]] — NF-e, manifestação SEFAZ, workflow aprovação, CNAB, compliance, plano Fase 3 ✅
+
+---
+
 ## Documentação de Referência
 
 - [[DDL Banco de dados Literarius]] — schema completo do banco
