@@ -1,15 +1,15 @@
-# O que é o AIOX
+# O que é o Triviaiox
 
-O AIOX é um framework de agentes de IA especializado para desenvolvimento de software. Pense nele como **uma equipe completa de software que fica disponível via Claude Code** — cada agente tem um papel específico e não invade o trabalho do outro.
+O Triviaiox é um framework de agentes de IA especializado para desenvolvimento de software. Pense nele como **uma equipe completa de software que fica disponível via Claude Code** — cada agente tem um papel específico e não invade o trabalho do outro.
 
 ---
 
 ## A Analogia
 
-Antes do AIOX, um desenvolvedor tentava fazer tudo: planejar, codificar, testar, documentar, revisar segurança. Com o AIOX, cada responsabilidade tem um agente especializado:
+Antes do Triviaiox, um desenvolvedor tentava fazer tudo: planejar, codificar, testar, documentar, revisar segurança. Com o Triviaiox, cada responsabilidade tem um agente especializado:
 
-| Papel Humano | Agente AIOX |
-|-------------|-------------|
+| Papel Humano | Agente Triviaiox |
+|-------------|-----------------|
 | Product Owner | `@po` |
 | Scrum Master | `@sm` |
 | Arquiteto | `@architect` |
@@ -19,7 +19,7 @@ Antes do AIOX, um desenvolvedor tentava fazer tudo: planejar, codificar, testar,
 | Data Engineer | `@data-engineer` |
 | UX Designer | `@ux-design-expert` |
 | Analista | `@analyst` |
-| Mestre do AIOX | `@aiox-master` |
+| Mestre do Triviaiox | `@triviaiox-master` |
 
 ---
 
@@ -43,7 +43,7 @@ Story marcada como "concluido"
 
 ---
 
-## Princípios do AIOX
+## Princípios do Triviaiox
 
 1. **CLI First** — o Claude Code (terminal) é a fonte de verdade
 2. **Cada agente tem sua autoridade** — `@qa` não codifica; `@dev` não aprova QA
@@ -80,6 +80,6 @@ Agentes **nunca** tomam decisões de negócio sozinhos. Eles implementam, testam
 
 ## Mais Detalhes
 
-- [[Instalação]] — como instalar o AIOX no repositório
+- [[Instalação]] — como instalar o Triviaiox no repositório
 - [[Equipe de Agentes]] — o que cada agente faz em detalhe
 - [[Ciclo de uma Story]] — fluxo completo de uma story do backlog ao deploy

@@ -1,6 +1,6 @@
-# Equipe de Agentes AIOX
+# Equipe de Agentes Triviaiox
 
-12 agentes especializados. Cada um tem sua autoridade e não invade o papel do outro.
+14 agentes especializados. Cada um tem sua autoridade e não invade o papel do outro.
 
 ---
 
@@ -8,7 +8,7 @@
 
 | Agente | Papel | Quando Usar |
 |--------|-------|------------|
-| `@aiox-master` | Orquestrador geral | Configurar equipes, resolver conflitos entre agentes |
+| `@triviaiox-master` | Orquestrador geral | Configurar equipes, resolver conflitos entre agentes |
 | `@po` | Product Owner | Definir requisitos, priorizar backlog, refinar produto |
 | `@sm` | Scrum Master | Criar e gerir stories, facilitar sprint, remover bloqueios |
 | `@architect` | Arquiteto | Decisões técnicas, design de sistema, ADRs |
@@ -17,9 +17,11 @@
 | `@devops` | DevOps | CI/CD, infraestrutura, deploy, monitoramento |
 | `@data-engineer` | Engenheiro de Dados | Schema Supabase, migrations, RLS, sync scripts |
 | `@ux-design-expert` | UX/UI | Design de interface, componentes, acessibilidade |
-| `@analyst` | Analista | Pesquisa, documentação, análise de dados |
+| `@analyst` | Analista + FinOps | Pesquisa, análise de dados, custo como métrica de produto |
 | `@pm` | Project Manager | Roadmap, milestones, comunicação com stakeholders |
 | `@squad-creator` | Criador de Squads | Montar equipe pré-configurada para um projeto |
+| `@reliability` | SRE / Observabilidade | SLO/SLI, error budgets, OpenTelemetry, incident response |
+| `@prompt-engineer` | Prompt Ops / LLM | Design de prompts, eval, A/B testing, defesa contra injection |
 
 ---
 

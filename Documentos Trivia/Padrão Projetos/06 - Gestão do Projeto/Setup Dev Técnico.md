@@ -1,4 +1,4 @@
-# Setup para Desenvolvedor Técnico (Claude Code + AIOX)
+# Setup para Desenvolvedor Técnico (Claude Code + Triviaiox)
 
 Guia para devs que trabalham via Claude Code. Diferente do [[Setup Colaborador]] (perfil de negócio), este guia é para quem vai implementar código.
 
@@ -39,10 +39,10 @@ Preencher com as credenciais que o Lucas vai passar. **Nunca commitar `.env.loca
 
 ---
 
-## O AIOX já está configurado
+## O Triviaiox já está configurado
 
 Ao clonar, você já tem os agentes e regras do projeto:
-- `.aiox-core/` — 12 agentes especializados
+- `.triviaiox-core/` — 14 agentes especializados
 - `.claude/` — regras e configurações do Claude Code
 - `CLAUDE.md` — instruções do projeto (ler antes de qualquer coisa)
 - `PROJECT_REQUIREMENTS.md` — requisitos e stack
