@@ -3,7 +3,7 @@ id: STORY-052
 titulo: "Cadastro de Clínicas (nome + CNPJ)"
 fase: 5
 modulo: "parameters"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -26,4 +26,4 @@ Há duas clínicas Angioclam (CNPJs diferentes). Precisa cadastrá-las.
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)

@@ -50,6 +50,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 ## Mapa de Dados e Análises
 
 - [[Mapa de Dados]] — tabela cruzada módulos × fontes, fluxos de integração
+- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — 🔴 inventário total: 150 tabelas Literarius + ~100 endpoints Tray + cruzamentos + oportunidades ✅
 - [[Dúvidas para Insights do CEO]] — perguntas pendentes para Heziom e Literarius
 - [[Premissas e Entendimentos]] — o que está validado e o que ainda está a confirmar
 - [[Análise dos Dados Extraídos]] — achados críticos e bloqueadores do DRE

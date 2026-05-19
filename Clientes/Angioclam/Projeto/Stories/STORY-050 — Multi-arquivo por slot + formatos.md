@@ -3,7 +3,7 @@ id: STORY-050
 titulo: "Multi-arquivo por slot + formatos (.csv ;/, .xlsx .xls binário .xls=HTML)"
 fase: 5
 modulo: "motor/report"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -34,7 +34,7 @@ web"). O sistema só aceita 1 arquivo por slot e 1 formato.
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)
 
 ## QA
 

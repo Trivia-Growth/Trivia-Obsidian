@@ -3,7 +3,7 @@ id: STORY-054
 titulo: "Editar nome/cor da operadora"
 fase: 5
 modulo: "parameters"
-status: pronto
+status: concluida
 prioridade: média
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -24,4 +24,4 @@ Sergio pediu poder mudar o nome da operadora.
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)

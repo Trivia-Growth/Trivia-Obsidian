@@ -61,17 +61,33 @@ Fluxo `rascunho→calculado→em_revisao→aprovado` (Edge Function
 impressão do HTML print-ready (ADR-009), habilita só aprovado; cor travada por
 operadora. STORY-040, 52 testes, deploy + E2E OK. **Status:** `concluída`.
 
-## Fase 5 — Multi-planilha + clínica + parâmetros extensíveis *(em andamento — 2026-05-19)*
+## Fase 5 — Multi-planilha + clínica + parâmetros extensíveis *(concluída — 2026-05-19)*
 
-Devolutiva do Sergio. Stories registradas:
-- STORY-050 multi-arquivo por slot + formatos (.csv/.xls=HTML)
-- STORY-051 parseDt 2 formatos de data
-- STORY-052 cadastro de clínicas (nome+CNPJ)
-- STORY-053 clínica no relatório (seleção + capa/CNPJ)
-- STORY-054 editar nome/cor da operadora
-- STORY-055 parâmetros extensíveis (add/remover exame)
-- STORY-056 verificação + deploy + E2E Bradesco
-- STORY-057 (Fase 5.2, diferida) motor com indicadores configuráveis
+Devolutiva do Sergio. Stories:
+- ✅ STORY-050 multi-arquivo por slot + formatos (.csv ;/, e .xls=HTML)
+- ✅ STORY-051 parseDt 2 formatos de data (ISO + DD/MM/AAAA)
+- ✅ STORY-052 cadastro de clínicas (nome+CNPJ)
+- ✅ STORY-053 clínica no relatório (seleção + capa/CNPJ)
+- ✅ STORY-054 editar nome/cor da operadora
+- ✅ STORY-055 parâmetros extensíveis (add/remover exame)
+- ✅ STORY-056 verificação + deploy + E2E Bradesco
+- ⏸️ STORY-057 (Fase 5.2, diferida) motor com indicadores configuráveis
+- ⏸️ STORY-058 (diferida) integração API Klingo
+- ⏸️ STORY-059 (diferida) anexar à plataforma da Lenira
+
+Entrega: 67/67 testes verdes (gate SulAmérica intacto), build/lint ok,
+commit `c453b45` (push main → Netlify), `supabase db push` (clinicas) +
+`functions deploy recompute-report`.
+
+**E2E completo Bradesco (2026-05-19, 9 arquivos):** mapeamento por schema —
+B1 = `relatorio.csv` + `data (3).xls` + `data (4).xls`; B2 = `relatorio
+(1).csv` + `data (8).xls` + `data (9).xls`; B3 = `data (5).xls` +
+`data (6).xls` + `data (7).xls` (colunas de comorbidade haspacmed/dmiipacmed/
+obespacmed…). Resultado: operadora "Bradesco Saúde", período 07/04/2025–
+11/05/2026 (datas BR ok), 2.635 pacientes, 4.923 atendimentos, 19.116
+procedimentos, faturamento R$ 3.405.235, econ. líquida (A) R$ 1.788.794,
+cobertura B1/B2 97,1%/99,97%. HTML do relatório gerado em
+`Sistema/Arquivos Bradesco/RELATORIO_Bradesco_E2E.html`.
 
 Decisões: clínica = cadastrar+escolher no upload (cada lote = 1 clínica, sem
 filtrar por coluna) + nome/CNPJ no relatório; novos exames = valores editáveis

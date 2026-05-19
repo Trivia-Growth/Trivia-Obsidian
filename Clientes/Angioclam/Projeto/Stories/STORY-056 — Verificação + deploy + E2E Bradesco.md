@@ -3,7 +3,7 @@ id: STORY-056
 titulo: "Verificação + deploy + E2E Bradesco"
 fase: 5
 modulo: "qa/devops"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -28,4 +28,4 @@ reais da Bradesco.
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)

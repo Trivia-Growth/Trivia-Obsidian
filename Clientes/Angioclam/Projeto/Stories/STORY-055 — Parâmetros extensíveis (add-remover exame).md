@@ -3,7 +3,7 @@ id: STORY-055
 titulo: "Parâmetros extensíveis (adicionar/remover exame)"
 fase: 5
 modulo: "parameters"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -27,4 +27,4 @@ indicadores configuráveis = STORY-057, diferida.)
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)

@@ -3,7 +3,7 @@ id: STORY-053
 titulo: "Clínica no relatório (seleção + capa/CNPJ)"
 fase: 5
 modulo: "report"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -28,4 +28,4 @@ clínica escolhida (nome + CNPJ) no lugar do "Angioclam" hardcoded.
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)

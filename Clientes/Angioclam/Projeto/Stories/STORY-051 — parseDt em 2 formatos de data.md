@@ -3,7 +3,7 @@ id: STORY-051
 titulo: "parseDt aceita DD/MM/AAAA além de ISO"
 fase: 5
 modulo: "motor"
-status: pronto
+status: concluida
 prioridade: alta
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -26,4 +26,4 @@ Os arquivos da Bradesco vêm com datas em `DD/MM/AAAA` (xls) e
 
 ## Implementação
 
-**Status:** `pronto`
+**Status:** `concluida` (Fase 5 entregue em 2026-05-19)
