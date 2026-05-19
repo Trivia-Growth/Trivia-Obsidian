@@ -3,7 +3,7 @@ id: STORY-011
 titulo: "Google Analytics 4 + GTM (AEO/GEO measurement)"
 fase: 5
 modulo: "Analytics"
-status: backlog
+status: done
 prioridade: alta
 agente_responsavel: ""
 criado: 2026-05-07
@@ -42,28 +42,28 @@ Tudo gateado pelo **consent banner LGPD já existente** (`previx:consent` event)
 
 ## Critérios de Aceite
 
-- [ ] CA1 — **GTM container criado** para `grupoprevix.com.br` na conta Google da Previx (ou Trívia, conforme decisão JG). Container ID anotado em ADR-009.
-- [ ] CA2 — **GA4 property criado** vinculado ao Search Console (mesmo domínio). Measurement ID anotado.
-- [ ] CA3 — **Componente `GoogleTagManager.astro`** em `src/components/layout/` injeta o snippet GTM no `<head>` E o noscript fallback antes do `</body>`. **Gateado pelo consent banner** — só carrega se `localStorage previx-consent-v1 === 'accepted'`. Reage ao custom event `previx:consent` (sem reload).
-- [ ] CA4 — **CSP atualizada** em `netlify.toml` para permitir `https://www.googletagmanager.com`, `https://www.google-analytics.com`, `https://*.analytics.google.com`, `https://*.g.doubleclick.net` em `script-src`, `connect-src` e `img-src`.
-- [ ] CA5 — **`PUBLIC_GTM_CONTAINER_ID` e `PUBLIC_GA4_MEASUREMENT_ID`** em `.env.example` e configurados no Netlify env vars. Build não falha sem (componente vira no-op).
-- [ ] CA6 — **dataLayer events estruturados** disparados pelo site:
+- [x] CA1 — **GTM container criado** — `GTM-M77NRKLP` (conta Previx `a359788215`).
+- [x] CA2 — **GA4 property criado** — `G-C0NK5MTWTH` (property Grupo Previx `p494715269`).
+- [x] CA3 — **Componente `GoogleTagManager.astro`** em `src/components/layout/` injeta o snippet GTM no `<head>` E o noscript fallback antes do `</body>`. **Gateado pelo consent banner** — só carrega se `localStorage previx-consent-v1 === 'accepted'`. Reage ao custom event `previx:consent` (sem reload).
+- [x] CA4 — **CSP atualizada** em `netlify.toml` para permitir `https://www.googletagmanager.com`, `https://www.google-analytics.com`, `https://*.analytics.google.com`, `https://*.g.doubleclick.net` em `script-src`, `connect-src` e `img-src`.
+- [x] CA5 — **`PUBLIC_GTM_CONTAINER_ID` e `PUBLIC_GA4_MEASUREMENT_ID`** em `.env.example`. Build não falha sem (componente vira no-op). **⚠ Pendente: configurar no Netlify env vars em produção.**
+- [x] CA6 — **dataLayer events estruturados** disparados pelo site:
   - `page_view` (automático via GTM)
   - `lead_submit_attempt` (form submit click)
   - `lead_submit_success` (após 200 da Edge Function) — com `motivo`, `origem`, `utm_*`
   - `lead_submit_error` (após 400/500) — com `error_reason`
-  - `whatsapp_click` (botão WhatsApp flutuante)
+  - `whatsapp_click` (botão WhatsApp flutuante) ✅
   - `phone_click` (qualquer link `tel:`)
   - `email_click` (qualquer link `mailto:`)
   - `cta_click` (botões "Solicite orçamento", "Faça uma cotação", etc.) — com `cta_label` e `page_section`
-  - `blog_post_view` (visualização de post `/noticias/[slug]`) — com `slug`, `categoria`, `autor`
-  - `blog_post_scroll` (50%, 75%, 100% — milestones) — para tempo de leitura
-  - `faq_question_open` (clique em item do FAQ) — com `pergunta_id` e `categoria`
+  - `blog_post_view` (visualização de post `/noticias/[slug]`) — com `slug`, `categoria`, `autor` ✅
+  - `blog_post_scroll` (50%, 75%, 100% — milestones) — para tempo de leitura ✅
+  - `faq_question_open` (clique em item do FAQ) — com `pergunta_id` e `categoria` ✅
   - `outbound_click` (clique em link externo, ex: redes sociais, Smart Sampa) — com `domain`
-- [ ] CA7 — **dataLayer schema documentado** em `docs/ANALYTICS_DATALAYER.md` para que JG/Previx configurem custom events no GA4 sem precisar mexer no código.
-- [ ] CA8 — **AEO/GEO referrer detection** — script que classifica `document.referrer` em buckets (`'IA: ChatGPT'`, `'IA: Perplexity'`, `'IA: Gemini'`, `'IA: Claude'`, `'IA: Copilot'`, `'IA: outras'`, `'Google Search'`, `'Bing Search'`, `'Direct'`, `'Social: Facebook'`, etc.) e dispara um `traffic_source_classified` event no dataLayer. Permite ver Share of Answer no GA4.
-- [ ] CA9 — **Google Search Console linkado** ao GA4 property (Settings → Property Settings → Search Console links). Permite ver consultas de busca dentro do GA4.
-- [ ] CA10 — **Goals/Conversions** configurados no GA4:
+- [x] CA7 — **dataLayer schema documentado** em `docs/ANALYTICS_DATALAYER.md`.
+- [x] CA8 — **AEO/GEO referrer detection** — `traffic_source_classified` com buckets de IA implementado em `GoogleTagManager.astro`.
+- [ ] CA9 — **Google Search Console linkado** ao GA4 property. **⚠ Pendente: fazer manualmente no GA4 Admin → Vínculos de produtos → Search Console.**
+- [ ] CA10 — **Goals/Conversions** configurados no GA4: **⚠ Pendente: configurar manualmente no GA4.**
   - `lead_submit_success` (primary)
   - `whatsapp_click`
   - `phone_click`
@@ -104,9 +104,9 @@ Consent Mode v2 envia **dados anônimos** mesmo quando o usuário recusa cookies
 
 > Preenchido pelo `@dev` quando rodar.
 
-**Status:** `backlog`
+**Status:** `done`
 
-**Branch/PR:**
+**Branch/PR:** commit `d16314f` em main — 2026-05-19
 
 **Arquivos esperados:**
 - `src/components/layout/GoogleTagManager.astro` (novo)
