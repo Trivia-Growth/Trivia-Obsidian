@@ -127,9 +127,9 @@ A Trivia pode entregar **os dois** para a Heziom:
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — o que a API permite
-- [[Fontes de Dados/Tray — Correlação com Literarius]] — integração de dados
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — fases da integração
+- [[Tray - Capacidades do Integrador]] — o que a API permite
+- [[Tray — Correlação com Literarius]] — integração de dados
+- [[Roadmap de Integração Tray × Literarius]] — fases da integração
 
 ---
 

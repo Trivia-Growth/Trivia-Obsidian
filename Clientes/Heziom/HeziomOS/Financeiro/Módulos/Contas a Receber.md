@@ -15,12 +15,12 @@ Gestão de todos os valores a receber pela Literarius: títulos gerados por vend
 
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] | `TipoTitulo='R'`, `Valor`, `Vencimento`, `Situacao`, `Pago`, `Parcela`, `TotalParcela` | Títulos a receber; `Pago=1` indica liquidado |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] | `DataBaixa`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros`, `Conciliado` | Registro de cada recebimento (parcial ou total) |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]] | `PlanoConta`, `CentroResultado`, `Percentual`, `Valor` | Rateio contábil do título por plano de contas |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroAgrupado]] | `idTituloFinanceiro`, `Vencimento`, `Valor` | Agrupamento de títulos (boleto único para múltiplas parcelas) |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] | `Descricao`, `BancoNumero`, `ContaNumero` | Conta destino do recebimento |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio pelo qual o título será/foi recebido |
+| [[TituloFinanceiro]] | `TipoTitulo='R'`, `Valor`, `Vencimento`, `Situacao`, `Pago`, `Parcela`, `TotalParcela` | Títulos a receber; `Pago=1` indica liquidado |
+| [[TituloFinanceiroBaixa]] | `DataBaixa`, `ValorBaixa`, `ValorDesconto`, `ValorMulta`, `ValorJuros`, `Conciliado` | Registro de cada recebimento (parcial ou total) |
+| [[TituloFinanceiroRateio]] | `PlanoConta`, `CentroResultado`, `Percentual`, `Valor` | Rateio contábil do título por plano de contas |
+| [[TituloFinanceiroAgrupado]] | `idTituloFinanceiro`, `Vencimento`, `Valor` | Agrupamento de títulos (boleto único para múltiplas parcelas) |
+| [[ContaBancaria]] | `Descricao`, `BancoNumero`, `ContaNumero` | Conta destino do recebimento |
+| [[FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio pelo qual o título será/foi recebido |
 
 ---
 

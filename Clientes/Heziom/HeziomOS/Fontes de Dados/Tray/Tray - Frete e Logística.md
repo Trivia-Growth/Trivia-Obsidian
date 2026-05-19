@@ -139,10 +139,10 @@ Entrega confirmada (tracking API ou webhook externo)
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — status e campos do pedido
-- [[Fontes de Dados/Tray/Tray - Invoices]] — vinculação de NF
-- [[Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] — NF com dados de transporte
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — visão consolidada
+- [[Tray - Pedidos]] — status e campos do pedido
+- [[Tray - Invoices]] — vinculação de NF
+- [[NotaFiscal]] — NF com dados de transporte
+- [[Mapa Completo de APIs e Capacidades]] — visão consolidada
 
 ---
 

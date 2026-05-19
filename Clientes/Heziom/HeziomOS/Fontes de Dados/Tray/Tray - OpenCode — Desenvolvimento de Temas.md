@@ -333,9 +333,9 @@ A Trivia pode ter os **dois papéis simultaneamente** — entregando tanto o Hez
 
 ## Referências cruzadas no vault
 
-- [[Fontes de Dados/Tray/Tray - Temas e Design]] — marketplace, preços, programa de parceiros
-- [[Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — o que a API permite (app vs tema)
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — fases de integração do HeziomOS
+- [[Tray - Temas e Design]] — marketplace, preços, programa de parceiros
+- [[Tray - Capacidades do Integrador]] — o que a API permite (app vs tema)
+- [[Roadmap de Integração Tray × Literarius]] — fases de integração do HeziomOS
 
 ---
 

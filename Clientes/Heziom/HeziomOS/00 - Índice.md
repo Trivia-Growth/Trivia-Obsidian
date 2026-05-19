@@ -2,16 +2,16 @@
 
 Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conexões entre módulos e fontes de dados.
 
-**Arquitetura completa:** [[HeziomOS — Arquitetura]] — stack React + Vite + Supabase, diagrama de componentes, decisões técnicas.
+**Arquitetura completa:** [[HeziomOS — Arquitetura e Fluxos]] — 🔴 proposta consolidada: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
 
 ---
 
 ## Acompanhamento do Projeto
 
-- [[Clientes/Heziom/HezionOS/Projeto/Dashboard do Projeto]] — status das stories em tempo real (requer plugin Dataview)
-- [[Clientes/Heziom/HezionOS/Projeto/Roadmap]] — 3 fases com milestones e critérios de saída
-- [[Clientes/Heziom/HeziomOS/Projeto/Sprint Atual]] — o que está sendo construído agora
-- [[Clientes/Heziom/HeziomOS/Projeto/Backlog]] — todas as stories por fase e prioridade
+- [[Dashboard do Projeto]] — status das stories em tempo real (requer plugin Dataview)
+- [[Roadmap]] — 3 fases com milestones e critérios de saída
+- [[Sprint Atual]] — o que está sendo construído agora
+- [[Backlog]] — todas as stories por fase e prioridade
 - [[Setup João]] — como acessar e contribuir com este vault
 
 ---
@@ -50,16 +50,16 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 ## Mapa de Dados e Análises
 
 - [[Mapa de Dados]] — tabela cruzada módulos × fontes, fluxos de integração
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — 🔴 inventário total: 150 tabelas Literarius + ~100 endpoints Tray + cruzamentos + oportunidades ✅
+- [[Mapa Completo de APIs e Capacidades]] — 🔴 inventário total: 150 tabelas Literarius + ~100 endpoints Tray + cruzamentos + oportunidades ✅
 - [[Dúvidas para Insights do CEO]] — perguntas pendentes para Heziom e Literarius
 - [[Premissas e Entendimentos]] — o que está validado e o que ainda está a confirmar
 - [[Análise dos Dados Extraídos]] — achados críticos e bloqueadores do DRE
-- [[Fontes de Dados/Literarius/Estoque Heziom — Análise Mai 2026]] — 123 SKUs, 134k unidades, R$8,4M em estoque, top produtos, alertas ✅
+- [[Estoque Heziom — Análise Mai 2026]] — 123 SKUs, 134k unidades, R$8,4M em estoque, top produtos, alertas ✅
 - [[Análise Conexão Direta DB]] — análise via conexão ao banco (abril 2026)
 - [[Análise Planilhas Janeiro 2026]] — faturamento, DRE, CMV, contas a pagar e DFC de janeiro
 - [[DRE Acumulado 2025-2026]] — DRE mensal completo jan/2025 a fev/2026 (arquivo oficial contábil)
-- [[Projeto/Dashboard CEO — Análise Maio 2026]] — KPIs reais 1–15 Mai · faturamento R$340k, A/R R$2M, top produtos
-- [[Projeto/Sessão 2026-05-19 — Continuidade João]] — registro de continuidade + mapa rápido do vault
+- [[Dashboard CEO — Análise Maio 2026]] — KPIs reais 1–15 Mai · faturamento R$340k, A/R R$2M, top produtos
+- [[Sessão 2026-05-19 — Continuidade João]] — registro de continuidade + mapa rápido do vault
 
 ---
 
@@ -81,61 +81,61 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 - [[Views — Camada de Acesso HeziomOS]] — 6 views otimizadas (−70% queries)
 
 **Títulos Financeiros**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixaRateio]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroAgrupado]]
+- [[TituloFinanceiro]]
+- [[TituloFinanceiroBaixa]]
+- [[TituloFinanceiroRateio]]
+- [[TituloFinanceiroBaixaRateio]]
+- [[TituloFinanceiroAgrupado]]
 
 **Contas Bancárias**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]]
+- [[ContaBancaria]]
+- [[ContaBancariaLancamento]]
 
 **Plano de Contas**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]]
+- [[PlanoConta]]
+- [[CentroResultado]]
 
 **Pagamentos**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CondicaoPagto]]
+- [[FormaPagto]]
+- [[CondicaoPagto]]
 
 **Pedidos e Faturamento**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]]
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]]
+- [[PedidoVenda]]
+- [[NotaFiscal]]
 
 **Comissões**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ComissaoParametro]]
+- [[ComissaoParametro]]
 
 ### Tray (API)
 
 **Infraestrutura**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]] — OAuth completo + credenciais + código Python ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Rate Limit e Paginação]] — rate limiter + paginação + retry (código Python) ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]] — 10 eventos + endpoints + ações recomendadas ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — matriz completa de 14 categorias (atualizado 19/05) ✅
+- [[Tray - Autenticação]] — OAuth completo + credenciais + código Python ✅
+- [[Tray - Rate Limit e Paginação]] — rate limiter + paginação + retry (código Python) ✅
+- [[Tray - Webhooks]] — 10 eventos + endpoints + ações recomendadas ✅
+- [[Tray - Capacidades do Integrador]] — matriz completa de 14 categorias (atualizado 19/05) ✅
 
 **Dados Transacionais**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] — GET/POST/PUT/DELETE orders ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]] — price_seller, taxas, status ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]] — vinculação NF-e ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Clientes]] — CRUD + endereços + correlação Literarius ✅ 🆕
+- [[Tray - Pedidos]] — GET/POST/PUT/DELETE orders ✅
+- [[Tray - Pagamentos]] — price_seller, taxas, status ✅
+- [[Tray - Invoices]] — vinculação NF-e ✅
+- [[Tray - Clientes]] — CRUD + endereços + correlação Literarius ✅ 🆕
 
 **Catálogo e Marketing**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Categorias e Marcas]] — hierarquia + selos + BISAC mapping ✅ 🆕
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Cupons e Promoções]] — CRUD + ROI de campanhas ✅ 🆕
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Carrinho Abandonado e Scripts]] — remarketing + pixels ✅ 🆕
+- [[Tray - Categorias e Marcas]] — hierarquia + selos + BISAC mapping ✅ 🆕
+- [[Tray - Cupons e Promoções]] — CRUD + ROI de campanhas ✅ 🆕
+- [[Tray - Carrinho Abandonado e Scripts]] — remarketing + pixels ✅ 🆕
 
 **Logística**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Frete e Logística]] — cálculo, rastreio, fluxo operacional ✅ 🆕
+- [[Tray - Frete e Logística]] — cálculo, rastreio, fluxo operacional ✅ 🆕
 
 **Integração Literarius ↔ Tray**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — schema Supabase + checklist ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray — Correlação com Literarius]] — mapa campo a campo + queries de conciliação ✅
-- [[Clientes/Heziom/HeziomOS/Projeto/Roadmap de Integração Tray × Literarius]] — 🔴 3 fases, oportunidades, mapa de dados completo ✅
+- [[Tray - Sync Agent — Endpoints e Estratégia]] — schema Supabase + checklist ✅
+- [[Tray — Correlação com Literarius]] — mapa campo a campo + queries de conciliação ✅
+- [[Roadmap de Integração Tray × Literarius]] — 🔴 3 fases, oportunidades, mapa de dados completo ✅
 
 **Temas e Parceria**
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Temas e Design]] — marketplace, preços, programa de parceiros, gap editorial ✅
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - OpenCode — Desenvolvimento de Temas]] — CLI, estrutura de pastas, stack técnica, checklist zero→publicado ✅
+- [[Tray - Temas e Design]] — marketplace, preços, programa de parceiros, gap editorial ✅
+- [[Tray - OpenCode — Desenvolvimento de Temas]] — CLI, estrutura de pastas, stack técnica, checklist zero→publicado ✅
 
 ---
 

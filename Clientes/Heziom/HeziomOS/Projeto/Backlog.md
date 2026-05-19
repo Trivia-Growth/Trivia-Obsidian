@@ -12,9 +12,9 @@ Lista completa de stories organizadas por fase. Stories da Fase 2 e 3 serão det
 
 | ID | Story | Módulo | Status | Prioridade |
 |----|-------|--------|--------|------------|
-| [[Clientes/Heziom/HeziomOS/Projeto/Stories/STORY-007 — Mapeamento de Processos Financeiros\|007]] | Mapeamento de Processos Financeiros | Docs | concluido | 🔴 alta |
-| [[Clientes/Heziom/HeziomOS/Projeto/Stories/STORY-008 — Documentação Robusta com Passo a Passo e Links de Vídeo\|008]] | Documentação Robusta — Passo a Passo + Vídeos | Docs | concluido | 🔴 alta |
-| [[Clientes/Heziom/HeziomOS/Projeto/Stories/STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
+| [[Stories/STORY-007 — Mapeamento de Processos Financeiros\|007]] | Mapeamento de Processos Financeiros | Docs | concluido | 🔴 alta |
+| [[Stories/STORY-008 — Documentação Robusta com Passo a Passo e Links de Vídeo\|008]] | Documentação Robusta — Passo a Passo + Vídeos | Docs | concluido | 🔴 alta |
+| [[Stories/STORY-001 — Setup Infraestrutura\|001]] | Setup Infraestrutura | Infra | pronto | 🔴 alta |
 | [[STORY-009 — Setup Raspberry Pi Sync Agent\|009]] | Setup Raspberry Pi como Sync Agent | Infra | backlog | 🔴 alta |
 | [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria\|002]] | Sync TituloFinanceiro + ContaBancaria | Sync | backlog | 🔴 alta |
 | [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda\|003]] | Sync NotaFiscal + PedidoVenda | Sync | backlog | 🔴 alta |

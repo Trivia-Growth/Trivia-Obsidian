@@ -18,7 +18,7 @@ criado: 2026-05-18
 - **Auth:** HTTP Basic + header `USER_LITERARIUS`
 - **Acesso:** Produção ativo, credenciais em mãos
 - **Paginação:** Não existe — retorna todos os registros sem ID. **Crítico para uso em volume.**
-- **Documentação:** [[Fontes de Dados/Literarius/APIs/Literarius-API-Documentacao]]
+- **Documentação:** [[Literarius-API-Documentacao]]
 
 | Controller               | Operações disponíveis                                                               |
 | ------------------------ | ----------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ criado: 2026-05-18
 - **Base URL:** `https://{api_address}/web_api/v2/`
 - **Auth:** `access_token` (query param ou header)
 - **Rate limit:** 180 req/min · 10.000 req/dia (padrão)
-- **Documentação:** [[Fontes de Dados/Tray/_a mapear]]
+- **Documentação:** [[_a mapear]]
 
 | Endpoint | Dados disponíveis |
 |---|---|
@@ -68,7 +68,7 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 - **Base URL:** `https://api.mandae.com.br/`
 - **Auth:** Bearer token via header `Authorization`
 - **Sandbox:** `https://sandbox.api.mandae.com.br/`
-- **Documentação:** [[Fontes de Dados/Mandae/Mandaê]]
+- **Documentação:** [[Mandaê]]
 
 | Endpoint | Função |
 |---|---|
@@ -259,10 +259,10 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 ## 8. Referências
 
 - [[HeziomOS — Arquitetura]] — diagrama completo, stack, fases
-- [[Fontes de Dados/Literarius/APIs/Literarius-API-Documentacao]] — API Literarius documentada em produção
-- [[Fontes de Dados/Mandae/Mandaê]] — API Mandaê documentada
-- [[Fontes de Dados/Tray/_a mapear]] — índice Tray API
-- [[Projeto/Backlog]] — stories por fase e status
+- [[Literarius-API-Documentacao]] — API Literarius documentada em produção
+- [[Mandaê]] — API Mandaê documentada
+- [[_a mapear]] — índice Tray API
+- [[Backlog]] — stories por fase e status
 - Documento técnico original: `Heziom-OS-Tecnico.md`
 
 ---

@@ -151,7 +151,7 @@ def carregar_tokens():
         return json.load(f)
 ```
 
-> Para o Raspberry Pi, armazenar em `/etc/heziom-sync/` (fora do código, permissão 600). Ver [[Decisões/ADR-002 — Segurança do Sync Agent]].
+> Para o Raspberry Pi, armazenar em `/etc/heziom-sync/` (fora do código, permissão 600). Ver [[ADR-002 — Segurança do Sync Agent]].
 
 ## Campos do token
 
@@ -209,4 +209,4 @@ def carregar_tokens():
 
 ---
 
-Ver: [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/_a mapear]]
+Ver: [[_a mapear]]

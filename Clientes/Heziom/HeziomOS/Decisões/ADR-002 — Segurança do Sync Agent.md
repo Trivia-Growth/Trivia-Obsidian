@@ -248,7 +248,7 @@ Se o Pi ficar mais de 2h sem sincronizar (falha de energia, crash, SD corrompido
 
 - [[ADR-001 — Sync Agent no Raspberry Pi]] — hardware e arquitetura
 - [[HeziomOS — Arquitetura]] — visão geral do sistema
-- [[Projeto/Stories/STORY-009 — Setup Raspberry Pi Sync Agent]] — tarefas de implementação
+- [[STORY-009 — Setup Raspberry Pi Sync Agent]] — tarefas de implementação
 
 ---
 

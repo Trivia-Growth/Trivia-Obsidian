@@ -35,10 +35,10 @@ Hoje a conciliação bancária é feita manualmente, planilha por planilha. O pr
 ### Literarius (leitura)
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] | idTituloFinanceiro, DataBaixa, Valor, FormaPagto, ContaBancaria | Base do match |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] | Parceiro, TipoTitulo, Descricao, Valor | Contexto do título |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] | Codigo, Descricao, Banco, Agencia, Conta | Identificar qual conta conciliar |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancariaLancamento]] | Data, Valor, Descricao, Tipo | Lançamentos diretos (tarifas, transferências) |
+| [[TituloFinanceiroBaixa]] | idTituloFinanceiro, DataBaixa, Valor, FormaPagto, ContaBancaria | Base do match |
+| [[TituloFinanceiro]] | Parceiro, TipoTitulo, Descricao, Valor | Contexto do título |
+| [[ContaBancaria]] | Codigo, Descricao, Banco, Agencia, Conta | Identificar qual conta conciliar |
+| [[ContaBancariaLancamento]] | Data, Valor, Descricao, Tipo | Lançamentos diretos (tarifas, transferências) |
 
 ### HeziomOS DB (leitura + escrita)
 | Tabela | Campos | Uso |

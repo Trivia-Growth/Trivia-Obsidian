@@ -256,7 +256,7 @@ def tray_webhook():
     return {"status": "ok"}, 200
 ```
 
-> Ver [[Fontes de Dados/Tray/Tray - Webhooks]] — lista completa de eventos disponíveis.
+> Ver [[Tray - Webhooks]] — lista completa de eventos disponíveis.
 
 ---
 
@@ -277,14 +277,14 @@ def tray_webhook():
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Autenticação]] — fluxo OAuth completo com código
-- [[Fontes de Dados/Tray/Tray - Rate Limit e Paginação]] — rate limiter e paginação
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — campos detalhados
-- [[Fontes de Dados/Tray/Tray - Pagamentos]] — campos de pagamento
-- [[Fontes de Dados/Tray/Tray - Webhooks]] — eventos disponíveis
-- [[Fontes de Dados/Tray — Correlação com Literarius]] — mapa completo de correlação
-- [[Fontes de Dados/Literarius/Réplica Supabase — Schema e Estratégia de Sync]] — schema Supabase do Literarius
-- [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]] — arquitetura do agente
+- [[Tray - Autenticação]] — fluxo OAuth completo com código
+- [[Tray - Rate Limit e Paginação]] — rate limiter e paginação
+- [[Tray - Pedidos]] — campos detalhados
+- [[Tray - Pagamentos]] — campos de pagamento
+- [[Tray - Webhooks]] — eventos disponíveis
+- [[Tray — Correlação com Literarius]] — mapa completo de correlação
+- [[Réplica Supabase — Schema e Estratégia de Sync]] — schema Supabase do Literarius
+- [[ADR-001 — Sync Agent no Raspberry Pi]] — arquitetura do agente
 
 ---
 

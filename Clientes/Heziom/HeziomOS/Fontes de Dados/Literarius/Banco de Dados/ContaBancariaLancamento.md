@@ -23,11 +23,11 @@ Lançamentos diretos em conta bancária — movimentações que não passam pelo
 | `DataLancto` | datetime | Data do lançamento |
 | `Documento` | varchar(250) | Número do documento de referência |
 | `Descricao` | varchar(30) | Descrição do lançamento |
-| `ContaBancaria` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] (conta origem) |
-| `ContaBancariaDestino` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] (conta destino, transferências) |
+| `ContaBancaria` | int | FK → [[ContaBancaria]] (conta origem) |
+| `ContaBancariaDestino` | int | FK → [[ContaBancaria]] (conta destino, transferências) |
 | `Valor` | money | Valor do lançamento |
-| `CentroResultado` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] |
-| `PlanoConta` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] |
+| `CentroResultado` | int | FK → [[CentroResultado]] |
+| `PlanoConta` | int | FK → [[PlanoConta]] |
 | `Liquidado` | bit | `1` = confirmado no extrato |
 | `Conciliado` | bit | `1` = conciliado |
 | `idExtratoBanco` | varchar(250) | ID no extrato bancário |
@@ -43,6 +43,6 @@ Lançamentos diretos em conta bancária — movimentações que não passam pelo
 
 ## Relações
 
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/ContaBancaria]] via `ContaBancaria` e `ContaBancariaDestino`
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] via `PlanoConta`
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] via `CentroResultado`
+- FK → [[ContaBancaria]] via `ContaBancaria` e `ContaBancariaDestino`
+- FK → [[PlanoConta]] via `PlanoConta`
+- FK → [[CentroResultado]] via `CentroResultado`

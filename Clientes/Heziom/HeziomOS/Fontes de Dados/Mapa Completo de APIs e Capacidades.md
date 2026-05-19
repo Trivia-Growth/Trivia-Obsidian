@@ -579,12 +579,12 @@ GET /dashboard              → KPIs do admin
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Capacidades do Integrador]]
-- [[Fontes de Dados/Tray/Tray - Autenticação]]
-- [[Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]]
-- [[Fontes de Dados/Tray — Correlação com Literarius]]
-- [[Fontes de Dados/Literarius/Views — Camada de Acesso HeziomOS]]
-- [[Projeto/Roadmap de Integração Tray × Literarius]]
+- [[Tray - Capacidades do Integrador]]
+- [[Tray - Autenticação]]
+- [[Tray - Sync Agent — Endpoints e Estratégia]]
+- [[Tray — Correlação com Literarius]]
+- [[Views — Camada de Acesso HeziomOS]]
+- [[Roadmap de Integração Tray × Literarius]]
 - [[Mapa de Dados]]
 - [[Análise Conexão Direta DB]]
 

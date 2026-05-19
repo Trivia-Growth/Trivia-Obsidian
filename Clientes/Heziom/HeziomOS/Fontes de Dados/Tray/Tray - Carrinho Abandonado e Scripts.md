@@ -137,9 +137,9 @@ Se não disponíveis via API:
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — o que a API permite vs. não permite
-- [[Fontes de Dados/Tray/Tray - Cupons e Promoções]] — cupons para remarketing
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — visão consolidada
+- [[Tray - Capacidades do Integrador]] — o que a API permite vs. não permite
+- [[Tray - Cupons e Promoções]] — cupons para remarketing
+- [[Mapa Completo de APIs e Capacidades]] — visão consolidada
 
 ---
 

@@ -357,9 +357,9 @@ Para tabelas grandes (TituloFinanceiro, PedidoVenda): sync incremental por `data
 
 - [[ADR-001 — Sync Agent no Raspberry Pi]] — onde o sync roda
 - [[ADR-002 — Segurança do Sync Agent]] — como proteger o Pi
-- [[Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]]
+- [[TituloFinanceiro]]
 - [[HeziomOS — Arquitetura]]
-- [[Projeto/Stories/STORY-009 — Setup Raspberry Pi Sync Agent]]
+- [[STORY-009 — Setup Raspberry Pi Sync Agent]]
 
 ---
 

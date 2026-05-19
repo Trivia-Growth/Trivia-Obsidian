@@ -186,9 +186,9 @@ A planilha confirma os campos disponíveis para o sync Literarius → Tray:
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — implementação do sync de estoque
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — Fase 1.1 (sync de saldo)
-- [[Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] — pedidos com SiteIdPedido
+- [[Tray - Sync Agent — Endpoints e Estratégia]] — implementação do sync de estoque
+- [[Roadmap de Integração Tray × Literarius]] — Fase 1.1 (sync de saldo)
+- [[PedidoVenda]] — pedidos com SiteIdPedido
 
 ---
 

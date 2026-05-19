@@ -88,7 +88,7 @@ Sem delay → bloqueio temporário por IP no IIS (403 após burst).
 
 - [[Estudo de APIs — Capacidades e Gaps]] — o que as APIs cobrem e o que não cobrem
 - [[HeziomOS — Arquitetura]] — stack, fases e fluxos
-- [[Fontes de Dados/Literarius/APIs/Literarius-API-Documentacao]] — documentação completa da API
+- [[Literarius-API-Documentacao]] — documentação completa da API
 
 ---
 

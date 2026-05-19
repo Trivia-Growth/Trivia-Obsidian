@@ -194,8 +194,8 @@ systemctl enable --now heziom-sync-financeiro.timer
 ## Referências
 
 - [[HeziomOS — Arquitetura]] — diagrama completo de componentes
-- [[Projeto/Estudo de APIs — Capacidades e Gaps]] — por que SQL direto é necessário
-- [[Projeto/Backlog]] — STORY-002 e STORY-003 dependem deste sync
+- [[Estudo de APIs — Capacidades e Gaps]] — por que SQL direto é necessário
+- [[Backlog]] — STORY-002 e STORY-003 dependem deste sync
 - Pendência P3 do backlog: "Definir máquina Heziom para rodar Deno sync"
 
 ---

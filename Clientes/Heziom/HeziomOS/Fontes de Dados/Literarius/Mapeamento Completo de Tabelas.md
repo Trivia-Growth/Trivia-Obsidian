@@ -163,7 +163,7 @@ Comparando com o schema anterior (`Réplica Supabase — Schema e Estratégia de
 
 - [[Réplica Supabase — Schema e Estratégia de Sync]] — schema original (atualizar)
 - [[ADR-001 — Sync Agent no Raspberry Pi]]
-- [[Projeto/Estudo de APIs — Capacidades e Gaps]]
+- [[Estudo de APIs — Capacidades e Gaps]]
 
 ---
 

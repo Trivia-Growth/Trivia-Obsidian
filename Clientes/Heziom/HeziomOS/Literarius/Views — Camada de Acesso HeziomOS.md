@@ -449,6 +449,6 @@ GRANT SELECT ON vw_Heziom_ProdutoResumo    TO acessoExterno;
 ## Módulos Relacionados
 
 - [[DDL Banco de dados Literarius]] — schema completo
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] — regras de filtro de faturamento
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] — regras de títulos
+- [[NotaFiscal]] — regras de filtro de faturamento
+- [[TituloFinanceiro]] — regras de títulos
 - [[Agente Financeiro — Prompt]] — queries de referência atuais

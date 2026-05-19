@@ -13,7 +13,7 @@ bloqueia: [STORY-002, STORY-003, STORY-004, STORY-006]
 
 Instalar e configurar um Raspberry Pi 4 dedicado dentro da rede da Heziom para rodar o Sync Agent — o componente que lê o SQL Server do Literarius e empurra os dados para o Supabase.
 
-> Decisão de arquitetura: [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]]
+> Decisão de arquitetura: [[ADR-001 — Sync Agent no Raspberry Pi]]
 
 ---
 
@@ -90,7 +90,7 @@ Esta story **bloqueia todas as stories de sync** (002, 003) e consequentemente o
 
 ## Segurança (obrigatório antes de ir para produção)
 
-Ver: [[Decisões/ADR-002 — Segurança do Sync Agent]]
+Ver: [[ADR-002 — Segurança do Sync Agent]]
 
 - [ ] Configurar `ufw`: bloquear toda entrada, permitir saída apenas 443 + 1433 + 53 + 123
 - [ ] Criar usuário `heziom-sync` sem shell para rodar o serviço
@@ -105,7 +105,7 @@ Ver: [[Decisões/ADR-002 — Segurança do Sync Agent]]
 
 ## Referências
 
-- [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]]
-- [[Decisões/ADR-002 — Segurança do Sync Agent]]
+- [[ADR-001 — Sync Agent no Raspberry Pi]]
+- [[ADR-002 — Segurança do Sync Agent]]
 - [[HeziomOS — Arquitetura]]
-- [[Projeto/Estudo de APIs — Capacidades e Gaps]] — seção de pendências P2, P3
+- [[Estudo de APIs — Capacidades e Gaps]] — seção de pendências P2, P3

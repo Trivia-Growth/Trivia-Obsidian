@@ -131,7 +131,7 @@ Pipeline operacional saudável. Apenas 2 cancelamentos no período.
 ## Referências
 
 - `heziom-ceo-dashboard-maio2026.html` — Dashboard interativo
-- [[Banco de Dados/_índice]] — Schema das fontes de dados
+- [[_índice]] — Schema das fontes de dados
 - [[Réplica Supabase — Schema e Estratégia de Sync]] — Plano de replicação
 - [[ADR-001 — Sync Agent no Raspberry Pi]] — Arquitetura técnica
 

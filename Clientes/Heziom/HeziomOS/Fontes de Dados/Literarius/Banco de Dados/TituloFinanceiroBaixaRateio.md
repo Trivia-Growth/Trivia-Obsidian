@@ -8,7 +8,7 @@ tipo: tabela
 
 ## Descrição
 
-Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroRateio]] classifica o título em competência, esta tabela classifica o caixa realizado por plano de contas e centro de resultado.
+Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[TituloFinanceiroRateio]] classifica o título em competência, esta tabela classifica o caixa realizado por plano de contas e centro de resultado.
 
 É a principal fonte para DRE por regime de caixa.
 
@@ -19,9 +19,9 @@ Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Cli
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `idTituloFinanceiroBaixaRateio` | bigint | PK |
-| `idTituloFinanceiroBaixa` | bigint | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] |
-| `PlanoConta` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] |
-| `CentroResultado` | int | FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] |
+| `idTituloFinanceiroBaixa` | bigint | FK → [[TituloFinanceiroBaixa]] |
+| `PlanoConta` | int | FK → [[PlanoConta]] |
+| `CentroResultado` | int | FK → [[CentroResultado]] |
 | `ValorBaixa` | money | Valor principal rateado |
 | `ValorDesconto` | money | Desconto rateado |
 | `ValorAbatimento` | money | Abatimento rateado |
@@ -41,6 +41,6 @@ Rateio contábil **da baixa** (pagamento ou recebimento efetivo). Enquanto [[Cli
 
 ## Relações
 
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiroBaixa]] via `idTituloFinanceiroBaixa`
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PlanoConta]] via `PlanoConta`
-- FK → [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CentroResultado]] via `CentroResultado`
+- FK → [[TituloFinanceiroBaixa]] via `idTituloFinanceiroBaixa`
+- FK → [[PlanoConta]] via `PlanoConta`
+- FK → [[CentroResultado]] via `CentroResultado`

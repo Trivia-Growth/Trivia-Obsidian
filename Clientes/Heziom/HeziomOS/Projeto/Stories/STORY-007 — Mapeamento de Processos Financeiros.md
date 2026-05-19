@@ -18,12 +18,12 @@ Antes de automatizar qualquer processo, é necessário entender como o financeir
 O financeiro documentou os processos em 3 KRs (Key Results), com vídeos tutoriais e documentos Word para cada processo. Este trabalho transforma essa documentação bruta em notas estruturadas dentro do vault, com classificação de impacto e fase do HeziomOS.
 
 ## Spec de Referência
-- [[Processos Financeiros/Índice dos Processos]] — tabela mestra de todos os processos
-- [[Processos Financeiros/KR1 — Contabilidade Mensal]] — 19 subprocessos mensais
-- [[Processos Financeiros/KR2 — Consignação]] — fluxos de consignação concedida e recebida
-- [[Processos Financeiros/KR3 — Dia a Dia]] — 10 processos operacionais rotineiros
-- [[Processos Financeiros/Outros Processos]] — Bookwire, antecipação Amazon, devoluções
-- [[Processos Financeiros/Mapa de Automação]] — priorização por impacto e fase
+- [[Índice dos Processos]] — tabela mestra de todos os processos
+- [[KR1 — Contabilidade Mensal]] — 19 subprocessos mensais
+- [[KR2 — Consignação]] — fluxos de consignação concedida e recebida
+- [[KR3 — Dia a Dia]] — 10 processos operacionais rotineiros
+- [[Outros Processos]] — Bookwire, antecipação Amazon, devoluções
+- [[Mapa de Automação]] — priorização por impacto e fase
 - [[HeziomOS — Arquitetura]] — arquitetura geral do sistema
 - [[Premissas e Entendimentos]] — premissas validadas com base nos processos
 

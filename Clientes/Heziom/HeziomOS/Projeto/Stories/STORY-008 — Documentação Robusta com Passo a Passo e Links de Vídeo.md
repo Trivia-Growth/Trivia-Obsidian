@@ -71,12 +71,12 @@ O conteúdo foi extraído de:
 ---
 
 ## Spec de Referência
-- [[Processos Financeiros/Índice dos Processos]] — índice central atualizado
-- [[Processos Financeiros/KR1 — Contabilidade Mensal]] — 19 processos com passo a passo completo
-- [[Processos Financeiros/KR2 — Consignação]] — fluxos de consignação
-- [[Processos Financeiros/KR3 — Dia a Dia]] — rotina operacional
-- [[Processos Financeiros/Outros Processos]] — processos avulsos
-- [[Processos Financeiros/Mapa de Automação]] — priorização linkada
+- [[Índice dos Processos]] — índice central atualizado
+- [[KR1 — Contabilidade Mensal]] — 19 processos com passo a passo completo
+- [[KR2 — Consignação]] — fluxos de consignação
+- [[KR3 — Dia a Dia]] — rotina operacional
+- [[Outros Processos]] — processos avulsos
+- [[Mapa de Automação]] — priorização linkada
 
 ## Critérios de Aceite
 - [x] CA1 — Todos os 6 arquivos Markdown da pasta `Processos Financeiros/` atualizados

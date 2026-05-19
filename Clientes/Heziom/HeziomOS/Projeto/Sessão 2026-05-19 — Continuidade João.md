@@ -17,9 +17,9 @@ participantes: [João Novais]
 Na sessão anterior com Lucas foram realizadas as seguintes entregas:
 
 1. **Mapeamento completo do banco Literarius** — 12 arquivos de schema com colunas reais, amostras e relevância para o HeziomOS
-2. **Descoberta das 61 views nativas** do Literarius — especialmente `vwProdutoEstoque`, `vwTituloFinanceiroBaixasComRateio`, `vwPedidoVenda` (ver [[Fontes de Dados/Literarius/Views SQL — Mapeamento e Uso]])
+2. **Descoberta das 61 views nativas** do Literarius — especialmente `vwProdutoEstoque`, `vwTituloFinanceiroBaixasComRateio`, `vwPedidoVenda` (ver [[Views SQL — Mapeamento e Uso]])
 3. **Dashboard CEO HTML interativo** com dados reais de 1–15 Mai 2026 — arquivo em `Projeto/heziom-ceo-dashboard-maio2026.html`
-4. **Análise executiva de Maio** com KPIs reais (ver [[Projeto/Dashboard CEO — Análise Maio 2026]])
+4. **Análise executiva de Maio** com KPIs reais (ver [[Dashboard CEO — Análise Maio 2026]])
 
 ---
 
@@ -88,7 +88,7 @@ HeziomOS/
 
 - [ ] João abrir `Projeto/heziom-ceo-dashboard-maio2026.html` no browser para validar o dashboard antes de apresentar ao CEO
 - [ ] Agendar apresentação do dashboard para o CEO da Heziom
-- [ ] Solicitar ao DBA/Literarius criação das 6 views customizadas (ver [[Literarius/Views — Camada de Acesso HeziomOS]])
+- [ ] Solicitar ao DBA/Literarius criação das 6 views customizadas (ver [[Views — Camada de Acesso HeziomOS]])
 - [ ] Corrigir `PlanoConta.TipoCategoria` no Literarius (atualmente `'A'` em todos os registros — bloqueia o DRE automático)
 - [ ] Ação de cobrança para os R$1,62M de A/R vencido (top devedores documentados na análise)
 
@@ -96,11 +96,11 @@ HeziomOS/
 
 ## Referências principais
 
-- [[Projeto/heziom-ceo-dashboard-maio2026.html]] — Dashboard CEO interativo
-- [[Projeto/Dashboard CEO — Análise Maio 2026]] — análise executiva completa
-- [[Fontes de Dados/Literarius/Views SQL — Mapeamento e Uso]] — 61 views nativas do Literarius
-- [[CEO Dashboard/Dashboard CEO]] — especificação do produto HeziomOS
-- [[Projeto/Setup João]] — como contribuir com este vault
+- [[heziom-ceo-dashboard-maio2026.html]] — Dashboard CEO interativo
+- [[Dashboard CEO — Análise Maio 2026]] — análise executiva completa
+- [[Views SQL — Mapeamento e Uso]] — 61 views nativas do Literarius
+- [[Dashboard CEO]] — especificação do produto HeziomOS
+- [[Setup João]] — como contribuir com este vault
 
 ---
 

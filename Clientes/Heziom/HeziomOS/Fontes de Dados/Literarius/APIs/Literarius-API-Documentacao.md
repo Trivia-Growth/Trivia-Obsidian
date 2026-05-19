@@ -15,7 +15,7 @@
 | **TEstoqueController** | ✅ GET saldo por setor/produto/box | ❌ | Somente leitura |
 | **TNotaFiscalController** | ✅ GET NF completa (112+ cols) | ❌ | Somente leitura |
 
-Ver: [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — inventário consolidado Literarius + Tray
+Ver: [[Mapa Completo de APIs e Capacidades]] — inventário consolidado Literarius + Tray
 
 ---
 

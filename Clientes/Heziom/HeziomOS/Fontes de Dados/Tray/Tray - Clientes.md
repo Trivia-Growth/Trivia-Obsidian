@@ -110,9 +110,9 @@ GET /customers?limit=50&page=1            → Paginação
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — pedidos vinculados ao cliente
-- [[Fontes de Dados/Literarius/Banco de Dados/Parceiro]] — base de parceiros (47k)
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — visão consolidada
+- [[Tray - Pedidos]] — pedidos vinculados ao cliente
+- [[Parceiro]] — base de parceiros (47k)
+- [[Mapa Completo de APIs e Capacidades]] — visão consolidada
 
 ---
 

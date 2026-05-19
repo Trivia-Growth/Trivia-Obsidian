@@ -18,19 +18,19 @@ Rate limit: **180 req/min** · 10.000 req/dia (padrão) · 50.000 req/dia (corpo
 
 | Nota | Endpoint | Relevância |
 |------|----------|------------|
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]] | `POST /auth`, `GET /auth?refresh_token=` | Credenciais + fluxo OAuth completo + código Python ✅ |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]] | `GET /orders`, `GET /orders/:id/complete` | Receita bruta, descontos, frete |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]] | `GET /payments`, `GET /payment-options` | Status de liquidação, taxa gateway, `price_seller` |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Invoices]] | `GET /invoices` | NFs emitidas e vinculadas ao pedido |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Webhooks]] | notificações POST | Eventos em tempo real (pagamento, cancelamento) |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Rate Limit e Paginação]] | — | Rate limiter + paginação completa com código Python ✅ |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] | — | Schema Supabase, queries, checklist de implementação ✅ |
+| [[Tray - Autenticação]] | `POST /auth`, `GET /auth?refresh_token=` | Credenciais + fluxo OAuth completo + código Python ✅ |
+| [[Tray - Pedidos]] | `GET /orders`, `GET /orders/:id/complete` | Receita bruta, descontos, frete |
+| [[Tray - Pagamentos]] | `GET /payments`, `GET /payment-options` | Status de liquidação, taxa gateway, `price_seller` |
+| [[Tray - Invoices]] | `GET /invoices` | NFs emitidas e vinculadas ao pedido |
+| [[Tray - Webhooks]] | notificações POST | Eventos em tempo real (pagamento, cancelamento) |
+| [[Tray - Rate Limit e Paginação]] | — | Rate limiter + paginação completa com código Python ✅ |
+| [[Tray - Sync Agent — Endpoints e Estratégia]] | — | Schema Supabase, queries, checklist de implementação ✅ |
 
 ---
 
 ## Correlação com Literarius
 
-[[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray — Correlação com Literarius]] — mapa completo campo a campo, fluxo de um pedido do início ao fim, queries de conciliação prontas.
+[[Tray — Correlação com Literarius]] — mapa completo campo a campo, fluxo de um pedido do início ao fim, queries de conciliação prontas.
 
 ```
 Tray: order.id

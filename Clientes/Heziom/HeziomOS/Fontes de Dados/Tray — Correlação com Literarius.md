@@ -212,7 +212,7 @@ ORDER BY Divergencia DESC
 | `order_shipped` | Pedido enviado | Registrar código de rastreio |
 | `order_cancelled` | Cancelamento | Cancelar NF e título se existirem |
 
-Documentação completa: [[Fontes de Dados/Tray/Tray - Webhooks]]
+Documentação completa: [[Tray - Webhooks]]
 
 ---
 
@@ -244,14 +244,14 @@ Documentação completa: [[Fontes de Dados/Tray/Tray - Webhooks]]
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Autenticação]] — credenciais, OAuth, rate limit
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — campos detalhados de pedidos
-- [[Fontes de Dados/Tray/Tray - Pagamentos]] — campos de pagamento e taxa gateway
-- [[Fontes de Dados/Tray/Tray - Invoices]] — vinculação NF Tray ↔ Literarius
-- [[Fontes de Dados/Tray/Tray - Webhooks]] — eventos em tempo real
-- [[Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] — NFs no ERP
-- [[Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] — pedidos no ERP
-- [[Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] — títulos financeiros
+- [[Tray - Autenticação]] — credenciais, OAuth, rate limit
+- [[Tray - Pedidos]] — campos detalhados de pedidos
+- [[Tray - Pagamentos]] — campos de pagamento e taxa gateway
+- [[Tray - Invoices]] — vinculação NF Tray ↔ Literarius
+- [[Tray - Webhooks]] — eventos em tempo real
+- [[NotaFiscal]] — NFs no ERP
+- [[PedidoVenda]] — pedidos no ERP
+- [[TituloFinanceiro]] — títulos financeiros
 
 ---
 

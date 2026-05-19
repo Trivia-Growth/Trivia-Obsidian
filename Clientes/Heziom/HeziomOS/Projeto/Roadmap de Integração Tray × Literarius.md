@@ -227,12 +227,12 @@ O Literarius tem `EstoqueMinimo` por produto. Cruzando com a velocidade de venda
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Capacidades do Integrador]] — o que a API permite
-- [[Fontes de Dados/Tray — Correlação com Literarius]] — mapa campo a campo
-- [[Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — implementação técnica
-- [[Fontes de Dados/Literarius/Banco de Dados/_índice]] — schema Literarius
-- [[Fontes de Dados/Literarius/Views SQL — Mapeamento e Uso]] — views para o sync
-- [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]] — onde o sync roda
+- [[Tray - Capacidades do Integrador]] — o que a API permite
+- [[Tray — Correlação com Literarius]] — mapa campo a campo
+- [[Tray - Sync Agent — Endpoints e Estratégia]] — implementação técnica
+- [[_índice]] — schema Literarius
+- [[Views SQL — Mapeamento e Uso]] — views para o sync
+- [[ADR-001 — Sync Agent no Raspberry Pi]] — onde o sync roda
 
 ---
 

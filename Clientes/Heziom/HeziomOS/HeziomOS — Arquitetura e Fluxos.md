@@ -583,12 +583,12 @@ erDiagram
 ## Referências
 
 - [[00 - Índice]] — mapa central do vault
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — inventário técnico
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — roadmap de integração
-- [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]] — decisão de infra
-- [[Decisões/ADR-002 — Segurança do Sync Agent]] — modelo de segurança
-- [[Projeto/Dashboard CEO — Análise Maio 2026]] — KPIs reais validados
-- [[Financeiro/Mapa de Dados]] — cruzamento módulos × fontes
+- [[Mapa Completo de APIs e Capacidades]] — inventário técnico
+- [[Roadmap de Integração Tray × Literarius]] — roadmap de integração
+- [[ADR-001 — Sync Agent no Raspberry Pi]] — decisão de infra
+- [[ADR-002 — Segurança do Sync Agent]] — modelo de segurança
+- [[Dashboard CEO — Análise Maio 2026]] — KPIs reais validados
+- [[Mapa de Dados]] — cruzamento módulos × fontes
 
 ---
 

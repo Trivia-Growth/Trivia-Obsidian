@@ -87,7 +87,7 @@ criado: 2026-05-18
 - [[Mapeamento Completo de Tabelas]] — todas as 150 tabelas com classificação
 - [[Réplica Supabase — Schema e Estratégia de Sync]] — quais replicar e com que frequência
 - [[ADR-001 — Sync Agent no Raspberry Pi]]
-- [[Projeto/Estudo de APIs — Capacidades e Gaps]]
+- [[Estudo de APIs — Capacidades e Gaps]]
 
 ---
 

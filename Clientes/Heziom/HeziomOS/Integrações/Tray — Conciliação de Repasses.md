@@ -8,7 +8,7 @@ criado: 2026-04-15
 
 Especificação da integração HeziomOS × Tray focada em rastrear os repasses financeiros do e-commerce, cruzando pedidos aprovados no Tray com os créditos recebidos na conta Santander.
 
-Para autenticação e endpoints gerais, ver [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]] e [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]].
+Para autenticação e endpoints gerais, ver [[Tray - Autenticação]] e [[Tray - Pedidos]].
 
 ---
 
@@ -210,5 +210,5 @@ ORDER BY Mes;
 - [[Comissões e Repasses]] — cálculo de receita líquida Tray (bruto - gateway)
 - [[Conciliação Bancária]] — crédito Tray identificado no extrato
 - [[Alertas e Notificações]] — alerta B3 (repasse atrasado)
-- [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Autenticação]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pedidos]], [[Clientes/Heziom/HeziomOS/Fontes de Dados/Tray/Tray - Pagamentos]] — documentação API
+- [[Tray - Autenticação]], [[Tray - Pedidos]], [[Tray - Pagamentos]] — documentação API
 - [[HeziomOS — Arquitetura]] — visão geral do sistema

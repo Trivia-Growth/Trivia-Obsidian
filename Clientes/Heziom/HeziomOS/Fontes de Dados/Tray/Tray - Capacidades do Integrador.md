@@ -170,12 +170,12 @@ A Tray exige comprovação de uso real da API:
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Autenticação]] — credenciais + OAuth
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — campos detalhados
-- [[Fontes de Dados/Tray/Tray - Pagamentos]] — `price_seller`, taxas
-- [[Fontes de Dados/Tray/Tray - Rate Limit e Paginação]] — implementação obrigatória
-- [[Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — o que sincronizar e como
-- [[Fontes de Dados/Tray — Correlação com Literarius]] — mapa de correlação
+- [[Tray - Autenticação]] — credenciais + OAuth
+- [[Tray - Pedidos]] — campos detalhados
+- [[Tray - Pagamentos]] — `price_seller`, taxas
+- [[Tray - Rate Limit e Paginação]] — implementação obrigatória
+- [[Tray - Sync Agent — Endpoints e Estratégia]] — o que sincronizar e como
+- [[Tray — Correlação com Literarius]] — mapa de correlação
 
 ---
 

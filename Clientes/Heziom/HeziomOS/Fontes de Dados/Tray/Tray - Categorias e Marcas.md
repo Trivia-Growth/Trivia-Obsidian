@@ -154,10 +154,10 @@ Novo livro no Literarius com BISAC preenchido
 
 ## Referências
 
-- [[Fontes de Dados/Literarius/Banco de Dados/Produto]] — campo BISAC, EditoraFantasia
-- [[Fontes de Dados/Tray/Tray - Sync Agent — Endpoints e Estratégia]] — sync de catálogo
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — Fase 2.2 (catálogo)
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — visão consolidada
+- [[Produto]] — campo BISAC, EditoraFantasia
+- [[Tray - Sync Agent — Endpoints e Estratégia]] — sync de catálogo
+- [[Roadmap de Integração Tray × Literarius]] — Fase 2.2 (catálogo)
+- [[Mapa Completo de APIs e Capacidades]] — visão consolidada
 
 ---
 

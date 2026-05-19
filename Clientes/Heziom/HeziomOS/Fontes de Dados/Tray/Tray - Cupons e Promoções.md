@@ -101,10 +101,10 @@ HeziomOS calcula:
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — campo `discount_coupon` no pedido
-- [[Fontes de Dados/Tray/Tray - Pagamentos]] — `price_seller` para receita líquida
-- [[Projeto/Roadmap de Integração Tray × Literarius]] — Fase 2.3 (análise de cupons)
-- [[Fontes de Dados/Mapa Completo de APIs e Capacidades]] — visão consolidada
+- [[Tray - Pedidos]] — campo `discount_coupon` no pedido
+- [[Tray - Pagamentos]] — `price_seller` para receita líquida
+- [[Roadmap de Integração Tray × Literarius]] — Fase 2.3 (análise de cupons)
+- [[Mapa Completo de APIs e Capacidades]] — visão consolidada
 
 ---
 

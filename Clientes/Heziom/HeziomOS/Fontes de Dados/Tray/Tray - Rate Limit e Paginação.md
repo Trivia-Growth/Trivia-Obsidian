@@ -233,10 +233,10 @@ def tray_get_com_retry(endpoint, params, access_token, api_host, max_retries=3):
 
 ## Referências
 
-- [[Fontes de Dados/Tray/Tray - Autenticação]] — tokens e credenciais
-- [[Fontes de Dados/Tray/Tray - Pedidos]] — filtros específicos de pedidos
-- [[Decisões/ADR-001 — Sync Agent no Raspberry Pi]] — arquitetura do sync
-- [[Fontes de Dados/Tray — Correlação com Literarius]] — mapeamento completo
+- [[Tray - Autenticação]] — tokens e credenciais
+- [[Tray - Pedidos]] — filtros específicos de pedidos
+- [[ADR-001 — Sync Agent no Raspberry Pi]] — arquitetura do sync
+- [[Tray — Correlação com Literarius]] — mapeamento completo
 
 ---
 

@@ -15,10 +15,10 @@ Consolidar as receitas geradas por pedidos de venda e notas fiscais emitidas pel
 
 | Tabela | Campos-chave | Uso |
 |--------|-------------|-----|
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/PedidoVenda]] | `TotalPedido`, `DataPedido`, `Status`, `CanalVenda`, `SiteIdPedido` | Pedidos brutos, inclui pedidos do e-commerce via `SiteIdPedido` |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/NotaFiscal]] | `TotalNota`, `DataEmissao`, `EntSai`, `GeraFinanceiro`, `CanalVenda` | NFs emitidas; `GeraFinanceiro=1` dispara títulos em [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/TituloFinanceiro]] |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio de pagamento do pedido |
-| [[Clientes/Heziom/HeziomOS/Fontes de Dados/Literarius/Banco de Dados/CondicaoPagto]] | `Descricao`, `CondicaoPagto`, `Avista`, `Cartao` | Parcelamento e condições aplicadas |
+| [[PedidoVenda]] | `TotalPedido`, `DataPedido`, `Status`, `CanalVenda`, `SiteIdPedido` | Pedidos brutos, inclui pedidos do e-commerce via `SiteIdPedido` |
+| [[NotaFiscal]] | `TotalNota`, `DataEmissao`, `EntSai`, `GeraFinanceiro`, `CanalVenda` | NFs emitidas; `GeraFinanceiro=1` dispara títulos em [[TituloFinanceiro]] |
+| [[FormaPagto]] | `Descricao`, `Taxa`, `Prazo` | Meio de pagamento do pedido |
+| [[CondicaoPagto]] | `Descricao`, `CondicaoPagto`, `Avista`, `Cartao` | Parcelamento e condições aplicadas |
 
 ---
 
