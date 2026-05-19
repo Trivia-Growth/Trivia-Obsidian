@@ -147,29 +147,63 @@ Ver [[04 - Agentes Triviaiox/Equipe de Agentes]] para detalhes de cada agente e 
 
 ---
 
-## Como instalar o Triviaiox em um projeto
+## Como o Triviaiox chega em cada máquina
 
-O Triviaiox está configurado via `npm link` na máquina do Lucas — instalar em qualquer projeto é um único comando:
+Existem dois perfis de uso. Identifique o seu e siga o caminho correspondente.
 
+---
+
+### Perfil A — Dev que inicia projetos (Lucas, João com acesso ao framework)
+
+Para poder criar projetos novos com `triviaiox-core install`, é necessário fazer o setup único abaixo na sua máquina (admins do GitHub da Trivia Growth já têm acesso ao repositório privado).
+
+**Setup único por máquina (qualquer dev com acesso):**
+```bash
+# 1. Clonar o repositório privado do framework
+git clone git@github.com:Trivia-Growth/Triviaiox.git ~/Documents/GitHub/Triviaiox
+cd ~/Documents/GitHub/Triviaiox
+npm install
+npm link   # registra triviaiox-core globalmente nesta máquina
+
+# Verificar que funcionou:
+triviaiox-core info   # deve mostrar versão 5.x.x
+```
+
+**Iniciar um projeto novo:**
 ```bash
 cd /caminho/do/projeto-cliente
 triviaiox-core install
+git add . && git commit -m "chore: install Triviaiox framework" && git push
 ```
 
-Para verificar que funcionou:
-```bash
-cat .triviaiox-core/version.json
-# deve mostrar {"version": "5.x.x"}
-```
+A partir deste commit, **todos os outros devs que clonarem o projeto não precisam de nenhum setup adicional** — o framework já está dentro do repositório.
 
-Para atualizar o framework quando houver melhorias:
+**Atualizar o framework quando houver melhorias:**
 ```bash
 cd ~/Documents/GitHub/Triviaiox
-git pull   # pega as melhorias mais recentes
-# pronto — todos os projetos novos já usam a versão atualizada
+git pull   # baixa as atualizações mais recentes
+# Projetos novos já usam a versão atualizada automaticamente
+# Para atualizar um projeto existente: cd [projeto] && triviaiox-core update
 ```
 
-Ver [[00 - Checklist de Início]] passo 6 para detalhes completos.
+---
+
+### Perfil B — Dev que entra em projeto existente (João, qualquer colaborador)
+
+O `.triviaiox-core/` já está commitado no repositório do projeto. **Zero configuração de framework necessária:**
+
+```bash
+git clone [URL do projeto]
+cd [projeto]
+npm install
+claude   # abrir Claude Code — 15 agentes disponíveis imediatamente
+```
+
+Não precisa de acesso ao repositório do framework. Não precisa de npm link. Não precisa de nenhum setup além do Node.js e Claude Code.
+
+---
+
+Ver [[00 - Checklist de Início]] passo 6 e [[06 - Gestão do Projeto/Setup Dev Técnico|Setup Dev Técnico]] para detalhes completos de cada perfil.
 
 ---
 

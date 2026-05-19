@@ -2,6 +2,15 @@
 
 Guia para devs que trabalham via Claude Code. Diferente do [[Setup Colaborador]] (perfil de negócio), este guia é para quem vai implementar código.
 
+Dois perfis — identifique o seu:
+
+| Perfil | Você vai... | Precisa de acesso ao framework? |
+|--------|-------------|---------------------------------|
+| **A — Iniciador** | Criar projetos novos com Triviaiox | Sim — admins do GitHub já têm |
+| **B — Implementador** | Desenvolver em projeto já configurado | Não |
+
+Se for Perfil A, siga primeiro o [[00 - Checklist de Início]] Passo 6a para configurar o framework na sua máquina. Depois volte aqui.
+
 ---
 
 ## Pré-requisitos (uma vez por máquina)
@@ -22,7 +31,7 @@ git --version
 ## Clonar e instalar
 
 ```bash
-git clone [URL do repositório]
+git clone [URL do repositório do projeto]
 cd [nome-do-projeto]
 npm install
 ```
@@ -41,8 +50,9 @@ Preencher com as credenciais que o Lucas vai passar. **Nunca commitar `.env.loca
 
 ## O Triviaiox já está configurado
 
-Ao clonar, você já tem os agentes e regras do projeto:
-- `.triviaiox-core/` — 14 agentes especializados
+Ao clonar, você já tem os 15 agentes e regras do projeto — não precisa instalar nada do framework:
+
+- `.triviaiox-core/` — 15 agentes especializados (dev, qa, architect, security, devops, etc.)
 - `.claude/` — regras e configurações do Claude Code
 - `CLAUDE.md` — instruções do projeto (ler antes de qualquer coisa)
 - `PROJECT_REQUIREMENTS.md` — requisitos e stack
@@ -63,15 +73,37 @@ claude
 3. Usar `@dev` no Claude Code para implementar
 4. Atualizar status e checklist em `docs/stories/STORY-XXX.md`
 5. `npm run lint && npm run typecheck && npm run build` antes de commitar
-6. Commit + push
+6. Commit — o @devops faz o push para remote
 
-**Atalhos dos agentes:**
+**Atalhos dos agentes (digitar no Claude Code):**
 ```
 /sm        → Scrum Master (cria e gerencia stories)
 /dev       → Developer (implementa)
 /qa        → QA (valida)
+/security  → Cipher — AppSec (review de segurança, obrigatório em features sensíveis)
 /architect → Architect (decisões técnicas)
+/devops    → DevOps (push para remote — exclusivo)
 ```
+
+---
+
+## Ciclo completo de uma story
+
+```
+@sm cria story
+    ↓
+@po valida (10-point checklist)
+    ↓
+@dev implementa (propõe Diff Plan → aguarda aprovação → código)
+    ↓
+@security *security-gate  ← obrigatório se toca auth, PII, API, pagamentos
+    ↓
+@qa *gate (7 quality checks)
+    ↓
+@devops push → deploy automático
+```
+
+**Importante:** `@dev` nunca faz `git push`. Sempre delegar para `@devops`.
 
 ---
 
@@ -95,7 +127,7 @@ npm run dev        # servidor local
 npm run build      # build de produção
 npm run lint       # ESLint (só src/ e netlify/)
 npm run typecheck  # TypeScript
-npm test           # testes (placeholder até ter suíte real)
+npm test           # testes
 npm run format     # Prettier
 ```
 
@@ -106,3 +138,4 @@ npm run format     # Prettier
 - [[../07 - Templates de Código/CLAUDE.md|Template CLAUDE.md]] — estrutura das instruções do projeto
 - [[../09 - Migrações/Migrar Projeto Lovable para Padrão Trivia|Migrar da Lovable]] — integrar projeto existente
 - [[10 - Sync Lovable e Claude]] — protocolo completo de sincronismo
+- [[../04 - Agentes Triviaiox/Equipe de Agentes|Equipe de Agentes]] — todos os 15 agentes e quando usar cada um

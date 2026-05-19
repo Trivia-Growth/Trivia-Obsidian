@@ -269,35 +269,54 @@ A Lovable detecta o pull e atualiza seu lado.
 
 ### Passo 6 — TRIVIAIOX (Agentes)
 
-> O TRIVIAIOX instala os 15 agentes de IA dentro do repositório de código. Requer Node.js instalado (Passo de pré-requisitos). O framework está instalado via `npm link` na máquina do Lucas — um único comando funciona em qualquer projeto.
+> O TRIVIAIOX instala os 15 agentes de IA dentro do repositório de código. **Este passo é executado pelo Lucas** ao criar um projeto novo. Desenvolvedores que entram depois (João e outros) **não precisam fazer nada aqui** — o framework já vem commitado no repo do projeto.
 
-**Setup inicial (uma vez por máquina):**
+#### 6a. Perfil A — Dev que inicia projetos (Lucas, João com acesso ao framework)
+
+> Necessário para poder criar projetos novos. Admins do GitHub da Trivia Growth já têm acesso ao repositório privado `Trivia-Growth/Triviaiox`.
+
+**Setup único por máquina:**
 ```bash
-# Clonar o repo do framework
+# Clonar o repositório privado do framework
 git clone git@github.com:Trivia-Growth/Triviaiox.git ~/Documents/GitHub/Triviaiox
 cd ~/Documents/GitHub/Triviaiox
 npm install
-npm link   # cria o atalho global triviaiox-core
+npm link   # registra triviaiox-core globalmente nesta máquina
 ```
 
-**Instalar em qualquer projeto:**
+Verificar:
+```bash
+triviaiox-core info   # deve mostrar versão 5.x.x
+```
+
+**Instalar num projeto novo:**
 ```bash
 cd caminho/para/[nome-do-projeto]-app
 triviaiox-core install
+git add .
+git commit -m "chore: install Triviaiox framework"
+git push
 ```
 
-**Para verificar que funcionou:**
+Após este commit, todos os outros devs que clonarem o projeto têm os agentes disponíveis — sem precisar do setup acima.
+
+#### 6b. Perfil B — Dev que entra em projeto existente (zero configuração)
+
 ```bash
-cat .triviaiox-core/version.json
-# Deve mostrar {"version": "5.x.x"}
+git clone https://github.com/[org]/[nome-do-projeto]-app.git
+cd [nome-do-projeto]-app
+npm install
+claude   # agentes já disponíveis
 ```
 
-> **Se aparecer "command not found: triviaiox-core":** o npm link não foi feito nesta máquina. Execute o setup inicial acima.
-> **Se aparecer "command not found: node":** o Node.js não está instalado. Volte ao passo de pré-requisitos.
+Ver [[06 - Gestão do Projeto/Setup Dev Técnico|Setup Dev Técnico]] para o onboarding completo.
 
-- [ ] Setup inicial feito (uma vez por máquina): repo clonado + `npm install` + `npm link`
-- [ ] TRIVIAIOX instalado com sucesso no projeto (`triviaiox-core install`)
-- [ ] Versão confirmada com `cat .triviaiox-core/version.json`
+> **"command not found: triviaiox-core":** npm link não feito nesta máquina — siga o Perfil A acima.
+> **"command not found: node":** Node.js não instalado — volte aos pré-requisitos.
+
+- [ ] (Perfil A) Setup feito: repo clonado + `npm install` + `npm link`
+- [ ] (Perfil A) Triviaiox instalado no projeto e commitado
+- [ ] (Perfil B) Projeto clonado e `npm install` feito — pronto
 
 Ver [[04 - Agentes Triviaiox/O que é o Triviaiox|O que é o Triviaiox]] para detalhes dos agentes.
 
