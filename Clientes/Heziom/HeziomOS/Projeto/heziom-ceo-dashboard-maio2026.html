@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heziom — CEO Dashboard · Maio 2026</title>
+<style>
+  :root {
+    --verde: #1a3a2a;
+    --verde-med: #2d5a3d;
+    --verde-light: #3d7a52;
+    --laranja: #C8714A;
+    --laranja-light: #e08860;
+    --ouro: #d4a843;
+    --bg: #0f1a13;
+    --card: #162214;
+    --card2: #1c2e1f;
+    --border: #2a4030;
+    --text: #e8f0e9;
+    --text2: #8aab8f;
+    --text3: #5a7a60;
+    --red: #e05555;
+    --red-light: #ff7777;
+    --green: #4caf74;
+    --blue: #5b9fd4;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--verde) 0%, #0d2318 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo-badge {
+    width: 44px; height: 44px;
+    background: var(--laranja);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: white;
+    letter-spacing: -1px;
+  }
+  .header-title h1 { font-size: 18px; font-weight: 700; color: var(--text); }
+  .header-title p { font-size: 11px; color: var(--text2); margin-top: 1px; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .live-badge {
+    background: rgba(76,175,116,0.15);
+    border: 1px solid rgba(76,175,116,0.4);
+    color: var(--green);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .date-badge {
+    font-size: 11px; color: var(--text2);
+    background: rgba(255,255,255,0.05);
+    padding: 4px 10px; border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* TABS */
+  .tabs-bar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; gap: 4px;
+  }
+  .tab {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--laranja); border-bottom-color: var(--laranja); }
+
+  /* MAIN */
+  .main { padding: 20px 24px; max-width: 1400px; }
+
+  /* PAGE */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ALERT BANNER */
+  .alert-banner {
+    background: linear-gradient(90deg, rgba(224,85,85,0.1), rgba(224,85,85,0.05));
+    border: 1px solid rgba(224,85,85,0.3);
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+  }
+  .alert-banner strong { color: var(--red-light); }
+
+  .info-banner {
+    background: linear-gradient(90deg, rgba(212,168,67,0.1), rgba(212,168,67,0.05));
+    border: 1px solid rgba(212,168,67,0.3);
+    border-left: 4px solid var(--ouro);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+    color: var(--ouro);
+  }
+
+  /* KPI CARDS */
+  .kpis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi:hover { border-color: var(--verde-light); }
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent, var(--laranja));
+  }
+  .kpi-label { font-size: 10px; color: var(--text2); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+  .kpi-value { font-size: 24px; font-weight: 800; color: var(--text); line-height: 1; }
+  .kpi-value.large { font-size: 28px; }
+  .kpi-sub { font-size: 11px; color: var(--text2); margin-top: 6px; }
+  .kpi-change {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 11px; font-weight: 600; padding: 2px 7px;
+    border-radius: 20px; margin-top: 6px;
+  }
+  .kpi-change.up { background: rgba(76,175,116,0.15); color: var(--green); }
+  .kpi-change.down { background: rgba(224,85,85,0.15); color: var(--red-light); }
+  .kpi-change.warn { background: rgba(212,168,67,0.15); color: var(--ouro); }
+  .kpi-icon {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 22px; opacity: 0.12;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--text2);
+    margin-bottom: 12px; margin-top: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after {
+    content: ''; flex: 1;
+    height: 1px; background: var(--border);
+  }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-cols-3-1 { display: grid; grid-template-columns: 3fr 1fr; gap: 16px; }
+  .grid-cols-1-1 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 12px; font-weight: 700; color: var(--text);
+    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title span { font-size: 10px; font-weight: 500; color: var(--text2); }
+
+  /* CHART BARS */
+  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; }
+  .bar-label { font-size: 11px; color: var(--text2); width: 140px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-label.short { width: 100px; }
+  .bar-track { flex: 1; height: 20px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill-text { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.9); white-space: nowrap; }
+  .bar-value { font-size: 11px; font-weight: 600; color: var(--text); width: 90px; text-align: right; flex-shrink: 0; }
+  .bar-value.small { width: 50px; }
+
+  /* LINE CHART */
+  .chart-area { position: relative; }
+  .sparkline-container { width: 100%; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .data-table th {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--text3); padding: 6px 8px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td { padding: 8px 8px; border-bottom: 1px solid rgba(42,64,48,0.5); color: var(--text); }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .td-right { text-align: right; }
+  .td-center { text-align: center; }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600;
+  }
+  .badge-green { background: rgba(76,175,116,0.15); color: var(--green); border: 1px solid rgba(76,175,116,0.3); }
+  .badge-red { background: rgba(224,85,85,0.15); color: var(--red-light); border: 1px solid rgba(224,85,85,0.3); }
+  .badge-orange { background: rgba(200,113,74,0.2); color: var(--laranja-light); border: 1px solid rgba(200,113,74,0.4); }
+  .badge-gold { background: rgba(212,168,67,0.15); color: var(--ouro); border: 1px solid rgba(212,168,67,0.3); }
+  .badge-blue { background: rgba(91,159,212,0.15); color: var(--blue); border: 1px solid rgba(91,159,212,0.3); }
+
+  /* CANAL CARDS */
+  .canal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .canal-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .canal-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); margin-bottom: 8px; }
+  .canal-value { font-size: 20px; font-weight: 800; color: var(--text); }
+  .canal-meta { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+  /* PRODUCT RANK */
+  .product-rank { display: flex; flex-direction: column; gap: 6px; }
+  .prod-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px; border-radius: 8px; background: var(--card2);
+    transition: background 0.2s;
+  }
+  .prod-row:hover { background: rgba(255,255,255,0.04); }
+  .prod-rank { font-size: 13px; font-weight: 800; color: var(--text3); width: 22px; text-align: center; }
+  .prod-rank.gold { color: var(--ouro); }
+  .prod-rank.silver { color: #a0a8b0; }
+  .prod-rank.bronze { color: #c87840; }
+  .prod-info { flex: 1; min-width: 0; }
+  .prod-title { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prod-author { font-size: 10px; color: var(--text3); }
+  .prod-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .prod-qtde { font-size: 13px; font-weight: 700; color: var(--text); }
+  .prod-valor { font-size: 10px; color: var(--text2); }
+
+  /* FINANCIAL WATERFALL */
+  .fin-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid rgba(42,64,48,0.5);
+  }
+  .fin-row:last-child { border-bottom: none; }
+  .fin-icon { font-size: 18px; width: 32px; }
+  .fin-label { flex: 1; }
+  .fin-label-main { font-size: 12px; font-weight: 600; color: var(--text); }
+  .fin-label-sub { font-size: 10px; color: var(--text3); }
+  .fin-value { font-size: 16px; font-weight: 800; }
+  .fin-value.positive { color: var(--green); }
+  .fin-value.negative { color: var(--red-light); }
+  .fin-value.neutral { color: var(--text); }
+  .fin-value.warn { color: var(--ouro); }
+
+  /* INADIMPLÊNCIA */
+  .inad-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid rgba(42,64,48,0.4);
+  }
+  .inad-row:last-child { border-bottom: none; }
+  .inad-bar-wrap { flex: 1; }
+  .inad-name { font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .inad-track { height: 6px; background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+  .inad-fill { height: 100%; background: var(--red); border-radius: 3px; opacity: 0.7; }
+  .inad-value { font-size: 13px; font-weight: 700; color: var(--red-light); width: 80px; text-align: right; flex-shrink: 0; }
+  .inad-days { font-size: 10px; color: var(--text3); width: 60px; text-align: right; }
+
+  /* ESTOQUE GAUGE */
+  .estoque-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .est-mini {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px; text-align: center;
+  }
+  .est-mini-value { font-size: 22px; font-weight: 800; }
+  .est-mini-label { font-size: 10px; color: var(--text2); margin-top: 3px; }
+  .est-mini-green { color: var(--green); }
+  .est-mini-red { color: var(--red-light); }
+  .est-mini-warn { color: var(--ouro); }
+  .est-mini-blue { color: var(--blue); }
+
+  /* MINI SPARKLINE SVG */
+  svg.spark { display: block; }
+
+  /* MONTH CHART */
+  .month-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; padding: 0 4px; }
+  .month-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .month-bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    position: relative; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .month-bar:hover { opacity: 0.8; }
+  .month-label { font-size: 10px; color: var(--text3); }
+  .month-value { font-size: 10px; font-weight: 600; color: var(--text2); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-cols-3-1, .grid-cols-1-1 { grid-template-columns: 1fr; }
+    .kpis-grid { grid-template-columns: repeat(2, 1fr); }
+    .estoque-summary-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* AR PIE */
+  .ar-breakdown { display: flex; flex-direction: column; gap: 8px; }
+  .ar-row { display: flex; align-items: center; gap: 10px; }
+  .ar-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .ar-label { flex: 1; font-size: 11px; color: var(--text2); }
+  .ar-value { font-size: 12px; font-weight: 700; }
+
+  /* TOOLTIP */
+  .tooltip { position: relative; }
+  .tooltip:hover .tooltip-text { display: block; }
+  .tooltip-text {
+    display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    background: #2a3a2e; border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 10px; font-size: 11px; color: var(--text);
+    white-space: nowrap; z-index: 10; margin-bottom: 6px;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .text-right { text-align: right; }
+  .mt-4 { margin-top: 4px; }
+  .fw-700 { font-weight: 700; }
+
+  /* Donut progress ring */
+  .ring-wrap { display: flex; align-items: center; gap: 20px; }
+  .ring-svg { flex-shrink: 0; }
+  .ring-labels { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .ring-label-row { display: flex; align-items: center; gap: 8px; }
+  .ring-label-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .ring-label-name { font-size: 11px; color: var(--text2); flex: 1; }
+  .ring-label-val { font-size: 12px; font-weight: 700; }
+  .ring-label-pct { font-size: 10px; color: var(--text3); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo-badge">H</div>
+    <div class="header-title">
+      <h1>Editora Heziom — CEO Dashboard</h1>
+      <p>Associação Editora Presbiteriana de Pinheiros · Dados diretos do ERP Literarius</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      DADOS REAIS
+    </div>
+    <div class="date-badge">Referência: 1–15 Mai 2026</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tab active" onclick="showPage('visao-geral', this)">Visão Geral</div>
+  <div class="tab" onclick="showPage('financeiro', this)">Financeiro</div>
+  <div class="tab" onclick="showPage('vendas', this)">Vendas & Canais</div>
+  <div class="tab" onclick="showPage('estoque', this)">Estoque</div>
+  <div class="tab" onclick="showPage('operacoes', this)">Operações</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ==================== VISÃO GERAL ==================== -->
+<div class="page active" id="visao-geral">
+
+  <!-- Alert -->
+  <div class="alert-banner">
+    <span>⚠️</span>
+    <div>
+      <strong>R$ 1.622.508 em A/R vencidos</strong> — 80% do total de recebíveis está em atraso.
+      Ação imediata necessária: Plenitude Distribuidora (R$89k, 242 dias) e Consumidor (R$40k, 258 dias).
+    </div>
+  </div>
+
+  <!-- KPIs principais -->
+  <div class="kpis-grid">
+    <div class="kpi" style="--accent: #C8714A">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-label">Faturamento Mai 1–15</div>
+      <div class="kpi-value large">R$ 339.9K</div>
+      <div class="kpi-sub">1.681 notas fiscais emitidas</div>
+      <div class="kpi-change up">▲ +42,6% vs Abr 1–15</div>
+    </div>
+    <div class="kpi" style="--accent: #4caf74">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-label">Recebido em Maio</div>
+      <div class="kpi-value large">R$ 265.4K</div>
+      <div class="kpi-sub">Baixas de A/R registradas</div>
+      <div class="kpi-change up">▲ vs R$265k receb. abr</div>
+    </div>
+    <div class="kpi" style="--accent: #5b9fd4">
+      <div class="kpi-icon">📦</div>
+      <div class="kpi-label">Estoque Total (valor)</div>
+      <div class="kpi-value">R$ 13,5M</div>
+      <div class="kpi-sub">167.018 unidades físicas</div>
+      <div class="kpi-change warn">4 SKUs críticos</div>
+    </div>
+    <div class="kpi" style="--accent: #d4a843">
+      <div class="kpi-icon">🤝</div>
+      <div class="kpi-label">Consignação Aberta</div>
+      <div class="kpi-value">R$ 2,06M</div>
+      <div class="kpi-sub">50 consignações em aberto</div>
+      <div class="kpi-change warn">Risco de não-devolução</div>
+    </div>
+    <div class="kpi" style="--accent: #e05555">
+      <div class="kpi-icon">⏰</div>
+      <div class="kpi-label">A/R Total em Aberto</div>
+      <div class="kpi-value">R$ 2,02M</div>
+      <div class="kpi-sub">R$ 1,62M já vencidos (80%)</div>
+      <div class="kpi-change down">▼ Exposição alta</div>
+    </div>
+    <div class="kpi" style="--accent: #8aab8f">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-label">Fat YTD Jan–Abr</div>
+      <div class="kpi-value">R$ 2,56M</div>
+      <div class="kpi-sub">Maio projeta +R$700k</div>
+      <div class="kpi-change up">▲ Pace acelerado</div>
+    </div>
+  </div>
+
+  <!-- Charts row -->
+  <div class="grid-2">
+
+    <!-- Faturamento mensal 2026 -->
+    <div class="card">
+      <div class="card-title">Faturamento Mensal 2026 <span>Jan–Mai (15 dias)</span></div>
+      <div style="display:flex; align-items:flex-end; gap:6px; height:120px; padding: 0 4px;">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+          <div style="font-size:9px;color:var(--text2);font-weight:600">R$807k</div>
+          <div style="width:100%;background:var(--laranja);border-radius:4px 4px 0 0;height:100%" title="Janeiro"></div>
+          <div style="font-size:10px;color:var(--text3)">Jan</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+          <div style="font-size:9px;color:var(--text2);font-weight:600">R$587k</div>
+          <div style="width:100%;background:var(--laranja);border-radius:4px 4px 0 0;height:72.7%"></div>
+          <div style="font-size:10px;color:var(--text3)">Fev</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+          <div style="font-size:9px;color:var(--text2);font-weight:600">R$570k</div>
+          <div style="width:100%;background:var(--laranja);border-radius:4px 4px 0 0;height:70.6%"></div>
+          <div style="font-size:10px;color:var(--text3)">Mar</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+          <div style="font-size:9px;color:var(--text2);font-weight:600">R$592k</div>
+          <div style="width:100%;background:var(--laranja);border-radius:4px 4px 0 0;height:73.4%"></div>
+          <div style="font-size:10px;color:var(--text3)">Abr</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+          <div style="font-size:9px;color:var(--green);font-weight:700">R$373k*</div>
+          <div style="width:100%;background:var(--verde-light);border-radius:4px 4px 0 0;height:46.2%;border:1px dashed var(--green)"></div>
+          <div style="font-size:10px;color:var(--green);font-weight:600">Mai*</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--text3);margin-top:8px;text-align:center">* Mai até 15/05 — projeção ~R$746k no mês completo</div>
+    </div>
+
+    <!-- Faturamento diário mai -->
+    <div class="card">
+      <div class="card-title">Faturamento Diário — Maio 2026 <span>1 a 15/Mai</span></div>
+      <svg id="sparkline-fat" width="100%" height="120" style="display:block"></svg>
+      <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">Pico em 07/Mai: R$91,6k (lote atacado)</div>
+    </div>
+  </div>
+
+  <!-- Canais de venda -->
+  <div class="section-title">Canais de Venda — Maio 1–15</div>
+  <div class="canal-grid" style="margin-bottom:20px">
+    <div class="canal-card" style="border-top:3px solid var(--laranja)">
+      <div class="canal-name">Atacado</div>
+      <div class="canal-value">R$ 145,9k</div>
+      <div class="canal-meta">53 NFs · ticket médio R$ 2.753</div>
+      <div style="margin-top:8px"><span class="badge badge-orange">42,9% do fat</span></div>
+    </div>
+    <div class="canal-card" style="border-top:3px solid var(--blue)">
+      <div class="canal-name">Site / E-commerce</div>
+      <div class="canal-value">R$ 117,6k</div>
+      <div class="canal-meta">967 NFs · ticket médio R$ 122</div>
+      <div style="margin-top:8px"><span class="badge badge-blue">34,6% do fat</span></div>
+    </div>
+    <div class="canal-card" style="border-top:3px solid #e0b040">
+      <div class="canal-name">Mercado Livre</div>
+      <div class="canal-value">R$ 33,8k</div>
+      <div class="canal-meta">316 NFs · ticket médio R$ 107</div>
+      <div style="margin-top:8px"><span class="badge badge-gold">9,9% do fat</span></div>
+    </div>
+    <div class="canal-card" style="border-top:3px solid #5b9fd4">
+      <div class="canal-name">Amazon</div>
+      <div class="canal-value">R$ 15,9k</div>
+      <div class="canal-meta">271 NFs · ticket médio R$ 59</div>
+      <div style="margin-top:8px"><span class="badge badge-blue">4,7% do fat</span></div>
+    </div>
+    <div class="canal-card" style="border-top:3px solid var(--verde-light)">
+      <div class="canal-name">Marketing</div>
+      <div class="canal-value">R$ 8,1k</div>
+      <div class="canal-meta">26 NFs · ticket médio R$ 313</div>
+      <div style="margin-top:8px"><span class="badge badge-green">2,4% do fat</span></div>
+    </div>
+    <div class="canal-card" style="border-top:3px solid var(--text3)">
+      <div class="canal-name">Livraria</div>
+      <div class="canal-value">R$ 4,8k</div>
+      <div class="canal-meta">47 NFs · ticket médio R$ 102</div>
+      <div style="margin-top:8px"><span class="badge" style="background:rgba(90,122,96,0.2);color:var(--text2);border:1px solid var(--border)">1,4% do fat</span></div>
+    </div>
+  </div>
+
+</div><!-- end visao-geral -->
+
+
+<!-- ==================== FINANCEIRO ==================== -->
+<div class="page" id="financeiro">
+
+  <div class="info-banner">
+    💡 <span>A/P total é R$4,1M — mais que o dobro do A/R. Parte relevante são as consignações (R$2,06M) que vencem conforme acerto com clientes.</span>
+  </div>
+
+  <!-- KPIs financeiro -->
+  <div class="kpis-grid">
+    <div class="kpi" style="--accent:#4caf74">
+      <div class="kpi-icon">💚</div>
+      <div class="kpi-label">A/R Total em Aberto</div>
+      <div class="kpi-value">R$ 2,02M</div>
+      <div class="kpi-sub">Contas a receber abertas</div>
+    </div>
+    <div class="kpi" style="--accent:#e05555">
+      <div class="kpi-icon">🔴</div>
+      <div class="kpi-label">A/R Vencido</div>
+      <div class="kpi-value">R$ 1,62M</div>
+      <div class="kpi-sub">80% do A/R está em atraso</div>
+      <div class="kpi-change down">CRÍTICO</div>
+    </div>
+    <div class="kpi" style="--accent:#d4a843">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-label">A/R Vence em Maio</div>
+      <div class="kpi-value">R$ 248k</div>
+      <div class="kpi-sub">Restante do mês</div>
+    </div>
+    <div class="kpi" style="--accent:#5b9fd4">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-label">A/R Vence em Junho</div>
+      <div class="kpi-value">R$ 43k</div>
+      <div class="kpi-sub">Previsão próximo mês</div>
+    </div>
+    <div class="kpi" style="--accent:#e05555">
+      <div class="kpi-icon">💸</div>
+      <div class="kpi-label">A/P Total em Aberto</div>
+      <div class="kpi-value">R$ 4,14M</div>
+      <div class="kpi-sub">Contas a pagar abertas</div>
+    </div>
+    <div class="kpi" style="--accent:#e08860">
+      <div class="kpi-icon">⚠️</div>
+      <div class="kpi-label">A/P Vencido</div>
+      <div class="kpi-value">R$ 689k</div>
+      <div class="kpi-sub">Pendências de pagamento</div>
+      <div class="kpi-change down">Atenção</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- Posição de caixa -->
+    <div class="card">
+      <div class="card-title">Fluxo de Caixa — Maio 2026</div>
+      <div class="fin-row">
+        <div class="fin-icon">📥</div>
+        <div class="fin-label">
+          <div class="fin-label-main">Recebimentos realizados</div>
+          <div class="fin-label-sub">Baixas de A/R registradas em mai</div>
+        </div>
+        <div class="fin-value positive">+ R$ 265.375</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-icon">📤</div>
+        <div class="fin-label">
+          <div class="fin-label-main">Pagamentos realizados</div>
+          <div class="fin-label-sub">Baixas de A/P registradas em mai</div>
+        </div>
+        <div class="fin-value neutral">R$ 0</div>
+      </div>
+      <div class="divider"></div>
+      <div class="fin-row">
+        <div class="fin-icon">📊</div>
+        <div class="fin-label">
+          <div class="fin-label-main">A/R vence restante maio</div>
+          <div class="fin-label-sub">Oportunidade de recebimento</div>
+        </div>
+        <div class="fin-value positive">+ R$ 248k</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-icon">🎯</div>
+        <div class="fin-label">
+          <div class="fin-label-main">Potencial total de caixa maio</div>
+          <div class="fin-label-sub">Se 100% do A/R a vencer entrar</div>
+        </div>
+        <div class="fin-value positive">R$ 513k</div>
+      </div>
+    </div>
+
+    <!-- A/R breakdown -->
+    <div class="card">
+      <div class="card-title">Breakdown A/R — R$ 2,02M total</div>
+      <div style="margin-bottom:12px">
+        <div style="height:18px;background:var(--card2);border-radius:9px;overflow:hidden;display:flex">
+          <div style="width:80.2%;background:var(--red);opacity:0.8" title="Vencido"></div>
+          <div style="width:12.3%;background:var(--ouro)" title="Vence mai"></div>
+          <div style="width:2.1%;background:var(--green)" title="Vence jun"></div>
+          <div style="flex:1;background:var(--border)" title="Restante"></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--red);opacity:0.8"></div><span style="color:var(--text2)">Vencido: <strong style="color:var(--red-light)">R$ 1,62M (80%)</strong></span></div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--ouro)"></div><span style="color:var(--text2)">Vence mai: <strong style="color:var(--ouro)">R$ 248k (12%)</strong></span></div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--green)"></div><span style="color:var(--text2)">Vence jun: <strong style="color:var(--green)">R$ 43k (2%)</strong></span></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="card-title" style="margin-top:12px;margin-bottom:10px">Top Inadimplentes</div>
+      <div id="inadimplencia-list"></div>
+    </div>
+
+  </div>
+
+</div><!-- end financeiro -->
+
+
+<!-- ==================== VENDAS ==================== -->
+<div class="page" id="vendas">
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="kpi" style="--accent:var(--laranja)">
+      <div class="kpi-icon">🏆</div>
+      <div class="kpi-label">Maior Canal</div>
+      <div class="kpi-value">Atacado</div>
+      <div class="kpi-sub">R$ 145.889 · 42,9% do fat</div>
+      <div class="kpi-change up">Ticket médio R$ 2.753</div>
+    </div>
+    <div class="kpi" style="--accent:var(--blue)">
+      <div class="kpi-icon">🌐</div>
+      <div class="kpi-label">Volume Digital (Site+ML+AMZ)</div>
+      <div class="kpi-value">1.554 NFs</div>
+      <div class="kpi-sub">R$ 167.209 em 15 dias</div>
+      <div class="kpi-change up">49,2% do fat total</div>
+    </div>
+  </div>
+
+  <!-- Top produtos -->
+  <div class="section-title">Top 15 Produtos — Vendas 1–15 Mai (por unidades)</div>
+  <div class="card">
+    <div id="top-produtos-list" class="product-rank"></div>
+  </div>
+
+  <!-- Canal bar chart -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Faturamento por Canal</div>
+      <div class="bar-chart" id="canal-chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ticket Médio por Canal (R$)</div>
+      <div class="bar-chart" id="ticket-chart"></div>
+    </div>
+  </div>
+
+  <!-- Tipo cliente -->
+  <div class="card">
+    <div class="card-title">Faturamento por Tipo de Cliente</div>
+    <div class="bar-chart" id="tipo-cliente-chart"></div>
+    <div style="margin-top:12px;font-size:10px;color:var(--text3)">
+      ⚠️ "Sem tipo" = 93,7% do fat — clientes sem classificação no Literarius. Oportunidade: cadastrar tipo dos principais compradores para segmentar campanhas.
+    </div>
+  </div>
+
+</div><!-- end vendas -->
+
+
+<!-- ==================== ESTOQUE ==================== -->
+<div class="page" id="estoque">
+
+  <!-- Summary -->
+  <div class="estoque-summary-grid">
+    <div class="est-mini">
+      <div class="est-mini-value est-mini-blue">167.018</div>
+      <div class="est-mini-label">Unidades em estoque</div>
+    </div>
+    <div class="est-mini">
+      <div class="est-mini-value" style="color:var(--text)">R$ 13,5M</div>
+      <div class="est-mini-label">Valor em estoque (preço de venda)</div>
+    </div>
+    <div class="est-mini">
+      <div class="est-mini-value est-mini-red">4.112</div>
+      <div class="est-mini-label">SKUs zerados</div>
+    </div>
+    <div class="est-mini">
+      <div class="est-mini-value est-mini-warn">4</div>
+      <div class="est-mini-label">SKUs abaixo do mínimo</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- Top 15 por valor -->
+    <div class="card">
+      <div class="card-title">Top 15 Estoque — Maior Valor <span>R$ estoque = saldo × preço</span></div>
+      <div class="bar-chart" id="estoque-valor-chart"></div>
+    </div>
+
+    <!-- Estoque zerado crítico -->
+    <div class="card">
+      <div class="card-title" style="color:var(--red-light)">⚠️ Ruptura — SKUs Zerados com Est. Mínimo</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th class="td-right">Preço</th>
+            <th class="td-right">Est. Min</th>
+          </tr>
+        </thead>
+        <tbody id="estoque-zerado-table"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Consignação -->
+  <div class="card">
+    <div class="card-title">Consignação Aberta — R$ 2,06M <span>Valor = Saldo × Preço Praticado</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+      <div style="text-align:center;padding:16px;background:var(--card2);border-radius:8px">
+        <div style="font-size:28px;font-weight:800;color:var(--ouro)">50</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">Consignações abertas</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--card2);border-radius:8px">
+        <div style="font-size:28px;font-weight:800;color:var(--text)">3.360</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">Itens em consignação</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--card2);border-radius:8px">
+        <div style="font-size:28px;font-weight:800;color:var(--red-light)">R$ 2,06M</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">Valor total em aberto</div>
+      </div>
+    </div>
+    <div style="padding:12px;background:rgba(212,168,67,0.08);border:1px solid rgba(212,168,67,0.2);border-radius:8px;font-size:11px;color:var(--ouro)">
+      💡 <strong>Oportunidade:</strong> R$2,06M em mercadoria fora da empresa sem retorno garantido.
+      Recomenda-se auditoria mensal de consignações com mais de 90 dias sem movimentação.
+    </div>
+  </div>
+
+</div><!-- end estoque -->
+
+
+<!-- ==================== OPERAÇÕES ==================== -->
+<div class="page" id="operacoes">
+
+  <!-- Pedidos por status -->
+  <div class="section-title">Pedidos Mai 1–15 — Por Status de Operação</div>
+  <div id="pedidos-status-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px"></div>
+
+  <!-- Tabela top produtos com detalhes -->
+  <div class="card">
+    <div class="card-title">Ranking Completo de Vendas — Mai 1–15 <span>Top 15 por receita</span></div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Produto</th>
+          <th>Autor</th>
+          <th class="td-right">Unid.</th>
+          <th class="td-right">Receita</th>
+          <th class="td-right">Preço Médio</th>
+        </tr>
+      </thead>
+      <tbody id="produtos-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Top estoque tabela completa -->
+  <div class="card">
+    <div class="card-title">Posição de Estoque — Top 15 Maior Valor <span>Potencial de venda imediata</span></div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Produto</th>
+          <th class="td-right">Saldo</th>
+          <th class="td-right">Preço</th>
+          <th class="td-right">Valor Estoque</th>
+          <th class="td-center">Status</th>
+        </tr>
+      </thead>
+      <tbody id="estoque-table"></tbody>
+    </table>
+  </div>
+
+</div><!-- end operacoes -->
+
+</div><!-- end main -->
+
+<script>
+// ============= DADOS =============
+const dados = {
+  fat_diario: [{"dia":"2026-05-01","qtde_nfs":11,"valor_total":778.1},{"dia":"2026-05-02","qtde_nfs":8,"valor_total":403.5},{"dia":"2026-05-03","qtde_nfs":11,"valor_total":992.9},{"dia":"2026-05-04","qtde_nfs":11,"valor_total":1027.97},{"dia":"2026-05-05","qtde_nfs":123,"valor_total":60975.17},{"dia":"2026-05-06","qtde_nfs":207,"valor_total":32022.7},{"dia":"2026-05-07","qtde_nfs":340,"valor_total":91568.6},{"dia":"2026-05-08","qtde_nfs":200,"valor_total":28034.51},{"dia":"2026-05-09","qtde_nfs":247,"valor_total":43574.74},{"dia":"2026-05-10","qtde_nfs":8,"valor_total":603.12},{"dia":"2026-05-11","qtde_nfs":8,"valor_total":606.81},{"dia":"2026-05-12","qtde_nfs":258,"valor_total":46226.91},{"dia":"2026-05-13","qtde_nfs":112,"valor_total":19143.73},{"dia":"2026-05-14","qtde_nfs":116,"valor_total":11738.82},{"dia":"2026-05-15","qtde_nfs":21,"valor_total":2213.43}],
+  fat_canal: [{"canal":"ATACADO","qtde_nfs":53,"valor_total":145888.62,"clientes_unicos":16,"ticket_medio":2752.61},{"canal":"SITE","qtde_nfs":967,"valor_total":117568.16,"clientes_unicos":847,"ticket_medio":121.58},{"canal":"MERCADO LIVRE - MP","qtde_nfs":316,"valor_total":33753.33,"clientes_unicos":305,"ticket_medio":106.81},{"canal":"AMAZON - MP","qtde_nfs":271,"valor_total":15888.18,"clientes_unicos":264,"ticket_medio":58.63},{"canal":"Sem canal","qtde_nfs":1,"valor_total":13868.0,"clientes_unicos":1,"ticket_medio":13868.0},{"canal":"MARKETING","qtde_nfs":26,"valor_total":8125.77,"clientes_unicos":7,"ticket_medio":312.53},{"canal":"LIVRARIA","qtde_nfs":47,"valor_total":4788.95,"clientes_unicos":8,"ticket_medio":101.89}],
+  fat_tipo_cliente: [{"tipo_cliente":"Sem tipo","qtde_nfs":1590,"valor_total":318340.01},{"tipo_cliente":"PF","qtde_nfs":16,"valor_total":6338.37},{"tipo_cliente":"DISTRIBUIDORAS","qtde_nfs":7,"valor_total":5321.2},{"tipo_cliente":"IGREJAS","qtde_nfs":28,"valor_total":4867.0},{"tipo_cliente":"LIVRARIAS","qtde_nfs":19,"valor_total":3684.0},{"tipo_cliente":"Empresas","qtde_nfs":21,"valor_total":1330.43}],
+  top_produtos: [{"produto_id":7066,"titulo":"Discipulado Teleios","isbn":"9786587079035","qtde_vendida":9850.0,"valor_total":356967.318,"preco_medio":36.24,"imagem":"","autor":"Equipe Editorial"},{"produto_id":6847,"titulo":"M\u00e3es da alian\u00e7a 2026","isbn":"9786587079493","qtde_vendida":7254.0,"valor_total":361605.9744,"preco_medio":49.85,"imagem":"","autor":""},{"produto_id":2534,"titulo":"Em busca do cora\u00e7\u00e3o de Deus","isbn":"9786587079790","qtde_vendida":2355.0,"valor_total":25629.887,"preco_medio":10.88,"imagem":"","autor":"Jill Briscoe"},{"produto_id":4226,"titulo":"Revistas: A Grande Comissao N 16","isbn":"","qtde_vendida":2240.0,"valor_total":3948.0,"preco_medio":1.76,"imagem":"","autor":""},{"produto_id":6648,"titulo":"Fam\u00edlia: um lugar seguro","isbn":"9786587079455","qtde_vendida":2106.0,"valor_total":19040.07,"preco_medio":9.04,"imagem":"","autor":""},{"produto_id":3989,"titulo":"Revistas: Pequenos Discipulos G1 T2 2026","isbn":"","qtde_vendida":1849.0,"valor_total":3402.5,"preco_medio":1.84,"imagem":"","autor":""},{"produto_id":6830,"titulo":"Revistas: A Grande Comissao N 17","isbn":"","qtde_vendida":1671.0,"valor_total":3017.55,"preco_medio":1.81,"imagem":"","autor":""},{"produto_id":4035,"titulo":"Revistas: Pequenos Discipulos G2 T2 2026","isbn":"","qtde_vendida":1617.0,"valor_total":2830.5,"preco_medio":1.75,"imagem":"","autor":""},{"produto_id":4281,"titulo":"Revistas: Jovens T2 2026","isbn":"","qtde_vendida":1564.0,"valor_total":3267.9,"preco_medio":2.09,"imagem":"","autor":""},{"produto_id":4498,"titulo":"Revistas: Adultos T2 2026","isbn":"","qtde_vendida":1557.0,"valor_total":4066.71,"preco_medio":2.61,"imagem":"","autor":""},{"produto_id":4083,"titulo":"Revistas: Adolescentes T2 2026","isbn":"","qtde_vendida":1471.0,"valor_total":3037.65,"preco_medio":2.07,"imagem":"","autor":""},{"produto_id":6951,"titulo":"Fam\u00edlia: um lugar seguro - Kit","isbn":"9786587079455","qtde_vendida":1392.0,"valor_total":15033.12,"preco_medio":10.8,"imagem":"","autor":""},{"produto_id":4282,"titulo":"Revistas: Professores T2 2026","isbn":"","qtde_vendida":1296.0,"valor_total":3445.5,"preco_medio":2.66,"imagem":"","autor":""},{"produto_id":6863,"titulo":"Revistas: Intermediarios T2 2026","isbn":"","qtde_vendida":1265.0,"valor_total":2346.25,"preco_medio":1.85,"imagem":"","autor":""},{"produto_id":4159,"titulo":"Revistas: Pré-adolescentes T2 2026","isbn":"","qtde_vendida":1204.0,"valor_total":2424.56,"preco_medio":2.02,"imagem":"","autor":""}],
+  kpis_fat: {"fat_maio_15":339881.01,"nfs_maio_15":1681,"fat_abr_15":238423.78,"fat_abril_total":592019.83,"fat_ytd_abril":2555382.75,"desconto_mai_15":68090.59},
+  financeiro: {"total_ar":2024810.56,"total_ap":4137047.62,"ar_vencido":1622508.35,"ar_vence_mai":248477.88,"ar_vence_jun":43002.2,"ap_vencido":689810.22},
+  recebimentos: {"recebido_mai":265375.47,"pago_mai":0,"recebido_abr":265049.95},
+  inadimplencia: [{"cliente":"PLENITUDE DISTRIBUIDORA.","titulos":11,"valor_vencido":89645.73,"mais_antigo":"2025-09-19","dias_atraso":242},{"cliente":"","titulos":6,"valor_vencido":55991.3,"mais_antigo":"2025-09-23","dias_atraso":238},{"cliente":"CONSUMIDOR","titulos":9,"valor_vencido":40147.96,"mais_antigo":"2025-09-04","dias_atraso":257},{"cliente":"","titulos":7,"valor_vencido":20947.37,"mais_antigo":"2025-09-02","dias_atraso":259},{"cliente":"DISTRIBUIDORA CURITIBA","titulos":7,"valor_vencido":15221.13,"mais_antigo":"2025-11-01","dias_atraso":199},{"cliente":"ARAUTOS DO EVANGELHO","titulos":3,"valor_vencido":13764.93,"mais_antigo":"2025-11-26","dias_atraso":174},{"cliente":"DISTRIBUIDORA CAMPINAS","titulos":5,"valor_vencido":12000.0,"mais_antigo":"2026-01-08","dias_atraso":131},{"cliente":"LIBANUS EDITORA","titulos":3,"valor_vencido":11671.44,"mais_antigo":"2025-12-19","dias_atraso":150}],
+  fat_mensal: [{"mes":1,"valor_total":806865.41,"qtde_nfs":3557},{"mes":2,"valor_total":586760.59,"qtde_nfs":2402},{"mes":3,"valor_total":569736.92,"qtde_nfs":2255},{"mes":4,"valor_total":592019.83,"qtde_nfs":2569},{"mes":5,"valor_total":373031.90,"qtde_nfs":1921}],
+  estoque: {"total_skus":8162,"skus_com_estoque":4050,"skus_zerados":4112,"skus_criticos":4,"total_unidades":167018,"valor_estoque":13539692.33},
+  estoque_top: [{"Codigo":7066,"Titulo":"Discipulado Teleios","autor":"Equipe Editorial","saldo":62560,"preco":38.9,"valor_estoque":2433584.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":6847,"Titulo":"M\u00e3es da alian\u00e7a 2026","autor":"","saldo":43290,"preco":52.9,"valor_estoque":2290041.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":6648,"Titulo":"Fam\u00edlia: um lugar seguro","autor":"","saldo":44534,"preco":39.9,"valor_estoque":1776907.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":6951,"Titulo":"Fam\u00edlia: um lugar seguro - Kit","autor":"","saldo":30562,"preco":39.9,"valor_estoque":1219424.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":6863,"Titulo":"Revistas: Intermediarios T2 2026","autor":"","saldo":38300,"preco":2.0,"valor_estoque":76600.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4083,"Titulo":"Revistas: Adolescentes T2 2026","autor":"","saldo":33620,"preco":2.1,"valor_estoque":70602.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":3989,"Titulo":"Revistas: Pequenos Discipulos G1 T2 2026","autor":"","saldo":36120,"preco":1.9,"valor_estoque":68628.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4035,"Titulo":"Revistas: Pequenos Discipulos G2 T2 2026","autor":"","saldo":37500,"preco":1.8,"valor_estoque":67500.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4498,"Titulo":"Revistas: Adultos T2 2026","autor":"","saldo":24770,"preco":2.7,"valor_estoque":66879.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4226,"Titulo":"Revistas: A Grande Comissao N 16","autor":"","saldo":32800,"preco":2.0,"valor_estoque":65600.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":6830,"Titulo":"Revistas: A Grande Comissao N 17","autor":"","saldo":36100,"preco":1.8,"valor_estoque":64980.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4281,"Titulo":"Revistas: Jovens T2 2026","autor":"","saldo":29280,"preco":2.2,"valor_estoque":64416.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4159,"Titulo":"Revistas: Pr\u00e9-adolescentes T2 2026","autor":"","saldo":31200,"preco":2.1,"valor_estoque":65520.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":4282,"Titulo":"Revistas: Professores T2 2026","autor":"","saldo":26200,"preco":2.7,"valor_estoque":70740.0,"EstoqueMinimo":0,"imagem":""},{"Codigo":2534,"Titulo":"Em busca do cora\u00e7\u00e3o de Deus","autor":"Jill Briscoe","saldo":6420,"preco":11.9,"valor_estoque":76398.0,"EstoqueMinimo":0,"imagem":""}],
+  consignacao: {"qtde_consignacoes":50,"qtde_itens":3360,"valor_aberto":2059477.91,"clientes":50},
+  estoque_zerado: [{"Codigo":7006,"Titulo":"Revistas: Pré-adolescentes T1 2026","autor":"","Preco":2.1,"EstoqueMinimo":10,"imagem":""},{"Codigo":7007,"Titulo":"Revistas: Adolescentes T1 2026","autor":"","Preco":2.1,"EstoqueMinimo":10,"imagem":""},{"Codigo":7009,"Titulo":"Revistas: Intermediarios T1 2026","autor":"","Preco":2.0,"EstoqueMinimo":10,"imagem":""},{"Codigo":7010,"Titulo":"Revistas: Pequenos Discipulos G1 T1 2026","autor":"","Preco":1.9,"EstoqueMinimo":10,"imagem":""},{"Codigo":7011,"Titulo":"Revistas: Pequenos Discipulos G2 T1 2026","autor":"","Preco":1.8,"EstoqueMinimo":10,"imagem":""},{"Codigo":7012,"Titulo":"Revistas: Adultos T1 2026","autor":"","Preco":2.7,"EstoqueMinimo":10,"imagem":""}],
+  pedidos: [{"Status":6,"qtde":1586,"valor_total":192246.92},{"Status":8,"qtde":23,"valor_total":3335.55},{"Status":3,"qtde":11,"valor_total":1405.6},{"Status":9,"qtde":5,"valor_total":3092.17},{"Status":1,"qtde":3,"valor_total":1126.97},{"Status":7,"qtde":2,"valor_total":1721.54}],
+  status_names: {"6":"Pedido Faturado","8":"Aguardando Separação","3":"Aguardando Conferência","9":"Separação em Andamento","1":"Digitando...","4":"Aguardando Faturamento","5":"NF Gerada","10":"Pedido Enviado","7":"Pedido Cancelado","2":"Aguardando Aprovação"}
+};
+
+// ============= UTILS =============
+const fmt = n => n == null ? '—' : 'R$ ' + Number(n).toLocaleString('pt-BR', {minimumFractionDigits:0,maximumFractionDigits:0});
+const fmtK = n => {
+  if (!n) return '—';
+  if (n >= 1000000) return 'R$ ' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return 'R$ ' + (n/1000).toFixed(0) + 'k';
+  return fmt(n);
+};
+const fmtN = n => n == null ? '—' : Number(n).toLocaleString('pt-BR');
+
+// ============= TABS =============
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ============= SPARKLINE =============
+function buildSparkline() {
+  const svg = document.getElementById('sparkline-fat');
+  if (!svg) return;
+  const W = svg.clientWidth || 400;
+  const H = 110;
+  const pad = { t:20, b:20, l:40, r:10 };
+  const vals = dados.fat_diario.map(d => d.valor_total);
+  const max = Math.max(...vals);
+  const n = vals.length;
+  const dx = (W - pad.l - pad.r) / (n - 1);
+
+  const pts = vals.map((v,i) => {
+    const x = pad.l + i * dx;
+    const y = pad.t + (H - pad.t - pad.b) * (1 - v/max);
+    return [x, y];
+  });
+
+  const pathD = pts.map((p,i) => (i===0?'M':'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const areaD = pathD + ` L${pts[pts.length-1][0]},${H-pad.b} L${pts[0][0]},${H-pad.b} Z`;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C8714A" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#C8714A" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="${areaD}" fill="url(#lg)"/>
+    <path d="${pathD}" fill="none" stroke="#C8714A" stroke-width="2" stroke-linejoin="round"/>
+    ${pts.map((p,i) => {
+      const d = dados.fat_diario[i];
+      const day = d.dia.slice(8);
+      const isMax = vals[i] === max;
+      return `
+        <circle cx="${p[0]}" cy="${p[1]}" r="${isMax?5:3}" fill="${isMax?'#C8714A':'#8aab8f'}" stroke="var(--bg)" stroke-width="1.5"/>
+        <text x="${p[0]}" y="${H-4}" font-size="9" text-anchor="middle" fill="var(--text3)">${day}</text>
+        ${isMax ? `<text x="${p[0]}" y="${p[1]-9}" font-size="9" text-anchor="middle" fill="#C8714A" font-weight="700">${fmtK(vals[i])}</text>` : ''}
+      `;
+    }).join('')}
+  `;
+}
+
+// ============= TOP PRODUTOS =============
+function buildTopProdutos() {
+  const el = document.getElementById('top-produtos-list');
+  if (!el) return;
+  const rankColors = ['gold', 'silver', 'bronze'];
+  const maxQ = dados.top_produtos[0].qtde_vendida;
+  el.innerHTML = dados.top_produtos.slice(0,15).map((p,i) => `
+    <div class="prod-row">
+      <div class="prod-rank ${rankColors[i]||''}">${i+1}</div>
+      <div class="prod-info">
+        <div class="prod-title">${p.titulo}</div>
+        <div class="prod-author">${p.autor||'—'}</div>
+        <div style="margin-top:4px;height:4px;background:var(--card);border-radius:2px;overflow:hidden">
+          <div style="height:100%;background:var(--laranja);width:${(p.qtde_vendida/maxQ*100).toFixed(1)}%;border-radius:2px;opacity:0.7"></div>
+        </div>
+      </div>
+      <div class="prod-stats">
+        <div class="prod-qtde">${fmtN(p.qtde_vendida)} un</div>
+        <div class="prod-valor">${fmtK(p.valor_total)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============= CANAL CHARTS =============
+function buildCanalChart() {
+  const el = document.getElementById('canal-chart');
+  if (!el) return;
+  const max = dados.fat_canal[0].valor_total;
+  const colors = ['var(--laranja)','var(--blue)','#e0b040','#5b9fd4','var(--verde-light)','var(--text3)','var(--text3)'];
+  el.innerHTML = dados.fat_canal.filter(c => c.canal !== 'Sem canal').map((c,i) => `
+    <div class="bar-row">
+      <div class="bar-label short">${c.canal.replace(' - MP','').replace('MERCADO LIVRE','ML')}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:${colors[i]};width:${(c.valor_total/max*100).toFixed(1)}%;opacity:0.8">
+          <span class="bar-fill-text">${c.qtde_nfs} NFs</span>
+        </div>
+      </div>
+      <div class="bar-value">${fmtK(c.valor_total)}</div>
+    </div>
+  `).join('');
+}
+
+function buildTicketChart() {
+  const el = document.getElementById('ticket-chart');
+  if (!el) return;
+  const canais = dados.fat_canal.filter(c => c.canal !== 'Sem canal');
+  const max = Math.max(...canais.map(c => c.ticket_medio));
+  const colors = ['var(--laranja)','var(--blue)','#e0b040','#5b9fd4','var(--verde-light)','var(--text3)'];
+  el.innerHTML = canais.map((c,i) => `
+    <div class="bar-row">
+      <div class="bar-label short">${c.canal.replace(' - MP','').replace('MERCADO LIVRE','ML')}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:${colors[i]};width:${(c.ticket_medio/max*100).toFixed(1)}%;opacity:0.8">
+        </div>
+      </div>
+      <div class="bar-value">R$ ${Number(c.ticket_medio).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}</div>
+    </div>
+  `).join('');
+}
+
+function buildTipoClienteChart() {
+  const el = document.getElementById('tipo-cliente-chart');
+  if (!el) return;
+  const max = dados.fat_tipo_cliente[0].valor_total;
+  const colors = ['var(--text3)','var(--blue)','var(--ouro)','var(--laranja)','var(--green)','var(--verde-light)'];
+  el.innerHTML = dados.fat_tipo_cliente.map((t,i) => `
+    <div class="bar-row">
+      <div class="bar-label">${t.tipo_cliente}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:${colors[i]};width:${(t.valor_total/max*100).toFixed(1)}%;opacity:0.85">
+          <span class="bar-fill-text">${t.qtde_nfs} NFs</span>
+        </div>
+      </div>
+      <div class="bar-value">${fmtK(t.valor_total)}</div>
+    </div>
+  `).join('');
+}
+
+// ============= INADIMPLÊNCIA =============
+function buildInadimplencia() {
+  const el = document.getElementById('inadimplencia-list');
+  if (!el) return;
+  const max = dados.inadimplencia[0].valor_vencido;
+  el.innerHTML = dados.inadimplencia.map(i => `
+    <div class="inad-row">
+      <div class="inad-bar-wrap">
+        <div class="inad-name">${i.cliente || '<sem nome>'}</div>
+        <div class="inad-track">
+          <div class="inad-fill" style="width:${(i.valor_vencido/max*100).toFixed(1)}%"></div>
+        </div>
+      </div>
+      <div class="inad-value">${fmtK(i.valor_vencido)}</div>
+      <div class="inad-days">${i.dias_atraso}d atraso</div>
+    </div>
+  `).join('');
+}
+
+// ============= ESTOQUE CHARTS =============
+function buildEstoqueValorChart() {
+  const el = document.getElementById('estoque-valor-chart');
+  if (!el) return;
+  const max = dados.estoque_top[0].valor_estoque;
+  const colors = ['#C8714A','#d4a843','#4caf74','#5b9fd4','#8a7fd4','#c47ab0'];
+  el.innerHTML = dados.estoque_top.slice(0,10).map((p,i) => `
+    <div class="bar-row">
+      <div class="bar-label" title="${p.Titulo}">${p.Titulo.length>22 ? p.Titulo.slice(0,22)+'…' : p.Titulo}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:${colors[i%colors.length]};width:${(p.valor_estoque/max*100).toFixed(1)}%;opacity:0.8">
+          <span class="bar-fill-text">${fmtN(p.saldo)} un</span>
+        </div>
+      </div>
+      <div class="bar-value">${fmtK(p.valor_estoque)}</div>
+    </div>
+  `).join('');
+}
+
+function buildEstoqueZerado() {
+  const el = document.getElementById('estoque-zerado-table');
+  if (!el) return;
+  el.innerHTML = dados.estoque_zerado.map(p => `
+    <tr>
+      <td>${p.Titulo}</td>
+      <td class="td-right">${fmt(p.Preco)}</td>
+      <td class="td-right"><span class="badge badge-red">${p.EstoqueMinimo}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ============= PEDIDOS STATUS =============
+function buildPedidosStatus() {
+  const el = document.getElementById('pedidos-status-grid');
+  if (!el) return;
+  const statusColors = {
+    6: 'var(--green)', 7: 'var(--red-light)', 8: 'var(--ouro)',
+    9: 'var(--blue)', 1: 'var(--text3)', 4: 'var(--red)',
+    3: 'var(--laranja)', 10: 'var(--verde-light)'
+  };
+  el.innerHTML = dados.pedidos.map(p => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;border-top:3px solid ${statusColors[p.Status]||'var(--text3)'}">
+      <div style="font-size:10px;font-weight:700;color:${statusColors[p.Status]||'var(--text2)'};text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">
+        ${dados.status_names[p.Status]||'Status '+p.Status}
+      </div>
+      <div style="font-size:24px;font-weight:800;color:var(--text)">${fmtN(p.qtde)}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:4px">${fmtK(p.valor_total)}</div>
+    </div>
+  `).join('');
+}
+
+// ============= PRODUTOS TABLE =============
+function buildProdutosTable() {
+  const el = document.getElementById('produtos-table');
+  if (!el) return;
+  const maxFat = Math.max(...dados.top_produtos.map(p => p.valor_total));
+  el.innerHTML = dados.top_produtos.map((p,i) => `
+    <tr>
+      <td style="font-weight:700;color:${i<3?'var(--ouro)':'var(--text3)'}">${i+1}</td>
+      <td><div style="font-weight:600">${p.titulo}</div></td>
+      <td style="color:var(--text2);font-size:10px">${p.autor||'—'}</td>
+      <td class="td-right fw-700">${fmtN(p.qtde_vendida)}</td>
+      <td class="td-right">
+        <div style="font-weight:700">${fmtK(p.valor_total)}</div>
+        <div style="height:3px;background:var(--laranja);width:${(p.valor_total/maxFat*100).toFixed(0)}%;border-radius:2px;margin-top:3px;opacity:0.7"></div>
+      </td>
+      <td class="td-right">R$ ${Number(p.preco_medio).toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+    </tr>
+  `).join('');
+}
+
+// ============= ESTOQUE TABLE =============
+function buildEstoqueTable() {
+  const el = document.getElementById('estoque-table');
+  if (!el) return;
+  el.innerHTML = dados.estoque_top.map((p,i) => {
+    const status = p.saldo > 100 ? ['badge-green','Normal'] : p.saldo > 0 ? ['badge-gold','Baixo'] : ['badge-red','Zerado'];
+    return `
+      <tr>
+        <td style="font-weight:700;color:${i<3?'var(--ouro)':'var(--text3)'}">${i+1}</td>
+        <td>
+          <div style="font-weight:600">${p.Titulo}</div>
+          <div style="font-size:10px;color:var(--text3)">${p.autor||'—'}</div>
+        </td>
+        <td class="td-right fw-700">${fmtN(p.saldo)}</td>
+        <td class="td-right">R$ ${Number(p.preco).toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+        <td class="td-right"><strong>${fmtK(p.valor_estoque)}</strong></td>
+        <td class="td-center"><span class="badge ${status[0]}">${status[1]}</span></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ============= INIT =============
+window.addEventListener('DOMContentLoaded', () => {
+  buildSparkline();
+  buildTopProdutos();
+  buildCanalChart();
+  buildTicketChart();
+  buildTipoClienteChart();
+  buildInadimplencia();
+  buildEstoqueValorChart();
+  buildEstoqueZerado();
+  buildPedidosStatus();
+  buildProdutosTable();
+  buildEstoqueTable();
+});
+
+window.addEventListener('resize', buildSparkline);
+</script>
+</body>
+</html>
