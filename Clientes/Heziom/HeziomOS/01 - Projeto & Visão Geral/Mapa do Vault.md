@@ -9,39 +9,50 @@ autor: JG Novais (Trivia)
 
 Inventário estrutural completo do vault **HeziomOS** e registro da organização feita em 19/05/2026. Para navegação por links, use [[00 - Índice]]. Este documento serve para entender **o que existe e onde está**.
 
-**Números:** 112 notas `.md` · raiz do vault Obsidian = pasta `HeziomOS/` · ~3,3 GB (a maior parte são vídeos de treinamento dos processos financeiros).
+**Números:** 113 notas `.md` · raiz do vault Obsidian = pasta `HeziomOS/` · ~3,3 GB (a maior parte são vídeos de treinamento dos processos financeiros).
 
 ---
 
 ## Estrutura de pastas
 
+Estrutura numerada por tema (reorganizada em 19/05/2026):
+
 ```
 HeziomOS/
-├── 00 - Índice.md                 ← mapa de navegação por links (ponto de entrada)
-├── HeziomOS — Arquitetura e Fluxos.md   ← ARQUITETURA VIGENTE
-├── HeziomOS — Arquitetura.md            ← arquitetura histórica (referência)
-├── Agente Financeiro — Prompt.md
-├── DDL Banco de dados Literarius.md     ← schema bruto do ERP
-├── PUML Tabelas Literarius.md           ← diagramas ER
+├── 00 - Índice.md            ← ponto de entrada / navegação por links
 │
-├── CEO Dashboard/        → o produto: dashboard, KPIs, assistente IA (4 notas)
-├── Financeiro/           → módulos e análises financeiras (15 notas)
-│   └── Módulos/          → os 8 módulos do sistema
-├── Fontes de Dados/      → documentação das integrações (54 notas)
-│   ├── Literarius/        → ERP: APIs, schema do banco, views
-│   │   ├── APIs/
-│   │   └── Banco de Dados/  → 21 tabelas mapeadas
-│   ├── Tray/              → e-commerce: 16 notas de endpoints
-│   └── Mandae/            → logística
-├── Integrações/          → Qive, Bancos CNAB/OFX, Alertas, Tray (4 notas)
-├── Processos Financeiros/ → mapeamento dos processos do time + vídeos
-│   └── KRs/               → KR1 Contabilidade, KR2 Consignação, KR3 Dia a Dia
-├── Projeto/              → gestão: roadmap, backlog, stories, dashboards (20 notas)
-│   └── Stories/           → STORY-001 a 009 + template
-├── Decisões/             → ADRs (decisões de arquitetura)
-├── Literarius/           → views da camada de acesso HeziomOS
-├── Queries/              → CSVs de resultados de queries exploratórias
-├── Financeiro HEziom 1-JANEIRO/ → fechamento de janeiro (planilhas, NFs, extratos)
+├── 01 - Projeto & Visão Geral/   → gestão + concepção do sistema
+│   ├── HeziomOS — Arquitetura e Fluxos.md   (ARQUITETURA VIGENTE)
+│   ├── HeziomOS — Arquitetura.md            (histórico)
+│   ├── Agente Financeiro — Prompt.md
+│   ├── Roadmap, Backlog, Sprint Atual, Dashboard do Projeto,
+│   │   Setup João, Escopo Tecnico, Estudo de APIs, Mapa do Vault…
+│   ├── CEO Dashboard/   → o produto: Dashboard CEO, KPIs, Assistente IA
+│   ├── Stories/         → STORY-001 a 009 + template
+│   └── Decisões/        → ADR-001, ADR-002
+│
+├── 02 - Sistema (Fluxos & Processos)/  → como o sistema deve funcionar
+│   ├── Módulos/         → os 8 módulos (Pedidos, Contas a R/P, DRE,
+│   │                       Aprovação, Conciliação, Estoque/CMV, Comissões)
+│   ├── Integrações/     → Qive, Bancos CNAB/OFX, Alertas, Tray Conciliação
+│   └── Mapa de Dados · Premissas e Entendimentos · Dúvidas p/ Insights
+│
+├── 03 - Departamentos/         → como as áreas operam hoje
+│   └── Financeiro/      → processos do time: KR1 Contabilidade,
+│       └── KRs/           KR2 Consignação, KR3 Dia a Dia + vídeos/docx
+│
+├── 04 - Documentação & Testes/ → docs dos sistemas externos + queries
+│   ├── Literarius/      → APIs/, Banco de Dados/ (21 tabelas), Schema, Views
+│   ├── Tray/            → 16 notas de endpoints e-commerce
+│   ├── Mandae/          → logística
+│   ├── Queries/         → 19 CSVs de testes de consulta (API/SQL)
+│   └── DDL Banco de dados Literarius · PUML Tabelas Literarius
+│
+├── 05 - Dados & Fechamentos/   → dados reais e resultados
+│   ├── Fechamento Janeiro 2026/ → planilhas, NFs, extratos
+│   └── DRE Acumulado 2025-2026 · Análise Planilhas Jan ·
+│       Análise Conexão DB · Análise dos Dados Extraídos
+│
 └── .aiox-core/           → framework AIOX (NÃO é nota — código do método)
 ```
 
@@ -112,6 +123,7 @@ Limpeza e padronização executadas (vault 5,9 GB → 3,3 GB):
 5. **Corrigidos ~308 wikilinks quebrados:** links com caminho `[[Clientes/Heziom/HeziomOS/...]]` (caminho inexistente a partir da raiz do vault) e o typo `HezionOS` foram reduzidos a `[[NomeDaNota]]`. Como todos os nomes de nota são únicos, o Obsidian resolve sozinho — links agora funcionam no Graph View.
 6. **Resolvido conflito de merge do git** não finalizado em `Projeto/Roadmap.md` (tabela de Stories da Fase 1).
 7. **Arquitetura:** mantidos os dois documentos; o índice e o cabeçalho do antigo agora deixam explícito qual é o vigente.
+8. **Reestruturação em 5 pastas numeradas** (00–05) por tema: visão geral/projeto, fluxos do sistema, departamentos, documentação & testes, dados & fechamentos. Como os links são todos `[[NomeDaNota]]`, nenhum link quebrou na mudança. As pastas antigas (`Projeto`, `Financeiro`, `Fontes de Dados`, `Processos Financeiros`, etc.) deixaram de existir como nível raiz.
 
 ### Recomendações em aberto (não executadas)
 - **`Queries/`**: os 19 CSVs têm o SQL inteiro como nome de arquivo (alguns com quebra de linha). Funciona, mas é frágil. Sugestão futura: renomear para `Q01-...`, `Q02-...` e mover o SQL para dentro de uma nota índice.
