@@ -133,7 +133,7 @@ Edge Functions rodam na nuvem do Supabase e **não alcançam IPs privados** (`19
 - [[Aprovação de Pagamentos]] — workflow de alçadas + geração de CNAB 240
 - [[Conciliação Bancária]] — extrato OFX × TituloFinanceiroBaixa
 - [[Gestão de Estoque e CMV]] — posição, cobertura, custo via Qive
-- [[Comissões e Repasses]] — marketplace + vendedores internos
+- [[Comissões e Repasses]] — marketplace + vendedores internoss
 
 ---
 
