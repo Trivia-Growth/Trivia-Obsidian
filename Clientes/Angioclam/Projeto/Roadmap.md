@@ -100,17 +100,18 @@ agora, indicadores configuráveis depois. Paridade SulAmérica é gate.
 
 ---
 
-## Fase 6 — Histórico + usabilidade *(backlog — 2026-05-19)*
+## Fase 6 — Histórico + usabilidade *(em andamento — 2026-05-19)*
 
 Levantado no E2E Bradesco com o cliente:
-- STORY-060 tela de histórico de relatórios (lista + filtros + auditoria).
-  Os dados já são persistidos (`reports` + `report_audit_log`); falta a
-  tela que os exibe.
-- Melhoria de usabilidade (sem story): rótulos da área de upload passam a
-  indicar **como identificar** a planilha de cada slot pelo conteúdo
-  (colunas), já que a Bradesco manda vários arquivos com nomes genéricos.
+- ✅ STORY-060 tela de histórico de relatórios — rotas `/historico`
+  (lista + filtros operadora/clínica/período) e `/historico/:id`
+  (detalhe reusa KpiDashboard + prévia HTML + painel de auditoria).
+  `reports_read` já libera leitura → sem migration. 69 testes verdes,
+  build/lint ok.
+- ✅ Usabilidade: rótulos da área de upload indicam **como identificar**
+  a planilha de cada slot pelo conteúdo (colunas).
 
-**Status:** `backlog`.
+**Status:** `em andamento` — segue STORY-057 (indicadores configuráveis).
 
 ---
 

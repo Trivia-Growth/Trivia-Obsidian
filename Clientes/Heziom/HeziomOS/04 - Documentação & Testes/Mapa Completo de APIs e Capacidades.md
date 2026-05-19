@@ -18,7 +18,7 @@ revisado: 2026-05-19
 graph LR
     subgraph ERP ["Literarius (SQL Server)"]
         DB[(150 tabelas<br>61 views)]
-        API_LIT[REST API<br>5 controllers]
+        API_LIT[REST API<br>6 controllers]
     end
     
     subgraph ECOM ["Tray (E-commerce)"]
@@ -214,7 +214,7 @@ graph LR
 
 ---
 
-#### 9. REST API do Literarius (Write parcial)
+#### 9. REST API do Literarius (Write parcial + Financeiro)
 
 | Endpoint | Método | O que faz |
 |---|---|---|
@@ -226,8 +226,11 @@ graph LR
 | `/ProdutoEAN/{ean}` | GET | Busca por código de barras |
 | `/Estoque/{emp}/{setor}/{prod}/{box}` | GET | Saldo atual |
 | `/NotaFiscal/{id}` | GET | NF com 112+ colunas |
+| `/TTituloFinanceiroController/Receber/{id}` | GET | 🆕 **Títulos a receber** (A/R) |
+| `/TTituloFinanceiroController/Pagar/{id}` | GET | 🆕 **Títulos a pagar** (A/P) |
 
-> A REST API permite **criar pedidos e alterar status** — não é 100% read-only.
+> A REST API permite **criar pedidos, alterar status, e agora consultar títulos financeiros** — não é 100% read-only.
+> 🆕 Controller financeiro liberado em 15/05/2026 pelo Elias (Literarius Sistemas). Ainda não testado em produção.
 
 ---
 
@@ -571,7 +574,7 @@ GET /dashboard              → KPIs do admin
 | Sistema | Tabelas/Endpoints | Registros | Escrita |
 |---|---|---|---|
 | **Literarius SQL** | 150 tabelas + 61 views | ~880k+ | ❌ (read-only) |
-| **Literarius REST** | 5 controllers, ~12 endpoints | — | ✅ (pedidos) |
+| **Literarius REST** | 6 controllers, ~14 endpoints | — | ✅ (pedidos) + 🆕 financeiro (leitura) |
 | **Tray API v2** | 18 categorias, ~100 endpoints | — | ✅ (full CRUD) |
 | **Tray Webhooks** | 10 eventos | — | Push (receptor) |
 

@@ -3,7 +3,7 @@ id: STORY-060
 titulo: "Tela de histórico de relatórios"
 fase: 6
 modulo: "report"
-status: backlog
+status: concluida
 prioridade: media
 agente_responsavel: "claude"
 criado: 2026-05-19
@@ -38,4 +38,4 @@ visão de histórico (validado no E2E Bradesco de 2026-05-19).
 
 ## Implementação
 
-**Status:** `backlog`
+**Status:** `concluida` (2026-05-19) — lista+filtros, detalhe /historico/:id reusa KpiDashboard/preview, painel de auditoria; reports_read libera leitura (sem migration); 69 testes verdes.

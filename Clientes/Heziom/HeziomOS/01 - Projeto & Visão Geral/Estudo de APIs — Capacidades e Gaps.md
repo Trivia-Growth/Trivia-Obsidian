@@ -27,6 +27,7 @@ criado: 2026-05-18
 | `TProdutoController`     | GET produto por código ou EAN, GET tipo/grupo/gênero/idioma/autor                   |
 | `TEstoqueController`     | GET saldo por empresa/setor/produto; GET por box (WMS)                              |
 | `TNotaFiscalController`  | GET nota fiscal por ID                                                              |
+| `TTituloFinanceiroController` | 🆕 GET `/Receber/{id}`, GET `/Pagar/{id}` — **módulo financeiro** (liberado 15/05/2026) |
 
 **Dados confirmados em produção:**
 - Pedidos com `siteIdPedido` (chave de conciliação com Tray)
@@ -35,7 +36,7 @@ criado: 2026-05-18
 - Produtos com ISBN, EAN, preço com vigência, autores, dimensões
 - NF-e modelo 55 com natureza de operação, emitente, destinatário
 
-**Limitação crítica:** A API Literarius é a face pública do ERP. Dados financeiros profundos (TituloFinanceiro, ContaBancaria, PlanoConta, DRE) **não estão expostos pela API** — apenas pelo SQL Server direto (`192.168.18.10:1433`). A arquitetura correta para esses dados é o **Deno sync script local**, conforme decidido.
+**Atualização 15/05/2026:** O módulo financeiro (`TTituloFinanceiroController`) foi liberado via API REST com endpoints `/Receber` e `/Pagar`. Dados de ContaBancaria, PlanoConta e DRE continuam **não expostos pela API** — apenas pelo SQL Server direto (`192.168.18.10:1433`). A arquitetura mantém o **Deno sync script local** como fonte primária para volume e rateio, com a API REST como complemento para consultas pontuais e fallback.
 
 ---
 
@@ -119,9 +120,9 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 | Necessidade do projeto | Por quê não é coberta | Alternativa |
 |---|---|---|
 | **Saldo bancário em tempo real** | Nenhuma das 3 APIs acessa contas bancárias | SQL direto: `ContaBancaria` + `ContaBancariaLancamento` no Literarius |
-| **Contas a Pagar / Receber (TituloFinanceiro)** | Não exposto pela Literarius API | SQL direto + Deno sync |
+| ~~**Contas a Pagar / Receber (TituloFinanceiro)**~~ | ~~Não exposto pela Literarius API~~ | 🆕 **RESOLVIDO 15/05/2026:** `GET /TTituloFinanceiroController/Receber` e `/Pagar` liberados. SQL direto permanece como fonte primária para volume/rateio |
 | **DRE / Plano de Contas** | Não exposto pela API | SQL direto (`PlanoConta`, `CentroResultado`) + correção `TipoCategoria` |
-| **Baixas financeiras (liquidações)** | Não exposto pela API | SQL direto: `TituloFinanceiroBaixa` |
+| **Baixas financeiras (liquidações)** | Provavelmente não exposto pela API | SQL direto: `TituloFinanceiroBaixa` — verificar se o novo controller retorna baixas embutidas |
 | **Extrato bancário OFX** | Nenhuma das 3 APIs fornece extrato | Upload manual (MVP) ou API bancária Santander (Fase 2) |
 | **NF-e recebidas de fornecedores** | Fora do escopo Literarius API e Tray | Qive API (integração separada, Fase 2) |
 | **Manifesto SEFAZ (Ciência da Operação)** | Fora do escopo | Via Qive |
@@ -142,7 +143,7 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 | Story | Fonte Principal | Status das APIs |
 |---|---|---|
 | STORY-001 Setup Infra | — | ✅ Independente de APIs |
-| STORY-002 Sync TituloFinanceiro + ContaBancaria | SQL direto (Deno) | ⚠️ APIs não cobrem — Deno local obrigatório |
+| STORY-002 Sync TituloFinanceiro + ContaBancaria | SQL direto (Deno) + 🆕 REST `/Receber` `/Pagar` | ⚠️ REST cobre consulta de títulos; Deno obrigatório para volume, rateio e baixas |
 | STORY-003 Sync NotaFiscal + PedidoVenda | Literarius API + SQL | ✅ API cobre NF e Pedidos; Deno para volume e financeiro |
 | STORY-004 Dashboard CEO — Posição Financeira | SQL direto + Tray | ⚠️ Saldo bancário e A/R só via SQL; faturamento Tray via API |
 | STORY-005 Dashboard CEO — DRE MTD | SQL direto | ❌ Bloqueado: PlanoConta.TipoCategoria inválido no Literarius |
@@ -152,7 +153,7 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 
 | Módulo | Fonte | Status |
 |---|---|---|
-| Aprovação de Pagamentos | SQL direto | ⚠️ Não coberto por API — SQL direto |
+| Aprovação de Pagamentos | SQL direto + 🆕 REST `/Pagar` | ⚠️ REST cobre consulta de A/P; workflow de aprovação via HeziomOS |
 | Conciliação Bancária | OFX + SQL | ⚠️ OFX externo; SQL para baixas |
 | Chat MCP (Assistente) | Literarius API + Tray API | ✅ APIs viáveis como ferramentas do agente |
 | Score de Saúde Financeira | Cálculo interno | ✅ Calculado a partir de dados já sincronizados |
@@ -267,4 +268,4 @@ Tray: order.id  ←→  Literarius: PedidoVenda.SiteIdPedido
 
 ---
 
-*Última atualização: 2026-05-18 — Lucas Azevedo (Trivia)*
+*Última atualização: 2026-05-19 — JG Novais (Trivia) — adicionado TTituloFinanceiroController (Receber/Pagar)*

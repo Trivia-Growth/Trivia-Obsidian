@@ -14,6 +14,7 @@
 | **TProdutoController** | ✅ GET por código ou EAN | ❌ | Somente leitura |
 | **TEstoqueController** | ✅ GET saldo por setor/produto/box | ❌ | Somente leitura |
 | **TNotaFiscalController** | ✅ GET NF completa (112+ cols) | ❌ | Somente leitura |
+| **TTituloFinanceiroController** | ✅ GET Receber · GET Pagar | ❌ | 🆕 Liberado 15/05/2026 — **módulo financeiro via API** |
 
 Ver: [[Mapa Completo de APIs e Capacidades]] — inventário consolidado Literarius + Tray
 
@@ -499,6 +500,80 @@ GET /TNotaFiscalController/NotaFiscal/{id}
 
 ---
 
+## 6. TTituloFinanceiroController — Módulo Financeiro (A/R e A/P)
+
+> 🆕 **Liberado em 15/05/2026** pelo Elias (Literarius Sistemas) via WhatsApp "Heziom Os + Literarius + Trívia".  
+> Anteriormente, dados de títulos financeiros só estavam acessíveis via SQL direto (`192.168.18.10:1433`).
+
+### 6.1 Consultar Títulos a Receber
+
+```
+GET /TTituloFinanceiroController/Receber/{id}
+```
+
+- Sem `{id}`: provável retorno de todos os títulos a receber (⚠️ sem paginação — mesmo padrão dos outros controllers).
+- Com `{id}`: título específico.
+
+**Campos esperados (baseado na tabela `TituloFinanceiro` do SQL Server):**
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `idTituloFinanceiro` | int | PK do título |
+| `empresa` | int | Código da empresa |
+| `numero` | string | Número do título |
+| `parceiro` | int | Cliente (devedor) |
+| `dataEmissao` | datetime | Data de emissão |
+| `dataVencimento` | datetime | Data de vencimento |
+| `valor` | decimal | Valor original |
+| `valorPago` | decimal | Valor já recebido |
+| `saldo` | decimal | Valor em aberto |
+| `status` | int | Aberto / Baixado / Cancelado |
+| `formaPagto` | int | Forma de pagamento |
+| `planoConta` | int | Conta contábil associada |
+| `centroResultado` | int | Centro de resultado |
+| `observacao` | string | Observações |
+| `baixas` | object | Wrapper `ownsObjects + listHelper` com baixas parciais |
+
+> ⚠️ **Schema acima é inferido** da estrutura SQL. A resposta real precisa ser verificada com uma chamada em produção. Solicitar ao Elias o PDF de documentação ou testar diretamente.
+
+### 6.2 Consultar Títulos a Pagar
+
+```
+GET /TTituloFinanceiroController/Pagar/{id}
+```
+
+- Sem `{id}`: provável retorno de todos os títulos a pagar.
+- Com `{id}`: título específico.
+
+**Campos esperados:** Mesma estrutura que `/Receber`, com `parceiro` representando o fornecedor (credor).
+
+### 6.3 Impacto no HeziomOS
+
+| Antes (até 14/05/2026) | Depois (a partir de 15/05/2026) |
+|---|---|
+| A/R e A/P só via SQL direto (Deno sync na LAN) | A/R e A/P **também via REST** (acessível de qualquer rede) |
+| Dependência total da máquina local (Raspberry Pi) | Redundância: API como fallback ou fonte complementar |
+| Bloqueio se máquina offline | Edge Functions podem consultar diretamente |
+
+**O que muda na arquitetura:**
+- O Deno sync local continua sendo a fonte primária (volume + performance + rateios + baixas detalhadas)
+- A REST API passa a ser usável para:
+  - Consultas pontuais (ex: saldo de um título específico)
+  - Chat MCP (assistente consulta A/R ou A/P em linguagem natural)
+  - Fallback se o sync local estiver offline
+  - Edge Functions que precisam de um dado financeiro sem depender do sync
+
+**Pendências para validação:**
+- [ ] Testar `GET /TTituloFinanceiroController/Receber` sem ID — confirmar se retorna lista
+- [ ] Testar `GET /TTituloFinanceiroController/Receber/1` — mapear campos reais
+- [ ] Testar `GET /TTituloFinanceiroController/Pagar/1` — mapear campos reais
+- [ ] Verificar se retorna rateio (`TituloFinanceiroRateio`) embutido ou só o título master
+- [ ] Verificar se retorna baixas (`TituloFinanceiroBaixa`) embutidas
+- [ ] Confirmar se há filtros por data/status (improvável dado o padrão dos outros controllers)
+- [ ] Solicitar documentação formal ao Elias (PDF como os outros controllers)
+
+---
+
 ## Observações de Integração
 
 ### Padrão de lista interna
@@ -532,5 +607,6 @@ A API retorna campos adicionais além dos documentados nos PDFs originais (ex: `
 ## Referências
 
 - Documentação original PDFs: pasta `APIs/`
-- Data da última verificação em produção: **2026-05-18**
+- Data da última verificação em produção: **2026-05-18** (controllers 1–5)
+- TTituloFinanceiroController: **anunciado 15/05/2026** — ainda não testado (aguardando validação)
 - Ambiente: produção (`200.187.66.71:1983`)
