@@ -145,7 +145,7 @@ Adicionadas 5 perguntas AEO ao `src/content/faq/faq.json` (IDs: `aeo-melhor-empr
 - [x] Publicar Lote 1 (4 artigos) no formato Jimmy 3.0 — concluído
 - [x] Melhorar `llms.txt` com dados proprietários — executado 2026-05-20
 - [x] Adicionar 5 perguntas AEO ao FAQ — executado 2026-05-20
-- [ ] Completar Google Business Profile — responsável: JG / Previx
+- [ ] Completar Google Business Profile — responsável: JG / Previx · guia em [[Google Business Profile — Guia de Preenchimento]]
 - [ ] Expandir página `/sobre` com números, história e certificações — responsável: Trivia + Previx (fornece dados)
 - [ ] Cadastrar no Reclame Aqui — responsável: Previx
 
