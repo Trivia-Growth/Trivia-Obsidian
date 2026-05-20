@@ -13,15 +13,15 @@ PASSO 1 — Único, manual, feito uma vez por loja
   Instalar app na loja → Tray gera um "code" (aparece na URL de callback)
 
 PASSO 2 — Programático, troca o "code" pelo primeiro token
-  POST https://{api_address}/web_api/v2/auth
+  POST https://{api_address}/web_api/auth
   Body: { consumer_key, consumer_secret, code }
   → Retorna: { access_token, refresh_token, api_host, date_expiration_access_token }
 
 PASSO 3 — Todas as chamadas da API
-  GET/POST https://{api_host}/web_api/v2/{endpoint}?access_token={token}
+  GET/POST https://{api_host}/web_api/{endpoint}?access_token={token}
 
 PASSO 4 — Renovação antes de expirar (proativo)
-  GET https://{api_host}/web_api/v2/auth?consumer_key=…&consumer_secret=…&refresh_token=…
+  GET https://{api_host}/web_api/auth?consumer_key=…&consumer_secret=…&refresh_token=…
   → Novo { access_token, refresh_token }
 ```
 
@@ -47,7 +47,7 @@ CONSUMER_SECRET = "0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d
 CODE            = "<code_obtido_no_passo_1>"
 API_ADDRESS     = "loja-s.tray.com.br"  # host da loja de teste (ID 1501119)
 
-url = f"https://{API_ADDRESS}/web_api/v2/auth"
+url = f"https://{API_ADDRESS}/web_api/auth"
 payload = {
     "consumer_key":    CONSUMER_KEY,
     "consumer_secret": CONSUMER_SECRET,
@@ -76,7 +76,7 @@ print(f"Expira em:    {expires_at}")
 ```python
 # Padrão de chamada com access_token
 def tray_get(endpoint, params=None, access_token=None, api_host=None):
-    base = f"https://{api_host}/web_api/v2"
+    base = f"https://{api_host}/web_api"
     p = params or {}
     p["access_token"] = access_token
     resp = requests.get(f"{base}/{endpoint}", params=p)
@@ -108,7 +108,7 @@ def renovar_token_se_necessario(access_token, refresh_token, expires_at, api_hos
     if datetime.now() < expira - timedelta(hours=1):
         return access_token, refresh_token, expires_at  # ainda válido
 
-    url = f"https://{api_host}/web_api/v2/auth"
+    url = f"https://{api_host}/web_api/auth"
     params = {
         "consumer_key":    CONSUMER_KEY,
         "consumer_secret": CONSUMER_SECRET,
@@ -188,9 +188,26 @@ def carregar_tokens():
 | **Login** | `atendimento@editoraheziom.com.br` |
 | **Senha** | `C-nws8krhl` |
 | **Status** | ✅ Ativa (criada 20/05/2026 — loja de teste dedicada para parceiros) |
-| **App Heziom OS** | Já liberado nesta loja — instalar e autenticar para obter `access_token` |
+| **App Heziom OS** | ✅ Instalado e autenticado (20/05/2026) |
 
 > Nova loja de teste criada pela Tray (João G. — Suporte Técnico) para substituir a anterior que estava bloqueada.
+
+### Tokens Ativos (loja 1501119)
+
+| Parâmetro | Valor |
+|-----------|-------|
+| **access_token** | `APP_ID-8395-STORE_ID-1501119-adba429a3db341f6206d0481cc89e57d540f412bd047ace4b0c49927e0690bda` |
+| **refresh_token** | `b0f1fa85a71e2633f2e88983ad3e9471a88a79240602e442b81dd7fdc4272b84` |
+| **api_host** | `https://lojatesteintegracaotray.commercesuite.com.br/web_api` |
+| **store_id** | `1501119` |
+| **Ativado em** | 2026-05-20 10:02:25 |
+| **Access expira** | 2026-05-20 13:02:25 (3h — renovar com refresh) |
+| **Refresh expira** | 2026-06-19 10:02:25 (30 dias) |
+
+> ⚠️ O `access_token` expira em 3h. Usar o `refresh_token` para renovar antes de expirar (ver Passo 4 acima).
+> ⚠️ O endpoint correto é `POST /web_api/auth` (sem `/v2/`).
+
+**Teste validado:** `GET /web_api/orders` retornou 2 pedidos da loja de teste com sucesso.
 
 ### Loja anterior (descontinuada)
 
