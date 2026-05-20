@@ -266,8 +266,8 @@ Testes realizados na loja `1501119` com dados reais:
 2. ~~Obter Access Token~~ ✅
 3. ~~Testar GET /orders~~ ✅
 4. **Confirmar campo `SiteIdPedido`** no Literarius com pedido real da loja de PRODUÇÃO
-5. **Resolver webhooks** — abrir chamado Tray para confirmar endpoint correto
-6. **Testar `POST /invoices`** com NF-e real (precisa de pedido com pagamento confirmado)
+5. **Webhooks:** Endpoint `/webhooks` bloqueado em loja não-inaugurada (status=implantacao). Duas opções: (a) pedir à Tray para inaugurar a loja de teste, ou (b) testar direto na loja de produção. Enquanto isso, polling via `GET /orders?modified=` funciona.
+6. **Invoices:** Também bloqueado em implantação. Testar em produção ou após inaugurar loja teste.
 7. **Criar tabelas Supabase** (`tray_orders`, `tray_payments`) e implementar sync
 8. **Testar na loja de produção** quando migrar do ambiente de teste
 

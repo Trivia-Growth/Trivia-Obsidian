@@ -272,7 +272,7 @@ def tray_webhook():
 - [ ] Adicionar ao cron do Raspberry Pi (a cada 15 min)
 - [ ] Implementar JOIN `tray_orders.id` ↔ `lit_pedido_venda.SiteIdPedido`
 - [ ] Testar query de receita líquida (bruto × taxa gateway)
-- [ ] Resolver webhook endpoint (404 no teste — verificar com Tray)
+- [ ] Resolver webhook endpoint — bloqueado porque loja está em `implantacao`. Opções: inaugurar loja teste ou testar em produção
 - [ ] Migrar para loja de produção da Heziom
 - [ ] Solicitar homologação à Tray até **13/08/2026**
 

@@ -224,7 +224,7 @@ O Literarius tem `EstoqueMinimo` por produto. Cruzando com a velocidade de venda
 - [ ] Confirmar `SiteIdPedido` no Literarius com pedido real de produção
 - [ ] Criar tabelas Supabase (`tray_orders`, `tray_payments`)
 - [ ] Implementar `sync_tray.py` com rate limiter no Raspberry Pi
-- [ ] Resolver endpoint de webhooks (404 no ambiente de teste)
+- [ ] Webhooks — bloqueados na loja de teste (status `implantacao`). Inaugurar loja ou testar em produção
 - [ ] Testar `POST /invoices` (vinculação NF-e)
 - [ ] Migrar para loja de produção
 - [ ] Submeter evidências para homologação (prazo: 13/08/2026)

@@ -196,13 +196,13 @@ def carregar_tokens():
 
 | Parâmetro | Valor |
 |-----------|-------|
-| **access_token** | `APP_ID-8395-STORE_ID-1501119-adba429a3db341f6206d0481cc89e57d540f412bd047ace4b0c49927e0690bda` |
-| **refresh_token** | `b0f1fa85a71e2633f2e88983ad3e9471a88a79240602e442b81dd7fdc4272b84` |
+| **access_token** | `APP_ID-8395-STORE_ID-1501119-0398320d2f1d2005ffced89adfe90a6f44d82b8f1de6a5dcccec55e55fe3e279` |
+| **refresh_token** | `57c82631562787669e5cbf3f03a8f5786b645fe6c07699367ef101de25a68ac4` |
 | **api_host** | `https://lojatesteintegracaotray.commercesuite.com.br/web_api` |
 | **store_id** | `1501119` |
-| **Ativado em** | 2026-05-20 10:02:25 |
-| **Access expira** | 2026-05-20 13:02:25 (3h — renovar com refresh) |
-| **Refresh expira** | 2026-06-19 10:02:25 (30 dias) |
+| **Ativado em** | 2026-05-20 10:23:24 |
+| **Access expira** | 2026-05-20 13:23:24 (3h — renovar com refresh) |
+| **Refresh expira** | 2026-06-19 10:23:24 (30 dias) |
 
 > ⚠️ O `access_token` expira em 3h. Usar o `refresh_token` para renovar antes de expirar (ver Passo 4 acima).
 > ⚠️ O endpoint correto é `POST /web_api/auth` (sem `/v2/`).
