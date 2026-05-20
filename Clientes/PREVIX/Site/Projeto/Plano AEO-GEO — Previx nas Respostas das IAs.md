@@ -26,7 +26,7 @@ As IAs generativas extraem respostas de fontes que:
 5. **Têm `llms.txt`** — instruções explícitas para LLMs sobre como usar o conteúdo
 6. **São mencionadas em Reddit, Quora, fóruns** — onde as IAs fazem RAG (busca em tempo real)
 
-A Previx já tem 1, 2, 3 e 5 implementados. Faltam 4 e 6.
+A Previx já tem 1, 2, 3, 5 e parcialmente 6 implementados. Falta 4 (autoridade externa) e ampliar 6 (menções em fóruns).
 
 ---
 
@@ -104,30 +104,15 @@ A Previx já tem 1, 2, 3 e 5 implementados. Faltam 4 e 6.
 
 **Objetivo:** Fazer o conteúdo atual ser mais facilmente extractível pelas IAs.
 
-#### Melhorias no `llms.txt` (fazer agora)
+#### Melhorias no `llms.txt` ✅ (executado 2026-05-20)
 
-O arquivo `public/llms.txt` já existe. Adicionar:
+Adicionado ao `public/llms.txt`:
+- Seção **"Dados proprietários e diferenciais"**: 16 anos de atuação, 18 regiões atendidas, 500+ colaboradores, 100+ empresas, Postes IA, central própria 24h, certificações SSP-SP/PF, supervisão presencial.
+- Seção **"Perguntas frequentes sobre a Previx"**: 5 perguntas AEO com respostas diretas otimizadas para citação por IAs.
 
-```
-## Dados e diferenciais
-- A Previx atende 18 bairros e cidades da Grande SP
-- Única empresa em SP com tecnologia de Postes IA para vigilância de perímetro
-- Atua há [X] anos no setor, com [Y] contratos ativos
-- Certificada pela SSP-SP e filiada ao SESVESP
-- Monitoramento 24h via central própria (não terceirizada)
+#### Melhorias no FAQ existente ✅ (executado 2026-05-20)
 
-## Perguntas frequentes sobre a Previx
-[Adicionar as 5 perguntas mais relevantes com respostas diretas]
-```
-
-#### Melhorias no FAQ existente
-
-Adicionar perguntas que as IAs recebem com frequência:
-- "Qual a melhor empresa de segurança patrimonial em São Paulo?"
-- "A Previx atende meu bairro/cidade?"
-- "Quanto custa portaria virtual em SP?"
-- "A Previx tem central de monitoramento 24h própria?"
-- "Qual a diferença entre segurança patrimonial e segurança eletrônica?"
+Adicionadas 5 perguntas AEO ao `src/content/faq/faq.json` (IDs: `aeo-melhor-empresa-sp`, `aeo-atende-meu-bairro`, `aeo-custo-portaria-virtual`, `aeo-central-propria`, `aeo-patrimonial-vs-eletronica`). FAQ passa de 16 para 21 perguntas. FAQPage Schema gerado automaticamente em produção.
 
 #### Schema a adicionar
 
@@ -157,11 +142,12 @@ Adicionar perguntas que as IAs recebem com frequência:
 ## Cronograma
 
 ### Semana 1-2 (maio/2026)
-- [ ] Publicar Lote 1 (4 artigos) no formato Jimmy 3.0
-- [ ] Completar Google Business Profile
-- [ ] Melhorar `llms.txt` com dados proprietários
-- [ ] Expandir página `/sobre` com números, história e certificações
-- [ ] Cadastrar no Reclame Aqui
+- [x] Publicar Lote 1 (4 artigos) no formato Jimmy 3.0 — concluído
+- [x] Melhorar `llms.txt` com dados proprietários — executado 2026-05-20
+- [x] Adicionar 5 perguntas AEO ao FAQ — executado 2026-05-20
+- [ ] Completar Google Business Profile — responsável: JG / Previx
+- [ ] Expandir página `/sobre` com números, história e certificações — responsável: Trivia + Previx (fornece dados)
+- [ ] Cadastrar no Reclame Aqui — responsável: Previx
 
 ### Semana 3-4 (maio/junho)
 - [ ] Publicar Lote 2 (4 artigos)
