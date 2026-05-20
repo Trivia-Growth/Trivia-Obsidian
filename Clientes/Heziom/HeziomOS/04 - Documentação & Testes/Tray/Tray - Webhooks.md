@@ -71,10 +71,10 @@ Tray → POST webhook (order.update, status = aprovado)
 ## Endpoints para gerenciar webhooks
 
 ```
-POST   /webhooks            → Registrar novo webhook
-GET    /webhooks            → Listar webhooks registrados
-GET    /webhooks/:id        → Detalhe
-DELETE /webhooks/:id        → Remover webhook
+POST   /web_api/webhooks            → Registrar novo webhook
+GET    /web_api/webhooks            → Listar webhooks registrados
+GET    /web_api/webhooks/:id        → Detalhe
+DELETE /web_api/webhooks/:id        → Remover webhook
 ```
 
 ### Registrar um webhook
@@ -86,13 +86,35 @@ payload = {
     "event": "transaction",
     "action": "update"
 }
-resp = requests.post(f"https://{api_host}/web_api/v2/webhooks?access_token={token}", json=payload)
+resp = requests.post(f"https://{api_host}/web_api/webhooks?access_token={token}", json=payload)
 ```
 
 > **Requisitos do receptor:**
 > - HTTPS obrigatório
 > - Responder HTTP 200 em < 5 segundos
 > - Tray reenvia até 3× se não receber 200
+
+### ⚠️ Limitação da Loja de Teste (validado 20/05/2026)
+
+O endpoint `/web_api/webhooks` retorna **404** na loja de teste `1501119` porque a loja está em status `implantacao` (não inaugurada).
+
+**Endpoints bloqueados em lojas não-inauguradas:**
+- `/webhooks` — 404
+- `/invoices` — 404
+- `/statuses` — 404
+- `/shipping` — 404
+- `/payment_methods` — 404
+
+**Endpoints que funcionam normalmente:**
+- `/orders` — ✅ 200
+- `/products` — ✅ 200
+- `/customers` — ✅ 200
+- `/categories` — ✅ 200
+- `/payments` — ✅ 200
+- `/brands` — ✅ 200
+- `/info` — ✅ 200
+
+**Solução:** Webhooks precisam ser testados na **loja de produção** da Heziom (após migrar o app para lá), ou pedir à Tray para inaugurar a loja de teste. Enquanto isso, usar **polling a cada 15min** (sync agent) como fallback — funciona perfeitamente com `GET /orders?modified=YYYY-MM-DD`.
 
 ---
 

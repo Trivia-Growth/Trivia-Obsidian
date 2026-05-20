@@ -225,7 +225,7 @@ Documentação completa: [[Tray - Webhooks]]
 | `code` gerado (instalação do app) | ✅ Obtido via OAuth URL direta (20/05/2026) |
 | `access_token` obtido | ✅ Funcional — refresh_token válido até 19/06/2026 |
 | Endpoints testados | ✅ Ver seção "Validação Real" abaixo |
-| Webhooks configurados | ⬜ Endpoint `/hooks` retorna 404 — investigar |
+| Webhooks configurados | ⬜ Bloqueado — loja em "implantação" (ver nota abaixo) |
 | Sync agent conectado à Tray | ⬜ Pendente (tabelas Supabase + cron) |
 | Homologação concluída | ⬜ Prazo: até 13/08/2026 |
 
