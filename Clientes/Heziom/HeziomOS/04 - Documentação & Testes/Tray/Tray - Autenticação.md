@@ -31,8 +31,8 @@ PASSO 4 — Renovação antes de expirar (proativo)
 
 > ⚠️ Requer login humano — a Tray usa reCAPTCHA no painel.
 
-1. Acesse `https://loja-s.tray.com.br/adm/login.php?loja=1225878`
-2. Login: `atendimento@editoraheziom.com.br` / `Trayteste@321`
+1. Acesse `https://loja-s.tray.com.br/adm/login.php?loja=1501119`
+2. Login: `atendimento@editoraheziom.com.br` / `C-nws8krhl`
 3. Menu lateral → **Aplicativos** → **Instalar novos aplicativos**
 4. Pesquisar **Heziom OS** → instalar
 5. A Tray redireciona para a URL de callback — o `code` aparece como parâmetro na URL
@@ -45,7 +45,7 @@ import requests
 CONSUMER_KEY    = "69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246"
 CONSUMER_SECRET = "0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6"
 CODE            = "<code_obtido_no_passo_1>"
-API_ADDRESS     = "loja-s.tray.com.br"  # host da loja de teste
+API_ADDRESS     = "loja-s.tray.com.br"  # host da loja de teste (ID 1501119)
 
 url = f"https://{API_ADDRESS}/web_api/v2/auth"
 payload = {
@@ -169,27 +169,45 @@ def carregar_tokens():
 
 ## Credenciais do Aplicativo Heziom OS
 
-> Recebidas via ticket #1615764 em 15/04/2026. Ambiente de **teste** (loja `1225878`).
+> Recebidas via ticket #1615764 em 15/04/2026. App liberado em **todas as lojas de teste** da Tray.
 
 | Parâmetro | Valor |
 |-----------|-------|
 | **Nome do app** | Heziom OS |
 | **Consumer Key** | `69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246` |
 | **Consumer Secret** | `0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6` |
-| **URL da loja de teste** | `https://loja-s.tray.com.br/adm/login.php?loja=1225878` |
-| **Login (loja teste)** | `atendimento@editoraheziom.com.br` |
-| **Senha (loja teste)** | `Trayteste@321` |
 
 > ⚠️ As chaves são únicas por integração e valem em todas as lojas que instalam o app. Nunca expô-las ao usuário final.
 
+### Loja de Teste (atual — ativa)
+
+| Parâmetro | Valor |
+|-----------|-------|
+| **Loja ID** | `1501119` |
+| **URL** | `https://loja-s.tray.com.br/adm/login.php?loja=1501119` |
+| **Login** | `atendimento@editoraheziom.com.br` |
+| **Senha** | `C-nws8krhl` |
+| **Status** | ✅ Ativa (criada 20/05/2026 — loja de teste dedicada para parceiros) |
+| **App Heziom OS** | Já liberado nesta loja — instalar e autenticar para obter `access_token` |
+
+> Nova loja de teste criada pela Tray (João G. — Suporte Técnico) para substituir a anterior que estava bloqueada.
+
+### Loja anterior (descontinuada)
+
+| Parâmetro | Valor |
+|-----------|-------|
+| **Loja ID** | `1225878` |
+| **URL** | `https://loja-s.tray.com.br/adm/login.php?loja=1225878` |
+| **Login** | `atendimento@editoraheziom.com.br` |
+| **Senha** | `Trayteste@321` |
+| **Status** | ❌ Bloqueada por inatividade (mai/2026) — não usar mais |
+
 ### Como obter o `code` para gerar o Access Token
 
-1. Acessar a loja de teste com as credenciais acima
+1. Acessar a loja de teste **1501119** com as credenciais acima
 2. Menu lateral → **Aplicativos** → **Instalar novos aplicativos**
 3. Pesquisar por **Heziom OS** e instalar
 4. O `code` gerado + `consumer_key` + `consumer_secret` → `POST /auth` → retorna `access_token`
-
-> ⚠️ **Status 19/05/2026:** Usuário `atendimento@editoraheziom.com.br` **bloqueado por inatividade** na loja de teste (`1225878.commercesuite.com.br`). Desbloqueio solicitado à Tray/admin da loja — aguardando retorno. Retomar instalação do app após confirmação.
 
 ### Rate limit
 
