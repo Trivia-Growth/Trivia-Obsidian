@@ -216,29 +216,60 @@ Documentação completa: [[Tray - Webhooks]]
 
 ---
 
-## Status atual da integração (19/Mai/2026)
+## Status atual da integração (20/Mai/2026)
 
 | Item | Status |
 |---|---|
 | Consumer Key + Secret recebidas | ✅ Recebido em 15/04/2026 |
-| Loja de teste disponível | ✅ `loja=1225878` |
-| `code` gerado (instalação do app) | ⬜ Pendente — fazer login na loja de teste |
-| `access_token` obtido | ⬜ Pendente |
-| Endpoints testados | ⬜ Pendente |
-| Webhooks configurados | ⬜ Pendente |
-| Sync agent conectado à Tray | ⬜ Pendente |
+| Loja de teste disponível | ✅ `loja=1501119` (nova, criada 20/05) |
+| `code` gerado (instalação do app) | ✅ Obtido via OAuth URL direta (20/05/2026) |
+| `access_token` obtido | ✅ Funcional — refresh_token válido até 19/06/2026 |
+| Endpoints testados | ✅ Ver seção "Validação Real" abaixo |
+| Webhooks configurados | ⬜ Endpoint `/hooks` retorna 404 — investigar |
+| Sync agent conectado à Tray | ⬜ Pendente (tabelas Supabase + cron) |
 | Homologação concluída | ⬜ Prazo: até 13/08/2026 |
+
+---
+
+## Validação Real dos Endpoints (20/Mai/2026)
+
+Testes realizados na loja `1501119` com dados reais:
+
+| Endpoint | Status | Observações |
+|---|---|---|
+| `GET /web_api/orders` | ✅ | Retorna pedidos com todos os campos esperados (status, customer, shipment, total) |
+| `GET /web_api/orders/:id/complete` | ✅ | Retorno completo com Customer, ProductsSold, Payment, etc. |
+| `GET /web_api/products` | ✅ | Catálogo com filtros por EAN, categoria, brand, stock |
+| `GET /web_api/products/:id` | ✅ | Detalhe com `ean`, `stock`, `price`, `cost_price`, imagens |
+| `PUT /web_api/products/:id` (stock) | ✅ | `{"Product": {"stock": "N"}}` funciona |
+| `GET /web_api/payments` | ✅ | Endpoint OK, loja de teste sem pagamentos processados |
+| `GET /web_api/customers` | ✅ | CNPJ, nome, email, newsletter |
+| `GET /web_api/categories` | ✅ | parent_id, active, has_product |
+| `GET /web_api/auth` (refresh) | ✅ | Renova token corretamente |
+| `PUT /products/:id/stock` (dedicado) | ❌ 404 | Não existe — usar `PUT /products/:id` com campo stock |
+| `GET /invoices` | ❌ 404 | Endpoint não existe neste host — verificar se é `/orders/:id/invoices` |
+| `GET /hooks` | ❌ 404 | Endpoint não existe — pode precisar de escopo adicional ou URL diferente |
+
+### Descobertas importantes
+
+1. **Endpoint base correto:** `/web_api/` (sem `/v2/`) para auth e endpoints de dados
+2. **Stock update:** Não usar endpoint dedicado `/products/:id/stock` — usar `PUT /products/:id` com `{"Product": {"stock": "N"}}`
+3. **Order.payment_method_type:** Campo confirmado (ex: `bank_billet`) — útil para análise de formas de pagamento
+4. **Filtros disponíveis:** `modified`, `date`, `status`, `customer_id`, `has_payment`, `has_invoice` — todos úteis para sync incremental
+5. **Webhooks:** Endpoint `/hooks` não funciona nesta loja de teste — pode ser limitação do ambiente sandbox ou precisar de URL diferente. Verificar com Tray.
 
 ---
 
 ## Próximos passos — Integração Tray
 
-1. **Instalar o app** na loja de teste (loja 1225878) para gerar o `code`
-2. **Obter o Access Token** via `POST /auth` com consumer_key + consumer_secret + code
-3. **Testar `GET /orders`** filtrando por data — confirmar retorno e campos
-4. **Confirmar campo `SiteIdPedido`** no Literarius (já visto em queries, mas validar com dado real)
-5. **Implementar webhook** para `payment_approved` → baixa automática de título
-6. **Conciliar divergências** pedido × NF usando a query acima
+1. ~~Instalar o app na loja de teste~~ ✅
+2. ~~Obter Access Token~~ ✅
+3. ~~Testar GET /orders~~ ✅
+4. **Confirmar campo `SiteIdPedido`** no Literarius com pedido real da loja de PRODUÇÃO
+5. **Resolver webhooks** — abrir chamado Tray para confirmar endpoint correto
+6. **Testar `POST /invoices`** com NF-e real (precisa de pedido com pagamento confirmado)
+7. **Criar tabelas Supabase** (`tray_orders`, `tray_payments`) e implementar sync
+8. **Testar na loja de produção** quando migrar do ambiente de teste
 
 ---
 

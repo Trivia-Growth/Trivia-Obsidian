@@ -215,12 +215,18 @@ O Literarius tem `EstoqueMinimo` por produto. Cruzando com a velocidade de venda
 
 ## Próximos passos imediatos
 
-- [ ] Desbloquear usuário na loja de teste da Tray (aguardando)
-- [ ] Instalar app Heziom OS na loja de teste → obter `code`
-- [ ] Executar `POST /auth` → salvar tokens
-- [ ] Testar `GET /orders` → confirmar retorno e campo `SiteIdPedido` na URL
-- [ ] Testar `GET /products` → mapear `product.id` com `Produto.SiteID` no Literarius
-- [ ] Implementar `PUT /products/:id/stock` (sync de estoque — fase 1.1)
+- [x] Desbloquear usuário na loja de teste da Tray → Nova loja `1501119` (20/05/2026)
+- [x] Instalar app Heziom OS na loja de teste → `code` obtido via OAuth URL
+- [x] Executar `POST /web_api/auth` → tokens salvos e refresh funcionando
+- [x] Testar `GET /orders` → 2 pedidos retornados, campos confirmados
+- [x] Testar `GET /products` → catálogo ok, campos `ean`, `stock`, `price` confirmados
+- [x] Testar `PUT /products/:id` (stock) → funciona com `{"Product": {"stock": "N"}}`
+- [ ] Confirmar `SiteIdPedido` no Literarius com pedido real de produção
+- [ ] Criar tabelas Supabase (`tray_orders`, `tray_payments`)
+- [ ] Implementar `sync_tray.py` com rate limiter no Raspberry Pi
+- [ ] Resolver endpoint de webhooks (404 no ambiente de teste)
+- [ ] Testar `POST /invoices` (vinculação NF-e)
+- [ ] Migrar para loja de produção
 - [ ] Submeter evidências para homologação (prazo: 13/08/2026)
 
 ---

@@ -262,16 +262,27 @@ def tray_webhook():
 
 ## Checklist de implementação
 
-- [ ] Obter `code` via login na loja de teste (manual)
-- [ ] Executar `POST /auth` → salvar tokens em `/etc/heziom-sync/tray_tokens.json`
-- [ ] Testar `GET /orders?date=2026-05-01,2026-05-15` → confirmar retorno
+- [x] Obter `code` via OAuth URL direto (20/05/2026 — loja 1501119)
+- [x] Executar `POST /web_api/auth` → tokens obtidos e refresh validado
+- [x] Testar `GET /web_api/orders` → retorno confirmado, 2 pedidos na loja de teste
+- [x] Testar `GET /web_api/products` → catálogo ok, EAN e stock confirmados
+- [x] Testar `PUT /web_api/products/:id` (stock update) → funcional
 - [ ] Criar tabelas `tray_orders` e `tray_payments` no Supabase
 - [ ] Implementar `sync_tray.py` com rate limiter e paginação
 - [ ] Adicionar ao cron do Raspberry Pi (a cada 15 min)
 - [ ] Implementar JOIN `tray_orders.id` ↔ `lit_pedido_venda.SiteIdPedido`
 - [ ] Testar query de receita líquida (bruto × taxa gateway)
-- [ ] Configurar webhook para `payment_approved` (fase 2)
+- [ ] Resolver webhook endpoint (404 no teste — verificar com Tray)
+- [ ] Migrar para loja de produção da Heziom
 - [ ] Solicitar homologação à Tray até **13/08/2026**
+
+## Notas técnicas da validação (20/05/2026)
+
+- **Endpoint base:** `/web_api/` (sem `/v2/`) — tanto para auth quanto para dados
+- **Stock update:** Usar `PUT /web_api/products/:id` com body `{"Product": {"stock": "N"}}`, NÃO existe endpoint `/products/:id/stock` dedicado
+- **Invoices:** Endpoint `GET /invoices` retorna 404 — provável que seja `GET /orders/:id/invoices` ou precisa de pedido com NF vinculada
+- **Webhooks:** `GET /hooks` retorna 404 — pode ser limitação do sandbox ou escopo insuficiente no app
+- **Filtro incremental:** Usar `?modified=YYYY-MM-DD` ou `?date=YYYY-MM-DD,YYYY-MM-DD` para sync delta
 
 ---
 
