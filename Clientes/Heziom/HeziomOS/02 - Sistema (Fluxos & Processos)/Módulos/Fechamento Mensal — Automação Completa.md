@@ -61,8 +61,8 @@ Cada mês tem uma pasta (`1-JANEIRO` a `12-DEZEMBRO`) com estrutura padrão:
 
 | Documento | Fonte atual | Tratamento manual | Automação HeziomOS |
 |---|---|---|---|
-| **Relação de NFs por número.xls** | Literarius → Relatórios → NFs emitidas/período | Export manual, filtro por mês | `SELECT NotaFiscal WHERE Emissao BETWEEN ...` → gera XLS via Edge Function |
-| **CMV.xls** | Literarius (TituloFinanceiroBaixaRateio com PlanoConta 20,21) | Filtrar pagamentos de produção e revenda do mês | Query automática: `PlanoConta IN (20,21)` por período → auto-gera |
+| **Relação de NFs por número.xls** | Literarius → Utilitários > Exportar > Faturamento (sem filtro — pega todas, inclusive canceladas) | Export manual, filtro por mês | `SELECT NotaFiscal WHERE Emissao BETWEEN ...` → gera XLS via Edge Function |
+| **CMV.xls** | Literarius → Faturamento > Análise de vendas (filtro: período 1-31 do mês, SEM filtro de PlanoConta). Separar itens "Brinde" em aba própria | Export manual, separar brindes | Query `vwProdutoVenda` por período → split "Brinde" em sheet separada → auto-gera |
 | **NFs Emitidas PDF/XML** | Literarius → módulo fiscal → download em lote | Download manual lote, compactar ZIP | Literarius SQL + API gera ZIP (ou HeziomOS armazena em Supabase Storage) |
 | **NFs ENTRADA XML** | Literarius/Qive → NFs recebidas (ENTRADA) | Download manual | Qive API (hoje) → módulo Fiscal próprio (Fase 3) |
 | **NFs Amazon / ML** | Portal Amazon Seller Central / Portal ML | Login manual, download por período, ZIP | API Amazon SP-API `GET /reports` + ML API `GET /invoices` |

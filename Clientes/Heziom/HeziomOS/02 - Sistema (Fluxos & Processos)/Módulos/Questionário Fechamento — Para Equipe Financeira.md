@@ -1,291 +1,258 @@
 ---
-tags: [financeiro, fechamento, questionário, pendente]
-status: aguardando-resposta
+tags: [financeiro, fechamento, questionário, respondido]
+status: respondido
 criado: 2026-05-19
-destinatário: Ana Zechmann / Igor Santos
+respondido: 2026-05-21
+destinatário: Ana Zechmann / Rafael Barbosa
 referência: "[[Fechamento Mensal — Automação Completa]]"
 ---
 
 # Questionário — Detalhamento do Processo de Fechamento Mensal
 
-> **Para:** Equipe Financeira (Ana / Igor)
+> **Para:** Equipe Financeira (Ana / Rafael)
 > **De:** JG Novais — Trivia (projeto HeziomOS)
-> **Objetivo:** Coletar informações detalhadas para automatizar 100% do processo de fechamento mensal no HeziomOS. Cada resposta nos ajuda a criar a integração correta.
+> **Respondido em:** 21/05/2026 por Ana Zechmann / Rafael Barbosa
 > **Referência técnica:** Documento [[Fechamento Mensal — Automação Completa]]
-
----
-
-## Como responder
-
-- Respondam **diretamente neste documento** (ou num doc separado referenciando os números)
-- Quanto mais detalhe, melhor — prints de tela do Literarius são muito bem-vindos
-- Se não souberem a resposta, escrevam "não sei, perguntar para [pessoa]"
-- Prazo ideal: até **XX/XX/2026** *(JG: defina a data)*
 
 ---
 
 ## Seção 1 — Processo de Geração dos Relatórios
 
-> Referência: os arquivos na pasta `OneDrive > Financeiro Editora Heziom > 2026 > Contabilidade > Fechamento Compartilhado > {MÊS}`
-
 ### 1.1 — CMV.xls
 
-📁 **Arquivo:** `{MÊS}/CMV.xls`
-📋 **Schema confirmado:** ISBN, Descrição, Produto, Total Bruto, Total Líquido, Qtde, Custo, Custo Total, Margem, Desc. Médio, Vlr. Líquido Médio, Editora Nome, Capa Atual
-
-**Perguntas:**
-
 **P1.** Qual o caminho exato no Literarius para gerar este relatório?
-> *(Ex: Menu > Relatórios > Faturamento > filtro por período + filtro X)*
 
-**Resposta:** _________________________________________________
+> **Resposta:** Faturamento > Análise de vendas > filtra por período, geralmente de 1 a 31 do mês anterior > Buscar > Exportar
 
-**P2.** Em abril o arquivo mudou de nome para "CMV - BRINDES - EBOOKS.xls" com sheets separadas (CMV-EBOOKS: 639 linhas + BRINDE: 5 linhas). Isso é o padrão correto daqui para frente? Ou janeiro (arquivo único "CMV.xls" com 605 linhas de livros) é que era o certo?
+**P2.** Em abril o arquivo mudou de nome para "CMV - BRINDES - EBOOKS.xls" com sheets separadas. Isso é o padrão correto daqui para frente?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Sim, agora ao puxar esse arquivo, dentro dele precisamos separar a linha dos itens com a nomenclatura "Brinde" em outra aba no mesmo arquivo e nomear essa aba como BRINDE.
 
-**P3.** Qual filtro vocês aplicam? É por PlanoConta (20 = Materiais para Revenda, 21 = Produção Material Próprio)? Tem algum outro filtro (por editora, por tipo de produto)?
+**P3.** Qual filtro vocês aplicam para CMV? É por PlanoConta (20/21)?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Referente ao CMV eu não coloco filtro algum. Eu uso esses filtros para puxar os pagamentos do mês referente ao material para revenda e produção material próprio e os passivos futuros para a contabilidade.
 
 ---
 
 ### 1.2 — Relação de Notas Fiscais por Número
 
-📁 **Arquivo:** `{MÊS}/Relação de notas fiscais por número.xls`
-📋 **Schema:** Número, Série, Tipo, Parceiro, Nome, Emissão, Total Nota, Forma Pagto, Op. Fiscal, Frete, Modelo Fiscal, NFe Motivo, Canal Venda, Pedido Cliente (~4.253 NFs/mês)
+**P4.** Qual menu/relatório do Literarius gera esse arquivo? Quais filtros?
 
-**Perguntas:**
+> **Resposta:** Utilitários > Exportar > Faturamento. Nenhum filtro é utilizado nesse relatório para pegar todos os números reservados das notas do mês.
 
-**P4.** Qual menu/relatório do Literarius gera esse arquivo? Quais filtros são usados (período, tipo de NF, status)?
+**P5.** O arquivo inclui NFs CANCELADAS? A contabilidade precisa das canceladas ou só das autorizadas?
 
-**Resposta:** _________________________________________________
-
-**P5.** O arquivo inclui NFs CANCELADAS (vimos "Cancelado" no campo NFe Motivo Ocorrência). A contabilidade precisa das canceladas ou só das autorizadas?
-
-**Resposta:** _________________________________________________
+> **Resposta:** Sim, foi solicitado em algum momento que todas devem estar relacionadas.
 
 ---
 
 ### 1.3 — Fluxos Bancários (Santander, Stone, CCs)
 
-📁 **Arquivos:** `{MÊS}/DFC/Fluxo Santander.xls`, `Fluxo Stone.xls`, `Fluxo CC *.xlsx`
-📋 **Schema:** Tipo (C/D), Número, Data, Documento, Descrição, Valor, Forma Pagto, Origem (BANCÁRIO/BAIXA), **Plano de Contas**, **Centro Resultados**
+**P6.** Qual tela/relatório do Literarius gera os "Fluxos"?
 
-**Perguntas:**
+> **Resposta:** Utilitários > Exportar > Movimentos Bancários. Exato, altera o filtro para a conta bancária desejada.
 
-**P6.** Qual tela/relatório do Literarius gera os "Fluxos"? É o mesmo relatório com filtro por conta bancária diferente?
+**P7.** A classificação (Plano de Contas + Centro Resultado) — ela já vem automática do Literarius?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Vem automático depois da classificação no lançamento de cada conta.
 
-**P7.** A classificação (Plano de Contas + Centro Resultado) — ela já vem automática do Literarius na hora da exportação? Ou alguém reclassifica manualmente depois?
+**P8.** Quando o campo "Origem" diz "BANCÁRIO" vs "BAIXA" — qual a diferença?
 
-**Resposta:** _________________________________________________
-
-**P8.** Quando o campo "Origem" diz "BANCÁRIO" vs "BAIXA" — o "BANCÁRIO" são só tarifas/transferências diretas ou inclui outros tipos?
-
-**Resposta:** _________________________________________________
+> **Resposta:** Baixa ocorre quando é realizada a baixa no módulo financeiro > Baixa de títulos financeiros. Bancário quando a conta é gerada e baixada via OFX na conciliação bancária.
 
 ---
 
 ### 1.4 — Fornecedores Pagos / A Pagar
 
-📁 **Arquivos:** `{MÊS}/DFC/Fornecedores pagos {mês}.xls` e `Fornecedores a pagar {mês+1}-dez.xls`
-📋 **Schema pagos:** 31 colunas incluindo Título, Parceiro, CNPJ, Valor, Data Pagamento, PlanoConta, CentroResultado, NF vinculada
+**P9.** Qual relatório do Literarius gera o "Fornecedores pagos"? Quais filtros?
 
-**Perguntas:**
+> **Resposta:** Utilitários > Exportar > Títulos Financeiros. Coloco "pagar baixas" > a data do mês de fechamento analisado. Filtro pelo plano de contas 20, puxo o relatório, depois puxo o 21.
 
-**P9.** Qual relatório do Literarius gera o "Fornecedores pagos"? Quais filtros? (Mês de pagamento? Tipo de título? PlanoConta específico?)
+**P10.** O filtro de separação é por PlanoConta: 20 vs 21?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Sim, dessa forma consigo as duas classificações que a contabilidade precisa.
 
-**P10.** O filtro de separação é por PlanoConta: 20 (Mercadorias para Revenda) vs. 21 (Produção Material Próprio)? Ou vocês separam de outra forma?
+**P11.** O "Fornecedores a pagar" — é simplesmente os títulos com Pago=0 e vencimento futuro?
 
-**Resposta:** _________________________________________________
-
-**P11.** O "Fornecedores a pagar" — é simplesmente os títulos com Pago=0 e vencimento futuro? Ou tem algum critério adicional (tipo ignorar parcelamentos futuros de empréstimo)?
-
-**Resposta:** _________________________________________________
+> **Resposta:** Fornecedores a pagar é o mesmo procedimento que o dos pagos. A diferença é o "pagar abertos" > filtro de data referente aos meses posteriores ao do fechamento. Por exemplo, hoje é maio, estamos fechando abril — o fornecedores a pagar é referente ao dia 1 de maio até o final do ano. São dois relatórios também com o filtro 21 e 20 no plano de contas.
 
 ---
 
 ### 1.5 — Conciliação Bancária
 
-📁 **Arquivos:** `{MÊS}/DFC/Fluxo Santander.xls` (sheet "Conciliação") e `Conciliação_Stone_*.xlsx`
-📋 **Schema Conciliação:** Data | Fluxo Lit | Santander | Diferença
+**P12.** A conciliação hoje é feita comparando saldo diário ou item por item?
 
-**Perguntas:**
+> **Resposta:** Item por item — extrato diário do Literarius com extrato diário dos bancos.
 
-**P12.** A conciliação hoje é feita comparando o saldo diário do Fluxo Literarius × saldo diário do Extrato? Ou é item por item?
+**P13.** Quando a conciliação NÃO bate — qual é o procedimento? Causas mais comuns?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Uma das causas é que pode ocorrer diferença de 1 centavo para o valor do boleto que está no banco e o valor do título financeiro — isso é comum de ocorrer. Quem determina os valores é o emissor da NF, boleto e XML. Para resolver é só ir no título financeiro e alterar o valor para corresponder com o que está no banco e então conciliar. Outra causa comum é a duplicação de títulos recebidos: damos baixa nos boletos recebidos e o OFX quer criar outro recebimento por não bater com o nome do Literarius.
 
-**P13.** Quando a conciliação NÃO bate (Diferença ≠ R$0,00) — qual é o procedimento? Vocês investigam um por um? Quais são as causas mais comuns de divergência?
+**P14.** A conciliação da Stone — mesma lógica?
 
-**Resposta:** _________________________________________________
-
-**P14.** A conciliação da Stone — mesma lógica? Compara Fluxo Lit (conta Stone) × Extrato Stone diariamente?
-
-**Resposta:** _________________________________________________
+> **Resposta:** Sim.
 
 ---
 
 ## Seção 2 — Fontes Externas e Credenciais
 
-> Referência: dados que hoje vocês **baixam manualmente de portais** e que queremos automatizar via API
-
 ### 2.1 — Gateways e Bancos
 
-**P15.** **Stone** — Vocês têm acesso ao painel Stone como admin? Já existe alguma integração via API ativa (webhook, relatórios automáticos por e-mail)? Qual o volume médio mensal de transações?
+**P15.** Stone — acesso admin, integração API, volume?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Temos acesso ao extrato. Ainda não temos integração via API que a equipe do financeiro saiba. Lançamentos nos bancos aproximadamente 1.260.
 
-**P16.** **Mercado Pago** — Qual conta MP vocês usam (e-mail associado)? Tem chave de API (Access Token) criada? Ou só acessam pelo portal web?
+**P16.** Mercado Pago — conta, chave API?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Só acessamos pelo portal web.
 
-**P17.** **AppMax** — AppMax é um gateway separado OU é o gateway dentro da Tray? A gente já tem credenciais Tray mapeadas — confirmar se é a mesma coisa ou conta separada.
+**P17.** AppMax — é gateway separado ou dentro da Tray?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Gateway separado. Precisamos ver isso com o João.
 
-**P18.** **Pagar.me** — Qual versão da API vocês usam (v4 ou v5)? Tem API Key gerada? Ou só portal web?
+**P18.** Pagar.me — versão API, API Key?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Pagar.me está descontinuado. Também precisamos ver essa questão da API com o João.
 
-**P19.** **Amazon Seller Central** — Vocês têm acesso ao Developer do Seller Central? (Necessário para SP-API). Quem tem login admin?
+**P19.** Amazon Seller Central — acesso Developer?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Temos acesso restrito. O João tem o login de admin.
 
 ### 2.2 — Logística e Frete
 
-**P20.** **Mandaê** — Usam portal web ou já têm integração? Têm API Key gerada? (~77 envios/mês)
+**P20.** Mandaê — portal web ou API?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Esses relatórios são puxados por solicitação da nossa expedição ao gerente da plataforma citada.
 
-**P21.** **Melhor Envio** — Usam a conta Melhor Envio Pro (pós-pago)? Têm app OAuth cadastrado? (~547 transações/mês)
+**P21.** Melhor Envio — conta Pro, OAuth?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Esses relatórios são puxados por solicitação da nossa expedição ao gerente da plataforma citada.
 
-**P22.** **Lalamove** — Credenciais de API (Key + Secret) existem? Ou só app no celular? (~15 entregas/mês)
+**P22.** Lalamove — credenciais API?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Esses relatórios são puxados por solicitação da nossa expedição ao gerente da plataforma citada.
 
-**P23.** **Mercado Livre** — Usam a API do ML para alguma coisa já, ou só baixam relatórios do portal? Quem tem acesso admin ao Seller?
+**P23.** Mercado Livre — API ou portal?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Não. Quem tem acesso é o João.
 
-**P24.** **LogManager** — O que é exatamente? É sistema de uma transportadora? Tem API ou portal? Ou é planilha que alguém manda por e-mail? (~4 lançamentos/mês)
+**P24.** LogManager — o que é?
 
-**Resposta:** _________________________________________________
+> **Resposta:** É mais uma transportadora. Pedimos os relatórios através da expedição para levantamento e envio à contabilidade. É mais conhecida por nós como To On Log.
 
-**P25.** **Módico/Correios** — De onde vem o relatório? Portal dos Correios? Fatura dos Correios? (~80 envios/mês)
+**P25.** Módico/Correios — de onde vem o relatório?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Esses relatórios são puxados por solicitação da nossa expedição ao gerente da plataforma citada.
 
-**P26.** **Transpo** — É uma transportadora específica? O CT-e (Conhecimento de Transporte) vem por XML via e-mail ou portal? (~12 fretes/mês)
+**P26.** Transpo — CT-e por XML ou portal?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Sim, e-mail e portal.
 
 ---
 
 ## Seção 3 — Regras de Negócio e Cálculos
 
-> Referência: `{MÊS}/DRE/Levantamento por competencia.xlsx` — planilha mestre com dados do DRE
-
 ### 3.1 — Direitos Autorais
 
-📁 **Arquivo:** Sheet "DADOS PARA DRE" no `Levantamento por competencia.xlsx`
-📋 **O que vimos:** ~13 autores com valores mensais (ex: Arival R$52k jan, Hernandes R$33k jan, Lucinho R$18k jan...)
-
 **P27.** Como é calculado o valor de Direitos Autorais de cada autor?
-- [ ] % fixo sobre vendas líquidas do mês (qual %?)
-- [ ] Valor fixo por contrato
-- [ ] % variável por faixa de vendas (escalonado)
-- [ ] Outro: _________________________________________________
 
-Onde está a tabela de contratos/parâmetros de cada autor? (Literarius? Planilha? Contrato físico?)
+> **Resposta:** No geral são % fixa por livro. Relatório retirado do Literarius através do módulo de Direito Autoral > Fechamento de Direito Autoral > seleciona o autor, a data do fechamento (geralmente o último dia do mês) > Buscar > Exportar para fazer o relatório para o autor. O resultado está na coluna Valor Autoral.
 
-**Resposta:** _________________________________________________
+**P27b.** Onde está a tabela de contratos/parâmetros?
+
+> **Resposta:** Direito Autoral > Parâmetro Autoral > Percentuais de Direitos Autorais.
 
 ### 3.2 — Comissões
 
-📋 **O que vimos:** Lucas e Bruno com valores mensais
+**P28.** Qual a fórmula de comissão? (Lucas e Bruno)
 
-**P28.** Qual a fórmula de comissão?
-- [ ] % sobre vendas totais do mês
-- [ ] % sobre vendas por canal específico
-- [ ] Meta + gatilho (pace CPC)
-- [ ] Outro: _________________________________________________
+> **Resposta:** % líquida das vendas do vendedor — 1,5% do Lucas, 5% do Bruno.
 
-Base de cálculo (vendas brutas? líquidas? de qual canal?): _________________________________________________
+**P28b.** Base de cálculo?
+
+> **Resposta:** Líquidas do canal atacado de cada vendedor.
 
 ### 3.3 — Bônus por Resultado
 
-📋 **O que vimos:** Lucas, Bruno, Ivanise, Hevelyn recebem bônus variável
+**P29.** Bônus é aprovado manualmente pela diretoria?
 
-**P29.** Bônus é aprovado manualmente pela diretoria todo mês? Existe critério formal (meta atingida)? Ou é discricionário?
-
-**Resposta:** _________________________________________________
+> **Resposta:** Existe uma meta estabelecida e é aprovada pela diretoria. Às vezes tem alguma campanha que também contempla isso.
 
 ### 3.4 — Apuração Moda
 
-📁 **Arquivo:** `{MÊS}/DRE/Apuração moda {mês}.xls` (aparece a partir de março/abril)
-
 **P30.** O que é "moda" neste contexto?
-- [ ] Um canal de venda (loja física de moda?)
-- [ ] Uma categoria de produto (vestuário/acessórios?)
-- [ ] Um parceiro/marca específica
-- [ ] Outro: _________________________________________________
 
-É um relatório do Literarius? Qual filtro gera ele?
+> **Resposta:** O cálculo do Moda é feito através do relatório de vendas, onde filtramos o produto "Mães Orando, Deus Agindo" e calculamos os custos para chegar no líquido e dividirmos o lucro com a coprodutora Casa Editora Presbiteriana. Como os estoques foram zerados, não teremos mais até a próxima versão. A última apuração foi essa.
 
-**Resposta:** _________________________________________________
+**P30b.** É um relatório do Literarius? Qual filtro?
+
+> **Resposta:** É feito através do relatório de vendas onde filtramos o produto "Mães Orando, Deus Agindo" e calculamos os custos para chegar no líquido e dividirmos o lucro com a coprodutora Casa Editora Presbiteriana.
 
 ---
 
 ## Seção 4 — Formato e Entrega para Contabilidade
 
-**P31.** A Contábil Ribeiro aceita os relatórios em qualquer formato digital (PDF, XLSX, CSV)? Ou EXIGE o formato XLS exatamente como está hoje?
+**P31.** A Contábil Ribeiro aceita em qualquer formato digital ou exige XLS?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Eles pedem as duas versões: XML e PDF.
 
-**P32.** Existe algo que a contabilidade ainda exige em PAPEL (documento físico, assinatura)? Se sim, o quê?
+**P32.** Existe algo que a contabilidade ainda exige em PAPEL?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Sim, a Movimentação Mensal — ou seja, a relação de todas as notas fiscais das contas que foram pagas no mês.
 
-**P33.** As guias de recolhimento (Recolher_*.pdf) — quem gera? É a Contábil Ribeiro que manda para vocês pagarem? Ou vocês que geram?
+**P33.** As guias de recolhimento — quem gera?
 
-**Resposta:** _________________________________________________
+> **Resposta:** A contabilidade — tanto a Contábil Ribeiro quanto a Porte Contábil.
 
-**P34.** Quando o pacote completo do mês está pronto, como vocês entregam hoje para a Contábil Ribeiro? (Link OneDrive? E-mail? Pendrive?)
+**P34.** Quando o pacote está pronto, como entregam para a Contábil Ribeiro?
 
-**Resposta:** _________________________________________________
+> **Resposta:** Uma pasta compartilhada no OneDrive.
 
 ---
 
-## Resumo do que JÁ sabemos (não precisam responder)
+## Síntese das Descobertas-Chave
 
-| Item | Status |
+### Caminhos confirmados no Literarius
+
+| Relatório | Caminho | Filtros |
+|---|---|---|
+| CMV | Faturamento > Análise de vendas | Período (1 a 31 do mês), sem filtro de PlanoConta |
+| NFs por número | Utilitários > Exportar > Faturamento | Nenhum (pega todas, inclusive canceladas) |
+| Fluxos bancários | Utilitários > Exportar > Movimentos Bancários | Conta bancária desejada |
+| Fornecedores pagos | Utilitários > Exportar > Títulos Financeiros | "Pagar baixas" + período + PlanoConta 20 ou 21 |
+| Fornecedores a pagar | Utilitários > Exportar > Títulos Financeiros | "Pagar abertos" + mês seguinte até dez + PlanoConta 20 ou 21 |
+| Direitos Autorais | Direito Autoral > Fechamento de Direito Autoral | Autor + data (último dia do mês) |
+| Parâmetros DA | Direito Autoral > Parâmetro Autoral > Percentuais | — |
+
+### Regras de negócio confirmadas
+
+| Regra | Detalhe |
 |---|---|
-| Schema de todos os XLS do fechamento | ✅ Mapeado |
-| Fontes Literarius (SQL) para NFs, CMV, Fluxos, Fornecedores | ✅ Queries prontas |
-| Classificação contábil (PlanoConta + CentroResultado) | ✅ Já vem do Literarius |
-| Conciliação Santander × Literarius bate na maioria dos dias | ✅ Confirmado |
-| Volume mensal por fonte (Stone ~1.800, NFs ~4.253, A/P ~863) | ✅ Mapeado |
-| Estrutura da pasta OneDrive (12 meses × 3 seções) | ✅ Mapeada |
+| CMV | Não usa filtro PlanoConta — pega todas as vendas do período. Separa "Brinde" em aba separada |
+| Comissão Lucas | 1,5% sobre vendas líquidas do canal atacado |
+| Comissão Bruno | 5% sobre vendas líquidas do canal atacado |
+| Direitos Autorais | % fixa por livro (configurada no módulo Parâmetro Autoral) |
+| Bônus | Meta + aprovação diretoria (semi-automático) |
+| Moda | Coprodução "Mães Orando, Deus Agindo" × CEP — DESCONTINUADO (estoque zerado) |
+| Conciliação | Item por item (NÃO saldo diário) |
+| Contabilidade formato | XML + PDF (não XLS) |
+| Contabilidade papel | Sim — "Movimentação Mensal" (relação NFs das contas pagas) |
+| Entrega | Pasta compartilhada OneDrive |
+| Guias | Geradas pela contabilidade (Contábil Ribeiro + Porte Contábil) |
+
+### Mudanças no plano de integração
+
+| Item | Status | Ação |
+|---|---|---|
+| Pagar.me | ❌ DESCONTINUADO | Remover do roadmap |
+| AppMax | ⚠️ Gateway SEPARADO da Tray | Pedir credenciais ao João |
+| Logística (Mandaê, Melhor Envio, Lalamove, LogManager, Módico) | ⚠️ Relatórios VIA EXPEDIÇÃO | Não há API direta — solicitação manual ao gerente de cada plataforma |
+| Amazon, ML | ⚠️ Acesso restrito | João tem admin — pedir credenciais |
+| Stone | ⚠️ Sem API ativa | Financeiro só acessa extrato web — pedir ativação API ao João |
+| Mercado Pago | ⚠️ Só portal web | Pedir criação de Access Token ao João |
+| LogManager | = To On Log | Transportadora, relatório via expedição |
 
 ---
 
-## Próximo Passo
-
-Assim que responderem, vamos:
-1. Configurar as APIs externas (vocês só precisam liberar credenciais)
-2. Criar o módulo de fechamento automático no HeziomOS
-3. Rodar 2-3 meses em paralelo (sistema gera + vocês conferem)
-4. Depois que validarem: desligar o processo manual
-
-**Resultado:** o pacote completo do mês estará pronto no **dia 1-2** automaticamente, sem downloads manuais de 8+ portais.
-
----
-
-*Documento gerado em 19/05/2026 — Projeto HeziomOS, Trivia*
+*Respondido em 21/05/2026 — Ana Zechmann / Rafael Barbosa*
+*Síntese processada por JG Novais (Trivia) para atualização do HeziomOS*
