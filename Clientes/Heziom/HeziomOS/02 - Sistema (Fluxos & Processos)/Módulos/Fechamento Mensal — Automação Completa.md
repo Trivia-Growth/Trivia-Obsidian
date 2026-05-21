@@ -104,12 +104,12 @@ Cada mês tem uma pasta (`1-JANEIRO` a `12-DEZEMBRO`) com estrutura padrão:
 | **APPMAX.xlsx** | Portal AppMax (**SEPARADO da Tray** — gateway independente) | Igual ao extrato DFC mas separado para DRE | Receita líquida por período | AppMax API (credenciais separadas — pedir ao João) |
 | **Apuração moda.xls** | **CONFIRMADO:** Relatório de vendas do Literarius filtrado por produto "Mães Orando, Deus Agindo". Calcula custos → lucro líquido → divide com coprodutora Casa Editora Presbiteriana. **DESCONTINUADO** — estoques zerados, não haverá nova apuração até próxima versão | Cálculo manual de custo + split | ~~Automatizável~~ — **não mais necessário** (produto descontinuado) |
 | **Relatórios de Frete:** | | | | |
-| — LogManager (To On Log) | Transportadora. Relatório via expedição | Data + Valor (6 linhas = semanal) | Soma mensal | Import CSV (expedição envia) → soma |
-| — Mandaê | Relatório via expedição ao gerente | 28 colunas: id, NF, chave_nfe, cidade, UF, serviço, peso, valor frete, prazo | ~77 envios/mês, soma `preco_frete` | Import CSV → soma (avaliar API futura) |
-| — Melhor Envio | Relatório via expedição ao gerente | 7 colunas: Protocolo, Data, Descrição, Status, Tipo, Valor, Pagamento | ~547 transações/mês (pós-pago) | Import CSV → soma (avaliar API futura) |
-| — Módico | Relatório via expedição ao gerente (Correios) | 3 colunas: descrição, qtde, total | ~80 envios/mês | Import CSV → soma |
-| — Transpo | Transportadora. CT-e via e-mail e portal | 23 colunas: CTe, emissão, remetente, destinatário, NF, peso, valor frete | ~12 envios/mês | Import CSV/XML CT-e |
-| — Lalamove | Relatório via expedição ao gerente | 26 colunas: Order ID, status, valor, endereços, distância | ~15 entregas/mês | Import CSV (avaliar API futura) |
+| — LogManager (To On Log) | Transportadora | Data + Valor (6 linhas = semanal) | Soma mensal | Import CSV ou API (verificar) |
+| — ~~Mandaê~~ | Substituída pelo Melhor Envio | 28 colunas: id, NF, chave_nfe, cidade, UF, serviço, peso, valor frete, prazo | ~77 envios/mês | ~~API Mandaê~~ → migrado para ME |
+| — Melhor Envio | **API já integrada** (substituiu Mandaê) | 7 colunas: Protocolo, Data, Descrição, Status, Tipo, Valor, Pagamento | ~547 transações/mês (pós-pago) | **Melhor Envio API** `GET /api/v2/me/shipment/tracking` + wallet → automático |
+| — Módico | Correios (API SIGEP Web / Nova API disponível) | 3 colunas: descrição, qtde, total | ~80 envios/mês | API Correios → automático |
+| — Transpo | Transportadora. CT-e via e-mail e portal | 23 colunas: CTe, emissão, remetente, destinatário, NF, peso, valor frete | ~12 envios/mês | Import XML CT-e |
+| — Lalamove | API REST v3 disponível | 26 colunas: Order ID, status, valor, endereços, distância | ~15 entregas/mês | **Lalamove API** `GET /v3/orders` → automático |
 | **Vendas ML** | Portal Mercado Livre | Relatório de faturamento + tarifas | Volume significativo | **ML API** `GET /invoices` → import |
 
 ---
@@ -170,20 +170,20 @@ Esta é a peça central do fechamento. Contém múltiplas sheets que alimentam o
 | **Tray** | Tray API | `GET /orders`, `GET /payments` | OAuth2 | Variável | ✅ Autenticado e validado |
 | ~~**Pagar.me**~~ | ~~Pagar.me v5~~ | — | — | — | ❌ **DESCONTINUADO** — remover |
 
-### Prioridade 3 — Relatórios via expedição (sem API direta)
+### Prioridade 3 — Logística (APIs disponíveis — financeiro não usa, expedição opera)
 
-> **CONFIRMADO (21/05/2026):** Todos os relatórios de logística são obtidos por solicitação da expedição ao gerente de cada plataforma. Não há acesso API direto pela equipe financeira.
+> **Contexto:** O financeiro solicita esses relatórios à expedição, mas a Trivia já desenvolveu integração com essas APIs no HeziomOS. As APIs existem e podem ser usadas diretamente.
 
-| Item | Plataforma | Como obtêm | Frequência |
-|---|---|---|---|
-| Mandaê | Mandaê | Expedição solicita ao gerente | ~77 envios/mês |
-| Melhor Envio | Melhor Envio | Expedição solicita ao gerente | ~547 transações/mês |
-| Lalamove | Lalamove | Expedição solicita ao gerente | ~15 entregas/mês |
-| LogManager (To On Log) | To On Log | Expedição solicita ao gerente | ~4 lançamentos/mês |
-| Módico/Correios | Correios | Expedição solicita ao gerente | ~80 envios/mês |
-| Transpo | Transpo | CT-e via e-mail e portal | ~12 fretes/mês |
+| Item | Plataforma | API disponível | Frequência | Status integração |
+|---|---|---|---|---|
+| ~~Mandaê~~ | Mandaê | API REST | ~77 envios/mês | Substituída pelo Melhor Envio |
+| Melhor Envio | Melhor Envio | OAuth2 REST API | ~547 transações/mês | ✅ Já integrado (substituiu Mandaê) |
+| Lalamove | Lalamove | REST API v3 (Key + Secret) | ~15 entregas/mês | Integrar |
+| LogManager (To On Log) | To On Log | A verificar | ~4 lançamentos/mês | Baixo volume — avaliar |
+| Módico/Correios | Correios | API Correios (SIGEP Web / Nova API) | ~80 envios/mês | Integrar |
+| Transpo | Transpo | CT-e via e-mail/portal | ~12 fretes/mês | Import XML CT-e |
 
-> **Decisão futura:** Avaliar se vale ativar APIs dessas plataformas diretamente (requer credenciais dos gerentes/admin). Por ora, manter como upload manual ou import CSV periódico.
+> **Nota:** O financeiro não sabe das APIs porque quem opera é a expedição. Para o fechamento, conectar o HeziomOS diretamente nas APIs que a expedição já usa.
 
 ### Prioridade 4 — Upload manual (sem API viável)
 
