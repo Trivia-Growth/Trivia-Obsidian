@@ -44,3 +44,8 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
 
 - `2026-05-22` — Story criada a partir do diagnóstico técnico.
 - `2026-05-22` — CA1 entregue (trigger de ordenação de eventos). CA2–CA6 pendentes.
+- `2026-05-22` — Bug encontrado na verificação E2E: `mercadolivre-webhook` mapeia
+  o status `returning` do ML para `'returning'`, mas o CHECK
+  `shipment_trackings_status_check` **não inclui `returning`** — um envio do ML
+  em devolução faria o upsert falhar. Corrigir junto da CA5 (adicionar `returning`
+  ao CHECK via migration, ou mapear para `returned`, que é um valor válido).
