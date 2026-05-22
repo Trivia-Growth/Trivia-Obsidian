@@ -62,6 +62,20 @@
 
 ---
 
+## Manutencao / Correcoes (fora das sprints de feature)
+
+| Story | Nome | Status |
+|-------|------|--------|
+| 018 | Correcao das Contas Contabeis ECC e Locacao (IPP) | ✅ Pronto (22/05/2026) |
+| 019 | Correcao de Papeis nas Edge Functions | ✅ Pronto (22/05/2026) |
+| 020 | Reparo do ESLint e Atualizacao da Documentacao | ✅ Pronto (22/05/2026) |
+| 021 | Limpeza das Pendencias de Lint | ⬜ Backlog |
+
+> Origem: diagnostico de 22/05/2026 — o sistema estava fora do ar apenas
+> porque o projeto Supabase (plano gratuito) havia sido pausado por inatividade.
+
+---
+
 ## Bloqueadores Criticos
 
 | # | Descricao | Responsavel | Impacto |
