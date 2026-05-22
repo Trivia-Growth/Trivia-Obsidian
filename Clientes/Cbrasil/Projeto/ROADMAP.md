@@ -1,116 +1,89 @@
 # Roadmap — C. Brasil Financeiro
 
-> Sistema financeiro para clientes da C. Brasil Contabilidade.  
-> Converte movimentacoes financeiras em lancamentos contabeis (partida dobrada) e exporta para Contmatic Phoenix.
+> Sistema financeiro para os clientes da C. Brasil Contabilidade. Converte movimentações financeiras simples em lançamentos contábeis (partida dobrada) e exporta para o Contmatic Phoenix.
 
 ---
 
-## Visao por Sprints
+## Fase 1 — MVP Operacional *(atual)*
 
-### Sprint 1 — Fundacao
+**Objetivo:** O cliente registra suas movimentações financeiras e o contador exporta para o Contmatic sem trabalho manual de classificação.
 
-| Story | Nome | Status | Bloqueadores |
-|-------|------|--------|--------------|
-| 001 | Setup Infraestrutura | 🟡 Em progresso | Criar repo GitHub dedicado |
-| 002 | Auth e Multi-tenancy | ⬜ Backlog | — |
-| 003 | Categorias e Mapeamento Contabil | ⬜ Backlog | Plano de contas completo do sogro |
+**Postura:** Operacional
 
-**Entregavel:** Login funcional, isolamento de dados por cliente, categorias IPP mapeadas.
+**Módulos:**
+- [x] Setup de infraestrutura — STORY-001
+- [x] Auth e multi-tenancy — STORY-002
+- [x] Categorias e mapeamento contábil — STORY-003
+- [x] Registro de lançamentos — STORY-004, STORY-012
+- [x] Importação de planilhas — STORY-005
+- [x] Painel do contador / revisão — STORY-006
+- [x] Exportação ODS Contmatic — STORY-007
+- [x] Contas bancárias e caixa — STORY-011
+- [x] Extrato e filtros — STORY-013
+- [x] Motor de tradução contábil — STORY-014
+- [x] Gestão de clientes e usuários — STORY-016
+- [x] Design system e temas — STORY-017
+- [~] Dashboard do cliente — STORY-009, STORY-015 *(gráficos pendentes — STORY-023)*
 
----
-
-### Sprint 2 — Operacao
-
-| Story | Nome | Status | Bloqueadores |
-|-------|------|--------|--------------|
-| 004 | Registro de Lancamentos | ⬜ Backlog | STORY-002, STORY-003 |
-| 005 | Importacao de Planilhas | ⬜ Backlog | STORY-004 |
-| 006 | Painel do Contador (Revisao) | ⬜ Backlog | STORY-004 |
-
-**Entregavel:** Cliente registra lancamentos, importa planilha. Contador revisa e aprova.
-
----
-
-### Sprint 3 — Exportacao + Visibilidade
-
-| Story | Nome | Status | Bloqueadores |
-|-------|------|--------|--------------|
-| 007 | Exportacao ODS Contmatic | ⬜ Backlog | STORY-006 |
-| 009 | Dashboard do Cliente | ⬜ Backlog | STORY-004 |
-
-**Entregavel:** ODS pronto para importar no Contmatic. Cliente acompanha status dos lancamentos.
+**Status:** `em andamento` — núcleo entregue e em uso (piloto IPP, 408 lançamentos exportados). Pendências de Fase 1: gráficos do dashboard (STORY-023), histórico de exportações (STORY-024), paginação das listas (STORY-025), hardening de segurança (STORY-022), limpeza de lint (STORY-021).
 
 ---
 
-### Sprint 4 — Integracao Direta (Fase 2)
+## Fase 2 — Integração API Contmatic *(futura)*
 
-| Story | Nome | Status | Bloqueadores |
-|-------|------|--------|--------------|
-| 008 | Integracao API Contmatic | ⬜ Backlog | Token API (ConnectCont do sogro) |
+**Objetivo:** Eliminar o passo manual de importar o arquivo ODS no Contmatic — envio direto via API.
 
-**Entregavel:** Envio direto para Contmatic via API, com fallback ODS.
+**Módulos planejados:** Envio de lançamentos via API REST Contmatic (STORY-008), sincronização do plano de contas, fallback para ODS. *(Stories detalhadas quando a Fase 1 estiver concluída.)*
 
----
-
-### Sprint 5+ — Inteligencia (Fase 3)
-
-| Story | Nome | Status | Bloqueadores |
-|-------|------|--------|--------------|
-| 010 | Sugestao IA e Deteccao Anomalias | ⬜ Backlog | Volume de dados historicos |
-
-**Entregavel:** Classificacao assistida por IA, alertas de anomalias.
+**Status:** `planejada` — bloqueada pelo token da API Contmatic.
 
 ---
 
-## Manutencao / Correcoes (fora das sprints de feature)
+## Fase 3 — Inteligência e Relatórios *(futura)*
 
-| Story | Nome | Status |
+**Objetivo:** Automatizar a classificação e dar mais visibilidade financeira ao cliente.
+
+**Módulos planejados:** Sugestão de categoria por IA, detecção de anomalias e duplicatas (STORY-010), relatórios comparativos, conciliação bancária. *(Escopo definido durante a Fase 2.)*
+
+**Status:** `planejada`
+
+---
+
+## Milestones
+
+| Marco | Data | Status |
 |-------|------|--------|
-| 018 | Correcao das Contas Contabeis ECC e Locacao (IPP) | ✅ Pronto (22/05/2026) |
-| 019 | Correcao de Papeis nas Edge Functions | ✅ Pronto (22/05/2026) |
-| 020 | Reparo do ESLint e Atualizacao da Documentacao | ✅ Pronto (22/05/2026) |
-| 021 | Limpeza das Pendencias de Lint | ⬜ Backlog |
-
-> Origem: diagnostico de 22/05/2026 — o sistema estava fora do ar apenas
-> porque o projeto Supabase (plano gratuito) havia sido pausado por inatividade.
+| Primeiro deploy em produção | 2026-05-07 | ✅ concluído |
+| Piloto IPP operando (408 lançamentos) | 2026-05 | ✅ concluído |
+| Fase 1 concluída | a definir | pendente |
+| Token API Contmatic obtido | a definir | pendente (bloqueador) |
+| Fase 2 concluída | a definir | pendente |
 
 ---
 
-## Bloqueadores Criticos
+## Bloqueadores e Dependências
 
-| # | Descricao | Responsavel | Impacto |
+| # | Descrição | Responsável | Impacto |
 |---|-----------|-------------|---------|
-| 1 | Plano de contas completo da IPP | Sogro | Bloqueia STORY-003 (seed data completo) |
-| 2 | Token API Contmatic (ConnectCont) | Sogro | Bloqueia STORY-008 (toda Fase 2) |
-| 3 | Dominio do sistema (app.cbrasil...) | JG | Bloqueia deploy producao |
-| 4 | Validacao com outros clientes | JG + Sogro | Pode revelar gaps no MVP |
+| 1 | Token da API Contmatic (ConnectCont) | Contador C. Brasil | Bloqueia toda a Fase 2 (STORY-008) |
+| 2 | Domínio próprio do sistema (app.cbrasil…) | JG | Necessário para produção definitiva |
+| 3 | Validação do fluxo com clientes além da IPP | JG + C. Brasil | Pode revelar gaps no MVP |
 
 ---
 
-## Decisoes Tomadas
+## Decisões e Histórico
 
-- **ODS antes de API** — entrega valor imediato sem depender de token
-- **Conversao no backend** — cliente nao precisa saber contabilidade
-- **Multi-tenancy via RLS** — isolamento impossivel de burlar pelo frontend
-- **Triviaiox framework** — padrao de desenvolvimento Trivia com stories e DoD
-- **Fase 1 = MVP funcional** — cobre 100% do trabalho manual atual do sogro
-
----
-
-## Metricas de Sucesso
-
-- [ ] IPP (cliente-piloto) usando o sistema para registrar lancamentos
-- [ ] Reducao de >70% no tempo de classificacao contabil do sogro
-- [ ] Zero erros de importacao no Contmatic (arquivo ODS valido)
-- [ ] Pelo menos 2 clientes ativos alem da IPP ate fim da Fase 1
+- `2026-05-07` — **ODS antes de API:** o MVP usa exportação ODS (funciona sem credenciais Contmatic); a API direta fica para a Fase 2.
+- `2026-05-07` — **Conversão contábil no backend:** o cliente não precisa saber contabilidade; a tradução para débito/crédito acontece nas Edge Functions.
+- `2026-05-07` — **Multi-tenancy via RLS** com `FORCE ROW LEVEL SECURITY` em todas as tabelas.
+- `2026-05-08` — **Refactor de papéis:** `admin`→`superadmin`, `cliente`→`admin_cliente`, novo papel `operador`.
+- `2026-05-22` — **Diagnóstico e estabilização:** o sistema estava fora do ar apenas porque o projeto Supabase (plano gratuito) havia sido pausado por inatividade. Reativado; correções aplicadas (STORY-018 a STORY-021). Auditoria do vault e migração ao padrão Trivia.
 
 ---
 
-## Evolucao Futura (Fora do Escopo Atual)
+## Evolução Futura *(fora do escopo atual)*
 
-- **Integra Contador (Serpro)** — APIs governamentais para DCTFWeb, PGDAS-D, e-CAC. Relevante quando C Brasil escalar para obrigacoes acessorias.
-- **NFS-e Nacional** — API REST do novo sistema federal. Relevante para clientes que emitem notas de servico.
-- **OCR de documentos** — Extrair dados de NFs escaneadas automaticamente (reduz input manual).
-- **Reconciliacao bancaria** — Importar OFX/extrato e cruzar com lancamentos registrados.
-- **Multi-banco** — Suportar mais de uma conta bancaria por cliente (hoje testado apenas com Bradesco 5632-4).
-- **Alterdata/eBot** — Avaliar parceria com ecossistema Alterdata (dona da Contmatic) para IA contabil nativa.
+- **Integra Contador (Serpro)** — APIs governamentais (DCTFWeb, PGDAS-D, e-CAC).
+- **NFS-e Nacional** — API REST do sistema federal de notas de serviço.
+- **OCR de documentos** — extrair dados de NFs escaneadas.
+- **Multi-banco** — mais de uma conta bancária por cliente.

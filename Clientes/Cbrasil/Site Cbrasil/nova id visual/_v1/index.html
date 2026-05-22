@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="C Brasil Contabilidade — Especialistas em terceiro setor, igrejas, ONGs e empresas de serviços em São Paulo. Contabilidade moderna com tecnologia.">
+  <title>C. Brasil Contabilidade | Especialistas em Terceiro Setor e Serviços</title>
+  <link rel="icon" href="assets/img/icone-cbrasil.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">
+        <img src="assets/img/logo-cbrasil.png" alt="C. Brasil Contabilidade">
+      </a>
+      <ul class="navbar-menu" id="navMenu">
+        <li><a href="/" class="active">Início</a></li>
+        <li><a href="pages/servicos.html">Serviços</a></li>
+        <li><a href="pages/terceiro-setor.html">Terceiro Setor</a></li>
+        <li><a href="pages/sobre.html">Sobre</a></li>
+        <li><a href="pages/contato.html">Contato</a></li>
+        <li><a href="pages/contato.html" class="btn btn-primary navbar-cta">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="animate-in">Contabilidade que<br><span class="highlight">entende</span> a sua missão</h1>
+        <p class="lead animate-in delay-1">Especialistas em terceiro setor e empresas de serviços. Cuidamos da sua contabilidade com a profundidade que a sua organização precisa.</p>
+        <div class="hero-buttons animate-in delay-2">
+          <a href="pages/contato.html" class="btn btn-primary">Fale com um especialista</a>
+          <a href="pages/servicos.html" class="btn btn-secondary">Conheça nossos serviços</a>
+        </div>
+        <div class="hero-stats animate-in delay-3">
+          <div>
+            <div class="stat-number" data-count="25" data-suffix="+">0</div>
+            <div class="stat-label">Anos de experiência</div>
+          </div>
+          <div>
+            <div class="stat-number" data-count="100" data-suffix="+">0</div>
+            <div class="stat-label">Clientes ativos</div>
+          </div>
+          <div>
+            <div class="stat-number">SP</div>
+            <div class="stat-label">São Paulo capital</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual animate-in delay-2">
+        <!-- Decorative Dashboard SVG -->
+        <div class="hero-dashboard">
+          <svg viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dashboard background -->
+            <rect x="0" y="0" width="480" height="360" rx="16" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+            <!-- Header bar -->
+            <rect x="0" y="0" width="480" height="52" rx="16" fill="#0F2A47"/>
+            <rect x="0" y="36" width="480" height="16" fill="#0F2A47"/>
+            <circle cx="24" cy="26" r="6" fill="#C9A24B"/>
+            <rect x="40" y="20" width="80" height="12" rx="6" fill="rgba(255,255,255,0.3)"/>
+            <!-- Sidebar dots -->
+            <rect x="440" y="20" width="12" height="12" rx="6" fill="rgba(255,255,255,0.2)"/>
+            <rect x="420" y="20" width="12" height="12" rx="6" fill="rgba(255,255,255,0.2)"/>
+            <!-- Metric cards -->
+            <rect x="20" y="68" width="135" height="72" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="1"/>
+            <rect x="30" y="80" width="50" height="8" rx="4" fill="#9CA3AF"/>
+            <rect x="30" y="96" width="70" height="14" rx="4" fill="#0F2A47"/>
+            <rect x="30" y="118" width="40" height="8" rx="4" fill="#0F6B3A"/>
+            <rect x="172" y="68" width="135" height="72" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="1"/>
+            <rect x="182" y="80" width="50" height="8" rx="4" fill="#9CA3AF"/>
+            <rect x="182" y="96" width="80" height="14" rx="4" fill="#0F2A47"/>
+            <rect x="182" y="118" width="40" height="8" rx="4" fill="#C9A24B"/>
+            <rect x="324" y="68" width="135" height="72" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="1"/>
+            <rect x="334" y="80" width="60" height="8" rx="4" fill="#9CA3AF"/>
+            <rect x="334" y="96" width="65" height="14" rx="4" fill="#0F2A47"/>
+            <rect x="334" y="118" width="40" height="8" rx="4" fill="#0F6B3A"/>
+            <!-- Chart area -->
+            <rect x="20" y="156" width="290" height="180" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="1"/>
+            <!-- Chart bars -->
+            <rect x="45" y="260" width="24" height="56" rx="4" fill="#E5E7EB"/>
+            <rect x="45" y="220" width="24" height="96" rx="4" fill="#0F2A47" opacity="0.8" class="float-slow"/>
+            <rect x="85" y="280" width="24" height="36" rx="4" fill="#E5E7EB"/>
+            <rect x="85" y="250" width="24" height="66" rx="4" fill="#0F6B3A" opacity="0.8"/>
+            <rect x="125" y="240" width="24" height="76" rx="4" fill="#E5E7EB"/>
+            <rect x="125" y="200" width="24" height="116" rx="4" fill="#C9A24B" opacity="0.8"/>
+            <rect x="165" y="260" width="24" height="56" rx="4" fill="#E5E7EB"/>
+            <rect x="165" y="230" width="24" height="86" rx="4" fill="#0F2A47" opacity="0.8"/>
+            <rect x="205" y="250" width="24" height="66" rx="4" fill="#E5E7EB"/>
+            <rect x="205" y="210" width="24" height="106" rx="4" fill="#0F6B3A" opacity="0.8"/>
+            <rect x="245" y="240" width="24" height="76" rx="4" fill="#E5E7EB"/>
+            <rect x="245" y="190" width="24" height="126" rx="4" fill="#C9A24B" opacity="0.8" class="float"/>
+            <!-- Chart label -->
+            <rect x="35" y="170" width="70" height="8" rx="4" fill="#9CA3AF"/>
+            <!-- Right panel - list -->
+            <rect x="328" y="156" width="132" height="180" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="1"/>
+            <rect x="340" y="172" width="60" height="8" rx="4" fill="#9CA3AF"/>
+            <rect x="340" y="192" width="108" height="10" rx="4" fill="#0F2A47" opacity="0.6"/>
+            <rect x="340" y="210" width="90" height="10" rx="4" fill="#0F2A47" opacity="0.4"/>
+            <rect x="340" y="228" width="100" height="10" rx="4" fill="#0F2A47" opacity="0.6"/>
+            <rect x="340" y="246" width="80" height="10" rx="4" fill="#0F2A47" opacity="0.3"/>
+            <rect x="340" y="264" width="108" height="10" rx="4" fill="#0F2A47" opacity="0.5"/>
+            <rect x="340" y="282" width="70" height="10" rx="4" fill="#0F2A47" opacity="0.4"/>
+            <!-- Line chart overlay -->
+            <polyline points="45,250 85,240 125,200 165,225 205,205 245,185 280,195" stroke="#C9A24B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+            <circle cx="125" cy="200" r="4" fill="#C9A24B"/>
+            <circle cx="245" cy="185" r="4" fill="#C9A24B"/>
+          </svg>
+          <!-- Floating decorative elements -->
+          <div class="deco-circle float-slow" style="width: 80px; height: 80px; top: -20px; right: -20px;"></div>
+          <div class="deco-circle float" style="width: 40px; height: 40px; bottom: 20px; left: -15px; border-color: var(--green);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Segments -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header centered animate-in">
+        <span class="overline">Segmentos</span>
+        <h2>Atendemos quem faz a diferença</h2>
+        <p>Cada segmento tem suas particularidades fiscais e legais. Nós dominamos cada uma delas.</p>
+      </div>
+      <div class="grid-3">
+        <div class="segment-card animate-in delay-1">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2H6a2 2 0 0 0-2 2v16l4-3 4 3 4-3 4 3V4a2 2 0 0 0-2-2z"/><path d="M12 6v4"/><path d="M10 8h4"/></svg>
+          </div>
+          <h3>Igrejas</h3>
+          <p>Gestão contábil especializada para comunidades religiosas, com controle de dízimos, ofertas e prestação de contas transparente.</p>
+          <a href="pages/terceiro-setor.html" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="segment-card animate-in delay-2">
+          <div class="icon-box icon-box-green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>ONGs e Associações</h3>
+          <p>Compliance contábil, prestação de contas a financiadores, CEBAS, Utilidade Pública e todas as certificações do setor.</p>
+          <a href="pages/terceiro-setor.html" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="segment-card animate-in delay-3">
+          <div class="icon-box icon-box-gold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3>Empresas de Serviços</h3>
+          <p>Contabilidade completa para prestadores de serviços: fiscal, trabalhista, societário e planejamento tributário.</p>
+          <a href="pages/servicos.html" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header animate-in">
+        <span class="overline">Serviços</span>
+        <h2>Soluções completas para sua organização</h2>
+        <p>Do operacional ao estratégico, entregamos tranquilidade contábil.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card animate-in delay-1">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>Contabilidade Fiscal</h3>
+          <p>Apuração de impostos, obrigações acessórias, SPED, EFD e acompanhamento fiscal completo.</p>
+        </div>
+        <div class="card animate-in delay-2">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Departamento Pessoal</h3>
+          <p>Folha de pagamento, eSocial, admissões, rescisões, férias e gestão trabalhista completa.</p>
+        </div>
+        <div class="card animate-in delay-3">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Societário</h3>
+          <p>Abertura, alteração e encerramento de empresas e associações junto aos órgãos competentes.</p>
+        </div>
+        <div class="card animate-in delay-1">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Consultoria Contábil</h3>
+          <p>Análise de demonstrações, planejamento tributário e assessoria em decisões financeiras.</p>
+        </div>
+        <div class="card animate-in delay-2">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Prestação de Contas</h3>
+          <p>Relatórios para financiadores, órgãos públicos e assembleias em todos os formatos exigidos.</p>
+        </div>
+        <div class="card animate-in delay-3">
+          <div class="icon-box icon-box-navy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </div>
+          <h3>Troca de Contador</h3>
+          <p>Migração segura e sem burocracia. Cuidamos de toda a transição com responsabilidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Differentials -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header centered animate-in">
+        <span class="overline">Diferenciais</span>
+        <h2>Por que a C. Brasil</h2>
+      </div>
+      <div class="grid-4">
+        <div class="diff-item animate-in delay-1">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>Especialização real</h3>
+          <p>Não somos generalistas. Conhecemos profundamente as regras do terceiro setor e serviços.</p>
+        </div>
+        <div class="diff-item animate-in delay-2">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Atendimento próximo</h3>
+          <p>WhatsApp, e-mail e reuniões quando você precisar. Sem filas, sem burocracia.</p>
+        </div>
+        <div class="diff-item animate-in delay-3">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Segurança e compliance</h3>
+          <p>Todas as obrigações em dia. Monitoramento constante para evitar multas e autuações.</p>
+        </div>
+        <div class="diff-item animate-in delay-4">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3>Tecnologia moderna</h3>
+          <p>Processos digitais e atendimento inteligente. Sem papelada desnecessária.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header centered animate-in">
+        <span class="overline">Depoimentos</span>
+        <h2>O que nossos clientes dizem</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card animate-in delay-1">
+          <p class="quote">A C. Brasil entende a realidade de uma igreja como nenhum outro escritório. A prestação de contas da nossa expansão foi impecável.</p>
+          <div class="author">
+            <div class="author-avatar">PR</div>
+            <div class="author-info">
+              <strong>Pastor Roberto</strong>
+              <span>Igreja Presbiteriana</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-in delay-2">
+          <p class="quote">Migramos de outro escritório e a transição foi transparente. Hoje temos clareza total da nossa situação fiscal.</p>
+          <div class="author">
+            <div class="author-avatar">MC</div>
+            <div class="author-info">
+              <strong>Marcos Costa</strong>
+              <span>Empresa de Consultoria</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-in delay-3">
+          <p class="quote">A equipe é acessível e resolve rápido. Para uma ONG com múltiplos projetos, isso é fundamental.</p>
+          <div class="author">
+            <div class="author-avatar">AL</div>
+            <div class="author-info">
+              <strong>Ana Luísa</strong>
+              <span>Diretora de ONG</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content animate-in">
+        <h2>Pronto para uma contabilidade que entende você?</h2>
+        <p>Converse com nossa equipe e descubra como podemos cuidar da sua organização.</p>
+        <div class="cta-buttons">
+          <a href="pages/contato.html" class="btn btn-gold">Fale com um especialista</a>
+          <a href="https://wa.me/5511970353989?text=Olá! Gostaria de saber mais sobre os serviços da C. Brasil Contabilidade." class="btn btn-whatsapp" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/img/logo-cbrasil.png" alt="C. Brasil Contabilidade">
+          <p>Escritório de contabilidade em São Paulo especializado em terceiro setor e empresas de serviços.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="pages/servicos.html">Serviços</a></li>
+            <li><a href="pages/terceiro-setor.html">Terceiro Setor</a></li>
+            <li><a href="pages/sobre.html">Sobre</a></li>
+            <li><a href="pages/contato.html">Contato</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Serviços</h4>
+          <ul>
+            <li><a href="pages/servicos.html">Contabilidade Fiscal</a></li>
+            <li><a href="pages/servicos.html">Departamento Pessoal</a></li>
+            <li><a href="pages/servicos.html">Societário</a></li>
+            <li><a href="pages/servicos.html">Consultoria</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="mailto:contato@cbrasilcontabilidade.com.br">contato@cbrasilcontabilidade.com.br</a></li>
+            <li><a href="tel:+5511970353989">(11) 99999-9999</a></li>
+            <li><a href="#">São Paulo, SP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2026 C. Brasil Contabilidade. Todos os direitos reservados.</p>
+        <p>CRC/SP</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5511970353989?text=Olá! Gostaria de saber mais sobre os serviços da C. Brasil Contabilidade." class="whatsapp-float" target="_blank" title="Fale conosco no WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
