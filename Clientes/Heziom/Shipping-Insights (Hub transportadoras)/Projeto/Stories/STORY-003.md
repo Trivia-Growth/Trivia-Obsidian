@@ -70,12 +70,24 @@ Com o auto-cadastro desativado e o convite exigindo um admin existente, o
 
 ## QA
 
-**Gate:** `PASS`
+**Gate:** `PASS` (após correção — ver abaixo)
 
-- [x] `npm run build` — passou (3,81s)
+- [x] `npm run build` — passou
 - [x] FORCE RLS confirmado nas 15 tabelas
 - [x] Zero policies de usuário/admin em `{public}` (anônimo bloqueado)
 - [x] `disable_signup=true` confirmado no Supabase
+- [x] **Teste end-to-end** (app rodando, usuário real): rota não logada →
+  `/auth`; sem aba "Cadastrar"; RLS anônimo bloqueado em tabela com dados;
+  admin acessa `/admin/*`; não-admin é redirecionado.
+
+### Bug encontrado e corrigido no teste E2E
+
+O teste end-to-end revelou uma **race condition** no `ProtectedRoute`: o gate
+`requireAdmin` usava `isLoading` da query de papel, que fica `false` por ~1
+render logo após a query ser habilitada — nessa janela `isAdmin` ainda é
+`false` e o admin era redirecionado por engano (falha intermitente).
+Corrigido para usar `isPending` (commit `041778e`). Re-testado: rota admin
+carrega de forma confiável (3×) e o bloqueio de não-admin segue funcionando.
 
 ## Referência
 
@@ -87,3 +99,5 @@ Com o auto-cadastro desativado e o convite exigindo um admin existente, o
 - `2026-05-22` — Story criada a partir do diagnóstico técnico.
 - `2026-05-22` — Escopo simplificado após decisão do JG (uso interno; sem portal
   de fornecedor externo). Concluída — commit `5f6480b`.
+- `2026-05-22` — Teste end-to-end encontrou race no gate de admin; corrigida no
+  commit `041778e` e re-verificada.
