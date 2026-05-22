@@ -24,6 +24,7 @@ inicio: 2026-01-03
 | Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
 | Stories | [[Projeto/Stories/]] · ativas em `docs/stories/` no repo |
 | Credenciais a coletar | [[Projeto/Credenciais das Integrações]] |
+| Diagnóstico técnico (auditoria) | [[Projeto/Diagnóstico Técnico]] |
 | Requisitos do sistema | *(no repositório: `PROJECT_REQUIREMENTS.md`)* |
 | Arquitetura | *(no repositório: `architecture.md`)* |
 | Dívida de segurança | *(no repositório: `SECURITY_DEBT.md`)* |
