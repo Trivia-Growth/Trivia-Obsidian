@@ -11,6 +11,9 @@ inicio: 2026-01-03
 > (Correios, Mandaê, Melhor Envio, Amazon Vendor, Mercado Livre, Tray, LogManager, Vipp),
 > com dashboard, relatórios, alertas de atraso e um portal para fornecedores.
 
+> ⚠️ **Estado atual (mai/2026):** sistema migrado para um Supabase novo e vazio —
+> em reconfiguração. Ver [[Projeto/Roadmap]] e [[Projeto/Stories/STORY-002]].
+
 ---
 
 ## Navegação
@@ -20,6 +23,7 @@ inicio: 2026-01-03
 | Dashboard (status das stories) | [[Projeto/Dashboard do Projeto]] |
 | Roadmap (fases e milestones) | [[Projeto/Roadmap]] |
 | Stories | [[Projeto/Stories/]] · ativas em `docs/stories/` no repo |
+| Credenciais a coletar | [[Projeto/Credenciais das Integrações]] |
 | Requisitos do sistema | *(no repositório: `PROJECT_REQUIREMENTS.md`)* |
 | Arquitetura | *(no repositório: `architecture.md`)* |
 | Dívida de segurança | *(no repositório: `SECURITY_DEBT.md`)* |
