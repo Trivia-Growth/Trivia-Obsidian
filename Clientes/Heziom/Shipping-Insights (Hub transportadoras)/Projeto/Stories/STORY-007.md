@@ -29,7 +29,9 @@ aumentam o risco de regressão e bugs silenciosos.
   `.gitignore`; o projeto usa só `package-lock.json` (npm)
 - [x] CA5 — *Parcial:* Error Boundary global criado (`ErrorBoundary.tsx`)
   envolvendo as rotas. Falta o tratamento de `isError` tela a tela.
-- [ ] CA6 — Primeira suíte de testes (Vitest) com smoke tests por área
+- [x] CA6 — Vitest configurado (commit `c663485`): config no `vite.config.ts`,
+  setup do testing-library, scripts `npm test` / `npm run test:run`. Primeiros
+  3 smoke tests cobrindo os rótulos centralizados — todos passando.
 - [x] CA7 — Code-splitting: rotas com `React.lazy()` + `Suspense`. Bundle
   inicial caiu de ~1.670 kB para ~508 kB (85 chunks). Verificado.
 - [x] CA8 — `CARRIER_LABELS` / `STATUS_LABELS` centralizados em `src/types/tracking.ts`;
@@ -47,7 +49,7 @@ aumentam o risco de regressão e bugs silenciosos.
 - **CA3** — trocar a `xlsx` (vulnerável, sem fix no npm) — exige testar a
   importação de planilha de "Envios Módicos".
 - **CA5** (resto) — tratar `isError` das queries nas telas.
-- **CA6** — configurar Vitest + smoke tests.
+- [x] **CA6** — concluída (commit `c663485`).
 - [x] **CA8** — concluída (commit `613d1ee`). O `STATUS_LABELS` do Dashboard
   era código morto; as outras cópias foram trocadas por imports de `tracking.ts`.
 - [x] **Extra — métrica "Em Trânsito"** (corrigido, commit `886cd35`):

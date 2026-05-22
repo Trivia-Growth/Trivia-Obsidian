@@ -31,9 +31,11 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
 - [ ] CA3 — Erro pontual de uma transportadora não derruba o lote inteiro
 - [ ] CA4 — Refresh de token OAuth robusto (serializar refresh; persistir
   refresh token rotativo de ML/Tray)
-- [x] CA5 — *Parcial:* Zod implementado em `mercadolivre-webhook` e
-  `logmanager-webhook` (commit `3b2fb6e`). Falta `mandae-webhook` (tem
-  dois tipos de evento — coleta vs item — precisa de schema discriminado).
+- [x] CA5 — Zod implementado em `mercadolivre-webhook`, `logmanager-webhook`
+  e `mandae-webhook` (commits `3b2fb6e` + `b0eeed3`). Webhook do Mandaê
+  usa Zod por tipo de evento (coleta vs item processado).
+- [x] **Extra — teto de páginas do Melhor Envio** subiu de 10 → 50
+  (commit `f5ff515`). Sync passou a importar 2.831 envios (era 1.002).
 - [ ] CA6 — `melhor-envio-sync` com lock contra execução concorrente e status de job
 - [x] **Extra** — Bug do status `returning` corrigido: `mercadolivre-webhook`
   mapeia `returning` → `in_devolution` (valor válido no CHECK). Commit `fb8ebc8`.
