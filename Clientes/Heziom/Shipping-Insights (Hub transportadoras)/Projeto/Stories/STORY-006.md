@@ -49,3 +49,8 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
   `shipment_trackings_status_check` **não inclui `returning`** — um envio do ML
   em devolução faria o upsert falhar. Corrigir junto da CA5 (adicionar `returning`
   ao CHECK via migration, ou mapear para `returned`, que é um valor válido).
+- `2026-05-22` — Limitação observada no 1º sync do Melhor Envio: `melhor-envio-sync`
+  para em **1.000 envios** (teto de 10 páginas no `doSync`). A conta tem volume
+  alto (~60/dia), então o histórico além de ~16 dias não vem. Adicionar como CA7:
+  paginação por data ou execução em blocos para trazer o histórico completo sem
+  estourar o tempo da função.

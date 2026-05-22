@@ -57,14 +57,27 @@ transportadoras e marketplaces, com rastreio, relatórios e alertas de atraso.
 
 **Objetivo:** Deixar o sistema operacional de novo no projeto Supabase oficial.
 
-**Passos:**
-- [ ] Coletar e configurar as credenciais das 8 integrações — ver
-  [[Projeto/Credenciais das Integrações]]
-- [ ] Re-registrar os webhooks dos marketplaces/transportadoras na URL nova
-- [ ] Agendar o polling automático (cron) das funções de rastreio
-- [ ] Configurar as variáveis de ambiente no Netlify
-- [ ] Recriar os usuários de acesso (banco está sem usuários)
-- [ ] Validar a sincronização (entrada de dados reais)
+**Progresso (atualizado 2026-05-22):**
+
+- 🟡 **Credenciais das integrações** — parcial:
+  - ✅ Mandaê (token já existia + webhook configurado)
+  - ✅ Melhor Envio (token configurado e validado)
+  - ⬜ Correios: falta `CORREIOS_ID` (o usuário da API — código já configurado)
+  - ⬜ Melhor Envio: falta `ME_APP_SECRET` (só para o webhook)
+  - ⬜ Vipp: confirmar valores literais de `VIPP_USUARIO` / `VIPP_SENHA`
+  - ⬜ Tray: só existe a loja de teste — valores ainda não enviados
+  - ❌ Mercado Livre, Amazon, LogManager — indisponíveis (informado pela logística)
+  - Detalhe e status em [[Projeto/Credenciais das Integrações]]
+- ⬜ **Re-registrar os webhooks** na URL nova, com `?token=` (ver STORY-004)
+- ⬜ **Agendar o polling automático** (cron) das funções de rastreio
+- ⬜ **Configurar variáveis de ambiente no Netlify** (aguarda acesso do JG)
+- ⬜ **Recriar os usuários** — bootstrap do 1º admin (procedimento em STORY-003)
+- ✅ **Sincronização validada** — Melhor Envio sincronizado em 22/05: **1.000 envios
+  + 4.646 eventos de rastreio**. Limitado a 1.000 pelo teto do código — trazer o
+  histórico completo é item da STORY-006.
+
+> **Pendências a concluir depois** (decisão JG 22/05 — "seguir e concluir depois"):
+> os 4 itens de credencial acima, o re-registro de webhooks, o cron e o Netlify.
 
 **Status:** `em andamento` — ver [[Projeto/Stories/STORY-002]]
 
