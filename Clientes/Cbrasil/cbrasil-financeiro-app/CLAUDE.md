@@ -7,12 +7,16 @@
 ## Documentacao (Vault Obsidian)
 
 ```
-Path relativo: ../../../Clientes/Cbrasil/
+Vault: /Users/joaogabrielnovais/Documents/Obsidian/Trivia-Obsidian/Clientes/Cbrasil/
+Subpasta deste app: cbrasil-financeiro-app/
+Contem: CLAUDE.md, PROJECT_REQUIREMENTS.md, SECURITY_DEBT.md, architecture.md
+Processos: ../processos/ (fluxos contábeis, mapeamentos Contmatic)
+Research: ../research/ (análises, comparações)
 ```
 
 Antes de implementar:
 1. Ler `PROJECT_REQUIREMENTS.md` neste repositorio
-2. Ler a story em `Projeto/Stories/STORY-XXX.md` no vault
+2. Ler a story em `docs/` neste repo ou `Projeto/Stories/` no vault
 3. Propor Diff Plan e aguardar aprovacao
 
 ---
@@ -120,6 +124,20 @@ Este sistema serve para os clientes da C. Brasil Contabilidade (principalmente i
 
 ---
 
+## Site Institucional (projeto irmao)
+
+| Item | Valor |
+|------|-------|
+| Repo | `Trivia-Growth/site-cbrasil` |
+| Local | `/Users/joaogabrielnovais/Documents/Obsidian/Github/site-cbrasil` |
+| Deploy | Netlify (auto-deploy do GitHub) |
+| Stack | HTML/CSS/JS estático |
+| Contato | WhatsApp (11) 97035-3989 |
+
+Funcionalidades: landing page institucional, chat SDR integrado com Supabase Edge Function, páginas Sobre e Contato.
+
+---
+
 ## Deploy — Comandos Obrigatorios
 
 ### Se a story criou ou alterou tabelas
@@ -140,11 +158,13 @@ supabase functions deploy [nome-da-funcao]
 supabase secrets set NOME_DA_VARIAVEL=valor
 ```
 
-### Frontend (automatico)
+### Frontend (deploy manual — auto-deploy NÃO configurado)
 
 ```bash
-git push origin main
+npm run build && npx netlify deploy --prod --dir=dist
 ```
+
+Site Netlify: https://cbrasil-financeiro.netlify.app
 
 ---
 
