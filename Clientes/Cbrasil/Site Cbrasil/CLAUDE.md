@@ -20,8 +20,8 @@
 
 - **Em producao:** versao antiga (Manrope only, chat SDR simples, sem JSON-LD completo)
 - **Pronta para deploy:** nova versao no vault com design system completo (Source Serif + Manrope, briefing multi-step, JSON-LD, SEO)
-- **Deploy:** Netlify (auto-deploy do GitHub) — https://site-cbrasil.netlify.app
-- **Dominio:** cbrasilcontabilidade.com.br (apontando para Netlify)
+- **Deploy:** Netlify (auto-deploy do GitHub) — https://cbrasilsite.netlify.app
+- **Dominio futuro:** cbrasilcontabilidade.com.br (custom domain a configurar)
 
 ---
 
