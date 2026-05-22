@@ -35,7 +35,7 @@ seguindo o checklist "09 - Migrar Projeto Lovable para Padrão Trivia".
 - [x] CA6 — `docs/stories/` com README (protocolo sync), `_TEMPLATE.md` e esta story
 - [x] CA7 — Vault Obsidian estruturado (Índice/Roadmap/Dashboard/Stories)
 - [ ] CA8 — Framework de agentes (AIOX/Triviaiox) instalado *(ADIADO — ver Pendências)*
-- [ ] CA9 — Supabase CLI linkado + Edge Functions/secrets confirmados *(requer `supabase login` — JG)*
+- [x] CA9 — Supabase CLI linkado + Edge Functions/secrets confirmados *(verificado 2026-05-22)*
 - [ ] CA10 — Variáveis de ambiente configuradas no Netlify *(requer acesso ao Netlify — JG)*
 
 ---
@@ -80,8 +80,8 @@ seguindo o checklist "09 - Migrar Projeto Lovable para Padrão Trivia".
 
 1. **Framework de agentes (AIOX/Triviaiox)** — adiado por decisão do JG; rodar
    `npx aiox@latest install` (ou via repo privado Triviaiox) em sessão acompanhada.
-2. **Supabase CLI** — `supabase login` + `supabase link --project-ref sjciabkjuqefponkfqan`;
-   confirmar `supabase functions list` e `supabase secrets list`.
+2. ✅ **Supabase CLI** — RESOLVIDO (2026-05-22): projeto `hubtransportadorashzm`
+   (`eqsjvacbhrezlgqpwipv`) linkado; 21 Edge Functions ATIVAS e 13 secrets confirmadas.
 3. **Netlify** — configurar `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`,
    `VITE_SUPABASE_PROJECT_ID` em Site configuration → Environment variables.
 4. **SEC-002/003** — auditar RLS+FORCE e validação de assinatura nos `*-webhook`.
@@ -91,3 +91,7 @@ seguindo o checklist "09 - Migrar Projeto Lovable para Padrão Trivia".
 - `2026-05-19` — Decisões do JG: pular instalação do framework por ora; commitar+pushar
   direto na main (repo sincronizado com Lovable, `git pull --rebase` antes); não rotacionar
   chave (pública) nem reescrever histórico.
+- `2026-05-22` — Supabase verificado com acesso à conta da Heziom: projeto
+  `hubtransportadorashzm` (`eqsjvacbhrezlgqpwipv`) linkado, 21 Edge Functions ATIVAS,
+  13 secrets configuradas. Reference ID errado nas notas (`sjciabkjuqefponkfqan`)
+  corrigido para `eqsjvacbhrezlgqpwipv` no Índice e nesta story.

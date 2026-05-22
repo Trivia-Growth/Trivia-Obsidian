@@ -47,8 +47,9 @@ Branch principal: main
 ## Supabase
 
 ```
-Project URL: https://sjciabkjuqefponkfqan.supabase.co
-Reference ID: sjciabkjuqefponkfqan
+Project Name: hubtransportadorashzm
+Project URL: https://eqsjvacbhrezlgqpwipv.supabase.co
+Reference ID: eqsjvacbhrezlgqpwipv
 ```
 
 Edge Functions (Deno) — ~20, agrupadas por integração:
