@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 2
+id: STORY-004
+titulo: "Registro de Lancamentos"
+fase: 1
+modulo: transacoes
+status: concluido
 prioridade: alta
-concluido: 2026-05-07
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-004 — Registro de Lancamentos

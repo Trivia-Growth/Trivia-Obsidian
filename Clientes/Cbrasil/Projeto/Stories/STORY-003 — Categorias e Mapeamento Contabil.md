@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 1
+id: STORY-003
+titulo: "Categorias e Mapeamento Contabil"
+fase: 1
+modulo: categorias
+status: concluido
 prioridade: alta
-concluido: 2026-05-07
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-003 — Categorias e Mapeamento Contabil

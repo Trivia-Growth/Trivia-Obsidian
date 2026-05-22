@@ -1,9 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 5
-prioridade: baixa
+id: STORY-010
+titulo: "Sugestao IA e Deteccao Anomalias"
 fase: 3
+modulo: ia
+status: backlog
+prioridade: baixa
+agente_responsavel: ""
+criado: 2026-05-11
+atualizado: 2026-05-22
 ---
 
 # STORY-010 — Sugestao de Categoria por IA e Deteccao de Anomalias

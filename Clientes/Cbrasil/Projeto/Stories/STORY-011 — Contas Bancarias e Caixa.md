@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-011
+titulo: "Contas Bancarias e Caixa"
+fase: 1
+modulo: contas
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-011 — Contas Bancarias e Caixa

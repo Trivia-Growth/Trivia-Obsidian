@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-013
+titulo: "Extrato e Filtros"
+fase: 1
+modulo: extrato
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-013 — Extrato e Filtros

@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-012
+titulo: "Lancamentos CRUD Completo"
+fase: 1
+modulo: transacoes
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-012 — Lancamentos CRUD Completo

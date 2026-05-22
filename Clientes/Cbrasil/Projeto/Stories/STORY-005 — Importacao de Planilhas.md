@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 2
-prioridade: media
-concluido: 2026-05-07
+id: STORY-005
+titulo: "Importacao de Planilhas"
+fase: 1
+modulo: importacao
+status: concluido
+prioridade: média
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-005 — Importacao de Planilhas

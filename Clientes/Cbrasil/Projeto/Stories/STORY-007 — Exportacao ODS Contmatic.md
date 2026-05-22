@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 3
+id: STORY-007
+titulo: "Exportacao ODS Contmatic"
+fase: 1
+modulo: exportacao
+status: concluido
 prioridade: alta
-concluido: 2026-05-07
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-007 — Exportacao ODS para Contmatic

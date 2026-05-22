@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 1
+id: STORY-002
+titulo: "Auth e Multi-tenancy"
+fase: 1
+modulo: auth
+status: concluido
 prioridade: alta
-concluido: 2026-05-07
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-002 — Auth e Multi-tenancy

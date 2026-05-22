@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-014
+titulo: "Motor de Traducao Contabil"
+fase: 1
+modulo: core
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-014 — Motor de Traducao Contabil Automatico

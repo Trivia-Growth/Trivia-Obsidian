@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
-prioridade: media
+id: STORY-015
+titulo: "Dashboard Financeiro Cliente"
+fase: 1
+modulo: dashboard
+status: concluido
+prioridade: média
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-015 — Dashboard Financeiro Cliente

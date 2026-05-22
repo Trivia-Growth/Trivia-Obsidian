@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: infra
-sprint: 1
+id: STORY-001
+titulo: "Setup Infraestrutura"
+fase: 1
+modulo: infra
+status: concluido
 prioridade: alta
-concluido: 2026-05-07
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-001 — Setup Infraestrutura

@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-017
+titulo: "Design System e Temas"
+fase: 1
+modulo: ui
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-017 — Design System + Tema Claro/Escuro

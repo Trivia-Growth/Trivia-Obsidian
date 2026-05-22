@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: correcao
-sprint: manutencao
-prioridade: media
-concluido: 2026-05-22
+id: STORY-018
+titulo: "Correcao Contas Contabeis ECC e Locacao"
+fase: 1
+modulo: correcao
+status: concluido
+prioridade: média
+agente_responsavel: ""
+criado: 2026-05-22
+atualizado: 2026-05-22
 ---
 
 # STORY-018 — Correcao das Contas Contabeis ECC e Locacao (IPP)

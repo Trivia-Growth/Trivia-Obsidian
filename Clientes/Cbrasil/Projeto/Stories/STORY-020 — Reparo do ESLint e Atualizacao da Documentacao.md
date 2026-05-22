@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: manutencao
-sprint: manutencao
+id: STORY-020
+titulo: "Reparo do ESLint e Atualizacao da Documentacao"
+fase: 1
+modulo: manutencao
+status: concluido
 prioridade: baixa
-concluido: 2026-05-22
+agente_responsavel: ""
+criado: 2026-05-22
+atualizado: 2026-05-22
 ---
 
 # STORY-020 — Reparo do ESLint e Atualizacao da Documentacao

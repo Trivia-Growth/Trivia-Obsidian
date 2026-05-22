@@ -1,8 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
+id: STORY-016
+titulo: "Gestao Clientes e Usuarios"
+fase: 1
+modulo: admin
+status: concluido
 prioridade: alta
+agente_responsavel: ""
+criado: 2026-05-08
+atualizado: 2026-05-08
 ---
 
 # STORY-016 — Gestao de Clientes e Usuarios

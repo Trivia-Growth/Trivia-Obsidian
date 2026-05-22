@@ -1,9 +1,13 @@
 ---
-status: pronto
-tipo: feature
-sprint: 3
-prioridade: media
-concluido: 2026-05-07
+id: STORY-009
+titulo: "Dashboard do Cliente"
+fase: 1
+modulo: dashboard
+status: concluido
+prioridade: média
+agente_responsavel: ""
+criado: 2026-05-07
+atualizado: 2026-05-07
 ---
 
 # STORY-009 — Dashboard do Cliente

@@ -31,11 +31,13 @@ aumentam o risco de regressão e bugs silenciosos.
 - [ ] CA6 — Primeira suíte de testes (Vitest) com smoke tests por área
 - [x] CA7 — Code-splitting: rotas com `React.lazy()` + `Suspense`. Bundle
   inicial caiu de ~1.670 kB para ~508 kB (85 chunks). Verificado.
-- [ ] CA8 — `CARRIER_LABELS` / `STATUS_LABELS` centralizados em um módulo
+- [x] CA8 — `CARRIER_LABELS` / `STATUS_LABELS` centralizados em `src/types/tracking.ts`;
+  4 cópias locais removidas. Spec de rótulos aprovada pelo JG. Commit `613d1ee`.
 
 ## Implementação
 
-**Commit:** `d835226` — CA4, CA5 (global), CA7.
+**Commits:** `d835226` (CA4, CA5 global, CA7) · `886cd35` (métrica Em Trânsito)
+· `613d1ee` (CA8).
 
 ## Pendências
 
@@ -45,9 +47,11 @@ aumentam o risco de regressão e bugs silenciosos.
   importação de planilha de "Envios Módicos".
 - **CA5** (resto) — tratar `isError` das queries nas telas.
 - **CA6** — configurar Vitest + smoke tests.
-- **CA8** — centralizar os mapas de rótulos (hoje duplicados em ~4 lugares).
-- **Extra (verificação E2E):** card "Em Trânsito" não conta o status
-  `posted` — decisão de produto / ajuste de UI.
+- [x] **CA8** — concluída (commit `613d1ee`). O `STATUS_LABELS` do Dashboard
+  era código morto; as outras cópias foram trocadas por imports de `tracking.ts`.
+- [x] **Extra — métrica "Em Trânsito"** (corrigido, commit `886cd35`):
+  passou a contar tudo que ainda não chegou (não entregue, sem problema);
+  novo card "Enviados ao CD" para o status `shipped`. Spec do JG (22/05).
 
 ## Referência
 
@@ -58,4 +62,7 @@ aumentam o risco de regressão e bugs silenciosos.
 
 - `2026-05-22` — Story criada a partir do diagnóstico técnico.
 - `2026-05-22` — CA4, CA5 (global) e CA7 entregues (commit `d835226`).
-  Demais CAs pendentes — ver Pendências.
+- `2026-05-22` — Métrica "Em Trânsito" corrigida + card "Enviados ao CD"
+  (commit `886cd35`), com spec definida pelo JG.
+- `2026-05-22` — CA8 concluída (commit `613d1ee`) após aprovação dos rótulos
+  pelo JG. Restam CA1, CA2, CA3, CA6 e o resto da CA5 — turnos dedicados.

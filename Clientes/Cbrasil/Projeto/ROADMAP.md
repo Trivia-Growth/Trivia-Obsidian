@@ -25,7 +25,7 @@
 - [x] Design system e temas — STORY-017
 - [~] Dashboard do cliente — STORY-009, STORY-015 *(gráficos pendentes — STORY-023)*
 
-**Status:** `em andamento` — núcleo entregue e em uso (piloto IPP, 408 lançamentos exportados). Pendências de Fase 1: gráficos do dashboard (STORY-023), histórico de exportações (STORY-024), paginação das listas (STORY-025), hardening de segurança (STORY-022), limpeza de lint (STORY-021).
+**Status:** `em andamento` — núcleo entregue e em uso (piloto IPP, 408 lançamentos exportados). Pendências de Fase 1: hardening de segurança (STORY-022), gráficos do dashboard (STORY-023), histórico de exportações (STORY-024), paginação das listas (STORY-025), refatoração de data-fetching para TanStack Query (STORY-026).
 
 ---
 

@@ -1,9 +1,13 @@
 ---
-status: backlog
-tipo: feature
-sprint: 4
-prioridade: media
+id: STORY-008
+titulo: "Integracao API Contmatic"
 fase: 2
+modulo: exportacao
+status: backlog
+prioridade: média
+agente_responsavel: ""
+criado: 2026-05-11
+atualizado: 2026-05-22
 ---
 
 # STORY-008 — Integracao Direta API Contmatic
