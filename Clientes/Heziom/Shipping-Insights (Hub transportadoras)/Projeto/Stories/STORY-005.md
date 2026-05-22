@@ -3,7 +3,7 @@ id: STORY-005
 titulo: "Bugs confirmados e credenciais expostas"
 fase: 1
 modulo: "Correções"
-status: pronto
+status: concluido
 prioridade: alta
 agente_responsavel: "Claude Code"
 criado: 2026-05-22
@@ -19,18 +19,33 @@ credenciais expostas que devem ser corrigidos antes do sistema entrar em uso.
 
 ## Critérios de Aceite
 
-- [ ] CA1 — `logmanager-webhook` compila (remover declaração duplicada de
-  `STATUS_LABELS` e imports não usados)
-- [ ] CA2 — Edição de lançamento (`useShippingData` / `Lancamentos.tsx`)
+- [x] CA1 — `logmanager-webhook` compila (removida declaração duplicada de
+  `STATUS_LABELS` e o import não usado)
+- [x] CA2 — Edição de lançamento (`useShippingData` / `Lancamentos.tsx`)
   SUBSTITUI os valores em vez de somar
-- [ ] CA3 — Importação de planilha (`Relatorios.tsx`) rejeita datas inválidas
-  em vez de gravá-las
-- [ ] CA4 — Logs de credenciais removidos de `_shared/correios-auth.ts`
-- [ ] CA5 — Credenciais hardcoded removidas do frontend (`AdminAmazonVendor.tsx`,
-  `AdminMercadoLivre.tsx`)
-- [ ] CA6 — `logmanager-webhook` não usa UUID de usuário hardcoded
-- [ ] CA7 — `melhor-envio-sync` — filtro de data funcional ou parâmetro removido
-- [ ] CA8 — `AdminTray.tsx` monta a URL do webhook via env var (como as demais telas)
+- [x] CA3 — Importação de planilha (`Relatorios.tsx`) rejeita datas inválidas
+- [x] CA4 — Logs de credenciais removidos de `_shared/correios-auth.ts`
+- [x] CA5 — `AdminAmazonVendor.tsx`: LWA Client ID mascarado. `AdminMercadoLivre.tsx`
+  já estava ok (Client ID mascarado; Seller ID é público, não é segredo)
+- [x] CA6 — `logmanager-webhook` insere com `user_id` null (sem UUID hardcoded)
+- [x] CA7 — `melhor-envio-sync` — parâmetro de data decorativo removido
+- [x] CA8 — `AdminTray.tsx` monta a URL do webhook via `VITE_SUPABASE_PROJECT_ID`
+
+## Implementação
+
+**Commit:** `0f431c9` — `fix: bugs confirmados e credenciais expostas (STORY-005)`
+
+**Edge Functions reimplantadas** (`supabase functions deploy`): logmanager-webhook,
+melhor-envio-sync, correios-poll-rastreio, correios-scan-objects, vipp-sync,
+vipp-track (as 4 últimas por dependerem de `_shared/correios-auth.ts`).
+
+## QA
+
+**Gate:** `PASS`
+
+- [x] `npm run build` — passou (3,75s, sem erros)
+- [x] Deploy das 6 Edge Functions confirmado no Supabase
+- [x] `git pull --rebase` antes do push
 
 ## Referência
 
@@ -39,3 +54,5 @@ credenciais expostas que devem ser corrigidos antes do sistema entrar em uso.
 ## Notas e Decisões
 
 - `2026-05-22` — Story criada a partir do diagnóstico técnico.
+- `2026-05-22` — Concluída. Commit `0f431c9` na `main`. O `logmanager-webhook`
+  estava com código que não compilava — o deploy bem-sucedido confirma a correção.
