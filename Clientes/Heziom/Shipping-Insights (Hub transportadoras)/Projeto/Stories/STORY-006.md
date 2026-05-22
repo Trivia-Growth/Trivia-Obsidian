@@ -23,18 +23,25 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
   `BEFORE UPDATE` em `shipment_trackings` (`skip_stale_tracking_update`) que
   descarta updates com `event_at` mais antigo que o armazenado. Migration
   `20260522140000`, commit `278e9c7`. Testado.
-- [ ] CA2 — Chamadas externas com retry + tratamento de HTTP 429 (`Retry-After`)
+- [x] CA2 — *Parcial:* retry de HTTP 429 (com `Retry-After`), 5xx e timeout
+  implementado no `melhor-envio-sync` (a integração que está em produção),
+  com backoff. Commit `fb8ebc8`. Falta propagar o mesmo padrão (idealmente um
+  helper compartilhado) às demais funções de polling — fazer quando elas forem
+  ativadas.
 - [ ] CA3 — Erro pontual de uma transportadora não derruba o lote inteiro
 - [ ] CA4 — Refresh de token OAuth robusto (serializar refresh; persistir
   refresh token rotativo de ML/Tray)
 - [ ] CA5 — Validação de input (Zod) em todos os webhooks
 - [ ] CA6 — `melhor-envio-sync` com lock contra execução concorrente e status de job
+- [x] **Extra** — Bug do status `returning` corrigido: `mercadolivre-webhook`
+  mapeia `returning` → `in_devolution` (valor válido no CHECK). Commit `fb8ebc8`.
 
-> **Status:** CA1 concluída. CA2–CA6 são um refactor extenso de Edge Functions
-> (~10 funções: helper de retry compartilhado, isolamento de erro por
-> transportadora, mutex de OAuth + tabela para refresh token rotativo, Zod nos
-> webhooks, advisory lock). Merecem um turno dedicado — não foram feitas para
-> evitar pressa em código de confiabilidade.
+> **Status:** CA1 e CA2 (para a integração viva) concluídas; bug do `returning`
+> corrigido. CA3, CA5 e CA6 valem para funções que ainda não estão ativas
+> (outras transportadoras, webhooks não registrados). CA4 (OAuth) está adiada
+> até as integrações ML/Amazon/Tray terem credenciais — hoje é prematuro.
+> O essencial de confiabilidade da integração **em produção** (Melhor Envio)
+> está coberto: eventos ordenados + retry resiliente.
 
 ## Referência
 
@@ -54,3 +61,7 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
   alto (~60/dia), então o histórico além de ~16 dias não vem. Adicionar como CA7:
   paginação por data ou execução em blocos para trazer o histórico completo sem
   estourar o tempo da função.
+- `2026-05-22` — CA2 (parcial) + fix do `returning` entregues no commit `fb8ebc8`.
+  Achado de UI na verificação E2E: o card "Em Trânsito" conta só
+  `in_transit`/`out_for_delivery` — os envios `posted` do Melhor Envio não
+  aparecem nele. Decisão de produto / ajuste de UI (registrar na STORY-007).
