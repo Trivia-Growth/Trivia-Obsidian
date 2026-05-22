@@ -18,6 +18,23 @@ status: "aguardando coleta"
 
 ---
 
+## Status da coleta — atualizado 2026-05-22
+
+Primeiro lote recebido do coordenador de logística e configurado no Supabase:
+
+| Integração | Situação |
+|------------|----------|
+| Correios | 🟡 Código de acesso + cartão de postagem configurados. **Falta o usuário** (`CORREIOS_ID`) — a API autentica com usuário **+** código. Sem ele não autentica. |
+| Mandaê | ✅ Webhook (chave + valor) configurado; `MANDAE_TOKEN` já existia. Completo. |
+| Melhor Envio | 🟡 Token de acesso configurado. **Falta `ME_APP_SECRET`** — só afeta a validação do webhook; o polling/sync já funciona. |
+| Mercado Livre | ❌ Não disponível (rastreio muito desatualizado). |
+| Amazon | ❌ Não disponível. |
+| Tray | ❌ Só existe a loja de teste — valores ainda não enviados. |
+| LogManager | ❌ Não disponível. |
+| Vipp | ❓ "Mesmo do Correios" — confirmar os valores literais de `VIPP_USUARIO` / `VIPP_SENHA` (login do portal Vipp). |
+
+---
+
 ## 1. Correios 🟡
 *Onde encontrar: contrato dos Correios / portal "Meu Correios" / API dos Correios.*
 
