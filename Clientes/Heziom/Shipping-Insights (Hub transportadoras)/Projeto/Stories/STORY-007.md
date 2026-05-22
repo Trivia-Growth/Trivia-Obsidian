@@ -22,7 +22,8 @@ aumentam o risco de regressão e bugs silenciosos.
 - [ ] CA1 — TypeScript `strict` ligado e erros resultantes corrigidos
   *(ADIADO — migração grande; ligar `strict` pode revelar dezenas de erros.
   Merece esforço próprio, como o próprio diagnóstico recomendou.)*
-- [ ] CA2 — `npm audit fix` aplicado; vulnerabilidades high tratadas
+- [x] CA2 — `npm audit fix` aplicado (commit `f7a0ab6`); de 18 vulnerabilidades
+  para 3 — as 3 restantes são todas do `xlsx` (sem fix no npm; ver CA3).
 - [ ] CA3 — Biblioteca `xlsx` substituída por versão segura (SheetJS CDN ou `exceljs`)
 - [x] CA4 — Lockfiles unificados — `bun.lock` e `bun.lockb` removidos e no
   `.gitignore`; o projeto usa só `package-lock.json` (npm)
@@ -42,7 +43,7 @@ aumentam o risco de regressão e bugs silenciosos.
 ## Pendências
 
 - **CA1** — ligar TS `strict`: migração extensa, turno dedicado.
-- **CA2** — `npm audit fix` (rollup/postcss/ws/yaml têm fix; `xlsx` não).
+- [x] **CA2** — concluída (commit `f7a0ab6`). 18 → 3 vulnerabilidades.
 - **CA3** — trocar a `xlsx` (vulnerável, sem fix no npm) — exige testar a
   importação de planilha de "Envios Módicos".
 - **CA5** (resto) — tratar `isError` das queries nas telas.

@@ -31,7 +31,9 @@ confiáveis sob carga: sem deduplicação, sem retry, login OAuth frágil.
 - [ ] CA3 — Erro pontual de uma transportadora não derruba o lote inteiro
 - [ ] CA4 — Refresh de token OAuth robusto (serializar refresh; persistir
   refresh token rotativo de ML/Tray)
-- [ ] CA5 — Validação de input (Zod) em todos os webhooks
+- [x] CA5 — *Parcial:* Zod implementado em `mercadolivre-webhook` e
+  `logmanager-webhook` (commit `3b2fb6e`). Falta `mandae-webhook` (tem
+  dois tipos de evento — coleta vs item — precisa de schema discriminado).
 - [ ] CA6 — `melhor-envio-sync` com lock contra execução concorrente e status de job
 - [x] **Extra** — Bug do status `returning` corrigido: `mercadolivre-webhook`
   mapeia `returning` → `in_devolution` (valor válido no CHECK). Commit `fb8ebc8`.
