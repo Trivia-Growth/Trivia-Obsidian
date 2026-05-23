@@ -7,7 +7,7 @@
 | STORY-001 | Deploy Nova ID Visual | critica | done |
 | STORY-002 | Briefing Multi-Step | alta | done |
 | STORY-003 | SEO Tecnico | alta | done |
-| STORY-004 | Form Handling e Notificacoes | alta | blocked |
+| STORY-004 | Form Handling e Notificacoes | alta | done |
 
 ## Fase 2 — Polish e crescimento
 
@@ -37,6 +37,6 @@
 
 ## Dependencias
 
-- **Supabase INACTIVE** — reativar antes de STORY-004
+- ~~**Supabase INACTIVE** — reativar antes de STORY-004~~ ✓ Ativo
 - **Insumos do cliente** — fotos, bios, autorizacao logos → STORY-008
-- **Servico de email** — escolher antes de STORY-004 (Resend recomendado)
+- ~~**Servico de email** — escolher antes de STORY-004 (Resend recomendado)~~ ✓ Resend integrado (falta setar RESEND_API_KEY no Supabase)
