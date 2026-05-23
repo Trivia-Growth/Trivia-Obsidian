@@ -3,7 +3,7 @@ id: STORY-007
 titulo: "Open Graph images dedicadas por pagina"
 fase: 2
 modulo: "seo"
-status: backlog
+status: done
 prioridade: media
 agente_responsavel: "@dev"
 criado: 2026-05-22
@@ -32,14 +32,26 @@ Todas as paginas usam `logo-cbrasil.png` como og:image — proporcao errada e fu
 
 ## Implementacao
 
-**Status:** `backlog`
+**Status:** `done`
 
-**Branch/PR:**
+**Branch/PR:** main (commit 7088032)
 
 **Arquivos alterados:**
--
+- assets/img/og/og-home.png (34KB)
+- assets/img/og/og-servicos.png (27KB)
+- assets/img/og/og-terceiro-setor.png (30KB)
+- assets/img/og/og-conteudo.png (30KB)
+- assets/img/og/og-sobre.png (32KB)
+- assets/img/og/og-contato.png (29KB)
+- index.html (og:image meta)
+- pages/servicos.html (og:image meta)
+- pages/terceiro-setor.html (og:image meta)
+- pages/conteudo.html (og:image meta)
+- pages/sobre.html (og:image meta)
+- pages/contato.html (og:image meta)
 
 **Notas de implementacao:**
+Gerado via Python Pillow. Navy (#1a365d) de fundo, logo branco top-left, titulo centralizado com accent line amarela, faixa tricolor (verde/amarelo/azul) no rodape. Todas < 35KB.
 
 ---
 

@@ -4,20 +4,20 @@
 
 | ID | Titulo | Prioridade | Status |
 |----|--------|-----------|--------|
-| STORY-001 | Deploy Nova ID Visual | critica | backlog |
-| STORY-002 | Briefing Multi-Step | alta | backlog |
-| STORY-003 | SEO Tecnico | alta | backlog |
-| STORY-004 | Form Handling e Notificacoes | alta | backlog |
+| STORY-001 | Deploy Nova ID Visual | critica | done |
+| STORY-002 | Briefing Multi-Step | alta | done |
+| STORY-003 | SEO Tecnico | alta | done |
+| STORY-004 | Form Handling e Notificacoes | alta | blocked |
 
 ## Fase 2 — Polish e crescimento
 
 | ID | Titulo | Prioridade | Status |
 |----|--------|-----------|--------|
-| STORY-005 | Performance e Core Web Vitals | media | backlog |
-| STORY-006 | Acessibilidade | media | backlog |
-| STORY-007 | OG Images | media | backlog |
-| STORY-008 | Conteudo Real | media | backlog |
-| STORY-009 | Analytics e Monitoramento | media | backlog |
+| STORY-005 | Performance e Core Web Vitals | media | done |
+| STORY-006 | Acessibilidade | media | done |
+| STORY-007 | OG Images | media | done |
+| STORY-008 | Conteudo Real | media | blocked |
+| STORY-009 | Analytics e Monitoramento | media | done |
 
 ---
 
