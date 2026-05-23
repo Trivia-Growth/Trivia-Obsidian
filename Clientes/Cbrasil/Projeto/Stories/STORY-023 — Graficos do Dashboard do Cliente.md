@@ -3,7 +3,7 @@ id: STORY-023
 titulo: "Graficos e Comparativos do Dashboard do Cliente"
 fase: 1
 modulo: dashboard
-status: backlog
+status: done
 prioridade: média
 agente_responsavel: ""
 criado: 2026-05-22

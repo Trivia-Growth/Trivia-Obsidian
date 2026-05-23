@@ -3,7 +3,7 @@ id: STORY-026
 titulo: "Refatorar Data-Fetching para TanStack Query"
 fase: 1
 modulo: core
-status: backlog
+status: in_progress
 prioridade: média
 agente_responsavel: ""
 criado: 2026-05-22

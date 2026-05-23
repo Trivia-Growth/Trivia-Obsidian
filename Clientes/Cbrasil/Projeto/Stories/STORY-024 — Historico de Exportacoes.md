@@ -3,7 +3,7 @@ id: STORY-024
 titulo: "Historico de Exportacoes (UI)"
 fase: 1
 modulo: exportacao
-status: backlog
+status: done
 prioridade: média
 agente_responsavel: ""
 criado: 2026-05-22

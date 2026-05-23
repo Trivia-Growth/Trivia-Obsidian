@@ -3,7 +3,7 @@ id: STORY-025
 titulo: "Paginacao das Listas de Lancamentos"
 fase: 1
 modulo: transacoes
-status: backlog
+status: done
 prioridade: baixa
 agente_responsavel: ""
 criado: 2026-05-22
