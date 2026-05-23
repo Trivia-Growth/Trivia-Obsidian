@@ -2,7 +2,8 @@
 tags: [heziom, arquitetura, interligação, fluxos, eventos, dados]
 status: proposta
 criado: 2026-05-19
-base: Módulos e Escopo Completo + Ferramentas a Substituir (ClickUp, Flowbiz, Unnichat, Qive)
+atualizado: 2026-05-23
+base: Módulos e Escopo Completo + Ferramentas a Substituir (ClickUp, Flowbiz, Unnichat, Qive) + APIs Externas + Questionário Financeiro
 ---
 
 # HeziomOS — Interligação Completa entre Módulos
@@ -93,13 +94,32 @@ system_events (
 | `ecom.order.created` | Tray webhook `order.insert` | CRM | Atualiza histórico do cliente |
 | `ecom.order.paid` | Tray webhook `transaction.update` | Financeiro | Baixa no título |
 | `ecom.order.paid` | Tray webhook `transaction.update` | Logística | Libera para picking |
-| `ecom.order.shipped` | Mandaê/Melhor Envio webhook | CRM | Envia notificação ao cliente |
-| `ecom.order.shipped` | Mandaê/Melhor Envio webhook | Atendimento | Disponibiliza rastreio para agente |
+| `ecom.order.shipped` | Melhor Envio webhook | CRM | Envia notificação ao cliente |
+| `ecom.order.shipped` | Melhor Envio webhook | Atendimento | Disponibiliza rastreio para agente |
 | `ecom.order.cancelled` | Tray webhook `order.delete` | Financeiro | Cancela título |
 | `ecom.order.cancelled` | Tray webhook `order.delete` | Logística | Remove da fila |
 | `ecom.cart.abandoned` | Cron (verifica Tray a cada 1h) | CRM | Dispara régua de recuperação |
 | `ecom.stock.low` | Sync agent (saldo < mínimo) | Logística | Alerta de ruptura |
 | `ecom.stock.low` | Sync agent | CEO Dashboard | Alerta visual |
+
+---
+
+### Eventos MULTI-GATEWAY (AppMax, Stone, Mercado Pago, Amazon, ML) → Reações
+
+| Evento | Trigger | Reage: Módulo | Ação |
+|---|---|---|---|
+| `gateway.payment.approved` | AppMax webhook `order.approved` / MP webhook | Financeiro | Cria/baixa título a receber; registra em `heziom_transactions` |
+| `gateway.payment.approved` | Idem | CEO Dashboard | Atualiza receita real-time |
+| `gateway.refund.created` | AppMax webhook `order.refunded` / MP webhook | Financeiro | Cria título de estorno; ajusta DRE |
+| `gateway.refund.created` | Idem | CRM | Marca contato para régua de retenção |
+| `gateway.settlement.received` | Polling Stone extrato / MP settlement report | Financeiro | Conciliação item-por-item (tolerância ≤R$0,01) |
+| `gateway.settlement.received` | Idem | Financeiro | Atualiza fluxo de caixa com `settlement_date` real |
+| `gateway.balance.updated` | Polling Stone/MP saldo cada 15min | CEO Dashboard | Saldo consolidado cross-gateway |
+| `gateway.balance.updated` | Idem | Financeiro | Alerta se saldo < threshold |
+| `amazon.financial_event.posted` | SP-API polling diário | Financeiro | Registra taxas/comissões Amazon em `heziom_transactions` |
+| `ml.invoice.available` | ML API polling | Financeiro | Captura NF do Mercado Livre para pacote contábil |
+| `ml.order.created` | ML API polling | CRM | Atualiza histórico do contato (canal ML) |
+| `ml.order.created` | Idem | Logística | Enfileira para separação |
 
 ---
 
@@ -150,7 +170,7 @@ system_events (
 | `fin.receivable.overdue` | Cron (título em aberto > vencimento) | CRM | Régua de cobrança |
 | `fin.receivable.overdue` | Idem | Comercial | Alerta ao vendedor responsável |
 | `fin.receivable.overdue` | Idem | CEO Dashboard | Aging visual atualizado |
-| `fin.reconciliation.mismatch` | Conciliação bancária detecta divergência | Tarefas | Tarefa "resolver divergência #{desc}" |
+| `fin.reconciliation.mismatch` | Conciliação item-por-item (tolerância ≤R$0,01) detecta divergência | Tarefas | Tarefa "resolver divergência #{desc}" |
 | `fin.dre.closed` | DRE mensal finalizado | CEO Dashboard | Atualiza KPIs |
 | `fin.cashflow.alert` | Projeção indica caixa negativo em X dias | CEO Dashboard | Alerta crítico |
 | `fin.cashflow.alert` | Idem | Tarefas | Tarefa urgente para financeiro |
@@ -235,6 +255,7 @@ system_events (
 | **Tarefa** | Todos os departamentos | `tasks.id` | `tasks` |
 | **Projeto Editorial** | Editorial, Financeiro, Comercial, Marketing, Logística | `editorial_projects.id` | `editorial_projects` |
 | **Conversa** | Atendimento, CRM, Comercial | `conversations.id` | `atendimento_conversations` |
+| **Transação Unificada** | Financeiro, E-commerce, CEO Dashboard | `heziom_transactions.id` | `heziom_transactions` |
 
 ---
 
@@ -337,15 +358,22 @@ sequenceDiagram
 sequenceDiagram
     participant CRON as Cron (dia 1)
     participant FIN as Financeiro
+    participant CONC as Conciliação
     participant DASH as CEO Dashboard
     participant CONT as Contabilidade (ext)
+    participant OD as OneDrive
     
     CRON->>FIN: Trigger: fechar mês anterior
-    FIN->>FIN: Agregar receitas (Tray + Literarius + Stone + AppMax)
+    FIN->>FIN: Agregar receitas (Tray + AppMax + ML + Amazon + Stone + MP)
+    FIN->>CONC: Conciliação item-por-item (tolerância ≤R$0,01 + dedup OFX)
+    CONC->>FIN: Divergências sinalizadas → tarefas manuais
     FIN->>FIN: Agregar despesas (títulos pagos por PlanoContas)
     FIN->>FIN: Calcular DRE: receita − CPV − desp. fixas − variáveis
-    FIN->>FIN: Gerar pacote contábil (relatórios + XMLs + extratos)
-    FIN->>CONT: Envia pacote automaticamente
+    FIN->>FIN: Gerar pacote contábil: NFs (XML + PDF) + extratos + relatórios
+    FIN->>FIN: Gerar "Movimentação Mensal" (doc físico obrigatório)
+    FIN->>OD: Upload pacote na pasta compartilhada contabilidade
+    Note over OD,CONT: Contabilidade acessa, apura guias (IRPJ/CSLL/PIS/COFINS)
+    CONT->>FIN: Retorna guias para pagamento
     FIN->>DASH: Publica DRE na hora (sem esperar 30 dias)
     
     Note over DASH: CEO tem visibilidade imediata
@@ -364,13 +392,14 @@ sequenceDiagram
     
     Note over ECOM,COMER: Mês inteiro: vendas registradas
     
-    ECOM->>PEOPLE: Vendas online por período
-    COMER->>PEOPLE: Vendas offline por vendedor
-    PEOPLE->>PEOPLE: Calcula atingimento vs. meta CPC
-    PEOPLE->>PEOPLE: Aplica faixa (0,5% a 3,5%)
+    COMER->>PEOPLE: Vendas atacado líquidas por vendedor (bruto − devoluções − descontos)
+    PEOPLE->>PEOPLE: Lucas: 1,5% sobre vendas líquidas atacado
+    PEOPLE->>PEOPLE: Bruno: 5% sobre vendas líquidas atacado
     PEOPLE->>FIN: Gera títulos a pagar (comissões)
     FIN->>FIN: Enfileira para CNAB do mês seguinte
 ```
+
+> **Nota:** Comissões incidem apenas sobre **vendas atacado líquidas** (NET), não sobre D2C/e-commerce. Fórmula: `comissão = net_atacado_vendedor × %_fixa`.
 
 ---
 
@@ -385,6 +414,7 @@ erDiagram
     
     lit_pedido_venda ||--o{ lit_titulo_financeiro : "generates"
     tray_orders ||--o{ lit_titulo_financeiro : "generates"
+    tray_orders ||--o{ heziom_transactions : "produces"
     
     editorial_projects ||--o{ editorial_stages : "has"
     editorial_projects ||--o{ lit_titulo_financeiro : "costs"
@@ -395,6 +425,18 @@ erDiagram
     lit_produto ||--o{ stock : "stored"
     
     lit_titulo_financeiro ||--o{ people_commission_calculations : "includes"
+    
+    heziom_transactions {
+        uuid id PK
+        text source "tray|appmax|stone|mp|amazon|ml"
+        text external_id
+        numeric gross_amount
+        numeric fee_amount
+        numeric net_amount
+        date settlement_date
+        text channel "d2c|atacado|marketplace"
+        text status "pending|settled|refunded"
+    }
     
     tasks ||--o{ editorial_stages : "tracks"
     tasks ||--o{ comercial_pipeline : "tracks"
@@ -411,8 +453,7 @@ erDiagram
 | **Literarius REST** | ↔ leitura + escrita | Comercial, Financeiro | HTTP REST | On-demand |
 | **Tray API** | ↔ leitura + escrita | E-commerce, CRM | HTTP REST | Polling 15min + webhooks |
 | **Tray Webhooks** | → push | E-commerce | HTTPS POST | Real-time |
-| **Mandaê API** | ← leitura | Logística, Atendimento | HTTP REST | On-demand |
-| **Melhor Envio API** | ← leitura | Logística, Atendimento | HTTP REST | On-demand |
+| **Melhor Envio API** | ↔ | Logística, Atendimento, Financeiro | OAuth2 REST | Real-time webhooks + polling |
 | **Shipping Insights** | ← leitura | Logística | API interna (TBD) | On-demand |
 | **WhatsApp Business API** | ↔ | Atendimento, Comercial, CRM | HTTP REST + webhooks | Real-time |
 | **Meta Ads API** | ← leitura | CRM, CEO Dashboard | HTTP REST | Diário |
@@ -423,7 +464,11 @@ erDiagram
 | **DocuSign** | ↔ | Editorial | REST API | On-demand |
 | **Bookwire** | → escrita | Editorial | TBD | Por lançamento |
 | **BookInfo** | → escrita | Editorial | TBD | Por lançamento |
-| **Amazon Vendor** | ↔ | Comercial | REST API (Fase 4) | Diário |
+| **AppMax API** | ↔ | Financeiro, E-commerce | OAuth2 REST (Client Credentials) | Real-time webhooks + polling 15min |
+| **Stone Banking API** | ← leitura | Financeiro | OAuth2 + JWT RSA | Polling cada 15min |
+| **Mercado Pago API** | ← leitura | Financeiro, CRM | Bearer Token (permanente) | Polling cada 15min |
+| **Amazon SP-API** | ← leitura | Financeiro, E-commerce, CRM | LWA OAuth + AWS SigV4 | Diário |
+| **Mercado Livre API** | ↔ | Financeiro, CRM, E-commerce | OAuth2 Authorization Code | Polling cada 15min |
 | **Supabase Realtime** | ↔ interno | Todos os módulos | WebSocket | Real-time |
 
 ---
@@ -463,11 +508,11 @@ erDiagram
 | Métrica | Valor |
 |---|---|
 | Módulos interligados | 10 |
-| Eventos mapeados | 52 |
+| Eventos mapeados | 64 (+12 multi-gateway) |
 | Fluxos end-to-end documentados | 5 |
-| Sistemas externos integrados | 17 |
+| Sistemas externos integrados | 21 (+5 gateways/banking, −1 Mandaê) |
 | Avisos manuais eliminados | 8 processos recorrentes |
-| Entidades compartilhadas | 7 |
+| Entidades compartilhadas | 8 (+heziom_transactions) |
 | Perfis de acesso | 8 |
 
 ---
@@ -481,7 +526,11 @@ erDiagram
 - [[Flowbiz — Funcionalidades Mapeadas]] — réguas e automações a replicar
 - [[Unnichat — Funcionalidades Mapeadas]] — fluxo de atendimento e escalação
 - [[Qive — Funcionalidades Mapeadas]] — workflow fiscal
+- [[APIs Externas — Credenciais e Passo a Passo]] — documentação e credenciais para AppMax, Stone, MP, Amazon, ML
+- [[Features Expandidas — APIs × Módulos HeziomOS]] — features habilitadas pelas integrações multi-gateway
+- [[Fechamento Mensal — Automação Completa]] — fluxo detalhado do fechamento com regras confirmadas
+- [[Questionário Fechamento — Para Equipe Financeira]] — respostas da equipe financeira (Ana/Rafael)
 
 ---
 
-*Análise de interligação criada em 2026-05-19 — JG Novais (Trivia)*
+*Análise de interligação criada em 2026-05-19 — Atualizada em 2026-05-23 com integrações multi-gateway, regras de comissão confirmadas e fluxo de fechamento detalhado — JG Novais (Trivia)*
