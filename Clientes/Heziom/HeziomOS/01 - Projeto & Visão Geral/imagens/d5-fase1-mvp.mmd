@@ -1,0 +1,59 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'14px'}}}%%
+graph TB
+    subgraph USERS["Usuarios Fase 1"]
+        CEO[CEO]
+        FIN[Financeiro]
+    end
+
+    subgraph WEB["Web App - Netlify"]
+        DASH[Dashboard CEO<br/>Posicao Financeira<br/>DRE MTD<br/>Faturamento Canal]
+        ALERTS_UI[Alertas + briefing]
+    end
+
+    subgraph EDGE["Edge Functions"]
+        FN_DASH[dashboard-ceo]
+        FN_BRIEF[briefing-7h - cron]
+        FN_TEAMS[alertas-teams]
+        FN_LGPD[lgpd-export + lgpd-delete]
+    end
+
+    subgraph DB["Supabase Postgres"]
+        LIT_M[(lit_mirror<br/>titulo + conta + nota + pedido)]
+        AUD[(audit append-only)]
+        CFG[(config thresholds)]
+        VIEWS[Views materializadas dashboard]
+    end
+
+    subgraph LAN["LAN Heziom"]
+        SYNC[Sync Agent Deno<br/>servidor Heziom]
+        LIT[(Literarius SQL)]
+    end
+
+    subgraph EXT["Externos Fase 1"]
+        TEAMS[Microsoft Teams]
+    end
+
+    CEO --> DASH
+    FIN --> DASH
+    DASH --> FN_DASH
+    FN_DASH --> VIEWS
+    VIEWS --> LIT_M
+    SYNC -. read .-> LIT
+    SYNC -. upsert .-> LIT_M
+    FN_BRIEF --> VIEWS
+    FN_BRIEF --> FN_TEAMS
+    FN_TEAMS --> TEAMS
+    FN_LGPD --> LIT_M
+    DASH --> CFG
+    FN_DASH -.log.-> AUD
+
+    classDef u fill:#5f1e3a,stroke:#330f1f,color:#fff
+    classDef w fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef e fill:#3a5f1e,stroke:#1f330f,color:#fff
+    classDef d fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef l fill:#3a3a3a,stroke:#1f1f1f,color:#fff
+    class CEO,FIN u
+    class DASH,ALERTS_UI w
+    class FN_DASH,FN_BRIEF,FN_TEAMS,FN_LGPD e
+    class LIT_M,AUD,CFG,VIEWS d
+    class SYNC,LIT,TEAMS l

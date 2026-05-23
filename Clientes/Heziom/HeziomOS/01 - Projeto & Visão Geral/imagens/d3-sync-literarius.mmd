@@ -1,0 +1,32 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'14px'}}}%%
+flowchart LR
+    subgraph LAN["LAN Heziom"]
+        LIT[(Literarius SQL Server<br/>192.168.x.x:1433<br/>user acessoExterno read-only)]
+        SRV[Servidor Heziom<br/>Deno runtime + Tailscale]
+    end
+
+    subgraph CLOUD["Supabase"]
+        SCH[(schemas lit_mirror)]
+        FN[Edge Function<br/>sync-report endpoint]
+        ALERT[Alertas Teams<br/>se sync falha]
+    end
+
+    subgraph CRON["Cron local"]
+        C1[every 15 min<br/>titulo_financeiro + conta_bancaria]
+        C2[every 30 min<br/>nota_fiscal + pedido_venda]
+        C3[hourly<br/>produto + estoque + parceiro]
+        C4[daily 22h<br/>full reconcile + plano_conta]
+    end
+
+    C1 & C2 & C3 & C4 --> SRV
+    SRV -. SELECT views Literarius .-> LIT
+    SRV -. upsert idempotente requestId .-> SCH
+    SRV -->|status + metricas| FN
+    FN --> ALERT
+
+    classDef lan fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef cloud fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef cron fill:#3a5f1e,stroke:#1f330f,color:#fff
+    class LIT,SRV lan
+    class SCH,FN,ALERT cloud
+    class C1,C2,C3,C4 cron

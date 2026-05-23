@@ -1,0 +1,79 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'14px'}}}%%
+graph TB
+    subgraph USERS["Usuarios"]
+        CEO[CEO / Diretor]
+        FIN[Financeiro]
+        ED[Editorial]
+        COM[Comercial]
+        AT[Atendimento]
+        MKT[Marketing]
+        EXP[Expedicao]
+        CLI[Cliente Final]
+    end
+
+    subgraph CLOUD["Nuvem - HeziomOS"]
+        WEB[Web App<br/>React 19 + Vite + TanStack<br/>Netlify CDN]
+        EDGE[Edge Functions<br/>Deno + Zod + JWT]
+        RT[Agent Runtime<br/>Inngest Workers<br/>Fly.io / Railway]
+        DB[(Supabase Postgres<br/>RLS FORCE + pgvector)]
+        AUTH[Supabase Auth<br/>Microsoft SSO + MFA]
+        ST[Supabase Storage<br/>NF-e + ebook + materiais]
+    end
+
+    subgraph LAN["LAN Heziom"]
+        SYNC[Sync Agent Deno<br/>servidor Heziom + Tailscale]
+        LIT[(Literarius<br/>SQL Server)]
+    end
+
+    subgraph EXTERNAL["Sistemas Externos"]
+        TRAY[Tray API + Webhooks]
+        QIVE[Qive NF-e]
+        SANT[Santander Internet Banking<br/>CNAB 240 - aprovacao humana]
+        STONE[Stone / AppMax / Mercado Pago]
+        MAND[Mandae / Melhor Envio]
+        SHIP[Shipping Insights]
+        ML[Mercado Livre / Amazon]
+        BOOK[Bookwire / BookInfo]
+        ONE[OneDrive<br/>arquivos editoriais]
+        TEAMS[Microsoft Teams<br/>alertas + briefing]
+        WPP[WhatsApp Cloud API<br/>+ Z-API / Evolution fallback]
+        AI[OpenRouter<br/>Claude + GPT-4o]
+        ADS[Meta Ads / Google Ads]
+    end
+
+    CEO & FIN & ED & COM & AT & MKT & EXP --> WEB
+    CLI -.WhatsApp.-> WPP
+
+    WEB --> AUTH
+    WEB --> EDGE
+    WEB --> ST
+    EDGE --> DB
+    EDGE --> RT
+    RT --> DB
+    RT --> AI
+
+    SYNC -. read .-> LIT
+    SYNC -. write upsert .-> DB
+    SYNC -. PUT pedidos Fase 3 .-> LIT
+
+    EDGE <-->|webhooks + poll| TRAY
+    EDGE <-->|NF-e| QIVE
+    EDGE -.proposta CNAB.-> SANT
+    EDGE <--> STONE
+    EDGE <--> MAND
+    EDGE <--> SHIP
+    EDGE <--> ML
+    EDGE <--> BOOK
+    EDGE <--> ONE
+    EDGE -->|alertas| TEAMS
+    EDGE <--> ADS
+    RT <--> WPP
+
+    classDef cloud fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef lan fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef ext fill:#3a5f1e,stroke:#1f330f,color:#fff
+    classDef user fill:#5f1e3a,stroke:#330f1f,color:#fff
+    class WEB,EDGE,RT,DB,AUTH,ST cloud
+    class SYNC,LIT lan
+    class TRAY,QIVE,SANT,STONE,MAND,SHIP,ML,BOOK,ONE,TEAMS,WPP,AI,ADS ext
+    class CEO,FIN,ED,COM,AT,MKT,EXP,CLI user

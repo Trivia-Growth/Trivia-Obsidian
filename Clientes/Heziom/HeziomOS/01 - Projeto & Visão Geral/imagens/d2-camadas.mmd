@@ -1,0 +1,57 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'14px'}}}%%
+graph TB
+    subgraph L1["1. Apresentacao - Web SPA"]
+        ROUTES[TanStack Router<br/>file-based src/routes]
+        FEAT[Features Bulletproof React<br/>financeiro / editorial / crm / atendimento / comercial / pessoas / tarefas]
+        UI[shadcn/ui + Tailwind v4 + tokens Heziom]
+        ERR[Error Boundaries + Loading States por feature]
+    end
+
+    subgraph L2["2. API - Edge Functions Deno"]
+        MW[Middleware<br/>auth.getUser JWT + Zod + rate limit + request-id]
+        DASH[dashboard-ceo<br/>briefing-7h<br/>alertas-teams]
+        WHK[tray-webhook<br/>tray-reconcile cron<br/>qive-poll]
+        FIN[fin-propose-payments<br/>fin-cnab-generate<br/>fin-reconcile-ofx]
+        LGPD[lgpd-export<br/>lgpd-delete]
+        OPS[ops-stock-sync<br/>ops-tracking]
+    end
+
+    subgraph L3["3. Runtime Duravel - Inngest Fase 2+"]
+        AG_WPP[Agent WhatsApp<br/>conversa multi-turno + memoria]
+        AG_FIN[Agente Financeiro<br/>analise titulos + proposta CNAB]
+        AG_ED[Agentes Editoriais<br/>traducao / preparacao / revisao]
+        AG_SUPER[Superagente CEO<br/>orquestrador]
+        GUARD[Guardrails<br/>anti prompt-injection + sanitizacao + tool allowlist]
+    end
+
+    subgraph L4["4. Dados - Supabase Postgres"]
+        DOM[Schemas dominio<br/>financeiro / editorial / crm / atendimento / comercial / pessoas / tarefas / fiscal]
+        MIR[Schemas espelho<br/>lit_mirror / tray_mirror]
+        AUD[Schemas governanca<br/>audit append-only / agents / lgpd / config]
+        VEC[pgvector<br/>memoria semantica dos agentes]
+        VIEWS[Views materializadas<br/>dashboard CEO + DRE MTD]
+    end
+
+    subgraph L5["5. Fontes Externas"]
+        LIT[Literarius SQL via sync-agent Deno]
+        TRAY[Tray API + webhooks]
+        OUTROS[Qive / Stone / Mandae / Bookwire / OneDrive / Teams / WhatsApp / OpenRouter]
+    end
+
+    L1 --> L2
+    L2 --> L3
+    L2 --> L4
+    L3 --> L4
+    L4 -.read.-> L5
+    L5 -.sync.-> L4
+
+    classDef l1 fill:#5f1e3a,stroke:#330f1f,color:#fff
+    classDef l2 fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef l3 fill:#3a5f1e,stroke:#1f330f,color:#fff
+    classDef l4 fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef l5 fill:#3a3a3a,stroke:#1f1f1f,color:#fff
+    class ROUTES,FEAT,UI,ERR l1
+    class MW,DASH,WHK,FIN,LGPD,OPS l2
+    class AG_WPP,AG_FIN,AG_ED,AG_SUPER,GUARD l3
+    class DOM,MIR,AUD,VEC,VIEWS l4
+    class LIT,TRAY,OUTROS l5
