@@ -2,6 +2,7 @@
 tags: [heziom, kickoff, implementação, sprint-1]
 data: 2026-05-26
 status: planejado
+atualizado: 2026-05-23
 ---
 
 # Kickoff da Implementação — Segunda, 26 Mai 2026
@@ -17,8 +18,10 @@ O projeto está 100% documentado e aprovado pelo Conselho da Heziom. O que come�
 
 **Sequência crítica:**
 ```
-Infra (STORY-001) → Raspberry Pi (STORY-009) → Sync Agent (STORY-002/003) → Dashboard CEO (STORY-004/005)
+Infra (STORY-001) → Servidor Intelinovo (STORY-009) → Sync Agent (STORY-002/003) → Dashboard CEO (STORY-004/005)
 ```
+
+> **Mudança de arquitetura (2026-05-23):** O Raspberry Pi foi descartado. A Heziom já tem um servidor Intelinovo com conectividade comprovada ao Literarius (era usado pelo Power BI). Usaremos ele. Ver [[ADR-003 — Sync Agent no Servidor Intelinovo]].
 
 ---
 
@@ -28,9 +31,13 @@ Infra (STORY-001) → Raspberry Pi (STORY-009) → Sync Agent (STORY-002/003) �
 
 | # | Decisão | Quem decide | Urgência |
 |---|---------|-------------|----------|
-| D1 | Quem compra o Raspberry Pi 4 (4GB) + SD 32GB + fonte? Custo ~R$ 500 | JG / Heziom | 🔴 Imediata |
-| D2 | Supabase Pro (US$ 25/mês) aprovado? Ou começamos no Free (limite 500MB)? | JG / Heziom | 🔴 Imediata |
-| D3 | Qual é o email para criar a conta Supabase? (recomendo email Trivia, não pessoal) | Lucas | 🟡 Antes do setup |
+| D1 | Supabase Pro (US$ 25/mês) aprovado? Ou começamos no Free (limite 500MB)? | JG / Heziom | 🔴 Imediata |
+| D2 | Qual é o email para criar a conta Supabase? (recomendo email Trivia, não pessoal) | Lucas | 🟡 Antes do setup |
+| D3 | OS do servidor Intelinovo — Windows Server ou Linux? | JG perguntar à Heziom/Intelinovo | 🔴 Imediata |
+| D4 | Temos acesso remoto ao servidor Intelinovo? (RDP ou SSH) | JG perguntar à Heziom | 🔴 Imediata |
+| D5 | As credenciais SQL Server usadas pelo Power BI ainda existem e funcionam? | DBA Literarius confirmar | 🟡 Antes da STORY-009 |
+
+> **Nota D3/D4:** Não é necessário resolver antes de iniciar STORY-001. STORY-001 (infra) começa na segunda independente. Mas D3 e D4 precisam estar resolvidos para começar STORY-009.
 
 ---
 
@@ -79,20 +86,35 @@ João consegue abrir o vault no Obsidian e ver mudanças do Lucas, sem usar term
 
 ---
 
-### Bloco 2 — STORY-009: Setup Raspberry Pi
+### Bloco 2 — STORY-009: Setup Sync Agent no Servidor Intelinovo
 
-**Responsável:** Lucas (setup técnico) + Heziom (hardware)  
-**Depende de:** Hardware comprado e máquina identificada na rede Heziom
+**Responsável:** Lucas  
+**Depende de:** D3 (OS confirmado) e D4 (acesso remoto) + autorização para instalar software
 
-- [ ] Hardware adquirido: Raspberry Pi 4 (4GB), SD 32GB, fonte oficial
-- [ ] Instalar Raspberry Pi OS Lite (64-bit, sem interface gráfica)
-- [ ] Instalar Deno (versão 1.x)
-- [ ] Configurar acesso SSH (para Lucas acessar remotamente via tailscale ou VPN)
-- [ ] Testar conexão com SQL Server do Literarius na rede local
-- [ ] Configurar systemd timer: executa script a cada 15 min
-- [ ] Criar script de healthcheck → se falhar 3x, envia alerta no Teams
+> O servidor Intelinovo já está na rede e já provou que conecta no Literarius. O trabalho aqui é instalar o runtime (Deno ou Node.js) e configurar os scripts de sync.
 
-> **Esta story pode rodar em paralelo com STORY-001.** Se o hardware chegar na semana, não precisa esperar.
+#### 2.1 Acesso e reconhecimento
+- [ ] Confirmar acesso remoto (RDP ou SSH) ao servidor
+- [ ] Verificar OS, versão e o que já está instalado (Node? Python? .NET?)
+- [ ] Confirmar saída na porta 443 (HTTPS para o Supabase)
+- [ ] Testar conectividade SQL Server com as credenciais existentes (do Power BI)
+
+#### 2.2 Instalação do runtime
+- [ ] Instalar Deno no servidor (Windows: `winget install DenoLand.Deno` / Linux: script oficial)
+- [ ] Clonar repositório `heziom-os-app` na pasta de trabalho (`C:\heziom-sync` ou `/opt/heziom-sync`)
+- [ ] Criar arquivo `.env` com credenciais (nunca no repositório)
+- [ ] Rodar teste de conexão: lê 1 linha de `TituloFinanceiro` e imprime no log
+
+#### 2.3 Agendamento
+- [ ] Configurar 4 tarefas agendadas (Task Scheduler no Windows ou systemd no Linux)
+  - Financeiro: 2× por dia (06h e 18h)
+  - Pedidos: a cada 30 min
+  - Estoque: a cada 30 min
+  - Cadastros: 1× por semana (domingo 02h)
+- [ ] Alerta Teams se sync não rodar por mais de 2h
+
+**Critério de conclusão da STORY-009:**  
+`lit_titulo_financeiro` no Supabase com dados reais do Literarius. Log de execução limpo. Alerta Teams testado.
 
 ---
 
@@ -101,13 +123,16 @@ João consegue abrir o vault no Obsidian e ver mudanças do Lucas, sem usar term
 > Estas dependências não bloqueiam STORY-001 mas vão bloquear STORY-002 e STORY-003 se não forem acionadas agora.
 
 #### 3.1 Equipe Literarius — Solicitar urgente
-Enviar e-mail ou mensagem formal para o DBA/responsável pelo Literarius:
+Enviar mensagem formal para o DBA/responsável pelo Literarius:
 
 **Item A — 6 views customizadas** (ver [[Views — Camada de Acesso HeziomOS]])  
 As views já estão especificadas no vault. Precisamos apenas que a equipe as crie no SQL Server. Prazo solicitado: até sexta (29 Mai).
 
 **Item B — Corrigir `PlanoConta.TipoCategoria`**  
 Atualmente todos os 115 registros estão com valor `'A'`, o que impede o cálculo automático do DRE. A correção define quais planos são Receita (`'R'`) e quais são Despesa (`'D'`). Sem isso, o DRE da Fase 1 não funciona.
+
+**Item C — Confirmar credenciais SQL Server**  
+As credenciais usadas pelo Power BI ainda funcionam? Podemos reusá-las ou precisamos criar novo usuário `heziom_sync` com acesso read-only?
 
 #### 3.2 CEO — Validar Dashboard HTML
 - Abrir `heziom-ceo-dashboard-maio2026.html` em navegador
@@ -120,12 +145,12 @@ Atualmente todos os 115 registros estão com valor `'A'`, o que impede o cálcul
 
 | Hora | Atividade | Quem |
 |------|-----------|------|
-| Manhã | Resolver D1 e D2 (Raspberry Pi + Supabase Pro) | JG + Lucas |
-| Manhã | Enviar solicitação de views + correção para equipe Literarius | JG |
+| Manhã | Confirmar D1 (Supabase Pro) e D3/D4 (servidor Intelinovo) | JG + Lucas |
+| Manhã | Enviar solicitação de views + correção + credenciais para DBA Literarius | JG |
 | Manhã | Criar repo `heziom-os-app` + scaffold React + CLAUDE.md | Lucas |
 | Tarde | Criar projeto Supabase + schema `lit_*` + RLS | Lucas |
 | Tarde | Conectar Netlify + testar CI/CD | Lucas |
-| Tarde | Atualizar STORY-001 com status de cada critério de aceite | Lucas |
+| Tarde | Tentar acesso remoto ao servidor Intelinovo (se D3/D4 resolvidos) | Lucas |
 | Fim do dia | Review rápido: o que está no ar, o que está bloqueado | JG + Lucas |
 
 ---
@@ -134,10 +159,12 @@ Atualmente todos os 115 registros estão com valor `'A'`, o que impede o cálcul
 
 | Impedimento | Impacto | Como destravar |
 |-------------|---------|----------------|
-| Raspberry Pi não comprado | Bloqueia STORY-009 e sync automático | Decisão D1 hoje |
+| OS e acesso ao servidor Intelinovo não confirmados | Bloqueia STORY-009 | JG perguntar à Heziom/Intelinovo — D3 e D4 |
 | Views Literarius não criadas | Bloqueia STORY-002 e STORY-003 | Acionar DBA segunda manhã |
 | `PlanoConta.TipoCategoria` errado | DRE automático não funciona | Acionar DBA segunda manhã |
-| Supabase Free (500MB) | Pode estourar com dados de 90 dias | Decisão D2: subir para Pro |
+| Supabase Free (500MB) | Pode estourar com dados de 90 dias | Decisão D1: subir para Pro |
+
+> ~~Raspberry Pi não comprado~~ → **Resolvido**: Usaremos o servidor Intelinovo existente.
 
 ---
 
@@ -156,7 +183,7 @@ Atualmente todos os 115 registros estão com valor `'A'`, o que impede o cálcul
 - [ ] Netlify com deploy automático funcionando
 - [ ] João acessa vault no Obsidian sem usar terminal
 - [ ] Literarius team acionado com prazo definido para as views
-- [ ] Raspberry Pi comprado (ou decisão tomada sobre quem compra e quando)
+- [ ] OS e acesso ao servidor Intelinovo confirmados (D3 e D4)
 
 ---
 
@@ -164,12 +191,14 @@ Atualmente todos os 115 registros estão com valor `'A'`, o que impede o cálcul
 
 - [[Sprint Atual]] — Stories do Sprint 1
 - [[Backlog]] — Todas as stories por fase
+- [[ADR-003 — Sync Agent no Servidor Intelinovo]] — decisão de arquitetura atual
 - [[HeziomOS — Arquitetura]] — Stack técnica completa
 - [[STORY-001 — Setup Infraestrutura]] — Critérios de aceite detalhados
-- [[STORY-009 — Setup Raspberry Pi Sync Agent]] — Spec do sync agent
+- [[STORY-009 — Setup Sync Agent no Servidor Intelinovo]] — Spec atualizada do sync agent
 - [[Views — Camada de Acesso HeziomOS]] — 6 views a solicitar para Literarius
 - [[heziom-ceo-dashboard-maio2026.html]] — Dashboard HTML para validação com CEO
 
 ---
 
-*Criado em 2026-05-23 — Lucas Azevedo (Trivia Growth)*
+*Criado em 2026-05-23 — Lucas Azevedo (Trivia Growth)*  
+*Atualizado em 2026-05-23: Raspberry Pi substituído pelo servidor Intelinovo*

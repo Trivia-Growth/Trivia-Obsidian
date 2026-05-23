@@ -1,15 +1,19 @@
 ---
 tags: [adr, decisao, infra, sync, raspberry-pi]
-status: decidido
+status: superseded
 data: 2026-05-18
 decisores: [Lucas Azevedo (Trivia)]
+superseded_by: [[ADR-003 — Sync Agent no Servidor Intelinovo]]
 ---
 
 # ADR-001 — Sync Agent rodando em Raspberry Pi dedicado
 
 ## Status
 
-**Decidido** — 2026-05-18
+> ⚠️ **SUPERSEDED em 2026-05-23** — A Heziom possui um servidor Intelinovo já conectado ao Literarius que será usado no lugar do Raspberry Pi. Ver [[ADR-003 — Sync Agent no Servidor Intelinovo]].
+
+**Superseded** — substituído pelo ADR-003 em 2026-05-23  
+~~Decidido — 2026-05-18~~
 
 ---
 
