@@ -1,0 +1,57 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'14px'}}}%%
+flowchart TB
+    subgraph C1["Camada 1 - HeziomOS - PROPOE"]
+        TIT[Titulos a Pagar<br/>lidos do lit_mirror.titulo_financeiro]
+        AGE[Agente Financeiro<br/>Inngest Workflow]
+        PROP[payment_proposals<br/>append-only com requestId]
+        APRV[payment_approvals<br/>fila para humano]
+    end
+
+    subgraph H["Humano - APROVA dentro do HeziomOS"]
+        OPER[financeiro_operador<br/>revisa lote]
+        APR[financeiro_aprovador<br/>aprova - alcadas]
+        DIR[diretor / CEO<br/>aprova acima do threshold]
+    end
+
+    subgraph C2["Camada 2 - Literarius - ESTRUTURA"]
+        LIT_LANC[Lancamento no Literarius<br/>Fase 3 - via REST PUT autorizado]
+        REM[Geracao arquivo CNAB 240]
+    end
+
+    subgraph C3["Camada 3 - Santander - EXECUTA"]
+        IB[Internet Banking<br/>upload CNAB]
+        DUAL[Dupla aprovacao<br/>2 diretores]
+        PAY[Pagamento executado]
+    end
+
+    subgraph AUD["Auditoria"]
+        LOG[(audit.agent_proposals_log<br/>audit.actions_log<br/>append-only)]
+    end
+
+    TIT --> AGE
+    AGE --> PROP
+    PROP --> APRV
+    APRV --> OPER
+    OPER --> APR
+    APR --> DIR
+    DIR --> LIT_LANC
+    LIT_LANC --> REM
+    REM --> IB
+    IB --> DUAL
+    DUAL --> PAY
+
+    AGE -.log.-> LOG
+    OPER -.log.-> LOG
+    APR -.log.-> LOG
+    DIR -.log.-> LOG
+
+    classDef c1 fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef h fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef c2 fill:#3a5f1e,stroke:#1f330f,color:#fff
+    classDef c3 fill:#5f1e3a,stroke:#330f1f,color:#fff
+    classDef aud fill:#3a3a3a,stroke:#1f1f1f,color:#fff
+    class TIT,AGE,PROP,APRV c1
+    class OPER,APR,DIR h
+    class LIT_LANC,REM c2
+    class IB,DUAL,PAY c3
+    class LOG aud

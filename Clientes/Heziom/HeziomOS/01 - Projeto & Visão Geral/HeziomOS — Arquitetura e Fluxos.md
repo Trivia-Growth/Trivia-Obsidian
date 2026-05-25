@@ -1,9 +1,13 @@
 ---
-tags: [heziom, arquitetura, fluxos, sistema, proposta]
-status: proposta
+tags: [heziom, arquitetura, fluxos, sistema, historico]
+status: histórico
 criado: 2026-05-19
 autor: JG Novais (Trivia)
+substituido_por: HeziomOS — Arquitetura v3
+substituido_em: 2026-05-23
 ---
+
+> ⚠️ **Documento histórico (19/05/2026).** Foi substituído pela versão vigente: [[HeziomOS — Arquitetura v3]] (23/05/2026). Mantido como registro da arquitetura consolidada antes da revisão estrutural (monorepo, runtime durável de agentes, schemas Postgres por domínio, RNFs de segurança).
 
 # HeziomOS — Arquitetura Completa e Fluxos entre Aplicações
 

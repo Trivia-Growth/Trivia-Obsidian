@@ -1,0 +1,46 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#fff','primaryBorderColor':'#0f1f33','lineColor':'#444','fontSize':'13px'}}}%%
+graph TB
+    subgraph DOM["Schemas de Dominio - escrita do HeziomOS"]
+        FIN[financeiro<br/>payment_proposals append-only<br/>payment_approvals<br/>cnab_batches<br/>bank_statements<br/>bank_reconciliations<br/>dre_snapshots]
+        ED[editorial<br/>projects + stages + budgets<br/>print_quotes + professionals<br/>launch_materials + contracts_meta]
+        CRM[crm<br/>contacts + contact_tags<br/>segments + campaigns<br/>communications + consents]
+        AT[atendimento<br/>conversations + messages + tickets]
+        COM[comercial<br/>pipeline + goals<br/>commissions + wholesale_orders]
+        PE[pessoas<br/>members + commissions_rules<br/>commission_calculations + evaluations]
+        TK[tarefas<br/>tasks + task_boards<br/>task_automations + task_comments]
+        FS[fiscal<br/>nfe_queue + cnpj_rules<br/>Fase 2/3]
+    end
+
+    subgraph MIR["Schemas Espelho - leitura sync"]
+        LM[lit_mirror<br/>titulo_financeiro + conta_bancaria<br/>nota_fiscal + pedido_venda<br/>produto + estoque + parceiro<br/>plano_conta]
+        TM[tray_mirror<br/>orders + customers + products<br/>abandoned_carts + payments]
+    end
+
+    subgraph GOV["Schemas de Governanca"]
+        AU[audit<br/>actions_log + access_log<br/>agent_proposals_log<br/>APPEND-ONLY deny update/delete]
+        AG[agents<br/>sessions + memory_embeddings pgvector<br/>tool_calls + prompt_versions<br/>model_routes OpenRouter]
+        LG[lgpd<br/>consent_records<br/>export_requests<br/>deletion_requests]
+        CF[config<br/>alert_config + threshold_config<br/>feature_flags]
+    end
+
+    FIN -. join .-> LM
+    ED -. consolida custo .-> FIN
+    COM -. emite pedido .-> LM
+    COM --> TM
+    CRM -. cross-channel .-> LM
+    CRM --> TM
+    AT --> CRM
+    PE --> FIN
+    TK -. trigger .-> ED
+    TK -. trigger .-> COM
+    FS --> FIN
+    AG -. log .-> AU
+    LG --> CRM
+    LG --> AT
+
+    classDef dom fill:#1e3a5f,stroke:#0f1f33,color:#fff
+    classDef mir fill:#5f3a1e,stroke:#331f0f,color:#fff
+    classDef gov fill:#3a5f1e,stroke:#1f330f,color:#fff
+    class FIN,ED,CRM,AT,COM,PE,TK,FS dom
+    class LM,TM mir
+    class AU,AG,LG,CF gov
