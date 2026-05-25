@@ -68,53 +68,53 @@ Tray → POST webhook (order.update, status = aprovado)
 
 ---
 
-## Endpoints para gerenciar webhooks
+## ⚠️ CORREÇÃO: Webhooks NÃO têm endpoint de API (confirmado pelo suporte 25/05/2026)
 
-```
-POST   /web_api/webhooks            → Registrar novo webhook
-GET    /web_api/webhooks            → Listar webhooks registrados
-GET    /web_api/webhooks/:id        → Detalhe
-DELETE /web_api/webhooks/:id        → Remover webhook
-```
+O suporte da Tray confirmou que:
+- **`/web_api/hooks` NÃO EXISTE** na plataforma
+- **`/web_api/webhooks` NÃO EXISTE** na plataforma
+- Não há endpoint REST para registrar/listar/remover webhooks via API
 
-### Registrar um webhook
+### Como registrar webhooks na Tray (processo real)
 
-```python
-# Exemplo: registrar webhook para pagamento aprovado
-payload = {
-    "url": "https://heziom-sync.trivia.com.br/webhooks/tray",
-    "event": "transaction",
-    "action": "update"
-}
-resp = requests.post(f"https://{api_host}/web_api/webhooks?access_token={token}", json=payload)
-```
+O registro é **manual, via ticket de suporte**:
 
-> **Requisitos do receptor:**
-> - HTTPS obrigatório
-> - Responder HTTP 200 em < 5 segundos
-> - Tray reenvia até 3× se não receber 200
+1. Abrir chamado em: https://atendimento.tray.com.br/hc/pt-br/requests/new
+2. Selecionar: **TRAY DESENVOLVEDORES** → **INTEGRAÇÕES API**
+3. Informar: nome do aplicativo + URL de notificação (HTTPS)
+4. Inicialmente apenas o scope `order` é habilitado — solicitar scopes adicionais no mesmo ticket
 
-### ⚠️ Limitação da Loja de Teste (validado 20/05/2026)
+> **Importante:** Não existe gerenciamento de webhooks self-service. Qualquer alteração (nova URL, novos scopes) requer novo ticket.
 
-O endpoint `/web_api/webhooks` retorna **404** na loja de teste `1501119` porque a loja está em status `implantacao` (não inaugurada).
+### Requisitos do receptor
 
-**Endpoints bloqueados em lojas não-inauguradas:**
-- `/webhooks` — 404
-- `/invoices` — 404
-- `/statuses` — 404
-- `/shipping` — 404
-- `/payment_methods` — 404
+- HTTPS obrigatório
+- Responder HTTP 200 (Tray reenvia por até ~20 dias com backoff)
+- Implementar idempotência — mesmo evento pode chegar mais de uma vez
+- Notificações só disparam para eventos **após** ativação (sem backfill histórico)
 
-**Endpoints que funcionam normalmente:**
-- `/orders` — ✅ 200
-- `/products` — ✅ 200
-- `/customers` — ✅ 200
-- `/categories` — ✅ 200
-- `/payments` — ✅ 200
-- `/brands` — ✅ 200
-- `/info` — ✅ 200
+---
 
-**Solução:** Webhooks precisam ser testados na **loja de produção** da Heziom (após migrar o app para lá), ou pedir à Tray para inaugurar a loja de teste. Enquanto isso, usar **polling a cada 15min** (sync agent) como fallback — funciona perfeitamente com `GET /orders?modified=YYYY-MM-DD`.
+## Rotas corrigidas (confirmação do suporte 25/05/2026)
+
+| Rota que testamos (ERRADA) | Rota correta | Doc |
+|---|---|---|
+| `/web_api/hooks` | **NÃO EXISTE** | — |
+| `/web_api/invoices` | `/web_api/orders/invoices` | [API de Nota Fiscal](https://developers.tray.com.br/#api-de-nota-fiscal) |
+| `/web_api/statuses` | `/web_api/orders/statuses` | [API de Status do Pedido](https://developers.tray.com.br/#api-de-status-do-pedido) |
+| `/web_api/shipping` | `/web_api/shippings` | [Listagem de Formas de Envio](https://developers.tray.com.br/#listagem-de-formas-de-envio-get) |
+| `/web_api/payment_methods` | `/web_api/payments/options` | [Opções de Pagamentos](https://developers.tray.com.br/#opcoes-de-pagamentos-get) |
+
+> **Conclusão:** Os 404 que reportamos NÃO eram por conta da loja não-inaugurada — eram rotas incorretas. As rotas corretas acima devem funcionar na loja de teste normalmente.
+
+---
+
+## Estratégia atualizada para o HeziomOS
+
+1. **Abrir ticket na Tray** solicitando ativação de webhook para o app HeziomOS com a URL de callback
+2. **Solicitar todos os scopes:** `order`, `product`, `product_price`, `product_stock`, `variant`, `customer`
+3. **Enquanto o ticket não é atendido:** manter polling via sync agent (`GET /web_api/orders?modified=YYYY-MM-DD` a cada 15min)
+4. **Após ativação:** webhook como trigger primário, polling como fallback de segurança
 
 ---
 
