@@ -1,13 +1,17 @@
 ---
 tags: [story, infra, raspberry-pi, sync]
-status: backlog
+status: cancelado
 fase: 1
 prioridade: alta
 criado: 2026-05-18
-bloqueia: [STORY-002, STORY-003, STORY-004, STORY-006]
+cancelado: 2026-05-23
+substituido_por: "[[STORY-009 — Setup Sync Agent no Servidor Intelinovo]]"
 ---
 
-# STORY-009 — Setup Raspberry Pi como Sync Agent
+# ~~STORY-009 — Setup Raspberry Pi como Sync Agent~~
+
+> ⚠️ **CANCELADA em 2026-05-23** — Substituída por [[STORY-009 — Setup Sync Agent no Servidor Intelinovo]].  
+> A Heziom já possui servidor Intelinovo com conectividade comprovada ao Literarius. Raspberry Pi não será comprado.
 
 ## Objetivo
 
