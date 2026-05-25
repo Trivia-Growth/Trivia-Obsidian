@@ -317,15 +317,31 @@ Quando alguém cola o link no WhatsApp, deve aparecer como card rico (igual prin
    ampliou a policy anon de `status='ativo'` para `status IN ('ativo','encerrado')`.
    Commit `329a19a`. Validado em produção 25/05.
 
-**Diagnóstico do dia 25/05 (Marcos reportou que testes não chegavam):** edge
-function, DB e Resend confirmados 100% funcionais via submit real. Última
-resposta válida no DB era de 22/05 13h09 UTC. Hipóteses prováveis para os
-"testes" do Marcos não chegarem ao DB:
-- Timing check anti-bot (linha 73 da edge function) retorna `ok:true` silencioso
-  quando submit é < 2s após render — possivelmente disparado em recargas rápidas.
-- `<input type="hidden" required>` das estrelas pode bloquear submit sem feedback
-  visível se o usuário esquecer de clicar em alguma estrela.
-- Rate limit (5/hora/IP) após múltiplos testes.
+**Diagnóstico do dia 25/05 (Marcos reportou que testes do time não chegavam):**
+edge function, DB e Resend confirmados funcionais via submit manual. Marcos
+listou: Ricardo ✅ (22/05), Adriano ❌, Cláudio ❌, Alessandro ❌.
+
+Logs reais via Supabase Management API (`function_edge_logs` na janela 25/05):
+- 9 POSTs ao endpoint
+- 7 com HTTP 200, mas só 2 inserções reais no DB
+- **5 status=200 foram early-returns silenciosos** (sem inserir nem notificar)
+
+Confirmadas 3 causas raiz e corrigidas no commit `4b89cb3`:
+
+1. **Timing check 2s removido** — `Date.now() - formRenderedAt < 2000` disparava
+   ok:true sem inserir quando relógio do client estava dessincronizado (delta
+   negativo) ou em recargas rápidas. Honeypot sozinho continua filtrando bots.
+2. **`<input type="hidden" required>` substituído** por validação JS visível
+   com destaque em vermelho na pergunta faltante + scroll automático até ela
+   + contador "Faltam X pergunta(s)". Idem para radios `_satisfacao` e `_nps`.
+3. **Rate limit subido de 5 → 30/hora por IP** — Previx tem funcionários atrás
+   de NAT corporativo, compartilham IP público.
+
+**Observabilidade adicionada:** `logEvent()` estruturado em JSON em todos os
+caminhos (rate_limited, honeypot_triggered, validation_fail, duplicate_blocked,
+insert_error, insert_ok, notify_ok, notify_resend_fail, notify_exception).
+Acessível via Supabase Logs Explorer ou Management API
+(`/v1/projects/{ref}/analytics/endpoints/logs.all` no source `function_logs`).
 
 ---
 
