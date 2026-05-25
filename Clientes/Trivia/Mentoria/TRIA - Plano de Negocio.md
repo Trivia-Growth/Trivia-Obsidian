@@ -177,10 +177,10 @@ Esta é a regra contratual mais importante da BU. Sem ela, a margem evapora e o 
 
 |Caso de uso                                      |Stack típico                               |Esforço |
 |-------------------------------------------------|-------------------------------------------|--------|
-|Agente WhatsApp de qualificação de lead          |n8n + Claude + Z-API + Supabase            |~40h dev|
-|Agente WhatsApp de atendimento/SAC nível 1       |n8n + Claude + Z-API + base de conhecimento|~50h    |
-|Automação de qualificação de e-mail comercial    |n8n + Claude + Gmail/Outlook API           |~30h    |
-|Agente de análise de documento (NF, contrato, CV)|n8n + Claude + storage Supabase            |~40h    |
+|Agente WhatsApp de qualificação de lead          |Stack Trívia + Claude + Z-API + Supabase   |~40h dev|
+|Agente WhatsApp de atendimento/SAC nível 1       |Stack Trívia + Claude + Z-API + base de conhecimento|~50h    |
+|Automação de qualificação de e-mail comercial    |Stack Trívia + Claude + Gmail/Outlook API  |~30h    |
+|Agente de análise de documento (NF, contrato, CV)|Stack Trívia + Claude + storage Supabase   |~40h    |
 |Dashboard de IA pro time comercial               |Lovable + Supabase + Claude API            |~50h    |
 
 #### O que NÃO está incluso (proposta separada)
@@ -303,7 +303,7 @@ WhatsApp é o canal de conversão central. Toda a comunicação de vendas conver
 |Pró-labore João                                            |R$ 30.000     |
 |Dev sênior CLT (R$ 12k bruto + encargos ~50%)              |R$ 18.000     |
 |2º dev mid (entrada no mês 9–10)                           |R$ 12.000     |
-|Ferramentas, APIs, infra (Claude API, Supabase, n8n, Z-API)|R$ 4.000      |
+|Ferramentas, APIs, infra (Claude API, Supabase, Z-API, orquestração)|R$ 4.000      |
 |Marketing (mídia paga limitada, conteúdo, eventos)         |R$ 10.000     |
 |Contabilidade, jurídico, software de gestão                |R$ 4.000      |
 |Sala / eventos presenciais (sob demanda)                   |R$ 3.000      |
@@ -371,11 +371,11 @@ Operamos Trívia Studio, Heziom e a infraestrutura própria JimmyAtende. Vendemo
 
 #### Framework Trívia documentado
 
-Método TRIA mais biblioteca de templates, prompts, fluxos n8n e integrações Supabase. Quando dev novo entra, entrega com nossa qualidade desde o primeiro projeto.
+Método TRIA mais biblioteca de templates, prompts, fluxos de orquestração proprietários e integrações Supabase. Quando dev novo entra, entrega com nossa qualidade desde o primeiro projeto.
 
 #### Stack moderna e demonstrável ao vivo
 
-n8n + Claude + Supabase + WhatsApp via Z-API. Na call de diagnóstico já mostramos sistemas rodando — o que reduz drasticamente o ciclo de venda.
+Stack Trívia: Claude + Supabase + WhatsApp via Z-API + orquestração proprietária. Na call de diagnóstico já mostramos sistemas rodando — o que reduz drasticamente o ciclo de venda.
 
 ### Por que não somos concorrentes diretos das alternativas
 
