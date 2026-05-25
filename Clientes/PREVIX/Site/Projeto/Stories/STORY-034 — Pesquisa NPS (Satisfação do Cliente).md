@@ -3,7 +3,7 @@ id: STORY-034
 titulo: "Sistema de Pesquisas NPS / Satisfação do Cliente"
 fase: 6
 modulo: "NPS"
-status: done
+status: concluido
 prioridade: alta
 agente_responsavel: ""
 criado: 2026-05-20
