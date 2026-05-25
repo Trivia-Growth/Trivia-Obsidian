@@ -3,11 +3,11 @@ id: STORY-034
 titulo: "Sistema de Pesquisas NPS / Satisfação do Cliente"
 fase: 6
 modulo: "NPS"
-status: planejado
+status: done
 prioridade: alta
 agente_responsavel: ""
 criado: 2026-05-20
-atualizado: 2026-05-20
+atualizado: 2026-05-25
 ---
 
 # STORY-034 — Sistema de Pesquisas NPS / Satisfação do Cliente
@@ -284,21 +284,48 @@ Quando alguém cola o link no WhatsApp, deve aparecer como card rico (igual prin
 
 ## Critérios de Aceite
 
-- [ ] CA1 — Tabelas `site.nps_pesquisas` e `site.nps_respostas` com RLS + policies
-- [ ] CA2 — Admin: criar pesquisa com perguntas customizáveis (qualquer quantidade, qualquer texto)
-- [ ] CA3 — Admin: template "Pesquisa Padrão SGQ" carrega as 10 perguntas do modelo atual
-- [ ] CA4 — Admin: configurar emails de notificação, permitir/bloquear duplicatas
-- [ ] CA5 — Página pública `/pesquisa/[slug]` renderiza dinamicamente as perguntas da pesquisa
-- [ ] CA6 — Query params pré-preenchem cliente e período
-- [ ] CA7 — OG tags geram preview rica ao compartilhar via WhatsApp
-- [ ] CA8 — Edge Function valida, insere e notifica por email (Resend)
-- [ ] CA9 — Admin: listagem de pesquisas com contagem de respostas e NPS médio
-- [ ] CA10 — Admin: visualizar respostas individuais + métricas agregadas
-- [ ] CA11 — Admin: exportar CSV de uma pesquisa
-- [ ] CA12 — Admin: copiar link público da pesquisa com 1 clique
-- [ ] CA13 — Mobile-first: formulário funciona perfeitamente no celular
-- [ ] CA14 — Anti-bot: honeypot + rate limit
-- [ ] CA15 — Pesquisa encerrada mostra mensagem amigável (não 404 genérico)
+- [x] CA1 — Tabelas `site.nps_pesquisas` e `site.nps_respostas` com RLS + policies
+- [x] CA2 — Admin: criar pesquisa com perguntas customizáveis (qualquer quantidade, qualquer texto)
+- [x] CA3 — Admin: template "Pesquisa Padrão SGQ" carrega as 10 perguntas do modelo atual
+- [x] CA4 — Admin: configurar emails de notificação, permitir/bloquear duplicatas
+- [x] CA5 — Página pública `/pesquisa/[slug]` renderiza dinamicamente as perguntas da pesquisa
+- [x] CA6 — Query params pré-preenchem cliente e período
+- [x] CA7 — OG tags geram preview rica ao compartilhar via WhatsApp
+- [x] CA8 — Edge Function valida, insere e notifica por email (Resend)
+- [x] CA9 — Admin: listagem de pesquisas com contagem de respostas e NPS médio
+- [x] CA10 — Admin: visualizar respostas individuais + métricas agregadas
+- [x] CA11 — Admin: exportar CSV de uma pesquisa
+- [x] CA12 — Admin: copiar link público da pesquisa com 1 clique
+- [x] CA13 — Mobile-first: formulário funciona perfeitamente no celular
+- [x] CA14 — Anti-bot: honeypot + rate limit
+- [x] CA15 — Pesquisa encerrada mostra mensagem amigável (não 404 genérico) — fix 25/05 commit 329a19a
+
+---
+
+## Notas de Implementação (atualizadas 25/05/2026)
+
+**Fix-up bugs encontrados em diagnóstico:**
+
+1. **Distribuição por pergunta no admin (`NpsRespostasPage.tsx`)** — o agregado filtrava
+   valores `'otimo' | 'bom' | 'ruim'` que nunca existem (o front salva escala de
+   estrelas `'1'..'5'`). Resultado: barras sempre vazias. Corrigido para agrupar
+   em 4-5★ / 3★ / 1-2★ e mostrar média numérica por pergunta. Commit `329a19a`.
+
+2. **CA15 (mensagem amigável)** — `[slug].astro` fazia `Astro.redirect('/404')`.
+   Agora renderiza inline com texto distinto para "não encontrada" (HTTP 404)
+   vs "encerrada" (HTTP 410). Migration `20260525120000_nps_anon_read_encerrada.sql`
+   ampliou a policy anon de `status='ativo'` para `status IN ('ativo','encerrado')`.
+   Commit `329a19a`. Validado em produção 25/05.
+
+**Diagnóstico do dia 25/05 (Marcos reportou que testes não chegavam):** edge
+function, DB e Resend confirmados 100% funcionais via submit real. Última
+resposta válida no DB era de 22/05 13h09 UTC. Hipóteses prováveis para os
+"testes" do Marcos não chegarem ao DB:
+- Timing check anti-bot (linha 73 da edge function) retorna `ok:true` silencioso
+  quando submit é < 2s após render — possivelmente disparado em recargas rápidas.
+- `<input type="hidden" required>` das estrelas pode bloquear submit sem feedback
+  visível se o usuário esquecer de clicar em alguma estrela.
+- Rate limit (5/hora/IP) após múltiplos testes.
 
 ---
 
