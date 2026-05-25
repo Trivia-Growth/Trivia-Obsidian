@@ -1,424 +1,487 @@
-# TRÍVIA · TRIA · MVP — PLANO DE LANÇAMENTO
+# TRÍVIA · TRIA · MVP — PLANO DE LANÇAMENTO (v2)
 
-> *Trívia Studio · Documento Interno · Versão MVP · Complementa [[TRIA - Plano de Negocio]] (oficial)*
+> *Trívia Studio · Documento Interno · Versão MVP v2 · Complementa [[TRIA - Plano de Negocio]] (oficial)*
 
-**Para:** Lucas Azevedo | **Revisado por:** João Gabriel Novais
+**Proposta:** João Gabriel Novais | **Pendente de alinhamento com:** Lucas Azevedo
 
-Versão de execução para os primeiros 90 dias, calibrada para a realidade atual: sem casos TRIA publicados, autoridade ainda em construção, custos comprimidos ao mínimo e ciclo de venda baseado em rede direta + tração orgânica em paralelo.
+Estratégia de lançamento da TRIA calibrada para a realidade pós-pivot: Trívia se reposiciona como **implementadora de IA**, e TRIA é a primeira BU desse novo posicionamento. O [[TRIA - Plano de Negocio]] continua valendo como visão de regime maduro — este documento define como sair do zero até a esteira completa funcionando.
 
-O [[TRIA - Plano de Negocio]] segue como visão de regime maduro — para onde queremos chegar. Este documento define como sair do zero até a primeira prova auditável.
-
------
-
-## O que muda em relação ao plano oficial
-
-|Item|Oficial (regime maduro)|MVP (primeiros 90 dias)|
-|----|----------------------|-----------------------|
-|Custos mensais|R$ 111k|Mínimo possível. Lucas mantém Itaú. Sem 2º dev. Pró-labore só do que sobrar.|
-|Tiers oferecidos|3 tiers ativos|Cardápio completo, com preço-fundador em todos|
-|Funil orgânico|100 leads/mês|10–20 leads/mês via conteúdo + rede direta|
-|Meta de receita|R$ 200k/mês|R$ 50–80k/mês ao final do mês 3|
-|Caixa esperado no mês 1|—|R$ 23.400 (3 entradas Operação fundador)|
-|Estratégia de prova|Cases TRIA publicados|Heziom + JimmyAtende como prova-ponte; caso TRIA 01 pronto no fim do mês 3|
+A v1 deste MVP previa venda direta de Operação a R$ 26k para fundadores no mês 1. Esta v2 substitui essa lógica por uma **esteira ascending value** com 3 fases: cases pseudo-gratuitos para construir prova, low ticket auto-service como porta de entrada (com tráfego pago), e upsell estruturado para a mentoria premium.
 
 -----
 
-## Catálogo completo de produtos · Preço cheio e preço fundador
+## O que muda em relação à v1 e ao plano oficial
 
-> *Gap do plano oficial: o Lucas escopou esforço em horas, não preço por entrega. Esta seção fecha isso.*
+|Item|Oficial|MVP v1|MVP v2 (esta versão)|
+|----|-------|------|-----|
+|Como construir prova social|Cases publicados em regime maduro|Vender preço fundador R$ 26k pros 3 primeiros|2–3 cases pseudo-gratuitos com documentação total nas redes|
+|Porta de entrada|Mentoria 1:1 (Operação)|Mentoria 1:1 (Operação fundador)|Low ticket auto-service (R$ 97 a R$ 497)|
+|Tráfego|Sem tráfego pago no início|Sem tráfego pago no início|R$ 500–1k/mês de validação a partir do mês 3|
+|Captação principal|Funil orgânico de 100 leads/mês|Rede direta + orgânico|Tráfego pago no low ticket + cases nas redes alimentando autoridade|
+|Receita primeira metade|—|R$ 100k em 90 dias|R$ 0–3k nos meses 1–2; cresce com low ticket no mês 3+|
+|Posicionamento dos preços cheios|Definitivo|Definitivo|Mantido. Não há mais "preço fundador" em R$ — os cases pseudo-gratuitos substituem essa função.|
 
-### Tiers de mentoria
+-----
 
-|Tier|Formato|Duração|Preço cheio|Preço fundador|Limite fundador|
-|----|-------|-------|-----------|--------------|---------------|
-|Ignição|Grupo 6–10|10 semanas|R$ 9.800|R$ 6.800|1ª turma (8 vagas)|
-|Operação|1:1 com 2 sócios|6 meses|R$ 39.000|R$ 26.000|3 primeiros|
-|Board|Fracional|12 meses|R$ 72.000|R$ 48.000|2 primeiros|
+## A estratégia em 3 fases
 
-Política de pagamento mantida do oficial: Ignição 100% antecipado ou 12x cartão. Operação 30% entrada + 70% em até 12x. Board mensalidade com fidelidade 12 meses.
+### Fase 1 · Cases + Conteúdo (meses 1–2)
+Sem captação de pagante premium. Foco em executar 2–3 cases pseudo-gratuitos (custos cobertos ou R$ 1–3k simbólicos) e em documentar tudo nas redes. Produção em paralelo dos low ticket. Receita esperada: praticamente zero.
 
-### Catálogo de implementações avulsas
+### Fase 2 · Low ticket + Tráfego (meses 3–4)
+Lançamento dos low ticket auto-service. Tráfego pago de validação (R$ 500–1k/mês). Foco em volume de base e calibragem de ROAS. Conteúdo continua girando, alimentado pelos cases que já entraram em produção.
 
-> *Cada item do catálogo também pode ser vendido sem mentoria, para cliente que ainda não compra TRIA mas precisa só da entrega técnica. Premissa de cálculo: R$ 200/hora de dev no preço cheio, com margem de framework e integração já embutida.*
+### Fase 3 · Upsell + Esteira completa (meses 5–6+)
+Base do low ticket recebe ofertas da mentoria premium (Ignição, Operação, Board). Primeiras vendas de ticket alto. Mídia escala. Esteira completa rodando.
 
-|Caso de uso|Esforço|Preço cheio|Preço fundador|Limite fundador|
-|-----------|-------|-----------|--------------|---------------|
-|Agente WhatsApp de qualificação de lead|~40h|R$ 12.000|R$ 8.000|3 primeiros|
-|Agente WhatsApp de SAC nível 1|~50h|R$ 16.000|R$ 11.000|3 primeiros|
-|Automação de qualificação de e-mail|~30h|R$ 9.000|R$ 6.000|3 primeiros|
-|Agente de análise de documento (NF/contrato/CV)|~40h|R$ 12.000|R$ 8.000|3 primeiros|
-|Dashboard de IA pro time comercial|~50h|R$ 16.000|R$ 11.000|3 primeiros|
+As fases se sobrepõem nas pontas — cases continuam saindo durante a fase 2; o low ticket continua vendendo durante a fase 3.
+
+-----
+
+## Catálogo completo de produtos
+
+### Low ticket auto-service (novidade desta versão)
+
+> *Princípio de design: o low ticket é a **ponta do iceberg**. Ensina a pensar e a estruturar. Não dá os ativos prontos nem implementa nada. Esses ficam exclusivos da mentoria.*
+
+|SKU|Faixa|Conteúdo|Promessa|Função no funil|
+|---|-----|--------|--------|--------------|
+|01 · Mapa de IA pro seu Negócio|R$ 97–147 (volume)|Assessment online (questionário) → relatório personalizado gerado por IA com 3 oportunidades priorizadas + framework matriz Impacto × Esforço + mini-curso de 30 min sobre como ler o relatório|"Em 30 minutos, você sai com 3 oportunidades reais de IA pra sua empresa, priorizadas por impacto e esforço."|Captura leads em massa via tráfego. O próprio relatório qualifica o lead pra próxima oferta.|
+|02 · Implementador IA Trívia|R$ 297–497 (média)|Mini-curso gravado (~4h): framework TRIA detalhado + 1 caso real da operação Trívia explicado fim-a-fim (JimmyAtende ou similar) + sessão sobre o que considerar antes de implementar|"Aprenda como uma implementação séria de IA é desenhada, desde a triagem até a operação."|Qualifica em profundidade. Quem consome percebe o tamanho real do problema e vira lead quente pra mentoria.|
+
+> *Acima de ~R$ 497, o cliente já não compra mini-curso — ele compra mentoria. Por isso o SKU 02 é o teto do low ticket.*
+
+### Mentoria (preços oficiais, sem desconto)
+
+|Tier|Formato|Duração|Preço|
+|----|-------|-------|-----|
+|Ignição|Grupo 6–10|10 semanas|R$ 9.800|
+|Operação|1:1 com 2 sócios|6 meses|R$ 39.000|
+|Board|Fracional|12 meses|R$ 72.000|
+
+> *Os 2–3 cases pseudo-gratuitos cumprem o papel que o "preço fundador" cumpria na v1. Como esses cases não pagam ticket cheio mas ficam vinculados via documentação, o que era "desconto" virou "case aberto" — defensável de comunicar e melhor pro posicionamento.*
+
+### Implementações avulsas
+
+> *Cada item também pode ser vendido sem mentoria. Premissa: R$ 200/h de dev no preço cheio, com framework e integração embutidos.*
+
+|Caso de uso|Esforço|Preço cheio|
+|-----------|-------|-----------|
+|Agente WhatsApp de qualificação|~40h|R$ 12.000|
+|Agente WhatsApp de SAC nível 1|~50h|R$ 16.000|
+|Automação de qualificação de e-mail|~30h|R$ 9.000|
+|Agente de análise de documento|~40h|R$ 12.000|
+|Dashboard de IA pro comercial|~50h|R$ 16.000|
 
 ### Retainer pós-go-live
 
-- **MVP:** R$ 2.500/mês (vs R$ 4–8k do plano oficial)
+- R$ 2.500/mês
 - Inclui: monitoramento, fixes pontuais, 4h de evolução/mês
 - Fidelidade mínima 3 meses
-
-### Lógica do desconto fundador
-
-Os preços fundador valem para os primeiros casos de cada SKU. Em troca, o cliente concorda com quatro coisas:
-
-- Depoimento gravado ao final do programa
-- Permissão de uso público do nome e dos números (com ajuste se forem sensíveis)
-- Compromisso de engajamento (mínimo 8h/mês do dono e time alocado)
-- Feedback estruturado mensal
-
-Sem essas contrapartidas, o preço é o cheio. Sem exceção.
 
 -----
 
 ## Seção 01 · ICP no MVP
 
-Mantém o ICP do plano oficial (faturamento R$ 5MM–R$ 50MM, dono fundador 35–55, time 10–100). Detalha o que estava implícito.
+Mantém o ICP do plano oficial (faturamento R$ 5MM–R$ 50MM, dono fundador 35–55, time 10–100). Detalhamento abaixo.
 
 ### Quem compra vs quem usa
 
 |Papel|Quem é|O que importa pra ele|Como engajamos|
 |-----|------|--------------------|---------------|
 |Comprador|Dono/sócio fundador da PME|ROI, velocidade, não virar refém de fornecedor|Mentoria 1:1, decisões estratégicas, número de impacto|
-|Patrocinador interno|Sócio ou diretor de operações/comercial|Time aceitar a mudança, processo não quebrar|Reunião de kickoff e milestones; entra no WhatsApp do programa|
-|Usuário operacional|Coordenador comercial / SAC / financeiro do cliente|Não perder o emprego, ferramenta não atrapalhar|Capacitação obrigatória na fase Ativação. Documentação simples.|
+|Patrocinador interno|Sócio ou diretor de operações/comercial|Time aceitar a mudança, processo não quebrar|Kickoff e milestones; entra no WhatsApp do programa|
+|Usuário operacional|Coordenador comercial / SAC / financeiro|Não perder o emprego, ferramenta não atrapalhar|Capacitação obrigatória na fase Ativação; documentação simples|
 
-Se o dono compra sem patrocinador interno, o projeto trava na fase Implementação. Critério obrigatório no contrato fundador: indicação nominal do patrocinador interno antes do kickoff.
+Critério obrigatório no contrato de mentoria: indicação nominal do patrocinador interno antes do kickoff. Sem isso o projeto trava na fase Implementação.
 
-### 4 perguntas de qualificação no WhatsApp
+### Qualificação no funil
 
-JimmyAtende dispara essas 4 perguntas no primeiro contato. Quem não responde corretamente é arquivado, sem call.
+**Low ticket SKU 01 (volume):** sem qualificação prévia. Quem paga R$ 97–147 entra. A qualificação acontece dentro do produto (assessment captura faturamento, headcount, dor, urgência).
 
-1. Qual o faturamento aproximado da sua empresa nos últimos 12 meses? *(Resposta válida: R$ 3MM ou mais.)*
-2. Quantas pessoas no time hoje? *(Resposta válida: 8 ou mais.)*
-3. Qual a dor que você quer resolver primeiro com IA? *(Qualquer resposta narrativa de 1+ frase.)*
-4. Você tem disponibilidade de no mínimo 4 horas por semana nas próximas 12 semanas? *(Resposta válida: sim.)*
+**Low ticket SKU 02 (média):** sem qualificação prévia. Filtro natural pelo preço.
 
-Lead que passa nas 4 → João assume e agenda call de diagnóstico em até 24h. Lead que falha em 1+ → mensagem padrão de "vamos te avisar quando tivermos turma compatível", arquiva no CRM com tag.
+**Mentoria:** qualificação obrigatória via 4 perguntas no WhatsApp (JimmyAtende):
 
------
+1. Qual o faturamento aproximado da sua empresa nos últimos 12 meses? *(válida: R$ 3MM+)*
+2. Quantas pessoas no time hoje? *(válida: 8+)*
+3. Qual a dor que você quer resolver primeiro com IA? *(narrativa de 1+ frase)*
+4. Você tem disponibilidade de no mínimo 4h/semana nas próximas 12 semanas? *(válida: sim)*
 
-## Seção 02 · Posicionamento e prova no MVP
-
-### O problema da prova zero
-
-Vendemos um produto que ainda não tem caso TRIA público. A solução não é esperar — é montar uma ponte de prova com o que já existe.
-
-|Prova disponível hoje|Onde aparece na venda|
-|---------------------|---------------------|
-|Heziom · R$ 7MM de lucro provado em editora|Bio do João, slide de credenciais, conversa de diagnóstico|
-|JimmyAtende rodando há 18+ meses|Demo ao vivo na call de diagnóstico (qualifica o próprio lead na frente do cliente)|
-|Trívia Studio · portfolio de implementação|Cases publicados de qualificação por WhatsApp, dashboards|
-|Lucas · Tech Lead Itaú · 13 anos chaos engineering|LinkedIn, bio, slide de credenciais|
-|Stack ao vivo (n8n + Claude + Z-API + Supabase)|Demo em tela na call. 2–3 minutos. Quebra objeção técnica.|
-
-### Plano de transição de prova
-
-- **Mês 1–2:** vende com a prova-ponte acima. Comunica claramente que o programa TRIA está sendo formatado e os primeiros clientes são fundadores.
-- **Mês 3:** depoimento de meio-de-programa do fundador 01.
-- **Mês 4–5:** primeiro caso público completo do fundador 01 (com número de impacto). A partir daqui o preço fundador sai da mesa.
-- **Mês 6+:** casos 02 e 03 publicados. Preço cheio para todo mundo.
+Lead da base do low ticket que pede upgrade tem prioridade na fila de calls.
 
 -----
 
-## Seção 03 · Oferta detalhada
+## Seção 02 · Cases pseudo-gratuitos
 
-### Garantias
+### Estrutura da oferta
 
-> *Gap do plano oficial: garantias não estavam definidas. Sem garantia, ticket alto encontra resistência.*
+- **Valor financeiro:** R$ 0 (cobrindo custos diretos como APIs e infra) **OU** R$ 1.000 a R$ 3.000 simbólicos, conforme o cliente
+- **Em troca, o cliente concorda com:**
+  - Documentação aberta do processo (fotos, vídeos curtos, prints, dados)
+  - Permissão de uso público do nome e dos números reais
+  - Participação em pelo menos 1 live ou vídeo-depoimento ao final
+  - Engajamento mínimo do dono (4h/semana nas 8–12 semanas de implementação)
+- **Meta:** 2 a 3 cases concluídos até o fim do mês 2
 
-**Tier Ignição:**
-- Garantia de devolução integral até o 3º encontro caso o cliente avalie que o programa não serve. Sem questionamento, sem burocracia.
+### Critérios de seleção (decisão final com Lucas)
 
-**Tier Operação:**
-- Garantia de entrega da plataforma do catálogo em até 12 semanas a partir do kickoff. Atraso por nossa causa: estendemos o programa sem custo adicional até entregar.
-- Não há devolução automática após o início — programa é fechado. Mas há cláusula de pausa: se o cliente não conseguir engajar 4h/semana, congelamos por até 60 dias.
+> *Decisão pendente: lista nominal dos candidatos. JG vai discutir com Lucas pra não queimar pagador potencial.*
 
-**Tier Board:**
-- Sem cláusula de devolução. Saída livre mediante aviso de 60 dias e pagamento das mensalidades já transcorridas. Sem multa para o fundador.
+|Critério|O que valida|
+|--------|-----------|
+|Empresa do círculo próximo, cliente atual ou indicação|Confiança e velocidade de fechamento|
+|Dor real onde IA entra em 40–80h de dev|Cabe no nosso esforço sem virar projeto eterno|
+|Dono engajado e disponível|Risco de travar na implementação é o maior|
+|**Não é pagador potencial de R$ 26k+ no curto prazo**|Não queima venda futura|
+|Topa expor números reais|Sem isso, não vira prova|
 
-### Onboarding (semana 0 do programa)
+Candidatos a discutir com Lucas (não definidos ainda):
+- Empresa interna (Heziom, operação Trívia, JimmyAtende como caso vivo já em curso)
+- Cliente atual de marketing/growth da Trívia que aceita virar caso de IA
+- Indicação da rede pessoal/profissional dos dois
+- Empresa que demonstrou interesse mas não tem orçamento de R$ 26k+ (idealmente alguém que se encaixa no perfil de R$ 3–8MM, abaixo do ICP premium)
 
-Vale para todos os tiers. Roda na semana imediatamente após assinatura.
+### O que documentar (importa mais que o caso em si)
 
-- **D+0:** boas-vindas via WhatsApp + envio do contrato assinado em PDF + link de pagamento
-- **D+1:** João envia áudio de boas-vindas; Lucas envia mensagem técnica curta
-- **D+2:** call de kickoff (60 min) — define data dos próximos 4 encontros, indica patrocinador interno, lista os 3 candidatos a caso de uso piloto
-- **D+3:** acesso ao espaço compartilhado (Notion ou pasta no Drive) com material da fase Triagem
-- **D+7:** primeira call regular
+|Formato|Onde|Quando|
+|-------|----|------|
+|Carrossel "antes vs depois"|Instagram + LinkedIn|Final do case|
+|Vídeo de bastidor (1–2 min)|Reels + LinkedIn nativo|Semanal durante implementação|
+|Live de 30 min com o dono do case|Instagram + LinkedIn|Conclusão|
+|Estudo de caso escrito (1 página)|LP da Trívia|Conclusão|
+|Áudio-depoimento curto (60s)|Material de venda|Conclusão|
 
-### Bônus para fundadores
-
-|Bônus|Quem ganha|Valor percebido|
-|-----|----------|---------------|
-|Acesso à comunidade alumni vitalícia (a ser criada após 10 clientes)|Todo fundador|R$ 2.000/ano|
-|1 implementação adicional pós-programa com 50% de desconto|Operação e Board fundadores|R$ 4–8k em desconto|
-|Convite para o evento presencial Trívia AI Day (mês 8–9)|Todo fundador|R$ 1.500|
-
-### SLA (mantido do oficial)
-
-- Ignição: WhatsApp da turma, resposta em D+1 nos dias úteis
-- Operação: WhatsApp direto, SLA 24h em horário comercial
-- Board: WhatsApp direto, SLA 4h em horário comercial
-
------
-
-## Seção 04 · Unidade econômica MVP
-
-> *Sem modelagem de custo fixo neste MVP — Lucas mantém Itaú, sem 2º dev, pró-labore variável conforme caixa. Foco em margem bruta por venda.*
-
-### Margem bruta estimada por produto (preço fundador)
-
-|Produto|Receita|Custo direto (dev + tools)|Margem bruta|% margem|
-|-------|-------|-------------------------|------------|--------|
-|Ignição (8 alunos × R$ 6.800)|R$ 54.400|R$ 5.000 (sala SP + material)|R$ 49.400|91%|
-|Operação fundador|R$ 26.000|R$ 8.000 (40h dev × R$ 200)|R$ 18.000|69%|
-|Board fundador (anual)|R$ 48.000|R$ 16.000 (80h dev × R$ 200)|R$ 32.000|67%|
-|Implementação avulsa (média)|R$ 8.800|R$ 4.800 (24h dev × R$ 200)|R$ 4.000|45%|
-|Retainer R$ 2.500/mês × 12|R$ 30.000|R$ 12.000 (5h/mês dev)|R$ 18.000|60%|
-
-Margem real para pró-labore dos sócios = margem bruta − APIs, infra, marketing orgânico. Como marketing nos primeiros 90 dias é orgânico (custo ~zero) e infra fica em ~R$ 500/mês, a aproximação serve.
-
-### CAC esperado nos 90 dias
-
-- Rede direta: ~zero (tempo do João como custo de oportunidade, sem desembolso)
-- Conteúdo orgânico: ~R$ 0 em mídia, ~12h/semana de tempo de João + Lucas
-- **CAC monetário efetivo: R$ 0.** Custo é tempo dos sócios
-
-Payback: instantâneo no momento da entrada (30%).
-
-### Receita esperada nos 90 dias
-
-|Mês|Linha de receita|Valor|
-|---|----------------|-----|
-|Mês 1|3 entradas Operação fundador (3 × R$ 7.800)|R$ 23.400|
-|Mês 2|Parcelas Operação (3 × R$ 1.700) + 1 implementação avulsa fundador|R$ 13.100|
-|Mês 3|Parcelas + 1ª turma Ignição fundador (8 × R$ 6.800) + 1 implementação avulsa|R$ 67.200|
-|**Total 90 dias**||**~R$ 103.700**|
-
-Cenário conservador (apenas 2 Operação fundador fechados em vez de 3): ~R$ 75.000 acumulado em 90 dias.
+Conteúdo bruto > conteúdo perfeito. A jornada é a parte que ninguém mais mostra.
 
 -----
 
-## Seção 05 · Canais no MVP
+## Seção 03 · Produtos low ticket detalhados
 
-### Mescla rede direta + conteúdo orgânico em paralelo
+### SKU 01 · Mapa de IA pro seu Negócio
 
-Decisão executiva: as duas frentes rodam ao mesmo tempo desde o dia 1. Rede direta gera caixa imediato; conteúdo orgânico constrói o funil sustentável para depois dos 90 dias.
+**Preço-alvo:** R$ 97–147 (decisão final após teste A/B no tráfego)
 
-### Frente 1 · Rede direta (fecha os 3 fundadores)
+**Componentes:**
+- Página de venda com promessa específica e gatilhos
+- Assessment online (~20 perguntas) que captura faturamento, headcount, processos atuais, dor principal, urgência
+- Relatório personalizado gerado por IA (Claude API + template estruturado) com 3 oportunidades priorizadas + matriz Impacto × Esforço
+- Mini-curso gravado de 30 min explicando como ler e priorizar o relatório
+- E-mail de follow-up D+3 com convite para o SKU 02 ou para call de diagnóstico
 
-- **Operador:** João (sócio comercial)
-- **Lista inicial:** 20 nomes da rede direta — contatos do Heziom, rede do Lucas, participantes de eventos de IA dos últimos 6 meses
-- **Cadência:** 5 abordagens/semana, mensagem pessoal via WhatsApp, sem template óbvio
-- **Conversão esperada:** 15–20% dos 20 viram conversa → 3–4 conversas → 2–3 contratos fechados em 30 dias
+**Esforço de produção:** ~30–50h (formulário no Lovable, prompt do relatório, mini-curso gravado, sequência de e-mail) — JG e Lucas dividem
 
-### Frente 2 · Conteúdo orgânico (constrói funil 30+ dias)
+**Custo unitário (após venda):** ~R$ 5–10 (APIs Claude para o relatório + hospedagem). Margem real acima de 90%.
 
-|Canal|Operador|Frequência|Conteúdo|
-|-----|--------|----------|--------|
-|Instagram Trívia|João + Lucas (rotativo)|4 posts/semana|Mix: caso (40%), diagnóstico (30%), contra-narrativa (20%), bastidor (10%)|
-|LinkedIn Lucas|Lucas|2–3 posts/semana|Tese técnica, IA em sistema crítico|
-|LinkedIn João|João|2–3 posts/semana|Gestão, cases Heziom, perspectiva comercial|
-|Newsletter mensal (mês 2+)|João|1×/mês|Lista construída via opt-in da LP|
+### SKU 02 · Implementador IA Trívia
 
-### Frente 3 · Parcerias (gap do plano oficial — adicionado aqui)
+**Preço-alvo:** R$ 297–497
 
-> *Para PME, indicação de fornecedor de confiança vale mais que conteúdo.*
+**Componentes:**
+- Mini-curso gravado (~4h): framework TRIA detalhado, princípios de seleção de caso de uso, princípios de implementação responsável
+- 1 caso real da operação Trívia explicado fim-a-fim (JimmyAtende ou similar)
+- 1 sessão sobre erros comuns e armadilhas
+- Comunidade no WhatsApp (sem suporte ativo dos sócios; é peer-to-peer)
+- E-mail de upsell para mentoria D+14 e D+30
 
-|Parceiro tipo|Como funciona|Comissão sugerida|
-|-------------|-------------|-----------------|
-|Contador (ex: C. Brasil)|Indica cliente PME que mencionou IA. Trívia paga comissão na venda fechada.|10% da venda Operação ou Board|
-|Consultoria de gestão|Aplica TRIA como módulo de IA dentro de programas maiores|R$ 3k/cliente indicado fechado|
-|Comunidade fechada (G4, Endeavor, AHRM)|Lucas/João palestra como autoridade técnica; comunidade vira funil|Sem comissão direta — palco vale|
-|Ex-cliente Heziom|Indica par dele com programa de cashback|R$ 2k em crédito de implementação adicional|
+**O que NÃO está no SKU 02 (fica exclusivo da mentoria):**
+- Templates prontos de n8n
+- Prompts proprietários
+- Acesso aos sócios
+- Implementação acoplada
 
-Meta de parcerias nos 90 dias: estruturar 2 contratos formais (contador + consultoria). Não exige captação ativa de cliente — é canal de longo prazo.
+**Esforço de produção:** ~60–100h (roteiro + gravação + edição básica + comunidade) — JG e Lucas dividem
 
-### Frente 4 · Marketplace (avaliação, não ação no MVP)
+**Custo unitário (após venda):** ~R$ 0 marginal. Margem acima de 95%.
 
-Entrar como mentor em programa existente (G4, Endeavor, ESPM, AHRM) só após mês 4–6, quando tiver caso publicado. Tentar antes prejudica o posicionamento premium.
+### Onde o low ticket termina e a mentoria começa
 
------
+A regra de produto pra evitar canibalização:
 
-## Seção 06 · Funil MVP
+|O que o low ticket faz|O que só a mentoria faz|
+|---------------------|----------------------|
+|Mostra **como pensar** sobre IA na empresa|Faz a triagem 1:1 do negócio do cliente|
+|Mostra **um caso real** da nossa operação|Implementa **o caso do cliente**, com nosso time|
+|Dá **framework e princípios**|Dá os **templates, prompts e fluxos** proprietários|
+|É **autoatendido**|Tem **acesso direto** aos sócios|
 
-### Volumes realistas nos 90 dias
-
-|Etapa|Mês 1|Mês 2|Mês 3|Observação|
-|-----|-----|-----|-----|----------|
-|Leads (orgânico + rede)|25|30|40|Rede direta domina mês 1; orgânico cresce depois|
-|Qualificados (passam nas 4 perguntas)|10|15|20||
-|Calls de diagnóstico|6|10|12||
-|Propostas enviadas|4|6|8||
-|Contratos fechados|3 Operação fundador|2 (1 implementação + 1 Operação)|3 (turma Ignição + 1 Board)|Meta total mês 1: 3 fundadores Operação assinados|
-
-### Ciclo de venda esperado
-
-- **Rede direta (mês 1):** 7 a 14 dias do primeiro contato ao contrato assinado. Calor da relação encurta o ciclo.
-- **Orgânico (mês 2+):** 30 a 60 dias do primeiro toque ao contrato. Lead precisa amadurecer com conteúdo.
-- **Indicação (parceria):** 14 a 21 dias. Confiança transferida acelera.
-
-### Win rate por etapa
-
-|Transição|Esperado MVP|Esperado regime maduro|
-|---------|------------|---------------------|
-|Lead → qualificado|40%|40%|
-|Qualificado → call|60%|60%|
-|Call → proposta|65%|65%|
-|Proposta → fechado|60% (rede direta) · 30% (orgânico)|35% (blendado)|
-
-A taxa proposta→fechado da rede direta é mais alta porque é venda calorosa. À medida que o funil orgânico aumenta peso, a taxa blendada cai pra ~35% — alinhado ao plano oficial.
-
-### NRR e churn (Board)
-
-Como Board no MVP só fecha mês 3, não há histórico para projetar churn. Premissa de trabalho: 80% de renovação no fim do ano 1 (1 em 5 não renova). Reavaliar a cada caso fechado.
+Cada material do low ticket termina com a mensagem: *"Isso te dá clareza. Pra execução com nossa equipe, conheça a mentoria TRIA."*
 
 -----
 
-## Seção 07 · Playbook fundador
+## Seção 04 · Tráfego pago
 
-### Roteiro da call de diagnóstico (45 min)
+### Budget de validação
 
-|Minuto|Bloco|Objetivo|
-|------|-----|--------|
-|0–5|Contexto do dono|Como está a empresa? O que mudou nos últimos 12 meses?|
-|5–15|Dor central|Onde o time perde mais tempo? O que o cliente faz repetidamente?|
-|15–25|Demo ao vivo|JimmyAtende qualificando o lead na frente do cliente. 3 minutos. Fecha objeção técnica.|
-|25–35|Apresentação TRIA|Método 4 fases. 3 tiers. Preço fundador.|
-|35–40|Próximos passos|Proposta em 24h. Decisão em 7 dias.|
-|40–45|Perguntas abertas|Ouvir mais que falar.|
+|Fase|Budget/mês|Foco|
+|----|---------|----|
+|Validação (mês 3)|R$ 500|SKU 01 apenas, 1 criativo, 1 público|
+|Validação ampliada (mês 4)|R$ 1.000|SKU 01 + SKU 02, 3 criativos, 2 públicos|
+|Escala condicionada (mês 5+)|R$ 2–5k|Decidir após calibragem de ROAS|
 
-### Top 5 objeções e respostas-base
+### Métricas-alvo na validação
+
+|Métrica|Meta inicial|Sinal verde pra escalar|
+|-------|------------|----------------------|
+|CAC do SKU 01|< R$ 50|< R$ 30|
+|ROAS direto SKU 01|≥ 1,5x|≥ 2,5x|
+|Conversão SKU 01 → SKU 02|≥ 15%|≥ 25%|
+|Conversão SKU 02 → call de mentoria|≥ 3%|≥ 5%|
+|LTV blendado|≥ R$ 200|≥ R$ 400|
+
+### Canais
+
+- Meta Ads (Instagram + Facebook): primário, dado o ICP
+- LinkedIn Ads: testar a partir do mês 4 para perfil B2B mais sênior
+- Google: avaliar só após estabilizar Meta
+
+### Operador
+
+> *A definir — JG, Lucas, ou freela/agência terceirizada. Não é decisão urgente; resolver até a 1ª retro mensal.*
+
+-----
+
+## Seção 05 · Conteúdo orgânico
+
+### Estrutura permanente
+
+|Canal|Operador|Frequência|Pilar dominante|
+|-----|--------|----------|---------------|
+|Instagram Trívia|JG + Lucas (rotativo)|4 posts/semana|Cases (40%), diagnóstico (30%), contra-narrativa (20%), bastidor (10%)|
+|LinkedIn Lucas|Lucas|2–3 posts/semana|Tese técnica, IA em sistema crítico, perspectiva de SRE/chaos|
+|LinkedIn JG|JG|2–3 posts/semana|Gestão, cases Heziom, perspectiva comercial, pivot Trívia|
+|Newsletter (mês 2+)|JG|1×/mês|Lista construída via opt-in do low ticket e LP|
+
+### Conteúdo dos cases pseudo-gratuitos como combustível
+
+Cada case gera entre 8 e 12 peças de conteúdo ao longo das 8–12 semanas:
+- 2 posts de "antes" (problema do cliente, hipótese)
+- 4–6 posts de bastidor durante a implementação
+- 1 live ou vídeo longo na conclusão
+- 1 carrossel de números e impacto
+- 1 áudio-depoimento
+
+Isso resolve a falta crônica de pauta dos primeiros meses. Sem case rodando, conteúdo trava.
+
+-----
+
+## Seção 06 · Funil esperado por fase
+
+### Fase 1 (meses 1–2) — sem funil pago
+
+- Conteúdo orgânico semeando
+- Base da newsletter cresce de 0 a ~100 inscritos (via opt-in da LP)
+- Receita: cases simbólicos apenas (R$ 0 a R$ 3k acumulados)
+
+### Fase 2 (meses 3–4) — funil pago de low ticket
+
+|Etapa|Mês 3 (budget R$ 500)|Mês 4 (budget R$ 1.000)|
+|-----|--------------------|----------------------|
+|Cliques pagos|~500–1.000|~1.000–2.000|
+|Compradores SKU 01|10–25|30–60|
+|Compradores SKU 02 (cross-sell)|2–4|6–12|
+|Receita low ticket|R$ 1.000–4.000|R$ 4.000–12.000|
+
+### Fase 3 (meses 5–6+) — esteira completa
+
+- Base acumulada de low ticket: 100–300 compradores
+- Calls de diagnóstico de mentoria: 5–10/mês
+- Conversão call → contrato: 30%
+- Vendas mensais de mentoria: 1–3 Operação + 1ª turma Ignição até o mês 6
+
+### Conversões realistas da esteira
+
+|Transição|Faixa típica do mercado|Nossa meta|
+|---------|----------------------|----------|
+|Tráfego → comprador SKU 01|2–5%|3%|
+|SKU 01 → SKU 02|10–30%|20%|
+|SKU 02 → call de mentoria|2–10%|5%|
+|Call → contrato de mentoria|25–40%|30%|
+
+Multiplicando: 100 compradores SKU 01 → 20 SKU 02 → 1 call → ~0,3 venda de Operação. Pra rodar 2 Operação/mês na fase 3 é necessário acumular base de ~400 compradores SKU 01 + outros canais (cases, orgânico, rede).
+
+> *Por isso a fase 1 não pode ser pulada. Cases e orgânico geram leads de mais alto valor que o tráfego pago, com conversão muito superior.*
+
+-----
+
+## Seção 07 · Projeção de receita · 6 meses
+
+|Mês|Receita estimada|Composição|
+|---|----------------|----------|
+|1|R$ 0–3k|Cases simbólicos (1 ou 2 fechados)|
+|2|R$ 0–3k|Cases simbólicos + produção dos low ticket|
+|3|R$ 1–4k|Lançamento SKU 01 + 1ª venda residual|
+|4|R$ 5–15k|SKU 01 escala + SKU 02 lança + workshop ao vivo opcional|
+|5|R$ 15–40k|Base começa a converter pra mentoria: 1 Operação + low ticket residual|
+|6|R$ 50–100k|1–2 Operação + 1ª turma Ignição (5–8 alunos × R$ 9.800) + low ticket residual|
+|**Total 6 meses**|**R$ 70–165k**||
+
+> *Premissa: tráfego pago calibrado dentro das metas + 2 cases pseudo-gratuitos concluídos até o mês 2. Se um dos dois falhar, deslocar +1 mês.*
+
+Cenário pessimista (50% das metas batidas): ~R$ 35–80k em 6 meses.
+
+-----
+
+## Seção 08 · Playbook de venda
+
+### Sequência automática pós-compra de low ticket
+
+|Dia|Mensagem|Canal|Objetivo|
+|---|--------|-----|--------|
+|D+0|Bem-vindo + acesso + comunidade WhatsApp|E-mail + WhatsApp|Entrega do produto|
+|D+3|"Como você está aplicando? Qualquer dúvida me responde"|E-mail|Engajamento|
+|D+7|Conteúdo extra gratuito + indicação do SKU 02 (se comprou só o 01)|E-mail|Cross-sell|
+|D+14|Convite para workshop ao vivo (R$ 497) ou call de diagnóstico|E-mail|Subir ticket|
+|D+21|Oferta da mentoria TRIA|E-mail + WhatsApp|Conversão premium|
+|D+30+|Cadência de nutrição via newsletter|E-mail|Long tail|
+
+### Triggers de upgrade manual (JimmyAtende avisa o JG)
+
+- Lead completou 80% do mini-curso SKU 02
+- Lead perguntou na comunidade sobre tema fora do escopo
+- Lead comprou os 2 SKUs
+- Lead respondeu o assessment com faturamento R$ 10MM+ e urgência alta
+
+Todo trigger gera uma mensagem manual do JG via WhatsApp dentro de 24h.
+
+### Roteiro de call de upgrade
+
+Mesmo roteiro de 45 min do plano oficial, com uma diferença: o lead já consumiu material nosso. Os primeiros 5 min focam em **o que ele já tentou fazer com o conteúdo** e onde travou.
+
+### Top objeções e respostas-base
 
 |Objeção|Resposta-base|
 |-------|-------------|
-|*"Preciso pensar com meu sócio."*|"Faz total sentido. Mando a proposta hoje, agendo call de 30 min com vocês dois quinta. Pode ser?"|
-|*"R$ 26k é caro."*|"Caro comparado ao quê? Curso de R$ 15k que não te entrega IA rodando, ou agência de R$ 80k que te entrega refém? O fundador paga 33% a menos pra virar caso público. Os próximos pagam R$ 39k."|
-|*"E se não funcionar?"*|"Em Operação garantimos a entrega da plataforma. Se atrasarmos por nossa causa, estendemos sem custo. E se o seu time não engajar 4h/semana, congelamos sem multa por até 60 dias."|
-|*"Já testei chatbot, não deu certo."*|"O problema é quase sempre o caso de uso, não a tecnologia. A fase Triagem do TRIA existe pra escolher o caso certo antes de implementar."|
-|*"Tô em outro processo seletivo de mentoria."*|"Se for FirstClass ou Sales Clube, são complementares — eles te dão visão de gestão, a gente entrega IA rodando. Se for outra mentoria de IA, me fala qual que eu te ajudo a comparar."|
-
-### Follow-up automatizado
-
-- **D+0:** proposta enviada em PDF (1 página)
-- **D+2:** mensagem do João — "deu tempo de olhar?"
-- **D+7:** mensagem do João — "estamos com 1 vaga fundadora ainda aberta, segue depoimento de cliente Heziom de referência (anexa áudio/print)"
-- **D+15:** última mensagem — "vou priorizar outros candidatos a fundador. Se mudar de ideia, me avisa"
-- **D+30:** entra na cadência de nutrição (newsletter, conteúdo)
-
-### Handoff vendedor → entregador
-
-> *Gap do plano oficial: o que acontece entre o "sim" e o kickoff.*
-
-Quem vende é João. Quem entrega é Lucas (técnico) + João (mentoria estratégica). O handoff precisa transferir tudo o que o cliente disse na venda sem que o Lucas precise reperguntar.
-
-**Documento de handoff (preencher no fechamento de cada contrato):**
-
-- Dor declarada pelo cliente (texto livre, palavras dele)
-- Caso de uso escolhido (do catálogo)
-- Promessas específicas feitas na venda (data, métrica, escopo)
-- Patrocinador interno indicado (nome, cargo)
-- Apetite do dono (alto/médio/baixo — observação do João)
-- Risco político percebido (alguém no time vai resistir?)
-
-Lucas lê esse doc antes da call de kickoff. Sem ele, kickoff trava.
+|*"Já comprei o mini-curso, isso não basta?"*|"O mini-curso te ensina a pensar. A mentoria implementa com você usando os ativos que a gente não compartilha em curso — templates de produção, fluxos n8n, e nosso time fazendo junto."|
+|*"R$ 9.800 (ou R$ 39k) é caro."*|"Caro comparado ao quê? O curso te entregou clareza. A mentoria entrega IA rodando na sua empresa em 12 semanas. Tem um caso público que você pode ver."|
+|*"E se não funcionar?"*|"Em Operação garantimos a entrega da plataforma. Se atrasarmos por nossa causa, estendemos sem custo. Cláusula de pausa se time não engajar 4h/semana."|
 
 -----
 
-## Seção 08 · Plano de execução · 90 dias
+## Seção 09 · Plano de execução · 6 meses
 
-### Cadências fixas (rodam toda semana)
+### Cadências fixas
 
 |Cadência|Frequência|Operadores|Pauta|
 |--------|----------|----------|-----|
-|Pipeline review|Segunda 8h, 30 min|João + Lucas|Cada lead em qual etapa, ações da semana|
-|Content review|Quinta 12h, 45 min|João + Lucas|O que postar Instagram + LinkedIn na semana|
-|Cliente fundador 1:1|Conforme contrato|Lucas e/ou João|Calls regulares do programa|
-|Retro mensal|Última sexta do mês, 90 min|João + Lucas|O que funcionou, o que não, ajustes pro mês seguinte|
+|Pipeline + tráfego review|Segunda 8h, 30 min|JG + Lucas|Status leads, criativos, métricas|
+|Conteúdo review|Quinta 12h, 45 min|JG + Lucas|Pauta da semana, posts de cases|
+|Cases 1:1|Conforme contrato|JG e/ou Lucas|Calls regulares com cliente do case|
+|Retro mensal|Última sexta do mês, 90 min|JG + Lucas|O que funcionou, ajustes pro mês seguinte|
 
-### Mês 01 · Fundação e captação
+### Mês 01 · Fundação e cases
 
-**Meta única:** 3 contratos Operação fundador assinados (R$ 26k cada), R$ 23.400 em caixa.
-
-|Semana|Atividade|Responsável|Saída|
-|------|---------|-----------|-----|
-|S1|Aprovação formal de tudo neste doc (preços, tiers, contrato)|João + Lucas|Doc assinado por ambos|
-|S1|Lista de 20 da rede direta|João|Planilha com nome, contato, contexto|
-|S1|Contrato Operação enviado ao advogado|João|Minuta em revisão|
-|S1|LP simples no Lovable (9 seções padrão)|Lucas|LP publicada no fim da S1|
-|S1|Bio Instagram + LinkedIn atualizadas|João + Lucas|Bios novas no ar|
-|S2|Abordagem dos 20 nomes (5/dia)|João|3+ contratos assinados ao fim da S2|
-|S2|3 posts iniciais (1 Instagram, 1 LinkedIn Lucas, 1 LinkedIn João)|Cada um|Posts publicados|
-|S2|Configuração JimmyAtende com as 4 perguntas|Lucas|Funil WhatsApp ativo|
-|S3|Onboarding dos 3 fundadores (kickoffs)|João + Lucas|Kickoffs realizados|
-|S3|Template de proposta PDF revisado|João|Template v2|
-|S3|Material da fase Triagem (templates Notion)|Lucas|Templates prontos|
-|S4|Conteúdo dobra: 4 posts Instagram, 3 LinkedIn cada|João + Lucas|Funil orgânico começa|
-|S4|Primeira call de Triagem com fundador 01|Lucas|Diagnóstico em mãos|
-
-### Mês 02 · Entrega + tração
-
-**Meta:** entregar Triagem + Roadmap dos 3 fundadores. Captar 1ª implementação avulsa fundador (R$ 8–11k). Acelerar conteúdo orgânico.
+**Meta:** 1 case pseudo-gratuito iniciado, produção do SKU 01 em andamento, conteúdo orgânico no ar.
 
 |Semana|Atividade|Responsável|
 |------|---------|-----------|
-|S5–S8|Fase Triagem + Roadmap dos 3 fundadores|Lucas (técnico) + João (negócio)|
-|S5–S8|4 posts/semana Instagram + 2–3 LinkedIn cada|João + Lucas|
-|S6|Aproximação dos 2 contadores parceiros (C. Brasil + 1 a definir)|João|
-|S6|Newsletter mensal #1 (lista da LP)|João|
-|S7|Lead da Trívia atual recebe oferta de implementação avulsa fundador|João|
-|S8|Anúncio público da 1ª turma Ignição fundador (8 vagas)|João + Lucas|
+|S1|Reunião JG + Lucas para fechar este plano (preços low ticket, lista de candidatos a case, contrato simplificado de case)|Ambos|
+|S1|LP institucional Trívia atualizada com novo posicionamento de implementadora de IA|Lucas|
+|S1|Bios Instagram + LinkedIn dos dois atualizadas|Ambos|
+|S2|Aproximação dos 5–8 candidatos a case|JG|
+|S2|Primeiros 4 posts orgânicos (1 cada Instagram, 1 LinkedIn cada)|Ambos|
+|S2|Início da produção do SKU 01 (formulário, prompt do relatório)|Lucas (dev) + JG (copy)|
+|S3|1 ou 2 cases fechados com contrato simplificado|JG|
+|S3|Mini-curso de 30 min do SKU 01 gravado|JG + Lucas|
+|S4|Kickoff dos cases|Lucas (técnico) + JG (acompanhamento)|
+|S4|Conteúdo dobra: 4 Instagram + 3 LinkedIn cada|Ambos|
 
-### Mês 03 · Validação e escala
+### Mês 02 · Cases em andamento + finalização do low ticket
 
-**Meta:** turma Ignição fundador formada (mínimo 5 alunos). Fundador 01 entra na fase Implementação. Primeiro caso Board fundador captado.
+**Meta:** 2 cases em fase de Implementação, SKU 01 pronto pra venda, SKU 02 em produção.
 
 |Semana|Atividade|Responsável|
 |------|---------|-----------|
-|S9|Captação da turma Ignição (8 vagas, R$ 6.800)|João|
-|S9–S12|Implementação dos fundadores Operação 01, 02, 03|Lucas|
-|S10|Kickoff da turma Ignição (10 semanas começam)|João + Lucas|
-|S10|Abordagem dos 5 perfis Board pré-mapeados|João|
-|S11|Primeiro depoimento de meio-de-programa do fundador 01 gravado|João|
-|S12|Retro consolidada dos 90 dias — decisões pro Q2|João + Lucas|
+|S5–S8|Implementação dos 2 cases pseudo-gratuitos|Lucas (técnico) + JG (negócio)|
+|S5–S8|4 posts/semana Instagram + 2–3 LinkedIn cada|Ambos|
+|S6|SKU 01 finalizado: LP, checkout, assessment, relatório, mini-curso|Lucas + JG|
+|S6|Primeiro conteúdo de bastidor dos cases (Reels + LinkedIn)|JG|
+|S7|Início da produção do SKU 02 (roteiro do mini-curso)|JG + Lucas|
+|S8|Newsletter #1 + opt-in ativo na LP|JG|
 
-### Responsáveis e divisão de trabalho
+### Mês 03 · Lançamento do SKU 01 + tráfego de validação
 
-|Função|Operador principal|Tempo semanal estimado|
-|------|------------------|----------------------|
-|Vendas (rede + funil)|João|10h/semana|
-|Mentoria estratégica (calls)|João|6h/semana|
-|Mentoria técnica + implementação|Lucas|8h/semana (compatível com Itaú em paralelo)|
-|Conteúdo Instagram + LinkedIn|João (gestão) + Lucas (técnico)|4h/semana cada|
-|Onboarding + handoff|João → Lucas|1h por novo cliente|
-|Pipeline review + retros|João + Lucas|2h/semana|
+**Meta:** 10–25 compradores do SKU 01, primeiros dados de ROAS, finalização do SKU 02.
 
-Total João: ~23h/semana. Total Lucas: ~14h/semana (passa do orçamento original de 8h — Lucas precisa decidir se sobe pra 14h ou se reduzimos escopo da entrega).
+|Semana|Atividade|Responsável|
+|------|---------|-----------|
+|S9|Configuração Meta Ads com 1 criativo + 1 público|A definir (JG/Lucas/freela)|
+|S9|Lançamento público do SKU 01 com R$ 500 de budget|JG|
+|S9|Encerramento dos cases pseudo-gratuitos: vídeos de depoimento e estudo escrito|JG|
+|S10|Primeira live de 30 min com dono do case 01|JG|
+|S10|SKU 02 finalizado em produção|JG + Lucas|
+|S11|Otimização inicial dos criativos com base nos dados|Operador de tráfego|
+|S12|Retro fim do mês 3|Ambos|
+
+### Mês 04 · Lançamento do SKU 02 + escala de mídia
+
+**Meta:** 30–60 SKU 01 + 6–12 SKU 02, base de 50–100 compradores.
+
+|Semana|Atividade|Responsável|
+|------|---------|-----------|
+|S13|Lançamento público do SKU 02 com cross-sell para base SKU 01|JG|
+|S13|Budget de tráfego sobe pra R$ 1.000|Operador|
+|S14|Primeiros uppgrades manuais ativados via JimmyAtende|JG|
+|S14–S16|Continuidade do conteúdo, ajuste de criativos, otimização de funil|Ambos|
+
+### Mês 05 · Primeiras ofertas premium
+
+**Meta:** 1 contrato Operação fechado (preço cheio R$ 39k) + low ticket residual.
+
+|Semana|Atividade|Responsável|
+|------|---------|-----------|
+|S17|Lista de 10 leads quentes da base do low ticket (assessment alto-fit)|JG|
+|S17|Workshop ao vivo opcional (R$ 497) pra essa lista|JG + Lucas|
+|S18–S19|5–10 calls de diagnóstico|JG (vende) → Lucas (técnico)|
+|S20|Primeira venda de Operação preço cheio|JG|
+
+### Mês 06 · Esteira completa + 1ª turma Ignição
+
+**Meta:** 1–2 Operação + 5–8 alunos na 1ª turma Ignição + low ticket rodando.
+
+|Semana|Atividade|Responsável|
+|------|---------|-----------|
+|S21|Abertura da 1ª turma Ignição com 8 vagas (R$ 9.800)|JG|
+|S21–S24|Captação da turma a partir da base de low ticket|JG|
+|S24|Kickoff da turma|Ambos|
+|S24|Retro consolidada dos 6 meses + decisões do Q3|Ambos|
 
 -----
 
-## Critério de validação ou pivô (mês 3)
+## Decisões pendentes (alinhar com Lucas)
 
-Ao final dos 90 dias, três cenários possíveis:
+1. Validar lista nominal dos 5–8 candidatos a case pseudo-gratuito (sem queimar pagador potencial)
+2. Aprovar preço final de cada SKU low ticket (faixa volume R$ 97–147 e faixa média R$ 297–497)
+3. Aprovar o conteúdo proposto pra cada SKU (assessment + relatório no 01; mini-curso de 4h no 02)
+4. Definir operador do tráfego pago (JG, Lucas, ou contratado)
+5. Validar a regra de produto que mantém templates/prompts/fluxos proprietários fora do low ticket
+6. Encaminhar contrato simplificado de case pseudo-gratuito para o advogado (cláusulas: documentação aberta, uso público, sem garantia de resultado)
+7. Encaminhar contrato Operação/Board oficial para o advogado (cláusulas de garantia, pausa, patrocinador)
+
+-----
+
+## Critério de validação ou pivô (mês 6)
+
+Ao final dos 6 meses:
 
 |Cenário|Critério|Ação|
 |-------|--------|----|
-|Confirma o modelo|3+ Operação + 5+ Ignição + 1 Board fechados|Mantém estratégia. Começa a substituir preço fundador por preço cheio a partir do mês 4.|
-|Confirma parcialmente|3 Operação fechados, mas Ignição ou Board não decolaram|Mantém Operação como carro-chefe. Pausa lançamento dos outros tiers até mês 6.|
-|Não confirma|Menos de 2 Operação fechados|Pausa a captação. Revisa ICP, mensagem e canais. Hipótese: rede direta era menor ou menos qualificada que parecia.|
-
-Em qualquer cenário, o produto não muda — muda o ritmo de expansão e os canais.
+|Confirma|2+ Operação + 5+ Ignição + 100+ compradores low ticket + ROAS ≥ 1,5x|Escala mídia, abre Board, contrata 2º dev|
+|Confirma parcial|1 Operação + low ticket rodando + base crescendo|Mantém estrutura, ajusta funil de upsell, posterga Board|
+|Não confirma|0 Operação + base abaixo de 50 + ROAS < 1x|Pausa mídia. Revisa ICP, mensagem e canais. Hipótese: ou o nicho é menor, ou o produto low ticket não está conectando.|
 
 -----
 
-## Decisões para esta semana
+## Decisões pra esta semana
 
-1. Aprovação dos preços fundador e cheios deste doc (Lucas + João).
-2. Definição se Lucas sobe de 8h pra 14h/semana, ou se reduzimos escopo da entrega no MVP.
-3. Lista nominal dos 20 da rede direta (João começa, Lucas complementa).
-4. Encaminhar contrato Operação ao advogado com as cláusulas: garantia de entrega, pausa por engajamento, patrocinador interno obrigatório.
-5. Decidir nome e local da 1ª turma Ignição (sábado de encerramento em São Paulo — qual data?).
+1. Reunião JG + Lucas pra alinhar esta versão v2 do MVP
+2. Lista de candidatos a case pseudo-gratuito (5–8 nomes pra abordar)
+3. Validação dos low ticket (formato, preço, conteúdo)
+4. Início da reposicionamento da LP institucional Trívia (implementadora de IA)
+5. Encaminhamento dos contratos pro advogado
 
 -----
 
-*Documento vivo. Revisão obrigatória ao final dos meses 1, 2 e 3 (datas nas retros mensais).*
+*Documento vivo. Revisão obrigatória nas retros mensais.*
 
-**Proposta · João Gabriel & Lucas Azevedo**
+**Proposta · João Gabriel Novais · Pendente de aprovação de Lucas Azevedo**
