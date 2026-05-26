@@ -7,10 +7,46 @@ status: done
 prioridade: media
 agente_responsavel: ""
 criado: 2026-05-08
-atualizado: 2026-05-08
+atualizado: 2026-05-26
 ---
 
 # STORY-025 — Mapeamento completo do site + remoção de travessões nas copies
+
+## Reabertura e refechamento (2026-05-26)
+
+Story foi marcada como `done` em 2026-05-08 com 63 ocorrências limpas, mas
+JG pediu uma segunda passada em 2026-05-26 ao notar que travessões voltaram
+em massa. Mapeamento mostrou:
+
+- **414 travessões em src/ + public/** (29 arquivos — explosão vs. 63 inicial)
+- **372 travessões no DB** (17 posts publicados, em `corpo_mdx`, `lede`,
+  `conclusoes_principais`, `estatisticas`, `faq` JSONB)
+
+**Causa raiz:** STORY-027 (gerador de post via IA, Claude Sonnet via
+OpenRouter) emite posts com 30-40 travessões cada. Sem lint preventivo, os
+posts geradores via `/admin/posts/novo` → "Gerar com IA" entraram com
+travessões e foram publicados sem revisão pontual.
+
+**Substituição aplicada (padrão alternativo conservador):**
+- ` — ` (em-dash com espaços) → ` - ` (hífen com espaços)
+- `—` (em-dash isolado) → `-`
+- ` – ` (en-dash com espaços) → ` - `
+- `–` (en-dash, ranges) → `-`
+
+**Cobertura final:** zero travessões em produção (Home, /sobre, /servicos,
+/noticias listagem + posts, /faq, /contato — auditados via curl + grep).
+
+**Salvaguarda criada para prevenir reincidência:** regra em
+`scripts/lint-content.ts` que falha o build se qualquer post (Git ou DB)
+tiver `—` ou `–`. Posts gerados via IA agora são rejeitados antes de chegar
+em produção.
+
+**Commits:**
+- `15fe874` — 414 substituições em 31 arquivos
+- `3671541` — empty push pra trigger rebuild após PATCHs no DB
+- 25 PATCHs em `site.posts` (14 + 11 round de campos JSONB esquecidos)
+
+---
 
 ## Contexto
 
