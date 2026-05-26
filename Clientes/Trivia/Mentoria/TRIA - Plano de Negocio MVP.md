@@ -36,7 +36,7 @@ As fases se sobrepõem. Cases continuam saindo durante a fase 2; o low ticket co
 
 |SKU|Faixa|O que entrega|Promessa|Função no funil|
 |---|-----|-------------|--------|--------------|
-|01 · Mapa de IA pro seu Negócio|R$ 97–147 (volume)|Assessment online (questionário) → relatório personalizado gerado por IA com 3 oportunidades priorizadas + framework Impacto × Esforço em PDF + áudio/vídeo gerado via NotebookLM apresentando o relatório|"Em 30 minutos, você sai com 3 oportunidades reais de IA pra sua empresa, priorizadas por impacto e esforço."|Captura leads em massa via tráfego. O próprio relatório qualifica o lead pra próxima oferta.|
+|01 · Mapa de IA pro seu Negócio|R$ 97–147 (volume)|**Conselheiro IA Estratégico Trívia** (Skill pro Claude + GPT pro ChatGPT) com cérebro composto por 15+ frameworks consagrados (Porter, Canvas, Blue Ocean, OKRs, JTBD, RICE, V2MOM, PDCA, SWOT, Eisenhower, RAPID, Radical Candor, entre outros) + assessment online → relatório personalizado com 3 oportunidades priorizadas + framework Impacto × Esforço em PDF + vídeo/áudio NotebookLM apresentando o relatório|"Em 30 minutos, você sai com um conselheiro IA estratégico que entra na sua rotina amanhã + 3 oportunidades reais de IA priorizadas pra sua empresa."|Captura leads em massa. O conselheiro entrega valor imediato no dia-a-dia; o relatório qualifica o lead pra próxima oferta.|
 |02 · Decisão Executiva de IA|R$ 297–497 (média)|Mini-curso gravado (~4h) sobre como o **dono** toma decisão de IA na empresa: ROI, riscos, escolha de fornecedor, gestão do projeto, governance, métricas executivas — perspectiva de **liderança**, não de implementação|"Aprenda a decidir, contratar e governar IA como executivo, sem precisar virar técnico."|Quem termina percebe: "preciso de alguém que execute pra mim." Vai pra mentoria.|
 
 > *Acima de ~R$ 497 o cliente já não compra mini-curso — ele compra mentoria. Por isso esse é o teto do low ticket.*
@@ -160,8 +160,35 @@ Conteúdo bruto > conteúdo perfeito. A jornada importa mais que o resultado pol
 
 **Preço-alvo:** R$ 97–147 (decisão final após teste A/B no tráfego)
 
-**Componentes:**
+**O ativo central do SKU — Conselheiro IA Estratégico Trívia**
+
+> *Decisão de produto adicionada após feedback do Lucas: o SKU precisa entregar algo que o dono USE NO DIA SEGUINTE à compra. O conselheiro IA é esse elemento. O assessment + relatório dão clareza estratégica; o conselheiro entra na rotina.*
+
+Conselheiro implementado em dois formatos pra cobrir tanto quem usa Claude quanto quem usa ChatGPT:
+- **Skill nativa pro Claude** (Anthropic Skill SDK) — versão premium, recomendada
+- **GPT customizado pra ChatGPT** — versão de alcance, mesmo cérebro
+
+**Cérebro composto por 15+ frameworks consagrados de gestão**, sem amarração a personalidade específica do mercado brasileiro (decisão tomada pra não ficar refém de figura conhecida só em nicho — ex: G4):
+
+|Categoria|Frameworks|
+|---------|----------|
+|Estratégia|Porter (5 Forças), Business Model Canvas, Blue Ocean, JTBD, SWOT|
+|Priorização|RICE, ICE, Eisenhower, MoSCoW|
+|Execução e metas|OKRs, V2MOM (Salesforce), PDCA, North Star Metric|
+|Decisão|RAPID, DACI, Pre-mortem|
+|Pessoas|Radical Candor, 9-Box, Topgrading|
+|Operações|Lean, Theory of Constraints, Kaizen|
+
+**Casos de uso típicos do conselheiro (testados antes do lançamento):**
+- "Vou ter reunião com sócio amanhã sobre expandir pra nova praça. Use Porter + JTBD pra montar minha pauta."
+- "Tenho 3 candidatos pra diretor financeiro. Use Topgrading pra estruturar a entrevista."
+- "Quero priorizar minha lista de 12 iniciativas pro próximo trimestre. Use RICE."
+- "Preciso preparar uma análise de concorrência pra reunião de conselho. Use 5 Forças de Porter."
+
+**Componentes completos do SKU 01:**
 - Página de venda com promessa específica
+- Conselheiro IA Estratégico Trívia (Skill pro Claude + GPT pro ChatGPT)
+- Manual de uso do conselheiro (1 página, casos de uso típicos e prompts de partida)
 - Assessment online (~20 perguntas) capturando faturamento, headcount, processos atuais, dor principal, urgência
 - Relatório personalizado gerado por IA (Claude API + template estruturado) com 3 oportunidades priorizadas + matriz Impacto × Esforço
 - Framework de priorização em PDF estilizado
@@ -170,9 +197,9 @@ Conteúdo bruto > conteúdo perfeito. A jornada importa mais que o resultado pol
 
 **O que NÃO tem (deliberadamente):**
 - Não tem mini-curso longo. Quem quer aprender vai pro SKU 02.
-- Não tem template pronto pra implementar nada. A entrega é estratégica, não técnica.
+- Não tem template pronto pra implementar IA na operação. A entrega é estratégica (decisão), não técnica (execução).
 
-**Esforço de produção:** ~20–30h (formulário no Lovable, prompt do relatório, framework em PDF, vídeo NotebookLM, sequência de e-mail, página de venda) — produção rápida, factível em 2–3 semanas.
+**Esforço de produção:** ~30–45h (configuração da Skill/GPT com a base de frameworks, formulário no Lovable, prompt do relatório, framework em PDF, vídeo NotebookLM, sequência de e-mail, página de venda) — produção rápida, factível em 2–3 semanas.
 
 **Custo unitário (após venda):** ~R$ 3–8 (APIs Claude + hospedagem). Margem real acima de 95%.
 
@@ -463,37 +490,43 @@ Mesmo roteiro de 45 min do plano oficial, com uma diferença: o lead já consumi
 
 ## Decisão de nome da mentoria
 
-> *JG receoso de "TRIA" confundir com "Trívia" (parece typo). Decisão pendente com Lucas.*
+> *JG e Lucas alinharam: as primeiras opções (Forja, Núcleo, Eixo, Vetor, Norte, Pulso) ficaram genéricas. Esta segunda rodada propõe nomes com gancho narrativo mais forte, distantes de comoditização.*
 
-### Opção A · Manter TRIA como método, novo nome comercial pra mentoria
+### Critérios de um nome melhor
 
-O método interno continua sendo **TRIA** (Triagem, Roadmap, Implementação, Ativação — o trabalho do Lucas está preservado). A mentoria recebe outro nome comercial.
+- **Carrega uma história**, não só um conceito vago de potência
+- **Som distinto** de "Trívia" (sem risco de typo aparente)
+- **Defensável**: difícil de copiar literalmente, mesmo por concorrente futuro
+- **Funciona em uma frase de vendas**: "Eu faço a [NOME]" tem que soar bem
+- **Compatível com TRIA como método interno**, preservando o trabalho do Lucas (Triagem, Roadmap, Implementação, Ativação)
 
-Sugestões de nome comercial (palavras de potência):
+### Opção A · Nomes-narrativa (cada um carrega uma história)
 
-|Nome|Conceito|
-|----|--------|
-|**Forja IA**|Onde se forja IA na empresa. Sugere construção, calor, transformação. Curto.|
-|**Núcleo IA**|Núcleo central de IA no negócio.|
-|**Eixo IA**|Eixo de transformação. Som forte e curto.|
-|**Pulso IA**|Pulso vivo de IA na empresa.|
-|**Vetor IA**|Vetor de mudança. Soa técnico e premium.|
-|**Norte IA**|Direção, bússola. Mais conceitual.|
+|Nome|A história que o nome conta|Frase de vendas|
+|----|---------------------------|---------------|
+|**Travessia**|IA é a ponte entre o que sua empresa é hoje e o que ela pode ser. Você não compra um curso, você atravessa uma fronteira com guia experiente.|"Faço a Travessia com você."|
+|**Tese**|Você não compra mentoria, você compra a tese sobre IA pra sua empresa — fundamentada, defensável, executável.|"Construo a sua Tese de IA."|
+|**Atlas**|Carrega o mundo. Quem entra na Atlas tem dois ombros experientes pra dividir o peso da decisão de IA.|"Atlas: mentoria de IA que carrega junto."|
+|**Posse**|Em vez de virar refém de fornecedor (a dor central do ICP), você tem POSSE da IA na sua empresa. O nome é a promessa.|"Você ganha Posse da sua IA."|
+|**Maestria**|Premium e claro. Maestria sobre IA aplicada à sua empresa, não sobre IA como tema acadêmico.|"Caminho pra Maestria em IA."|
+|**Ofício**|Ofício = trabalho artesanal, maestria conquistada. Diferencia de commodity ("agência de IA"). Posicionamento de guilda.|"O Ofício de implementar IA."|
 
-### Opção B · Novo acrônimo substituindo TRIA
+### Opção B · Substituir TRIA por novo acrônimo
 
-Manter a lógica de acrônimo (igual ao TRIA) mas com palavra-resultado diferente.
+Mesma lógica que o acrônimo do Lucas, com palavra-resultado diferente.
 
-|Acrônimo|Significado|Som|
-|--------|----------|---|
-|**ROTA**|Reconhecer · Organizar · Transformar · Ativar|Limpo, jornada|
-|**APIA**|Análise · Plano · Implementação · Ativação|Sugere "apoia"|
-|**EIXO**|Estruturar · Implementar · eXecutar · Operar|Forçado, melhor evitar|
-|**GERA**|Garantir · Estruturar · Realizar · Ativar|Som de resultado|
+|Acrônimo|Significado|Comentário|
+|--------|----------|----------|
+|**ROTA**|Reconhecer · Organizar · Transformar · Ativar|Sugere jornada com começo, meio e fim. Limpo.|
+|**MAPA**|Mapear · Aplicar · Provar · Ativar|Conceito visual, "mapa de IA".|
+|**SOMA**|Selecionar · Operacionalizar · Medir · Ativar|Posicionamento de resultado acumulado.|
+|**APIA**|Análise · Plano · Implementação · Ativação|Sugere "apoia" — risco de soar fofo demais.|
 
-### Recomendação
+### Recomendação atualizada
 
-A **Opção A com "Forja IA"** preserva o trabalho do Lucas (TRIA continua como método interno, descrito na metodologia) e dá um nome comercial novo, distintivo e premium. O time interno fala "vamos rodar a fase Triagem do TRIA"; o cliente compra "Forja IA mentoria".
+**Atlas** ou **Travessia** são os dois nomes mais defensáveis desta lista — ambos carregam uma narrativa que sustenta posicionamento premium e diferenciam clara e imediatamente da concorrência. **Posse** é a aposta arriscada-de-alto-upside: é a única que coloca como nome a dor que o ICP mais sente (virar refém do fornecedor), o que dá uma força comercial rara.
+
+Se preferirem manter formato de acrônimo, **ROTA** é a melhor da Opção B — mas perde força narrativa em relação aos nomes-história.
 
 Decisão final fica com JG + Lucas.
 
