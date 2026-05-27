@@ -1,6 +1,6 @@
 # Meta CAPI — Configuração Tray Ecommerce
 
-**Status:** ✅ Implementado, testado e validado (26/05/2026)
+**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key event configurado (27/05/2026)
 
 ## Contexto
 
@@ -112,8 +112,28 @@ O mesmo `eventId` (`tray_purchase_{orderId}_{timestamp}`) é enviado tanto no `f
 - GTM usa ECMASCRIPT_2015 como modo de compilação — async/await e arrow functions não são suportados.
 - 3 fixes aplicados durante o E2E: CORS preflight, token CAPI atualizado, country hasheado.
 
+## GA4 — Configuração de Key Events (27/05/2026)
+
+### Estrutura de propriedades identificada
+
+| Conta GA4 | Propriedade | Stream | Measurement ID |
+|---|---|---|---|
+| Editora Heziom - TRAY (334400083) | Editora Heziom - Tray (p464741321) | Editora Heziom - Tray | — |
+| Editora Heziom - TRAY (334400083) | Editora Heziom - Tray (p464741321) | LP Coleções 2026 | `G-RPPLKVTJTV` |
+
+> A LP `colecoes.editoraheziom.com.br` e o ecommerce `www.editoraheziom.com.br` compartilham a **mesma propriedade GA4** (p464741321), com dois streams distintos.
+
+### Key events configurados
+
+| Evento | Stream | Status | Data |
+|---|---|---|---|
+| `generate_lead` | LP Coleções 2026 | ✅ Ativado como evento principal | 27/05/2026 |
+| `purchase` | Editora Heziom - Tray | ✅ Já era evento principal (nativo) | — |
+
+> `generate_lead` **não existe** no stream do ecommerce Tray — correto, pois não há formulário de leads na loja. Nenhuma ação necessária lá.
+
 ## Pendente
 
-- [ ] Marcar `generate_lead` como key event no GA4 (disponível 27/05/2026 — aguardar 24h)
-- [ ] Monitorar Meta Events Manager por 48h para confirmar eventos reais de compra chegando
+- [x] Marcar `generate_lead` como key event no GA4 — ✅ concluído 27/05/2026
+- [ ] Monitorar Meta Events Manager por 48h para confirmar eventos reais de compra chegando (prazo: 28/05/2026)
 - [ ] Avaliar adição de `InitiateCheckout` na tag GTM para rastrear início de checkout
