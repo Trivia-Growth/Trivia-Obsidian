@@ -45,6 +45,19 @@ substitui: Flowbiz
 
 ---
 
+## Tracking & Pixels — Implementado (LP + Ecommerce)
+
+> Infraestrutura de rastreamento operacional (Meta Pixel + CAPI server-side + GA4) já no ar, separada do CRM em construção.
+
+| Nota | Status | Cobertura |
+|---|---|---|
+| [[Meta CAPI — Configuração Tray Ecommerce]] | ✅ No ar | CAPI server-side via webhooks Tray + tracking completo da LP `colecoes.editoraheziom.com.br`: PageView, scroll depth (`percent_scrolled`), ViewContent/AddToCart por combo, `ver_colecao_click`, lead capture, GA4 key events |
+
+- **LP Coleções 2026 (Plano Bomba):** GA4 `G-RPPLKVTJTV` + Pixel `297709555050094`, inline (sem GTM). Repo de deploy `heziom/LPplanobomba` (clonado em `~/Documents/Obsidian/Github/LPplanobomba`, auto-deploy Netlify).
+- **Ecommerce Tray:** CAPI Purchase server-side (`heziom/heziom-api`), dedup browser↔server via `event_id` determinístico (GTM v20).
+
+---
+
 ## Segmentações Desejadas (impossíveis hoje no Flowbiz)
 
 - "Clientes que compraram teologia reformada nos últimos 90 dias e não abriram últimos 3 e-mails"

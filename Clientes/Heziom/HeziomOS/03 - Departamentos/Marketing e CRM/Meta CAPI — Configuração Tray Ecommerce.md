@@ -1,6 +1,6 @@
 # Meta CAPI — Configuração Tray Ecommerce
 
-**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026) · `ver_colecao_click` rastreado (28/05/2026) · **GA4 Custom Dimension `percent_scrolled` registrada (28/05/2026)**
+**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026) · `ver_colecao_click` rastreado (28/05/2026) · GA4 Custom Dimension `percent_scrolled` registrada (28/05/2026) · **GTM v20 — dedup alinhada browser↔server (28/05/2026)**
 
 ## Contexto
 
@@ -64,48 +64,37 @@ Compra confirmada na Tray
 - **Tag:** `5 - Meta Pixel - Purchase`
   - Tipo: HTML personalizado (ES5 puro — sem async/await)
   - Trigger: `Evento Personalizado - Purchase`
-  - **Versão publicada: v19** (26/05/2026 16:20)
+  - **Versão publicada: v20** (28/05/2026) — dedup fix + remove fetch CAPI (fallback only)
 
-### Código da tag GTM
+### Código da tag GTM (v20 — fallback only)
 
 ```html
 <script>
 (function() {
-  var email = '{{dtl - email - purchase}}';
   var orderId = '{{dtl - transaction ID}}';
   var value = '{{dtl - value - purchase}}';
   if (!window.fbq) return;
-  var eventId = 'tray_purchase_' + orderId + '_' + Date.now();
+  var eventId = 'tray_purchase_' + orderId;
   fbq('track', 'Purchase', {
     value: parseFloat(value)||0,
     currency: 'BRL',
     content_type: 'product',
     order_id: orderId
   }, { eventID: eventId });
-  fetch('https://api.editoraheziom.com.br/api/tray-capi', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Tray-Webhook-Secret': 'hz_tray_2026_xK9p4mR7vQs'
-    },
-    body: JSON.stringify({
-      type: 'order_payment_confirmed',
-      order: { id: orderId, total: value, status: 'approved', customer: { email: email } },
-      _gtm_event_id: eventId
-    })
-  }).catch(function(){});
 })();
 </script>
 ```
 
+> **Nota v20:** Removido `Date.now()` do eventId (agora determinístico, alinhado com server-side) e removido o `fetch` ao `/api/tray-capi` (CAPI agora é disparado exclusivamente via webhooks server-side). A tag GTM serve apenas como fallback browser-side para deduplicação com o mesmo `event_id`.
+
 ### Deduplicação (atualizado 28/05/2026)
 
-**Camadas de deduplicação:**
+**Camadas de deduplicação — todas operacionais:**
 
-1. **Meta event_id** — O server-side usa `event_id = tray_purchase_{orderId}` (determinístico). Se o browser-side (GTM) também disparar para o mesmo pedido, a Meta deduplica automaticamente desde que o `eventID` seja igual.
-2. **Server-side dedup** — Antes de disparar CAPI, a function verifica na tabela `tray_webhook_log` se já existe um registro `processed=true` para aquele pedido. Se sim, não dispara novamente. Isso evita múltiplos disparos quando a Tray envia vários `order.update` para o mesmo pedido.
+1. **Meta event_id (browser ↔ server)** — Ambos usam `event_id = tray_purchase_{orderId}` (determinístico, sem `Date.now()`). Se o browser-side (GTM v20) e o server-side (webhook) dispararem para o mesmo pedido, a Meta deduplica automaticamente.
+2. **Server-side dedup (Supabase)** — Antes de disparar CAPI, a function verifica na tabela `tray_webhook_log` se já existe um registro `processed=true` para aquele pedido. Se sim, não dispara novamente. Isso evita múltiplos disparos quando a Tray envia vários `order.update` para o mesmo pedido.
 
-**⚠️ Ação pendente:** Atualizar o GTM tag `5 - Meta Pixel - Purchase` para usar `eventId = 'tray_purchase_' + orderId` (sem `Date.now()`) para alinhar com o server-side. Até lá, a deduplicação Meta não funciona entre browser ↔ server (mas o server-side dedup próprio impede duplos CAPI).
+✅ **Resolvido (GTM v20, 28/05/2026):** Tag GTM atualizada para usar `eventId = 'tray_purchase_' + orderId` e removida a chamada `fetch` ao `/api/tray-capi` (agora o server-side via webhooks é o primário; GTM fica como fallback browser-side apenas).
 
 ### Mapeamento de status Tray → CAPI
 
@@ -123,7 +112,7 @@ Compra confirmada na Tray
 ### Observações técnicas
 
 - ~~Tray não suporta webhooks via UI admin~~ **Webhooks ativados via ticket de suporte (28/05/2026)** — 12 escopos ativos, URL: `https://api.editoraheziom.com.br/webhooks/tray`
-- **Arquitetura híbrida atual:** GTM browser (v19) + Webhook server-side. Ambos podem disparar CAPI Purchase. Planejado desativar GTM Purchase e usar apenas server-side.
+- **Arquitetura final (v20):** Webhook server-side é o primário para CAPI Purchase. GTM browser (v20) mantém apenas `fbq('track', 'Purchase')` como fallback — não dispara CAPI diretamente. Deduplicação garantida pelo `event_id` determinístico compartilhado.
 - Email, telefone, nome, CEP, cidade, estado e país são **hash SHA256** antes de chegar à Meta (LGPD-safe).
 - GTM usa ECMASCRIPT_2015 como modo de compilação — async/await e arrow functions não são suportados.
 - 3 fixes aplicados durante o E2E: CORS preflight, token CAPI atualizado, country hasheado.
@@ -320,6 +309,7 @@ O endpoint recebe o submit do formulário e dispara:
 ## 5.1 · Concluído (28/05/2026)
 
 - [x] **`ver_colecao_click` implementado e no ar** (commit `b5f20c5`, deploy Netlify confirmado). Evento GA4 com parâmetro `source: 'nav' | 'hero'` para diferenciar botão do topo vs. hero section. Os 332 cliques genéricos do Enhanced Measurement ganham nome e origem.
+- [x] **GTM v20 publicada — dedup browser↔server alinhada** (28/05/2026). `eventId` agora é `tray_purchase_{orderId}` (determinístico) em ambos os lados. Removido `fetch` ao `/api/tray-capi` da tag GTM — CAPI é disparado apenas via webhook server-side. GTM mantido como fallback `fbq('track')` only.
 
 ---
 
