@@ -256,6 +256,8 @@ O endpoint recebe o submit do formulário e dispara:
 
 - [ ] Monitorar Meta Events Manager por 48h para confirmar eventos reais de compra chegando via CAPI (prazo: 28/05/2026)
 - [ ] Avaliar adição de `InitiateCheckout` na tag GTM para rastrear início de checkout no ecommerce Tray
+- [ ] **Registrar `percent_scrolled` como Custom Dimension no GA4** → Admin (p464741321) → Dados personalizados → Dimensões personalizadas → Criar dimensão de evento com parâmetro `percent_scrolled`. Necessário para breakdown de scroll depth por nível (25/50/75/90%) via API e Explorar.
+- [ ] **Adicionar tracking de cliques em "Ver toda Coleção"** na LP — botão não tem evento customizado. Solução: adicionar `hzGA4('ver_colecao_click', {link_url: href})` no listener do botão no Script 3 da LP.
 
 ---
 
