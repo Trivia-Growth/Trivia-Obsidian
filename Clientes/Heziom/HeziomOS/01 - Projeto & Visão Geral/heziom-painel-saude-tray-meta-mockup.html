@@ -1,83 +1,209 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel de Saúde — Integração Tray ↔ Meta (MOCKUP)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0f1419; --panel:#1a2129; --panel2:#222b35; --line:#2c3742;
-    --txt:#e6edf3; --muted:#9aa7b4; --accent:#4f8cff;
-    --ok:#3fb950; --warn:#d29922; --err:#f85149;
+  /* ===== Tokens — padrão visual LP Heziom (claro) ===== */
+  :root, [data-theme="light"]{
+    --green-primary:#1E5631; --green-secondary:#4C9F70; --green-deep:#163f23;
+    --gold:#D4AF37;
+    --bg:#FAFAF8; --bg-grad-a:rgba(30,86,49,.05); --bg-grad-b:rgba(212,175,55,.06);
+    --panel:#FFFFFF; --panel-2:#F4F1EA;
+    --text:#1A1A1A; --muted:#4B5563; --border:#E5E7EB;
+    --accent:#1E5631; --accent-soft:rgba(30,86,49,.06); --accent-line:#4C9F70;
+    --ok:#1E7D3A; --ok-bg:rgba(30,125,58,.10);
+    --warn:#9A6B00; --warn-bg:rgba(212,175,55,.18);
+    --err:#DC2626; --err-bg:rgba(220,38,38,.09);
+    --shadow:0 4px 26px -14px rgba(22,63,35,.28);
+    --shadow-card:0 1px 0 rgba(0,0,0,.02), 0 10px 30px -22px rgba(22,63,35,.30);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.45;padding:28px;max-width:1180px;margin:0 auto}
-  .mock-tag{position:fixed;top:0;right:0;background:var(--warn);color:#1a1300;font-size:11px;font-weight:700;padding:4px 12px;border-bottom-left-radius:8px;letter-spacing:.5px;z-index:10}
-  header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:8px}
-  h1{font-size:22px;font-weight:650}
-  .sub{color:var(--muted);font-size:13px;margin-top:2px}
-  .env{display:inline-flex;align-items:center;gap:7px;background:rgba(210,153,34,.12);border:1px solid rgba(210,153,34,.4);color:var(--warn);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px}
-  .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-  .updated{color:var(--muted);font-size:12px}
-  /* KPIs */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:22px 0}
-  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .kpi .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-  .kpi .num{font-size:30px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
-  .kpi .foot{font-size:12px;color:var(--muted);margin-top:4px}
-  .kpi.alert{border-color:rgba(248,81,73,.5);background:linear-gradient(180deg,rgba(248,81,73,.08),var(--panel))}
-  .kpi.alert .num{color:var(--err)}
+  /* ===== Tokens — variante escura (mesma marca) ===== */
+  [data-theme="dark"]{
+    --green-primary:#86D69E; --green-secondary:#4C9F70; --green-deep:#0c1f14;
+    --gold:#E2C25C;
+    --bg:#0C130F; --bg-grad-a:rgba(134,214,158,.06); --bg-grad-b:rgba(212,175,55,.05);
+    --panel:#13201A; --panel-2:#1A2A21;
+    --text:#E8EFE9; --muted:#93A89B; --border:#243329;
+    --accent:#86D69E; --accent-soft:rgba(134,214,158,.10); --accent-line:#3f6f50;
+    --ok:#5FCB7C; --ok-bg:rgba(95,203,124,.14);
+    --warn:#E2C25C; --warn-bg:rgba(226,194,92,.14);
+    --err:#F87171; --err-bg:rgba(248,113,113,.13);
+    --shadow:0 8px 34px -16px rgba(0,0,0,.7);
+    --shadow-card:0 1px 0 rgba(255,255,255,.02), 0 14px 34px -24px rgba(0,0,0,.8);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; font-size:15px;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding:34px 28px 48px; max-width:1200px; margin:0 auto;
+    position:relative; min-height:100vh;
+    transition:background .25s ease, color .25s ease;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+    background:
+      radial-gradient(900px 520px at 88% -8%, var(--bg-grad-a), transparent 60%),
+      radial-gradient(720px 420px at -8% 108%, var(--bg-grad-b), transparent 60%);
+  }
+
+  /* ===== Topo: ribbon mock + toggle ===== */
+  .mock-tag{
+    position:fixed;top:0;left:0;z-index:20;
+    background:var(--gold);color:#1A1500;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:5px 14px;border-bottom-right-radius:10px;
+  }
+  .theme-toggle{
+    position:fixed;top:14px;right:22px;z-index:20;
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.10em;text-transform:uppercase;
+    color:var(--accent);background:var(--panel);
+    border:1px solid var(--border);border-radius:999px;
+    padding:8px 14px;cursor:pointer;box-shadow:var(--shadow-card);
+    transition:background .2s, border-color .2s, transform .15s;
+  }
+  .theme-toggle:hover{transform:translateY(-1px);border-color:var(--accent-line)}
+  .theme-toggle svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.7;fill:none}
+
+  /* ===== Header ===== */
+  header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;margin:18px 0 6px}
+  .section-label{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);display:inline-flex;align-items:center;gap:10px;
+  }
+  .section-label::before{content:"";width:26px;height:1px;background:var(--accent-line)}
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,3.5vw,40px);
+    line-height:1.06;letter-spacing:-.02em;margin:10px 0 6px;
+  }
+  h1 em{font-style:italic;color:var(--green-primary);font-weight:400}
+  .sub{color:var(--muted);font-size:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+  .head-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .env{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;font-weight:500;
+    color:var(--warn);background:var(--warn-bg);
+    border:1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+    padding:8px 14px;border-radius:999px;
+  }
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--warn);position:relative;flex:0 0 auto}
+  .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--warn);
+    animation:pulse 1.9s infinite;opacity:.6}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 var(--warn)}100%{box-shadow:0 0 0 9px transparent}}
+  .updated{color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+
+  /* ===== KPIs ===== */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:16px;margin:26px 0}
+  .kpi{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    padding:18px 18px 16px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;
+  }
+  .kpi::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent-line);opacity:.5}
+  .kpi .label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+  .kpi .num{font-family:'Fraunces',serif;font-weight:500;font-size:38px;line-height:1;margin-top:12px;font-variant-numeric:tabular-nums}
+  .kpi .foot{font-size:12px;color:var(--muted);margin-top:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+  .kpi.good::before{background:var(--ok);opacity:.8}
   .kpi.good .num{color:var(--ok)}
-  /* layout */
-  .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
-  @media(max-width:820px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
-  .card h2{font-size:14px;font-weight:650;padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-  .card h2 .hint{font-size:11px;color:var(--muted);font-weight:400}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{text-align:left;padding:10px 16px;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+  .kpi.alert{border-color:color-mix(in srgb, var(--err) 45%, var(--border));background:linear-gradient(180deg,var(--err-bg),var(--panel) 65%)}
+  .kpi.alert::before{background:var(--err);opacity:.9}
+  .kpi.alert .num{color:var(--err)}
+  .kpi .num.word{font-size:24px;padding-top:8px}
+
+  /* ===== Layout ===== */
+  .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-card);
+  }
+  .card h2{
+    font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;
+    padding:15px 18px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .card h2 .hint{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);font-weight:400;text-transform:uppercase;letter-spacing:.10em;text-align:right}
+
+  /* ===== Tabela ===== */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 18px;border-bottom:1px solid var(--border)}
+  th{font-family:'JetBrains Mono',monospace;color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.12em}
   tr:last-child td{border-bottom:none}
-  td.num{font-variant-numeric:tabular-nums}
-  .pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;display:inline-block}
-  .pill.ok{background:rgba(63,185,80,.15);color:var(--ok)}
-  .pill.warn{background:rgba(210,153,34,.15);color:var(--warn)}
-  .pill.err{background:rgba(248,81,73,.15);color:var(--err)}
-  .pill.mut{background:var(--panel2);color:var(--muted)}
-  /* token */
-  .token-row{display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px}
-  .token-row:last-child{border:none}
-  .token-row .k{color:var(--muted)}
-  .bar{height:6px;background:var(--panel2);border-radius:4px;overflow:hidden;margin:0 16px 14px}
-  .bar > span{display:block;height:100%;background:var(--ok);width:8%}
-  /* events */
-  .ev{display:flex;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px;align-items:flex-start}
+  td.num{font-family:'JetBrains Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* ===== Pills (estilo badge LP) ===== */
+  .pill{
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+    letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 10px;border-radius:999px;display:inline-block;white-space:nowrap;
+  }
+  .pill.ok{background:var(--ok-bg);color:var(--ok)}
+  .pill.warn{background:var(--warn-bg);color:var(--warn)}
+  .pill.err{background:var(--err-bg);color:var(--err)}
+  .pill.mut{background:var(--panel-2);color:var(--muted)}
+
+  /* ===== Linhas chave-valor (token / resumo) ===== */
+  .kv{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px}
+  .kv:last-of-type{border-bottom:none}
+  .kv .k{color:var(--muted)}
+  .kv .v{font-weight:600}
+  .kv .v.num{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  .bar{height:7px;background:var(--panel-2);border-radius:5px;overflow:hidden;margin:4px 18px 16px}
+  .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--green-secondary),var(--green-primary));width:8%;border-radius:5px}
+
+  /* ===== Eventos / atividade ===== */
+  .ev{display:flex;gap:13px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:flex-start}
   .ev:last-child{border:none}
-  .ev .when{color:var(--muted);font-size:11px;min-width:54px;padding-top:1px}
-  .ev .msg b{font-weight:600}
-  footer{color:var(--muted);font-size:11px;margin-top:8px;text-align:center}
+  .ev .when{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;min-width:44px;padding-top:2px;letter-spacing:.02em}
+  .ev .dotmark{width:7px;height:7px;border-radius:50%;margin-top:6px;flex:0 0 auto;background:var(--accent-line)}
+  .ev.is-ok .dotmark{background:var(--ok)}
+  .ev.is-err .dotmark{background:var(--err)}
+  .ev .msg b{font-weight:700}
+  .ev .msg .accent-ok{color:var(--ok)}
+  .ev .msg .accent-err{color:var(--err)}
+
+  /* erros recentes em linguagem clara */
+  .err-row{display:flex;gap:13px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:flex-start}
+  .err-row:last-child{border:none}
+  .err-row .when{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;min-width:44px;padding-top:2px}
+
+  footer{
+    color:var(--muted);font-size:11px;margin-top:14px;text-align:center;
+    font-family:'JetBrains Mono',monospace;letter-spacing:.06em;
+  }
 </style>
 </head>
 <body>
-<div class="mock-tag">MOCKUP · DADOS DE EXEMPLO</div>
+<div class="mock-tag">Mockup · dados de exemplo</div>
+<button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro"></button>
 
 <header>
   <div>
-    <h1>Painel de Saúde — Integração Tray ↔ Meta</h1>
-    <div class="sub">heziom-api · rastreamento de vendas no Meta (Conversions API)</div>
+    <span class="section-label">Painel de Saúde · heziom-api</span>
+    <h1>Integração <em>Tray ↔ Meta</em></h1>
+    <div class="sub">rastreamento de vendas no Meta (Conversions API)</div>
   </div>
-  <div style="text-align:right">
-    <div class="env"><span class="dot" style="background:var(--warn)"></span> Homologação (loja de teste) · até 13/08/2026</div>
-    <div class="updated" style="margin-top:8px">Atualizado há 40s · janela: últimas 24h ▾</div>
+  <div class="head-right">
+    <span class="env"><span class="pulse"></span> Homologação (loja de teste) · até 13/08/2026</span>
+    <span class="updated">atualizado há 40s · janela: últimas 24h</span>
   </div>
 </header>
 
 <section class="kpis">
-  <div class="kpi"><div class="label">Webhooks recebidos</div><div class="num">137</div><div class="foot">↑ 12 vs. ontem</div></div>
-  <div class="kpi good"><div class="label">Compras rastreadas (CAPI)</div><div class="num">28</div><div class="foot">events_received: 28 ✅</div></div>
-  <div class="kpi alert"><div class="label">Aprovados SEM rastreio</div><div class="num">1</div><div class="foot">⚠️ precisa de atenção</div></div>
+  <div class="kpi"><div class="label">Webhooks recebidos</div><div class="num">137</div><div class="foot">+12 vs. ontem</div></div>
+  <div class="kpi good"><div class="label">Compras rastreadas (CAPI)</div><div class="num">28</div><div class="foot">events_received: 28</div></div>
+  <div class="kpi alert"><div class="label">Aprovados sem rastreio</div><div class="num">1</div><div class="foot">precisa de atenção</div></div>
   <div class="kpi"><div class="label">Erros (24h)</div><div class="num">2</div><div class="foot">ver detalhes abaixo</div></div>
-  <div class="kpi good"><div class="label">Token Tray</div><div class="num" style="font-size:20px;padding-top:8px">Válido</div><div class="foot">renova em ~1h48</div></div>
+  <div class="kpi good"><div class="label">Token Tray</div><div class="num word">Válido</div><div class="foot">renova em ~1h48</div></div>
 </section>
 
 <div class="grid">
@@ -87,57 +213,73 @@
       <table>
         <thead><tr><th>Pedido</th><th>Status Tray</th><th>Webhook</th><th>CAPI</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td class="num">#125</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">✅ rastreado</span></td></tr>
-          <tr><td class="num">#123</td><td>FINALIZADO</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">✅ rastreado</span></td></tr>
-          <tr><td class="num">#121</td><td>ENVIADO</td><td><span class="pill ok">recebido (4×)</span></td><td><span class="pill ok">disparado (1×)</span></td><td><span class="pill ok">✅ dedup ok</span></td></tr>
+          <tr><td class="num">#125</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
+          <tr><td class="num">#123</td><td>FINALIZADO</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
+          <tr><td class="num">#121</td><td>ENVIADO</td><td><span class="pill ok">recebido (4×)</span></td><td><span class="pill ok">disparado (1×)</span></td><td><span class="pill ok">dedup ok</span></td></tr>
           <tr><td class="num">#119</td><td>AGUARDANDO PGTO</td><td><span class="pill ok">recebido</span></td><td><span class="pill mut">—</span></td><td><span class="pill mut">status não dispara</span></td></tr>
-          <tr style="background:rgba(248,81,73,.06)"><td class="num">#118</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill err">falhou</span></td><td><span class="pill err">❌ token vencido</span></td></tr>
-          <tr><td class="num">#117</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">✅ rastreado</span></td></tr>
+          <tr style="background:var(--err-bg)"><td class="num">#118</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill err">falhou</span></td><td><span class="pill err">token vencido</span></td></tr>
+          <tr><td class="num">#117</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="card">
       <h2>Erros recentes <span class="hint">em linguagem clara</span></h2>
-      <table>
-        <tbody>
-          <tr><td style="width:70px;color:var(--muted);font-size:11px">14:02</td><td><b>Pedido #118:</b> falha ao buscar na Tray — token de acesso expirado. Renovação automática corrigiu às 14:05.</td></tr>
-          <tr><td style="color:var(--muted);font-size:11px">09:41</td><td><b>Meta CAPI:</b> 1 evento rejeitado — campo de telefone malformado no pedido #102.</td></tr>
-        </tbody>
-      </table>
+      <div class="err-row"><span class="when">14:02</span><span><b>Pedido #118:</b> falha ao buscar na Tray — token de acesso expirado. Renovação automática corrigiu às 14:05.</span></div>
+      <div class="err-row"><span class="when">09:41</span><span><b>Meta CAPI:</b> 1 evento rejeitado — campo de telefone malformado no pedido #102.</span></div>
     </div>
   </div>
 
   <div>
     <div class="card">
       <h2>Token da Tray</h2>
-      <div class="token-row"><span class="k">Situação</span><span><span class="pill ok">válido</span></span></div>
-      <div class="token-row"><span class="k">Última renovação</span><span>há 12 min (automática)</span></div>
-      <div class="token-row"><span class="k">Próxima renovação</span><span>em ~1h48 (cron 2h)</span></div>
-      <div class="token-row"><span class="k">Tempo restante</span><span>1h 50min</span></div>
+      <div class="kv"><span class="k">Situação</span><span class="v"><span class="pill ok">válido</span></span></div>
+      <div class="kv"><span class="k">Última renovação</span><span class="v">há 12 min (automática)</span></div>
+      <div class="kv"><span class="k">Próxima renovação</span><span class="v">em ~1h48 (cron 2h)</span></div>
+      <div class="kv"><span class="k">Tempo restante</span><span class="v num">1h 50min</span></div>
       <div class="bar"><span></span></div>
     </div>
 
     <div class="card">
       <h2>Atividade recente</h2>
-      <div class="ev"><span class="when">14:11</span><span class="msg"><b>CAPI Purchase</b> disparado — pedido #125 · R$ 99,00</span></div>
-      <div class="ev"><span class="when">14:08</span><span class="msg"><b>Webhook</b> order.update — pedido #125</span></div>
-      <div class="ev"><span class="when">14:05</span><span class="msg" style="color:var(--ok)"><b>Token</b> renovado automaticamente ✅</span></div>
-      <div class="ev"><span class="when">14:02</span><span class="msg" style="color:var(--err)"><b>Erro</b> pedido #118 — token vencido</span></div>
-      <div class="ev"><span class="when">13:57</span><span class="msg"><b>Webhook</b> ignorado — pedido #119 (aguardando pgto)</span></div>
-      <div class="ev"><span class="when">13:50</span><span class="msg"><b>CAPI Purchase</b> disparado — pedido #123 · R$ 149,00</span></div>
+      <div class="ev is-ok"><span class="when">14:11</span><span class="dotmark"></span><span class="msg"><b>CAPI Purchase</b> disparado — pedido #125 · R$ 99,00</span></div>
+      <div class="ev"><span class="when">14:08</span><span class="dotmark"></span><span class="msg"><b>Webhook</b> order.update — pedido #125</span></div>
+      <div class="ev is-ok"><span class="when">14:05</span><span class="dotmark"></span><span class="msg"><b>Token</b> <span class="accent-ok">renovado automaticamente</span></span></div>
+      <div class="ev is-err"><span class="when">14:02</span><span class="dotmark"></span><span class="msg"><b>Erro</b> <span class="accent-err">pedido #118 — token vencido</span></span></div>
+      <div class="ev"><span class="when">13:57</span><span class="dotmark"></span><span class="msg"><b>Webhook</b> ignorado — pedido #119 (aguardando pgto)</span></div>
+      <div class="ev is-ok"><span class="when">13:50</span><span class="dotmark"></span><span class="msg"><b>CAPI Purchase</b> disparado — pedido #123 · R$ 149,00</span></div>
     </div>
 
     <div class="card">
       <h2>Resumo 7 dias</h2>
-      <div class="token-row"><span class="k">Webhooks</span><span class="num">534</span></div>
-      <div class="token-row"><span class="k">Compras rastreadas</span><span class="num" style="color:var(--ok)">126</span></div>
-      <div class="token-row"><span class="k">Aprovados sem rastreio</span><span class="num" style="color:var(--err)">3</span></div>
-      <div class="token-row"><span class="k">Taxa de cobertura</span><span class="num" style="color:var(--ok)">97,7%</span></div>
+      <div class="kv"><span class="k">Webhooks</span><span class="v num">534</span></div>
+      <div class="kv"><span class="k">Compras rastreadas</span><span class="v num" style="color:var(--ok)">126</span></div>
+      <div class="kv"><span class="k">Aprovados sem rastreio</span><span class="v num" style="color:var(--err)">3</span></div>
+      <div class="kv"><span class="k">Taxa de cobertura</span><span class="v num" style="color:var(--ok)">97,7%</span></div>
     </div>
   </div>
 </div>
 
-<footer>MOCKUP para validação visual · dados fictícios · painel standalone (Padrão Trivia) a unificar no HeziomOS depois</footer>
+<footer>MOCKUP para validação visual · dados fictícios · painel standalone (padrão visual LP Heziom) a unificar no HeziomOS depois</footer>
+
+<script>
+  (function(){
+    var root=document.documentElement;
+    var btn=document.getElementById('themeToggle');
+    var sun='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+    var moon='<svg viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>';
+    var saved=localStorage.getItem('hz-theme');
+    var initial=saved||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    apply(initial);
+    btn.addEventListener('click',function(){
+      apply(root.getAttribute('data-theme')==='dark'?'light':'dark');
+    });
+    function apply(t){
+      root.setAttribute('data-theme',t);
+      localStorage.setItem('hz-theme',t);
+      btn.innerHTML=(t==='dark'?sun:moon)+'<span>'+(t==='dark'?'Tema claro':'Tema escuro')+'</span>';
+    }
+  })();
+</script>
 </body>
 </html>
