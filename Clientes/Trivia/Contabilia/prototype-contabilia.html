@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contabilia — Automacao Inteligente para Escritorios Contabeis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .sidebar-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .sidebar-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-right: 3px solid #3b82f6;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+        .whatsapp-bubble {
+            position: relative;
+        }
+        .whatsapp-bubble::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #dcf8c6 transparent transparent transparent;
+        }
+        .whatsapp-bubble-received::after {
+            left: auto;
+            right: -8px;
+            border-color: #ffffff transparent transparent transparent;
+        }
+        .bar-chart .bar {
+            transition: height 0.5s ease;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        .grid-editable td {
+            border: 1px solid #334155;
+            padding: 8px 12px;
+        }
+        .grid-editable td:focus-within {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                            600: '#475569',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-full w-64 bg-slate-900 border-r border-slate-800 flex flex-col z-50">
+        <!-- Logo -->
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold">
+                <span class="text-blue-500">Contab</span><span class="text-emerald-500">ilia</span>
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Automacao inteligente para escritorios contabeis</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 py-4 overflow-y-auto">
+            <ul class="space-y-1 px-3">
+                <li>
+                    <button onclick="showSection('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="dashboard">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-blue-400"></i>
+                        Dashboard
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('crm-lista')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="crm-lista">
+                        <i data-lucide="users" class="w-5 h-5 text-blue-400"></i>
+                        CRM — Clientes
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('crm-ficha')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="crm-ficha">
+                        <i data-lucide="user-circle" class="w-5 h-5 text-blue-400"></i>
+                        CRM — Ficha
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('notas')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="notas">
+                        <i data-lucide="file-text" class="w-5 h-5 text-blue-400"></i>
+                        Emissao de Notas
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('emissao-lote')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="emissao-lote">
+                        <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i>
+                        Emissao em Lote
+                        <span class="ml-auto text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">NOVO</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('documentos')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="documentos">
+                        <i data-lucide="folder-open" class="w-5 h-5 text-blue-400"></i>
+                        Coleta de Documentos
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('atendimento')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="atendimento">
+                        <i data-lucide="headphones" class="w-5 h-5 text-emerald-400"></i>
+                        Atendimento
+                        <span class="ml-auto text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">NOVO</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('comunicacao')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="comunicacao">
+                        <i data-lucide="message-circle" class="w-5 h-5 text-blue-400"></i>
+                        Comunicacao
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('relatorios')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="relatorios">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5 text-emerald-400"></i>
+                        Relatorios
+                        <span class="ml-auto text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">NOVO</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showSection('admin')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-slate-200 transition-all" data-section="admin">
+                        <i data-lucide="settings" class="w-5 h-5 text-blue-400"></i>
+                        Admin / Config
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- User -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold">RS</div>
+                <div>
+                    <p class="text-sm font-medium text-slate-200">Ricardo Silva</p>
+                    <p class="text-xs text-slate-400">Socio Administrador</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-sm border-b border-slate-800 px-8 py-4 flex items-center justify-between">
+            <div>
+                <h2 class="text-lg font-semibold text-slate-100" id="page-title">Dashboard do Escritorio</h2>
+                <p class="text-sm text-slate-400">Escritorio Contabil Silva & Associados</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative p-2 rounded-lg hover:bg-slate-800 transition">
+                    <i data-lucide="bell" class="w-5 h-5 text-slate-300"></i>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <span class="text-sm text-slate-400">27 mai 2026 — 14:32</span>
+            </div>
+        </header>
+
+        <!-- Sections Container -->
+        <div class="flex-1 p-8">
+
+            <!-- SECTION 1: Dashboard -->
+            <section id="section-dashboard" class="section fade-in">
+                <!-- KPIs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-blue-500/50 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="building-2" class="w-8 h-8 text-blue-400"></i>
+                            <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full">+3 este mes</span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-100">47</p>
+                        <p class="text-sm text-slate-400 mt-1">Clientes ativos</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-blue-500/50 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="dollar-sign" class="w-8 h-8 text-emerald-400"></i>
+                            <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full">+12% vs abril</span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-100">R$ 58.200</p>
+                        <p class="text-sm text-slate-400 mt-1">A receber este mes</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-blue-500/50 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-blue-400"></i>
+                            <span class="text-xs text-blue-400 bg-blue-400/10 px-2 py-1 rounded-full">Meta: 95%</span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-100">92%</p>
+                        <p class="text-sm text-slate-400 mt-1">Documentos em dia</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-red-500/50 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="alert-triangle" class="w-8 h-8 text-red-400"></i>
+                            <span class="text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded-full">Urgente</span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-100">3</p>
+                        <p class="text-sm text-slate-400 mt-1">Obrigacoes vencendo esta semana</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Inadimplencia -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+                            <h3 class="font-semibold text-red-300">Inadimplencia (5 clientes)</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Restaurante Bom Gosto</span>
+                                    <span class="text-xs text-red-400">45 dias</span>
+                                </div>
+                                <p class="text-sm text-red-300 mt-1">R$ 3.600 (2 meses)</p>
+                            </div>
+                            <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Auto Pecas Central</span>
+                                    <span class="text-xs text-red-400">32 dias</span>
+                                </div>
+                                <p class="text-sm text-red-300 mt-1">R$ 2.200 (1 mes)</p>
+                            </div>
+                            <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Moda Urbana ME</span>
+                                    <span class="text-xs text-red-400">28 dias</span>
+                                </div>
+                                <p class="text-sm text-red-300 mt-1">R$ 1.500 (1 mes)</p>
+                            </div>
+                            <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Clinica Vida Plena</span>
+                                    <span class="text-xs text-red-400">15 dias</span>
+                                </div>
+                                <p class="text-sm text-red-300 mt-1">R$ 2.800 (1 mes)</p>
+                            </div>
+                            <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Constrular Materiais</span>
+                                    <span class="text-xs text-red-400">10 dias</span>
+                                </div>
+                                <p class="text-sm text-red-300 mt-1">R$ 1.800 (1 mes)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pendencias Urgentes -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="clock" class="w-5 h-5 text-amber-400"></i>
+                            <h3 class="font-semibold text-amber-300">Pendencias Urgentes</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-red-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Padaria Sabor & Arte</p>
+                                    <p class="text-xs text-slate-400">SPED Fiscal vence em 2 dias</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-red-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Tech Solutions Ltda</p>
+                                    <p class="text-xs text-slate-400">Falta enviar extratos bancarios de maio</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-amber-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Distribuidora Norte Sul</p>
+                                    <p class="text-xs text-slate-400">DAS Simples vence dia 29/05</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-amber-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Clinica Vida Plena</p>
+                                    <p class="text-xs text-slate-400">Certificado digital vence em 5 dias</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-blue-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Loja do Marceneiro</p>
+                                    <p class="text-xs text-slate-400">Apuracao ICMS pendente (ref. abril)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-amber-950/20 border border-amber-900/30 rounded-lg">
+                                <span class="w-2 h-2 mt-2 rounded-full bg-blue-500 shrink-0"></span>
+                                <div>
+                                    <p class="text-sm font-medium">Auto Pecas Central</p>
+                                    <p class="text-xs text-slate-400">GFIP/SEFIP maio nao transmitida</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Recente -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="activity" class="w-5 h-5 text-blue-400"></i>
+                            <h3 class="font-semibold text-blue-300">Timeline Recente</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                    <div class="w-0.5 flex-1 bg-slate-700"></div>
+                                </div>
+                                <div class="pb-4">
+                                    <p class="text-sm font-medium">NFS-e emitida — Tech Solutions</p>
+                                    <p class="text-xs text-slate-400">Hoje, 14:15 — R$ 12.500,00</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                    <div class="w-0.5 flex-1 bg-slate-700"></div>
+                                </div>
+                                <div class="pb-4">
+                                    <p class="text-sm font-medium">Documentos recebidos — Padaria Sabor & Arte</p>
+                                    <p class="text-xs text-slate-400">Hoje, 11:40 — 4 arquivos XML</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                    <div class="w-0.5 flex-1 bg-slate-700"></div>
+                                </div>
+                                <div class="pb-4">
+                                    <p class="text-sm font-medium">Cobranca enviada — Restaurante Bom Gosto</p>
+                                    <p class="text-xs text-slate-400">Hoje, 09:00 — WhatsApp automatico</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                    <div class="w-0.5 flex-1 bg-slate-700"></div>
+                                </div>
+                                <div class="pb-4">
+                                    <p class="text-sm font-medium">Pagamento confirmado — Distribuidora Norte Sul</p>
+                                    <p class="text-xs text-slate-400">Ontem, 16:22 — R$ 1.600,00</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Novo cliente cadastrado — Studio Pilates</p>
+                                    <p class="text-xs text-slate-400">Ontem, 10:05 — Simples Nacional</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: CRM Lista -->
+            <section id="section-crm-lista" class="section hidden fade-in">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" placeholder="Buscar cliente..." class="pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 w-72 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <select class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200">
+                            <option>Todos os regimes</option>
+                            <option>Simples Nacional</option>
+                            <option>Lucro Presumido</option>
+                            <option>Lucro Real</option>
+                        </select>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Novo Cliente
+                    </button>
+                </div>
+
+                <div class="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-slate-700 text-left">
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Nome Fantasia</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">CNPJ</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Regime</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Honorario</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status Pgto</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Score Saude</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Docs Pend.</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/50">
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Tech Solutions Ltda</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">12.345.678/0001-90</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Lucro Presumido</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 1.800</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Em dia</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full font-bold">A</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">1</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Padaria Sabor & Arte</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">23.456.789/0001-12</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 980</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Em dia</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full font-bold">B</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">3</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Restaurante Bom Gosto</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">34.567.890/0001-23</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 1.200</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">Inadimplente</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full font-bold">D</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">5</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Distribuidora Norte Sul</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">45.678.901/0001-34</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full">Lucro Real</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 3.200</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Em dia</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full font-bold">A</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Auto Pecas Central</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">56.789.012/0001-45</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 1.100</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">Inadimplente</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full font-bold">C</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">4</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Clinica Vida Plena</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">67.890.123/0001-56</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Lucro Presumido</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 2.400</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full">Atrasado 15d</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full font-bold">B</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">2</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Loja do Marceneiro</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">78.901.234/0001-67</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 850</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Em dia</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full font-bold">A</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">1</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Moda Urbana ME</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">89.012.345/0001-78</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 750</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">Inadimplente</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full font-bold">C</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">6</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Constrular Materiais</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">90.123.456/0001-89</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Lucro Presumido</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 1.800</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full">Atrasado 10d</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full font-bold">B</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">2</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/30 transition cursor-pointer">
+                                    <td class="px-6 py-4 text-sm font-medium">Studio Pilates Bem-Estar</td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">01.234.567/0001-90</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Simples Nacional</span></td>
+                                    <td class="px-6 py-4 text-sm">R$ 680</td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Em dia</span></td>
+                                    <td class="px-6 py-4"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full font-bold">A</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-300">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: CRM Ficha do Cliente -->
+            <section id="section-crm-ficha" class="section hidden fade-in">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="showSection('crm-lista')" class="p-2 rounded-lg hover:bg-slate-800 transition">
+                        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400"></i>
+                    </button>
+                    <h3 class="text-xl font-bold">Tech Solutions Ltda</h3>
+                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full">Ativo</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Dados Cadastrais -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-300 mb-4 flex items-center gap-2">
+                            <i data-lucide="building" class="w-4 h-4"></i>
+                            Dados Cadastrais
+                        </h4>
+                        <div class="space-y-3 text-sm">
+                            <div>
+                                <span class="text-slate-400">Razao Social</span>
+                                <p class="text-slate-200">Tech Solutions Tecnologia Ltda</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">CNPJ</span>
+                                <p class="text-slate-200">12.345.678/0001-90</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Inscricao Municipal</span>
+                                <p class="text-slate-200">1.234.567-8</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Regime Tributario</span>
+                                <p class="text-slate-200">Lucro Presumido</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">CNAE Principal</span>
+                                <p class="text-slate-200">6201-5/01 — Desenvolvimento de software sob encomenda</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Endereco</span>
+                                <p class="text-slate-200">Rua Augusta, 1.520 — Sala 304<br>Consolacao, Sao Paulo/SP — 01304-001</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Responsavel</span>
+                                <p class="text-slate-200">Marcos Oliveira — (11) 99876-5432</p>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">E-mail</span>
+                                <p class="text-slate-200">financeiro@techsolutions.com.br</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contrato e Financeiro -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-emerald-300 mb-4 flex items-center gap-2">
+                                <i data-lucide="file-check" class="w-4 h-4"></i>
+                                Contrato
+                            </h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Honorario Mensal</span>
+                                    <span class="text-emerald-300 font-bold">R$ 1.800,00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Vencimento</span>
+                                    <span class="text-slate-200">Dia 10</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Inicio</span>
+                                    <span class="text-slate-200">01/03/2024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Tipo</span>
+                                    <span class="text-slate-200">12 meses (renovacao auto.)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Servicos inclusos</span>
+                                    <span class="text-slate-200">Contabil + Fiscal + Folha</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-emerald-300 mb-4 flex items-center gap-2">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                Financeiro (Ultimos 6 meses)
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Mai/2026</span>
+                                    <span class="text-amber-300">Aguardando</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Abr/2026</span>
+                                    <span class="text-emerald-300">Pago 08/04</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Mar/2026</span>
+                                    <span class="text-emerald-300">Pago 10/03</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Fev/2026</span>
+                                    <span class="text-emerald-300">Pago 09/02</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Jan/2026</span>
+                                    <span class="text-emerald-300">Pago 10/01</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">Dez/2025</span>
+                                    <span class="text-emerald-300">Pago 09/12</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documentos e Certificado -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-blue-300 mb-4 flex items-center gap-2">
+                                <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                                Checklist Documentos — Maio/2026
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Notas fiscais de entrada</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Notas fiscais de saida</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Comprovantes de pagamento</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Folha de ponto (3 func.)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Relatorio de comissoes</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="square" class="w-4 h-4 text-amber-400"></i>
+                                    <span class="text-amber-200">Extratos bancarios (pendente)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-400"></i>
+                                    <span class="text-slate-200">Contratos novos do mes</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 86%"></div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">6 de 7 documentos recebidos</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-blue-300 mb-4 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                Certificado Digital
+                            </h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Tipo</span>
+                                    <span class="text-slate-200">e-CNPJ A1</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Emissora</span>
+                                    <span class="text-slate-200">Certisign</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Validade</span>
+                                    <span class="text-emerald-300">14/11/2026</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Status</span>
+                                    <span class="text-emerald-300 flex items-center gap-1">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                        Valido
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-blue-300 mb-4 flex items-center gap-2">
+                                <i data-lucide="history" class="w-4 h-4"></i>
+                                Timeline
+                            </h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-500 w-16 shrink-0">27/05</span>
+                                    <span class="text-slate-200">NFS-e #1247 emitida — R$ 12.500</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="text-slate-500 w-16 shrink-0">20/05</span>
+                                    <span class="text-slate-200">Lembrete enviado: extratos pendentes</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="text-slate-500 w-16 shrink-0">15/05</span>
+                                    <span class="text-slate-200">Docs recebidos (5 de 7)</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="text-slate-500 w-16 shrink-0">10/05</span>
+                                    <span class="text-slate-200">Honorario maio faturado</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="text-slate-500 w-16 shrink-0">08/04</span>
+                                    <span class="text-slate-200">Pagamento abril confirmado</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Emissao de Notas -->
+            <section id="section-notas" class="section hidden fade-in">
+                <!-- Botao Emissao em Lote -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold">Emissao de Notas Fiscais</h3>
+                    <button onclick="showSection('emissao-lote')" class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
+                        <i data-lucide="layers" class="w-4 h-4"></i>
+                        Emissao em Lote
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Formulario -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                            <i data-lucide="file-plus" class="w-5 h-5 text-blue-400"></i>
+                            Emissao de NFS-e
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <h5 class="text-xs uppercase text-slate-400 font-semibold mb-3">Prestador</h5>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-xs text-slate-400">Razao Social</label>
+                                        <input type="text" value="Tech Solutions Tecnologia Ltda" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400">CNPJ</label>
+                                        <input type="text" value="12.345.678/0001-90" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <h5 class="text-xs uppercase text-slate-400 font-semibold mb-3">Tomador do Servico</h5>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-xs text-slate-400">Razao Social</label>
+                                        <input type="text" value="Grupo Varejo Express S.A." class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400">CNPJ</label>
+                                        <input type="text" value="98.765.432/0001-10" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200">
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="text-xs text-slate-400">Endereco</label>
+                                        <input type="text" value="Av. Paulista, 2.100 — 15 andar — Bela Vista, SP" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <h5 class="text-xs uppercase text-slate-400 font-semibold mb-3">Servico</h5>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="col-span-2">
+                                        <label class="text-xs text-slate-400">Descricao</label>
+                                        <textarea class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200 h-16">Desenvolvimento de sistema de gestao de estoque - Sprint maio/2026. Modulo de entrada/saida e dashboard gerencial.</textarea>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400">Codigo do Servico (LC 116)</label>
+                                        <input type="text" value="1.04 — Elaboracao de programas" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-slate-200">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400">Valor do Servico</label>
+                                        <input type="text" value="R$ 12.500,00" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-sm text-emerald-300 font-bold">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Motor de Tributos em tempo real -->
+                            <div class="p-4 bg-blue-950/30 rounded-lg border border-blue-800/50">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i data-lucide="cpu" class="w-4 h-4 text-blue-400"></i>
+                                    <h5 class="text-xs uppercase text-blue-300 font-semibold">Motor de Tributos — Calculo em tempo real</h5>
+                                    <span class="ml-auto text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full pulse-glow">Calculado</span>
+                                </div>
+                                <div class="grid grid-cols-5 gap-2 mb-3">
+                                    <div class="text-center p-2 bg-slate-900/50 rounded">
+                                        <p class="text-[10px] text-slate-400">ISS (5%)</p>
+                                        <p class="text-sm font-bold text-amber-300">R$ 625,00</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-slate-900/50 rounded">
+                                        <p class="text-[10px] text-slate-400">IBS (0,1%)</p>
+                                        <p class="text-sm font-bold text-amber-300">R$ 12,50</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-slate-900/50 rounded">
+                                        <p class="text-[10px] text-slate-400">CBS (0,9%)</p>
+                                        <p class="text-sm font-bold text-amber-300">R$ 112,50</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-slate-900/50 rounded">
+                                        <p class="text-[10px] text-slate-400">Total tributos</p>
+                                        <p class="text-sm font-bold text-red-300">R$ 750,00</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-slate-900/50 rounded">
+                                        <p class="text-[10px] text-slate-400">Liquido</p>
+                                        <p class="text-sm font-bold text-emerald-300">R$ 11.750,00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs">
+                                    <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">Regime: Lucro Presumido</span>
+                                    <span class="bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Municipio destino: Sao Paulo/SP</span>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-semibold text-sm transition flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                Emitir NFS-e
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Notas Recentes -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                            <i data-lucide="list" class="w-5 h-5 text-emerald-400"></i>
+                            Ultimas Notas Emitidas
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-emerald-500/30 transition">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm font-medium">NFS-e #1247</p>
+                                        <p class="text-xs text-slate-400">Tech Solutions → Grupo Varejo Express</p>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Autorizada</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">27/05/2026</span>
+                                    <span class="text-emerald-300 font-medium">R$ 12.500,00</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-emerald-500/30 transition">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm font-medium">NFS-e #1246</p>
+                                        <p class="text-xs text-slate-400">Distribuidora Norte Sul → Rede Mercados Sul</p>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Autorizada</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">25/05/2026</span>
+                                    <span class="text-emerald-300 font-medium">R$ 45.000,00</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-emerald-500/30 transition">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm font-medium">NFS-e #1245</p>
+                                        <p class="text-xs text-slate-400">Clinica Vida Plena → Convenio Saude Total</p>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Autorizada</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">22/05/2026</span>
+                                    <span class="text-emerald-300 font-medium">R$ 8.750,00</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-amber-500/30 transition">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm font-medium">NFS-e #1244</p>
+                                        <p class="text-xs text-slate-400">Loja do Marceneiro → Construtora Horizonte</p>
+                                    </div>
+                                    <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full">Processando</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">20/05/2026</span>
+                                    <span class="text-emerald-300 font-medium">R$ 3.200,00</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-red-500/30 transition">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm font-medium">NFS-e #1243</p>
+                                        <p class="text-xs text-slate-400">Auto Pecas Central → Oficina Mecanica JP</p>
+                                    </div>
+                                    <span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">Rejeitada</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">18/05/2026</span>
+                                    <span class="text-slate-400 font-medium">R$ 1.890,00</span>
+                                </div>
+                                <p class="text-xs text-red-400 mt-2">Erro: CNPJ tomador invalido na base municipal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: Emissao em Lote (NOVA) -->
+            <section id="section-emissao-lote" class="section hidden fade-in">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="showSection('notas')" class="p-2 rounded-lg hover:bg-slate-800 transition">
+                        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400"></i>
+                    </button>
+                    <h3 class="text-lg font-semibold">Emissao em Lote</h3>
+                </div>
+
+                <!-- Abas -->
+                <div class="flex border-b border-slate-700 mb-6">
+                    <button onclick="showLoteTab('importar')" class="lote-tab px-6 py-3 text-sm font-medium border-b-2 border-blue-500 text-blue-300" data-tab="importar">
+                        <i data-lucide="upload" class="w-4 h-4 inline mr-2"></i>
+                        Importar Planilha
+                    </button>
+                    <button onclick="showLoteTab('grid')" class="lote-tab px-6 py-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-tab="grid">
+                        <i data-lucide="table" class="w-4 h-4 inline mr-2"></i>
+                        Preencher no Grid
+                    </button>
+                </div>
+
+                <!-- Aba Importar Planilha -->
+                <div id="lote-tab-importar" class="lote-tab-content">
+                    <!-- Drag & Drop -->
+                    <div class="bg-slate-800/50 border-2 border-dashed border-slate-600 rounded-xl p-12 text-center mb-6 hover:border-blue-500/50 transition-all cursor-pointer">
+                        <i data-lucide="file-spreadsheet" class="w-16 h-16 text-slate-500 mx-auto mb-4"></i>
+                        <p class="text-lg font-medium text-slate-300 mb-2">Arraste o arquivo Excel ou CSV aqui</p>
+                        <p class="text-sm text-slate-500 mb-4">ou clique para selecionar do computador</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+                                Selecionar Arquivo
+                            </button>
+                            <button class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                Baixar modelo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preview da importacao -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+                                <span class="text-sm font-medium">lote_notas_maio_2026.xlsx</span>
+                                <span class="text-xs text-slate-400">— importado com sucesso</span>
+                            </div>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">6 registros</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-slate-700 text-left">
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">#</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Tomador (CNPJ)</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Razao Social</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Descricao do Servico</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Valor</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">ISS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">IBS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">CBS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Liquido</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700/50">
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 text-slate-400">1</td>
+                                        <td class="px-4 py-3 text-slate-300 font-mono text-xs">98.765.432/0001-10</td>
+                                        <td class="px-4 py-3">Grupo Varejo Express S.A.</td>
+                                        <td class="px-4 py-3 text-slate-300">Consultoria em TI — maio/2026</td>
+                                        <td class="px-4 py-3 font-medium">R$ 12.500</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 625</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 12,50</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 112,50</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 11.750</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="check" class="w-3 h-3"></i> Valido</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 text-slate-400">2</td>
+                                        <td class="px-4 py-3 text-slate-300 font-mono text-xs">11.222.333/0001-44</td>
+                                        <td class="px-4 py-3">Industria Metalmax Ltda</td>
+                                        <td class="px-4 py-3 text-slate-300">Desenvolvimento de sistema ERP — modulo fiscal</td>
+                                        <td class="px-4 py-3 font-medium">R$ 18.000</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 900</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 18,00</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 162,00</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 16.920</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="check" class="w-3 h-3"></i> Valido</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 text-slate-400">3</td>
+                                        <td class="px-4 py-3 text-slate-300 font-mono text-xs">55.666.777/0001-88</td>
+                                        <td class="px-4 py-3">Logistica Rapida Express</td>
+                                        <td class="px-4 py-3 text-slate-300">Assessoria em automacao de processos</td>
+                                        <td class="px-4 py-3 font-medium">R$ 7.500</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 375</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 7,50</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 67,50</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 7.050</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="check" class="w-3 h-3"></i> Valido</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-amber-950/10 bg-amber-950/5">
+                                        <td class="px-4 py-3 text-slate-400">4</td>
+                                        <td class="px-4 py-3 text-amber-300 font-mono text-xs">00.111.222/0001-99</td>
+                                        <td class="px-4 py-3 text-amber-200">???</td>
+                                        <td class="px-4 py-3 text-slate-300">Treinamento de equipe — Power BI</td>
+                                        <td class="px-4 py-3 font-medium">R$ 4.800</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 240</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 4,80</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 43,20</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 4.512</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="alert-triangle" class="w-3 h-3"></i> Atencao</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 text-slate-400">5</td>
+                                        <td class="px-4 py-3 text-slate-300 font-mono text-xs">33.444.555/0001-66</td>
+                                        <td class="px-4 py-3">Clinica Odonto Premium</td>
+                                        <td class="px-4 py-3 text-slate-300">Suporte tecnico mensal — infraestrutura</td>
+                                        <td class="px-4 py-3 font-medium">R$ 2.200</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 110</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 2,20</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 19,80</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 2.068</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="check" class="w-3 h-3"></i> Valido</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 text-slate-400">6</td>
+                                        <td class="px-4 py-3 text-slate-300 font-mono text-xs">77.888.999/0001-22</td>
+                                        <td class="px-4 py-3">Construtora Horizonte Ltda</td>
+                                        <td class="px-4 py-3 text-slate-300">Implantacao de sistema de gestao de obras</td>
+                                        <td class="px-4 py-3 font-medium">R$ 2.300</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 115</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 2,30</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 20,70</td>
+                                        <td class="px-4 py-3 text-emerald-300">R$ 2.162</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><i data-lucide="check" class="w-3 h-3"></i> Valido</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Alerta linha 4 -->
+                        <div class="px-6 py-3 bg-amber-950/20 border-t border-amber-800/30 flex items-center gap-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400"></i>
+                            <span class="text-xs text-amber-300">Linha 4: CNPJ 00.111.222/0001-99 nao encontrado na base do Serpro — verificar dados do tomador</span>
+                        </div>
+
+                        <!-- Rodape totalizador -->
+                        <div class="px-6 py-4 border-t border-slate-700 bg-slate-900/30 flex items-center justify-between">
+                            <div class="flex items-center gap-6 text-sm">
+                                <span class="text-slate-400"><span class="font-bold text-slate-200">6</span> notas</span>
+                                <span class="text-slate-400">Total: <span class="font-bold text-slate-200">R$ 47.300</span></span>
+                                <span class="text-slate-400">Tributos: <span class="font-bold text-amber-300">R$ 2.838</span></span>
+                                <span class="text-slate-400">Liquido: <span class="font-bold text-emerald-300">R$ 44.462</span></span>
+                            </div>
+                            <button class="bg-emerald-600 hover:bg-emerald-700 px-6 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                Emitir 6 Notas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba Preencher no Grid -->
+                <div id="lote-tab-grid" class="lote-tab-content hidden">
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="table" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-sm font-medium">Preenchimento manual em grid</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-400">Dica: use Tab para navegar entre celulas</span>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm grid-editable">
+                                <thead>
+                                    <tr class="border-b border-slate-700 text-left">
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase w-8">#</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">CNPJ Tomador</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Razao Social</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Descricao</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Cod. Servico</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Valor</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">ISS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">IBS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">CBS</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Liquido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-3 text-slate-400">1</td>
+                                        <td class="px-4 py-3"><input type="text" value="98.765.432/0001-10" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none font-mono"></td>
+                                        <td class="px-4 py-3 text-slate-300">Grupo Varejo Express S.A. <span class="text-[10px] text-emerald-400">(auto)</span></td>
+                                        <td class="px-4 py-3"><input type="text" value="Consultoria em arquitetura de sistemas" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none"></td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1">
+                                                <span class="text-slate-200 text-sm">1.04</span>
+                                                <span class="text-[9px] bg-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded font-bold">IA</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3"><input type="text" value="R$ 15.000" class="w-full bg-transparent border-none text-emerald-300 text-sm focus:outline-none font-medium"></td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 750</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 15,00</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 135,00</td>
+                                        <td class="px-4 py-3 text-emerald-300 font-medium">R$ 14.100</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-slate-400">2</td>
+                                        <td class="px-4 py-3"><input type="text" value="11.222.333/0001-44" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none font-mono"></td>
+                                        <td class="px-4 py-3 text-slate-300">Industria Metalmax Ltda <span class="text-[10px] text-emerald-400">(auto)</span></td>
+                                        <td class="px-4 py-3"><input type="text" value="Desenvolvimento de modulo de BI" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none"></td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1">
+                                                <span class="text-slate-200 text-sm">1.04</span>
+                                                <span class="text-[9px] bg-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded font-bold">IA</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3"><input type="text" value="R$ 22.000" class="w-full bg-transparent border-none text-emerald-300 text-sm focus:outline-none font-medium"></td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 1.100</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 22,00</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 198,00</td>
+                                        <td class="px-4 py-3 text-emerald-300 font-medium">R$ 20.680</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-slate-400">3</td>
+                                        <td class="px-4 py-3"><input type="text" value="55.666.777/0001-88" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none font-mono"></td>
+                                        <td class="px-4 py-3 text-slate-300">Logistica Rapida Express <span class="text-[10px] text-emerald-400">(auto)</span></td>
+                                        <td class="px-4 py-3"><input type="text" value="Assessoria tecnica em integracao de APIs" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none"></td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1">
+                                                <span class="text-slate-200 text-sm">1.07</span>
+                                                <span class="text-[9px] bg-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded font-bold">IA</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3"><input type="text" value="R$ 8.500" class="w-full bg-transparent border-none text-emerald-300 text-sm focus:outline-none font-medium"></td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 425</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 8,50</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 76,50</td>
+                                        <td class="px-4 py-3 text-emerald-300 font-medium">R$ 7.990</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-slate-400">4</td>
+                                        <td class="px-4 py-3"><input type="text" value="33.444.555/0001-66" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none font-mono"></td>
+                                        <td class="px-4 py-3 text-slate-300">Clinica Odonto Premium <span class="text-[10px] text-emerald-400">(auto)</span></td>
+                                        <td class="px-4 py-3"><input type="text" value="Treinamento equipe — sistema de gestao" class="w-full bg-transparent border-none text-slate-200 text-sm focus:outline-none"></td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1">
+                                                <span class="text-slate-200 text-sm">8.02</span>
+                                                <span class="text-[9px] bg-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded font-bold">IA</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3"><input type="text" value="R$ 3.600" class="w-full bg-transparent border-none text-emerald-300 text-sm focus:outline-none font-medium"></td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 180</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 3,60</td>
+                                        <td class="px-4 py-3 text-slate-400">R$ 32,40</td>
+                                        <td class="px-4 py-3 text-emerald-300 font-medium">R$ 3.384</td>
+                                    </tr>
+                                    <!-- Linha vazia -->
+                                    <tr class="bg-slate-900/30">
+                                        <td class="px-4 py-3 text-slate-600">5</td>
+                                        <td class="px-4 py-3"><input type="text" placeholder="00.000.000/0001-00" class="w-full bg-transparent border-none text-slate-500 text-sm focus:outline-none font-mono placeholder:text-slate-600"></td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                        <td class="px-4 py-3"><input type="text" placeholder="Descricao do servico..." class="w-full bg-transparent border-none text-slate-500 text-sm focus:outline-none placeholder:text-slate-600"></td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                        <td class="px-4 py-3"><input type="text" placeholder="R$ 0,00" class="w-full bg-transparent border-none text-slate-500 text-sm focus:outline-none placeholder:text-slate-600"></td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                        <td class="px-4 py-3 text-slate-600">—</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Botao adicionar linha -->
+                        <div class="px-6 py-3 border-t border-slate-700">
+                            <button class="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1 transition">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                Adicionar linha
+                            </button>
+                        </div>
+
+                        <!-- Rodape totalizador -->
+                        <div class="px-6 py-4 border-t border-slate-700 bg-slate-900/30 flex items-center justify-between">
+                            <div class="flex items-center gap-6 text-sm">
+                                <span class="text-slate-400"><span class="font-bold text-slate-200">4</span> notas preenchidas</span>
+                                <span class="text-slate-400">Total: <span class="font-bold text-slate-200">R$ 49.100</span></span>
+                                <span class="text-slate-400">Tributos: <span class="font-bold text-amber-300">R$ 2.946</span></span>
+                                <span class="text-slate-400">Liquido: <span class="font-bold text-emerald-300">R$ 46.154</span></span>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-700 px-6 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2">
+                                <i data-lucide="zap" class="w-4 h-4"></i>
+                                Gerar Todas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Coleta de Documentos -->
+            <section id="section-documentos" class="section hidden fade-in">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold">Coleta de Documentos — Maio/2026</h3>
+                        <p class="text-sm text-slate-400">Acompanhe o envio de documentos por cliente</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full">32 completos</span>
+                        <span class="text-xs bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full">10 parciais</span>
+                        <span class="text-xs bg-red-500/20 text-red-300 px-3 py-1 rounded-full">5 atrasados</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Tech Solutions Ltda</h4>
+                            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Parcial</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 86%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">6 de 7 documentos recebidos</p>
+                        <p class="text-xs text-amber-300 mt-1">Faltam: Extratos bancarios</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Distribuidora Norte Sul</h4>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Completo</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">8 de 8 documentos recebidos</p>
+                        <p class="text-xs text-emerald-300 mt-1">Entregue em 12/05</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-red-500/30 rounded-xl p-5 hover:border-red-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Restaurante Bom Gosto</h4>
+                            <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Atrasado</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 29%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">2 de 7 documentos recebidos</p>
+                        <p class="text-xs text-red-300 mt-1">Prazo expirado ha 5 dias</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Padaria Sabor & Arte</h4>
+                            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Parcial</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 71%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">5 de 7 documentos recebidos</p>
+                        <p class="text-xs text-amber-300 mt-1">Faltam: NF entrada, DRE</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-red-500/30 rounded-xl p-5 hover:border-red-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Auto Pecas Central</h4>
+                            <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Atrasado</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 43%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">3 de 7 documentos recebidos</p>
+                        <p class="text-xs text-red-300 mt-1">Prazo expirado ha 3 dias</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Clinica Vida Plena</h4>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Completo</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">6 de 6 documentos recebidos</p>
+                        <p class="text-xs text-emerald-300 mt-1">Entregue em 18/05</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Loja do Marceneiro</h4>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Completo</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">5 de 5 documentos recebidos</p>
+                        <p class="text-xs text-emerald-300 mt-1">Entregue em 14/05</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-red-500/30 rounded-xl p-5 hover:border-red-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Moda Urbana ME</h4>
+                            <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Atrasado</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 17%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">1 de 6 documentos recebidos</p>
+                        <p class="text-xs text-red-300 mt-1">Prazo expirado ha 8 dias — 3 cobr. enviadas</p>
+                    </div>
+
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-medium">Constrular Materiais</h4>
+                            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Parcial</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 57%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400">4 de 7 documentos recebidos</p>
+                        <p class="text-xs text-amber-300 mt-1">Faltam: Extratos, NF entrada, Folha ponto</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 7: Atendimento (NOVA) -->
+            <section id="section-atendimento" class="section hidden fade-in">
+                <!-- KPIs -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="inbox" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-bold">12</p>
+                                <p class="text-xs text-slate-400">Demandas abertas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 border border-red-700/30 rounded-xl p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-bold text-red-300">3</p>
+                                <p class="text-xs text-slate-400">Atrasadas (SLA)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="timer" class="w-5 h-5 text-amber-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-bold">6h</p>
+                                <p class="text-xs text-slate-400">Tempo medio resposta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="star" class="w-5 h-5 text-emerald-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-bold">4.7<span class="text-sm text-slate-400">/5</span></p>
+                                <p class="text-xs text-slate-400">Satisfacao</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Fila de demandas -->
+                    <div class="lg:col-span-2 bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <i data-lucide="list-todo" class="w-5 h-5 text-blue-400"></i>
+                                Fila de Demandas
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <select class="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs text-slate-300">
+                                    <option>Todas</option>
+                                    <option>Abertas</option>
+                                    <option>Em andamento</option>
+                                    <option>Atrasadas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-slate-700 text-left">
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Cliente</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Categoria</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Demanda</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">SLA</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Responsavel</th>
+                                        <th class="px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700/50">
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 font-medium">Tech Solutions</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full">Certidao</span></td>
+                                        <td class="px-4 py-3 text-slate-300">CND Federal</td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded">48h (23h restantes)</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-slate-300">Maria</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full">Em andamento</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 font-medium">Padaria Sabor & Arte</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">Duvida fiscal</span></td>
+                                        <td class="px-4 py-3 text-slate-300">"Posso deduzir compra de forno?"</td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-xs bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded">24h (5h restantes)</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-slate-300">Joao</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Aberto</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 font-medium">Clinica Bem Estar</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Emissao de nota</span></td>
+                                        <td class="px-4 py-3 text-slate-300">"Nota para convenio novo"</td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded">4h (2h restantes)</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-slate-300">Maria</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full">Em andamento</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-red-950/10 bg-red-950/5">
+                                        <td class="px-4 py-3 font-medium text-red-200">Auto Pecas JR</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Urgencia</span></td>
+                                        <td class="px-4 py-3 text-red-200">"Notificacao da Receita Federal"</td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded font-bold">2h (ATRASADO)</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-slate-300">Carlos</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Aberto</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/20">
+                                        <td class="px-4 py-3 font-medium">Restaurante Sabores</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-slate-500/20 text-slate-300 px-2 py-0.5 rounded-full">Alteracao</span></td>
+                                        <td class="px-4 py-3 text-slate-300">"Mudar endereco da empresa"</td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded">5 dias</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-slate-500">—</td>
+                                        <td class="px-4 py-3"><span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Aberto</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Card IA Sugestao -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/50 border border-purple-700/30 rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-purple-300">IA Sugeriu Resposta</h4>
+                                    <p class="text-[10px] text-slate-400">Para: Padaria Sabor & Arte — "Posso deduzir compra de forno?"</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900/70 rounded-lg p-4 border border-slate-700 mb-4">
+                                <p class="text-sm text-slate-200 leading-relaxed">
+                                    Ola, Fernanda! Sobre a compra do forno: <strong>sim, e possivel deduzir</strong>. Como a Padaria esta no Simples Nacional, o valor do forno (ativo imobilizado) nao gera credito direto de ICMS, mas entra como despesa operacional na apuracao do IRPJ/CSLL caso migrem para Lucro Presumido futuramente. Recomendo guardar a NF de compra e o comprovante de pagamento. Precisa de mais detalhes?
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="bg-purple-600 hover:bg-purple-700 px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1">
+                                    <i data-lucide="send" class="w-3 h-3"></i>
+                                    Enviar resposta
+                                </button>
+                                <button class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-xs font-medium transition">
+                                    Editar antes
+                                </button>
+                                <button class="text-xs text-slate-500 hover:text-slate-300 transition">
+                                    Descartar
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-slate-500 mt-3">Confianca: 94% | Base: legislacao Simples Nacional + historico do cliente</p>
+                        </div>
+
+                        <!-- Metricas SLA -->
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-sm mb-4 flex items-center gap-2">
+                                <i data-lucide="gauge" class="w-4 h-4 text-blue-400"></i>
+                                SLA — Ultimos 30 dias
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-slate-400">Dentro do SLA</span>
+                                    <span class="text-sm font-bold text-emerald-300">87%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 text-center mt-3">
+                                    <div class="bg-slate-900/50 rounded p-2">
+                                        <p class="text-xs text-slate-400">Resolvidas</p>
+                                        <p class="text-sm font-bold text-emerald-300">48</p>
+                                    </div>
+                                    <div class="bg-slate-900/50 rounded p-2">
+                                        <p class="text-xs text-slate-400">Fora SLA</p>
+                                        <p class="text-sm font-bold text-red-300">7</p>
+                                    </div>
+                                    <div class="bg-slate-900/50 rounded p-2">
+                                        <p class="text-xs text-slate-400">Pendentes</p>
+                                        <p class="text-sm font-bold text-amber-300">12</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: Comunicacao -->
+            <section id="section-comunicacao" class="section hidden fade-in">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- WhatsApp Preview -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-400"></i>
+                            Preview — Mensagens WhatsApp
+                        </h3>
+                        <p class="text-xs text-slate-400 mb-4">Ultimas mensagens automaticas enviadas pelo sistema</p>
+
+                        <div class="bg-slate-900 rounded-xl p-4 space-y-4 max-h-96 overflow-y-auto" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22><rect width=%2220%22 height=%2220%22 fill=%22%230f172a%22/><circle cx=%2210%22 cy=%2210%22 r=%221%22 fill=%22%231e293b%22/></svg>'); background-size: 20px 20px;">
+
+                            <div class="flex justify-end">
+                                <div class="bg-emerald-800/80 rounded-lg rounded-tr-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Ola, Sr. Carlos! Aqui e do Escritorio Silva & Associados. Lembramos que o honorario de abril (R$ 1.200,00) esta com 45 dias de atraso. Podemos negociar o pagamento? Responda esta mensagem ou ligue (11) 3456-7890.</p>
+                                    <p class="text-[10px] text-emerald-300 text-right mt-1">09:00 — Restaurante Bom Gosto</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end">
+                                <div class="bg-emerald-800/80 rounded-lg rounded-tr-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Bom dia, Marcos! Estamos fechando a contabilidade de maio da Tech Solutions e faltam os extratos bancarios. Pode nos enviar ate amanha? Basta responder aqui com os PDFs ou enviar para docs@contabilia.com.br</p>
+                                    <p class="text-[10px] text-emerald-300 text-right mt-1">10:30 — Tech Solutions</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-start">
+                                <div class="bg-slate-700 rounded-lg rounded-tl-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Opa, bom dia! Vou pedir pro financeiro enviar hoje ainda. Desculpa a demora!</p>
+                                    <p class="text-[10px] text-slate-400 text-right mt-1">10:45 — Marcos (Tech Solutions)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end">
+                                <div class="bg-emerald-800/80 rounded-lg rounded-tr-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Perfeito, Marcos! Agradecemos. Qualquer duvida estamos a disposicao.</p>
+                                    <p class="text-[10px] text-emerald-300 text-right mt-1">10:46 — Resposta automatica</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end">
+                                <div class="bg-emerald-800/80 rounded-lg rounded-tr-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Ola, Fernanda! O DAS do Simples Nacional referente a maio/2026 vence em 2 dias (29/05). O valor e R$ 1.847,23. Deseja que enviemos a guia por aqui?</p>
+                                    <p class="text-[10px] text-emerald-300 text-right mt-1">11:00 — Padaria Sabor & Arte</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-start">
+                                <div class="bg-slate-700 rounded-lg rounded-tl-none p-3 max-w-[85%] shadow">
+                                    <p class="text-sm text-slate-100">Sim, por favor! Manda a guia que eu pago hoje</p>
+                                    <p class="text-[10px] text-slate-400 text-right mt-1">11:15 — Fernanda (Padaria)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regua de Cobranca -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                            <i data-lucide="git-branch" class="w-5 h-5 text-blue-400"></i>
+                            Regua de Cobranca Automatica
+                        </h3>
+                        <p class="text-xs text-slate-400 mb-6">Fluxo automatico de comunicacao baseado no vencimento do honorario</p>
+
+                        <div class="relative">
+                            <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-slate-700"></div>
+
+                            <div class="space-y-6">
+                                <div class="flex gap-4 items-start relative">
+                                    <div class="w-12 h-12 rounded-full bg-blue-500/20 border-2 border-blue-500 flex items-center justify-center shrink-0 z-10">
+                                        <span class="text-xs font-bold text-blue-300">D-3</span>
+                                    </div>
+                                    <div class="bg-blue-950/30 border border-blue-900/50 rounded-lg p-4 flex-1">
+                                        <p class="text-sm font-medium text-blue-200">Lembrete amigavel</p>
+                                        <p class="text-xs text-slate-400 mt-1">WhatsApp: "Seu honorario vence em 3 dias. Valor: R$ X. Precisa da guia?"</p>
+                                        <span class="text-xs text-blue-400 mt-2 inline-block">Canal: WhatsApp</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 items-start relative">
+                                    <div class="w-12 h-12 rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center shrink-0 z-10">
+                                        <span class="text-xs font-bold text-emerald-300">D0</span>
+                                    </div>
+                                    <div class="bg-emerald-950/30 border border-emerald-900/50 rounded-lg p-4 flex-1">
+                                        <p class="text-sm font-medium text-emerald-200">Dia do vencimento</p>
+                                        <p class="text-xs text-slate-400 mt-1">WhatsApp: "Hoje vence seu honorario. Confirme o pagamento."</p>
+                                        <span class="text-xs text-emerald-400 mt-2 inline-block">Canal: WhatsApp + E-mail</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 items-start relative">
+                                    <div class="w-12 h-12 rounded-full bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center shrink-0 z-10">
+                                        <span class="text-xs font-bold text-amber-300">D+3</span>
+                                    </div>
+                                    <div class="bg-amber-950/30 border border-amber-900/50 rounded-lg p-4 flex-1">
+                                        <p class="text-sm font-medium text-amber-200">1a cobranca</p>
+                                        <p class="text-xs text-slate-400 mt-1">WhatsApp: "Identificamos que o pagamento nao foi efetuado. Houve algum problema?"</p>
+                                        <span class="text-xs text-amber-400 mt-2 inline-block">Canal: WhatsApp</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 items-start relative">
+                                    <div class="w-12 h-12 rounded-full bg-orange-500/20 border-2 border-orange-500 flex items-center justify-center shrink-0 z-10">
+                                        <span class="text-xs font-bold text-orange-300">D+7</span>
+                                    </div>
+                                    <div class="bg-orange-950/30 border border-orange-900/50 rounded-lg p-4 flex-1">
+                                        <p class="text-sm font-medium text-orange-200">2a cobranca + multa</p>
+                                        <p class="text-xs text-slate-400 mt-1">E-mail formal + WhatsApp: "Honorario em atraso ha 7 dias. Multa de 2% + juros 1% a.m. aplicados."</p>
+                                        <span class="text-xs text-orange-400 mt-2 inline-block">Canal: E-mail + WhatsApp</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 items-start relative">
+                                    <div class="w-12 h-12 rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center shrink-0 z-10">
+                                        <span class="text-xs font-bold text-red-300">D+15</span>
+                                    </div>
+                                    <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-4 flex-1">
+                                        <p class="text-sm font-medium text-red-200">Aviso de suspensao</p>
+                                        <p class="text-xs text-slate-400 mt-1">E-mail + WhatsApp + Ligacao: "Servicos serao suspensos em 48h. Entre em contato urgente."</p>
+                                        <span class="text-xs text-red-400 mt-2 inline-block">Canal: E-mail + WhatsApp + Telefone</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium">Taxa de sucesso da regua</p>
+                                    <p class="text-xs text-slate-400">Ultimos 90 dias</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-emerald-400">78%</p>
+                                    <p class="text-xs text-slate-400">pagam ate D+3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 9: Relatorios (NOVA) -->
+            <section id="section-relatorios" class="section hidden fade-in">
+                <!-- Grid de relatorios disponiveis -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">Relatorios Disponiveis</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium">Resumo Fiscal Mensal</h4>
+                                    <p class="text-xs text-slate-400">Por cliente, com totais de impostos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center group-hover:bg-amber-500/30 transition">
+                                    <i data-lucide="git-compare" class="w-5 h-5 text-amber-400"></i>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div>
+                                        <h4 class="text-sm font-medium">Comparativo Regime Antigo x Novo</h4>
+                                        <p class="text-xs text-slate-400">Projecao de economia tributaria</p>
+                                    </div>
+                                    <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">Transicao</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center group-hover:bg-emerald-500/30 transition">
+                                    <i data-lucide="banknote" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium">Rentabilidade por Cliente</h4>
+                                    <p class="text-xs text-slate-400">Honorario vs horas dedicadas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition">
+                                    <i data-lucide="trending-down" class="w-5 h-5 text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium">Inadimplencia Acumulada</h4>
+                                    <p class="text-xs text-slate-400">Historico e projecao de perdas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition">
+                                    <i data-lucide="clipboard-check" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium">Obrigacoes Entregues</h4>
+                                    <p class="text-xs text-slate-400">Controle de entregas ao fisco</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 hover:border-blue-500/50 transition cursor-pointer group">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition">
+                                    <i data-lucide="ticket" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium">Demandas e SLA</h4>
+                                    <p class="text-xs text-slate-400">Performance de atendimento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview de relatorio aberto -->
+                <div class="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5 text-blue-400"></i>
+                            <div>
+                                <h3 class="font-semibold">Resumo Fiscal — Maio/2026</h3>
+                                <p class="text-xs text-slate-400">Tech Solutions Ltda — 12.345.678/0001-90</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1">
+                                <i data-lucide="download" class="w-3 h-3"></i>
+                                Exportar PDF
+                            </button>
+                            <button class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1">
+                                <i data-lucide="mail" class="w-3 h-3"></i>
+                                Enviar ao cliente
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Dados do relatorio -->
+                            <div class="space-y-6">
+                                <!-- Resumo NFS-e -->
+                                <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-700">
+                                    <h4 class="text-sm font-semibold text-blue-300 mb-4">Notas Fiscais Emitidas</h4>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-xs text-slate-400">Quantidade</p>
+                                            <p class="text-2xl font-bold">8</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">Total faturado</p>
+                                            <p class="text-2xl font-bold text-emerald-300">R$ 45.200</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tributos -->
+                                <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-700">
+                                    <h4 class="text-sm font-semibold text-amber-300 mb-4">Tributos Apurados</h4>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-slate-400">ISS retido (5%)</span>
+                                            <span class="text-sm font-bold text-slate-200">R$ 2.260,00</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-slate-400">IBS (0,1%)</span>
+                                            <span class="text-sm font-bold text-slate-200">R$ 45,20</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-slate-400">CBS (0,9%)</span>
+                                            <span class="text-sm font-bold text-slate-200">R$ 406,80</span>
+                                        </div>
+                                        <div class="border-t border-slate-700 pt-2 flex justify-between items-center">
+                                            <span class="text-sm font-medium text-slate-300">Total tributos</span>
+                                            <span class="text-sm font-bold text-amber-300">R$ 2.712,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Guias -->
+                                <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-700">
+                                    <h4 class="text-sm font-semibold text-emerald-300 mb-4">Guias Pagas</h4>
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+                                            <span class="text-lg font-bold">3/3</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-emerald-300">Todas pagas</span>
+                                    </div>
+                                    <div class="mt-3 space-y-1 text-xs text-slate-400">
+                                        <p>ISS — Guia Municipal — paga 15/05</p>
+                                        <p>IRPJ — DARF 2089 — paga 20/05</p>
+                                        <p>CSLL — DARF 2372 — paga 20/05</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Grafico + Comparativo -->
+                            <div class="space-y-6">
+                                <!-- Comparativo regime -->
+                                <div class="bg-slate-900/50 rounded-lg p-5 border border-amber-700/30">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <i data-lucide="git-compare" class="w-4 h-4 text-amber-400"></i>
+                                        <h4 class="text-sm font-semibold text-amber-300">Comparativo: Regime Antigo x Novo</h4>
+                                        <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded ml-auto">Transicao tributaria</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
+                                        <div class="bg-slate-800/70 rounded-lg p-4 text-center border border-slate-700">
+                                            <p class="text-[10px] text-slate-400 uppercase mb-1">Regime Atual (ISS)</p>
+                                            <p class="text-xl font-bold text-red-300">R$ 2.260</p>
+                                            <p class="text-xs text-slate-400 mt-1">5% sobre faturamento</p>
+                                        </div>
+                                        <div class="bg-emerald-950/30 rounded-lg p-4 text-center border border-emerald-800/30">
+                                            <p class="text-[10px] text-slate-400 uppercase mb-1">Regime Novo (IBS+CBS)</p>
+                                            <p class="text-xl font-bold text-emerald-300">R$ 452</p>
+                                            <p class="text-xs text-slate-400 mt-1">1% sobre faturamento</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-emerald-950/20 border border-emerald-800/30 rounded-lg p-3 text-center">
+                                        <p class="text-xs text-slate-400">Economia projetada ao migrar</p>
+                                        <p class="text-lg font-bold text-emerald-300">80% <span class="text-sm text-slate-400 font-normal">de reducao</span></p>
+                                        <p class="text-[10px] text-slate-500">Projecao baseada na reforma tributaria — transicao 2026–2033</p>
+                                    </div>
+                                </div>
+
+                                <!-- Mini grafico de barras -->
+                                <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-700">
+                                    <h4 class="text-sm font-semibold text-blue-300 mb-4">Impostos — Ultimos 6 meses</h4>
+                                    <div class="bar-chart flex items-end justify-between gap-2 h-40 px-2">
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500/60 rounded-t" style="height: 65%"></div>
+                                            <span class="text-[10px] text-slate-500">Dez</span>
+                                            <span class="text-[10px] text-slate-400">R$ 1.8k</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500/60 rounded-t" style="height: 72%"></div>
+                                            <span class="text-[10px] text-slate-500">Jan</span>
+                                            <span class="text-[10px] text-slate-400">R$ 2.0k</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500/60 rounded-t" style="height: 68%"></div>
+                                            <span class="text-[10px] text-slate-500">Fev</span>
+                                            <span class="text-[10px] text-slate-400">R$ 1.9k</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500/60 rounded-t" style="height: 80%"></div>
+                                            <span class="text-[10px] text-slate-500">Mar</span>
+                                            <span class="text-[10px] text-slate-400">R$ 2.2k</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500/60 rounded-t" style="height: 85%"></div>
+                                            <span class="text-[10px] text-slate-500">Abr</span>
+                                            <span class="text-[10px] text-slate-400">R$ 2.4k</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center gap-1">
+                                            <div class="bar w-full bg-blue-500 rounded-t" style="height: 97%"></div>
+                                            <span class="text-[10px] text-blue-300 font-medium">Mai</span>
+                                            <span class="text-[10px] text-blue-300 font-medium">R$ 2.7k</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-between text-xs text-slate-400">
+                                        <span>Media: R$ 2.167/mes</span>
+                                        <span class="text-amber-300">Tendencia: +8% a.m.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 10: Admin / Configuracoes -->
+            <section id="section-admin" class="section hidden fade-in">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Chaves de API -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                            <i data-lucide="key" class="w-5 h-5 text-blue-400"></i>
+                            Chaves de API
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">Prefeitura SP — NFS-e</h4>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Ativa</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">sk_live_●●●●●●●●●●●●●●●●●●●●4f8a</p>
+                                <p class="text-xs text-slate-500 mt-1">Ultima chamada: hoje, 14:15</p>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">SEFAZ — NF-e / CT-e</h4>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Ativa</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">cert_prod_●●●●●●●●●●●●●●●●7b2c</p>
+                                <p class="text-xs text-slate-500 mt-1">Ultima chamada: hoje, 11:40</p>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">WhatsApp Business API</h4>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Ativa</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">waba_●●●●●●●●●●●●●●●●●●●●9d1e</p>
+                                <p class="text-xs text-slate-500 mt-1">Ultima chamada: hoje, 11:00 — 847 msgs este mes</p>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">Serpro — Consulta CNPJ</h4>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Ativa</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">serp_●●●●●●●●●●●●●●●●●●●●3a5f</p>
+                                <p class="text-xs text-slate-500 mt-1">Ultima chamada: ontem, 16:30 — 124 consultas este mes</p>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">Contmatic Phoenix — Sync</h4>
+                                    </div>
+                                    <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Limitada</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">ctx_●●●●●●●●●●●●●●●●●●●●●●8e2b</p>
+                                <p class="text-xs text-amber-400 mt-1">Cota: 89% utilizada (8.900/10.000 chamadas)</p>
+                            </div>
+
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                        <h4 class="text-sm font-medium">OpenAI — Classificacao docs</h4>
+                                    </div>
+                                    <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Expirada</span>
+                                </div>
+                                <p class="text-sm text-slate-400 font-mono">sk-●●●●●●●●●●●●●●●●●●●●●●●●0x4d</p>
+                                <p class="text-xs text-red-400 mt-1">Expirou em 20/05/2026 — renovar urgente</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certificados Digitais -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                                <i data-lucide="shield" class="w-5 h-5 text-emerald-400"></i>
+                                Certificados Digitais dos Clientes
+                            </h3>
+
+                            <div class="space-y-3">
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Tech Solutions Ltda</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A1 — Certisign</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-emerald-300">14/11/2026</p>
+                                        <p class="text-xs text-slate-400">171 dias restantes</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Distribuidora Norte Sul</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A1 — Serasa</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-emerald-300">03/09/2026</p>
+                                        <p class="text-xs text-slate-400">99 dias restantes</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-amber-700/50 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Clinica Vida Plena</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A3 — Valid</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-amber-300">01/06/2026</p>
+                                        <p class="text-xs text-amber-400">5 dias restantes!</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Padaria Sabor & Arte</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A1 — Certisign</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-emerald-300">22/02/2027</p>
+                                        <p class="text-xs text-slate-400">271 dias restantes</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Restaurante Bom Gosto</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A1 — Soluti</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-emerald-300">18/08/2026</p>
+                                        <p class="text-xs text-slate-400">83 dias restantes</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-900/50 rounded-lg border border-red-700/50 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium">Auto Pecas Central</p>
+                                        <p class="text-xs text-slate-400">e-CNPJ A1 — Serasa</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-red-300">12/05/2026</p>
+                                        <p class="text-xs text-red-400">Expirado ha 15 dias</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuracoes do Escritorio -->
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                            <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                                <i data-lucide="sliders" class="w-5 h-5 text-blue-400"></i>
+                                Configuracoes do Escritorio
+                            </h3>
+                            <div class="space-y-4 text-sm">
+                                <div class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium">Cobranca automatica</p>
+                                        <p class="text-xs text-slate-400">Regua de cobranca via WhatsApp</p>
+                                    </div>
+                                    <div class="w-10 h-5 bg-emerald-500 rounded-full relative cursor-pointer">
+                                        <div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium">Lembrete de documentos</p>
+                                        <p class="text-xs text-slate-400">Notificar clientes D-5 do fechamento</p>
+                                    </div>
+                                    <div class="w-10 h-5 bg-emerald-500 rounded-full relative cursor-pointer">
+                                        <div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium">Classificacao por IA</p>
+                                        <p class="text-xs text-slate-400">Classificar documentos automaticamente</p>
+                                    </div>
+                                    <div class="w-10 h-5 bg-slate-600 rounded-full relative cursor-pointer">
+                                        <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-slate-300 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium">Alerta cert. digital</p>
+                                        <p class="text-xs text-slate-400">Avisar 30 dias antes do vencimento</p>
+                                    </div>
+                                    <div class="w-10 h-5 bg-emerald-500 rounded-full relative cursor-pointer">
+                                        <div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-800 px-8 py-4 text-center">
+            <p class="text-sm text-slate-500">Contabilia &copy; 2026 — Desenvolvido por <span class="text-blue-400">Trivia</span></p>
+        </footer>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => {
+                s.classList.add('hidden');
+                s.classList.remove('fade-in');
+            });
+
+            // Show target section
+            const target = document.getElementById('section-' + sectionId);
+            if (target) {
+                target.classList.remove('hidden');
+                // Trigger animation
+                void target.offsetWidth;
+                target.classList.add('fade-in');
+            }
+
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.section === sectionId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard do Escritorio',
+                'crm-lista': 'CRM — Lista de Clientes',
+                'crm-ficha': 'CRM — Ficha do Cliente',
+                'notas': 'Emissao de Notas Fiscais',
+                'emissao-lote': 'Emissao em Lote',
+                'documentos': 'Coleta de Documentos',
+                'atendimento': 'Atendimento ao Cliente',
+                'comunicacao': 'Comunicacao',
+                'relatorios': 'Relatorios',
+                'admin': 'Admin / Configuracoes'
+            };
+            document.getElementById('page-title').textContent = titles[sectionId] || 'Dashboard';
+
+            // Re-initialize icons for the new section
+            lucide.createIcons();
+        }
+
+        // Lote tab navigation
+        function showLoteTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.lote-tab-content').forEach(c => {
+                c.classList.add('hidden');
+            });
+
+            // Show target tab content
+            const target = document.getElementById('lote-tab-' + tabId);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+
+            // Update tab active state
+            document.querySelectorAll('.lote-tab').forEach(tab => {
+                tab.classList.remove('border-blue-500', 'text-blue-300');
+                tab.classList.add('border-transparent', 'text-slate-400');
+                if (tab.dataset.tab === tabId) {
+                    tab.classList.add('border-blue-500', 'text-blue-300');
+                    tab.classList.remove('border-transparent', 'text-slate-400');
+                }
+            });
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
