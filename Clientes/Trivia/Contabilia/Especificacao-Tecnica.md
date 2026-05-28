@@ -647,16 +647,58 @@ Painel do Escritório:
 
 ---
 
-## Modelo de Negócio Sugerido
+## Modelos de Comercialização
+
+### Modelo A — Implementação de Sistema Operacional (Principal)
+
+Posicionamento: **"Construímos e configuramos o sistema operacional do seu escritório"** — não é um SaaS genérico, é uma implementação personalizada com acompanhamento.
+
+| Fase | Duração | Entrega | Investimento |
+|---|---|---|---|
+| **Diagnóstico** | 1 semana | Mapeamento de processos, carteira, gargalos, sistemas | Incluso |
+| **Implementação** | 8-12 semanas | Plataforma configurada: CRM migrado, templates, réguas, IA treinada | R$ 15.000 a R$ 35.000 |
+| **Onboarding** | 2-4 semanas | Treinamento, migração de dados, primeiros clientes ativos | Incluso |
+| **Operação** | Mensal (contínuo) | Infraestrutura, APIs, IA, suporte, evolução | R$ 990 a R$ 2.490/mês |
+
+**Diferenciais vs. SaaS puro:**
+- Sistema é do escritório (não genérico)
+- IA treinada no padrão específico daquele escritório
+- Templates, réguas e fluxos personalizados
+- Acompanhamento na implantação
+- Ticket médio alto + recorrência (LTV elevado)
+- Barreira de saída alta (integrado na operação)
+- Relação consultiva de longo prazo
+
+**Perfil do cliente ideal:**
+- 30-200 clientes PME
+- Faturamento R$ 30K-200K/mês em honorários
+- Sente o peso da reforma tributária
+- Investimento = 1-2 meses de honorário (ROI claro)
+
+---
+
+### Modelo B — SaaS Self-Service (Escala futura)
+
+Para quando a plataforma estiver madura (após 10-20 implementações):
 
 | Plano | Preço/mês | Clientes inclusos | Funcionalidades |
 |---|---|---|---|
 | Starter | R$ 297 | Até 20 clientes | Portal + Emissão + Comunicação |
-| Pro | R$ 597 | Até 50 clientes | + Conciliação + Apuração + IA |
+| Pro | R$ 597 | Até 50 clientes | + Lote + IA + Relatórios |
 | Enterprise | R$ 1.497 | Até 200 clientes | + SPED + API + White-label |
-| Custom | Sob consulta | 200+ | Dedicado |
 
-**Adicional por cliente ativo acima da franquia:** R$ 9,90/cliente/mês
+---
+
+### Comparativo
+
+| Aspecto | Implementação (A) | SaaS (B) |
+|---|---|---|
+| Ticket médio | R$ 15-35K + recorrência | R$ 297-1.497/mês |
+| Personalização | Alta | Padrão configurável |
+| Acompanhamento | Dedicado | Self-service |
+| Churn | Baixo | Médio-alto |
+| Momento | Agora (validação) | Futuro (escala) |
+| Posicionamento | "Seu sistema operacional" | "Ferramenta de automação" |
 
 ---
 

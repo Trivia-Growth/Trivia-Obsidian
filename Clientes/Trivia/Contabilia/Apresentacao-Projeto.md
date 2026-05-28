@@ -196,13 +196,64 @@ A reforma tributária brasileira (2026-2032) está dobrando o trabalho dos escri
 
 ---
 
-## Modelo de Negócio
+## Modelos de Comercialização
 
-| Plano | Preço/mês | Clientes inclusos |
+### Modelo A — Implementação de Sistema Operacional (Recomendado)
+
+O Contabilia não é "mais um software de assinatura". É a **implementação do sistema operacional do escritório** — personalizado, configurado para a realidade do contador, com acompanhamento.
+
+**Proposta de valor:** "Nós construímos e configuramos o sistema operacional do seu escritório. Você recebe uma plataforma pronta, integrada, funcionando com seus clientes — não um login genérico igual ao de todo mundo."
+
+| Fase | O que entrega | Investimento |
 |---|---|---|
-| Starter | R$ 297 | Até 20 clientes |
-| Pro | R$ 597 | Até 50 clientes |
-| Enterprise | R$ 1.497 | Até 200 clientes |
+| **Diagnóstico** (1 semana) | Mapeamento de processos, clientes, dores específicas, sistemas usados | Incluso |
+| **Implementação** (8-12 semanas) | Plataforma configurada: CRM com todos os clientes, templates de notas, réguas de comunicação, IA treinada no padrão do escritório | R$ 15.000 a R$ 35.000 |
+| **Onboarding** (2-4 semanas) | Treinamento da equipe, migração de dados, primeiros clientes ativos | Incluso |
+| **Operação + Suporte** (mensal) | Infraestrutura, APIs, IA, evolução, suporte técnico | R$ 990 a R$ 2.490/mês |
+
+**Por que funciona melhor que SaaS puro:**
+- Escritório sente que é DELE (não é genérico)
+- IA treinada com o padrão específico daquele escritório
+- Templates, réguas e fluxos personalizados
+- Acompanhamento na implantação (não é "se vira com o tutorial")
+- Ticket médio muito maior (R$ 15-35K + recorrência)
+- Relação de longo prazo (não churn de SaaS)
+- Barreira de saída alta (está integrado na operação)
+
+**Perfil do cliente ideal:**
+- Escritório com 30-200 clientes PME
+- Faturamento R$ 30K-200K/mês em honorários
+- Sente o peso da reforma tributária
+- Quer se profissionalizar/escalar sem contratar mais gente
+- Investimento do Contabilia = 1-2 meses de honorário (ROI claro)
+
+---
+
+### Modelo B — SaaS (Escala futura)
+
+Para quando a plataforma estiver madura e o mercado validado, pode abrir como self-service:
+
+| Plano | Preço/mês | Clientes inclusos | Perfil |
+|---|---|---|---|
+| Starter | R$ 297 | Até 20 clientes | Escritório solo/micro |
+| Pro | R$ 597 | Até 50 clientes | Escritório pequeno |
+| Enterprise | R$ 1.497 | Até 200 clientes | Escritório médio |
+
+**Quando usar:** Após 10-20 implementações personalizadas, quando o produto estiver maduro o suficiente para funcionar sem acompanhamento de implantação.
+
+---
+
+### Comparativo dos Modelos
+
+| Aspecto | Implementação (Modelo A) | SaaS (Modelo B) |
+|---|---|---|
+| Ticket médio | R$ 15-35K + R$ 990-2.490/mês | R$ 297-1.497/mês |
+| Personalização | Alta (IA treinada, fluxos sob medida) | Padrão (configurável) |
+| Acompanhamento | Implantação + suporte dedicado | Self-service + suporte básico |
+| Churn | Baixo (integrado na operação) | Médio-alto (típico SaaS) |
+| Escalabilidade | Limitada (requer equipe) | Alta (self-service) |
+| Momento ideal | Agora (validação + receita rápida) | Futuro (após maturidade) |
+| Posicionamento | "Seu sistema operacional" | "Ferramenta de automação" |
 
 ---
 
