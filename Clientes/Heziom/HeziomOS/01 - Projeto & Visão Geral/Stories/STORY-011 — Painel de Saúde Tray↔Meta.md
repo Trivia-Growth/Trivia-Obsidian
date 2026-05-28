@@ -13,7 +13,7 @@ atualizado: 2026-05-28
 # STORY-011 — Painel de Saúde (Integração Tray ↔ Meta)
 
 ## Status
-`Review` — código implementado e validado em smoke test; aguarda JG rodar o SQL + setar `PANEL_STATS_SECRET` + deploy pra validação ao vivo.
+`Review` — código implementado, migração aplicada e deploy feito (commit `b6d1a8c` em `main` → Netlify publica). **Falta só:** setar `PANEL_STATS_SECRET` no Netlify + ver 1 pedido real aparecer no `/painel` pra fechar o gate.
 
 > Fluxo TRIVIAIOX: `@sm` (story) → `@dev` (Diff Plan + implementação) → `@qa` (gate) → push.
 > Story mora no vault (padrão da STORY-010), não em `docs/stories/`.
@@ -132,9 +132,9 @@ Definir nova env var (ex.: `PANEL_STATS_SECRET`). `.env` é gitignored — nunca
 
 ---
 
-## Migração Supabase (JG executa no SQL Editor — projeto `eqsjvacbhrezlgqpwipv`)
+## Migração Supabase (projeto `eqsjvacbhrezlgqpwipv`)
 
-> ⚠️ @dev não aplica DDL. Rodar **antes** do deploy. Sem isso, o webhook só loga um erro de métrica (não quebra o fluxo de CAPI).
+> ✅ **Aplicada em 2026-05-28** (JG autorizou e forneceu token; rodada via Management API, HTTP 201). Tabela `tray_event_metrics` criada com RLS ligado.
 
 ```sql
 create table if not exists tray_event_metrics (
@@ -160,6 +160,7 @@ alter table tray_event_metrics enable row level security;
 | 2026-05-28 | 0.1 | Story criada no template do vault | @sm |
 | 2026-05-28 | 1.0 | Reformatada no template TRIVIAIOX (story-template-v2); decisão "painel completo" + HTML standalone; tasks T1–T4 mapeadas aos CAs | @sm |
 | 2026-05-28 | 1.1 | Implementação T1–T4 (instrumentação, endpoint, painel SSR, docs); smoke tests OK; status → Review | @dev |
+| 2026-05-28 | 1.2 | Migração `tray_event_metrics` aplicada (Management API, HTTP 201); commit `b6d1a8c` em `main` → deploy Netlify | @dev |
 
 ---
 
