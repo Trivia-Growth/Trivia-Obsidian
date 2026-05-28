@@ -121,6 +121,8 @@ Compra confirmada na Tray
 
 ## 1.1 · CAPI Server-Side via Webhooks (28/05/2026)
 
+> Mapa técnico de todas as funções do repo `heziom-api` em [[heziom-api — Referência Técnica]].
+
 ### Arquitetura (substitui dependência do GTM browser)
 
 ```
