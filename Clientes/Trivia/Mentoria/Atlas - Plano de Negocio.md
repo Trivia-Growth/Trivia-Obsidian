@@ -1,8 +1,8 @@
-# TRÍVIA · TRIA · ED. 001 — PLANO DE NEGÓCIO
+# TRÍVIA · ATLAS · ED. 001 — PLANO DE NEGÓCIO
 
 > *Trívia Studio · Documento Interno · Ed. 001*
 
-**Método TRIA.** Uma nova BU para a Trívia.
+**Atlas.** Uma nova BU para a Trívia, rodando o método TRIA.
 
 Plano de negócio para a nova unidade de mentoria de implementação de IA. Posicionamento, ICP, produto, precificação, funil de aquisição, modelo financeiro, riscos e plano de 30 dias.
 
@@ -14,13 +14,13 @@ Plano de negócio para a nova unidade de mentoria de implementação de IA. Posi
 
 ### O que estamos propondo.
 
-A Trívia Studio opera hoje três frentes — marketing, growth e IA — entregando sistemas para empresas que precisam disso integrado. Este documento propõe a criação de uma quarta unidade de negócio: TRIA, uma mentoria de implementação de IA voltada a donos de PME (R$ 5MM a R$ 50MM de faturamento). É produto complementar, não substituto. Mentoria abre o relacionamento; a BU de implementação da Trívia entrega o que o cliente decidir contratar adicionalmente.
+A Trívia Studio opera hoje três frentes — marketing, growth e IA — entregando sistemas para empresas que precisam disso integrado. Este documento propõe a criação de uma quarta unidade de negócio: Atlas, uma mentoria de implementação de IA voltada a donos de PME (R$ 5MM a R$ 50MM de faturamento). É produto complementar, não substituto. Mentoria abre o relacionamento; a BU de implementação da Trívia entrega o que o cliente decidir contratar adicionalmente.
 
 O ponto-cego de mercado é claro. Hoje o dono de PME que ouviu falar de IA tem duas opções: (a) gastar entre R$ 5k e R$ 105k em cursos e imersões que entregam conteúdo, não execução; (b) contratar agência de IA por R$ 50k+ que entrega projeto fechado sem o dono entender o que foi feito. Falta o terceiro caminho: alguém sênior que senta do lado do dono, escolhe o caso de uso certo, monta o plano e bota IA pra rodar em 90 dias dentro da operação do cliente — com o time do cliente sabendo operar no final.
 
 *“Empresário não está com falta de conteúdo sobre IA. Está com falta de execução.”*
 
-TRIA preenche esse espaço com três tiers: Ignição (grupo, R$ 9.800), Operação (1:1, R$ 39.000) e Board (fracional anual, R$ 72.000). Cada tier é desenhado para uma maturidade diferente de cliente e tem ponte natural para upsell da BU de implementação da Trívia em escopo de R$ 12k a R$ 120k. Projetamos atingir regime maduro de R$ 200k/mês de receita combinada no mês 10–12, com receita acumulada de R$ 1,4MM a R$ 1,8MM no primeiro ano, custos estabilizados em R$ 111k/mês (incluindo pró-labore para os dois sócios e dev sênior CLT) e margem líquida de aproximadamente R$ 89k/mês para os sócios em regime.
+Atlas preenche esse espaço com três tiers: Ignição (grupo, R$ 9.800), Operação (1:1, R$ 39.000) e Board (fracional anual, R$ 72.000). Cada tier é desenhado para uma maturidade diferente de cliente e tem ponte natural para upsell da BU de implementação da Trívia em escopo de R$ 12k a R$ 120k. Projetamos atingir regime maduro de R$ 200k/mês de receita combinada no mês 10–12, com receita acumulada de R$ 1,4MM a R$ 1,8MM no primeiro ano, custos estabilizados em R$ 111k/mês (incluindo pró-labore para os dois sócios e dev sênior CLT) e margem líquida de aproximadamente R$ 89k/mês para os sócios em regime.
 
 A próxima ação concreta — única métrica do mês 1 — é fechar 3 contratos de Operação como turma fundadora, a R$ 26.000 cada (oferta com 33% de desconto em troca de depoimento e caso público). Caixa esperado em 30 dias: R$ 23.400 de entrada. Esse é o mínimo necessário para validar o ciclo completo (mentoria → implementação → upsell) antes de qualquer escala em mídia ou conteúdo.
 
@@ -44,7 +44,7 @@ Em conversas reais com donos de PME — incluindo participantes de eventos de IA
 - “Meu time gasta tempo demais com tarefa repetitiva (orçamento, atendimento, follow-up, análise) e eu sei que IA resolve, mas não sei quem confiar.”
 - “Já paguei curso, fiz imersão, recebi PDF. Na segunda-feira na empresa, nada mudou.”
 
-Essas três frases definem nosso cliente. Ele já investiu em educação. Ele não precisa de mais informação. Ele precisa de alguém de confiança, com domínio técnico real, que senta do lado dele, escolhe o caso de uso certo (não os 15 possíveis), executa com qualidade e ensina o time dele a operar no final. É exatamente o produto que TRIA propõe.
+Essas três frases definem nosso cliente. Ele já investiu em educação. Ele não precisa de mais informação. Ele precisa de alguém de confiança, com domínio técnico real, que senta do lado dele, escolhe o caso de uso certo (não os 15 possíveis), executa com qualidade e ensina o time dele a operar no final. É exatamente o produto que Atlas propõe.
 
 ### Janela de mercado
 
@@ -116,13 +116,14 @@ SOM realista em 24 meses, considerando capacidade operacional dos dois sócios m
 
 ### Método TRIA.
 
-TRIA é o nome do método proprietário da BU. Acrônimo escolhido por três razões.
+TRIA é o nome do método proprietário da mentoria Atlas. Acrônimo escolhido por duas razões.
 
 - Cada letra significa uma fase real e distinta do programa, na ordem em que acontece. Não é nome forçado para encaixar marketing — é descrição literal do método.
 - “Triar” é verbo em português: selecionar, filtrar, separar o que importa. Subtexto perfeito para nossa proposta — o cliente chega afogado em hype de IA, nós triamos o que faz sentido para o negócio dele.
-- Sonoramente próximo de “Trívia” — reforço de marca automático. Cliente diz “estou no TRIA” e está dizendo “estou na Trívia” ao mesmo tempo.
 
-Acrônimos fortes têm uma propriedade rara: parecem óbvios depois de prontos. É isso que torna TRIA difícil de copiar por concorrente futuro — o duplo sentido com a marca-mãe e com o verbo do português torna a sigla indissociável da Trívia.
+A proximidade sonora com “Trívia” levou à decisão de NÃO usar TRIA como marca comercial — para um cliente novo, “TRIA” lido rápido parece erro de digitação de “Trívia”. Por isso o nome da mentoria é **Atlas**, e TRIA fica como o método interno: o cliente compra a Atlas, e dentro dela roda a metodologia TRIA (Triagem → Roadmap → Implementação → Ativação).
+
+Acrônimos fortes têm uma propriedade rara: parecem óbvios depois de prontos. É isso que torna TRIA difícil de copiar por concorrente futuro — a descrição literal das fases combinada com o verbo do português torna a sigla indissociável do método.
 
 ### As quatro fases
 
@@ -135,7 +136,7 @@ Acrônimos fortes têm uma propriedade rara: parecem óbvios depois de prontos. 
 
 ### Os três tiers
 
-TRIA é entregue em três formatos diferentes, desenhados para perfis distintos de cliente e momentos diferentes da jornada. Cada tier tem ponte natural para upsell de implementação adicional pela Trívia.
+Atlas é entregue em três formatos diferentes, desenhados para perfis distintos de cliente e momentos diferentes da jornada. Cada tier tem ponte natural para upsell de implementação adicional pela Trívia.
 
 #### Tier 1 · Ignição (grupo, entrada)
 
@@ -343,7 +344,7 @@ Receita acumulada estimada nos 12 primeiros meses: **R$ 1,4MM a R$ 1,8MM.** Marg
 
 #### 01 · Dependência operacional do Lucas no Itaú
 
-Lucas mantém o vínculo com Itaú em paralelo, alocando 8 horas semanais à noite para TRIA. Se o Itaú apertar prazos ou as vendas crescerem mais rápido do que a capacidade de entrega, qualidade cai.
+Lucas mantém o vínculo com Itaú em paralelo, alocando 8 horas semanais à noite para a Atlas. Se o Itaú apertar prazos ou as vendas crescerem mais rápido do que a capacidade de entrega, qualidade cai.
 
 Mitigação: teto rígido de 8 contratos Operação simultâneos e 2 turmas Ignição por semestre. Documentação completa do framework desde o primeiro cliente. Contratação obrigatória de 2º dev no mês 9–10. Plano de saída gradual do Itaú a partir do mês 18, condicionado à estabilidade financeira da BU.
 
@@ -409,7 +410,7 @@ Caixa esperado nos primeiros 30 dias: 3 × R$ 7.800 (entrada de 30%) = **R$ 23.4
 
 #### Semana 01 · Decisão e produto
 
-- Aprovar formalmente nome TRIA, os 3 tiers e os 3 preços públicos.
+- Aprovar formalmente o nome Atlas (mentoria) e TRIA (método), os 3 tiers e os 3 preços públicos.
 - Redigir a promessa do programa em 1 página formato Hattab: dor → solução → método → garantia.
 - Acelerar contratação e onboarding do dev (produtivo até o final do mês).
 - Definir o 1 caso de uso padrão que cabe em ~90% dos clientes — sugestão: agente WhatsApp de qualificação de lead.
@@ -461,7 +462,7 @@ Em nenhum cenário o resultado dos 30 primeiros dias justifica abandonar o model
 
 A Trívia já entrega marketing, growth e IA no mesmo sistema. Mentoria de implementação é a quarta estrada — natural, defensável, e abre o que falta hoje no portfólio: receita recorrente de alto ticket com cliente final.
 
-TRIA não compete com a BU de implementação atual — alimenta ela. Cada cliente Operação tem ponte natural para upsell Trívia. Cada cliente Board é uma porta aberta o ano inteiro. Cada turma Ignição é um funil de 6 a 10 oportunidades futuras para os tiers maiores.
+Atlas não compete com a BU de implementação atual — alimenta ela. Cada cliente Operação tem ponte natural para upsell Trívia. Cada cliente Board é uma porta aberta o ano inteiro. Cada turma Ignição é um funil de 6 a 10 oportunidades futuras para os tiers maiores.
 
 O timing está aberto. O nicho está vazio. Os dois sócios têm os perfis complementares que o mercado precisa. O método está nomeado e estruturado. O dev está em fase de contratação. A próxima ação é decisão executiva conjunta, seguida de execução disciplinada por 30 dias.
 
@@ -469,7 +470,7 @@ O timing está aberto. O nicho está vazio. Os dois sócios têm os perfis compl
 
 ## Decisões para esta semana
 
-1. Aprovação formal do nome TRIA, da estrutura de 3 tiers (Ignição R$ 9,8k · Operação R$ 39k · Board R$ 72k), e da oferta de turma fundadora (R$ 26k para os 3 primeiros).
+1. Aprovação formal do nome Atlas (mentoria) e do método TRIA, da estrutura de 3 tiers (Ignição R$ 9,8k · Operação R$ 39k · Board R$ 72k), e da oferta de turma fundadora (R$ 26k para os 3 primeiros).
 1. Definição conjunta dos 20 nomes da rede direta para abordagem de venda dos 3 fundadores nas semanas 1 e 2.
 1. Aceleração da contratação do dev — deadline obrigatório de start operacional no mês 2.
 1. Encaminhamento do contrato-base de Operação ao advogado, com base nas cláusulas de escopo e expectativa apresentadas neste documento.

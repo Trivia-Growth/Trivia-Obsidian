@@ -1,13 +1,13 @@
-# TRÍVIA · MVP — PLANO DE LANÇAMENTO (v3)
+# ATLAS · MVP — PLANO DE LANÇAMENTO (v3)
 
-> *Trívia Studio · Documento Interno · Versão MVP v3 · Complementa [[TRIA - Plano de Negocio]] (oficial)*
+> *Trívia Studio · Documento Interno · Versão MVP v3 · Complementa [[Atlas - Plano de Negocio]] (oficial)*
 
 **Proposta:** João Gabriel Novais | **Pendente de alinhamento com:** Lucas Azevedo
 
-Estratégia de lançamento calibrada para a realidade pós-pivot: Trívia se reposiciona como **implementadora de IA**, e a mentoria é a primeira BU desse novo posicionamento. O [[TRIA - Plano de Negocio]] continua valendo como visão de regime maduro — este documento define como sair do zero até a esteira completa funcionando.
+Estratégia de lançamento da **Atlas** — a mentoria de implementação de IA da Trívia — calibrada para a realidade pós-pivot: Trívia se reposiciona como **implementadora de IA**, e a Atlas é a primeira BU desse novo posicionamento. O [[Atlas - Plano de Negocio]] continua valendo como visão de regime maduro — este documento define como sair do zero até a esteira completa funcionando.
 
 > **Notas importantes desta v3:**
-> - O nome **TRIA** continua marcado em todo o documento, mas está **sob revisão** — JG ficou receoso de confundir com "Trívia" (parece erro de digitação). Há seção dedicada de brainstorm no fim com 8 opções para decidir com Lucas. O **método TRIA** (Triagem, Roadmap, Implementação, Ativação) é mantido independente de qual nome a mentoria receber.
+> - **Nome decidido: a mentoria se chama Atlas.** O **método TRIA** (Triagem, Roadmap, Implementação, Ativação) é mantido como a metodologia interna — o cliente compra a Atlas, e dentro dela roda o método TRIA.
 > - **Cronograma agressivo:** low ticket de volume lançado já no mês 1, em paralelo com os cases pseudo-gratuitos.
 > - **Sem dependência de plataforma terceira:** Stack Trívia substitui qualquer menção a ferramentas de orquestração específicas em toda a comunicação externa.
 
@@ -488,54 +488,20 @@ Mesmo roteiro de 45 min do plano oficial, com uma diferença: o lead já consumi
 
 -----
 
-## Decisão de nome da mentoria
+## Nome da mentoria · DECIDIDO
 
-> *JG e Lucas alinharam: as primeiras opções (Forja, Núcleo, Eixo, Vetor, Norte, Pulso) ficaram genéricas. Esta segunda rodada propõe nomes com gancho narrativo mais forte, distantes de comoditização.*
+**A mentoria se chama Atlas.** JG e Lucas bateram o martelo.
 
-### Critérios de um nome melhor
+A história que o nome carrega: Atlas carrega o mundo nos ombros. Quem entra na Atlas tem dois ombros experientes pra dividir o peso da decisão de IA — exatamente o oposto do "compra um curso e se vira sozinho". Frase de vendas: *"Atlas: mentoria de IA que carrega junto."*
 
-- **Carrega uma história**, não só um conceito vago de potência
-- **Som distinto** de "Trívia" (sem risco de typo aparente)
-- **Defensável**: difícil de copiar literalmente, mesmo por concorrente futuro
-- **Funciona em uma frase de vendas**: "Eu faço a [NOME]" tem que soar bem
-- **Compatível com TRIA como método interno**, preservando o trabalho do Lucas (Triagem, Roadmap, Implementação, Ativação)
-
-### Opção A · Nomes-narrativa (cada um carrega uma história)
-
-|Nome|A história que o nome conta|Frase de vendas|
-|----|---------------------------|---------------|
-|**Travessia**|IA é a ponte entre o que sua empresa é hoje e o que ela pode ser. Você não compra um curso, você atravessa uma fronteira com guia experiente.|"Faço a Travessia com você."|
-|**Tese**|Você não compra mentoria, você compra a tese sobre IA pra sua empresa — fundamentada, defensável, executável.|"Construo a sua Tese de IA."|
-|**Atlas**|Carrega o mundo. Quem entra na Atlas tem dois ombros experientes pra dividir o peso da decisão de IA.|"Atlas: mentoria de IA que carrega junto."|
-|**Posse**|Em vez de virar refém de fornecedor (a dor central do ICP), você tem POSSE da IA na sua empresa. O nome é a promessa.|"Você ganha Posse da sua IA."|
-|**Maestria**|Premium e claro. Maestria sobre IA aplicada à sua empresa, não sobre IA como tema acadêmico.|"Caminho pra Maestria em IA."|
-|**Ofício**|Ofício = trabalho artesanal, maestria conquistada. Diferencia de commodity ("agência de IA"). Posicionamento de guilda.|"O Ofício de implementar IA."|
-
-### Opção B · Substituir TRIA por novo acrônimo
-
-Mesma lógica que o acrônimo do Lucas, com palavra-resultado diferente.
-
-|Acrônimo|Significado|Comentário|
-|--------|----------|----------|
-|**ROTA**|Reconhecer · Organizar · Transformar · Ativar|Sugere jornada com começo, meio e fim. Limpo.|
-|**MAPA**|Mapear · Aplicar · Provar · Ativar|Conceito visual, "mapa de IA".|
-|**SOMA**|Selecionar · Operacionalizar · Medir · Ativar|Posicionamento de resultado acumulado.|
-|**APIA**|Análise · Plano · Implementação · Ativação|Sugere "apoia" — risco de soar fofo demais.|
-
-### Recomendação atualizada
-
-**Atlas** ou **Travessia** são os dois nomes mais defensáveis desta lista — ambos carregam uma narrativa que sustenta posicionamento premium e diferenciam clara e imediatamente da concorrência. **Posse** é a aposta arriscada-de-alto-upside: é a única que coloca como nome a dor que o ICP mais sente (virar refém do fornecedor), o que dá uma força comercial rara.
-
-Se preferirem manter formato de acrônimo, **ROTA** é a melhor da Opção B — mas perde força narrativa em relação aos nomes-história.
-
-Decisão final fica com JG + Lucas.
+O **método TRIA** (Triagem · Roadmap · Implementação · Ativação) é mantido como a metodologia interna. O cliente compra a **Atlas**; dentro dela roda o **método TRIA**. As duas camadas convivem: marca comercial (Atlas) e método proprietário (TRIA).
 
 -----
 
 ## Decisões pendentes (alinhar com Lucas)
 
 1. Validar lista nominal dos 5–8 candidatos a case pseudo-gratuito
-2. **Aprovar nome final da mentoria** (Forja IA, ROTA, ou outro)
+2. ~~Aprovar nome da mentoria~~ ✅ **DECIDIDO: Atlas** (método interno segue TRIA). Pendente: identidade visual / logo da Atlas.
 3. Aprovar preço final de cada SKU low ticket (R$ 97–147 / R$ 297–497)
 4. Aprovar o tema do SKU 02 (Decisão Executiva de IA é a proposta; alternativas estão na seção 3)
 5. Definir operador do tráfego pago
