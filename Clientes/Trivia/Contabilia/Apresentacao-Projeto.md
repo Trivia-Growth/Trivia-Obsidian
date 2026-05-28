@@ -211,10 +211,11 @@ A reforma tributária brasileira (2026-2032) está dobrando o trabalho dos escri
 | Arquivo | Descrição |
 |---|---|
 | `Apresentacao-Projeto.md` | Este documento — visão geral e ganhos |
+| `apresentacao-vendas.html` | **Apresentação de vendas** — abrir no browser, navegar com setas |
 | `Especificacao-Tecnica.md` | Especificação completa (fluxos, IA, stack, MVP, roadmap) |
-| `prototype-contabilia.html` | Wireframe interativo — abrir no browser |
+| `prototype-contabilia.html` | Wireframe interativo com 10 telas — abrir no browser |
 | `roteiro-notebooklm-contabilia.md` | Texto para gerar vídeo/podcast no NotebookLM |
-| `gerar-apresentacao-contabilia.py` | Script para gerar PPTX (rodar com python3) |
+| `gerar-apresentacao-contabilia.py` | Script para gerar PPTX alternativo |
 
 ---
 

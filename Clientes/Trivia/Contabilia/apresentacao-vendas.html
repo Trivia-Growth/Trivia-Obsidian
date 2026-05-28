@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contabilia — Automação Inteligente para Escritórios Contábeis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #020617 50%, #0f172a 100%);
+            color: #f8fafc;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateX(30px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateX(0);
+        }
+
+        .slide.exit-left {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+
+        .glass-card-strong {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-warm {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            bottom: -80px;
+            left: -80px;
+            animation-delay: 2s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -20px) scale(1.05); }
+            66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #f8fafc;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .progress-dot.active {
+            background: #3b82f6;
+            transform: scale(1.4);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+        }
+
+        .whatsapp-bubble {
+            background: #075e54;
+            border-radius: 12px 12px 12px 0;
+            padding: 12px 16px;
+            max-width: 320px;
+            position: relative;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .whatsapp-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 8px 10px 0;
+            border-color: transparent #075e54 transparent transparent;
+        }
+
+        .pricing-popular {
+            border: 2px solid #3b82f6;
+            transform: scale(1.05);
+            position: relative;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 2rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Inter', sans-serif;
+            z-index: 100;
+        }
+
+        .flow-arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1rem;
+            }
+
+            .glass-card, .glass-card-strong {
+                padding: 1rem !important;
+            }
+
+            .orb {
+                display: none;
+            }
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .sla-card {
+            text-align: center;
+            padding: 1.25rem;
+        }
+
+        .metric-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        @media (max-width: 640px) {
+            .metric-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4">
+        <button onclick="prevSlide()" class="nav-btn" id="btn-prev">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div id="progress-dots" class="flex items-center gap-2"></div>
+        <button onclick="nextSlide()" class="nav-btn" id="btn-next">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+    </div>
+
+    <!-- Slide Number -->
+    <div class="slide-number" id="slide-number">1/16</div>
+
+    <!-- ============ SLIDE 1 — CAPA ============ -->
+    <div class="slide active" id="slide-1">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="text-center relative z-10 max-w-4xl">
+            <h1 class="font-jakarta font-800 text-7xl md:text-8xl lg:text-9xl gradient-text mb-6 tracking-tight">
+                Contabilia
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light mb-4 tracking-wide">
+                Automacao inteligente para escritorios contabeis
+            </p>
+            <div class="mt-12 text-sm text-slate-500 font-medium tracking-widest uppercase">
+                Trivia Studio | 2026
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 2 — O PROBLEMA ============ -->
+    <div class="slide" id="slide-2">
+        <div class="max-w-5xl w-full relative z-10">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl text-center mb-12 gradient-text-warm">
+                A Tempestade Perfeita
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-card-strong p-8 text-center">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Reforma Tributaria</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Trabalho dobra com apuracao dual (2026-2032)</p>
+                </div>
+                <div class="glass-card-strong p-8 text-center">
+                    <div class="text-5xl mb-4">💸</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Split Payment</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Recebimentos fragmentados, conciliacao impossivel</p>
+                </div>
+                <div class="glass-card-strong p-8 text-center">
+                    <div class="text-5xl mb-4">📈</div>
+                    <h3 class="text-lg font-bold text-white mb-2">+60% trabalho</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Sem aumento de receita</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <blockquote class="text-xl md:text-2xl text-slate-400 italic font-light max-w-3xl mx-auto border-l-4 border-blue-500/50 pl-6">
+                    "Sou pago como operacional, cobrado como estrategico"
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 3 — DORES DO DIA A DIA ============ -->
+    <div class="slide" id="slide-3">
+        <div class="max-w-5xl w-full relative z-10">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl text-center mb-6">
+                O Que Tira Seu Sono
+            </h2>
+            <div class="text-center mb-10">
+                <span class="metric-number gradient-text">80%</span>
+                <p class="text-slate-400 mt-2 text-lg">do tempo em operacional</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <span class="text-3xl">📱</span>
+                    <p class="text-slate-300 text-sm">WhatsApp como "sistema de gestao"</p>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <span class="text-3xl">⏰</span>
+                    <p class="text-slate-300 text-sm">Clientes atrasam documentos</p>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <span class="text-3xl">🔄</span>
+                    <p class="text-slate-300 text-sm">Retrabalho por info errada</p>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <span class="text-3xl">💰</span>
+                    <p class="text-slate-300 text-sm">Inadimplencia silenciosa</p>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <span class="text-3xl">🚫</span>
+                    <p class="text-slate-300 text-sm">Zero tempo para consultoria</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 4 — A VIRADA ============ -->
+    <div class="slide" id="slide-4">
+        <div class="max-w-4xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-3xl md:text-5xl mb-12 text-white">
+                E se <span class="gradient-text">80% do operacional</span> desaparecesse?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-3xl mx-auto">
+                <div class="glass-card-strong p-8">
+                    <div class="w-16 h-16 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">😰</span>
+                    </div>
+                    <h3 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-wide">Antes</h3>
+                    <p class="text-slate-400">Correndo atras de informacao</p>
+                </div>
+                <div class="glass-card-strong p-8">
+                    <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🚀</span>
+                    </div>
+                    <h3 class="text-emerald-400 font-bold text-lg mb-2 uppercase tracking-wide">Depois</h3>
+                    <p class="text-slate-400">Vendendo inteligencia</p>
+                </div>
+            </div>
+            <div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-semibold text-lg cursor-pointer hover:bg-blue-500/20 transition-all">
+                Conheca a Contabilia
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 5 — VISAO GERAL ============ -->
+    <div class="slide" id="slide-5">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                Uma plataforma, toda a operacao
+            </h2>
+            <p class="text-slate-400 text-lg mb-12">Escritorio e cliente conectados em um unico sistema</p>
+            <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                <div class="glass-card-strong p-5 md:p-6 text-center min-w-[120px]">
+                    <div class="text-3xl mb-2">📥</div>
+                    <p class="text-sm font-semibold text-blue-400">Coleta</p>
+                </div>
+                <span class="flow-arrow hidden md:block">→</span>
+                <div class="glass-card-strong p-5 md:p-6 text-center min-w-[120px]">
+                    <div class="text-3xl mb-2">📄</div>
+                    <p class="text-sm font-semibold text-cyan-400">Emissao</p>
+                </div>
+                <span class="flow-arrow hidden md:block">→</span>
+                <div class="glass-card-strong p-5 md:p-6 text-center min-w-[120px]">
+                    <div class="text-3xl mb-2">🏷️</div>
+                    <p class="text-sm font-semibold text-purple-400">Classificacao</p>
+                </div>
+                <span class="flow-arrow hidden md:block">→</span>
+                <div class="glass-card-strong p-5 md:p-6 text-center min-w-[120px]">
+                    <div class="text-3xl mb-2">🧮</div>
+                    <p class="text-sm font-semibold text-amber-400">Apuracao</p>
+                </div>
+                <span class="flow-arrow hidden md:block">→</span>
+                <div class="glass-card-strong p-5 md:p-6 text-center min-w-[120px]">
+                    <div class="text-3xl mb-2">📬</div>
+                    <p class="text-sm font-semibold text-emerald-400">Entrega</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 6 — CRM CONTABIL ============ -->
+    <div class="slide" id="slide-6">
+        <div class="max-w-5xl w-full relative z-10">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl text-center mb-4 text-white">
+                Base de Clientes Completa
+            </h2>
+            <p class="text-center text-slate-400 text-lg mb-10">Chega de inadimplencia silenciosa</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="glass-card-strong p-6 flex items-start gap-4">
+                    <div class="text-3xl">📊</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Score de Saude</h3>
+                        <p class="text-slate-400 text-sm">Saude financeira e operacional por cliente</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 flex items-start gap-4">
+                    <div class="text-3xl">💰</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Cobranca Automatica</h3>
+                        <p class="text-slate-400 text-sm">Honorarios cobrados sem intervencao manual</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 flex items-start gap-4">
+                    <div class="text-3xl">📋</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Regua de Cobranca</h3>
+                        <p class="text-slate-400 text-sm">D-3, D+0, D+3, D+7, D+15 automatico</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 flex items-start gap-4">
+                    <div class="text-3xl">🎯</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Rentabilidade Real</h3>
+                        <p class="text-slate-400 text-sm">Quanto cada cliente realmente gera de lucro</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 7 — EMISSAO DE NOTAS ============ -->
+    <div class="slide" id="slide-7">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                Emissao Inteligente
+            </h2>
+            <p class="text-emerald-400 font-semibold text-lg mb-10">Motor de tributos 100% automatico</p>
+
+            <div class="glass-card-strong p-8 max-w-3xl mx-auto mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                    <div class="glass-card p-4 text-center">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide mb-1">Input</p>
+                        <p class="text-sm text-slate-300">Prestador + Tomador + Servico</p>
+                    </div>
+                    <span class="text-2xl text-blue-400">→</span>
+                    <div class="glass-card p-4 text-center">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide mb-1">Output</p>
+                        <p class="text-sm text-slate-300">ISS + IBS + CBS = <span class="text-emerald-400 font-bold">Liquido</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
+                <span class="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-medium">Individual</span>
+                <span class="px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-sm font-medium">Lote (Excel/Grid)</span>
+                <span class="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-medium">Recorrente</span>
+            </div>
+
+            <p class="text-4xl font-800 gradient-text">12 notas em 2 minutos</p>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 8 — EMISSAO EM LOTE ============ -->
+    <div class="slide" id="slide-8">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 gradient-text">
+                12 Notas em 2 Minutos
+            </h2>
+            <p class="text-slate-400 text-lg mb-8">Importa Excel ou preenche no grid — IA calcula tributos por linha</p>
+
+            <div class="glass-card-strong p-6 max-w-4xl mx-auto mb-8 overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b border-white/10">
+                            <th class="py-3 px-4 text-slate-400 font-medium">Cliente</th>
+                            <th class="py-3 px-4 text-slate-400 font-medium">Servico</th>
+                            <th class="py-3 px-4 text-slate-400 font-medium">Valor</th>
+                            <th class="py-3 px-4 text-slate-400 font-medium">Tributos</th>
+                            <th class="py-3 px-4 text-slate-400 font-medium">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-white/5">
+                            <td class="py-3 px-4 text-white">Empresa Alpha</td>
+                            <td class="py-3 px-4 text-slate-300">Consultoria TI</td>
+                            <td class="py-3 px-4 text-slate-300">R$ 5.200</td>
+                            <td class="py-3 px-4 text-amber-400">R$ 412</td>
+                            <td class="py-3 px-4"><span class="text-emerald-400">✓ Emitida</span></td>
+                        </tr>
+                        <tr class="border-b border-white/5">
+                            <td class="py-3 px-4 text-white">Tech Corp</td>
+                            <td class="py-3 px-4 text-slate-300">Manutencao</td>
+                            <td class="py-3 px-4 text-slate-300">R$ 3.800</td>
+                            <td class="py-3 px-4 text-amber-400">R$ 301</td>
+                            <td class="py-3 px-4"><span class="text-emerald-400">✓ Emitida</span></td>
+                        </tr>
+                        <tr class="border-b border-white/5">
+                            <td class="py-3 px-4 text-white">Grupo Beta</td>
+                            <td class="py-3 px-4 text-slate-300">Desenvolvimento</td>
+                            <td class="py-3 px-4 text-slate-300">R$ 12.500</td>
+                            <td class="py-3 px-4 text-amber-400">R$ 990</td>
+                            <td class="py-3 px-4"><span class="text-emerald-400">✓ Emitida</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-white">InnovaLab</td>
+                            <td class="py-3 px-4 text-slate-300">Design UX</td>
+                            <td class="py-3 px-4 text-slate-300">R$ 7.000</td>
+                            <td class="py-3 px-4 text-amber-400">R$ 555</td>
+                            <td class="py-3 px-4"><span class="text-blue-400">⏳ Processando</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold">
+                O cliente faz sozinho, com supervisao
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 9 — PORTAL DO CLIENTE ============ -->
+    <div class="slide" id="slide-9">
+        <div class="max-w-4xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                O Cliente Envia Organizado
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">Zero WhatsApp pessoal para cobrar documento</p>
+
+            <div class="glass-card-strong p-8 max-w-lg mx-auto text-left">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                        <span class="text-emerald-400 text-xl">✅</span>
+                        <span class="text-slate-200">Notas fiscais de servico</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                        <span class="text-emerald-400 text-xl">✅</span>
+                        <span class="text-slate-200">Folha de pagamento</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                        <span class="text-amber-400 text-xl">⬜</span>
+                        <span class="text-slate-200">Extrato bancario</span>
+                        <span class="ml-auto text-xs text-amber-400 font-medium px-2 py-1 rounded bg-amber-500/10">Lembrete enviado</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-500/10 border border-slate-500/20">
+                        <span class="text-slate-500 text-xl">⬜</span>
+                        <span class="text-slate-400">Comprovantes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 10 — ATENDIMENTO ============ -->
+    <div class="slide" id="slide-10">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                Demandas Organizadas, SLA Cumprido
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">IA classifica e sugere resposta automaticamente</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10">
+                <div class="glass-card-strong sla-card">
+                    <p class="text-2xl font-800 text-blue-400 mb-1">4h</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Emissao</p>
+                </div>
+                <div class="glass-card-strong sla-card">
+                    <p class="text-2xl font-800 text-purple-400 mb-1">24h</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Duvida</p>
+                </div>
+                <div class="glass-card-strong sla-card">
+                    <p class="text-2xl font-800 text-cyan-400 mb-1">48h</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Certidao</p>
+                </div>
+                <div class="glass-card-strong sla-card">
+                    <p class="text-2xl font-800 text-amber-400 mb-1">2h</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Urgencia</p>
+                </div>
+            </div>
+
+            <div class="glass-card inline-flex items-center gap-3 px-6 py-3">
+                <span class="text-2xl">⭐</span>
+                <span class="text-white font-semibold">Satisfacao: 4.7/5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 11 — COMUNICACAO AUTOMATIZADA ============ -->
+    <div class="slide" id="slide-11">
+        <div class="max-w-4xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                WhatsApp Profissional
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">Nenhuma mensagem digitada manualmente</p>
+
+            <div class="flex flex-col gap-5 items-start max-w-md mx-auto">
+                <div class="whatsapp-bubble">
+                    <p class="text-white">Faltam 3 dias pro fechamento. Pendente: <strong>extrato bancario</strong>.</p>
+                    <span class="text-xs text-slate-400 mt-1 block text-right">09:14 ✓✓</span>
+                </div>
+                <div class="whatsapp-bubble ml-auto" style="border-radius: 12px 12px 0 12px; background: #1f6e5c;">
+                    <p class="text-white">Nota #789 emitida! R$ 3.200. PDF em anexo.</p>
+                    <span class="text-xs text-slate-400 mt-1 block text-right">14:32 ✓✓</span>
+                </div>
+                <div class="whatsapp-bubble">
+                    <p class="text-white">Honorario vence amanha. Pix: <strong>trivia@contabilia.com</strong></p>
+                    <span class="text-xs text-slate-400 mt-1 block text-right">18:00 ✓✓</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 12 — RELATORIOS ============ -->
+    <div class="slide" id="slide-12">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                Dados que Geram Decisao
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">Enviados automaticamente. White-label com sua marca.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div class="glass-card-strong p-6 text-left flex items-start gap-4">
+                    <div class="text-3xl">📊</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Resumo Fiscal Mensal</h3>
+                        <p class="text-slate-400 text-sm">Visao consolidada de todas as obrigacoes</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 text-left flex items-start gap-4">
+                    <div class="text-3xl">⚖️</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Comparativo Regimes</h3>
+                        <p class="text-slate-400 text-sm">Regime antigo vs novo — economia real</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 text-left flex items-start gap-4">
+                    <div class="text-3xl">💰</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Rentabilidade</h3>
+                        <p class="text-slate-400 text-sm">Lucro real por cliente e por servico</p>
+                    </div>
+                </div>
+                <div class="glass-card-strong p-6 text-left flex items-start gap-4">
+                    <div class="text-3xl">📋</div>
+                    <div>
+                        <h3 class="font-bold text-white mb-1">Obrigacoes + SLA</h3>
+                        <p class="text-slate-400 text-sm">Status de entregas e cumprimento de prazos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 13 — IA NA PRATICA ============ -->
+    <div class="slide" id="slide-13">
+        <div class="max-w-4xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 gradient-text-blue">
+                IA que Aprende com Voce
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">Quanto mais usa, mais precisa fica</p>
+
+            <div class="space-y-4 max-w-2xl mx-auto text-left">
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <span class="text-3xl">🧠</span>
+                    <p class="text-slate-200">Classifica <span class="text-blue-400 font-bold">70%</span> das notas automaticamente</p>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <span class="text-3xl">📷</span>
+                    <p class="text-slate-200">Le fotos/PDFs e extrai dados (OCR)</p>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <span class="text-3xl">🔍</span>
+                    <p class="text-slate-200">Detecta anomalias fiscais automaticamente</p>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <span class="text-3xl">💬</span>
+                    <p class="text-slate-200">Sugere respostas para duvidas dos clientes</p>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <span class="text-3xl">📖</span>
+                    <p class="text-slate-200">Monitora legislacao e alerta mudancas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 14 — IMPACTO / NUMEROS ============ -->
+    <div class="slide" id="slide-14">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-12 text-white">
+                Resultados Esperados
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="glass-card-strong p-6">
+                    <p class="metric-number gradient-text mb-2">70%</p>
+                    <p class="text-slate-400 text-sm">menos tempo em classificacao</p>
+                </div>
+                <div class="glass-card-strong p-6">
+                    <p class="metric-number gradient-text mb-2">0</p>
+                    <p class="text-slate-400 text-sm">cobrancas manuais de docs</p>
+                </div>
+                <div class="glass-card-strong p-6">
+                    <p class="metric-number gradient-text mb-2">28h</p>
+                    <p class="text-slate-400 text-sm">por semana liberadas</p>
+                </div>
+                <div class="glass-card-strong p-6">
+                    <p class="metric-number text-emerald-400 mb-2" style="-webkit-text-fill-color: #10b981; font-size: 2.2rem;">R$ 33.600</p>
+                    <p class="text-slate-400 text-sm">potencial em consultoria/mes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 15 — INVESTIMENTO ============ -->
+    <div class="slide" id="slide-15">
+        <div class="max-w-5xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-4xl md:text-5xl mb-4 text-white">
+                Investimento
+            </h2>
+            <p class="text-emerald-400 font-semibold text-lg mb-10">ROI no primeiro mes</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto items-start">
+                <!-- Starter -->
+                <div class="glass-card-strong p-8">
+                    <h3 class="text-lg font-bold text-slate-300 mb-2">Starter</h3>
+                    <p class="text-4xl font-800 text-white mb-1">R$ 297<span class="text-base font-normal text-slate-500">/mes</span></p>
+                    <p class="text-slate-400 text-sm mb-6">Ate 20 clientes</p>
+                    <ul class="text-left text-sm text-slate-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> CRM Contabil</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Portal do Cliente</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Emissao Individual</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> WhatsApp Basico</li>
+                    </ul>
+                </div>
+                <!-- Pro -->
+                <div class="glass-card-strong p-8 pricing-popular">
+                    <div class="badge-popular">Popular</div>
+                    <h3 class="text-lg font-bold text-blue-400 mb-2 mt-2">Pro</h3>
+                    <p class="text-4xl font-800 text-white mb-1">R$ 597<span class="text-base font-normal text-slate-500">/mes</span></p>
+                    <p class="text-slate-400 text-sm mb-6">Ate 50 clientes</p>
+                    <ul class="text-left text-sm text-slate-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Tudo do Starter</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Emissao em Lote</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> IA Classificacao</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Relatorios White-label</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Regua de Cobranca</li>
+                    </ul>
+                </div>
+                <!-- Enterprise -->
+                <div class="glass-card-strong p-8">
+                    <h3 class="text-lg font-bold text-slate-300 mb-2">Enterprise</h3>
+                    <p class="text-4xl font-800 text-white mb-1">R$ 1.497<span class="text-base font-normal text-slate-500">/mes</span></p>
+                    <p class="text-slate-400 text-sm mb-6">Ate 200 clientes</p>
+                    <ul class="text-left text-sm text-slate-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Tudo do Pro</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> API Personalizada</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> IA Avancada</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Suporte Dedicado</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Multi-escritorio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SLIDE 16 — CTA FINAL ============ -->
+    <div class="slide" id="slide-16">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="max-w-4xl w-full relative z-10 text-center">
+            <h2 class="font-jakarta font-800 text-5xl md:text-6xl lg:text-7xl mb-6 gradient-text">
+                Vamos Construir Juntos?
+            </h2>
+            <p class="text-xl text-slate-300 mb-12">
+                MVP em 12-16 semanas. Validacao com escritorio piloto.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
+                <span class="tech-badge">Supabase</span>
+                <span class="tech-badge">Next.js</span>
+                <span class="tech-badge">Claude AI</span>
+                <span class="tech-badge">Nuvem Fiscal</span>
+                <span class="tech-badge">Evolution API</span>
+            </div>
+
+            <div class="border-t border-white/10 pt-8">
+                <p class="text-slate-500 text-sm tracking-widest uppercase">
+                    Trivia Studio — Automacao Inteligente | 2026
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Slide management
+        const totalSlides = 16;
+        let currentSlide = 1;
+        let isAnimating = false;
+
+        // Create progress dots
+        const dotsContainer = document.getElementById('progress-dots');
+        for (let i = 1; i <= totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = `progress-dot ${i === 1 ? 'active' : ''}`;
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            // Update dots
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentSlide);
+            });
+
+            // Update slide number
+            document.getElementById('slide-number').textContent = `${currentSlide}/${totalSlides}`;
+        }
+
+        function goToSlide(n) {
+            if (isAnimating || n === currentSlide || n < 1 || n > totalSlides) return;
+            isAnimating = true;
+
+            const currentEl = document.getElementById(`slide-${currentSlide}`);
+            const nextEl = document.getElementById(`slide-${n}`);
+
+            const goingForward = n > currentSlide;
+
+            // Exit current slide
+            currentEl.classList.remove('active');
+            currentEl.classList.add(goingForward ? 'exit-left' : '');
+            currentEl.style.transform = goingForward ? 'translateX(-30px)' : 'translateX(30px)';
+            currentEl.style.opacity = '0';
+
+            // Prepare next slide entry
+            nextEl.style.transform = goingForward ? 'translateX(30px)' : 'translateX(-30px)';
+            nextEl.style.opacity = '0';
+            nextEl.classList.remove('exit-left');
+
+            // Small delay then show next
+            setTimeout(() => {
+                nextEl.classList.add('active');
+                nextEl.style.transform = 'translateX(0)';
+                nextEl.style.opacity = '1';
+            }, 50);
+
+            currentSlide = n;
+            updateUI();
+
+            setTimeout(() => {
+                isAnimating = false;
+                currentEl.classList.remove('exit-left');
+            }, 450);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) goToSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                goToSlide(1);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                goToSlide(totalSlides);
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 60) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
