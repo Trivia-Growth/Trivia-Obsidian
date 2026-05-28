@@ -133,7 +133,7 @@ Coloca o primeiro par `access_token`/`refresh_token` no Supabase para a renovaç
 | `SUPABASE_URL` | `https://eqsjvacbhrezlgqpwipv.supabase.co` |
 | `SUPABASE_SERVICE_KEY` | service role key (secret) |
 
-> ⚠️ **Atenção:** `TRAY_API_HOST` ainda aponta para a **loja de teste** da Tray (`lojatesteintegracaotray...`), não para a loja de produção. Confirmar/trocar antes de tratar os dados como definitivos de produção.
+> ⚠️ **Homologação até 13/08/2026:** `TRAY_API_HOST` aponta para a **loja de teste** (`lojatesteintegracaotray...`) **de propósito** — a integração está em homologação. Na migração para produção, trocar para `www.editoraheziom.com.br` (store ID **1345958**), reconfigurar `TRAY_CONSUMER_KEY/SECRET` e re-seed do token. O aviso fica como boa prática até o cutover.
 
 ---
 

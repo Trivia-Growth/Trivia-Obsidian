@@ -46,7 +46,7 @@ Adicionar ao `netlify.toml` para que a URL limpa funcione:
 | `TRAY_WEBHOOK_SECRET` | `hz_tray_2026_xK9p4mR7vQs` | Valida webhook e o seed de token |
 | `SUPABASE_URL` | `https://eqsjvacbhrezlgqpwipv.supabase.co` | URL do projeto Supabase HeziomOS |
 | `SUPABASE_SERVICE_KEY` | `eyJ...` | Service role key (não anon) |
-| `TRAY_API_HOST` | `https://lojatesteintegracaotray.commercesuite.com.br` | Host da loja (⚠️ hoje é a loja de **teste**) |
+| `TRAY_API_HOST` | `https://lojatesteintegracaotray.commercesuite.com.br` | Host da loja — ⚠️ loja de **teste** (homologação até 13/08/2026; prod = `www.editoraheziom.com.br`, store 1345958) |
 | `TRAY_CONSUMER_KEY` | `69a36f861...` | Consumer key do app |
 | `TRAY_CONSUMER_SECRET` | `0a18522d3...` | Consumer secret do app (secret) |
 | `TRAY_ACCESS_TOKEN` | `...` | Fallback se o Supabase falhar |
