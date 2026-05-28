@@ -156,12 +156,13 @@ Pedido aprovado na Tray
 | `SUPABASE_URL` | `https://eqsjvacbhrezlgqpwipv.supabase.co` |
 | `SUPABASE_SERVICE_KEY` | Service role key (secret) |
 
-### Teste E2E validado (28/05/2026 10:50 BRT)
+### Teste E2E validado (28/05/2026 12:13 BRT — final)
 
-- 446+ webhooks reais recebidos e logados ✅
-- CAPI Purchase disparado para pedido #113 (R$21.93, status "A ENVIAR") ✅
-- Deduplicação funcionando: segundo envio do mesmo pedido não redispara ✅
-- Token auto-refresh operacional (cron 2h) ✅
+- 534 webhooks recebidos e logados ✅
+- **8 pedidos reais com CAPI Purchase disparado:** #85, #87, #113, #117, #119, #121, #123, #125 ✅
+- Deduplicação validada: pedido #125 recebeu 4 webhooks, CAPI disparou apenas 1x ✅
+- Token auto-refresh operacional (cron 2h) — renovação manual testada com sucesso ✅
+- GTM v20 publicada como fallback com `event_id` alinhado ✅
 
 ---
 
@@ -301,7 +302,7 @@ O endpoint recebe o submit do formulário e dispara:
 
 ## 5 · Pendências abertas
 
-- [ ] Monitorar Meta Events Manager por 48h para confirmar eventos reais de compra chegando via CAPI (prazo: 28/05/2026)
+- [x] ~~Monitorar Meta Events Manager por 48h~~ → **Confirmado via teste E2E (28/05/2026 12:13 BRT):** 8 pedidos reais com CAPI disparado (#85, #87, #113, #117, #119, #121, #123, #125). Deduplicação validada (pedido #125 recebeu 4 webhooks, CAPI disparou 1x)
 - [ ] Avaliar adição de `InitiateCheckout` na tag GTM para rastrear início de checkout no ecommerce Tray
 - [x] **`percent_scrolled` registrado como Custom Dimension no GA4** (28/05/2026) → Dimensão "Scroll Depth", Escopo Evento, parâmetro `percent_scrolled`. Dados disponíveis via API em ~24h.
 - [ ] **(Opcional) Marcar `ver_colecao_click` como conversão no GA4** → Admin → Eventos → toggle de conversão. Aparece na lista ~24h após o primeiro clique real.
