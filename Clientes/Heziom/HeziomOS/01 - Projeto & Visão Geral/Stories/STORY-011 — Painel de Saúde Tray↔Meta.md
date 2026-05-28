@@ -161,6 +161,7 @@ alter table tray_event_metrics enable row level security;
 | 2026-05-28 | 1.0 | Reformatada no template TRIVIAIOX (story-template-v2); decisão "painel completo" + HTML standalone; tasks T1–T4 mapeadas aos CAs | @sm |
 | 2026-05-28 | 1.1 | Implementação T1–T4 (instrumentação, endpoint, painel SSR, docs); smoke tests OK; status → Review | @dev |
 | 2026-05-28 | 1.2 | Migração `tray_event_metrics` aplicada (Management API, HTTP 201); commit `b6d1a8c` em `main` → deploy Netlify | @dev |
+| 2026-05-28 | 1.3 | ADR-005: login por email+senha do superadmin + `/painel/primeiro-acesso` (token de uso único, senha em scrypt); tabela `panel_users` criada (HTTP 201) + token semeado; commit `7ded098` | @dev |
 
 ---
 
