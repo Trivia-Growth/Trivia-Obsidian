@@ -19,6 +19,7 @@
     --ok:#1E7D3A; --ok-bg:rgba(30,125,58,.10);
     --warn:#9A6B00; --warn-bg:rgba(212,175,55,.18);
     --err:#DC2626; --err-bg:rgba(220,38,38,.09);
+    --info:#2563EB; --info-bg:rgba(37,99,235,.10);
     --shadow:0 4px 26px -14px rgba(22,63,35,.28);
     --shadow-card:0 1px 0 rgba(0,0,0,.02), 0 10px 30px -22px rgba(22,63,35,.30);
   }
@@ -33,6 +34,7 @@
     --ok:#5FCB7C; --ok-bg:rgba(95,203,124,.14);
     --warn:#E2C25C; --warn-bg:rgba(226,194,92,.14);
     --err:#F87171; --err-bg:rgba(248,113,113,.13);
+    --info:#7AA2F7; --info-bg:rgba(122,162,247,.14);
     --shadow:0 8px 34px -16px rgba(0,0,0,.7);
     --shadow-card:0 1px 0 rgba(255,255,255,.02), 0 14px 34px -24px rgba(0,0,0,.8);
   }
@@ -44,7 +46,7 @@
     background:var(--bg); color:var(--text);
     line-height:1.5; font-size:15px;
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    padding:34px 28px 48px; max-width:1200px; margin:0 auto;
+    padding:34px 28px 48px; max-width:1240px; margin:0 auto;
     position:relative; min-height:100vh;
     transition:background .25s ease, color .25s ease;
   }
@@ -103,21 +105,24 @@
   .updated{color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
 
   /* ===== KPIs ===== */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:16px;margin:26px 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:14px;margin:26px 0}
   .kpi{
     background:var(--panel);border:1px solid var(--border);border-radius:14px;
-    padding:18px 18px 16px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;
+    padding:16px 16px 14px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;
   }
   .kpi::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent-line);opacity:.5}
-  .kpi .label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
-  .kpi .num{font-family:'Fraunces',serif;font-weight:500;font-size:38px;line-height:1;margin-top:12px;font-variant-numeric:tabular-nums}
-  .kpi .foot{font-size:12px;color:var(--muted);margin-top:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+  .kpi .label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;line-height:1.35;min-height:26px}
+  .kpi .num{font-family:'Fraunces',serif;font-weight:500;font-size:34px;line-height:1;margin-top:8px;font-variant-numeric:tabular-nums}
+  .kpi .foot{font-size:11.5px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
   .kpi.good::before{background:var(--ok);opacity:.8}
   .kpi.good .num{color:var(--ok)}
   .kpi.alert{border-color:color-mix(in srgb, var(--err) 45%, var(--border));background:linear-gradient(180deg,var(--err-bg),var(--panel) 65%)}
   .kpi.alert::before{background:var(--err);opacity:.9}
   .kpi.alert .num{color:var(--err)}
-  .kpi .num.word{font-size:24px;padding-top:8px}
+  .kpi.accent::before{background:var(--gold);opacity:.9}
+  .kpi .num.word{font-size:22px;padding-top:6px}
+  .kpi .num .unit{font-size:16px;color:var(--muted);font-family:'Manrope',sans-serif;font-weight:600}
+  .kpi .num .cents{font-size:20px}
 
   /* ===== Layout ===== */
   .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
@@ -134,17 +139,20 @@
   .card h2 .hint{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);font-weight:400;text-transform:uppercase;letter-spacing:.10em;text-align:right}
 
   /* ===== Tabela ===== */
-  table{width:100%;border-collapse:collapse;font-size:13.5px}
-  th,td{text-align:left;padding:11px 18px;border-bottom:1px solid var(--border)}
-  th{font-family:'JetBrains Mono',monospace;color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
+  th:first-child,td:first-child{padding-left:18px}
+  th:last-child,td:last-child{padding-right:18px}
+  th{font-family:'JetBrains Mono',monospace;color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.10em}
   tr:last-child td{border-bottom:none}
   td.num{font-family:'JetBrains Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums}
+  td.val{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;color:var(--muted)}
 
   /* ===== Pills (estilo badge LP) ===== */
   .pill{
-    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
-    letter-spacing:.06em;text-transform:uppercase;
-    padding:4px 10px;border-radius:999px;display:inline-block;white-space:nowrap;
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+    letter-spacing:.05em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;display:inline-block;white-space:nowrap;
   }
   .pill.ok{background:var(--ok-bg);color:var(--ok)}
   .pill.warn{background:var(--warn-bg);color:var(--warn)}
@@ -152,16 +160,34 @@
   .pill.mut{background:var(--panel-2);color:var(--muted)}
 
   /* ===== Linhas chave-valor (token / resumo) ===== */
-  .kv{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px}
+  .kv{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid var(--border);font-size:13.5px}
   .kv:last-of-type{border-bottom:none}
   .kv .k{color:var(--muted)}
   .kv .v{font-weight:600}
   .kv .v.num{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
-  .bar{height:7px;background:var(--panel-2);border-radius:5px;overflow:hidden;margin:4px 18px 16px}
-  .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--green-secondary),var(--green-primary));width:8%;border-radius:5px}
+  .kv .v.sm{font-weight:500;font-size:12.5px}
+  .bar{height:7px;background:var(--panel-2);border-radius:5px;overflow:hidden;margin:2px 18px 16px}
+  .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--green-secondary),var(--green-primary));border-radius:5px}
+
+  /* ===== Barras de volume por status ===== */
+  .statbar{padding:11px 18px;border-bottom:1px solid var(--border)}
+  .statbar:last-of-type{border-bottom:none}
+  .statbar .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;margin-bottom:7px}
+  .statbar .lbl{display:inline-flex;align-items:center;gap:8px}
+  .statbar .dotmark{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--muted);opacity:.45}
+  .statbar.is-fire .dotmark{background:var(--ok);opacity:1}
+  .statbar .val{font-family:'JetBrains Mono',monospace;color:var(--muted);font-variant-numeric:tabular-nums}
+  .statbar .track{height:6px;background:var(--panel-2);border-radius:5px;overflow:hidden}
+  .statbar .track > span{display:block;height:100%;border-radius:5px;background:var(--muted);opacity:.35}
+  .statbar.is-fire .track > span{background:linear-gradient(90deg,var(--green-secondary),var(--green-primary));opacity:1}
+  .legend{display:flex;gap:18px;padding:11px 18px 13px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;border-top:1px solid var(--border)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .legend i.fire{background:var(--ok)}
+  .legend i.mut{background:var(--muted);opacity:.45}
 
   /* ===== Eventos / atividade ===== */
-  .ev{display:flex;gap:13px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:flex-start}
+  .ev{display:flex;gap:13px;padding:11px 18px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:flex-start}
   .ev:last-child{border:none}
   .ev .when{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;min-width:44px;padding-top:2px;letter-spacing:.02em}
   .ev .dotmark{width:7px;height:7px;border-radius:50%;margin-top:6px;flex:0 0 auto;background:var(--accent-line)}
@@ -175,6 +201,15 @@
   .err-row{display:flex;gap:13px;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13.5px;align-items:flex-start}
   .err-row:last-child{border:none}
   .err-row .when{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;min-width:44px;padding-top:2px}
+
+  /* EMQ score */
+  .score{display:flex;align-items:baseline;gap:8px;padding:14px 18px 6px}
+  .score .big{font-family:'Fraunces',serif;font-weight:500;font-size:36px;line-height:1;color:var(--ok)}
+  .score .of{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .two .kv{border-right:1px solid var(--border)}
+  .two .kv:nth-child(even){border-right:none}
 
   footer{
     color:var(--muted);font-size:11px;margin-top:14px;text-align:center;
@@ -199,11 +234,14 @@
 </header>
 
 <section class="kpis">
-  <div class="kpi"><div class="label">Webhooks recebidos</div><div class="num">137</div><div class="foot">+12 vs. ontem</div></div>
+  <div class="kpi good"><div class="label">Taxa de cobertura (24h)</div><div class="num">96,6<span class="unit">%</span></div><div class="foot">28 de 29 aprovados</div></div>
+  <div class="kpi accent"><div class="label">Valor rastreado (24h)</div><div class="num"><span class="unit">R$</span> 4.187</div><div class="foot">enviado ao Meta CAPI</div></div>
+  <div class="kpi"><div class="label">Webhooks recebidos (24h)</div><div class="num">137</div><div class="foot">+12 vs. ontem</div></div>
   <div class="kpi good"><div class="label">Compras rastreadas (CAPI)</div><div class="num">28</div><div class="foot">events_received: 28</div></div>
   <div class="kpi alert"><div class="label">Aprovados sem rastreio</div><div class="num">1</div><div class="foot">precisa de atenção</div></div>
   <div class="kpi"><div class="label">Erros (24h)</div><div class="num">2</div><div class="foot">ver detalhes abaixo</div></div>
-  <div class="kpi good"><div class="label">Token Tray</div><div class="num word">Válido</div><div class="foot">renova em ~1h48</div></div>
+  <div class="kpi"><div class="label">Latência webhook → CAPI</div><div class="num">1,8<span class="unit">s</span></div><div class="foot">p95: 3,1s</div></div>
+  <div class="kpi"><div class="label">Webhooks deduplicados</div><div class="num">6</div><div class="foot">duplicados barrados</div></div>
 </section>
 
 <div class="grid">
@@ -211,16 +249,25 @@
     <div class="card">
       <h2>Conciliação de pedidos <span class="hint">Tray aprovou → o Meta recebeu?</span></h2>
       <table>
-        <thead><tr><th>Pedido</th><th>Status Tray</th><th>Webhook</th><th>CAPI</th><th>Resultado</th></tr></thead>
+        <thead><tr><th>Pedido</th><th>Status Tray</th><th>Valor</th><th>Webhook</th><th>CAPI</th><th>Latência</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td class="num">#125</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
-          <tr><td class="num">#123</td><td>FINALIZADO</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
-          <tr><td class="num">#121</td><td>ENVIADO</td><td><span class="pill ok">recebido (4×)</span></td><td><span class="pill ok">disparado (1×)</span></td><td><span class="pill ok">dedup ok</span></td></tr>
-          <tr><td class="num">#119</td><td>AGUARDANDO PGTO</td><td><span class="pill ok">recebido</span></td><td><span class="pill mut">—</span></td><td><span class="pill mut">status não dispara</span></td></tr>
-          <tr style="background:var(--err-bg)"><td class="num">#118</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill err">falhou</span></td><td><span class="pill err">token vencido</span></td></tr>
-          <tr><td class="num">#117</td><td>A ENVIAR</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td><span class="pill ok">rastreado</span></td></tr>
+          <tr><td class="num">#125</td><td>A ENVIAR</td><td class="val">R$ 99,00</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td class="val">1,6s</td><td><span class="pill ok">rastreado</span></td></tr>
+          <tr><td class="num">#123</td><td>FINALIZADO</td><td class="val">R$ 149,00</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td class="val">2,0s</td><td><span class="pill ok">rastreado</span></td></tr>
+          <tr><td class="num">#121</td><td>ENVIADO</td><td class="val">R$ 210,00</td><td><span class="pill ok">recebido (4×)</span></td><td><span class="pill ok">disparado (1×)</span></td><td class="val">1,4s</td><td><span class="pill ok">dedup ok</span></td></tr>
+          <tr><td class="num">#119</td><td>AGUARDANDO PGTO</td><td class="val">R$ 78,00</td><td><span class="pill ok">recebido</span></td><td><span class="pill mut">—</span></td><td class="val">—</td><td><span class="pill mut">status não dispara</span></td></tr>
+          <tr style="background:var(--err-bg)"><td class="num">#118</td><td>A ENVIAR</td><td class="val">R$ 132,00</td><td><span class="pill ok">recebido</span></td><td><span class="pill err">falhou</span></td><td class="val">—</td><td><span class="pill err">token vencido</span></td></tr>
+          <tr><td class="num">#117</td><td>A ENVIAR</td><td class="val">R$ 89,00</td><td><span class="pill ok">recebido</span></td><td><span class="pill ok">disparado</span></td><td class="val">2,3s</td><td><span class="pill ok">rastreado</span></td></tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="card">
+      <h2>Webhooks por status <span class="hint">últimas 24h</span></h2>
+      <div class="statbar is-fire"><div class="top"><span class="lbl"><span class="dotmark"></span> Aprovado / A enviar / Finalizado</span><span class="val">54</span></div><div class="track"><span style="width:100%"></span></div></div>
+      <div class="statbar"><div class="top"><span class="lbl"><span class="dotmark"></span> Aguardando pagamento</span><span class="val">48</span></div><div class="track"><span style="width:89%"></span></div></div>
+      <div class="statbar"><div class="top"><span class="lbl"><span class="dotmark"></span> Cancelado / estornado</span><span class="val">21</span></div><div class="track"><span style="width:39%"></span></div></div>
+      <div class="statbar"><div class="top"><span class="lbl"><span class="dotmark"></span> Atualização sem mudança</span><span class="val">14</span></div><div class="track"><span style="width:26%"></span></div></div>
+      <div class="legend"><span><i class="fire"></i> dispara CAPI</span><span><i class="mut"></i> não dispara</span></div>
     </div>
 
     <div class="card">
@@ -234,10 +281,12 @@
     <div class="card">
       <h2>Token da Tray</h2>
       <div class="kv"><span class="k">Situação</span><span class="v"><span class="pill ok">válido</span></span></div>
-      <div class="kv"><span class="k">Última renovação</span><span class="v">há 12 min (automática)</span></div>
-      <div class="kv"><span class="k">Próxima renovação</span><span class="v">em ~1h48 (cron 2h)</span></div>
+      <div class="kv"><span class="k">Última renovação</span><span class="v sm">há 12 min (automática)</span></div>
+      <div class="kv"><span class="k">Próxima renovação</span><span class="v sm">em ~1h48 (cron 2h)</span></div>
       <div class="kv"><span class="k">Tempo restante</span><span class="v num">1h 50min</span></div>
-      <div class="bar"><span></span></div>
+      <div class="bar"><span style="width:92%"></span></div>
+      <div class="kv"><span class="k">Renovações (7 dias)</span><span class="v num" style="color:var(--ok)">84 ok · 0 falhas</span></div>
+      <div class="kv"><span class="k">Agendamento (cron)</span><span class="v sm" style="font-family:'JetBrains Mono',monospace">0 */2 * * *</span></div>
     </div>
 
     <div class="card">
@@ -251,11 +300,23 @@
     </div>
 
     <div class="card">
+      <h2>Qualidade no Meta <span class="hint">Event Match Quality</span></h2>
+      <div class="score"><span class="big">8,2</span><span class="of">/ 10 · boa correspondência</span></div>
+      <div class="bar"><span style="width:82%"></span></div>
+      <div class="kv"><span class="k">Parâmetros enviados</span><span class="v sm">e-mail · telefone · nome · IP</span></div>
+      <div class="kv"><span class="k">PII</span><span class="v sm" style="color:var(--ok)">100% em SHA-256</span></div>
+      <div class="kv"><span class="k">Fonte</span><span class="v sm">Events Manager (Meta)</span></div>
+    </div>
+
+    <div class="card">
       <h2>Resumo 7 dias</h2>
-      <div class="kv"><span class="k">Webhooks</span><span class="v num">534</span></div>
+      <div class="kv"><span class="k">Webhooks recebidos</span><span class="v num">534</span></div>
       <div class="kv"><span class="k">Compras rastreadas</span><span class="v num" style="color:var(--ok)">126</span></div>
+      <div class="kv"><span class="k">Valor rastreado</span><span class="v num">R$ 21.940</span></div>
       <div class="kv"><span class="k">Aprovados sem rastreio</span><span class="v num" style="color:var(--err)">3</span></div>
       <div class="kv"><span class="k">Taxa de cobertura</span><span class="v num" style="color:var(--ok)">97,7%</span></div>
+      <div class="kv"><span class="k">Latência média</span><span class="v num">1,9s</span></div>
+      <div class="kv"><span class="k">Webhooks deduplicados</span><span class="v num">41</span></div>
     </div>
   </div>
 </div>
