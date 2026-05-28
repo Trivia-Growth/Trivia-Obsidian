@@ -2,7 +2,7 @@
 
 > *Trívia Studio · Documento Interno · Ed. 001*
 
-**Atlas.** Uma nova BU para a Trívia, rodando o método TRIA.
+**Atlas.** Uma nova BU para a Trívia. Mentoria e método na mesma palavra — ATLAS.
 
 Plano de negócio para a nova unidade de mentoria de implementação de IA. Posicionamento, ICP, produto, precificação, funil de aquisição, modelo financeiro, riscos e plano de 30 dias.
 
@@ -112,27 +112,28 @@ SOM realista em 24 meses, considerando capacidade operacional dos dois sócios m
 
 -----
 
-## Seção 04 · Método TRIA
+## Seção 04 · Método ATLAS
 
-### Método TRIA.
+### Método ATLAS.
 
-TRIA é o nome do método proprietário da mentoria Atlas. Acrônimo escolhido por duas razões.
+ATLAS é, ao mesmo tempo, o nome da mentoria e o nome do método proprietário. Cada letra é uma fase real e distinta do programa, na ordem em que acontece — não é nome forçado para encaixar marketing, é descrição literal do método.
 
-- Cada letra significa uma fase real e distinta do programa, na ordem em que acontece. Não é nome forçado para encaixar marketing — é descrição literal do método.
-- “Triar” é verbo em português: selecionar, filtrar, separar o que importa. Subtexto perfeito para nossa proposta — o cliente chega afogado em hype de IA, nós triamos o que faz sentido para o negócio dele.
+Dois reforços fixam a marca:
 
-A proximidade sonora com “Trívia” levou à decisão de NÃO usar TRIA como marca comercial — para um cliente novo, “TRIA” lido rápido parece erro de digitação de “Trívia”. Por isso o nome da mentoria é **Atlas**, e TRIA fica como o método interno: o cliente compra a Atlas, e dentro dela roda a metodologia TRIA (Triagem → Roadmap → Implementação → Ativação).
+- O nome carrega a promessa: Atlas carrega o mundo nos ombros. Quem entra na Atlas tem dois sócios sêniores para dividir o peso da decisão de IA — o oposto de "comprar o curso e se virar sozinho".
+- A fase de **Triagem** preserva o melhor da formulação original: "triar" é verbo em português (selecionar, filtrar, separar o que importa). O cliente chega afogado em hype de IA, e nós triamos o que faz sentido para o negócio dele.
 
-Acrônimos fortes têm uma propriedade rara: parecem óbvios depois de prontos. É isso que torna TRIA difícil de copiar por concorrente futuro — a descrição literal das fases combinada com o verbo do português torna a sigla indissociável do método.
+Acrônimos fortes têm uma propriedade rara: parecem óbvios depois de prontos. É isso que torna ATLAS difícil de copiar por concorrente futuro — a sigla é indissociável do método, e o método é indissociável da marca.
 
-### As quatro fases
+### As cinco fases
 
-|Letra|Fase         |Duração   |O que acontece                                                                                                                        |
-|-----|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
-|**T**|Triagem      |Sem. 1–2  |Diagnóstico do negócio. Mapeamento de processos x oportunidades x ROI estimado. Identificação da dor única que vale resolver primeiro.|
-|**R**|Roadmap      |Sem. 3–4  |Plano de IA detalhado. Priorização do caso de uso piloto. Definição de stack, métricas, time interno responsável. Escopo travado.     |
-|**I**|Implementação|Sem. 5–10 |Mão na massa. Framework Trívia aplicado. Trívia constrói, ou cliente constrói com supervisão. Sprints de 2 semanas. Entregas reais.   |
-|**A**|Ativação     |Sem. 11–12|Time do cliente operando sozinho. Capacitação, governança, métricas em produção. Plano de evolução para os próximos 90 dias.          |
+|Letra|Fase       |Duração   |O que acontece                                                                                                                        |
+|-----|-----------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
+|**A**|Alinhamento|Sem. 1    |Entender o dono, os objetivos do negócio e a maturidade do time. Definir o que "sucesso" significa antes de escolher qualquer caso.   |
+|**T**|Triagem    |Sem. 2–3  |Diagnóstico do negócio. Mapeamento de processos × oportunidades × ROI estimado. Identificação da dor única que vale resolver primeiro.|
+|**L**|Lapidação  |Sem. 4    |Plano de IA detalhado. Priorização do caso de uso piloto. Definição de stack, métricas, time interno responsável. Escopo travado.     |
+|**A**|Aplicação  |Sem. 5–10 |Mão na massa. Stack Trívia aplicada. Trívia constrói, ou cliente constrói com supervisão. Sprints de 2 semanas. Entregas reais.       |
+|**S**|Sustentação|Sem. 11–12|Time do cliente operando sozinho. Capacitação, governança, métricas em produção. Plano de evolução e ponte para o retainer.           |
 
 ### Os três tiers
 
@@ -267,7 +268,7 @@ Frequência: 4 posts/semana no feed da Trívia, stories diários. CTA único —
 
 #### Landing Page — conversão
 
-Página única com nove seções: Hero, Faixa de autoridade, Quem é o cliente, Método TRIA, Casos, Os 3 planos (com preço visível), Comparativo contra concorrentes, FAQ e CTA final.
+Página única com nove seções: Hero, Faixa de autoridade, Quem é o cliente, Método ATLAS, Casos, Os 3 planos (com preço visível), Comparativo contra concorrentes, FAQ e CTA final.
 
 #### WhatsApp — venda
 
@@ -352,7 +353,7 @@ Mitigação: teto rígido de 8 contratos Operação simultâneos e 2 turmas Igni
 
 Hoje o espaço está vazio. Em 18 meses, dezenas de profissionais vão se posicionar com a mesma proposta.
 
-Mitigação: trancar autoridade nos primeiros 6 meses. Método TRIA registrado no INPI. Cases auditáveis publicados ativamente. Comunidade alumni fechada após primeiros 20 clientes. Mover-se rapidamente para o tier Board e retainer recorrente, que são mais difíceis de copiar.
+Mitigação: trancar autoridade nos primeiros 6 meses. Marca Atlas e método ATLAS registrados no INPI. Cases auditáveis publicados ativamente. Comunidade alumni fechada após primeiros 20 clientes. Mover-se rapidamente para o tier Board e retainer recorrente, que são mais difíceis de copiar.
 
 #### 03 · Cliente compra esperando milagre
 
@@ -372,7 +373,7 @@ Operamos Trívia Studio, Heziom e a infraestrutura própria JimmyAtende. Vendemo
 
 #### Framework Trívia documentado
 
-Método TRIA mais biblioteca de templates, prompts, fluxos de orquestração proprietários e integrações Supabase. Quando dev novo entra, entrega com nossa qualidade desde o primeiro projeto.
+Método ATLAS mais biblioteca de templates, prompts, fluxos de orquestração proprietários e integrações Supabase. Quando dev novo entra, entrega com nossa qualidade desde o primeiro projeto.
 
 #### Stack moderna e demonstrável ao vivo
 
@@ -410,7 +411,7 @@ Caixa esperado nos primeiros 30 dias: 3 × R$ 7.800 (entrada de 30%) = **R$ 23.4
 
 #### Semana 01 · Decisão e produto
 
-- Aprovar formalmente o nome Atlas (mentoria) e TRIA (método), os 3 tiers e os 3 preços públicos.
+- Aprovar formalmente o nome e método ATLAS (marca da mentoria + acrônimo das 5 fases), os 3 tiers e os 3 preços públicos.
 - Redigir a promessa do programa em 1 página formato Hattab: dor → solução → método → garantia.
 - Acelerar contratação e onboarding do dev (produtivo até o final do mês).
 - Definir o 1 caso de uso padrão que cabe em ~90% dos clientes — sugestão: agente WhatsApp de qualificação de lead.
@@ -425,7 +426,7 @@ Caixa esperado nos primeiros 30 dias: 3 × R$ 7.800 (entrada de 30%) = **R$ 23.4
 #### Semana 03 · Setup operacional mínimo
 
 - LP simples em Lovable ou Framer com as 9 seções padrão. Não precisa estar perfeita — precisa estar publicada.
-- Reposicionamento do perfil Instagram da Trívia com nova bio e primeiro carrossel apresentando o método TRIA.
+- Reposicionamento do perfil Instagram da Trívia com nova bio e primeiro carrossel apresentando o método ATLAS.
 - Template de proposta em PDF (1 página). Reutilizável.
 - Configurar funil WhatsApp com qualificação automática usando JimmyAtende existente.
 - Encaminhar contrato-base ao advogado para minutar versão de produção.
@@ -470,7 +471,7 @@ O timing está aberto. O nicho está vazio. Os dois sócios têm os perfis compl
 
 ## Decisões para esta semana
 
-1. Aprovação formal do nome Atlas (mentoria) e do método TRIA, da estrutura de 3 tiers (Ignição R$ 9,8k · Operação R$ 39k · Board R$ 72k), e da oferta de turma fundadora (R$ 26k para os 3 primeiros).
+1. Aprovação formal do nome e método ATLAS (marca da mentoria + acrônimo das 5 fases), da estrutura de 3 tiers (Ignição R$ 9,8k · Operação R$ 39k · Board R$ 72k), e da oferta de turma fundadora (R$ 26k para os 3 primeiros).
 1. Definição conjunta dos 20 nomes da rede direta para abordagem de venda dos 3 fundadores nas semanas 1 e 2.
 1. Aceleração da contratação do dev — deadline obrigatório de start operacional no mês 2.
 1. Encaminhamento do contrato-base de Operação ao advogado, com base nas cláusulas de escopo e expectativa apresentadas neste documento.
