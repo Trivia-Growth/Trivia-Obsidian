@@ -162,6 +162,7 @@ alter table tray_event_metrics enable row level security;
 | 2026-05-28 | 1.1 | Implementação T1–T4 (instrumentação, endpoint, painel SSR, docs); smoke tests OK; status → Review | @dev |
 | 2026-05-28 | 1.2 | Migração `tray_event_metrics` aplicada (Management API, HTTP 201); commit `b6d1a8c` em `main` → deploy Netlify | @dev |
 | 2026-05-28 | 1.3 | ADR-005: login por email+senha do superadmin + `/painel/primeiro-acesso` (token de uso único, senha em scrypt); tabela `panel_users` criada (HTTP 201) + token semeado; commit `7ded098` | @dev |
+| 2026-05-28 | 1.4 | ADR-006: resiliência do token Tray — cron de hora em hora garantido no `netlify.toml`; self-heal no webhook (renova token e refaz busca 1×); fuso da validade corrigido (GMT-3) → painel para de mostrar "vencido" à toa; tema instantâneo. commit `__PENDING__` | @dev |
 
 ---
 
