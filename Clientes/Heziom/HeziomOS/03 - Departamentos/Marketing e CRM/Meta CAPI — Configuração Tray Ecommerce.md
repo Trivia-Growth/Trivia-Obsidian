@@ -314,7 +314,7 @@ O endpoint recebe o submit do formulário e dispara:
 
 - [ ] Monitorar Meta Events Manager por 48h para confirmar eventos reais de compra chegando via CAPI (prazo: 28/05/2026)
 - [ ] Avaliar adição de `InitiateCheckout` na tag GTM para rastrear início de checkout no ecommerce Tray
-- [ ] **Registrar `percent_scrolled` como Custom Dimension no GA4** *(ação de painel — sem código)* → Admin → p464741321 → Definições personalizadas → Dimensões personalizadas → Criar → Escopo *Evento*, parâmetro `percent_scrolled`. Habilita breakdown 25/50/75/90% via API e Explorar.
+- [x] **`percent_scrolled` registrado como Custom Dimension no GA4** (28/05/2026) → Dimensão "Scroll Depth", Escopo Evento, parâmetro `percent_scrolled`. Dados disponíveis via API em ~24h.
 - [ ] **(Opcional) Marcar `ver_colecao_click` como conversão no GA4** → Admin → Eventos → toggle de conversão. Aparece na lista ~24h após o primeiro clique real.
 
 ## 5.1 · Concluído (28/05/2026)
