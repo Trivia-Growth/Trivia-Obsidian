@@ -1,6 +1,6 @@
 # Meta CAPI — Configuração Tray Ecommerce
 
-**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026) · **Webhook server-side CAPI ativo (28/05/2026)**
+**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026) · `ver_colecao_click` rastreado (28/05/2026) · **GA4 Custom Dimension `percent_scrolled` registrada (28/05/2026)**
 
 ## Contexto
 
