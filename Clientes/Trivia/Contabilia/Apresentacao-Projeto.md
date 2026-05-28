@@ -4,7 +4,7 @@
 
 **Contabilia** é uma plataforma que automatiza a operação de escritórios de contabilidade, conectando escritório e cliente em um único sistema inteligente.
 
-Resolve o problema central do contador: **gastar 80% do tempo em operacional repetitivo** enquanto o cliente espera orientação estratégica.
+Resolve o problema central do contador: **gastar 80% do tempo em operacional repetitivo** enquanto o cliente espera orientação estratégica..
 
 ---
 
