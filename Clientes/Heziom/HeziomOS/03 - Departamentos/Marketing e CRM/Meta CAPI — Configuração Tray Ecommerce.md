@@ -1,6 +1,6 @@
 # Meta CAPI — Configuração Tray Ecommerce
 
-**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026)
+**Status:** ✅ Implementado, testado e validado (26/05/2026) · GA4 key events configurados (27/05/2026) · LP tracking enterprise (27/05/2026) · **Webhook server-side CAPI ativo (28/05/2026)**
 
 ## Contexto
 
@@ -98,23 +98,81 @@ Compra confirmada na Tray
 </script>
 ```
 
-### Deduplicação
+### Deduplicação (atualizado 28/05/2026)
 
-O mesmo `eventId` (`tray_purchase_{orderId}_{timestamp}`) é enviado tanto no `fbq('track')` via `eventID` quanto no payload da CAPI. A Meta deduplica automaticamente — **nenhuma compra é contada duas vezes**.
+**Camadas de deduplicação:**
 
-### Mapeamento de eventos CAPI
+1. **Meta event_id** — O server-side usa `event_id = tray_purchase_{orderId}` (determinístico). Se o browser-side (GTM) também disparar para o mesmo pedido, a Meta deduplica automaticamente desde que o `eventID` seja igual.
+2. **Server-side dedup** — Antes de disparar CAPI, a function verifica na tabela `tray_webhook_log` se já existe um registro `processed=true` para aquele pedido. Se sim, não dispara novamente. Isso evita múltiplos disparos quando a Tray envia vários `order.update` para o mesmo pedido.
 
-| Trigger | Evento CAPI |
-|---|---|
-| Status `approved` / `payment_confirmed` | `Purchase` |
-| Status `new` / `pending` | `InitiateCheckout` |
+**⚠️ Ação pendente:** Atualizar o GTM tag `5 - Meta Pixel - Purchase` para usar `eventId = 'tray_purchase_' + orderId` (sem `Date.now()`) para alinhar com o server-side. Até lá, a deduplicação Meta não funciona entre browser ↔ server (mas o server-side dedup próprio impede duplos CAPI).
+
+### Mapeamento de status Tray → CAPI
+
+| Status Tray | Tipo | Dispara CAPI Purchase? |
+|---|---|---|
+| `A ENVIAR` (ID 1) | open | ✅ Sim |
+| `A ENVIAR MASTER` (ID 6) | open | ✅ Sim |
+| `A ENVIAR VINDI` (ID 350) | open | ✅ Sim |
+| `ENVIADO` (ID 342) | open | ✅ Sim |
+| `FINALIZADO` (ID 69) | closed | ✅ Sim |
+| `AGUARDANDO PAGAMENTO` (ID 39) | open | ❌ Não |
+| `CANCELADO` (ID 53) | canceled | ❌ Não |
+| `PENDENTE` (ID 73) | open | ❌ Não |
 
 ### Observações técnicas
 
-- Tray **não suporta webhooks via UI admin** — requer app de parceiro OAuth (não disponível). O flow usa GTM (browser-initiated) em vez de server-to-server puro.
+- ~~Tray não suporta webhooks via UI admin~~ **Webhooks ativados via ticket de suporte (28/05/2026)** — 12 escopos ativos, URL: `https://api.editoraheziom.com.br/webhooks/tray`
+- **Arquitetura híbrida atual:** GTM browser (v19) + Webhook server-side. Ambos podem disparar CAPI Purchase. Planejado desativar GTM Purchase e usar apenas server-side.
 - Email, telefone, nome, CEP, cidade, estado e país são **hash SHA256** antes de chegar à Meta (LGPD-safe).
 - GTM usa ECMASCRIPT_2015 como modo de compilação — async/await e arrow functions não são suportados.
 - 3 fixes aplicados durante o E2E: CORS preflight, token CAPI atualizado, country hasheado.
+
+---
+
+## 1.1 · CAPI Server-Side via Webhooks (28/05/2026)
+
+### Arquitetura (substitui dependência do GTM browser)
+
+```
+Pedido aprovado na Tray
+  → Tray dispara webhook POST para api.editoraheziom.com.br/webhooks/tray
+  → Netlify Function webhooks-tray.js:
+      ├── Log no Supabase (tray_webhook_log)
+      ├── Dedup check (processed=true? → skip)
+      ├── GET /web_api/orders/{id}/complete (busca dados do cliente)
+      ├── Verifica status (A ENVIAR, ENVIADO, FINALIZADO = aprovado)
+      └── POST graph.facebook.com/v19.0/{pixel}/events
+            → Purchase event com user_data hasheado
+            → event_id = tray_purchase_{orderId}
+```
+
+### Infraestrutura
+
+| Item | Valor |
+|---|---|
+| Função | `netlify/functions/webhooks-tray.js` |
+| Token refresh | `netlify/functions/tray-token-refresh.js` (cron 2h) |
+| Token seed | `netlify/functions/tray-token-seed.js` |
+| Persistência | Supabase (`tray_tokens`, `tray_webhook_log`) |
+| Supabase project | `eqsjvacbhrezlgqpwipv` (sa-east-1) |
+
+### Env vars adicionais (Netlify)
+
+| Variável | Descrição |
+|---|---|
+| `TRAY_API_HOST` | `https://lojatesteintegracaotray.commercesuite.com.br` |
+| `TRAY_CONSUMER_KEY` | Consumer key do app Heziom OS |
+| `TRAY_CONSUMER_SECRET` | Consumer secret (secret) |
+| `SUPABASE_URL` | `https://eqsjvacbhrezlgqpwipv.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | Service role key (secret) |
+
+### Teste E2E validado (28/05/2026 10:50 BRT)
+
+- 446+ webhooks reais recebidos e logados ✅
+- CAPI Purchase disparado para pedido #113 (R$21.93, status "A ENVIAR") ✅
+- Deduplicação funcionando: segundo envio do mesmo pedido não redispara ✅
+- Token auto-refresh operacional (cron 2h) ✅
 
 ---
 

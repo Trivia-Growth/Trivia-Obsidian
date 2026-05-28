@@ -1,13 +1,14 @@
 ---
 tags: [tray, webhook, deploy, netlify, heziom-api]
-status: pronto-para-deploy
+status: operacional
 criado: 2026-05-27
+atualizado: 2026-05-28
 ---
 
 # Tray Webhook — Deploy Guide
 
 > Instruções para adicionar a function de webhook no repo `heziom-api` (Netlify).
-> **Status:** Webhooks ativados pela Tray em 27/05/2026 (todos os 12 scopes).
+> **Status:** ✅ **OPERACIONAL** — Webhooks ativos, CAPI disparando, deduplicação funcionando (28/05/2026).
 
 ---
 

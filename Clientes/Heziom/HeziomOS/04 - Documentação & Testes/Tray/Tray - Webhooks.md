@@ -2,11 +2,15 @@
 tags: [tray, api, webhooks, financeiro]
 fonte: Tray API
 tipo: referencia
+status: operacional
+atualizado: 2026-05-28
 ---
 
 # Tray — Webhooks
 
 Notificações enviadas por POST para uma URL do aplicativo quando eventos ocorrem na Tray. Permitem reação em tempo real sem polling.
+
+> **✅ OPERACIONAL desde 28/05/2026** — URL: `https://api.editoraheziom.com.br/webhooks/tray` | 446+ eventos recebidos | CAPI Purchase ativo | Deduplicação server-side funcionando
 
 ---
 
