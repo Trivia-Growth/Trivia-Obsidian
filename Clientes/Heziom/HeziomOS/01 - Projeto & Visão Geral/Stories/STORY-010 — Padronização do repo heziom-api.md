@@ -1,6 +1,6 @@
 ---
 tags: [story, infra, heziom-api, padrao-trivia]
-status: em-progresso
+status: concluido
 fase: 1
 prioridade: média
 criado: 2026-05-28
@@ -33,41 +33,47 @@ O repositório `heziom-api` foi criado fora do padrão Trivia (só `README.md`, 
 - [x] CA3 — `netlify.toml` com security headers (sem quebrar os redirects de API)
 - [x] CA4 — `README.md` refletindo as 4 funções + `.gitignore` com `.DS_Store`
 - [x] CA5 — Verificação de segurança: `.env` no `.gitignore` e nunca commitado (`git log --all`)
-- [ ] CA6 — AIOX instalado (`triviaiox-core install`) — **pendente** (framework não disponível nesta máquina; passo do Lucas/Perfil A)
-- [ ] CA7 — Commit + push em `main` — **pendente de autorização do JG**
+- [x] CA6 — TRIVIAIOX (AIOX) v5.0.3 instalado em `.triviaiox-core/` (1106 arquivos, 14 pastas; 746 entidades no registry)
+- [x] CA7 — Commit + push em `main` (autorizado pelo JG)
 
 ---
 
 ## Implementação
 
-**Status:** `em-progresso`
+**Status:** `concluido`
+
+**Commits:** `b109f40` (docs do padrão) + commit do TRIVIAIOX/ajustes.
 
 **Arquivos criados (repo `heziom-api`):**
 - `CLAUDE.md`, `AGENTS.md`, `architecture.md`, `PROJECT_REQUIREMENTS.md`, `SECURITY_DEBT.md`
 - `specs/technical/API_SPECIFICATION.md`, `specs/technical/BUSINESS_LOGIC.md`, `specs/technical/TROUBLESHOOTING.md`
+- TRIVIAIOX: `.triviaiox-core/`, `.claude/` (10 comandos extras + agentes), `.github/agents/`, `.codex/`, `.cursor/`, `.gemini/`, `.antigravity/`
 
 **Arquivos alterados (repo `heziom-api`):**
-- `netlify.toml` (security headers), `.gitignore` (`.DS_Store`), `README.md`
+- `netlify.toml` (security headers), `.gitignore` (`.DS_Store` + seções TRIVIAIOX), `README.md`, `.env.example`
 
 **Notas de implementação:**
 - Repo e vault **não** ficam lado a lado (repo em `Obsidian/Github/heziom-api`, vault em `Obsidian/Trivia-Obsidian/...`) → path relativo no `CLAUDE.md` é `../../`.
 - 3 ADRs documentados: ADR-001 (token no Supabase), ADR-002 (CAPI server-side primário), ADR-003 (padrão adaptado a backend).
+- **Instalação do TRIVIAIOX:** framework local em `Trivia-Obsidian/Triviaiox-main` (não em `~/Documents/GitHub/Triviaiox`). Comando: `node .../Triviaiox-main/bin/triviaiox.js install --quiet --merge`. Os modos interativos travam neste ambiente sem TTY — usar **sempre `--quiet`**. Foi lento (~15 min) por leitura dos arquivos do vault (cloud sync).
+- ⚠️ O merge do instalador **sobrescreveu o `.env.example`** com o template TRIVIAIOX, removendo as 9 vars da Heziom. **Restauradas** numa seção própria ("heziom-api (aplicação)"). CLAUDE.md e AGENTS.md foram preservados.
 
 ---
 
 ## QA
 
-**Gate:** `PASS` | `CONCERNS` | `FAIL` — _pendente_
+**Gate:** `PASS`
 
 **Checklist:**
 - [x] Sem segredo exposto no repositório (`.env` ignorado e nunca commitado)
-- [ ] AIOX instalado e agentes disponíveis
-- [ ] Build/deploy Netlify sem regressão após push
+- [x] TRIVIAIOX instalado e agentes disponíveis
+- [x] `.env.example` da Heziom restaurado após o merge do instalador
+- [ ] Confirmar deploy Netlify sem regressão após o push (security headers passam a valer)
 
 ---
 
-## Notas e Decisões
+## Notas e Decisões (confirmadas por JG em 28/05/2026)
 
-- **Host de teste:** `TRAY_API_HOST` aponta para `lojatesteintegracaotray...` (loja de teste). Registrado como Questão Aberta #1 em `PROJECT_REQUIREMENTS.md` e SEC no `SECURITY_DEBT.md` — confirmar com JG se é intencional.
-- **`tray-capi.js`:** em standby desde o GTM v20 (sem consumidor). Mantido como fallback; decisão de remover fica para uma story futura.
-- **Pendências externas:** instalar AIOX (precisa do framework `Trivia-Growth/Triviaiox`) e push (sem autorização de push direto registrada para `heziom-api`, diferente de outros repos Heziom/Trivia).
+- **Host de teste é intencional:** integração em **homologação até 13/08/2026**. Migrar para produção (`www.editoraheziom.com.br`, store ID **1345958**) trocando host, credenciais e re-seed do token. Aviso ⚠️ mantido como boa prática.
+- **`tray-capi.js` fica como fallback manual** (útil para testes). Remover só quando o webhook estiver comprovadamente estável por tempo suficiente.
+- **Próxima feature já entra no ciclo TRIVIAIOX:** `/sm` cria a story → `/dev` implementa com Diff Plan → `/qa` → push.
