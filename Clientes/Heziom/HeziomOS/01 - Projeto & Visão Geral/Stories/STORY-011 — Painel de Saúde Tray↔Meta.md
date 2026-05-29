@@ -163,6 +163,7 @@ alter table tray_event_metrics enable row level security;
 | 2026-05-28 | 1.2 | Migração `tray_event_metrics` aplicada (Management API, HTTP 201); commit `b6d1a8c` em `main` → deploy Netlify | @dev |
 | 2026-05-28 | 1.3 | ADR-005: login por email+senha do superadmin + `/painel/primeiro-acesso` (token de uso único, senha em scrypt); tabela `panel_users` criada (HTTP 201) + token semeado; commit `7ded098` | @dev |
 | 2026-05-28 | 1.4 | ADR-006: resiliência do token Tray — cron de hora em hora garantido no `netlify.toml`; self-heal no webhook (renova token e refaz busca 1×); fuso da validade corrigido (GMT-3) → painel para de mostrar "vencido" à toa; tema instantâneo. commit `41c77cf` em `main` → deploy Netlify | @dev |
+| 2026-05-29 | 1.5 | ADR-006 reforçado: validade do token convertida para **UTC ISO na gravação** (`trayExpiryToUtc()` em `tray-token-refresh.js` e self-heal do `webhooks-tray.js`) — corrige o card "vencido" mesmo com build antigo da função de leitura na Netlify. Deploy confirmado (resposta em `...Z`), token regravado com 3h de validade. commit `772b7b3` em `main` → deploy Netlify | @dev |
 
 ---
 
