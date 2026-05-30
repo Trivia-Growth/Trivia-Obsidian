@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Tasker - Gestao de Projetos Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --primary-dark: #5b21b6;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --bg-dark: #0f0a1e;
+            --bg-card: rgba(30, 20, 60, 0.6);
+            --bg-card-hover: rgba(40, 30, 80, 0.8);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: rgba(124, 58, 237, 0.2);
+            --gradient-1: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #3b82f6 100%);
+            --gradient-2: linear-gradient(135deg, #1e1040 0%, #0f0a1e 100%);
+            --gradient-3: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-delay-1 { transition-delay: 0.1s; }
+        .animate-delay-2 { transition-delay: 0.2s; }
+        .animate-delay-3 { transition-delay: 0.3s; }
+        .animate-delay-4 { transition-delay: 0.4s; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(15, 10, 30, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-logo img {
+            height: 32px;
+        }
+
+        .nav-logo span {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #6366f1 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.5);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--gradient-2);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .problem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #fca5a5;
+        }
+
+        .problem-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Section Headers */
+        .section-label {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* Solution Section */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .solution-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
+        }
+
+        .solution-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-3);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .solution-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .feature-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .feature-image {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .feature-image:hover {
+            transform: scale(1.02);
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Analytics Section - Highlighted */
+        .analytics-section {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.05) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(15, 10, 30, 1) 100%);
+            padding: 8rem 2rem;
+        }
+
+        .analytics-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .analytics-header .section-title {
+            background: linear-gradient(135deg, #a78bfa 0%, #6366f1 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .analytics-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .analytics-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .analytics-card-content {
+            padding: 1.5rem;
+        }
+
+        .analytics-card-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .analytics-card-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .ai-highlight {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .ai-highlight h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ai-highlight p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .ai-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .ai-feature-tag {
+            padding: 0.6rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        /* Automation Section */
+        .automation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .automation-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .automation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .automation-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .automation-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .automation-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: var(--gradient-2);
+            text-align: center;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .roi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .roi-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .roi-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Mais Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.4rem 1.2rem;
+            background: var(--gradient-1);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .pricing-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .pricing-period {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li::before {
+            content: '\2713';
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .pricing-cta {
+            display: block;
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pricing-cta-primary {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+        }
+
+        .pricing-cta-secondary {
+            background: transparent;
+            color: var(--primary-light);
+            border: 1px solid var(--border);
+        }
+
+        .pricing-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        /* CTA Final */
+        .cta-final {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-final h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-final p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.5);
+        }
+
+        .cta-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--primary-light);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .cta-btn-secondary:hover {
+            transform: translateY(-3px);
+            background: var(--glass);
+        }
+
+        .cta-contact {
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .cta-contact a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .feature-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-image {
+                order: -1;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-5px);
+            }
+
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .roi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Screenshot placeholder */
+        .screenshot-placeholder {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Glow effects */
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .glow-purple {
+            background: var(--primary);
+        }
+
+        .glow-blue {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">
+            <img src="assets/trivia-logo-dark.png" alt="Trivia Tasker" onerror="this.style.display='none'">
+            <span>Trivia Tasker</span>
+        </div>
+        <a href="#contato" class="nav-cta">Agendar Demo</a>
+    </nav>
+
+    <!-- Slide 1: Hero -->
+    <section class="hero">
+        <div class="glow glow-purple" style="top: 20%; left: 10%;"></div>
+        <div class="glow glow-blue" style="bottom: 20%; right: 10%;"></div>
+        <div class="section-content">
+            <div class="hero-badge">Plataforma de Gestao de Projetos com IA</div>
+            <h1>Projetos sob controle.<br>Equipe alinhada.<br>Resultados visiveis.</h1>
+            <p>O Trivia Tasker e a plataforma completa para gestao de projetos, equipes e entregas. Com inteligencia artificial integrada, voce toma decisoes melhores e entrega mais rapido.</p>
+            <a href="#contato" class="hero-cta">
+                Agende uma Demonstracao
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">393+</div>
+                    <div class="label">Componentes</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">6</div>
+                    <div class="label">Views de Tarefas</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">25</div>
+                    <div class="label">Edge Functions</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">100%</div>
+                    <div class="label">Na Nuvem</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Problema -->
+    <section class="problem">
+        <div class="section-content">
+            <div class="animate-on-scroll">
+                <span class="section-label">O Desafio</span>
+                <h2 class="section-title">Sua operacao sofre com isso?</h2>
+                <p class="section-subtitle">Gestores perdem horas todos os dias tentando entender o que esta acontecendo nos projetos.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card animate-on-scroll animate-delay-1">
+                    <div class="problem-icon">&#128566;</div>
+                    <h3>Zero visibilidade</h3>
+                    <p>Voce nao sabe em que ponto cada projeto esta. Status atualizado? So perguntando um por um. Decisoes sao tomadas no escuro.</p>
+                </div>
+                <div class="problem-card animate-on-scroll animate-delay-2">
+                    <div class="problem-icon">&#128101;</div>
+                    <h3>Equipe desconectada</h3>
+                    <p>Informacoes espalhadas em emails, WhatsApp, planilhas. Cada um tem uma versao diferente da verdade. Retrabalho e a consequencia.</p>
+                </div>
+                <div class="problem-card animate-on-scroll animate-delay-3">
+                    <div class="problem-icon">&#128200;</div>
+                    <h3>Sem dados para decidir</h3>
+                    <p>Quanto custa cada projeto? Quem esta sobrecarregado? Vamos estourar o prazo? Sem metricas, voce so descobre quando ja e tarde.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Solucao -->
+    <section>
+        <div class="section-content">
+            <div class="animate-on-scroll" style="text-align: center; margin-bottom: 1rem;">
+                <span class="section-label">A Solucao</span>
+                <h2 class="section-title">Tudo que voce precisa. Em um so lugar.</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">O Trivia Tasker reune gestao de projetos, tarefas, equipes, tempo, propostas comerciais e inteligencia artificial em uma unica plataforma.</p>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-card animate-on-scroll animate-delay-1">
+                    <div class="solution-card-icon">&#128202;</div>
+                    <h3>Dashboard Executivo</h3>
+                    <p>Visao 360 de todos os projetos, custos e prazos em tempo real.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-2">
+                    <div class="solution-card-icon">&#9745;</div>
+                    <h3>Tarefas Multi-view</h3>
+                    <p>Board, Lista, Timeline, Calendario, Spreadsheet. Cada um trabalha como prefere.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-3">
+                    <div class="solution-card-icon">&#9201;</div>
+                    <h3>Time Tracking</h3>
+                    <p>Controle de horas por projeto e colaborador com custo automatico.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-4">
+                    <div class="solution-card-icon">&#129302;</div>
+                    <h3>Jimmy AI</h3>
+                    <p>Analise de riscos, previsoes e insights automaticos para decisao rapida.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-1">
+                    <div class="solution-card-icon">&#128196;</div>
+                    <h3>Propostas Comerciais</h3>
+                    <p>Crie, envie e acompanhe propostas com aceitacao digital.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-2">
+                    <div class="solution-card-icon">&#9889;</div>
+                    <h3>Automacoes</h3>
+                    <p>Workflows que executam acoes automaticamente com triggers configurados.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-3">
+                    <div class="solution-card-icon">&#128101;</div>
+                    <h3>Gestao de Equipes</h3>
+                    <p>Papeis, grupos, taxas, ausencias e timeline de alocacao.</p>
+                </div>
+                <div class="solution-card animate-on-scroll animate-delay-4">
+                    <div class="solution-card-icon">&#128209;</div>
+                    <h3>Espacos Colaborativos</h3>
+                    <p>Documentos, planilhas, whiteboards e arquivos em um so lugar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Dashboard -->
+    <section>
+        <div class="section-content">
+            <div class="feature-section">
+                <div class="feature-text animate-on-scroll">
+                    <span class="section-label">Visao Geral</span>
+                    <h2 class="section-title">Dashboard que mostra o que importa</h2>
+                    <p class="section-subtitle">Visualize a saude de todos os projetos, custos acumulados, deadlines proximas e performance da equipe em um unico painel.</p>
+                    <ul class="feature-list">
+                        <li>Dashboard organizacional com metricas executivas</li>
+                        <li>Health Score com pesos configuraveis por projeto</li>
+                        <li>Drill-down de custos por projeto e colaborador</li>
+                        <li>Visao de projetos criticos e deadlines em risco</li>
+                        <li>Modo apresentacao para reunioes</li>
+                    </ul>
+                </div>
+                <div class="feature-image animate-on-scroll animate-delay-2">
+                    <img src="assets/project-costs-dashboard.png" alt="Dashboard de Custos por Projeto" onerror="this.parentElement.innerHTML='<div class=screenshot-placeholder>Dashboard de Custos por Projeto</div>'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Gestao de Tarefas -->
+    <section>
+        <div class="section-content">
+            <div class="feature-section">
+                <div class="feature-image animate-on-scroll">
+                    <img src="assets/task-views-dashboard.png" alt="Multiplas Views de Tarefas" onerror="this.parentElement.innerHTML='<div class=screenshot-placeholder>Views de Tarefas - Board, Lista, Timeline, Calendario</div>'">
+                </div>
+                <div class="feature-text animate-on-scroll animate-delay-2">
+                    <span class="section-label">Tarefas</span>
+                    <h2 class="section-title">6 formas de ver seu trabalho</h2>
+                    <p class="section-subtitle">Cada membro da equipe trabalha do jeito que prefere. Board Kanban, Lista, Lista Agrupada, Spreadsheet, Timeline ou Calendario.</p>
+                    <ul class="feature-list">
+                        <li>Drag and drop para reorganizacao instantanea</li>
+                        <li>Subtarefas, tags e campos customizados</li>
+                        <li>Edicao e exclusao em batch</li>
+                        <li>Filtros avancados e sessoes de filtro</li>
+                        <li>Comentarios, historico e anexos de arquivos</li>
+                        <li>Kanban por fases customizaveis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Time Tracking -->
+    <section>
+        <div class="section-content">
+            <div class="feature-section">
+                <div class="feature-text animate-on-scroll">
+                    <span class="section-label">Rastreamento de Tempo</span>
+                    <h2 class="section-title">Saiba exatamente onde o tempo vai</h2>
+                    <p class="section-subtitle">Timer ativo, registro manual ou tracking automatico via Desktop Agent. Calcule custos reais por projeto de forma automatica.</p>
+                    <ul class="feature-list">
+                        <li>Timer flutuante que acompanha voce na plataforma</li>
+                        <li>Categorias de tempo configuraveis</li>
+                        <li>Importacao de time entries de outras ferramentas</li>
+                        <li>Calculo automatico de custo por taxa/hora do colaborador</li>
+                        <li>Relatorios de tempo por projeto e usuario</li>
+                        <li>Desktop Agent para tracking automatico</li>
+                    </ul>
+                </div>
+                <div class="feature-image animate-on-scroll animate-delay-2">
+                    <img src="assets/time-tracking-dashboard.png" alt="Dashboard de Time Tracking" onerror="this.parentElement.innerHTML='<div class=screenshot-placeholder>Time Tracking Dashboard</div>'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Analytics & AI (DESTAQUE) -->
+    <section class="analytics-section" id="analytics">
+        <div class="section-content">
+            <div class="analytics-header animate-on-scroll">
+                <span class="section-label">Analytics & Inteligencia Artificial</span>
+                <h2 class="section-title">Decisoes inteligentes.<br>Dados em tempo real.</h2>
+                <p class="section-subtitle" style="margin: 0 auto; max-width: 700px;">Combine analytics avancados com a Jimmy AI para antecipar problemas, otimizar recursos e entregar resultados consistentes.</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card animate-on-scroll animate-delay-1">
+                    <img src="assets/team-performance-dashboard.png" alt="Performance da Equipe" onerror="this.parentElement.querySelector('img').style.display='none'">
+                    <div class="analytics-card-content">
+                        <h3>Performance da Equipe</h3>
+                        <p>Visualize carga de trabalho, produtividade e entregas de cada membro. Identifique gargalos antes que virem problemas.</p>
+                    </div>
+                </div>
+                <div class="analytics-card animate-on-scroll animate-delay-2">
+                    <img src="assets/project-costs-dashboard.png" alt="Custos por Projeto" onerror="this.parentElement.querySelector('img').style.display='none'">
+                    <div class="analytics-card-content">
+                        <h3>Custos por Projeto</h3>
+                        <p>Acompanhe o investimento real de cada projeto com drill-down por colaborador, fase e periodo.</p>
+                    </div>
+                </div>
+                <div class="analytics-card animate-on-scroll animate-delay-3">
+                    <img src="assets/time-tracking-dashboard.png" alt="Analise de Tempo" onerror="this.parentElement.querySelector('img').style.display='none'">
+                    <div class="analytics-card-content">
+                        <h3>Analise de Tempo</h3>
+                        <p>Entenda como o tempo da equipe esta sendo investido. Identifique projetos que consomem mais do que deveriam.</p>
+                    </div>
+                </div>
+                <div class="analytics-card animate-on-scroll animate-delay-4">
+                    <img src="assets/task-views-dashboard.png" alt="Coordenacao de Projetos" onerror="this.parentElement.querySelector('img').style.display='none'">
+                    <div class="analytics-card-content">
+                        <h3>Coordenacao de Projetos</h3>
+                        <p>Dashboard CEO com metricas executivas, projetos criticos e predicoes de entrega baseadas em IA.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-highlight animate-on-scroll">
+                <h3>Jimmy AI - Seu Assistente Inteligente</h3>
+                <p>A Jimmy AI analisa seus projetos em tempo real, identifica riscos, sugere otimizacoes e gera relatorios automaticos. Receba um digest diario e relatorio semanal sem mover um dedo.</p>
+                <div class="ai-features">
+                    <span class="ai-feature-tag">Analise de Riscos</span>
+                    <span class="ai-feature-tag">Identificacao de Gargalos</span>
+                    <span class="ai-feature-tag">Previsoes de Prazo</span>
+                    <span class="ai-feature-tag">Previsoes de Orcamento</span>
+                    <span class="ai-feature-tag">Digest Diario</span>
+                    <span class="ai-feature-tag">Relatorio Semanal</span>
+                    <span class="ai-feature-tag">Sugestoes de Otimizacao</span>
+                    <span class="ai-feature-tag">Insights por Projeto</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Automacoes -->
+    <section>
+        <div class="section-content">
+            <div class="animate-on-scroll" style="text-align: center; margin-bottom: 1rem;">
+                <span class="section-label">Automacoes</span>
+                <h2 class="section-title">Deixe o trabalho repetitivo para a maquina</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">Crie workflows visuais com triggers e acoes. Quando algo acontece, o Tasker reage automaticamente.</p>
+            </div>
+            <div class="automation-grid">
+                <div class="automation-card animate-on-scroll animate-delay-1">
+                    <div class="automation-icon">&#9889;</div>
+                    <h3>Triggers Inteligentes</h3>
+                    <p>Mudanca de status, deadline atingida, nova tarefa criada. Defina o que dispara cada automacao.</p>
+                </div>
+                <div class="automation-card animate-on-scroll animate-delay-2">
+                    <div class="automation-icon">&#128736;</div>
+                    <h3>Builder Visual</h3>
+                    <p>Monte automacoes arrastando e conectando blocos. Sem codigo, sem complexidade.</p>
+                </div>
+                <div class="automation-card animate-on-scroll animate-delay-3">
+                    <div class="automation-icon">&#128203;</div>
+                    <h3>Logs de Execucao</h3>
+                    <p>Acompanhe tudo que foi executado automaticamente. Transparencia total nas acoes do sistema.</p>
+                </div>
+                <div class="automation-card animate-on-scroll animate-delay-4">
+                    <div class="automation-icon">&#128276;</div>
+                    <h3>Notificacoes Automaticas</h3>
+                    <p>Alertas de deadline, mencoes, mudancas de projeto. A equipe sempre informada, sem esforco manual.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: ROI -->
+    <section class="roi-section">
+        <div class="section-content">
+            <div class="animate-on-scroll" style="text-align: center;">
+                <span class="section-label">Retorno sobre Investimento</span>
+                <h2 class="section-title">Resultados que se pagam</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">Nossos clientes reportam ganhos significativos ja nos primeiros meses de uso.</p>
+            </div>
+            <div class="roi-grid">
+                <div class="roi-card animate-on-scroll animate-delay-1">
+                    <div class="roi-number">-40%</div>
+                    <div class="roi-label">Tempo em reunioes de status</div>
+                </div>
+                <div class="roi-card animate-on-scroll animate-delay-2">
+                    <div class="roi-number">+60%</div>
+                    <div class="roi-label">Visibilidade sobre projetos</div>
+                </div>
+                <div class="roi-card animate-on-scroll animate-delay-3">
+                    <div class="roi-number">-30%</div>
+                    <div class="roi-label">Reducao de retrabalho</div>
+                </div>
+                <div class="roi-card animate-on-scroll animate-delay-4">
+                    <div class="roi-number">2 meses</div>
+                    <div class="roi-label">Para ROI positivo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: Planos & Precos -->
+    <section id="planos">
+        <div class="section-content">
+            <div class="animate-on-scroll" style="text-align: center; margin-bottom: 1rem;">
+                <span class="section-label">Planos</span>
+                <h2 class="section-title">Escolha o plano ideal para seu time</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">Todos os planos incluem suporte, atualizacoes e onboarding assistido.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card animate-on-scroll animate-delay-1">
+                    <div class="pricing-name">Starter</div>
+                    <div class="pricing-desc">Para equipes pequenas comecando a organizar</div>
+                    <div class="pricing-price">R$ 49<span>/usuario</span></div>
+                    <div class="pricing-period">por mes, cobrado mensalmente</div>
+                    <ul class="pricing-features">
+                        <li>Ate 10 usuarios</li>
+                        <li>Projetos ilimitados</li>
+                        <li>Board, Lista e Calendario</li>
+                        <li>Time Tracking basico</li>
+                        <li>Dashboard organizacional</li>
+                        <li>1 GB de armazenamento</li>
+                    </ul>
+                    <a href="#contato" class="pricing-cta pricing-cta-secondary">Comecar agora</a>
+                </div>
+                <div class="pricing-card featured animate-on-scroll animate-delay-2">
+                    <div class="pricing-name">Professional</div>
+                    <div class="pricing-desc">Para times que precisam de controle total</div>
+                    <div class="pricing-price">R$ 89<span>/usuario</span></div>
+                    <div class="pricing-period">por mes, cobrado mensalmente</div>
+                    <ul class="pricing-features">
+                        <li>Ate 50 usuarios</li>
+                        <li>Todas as views de tarefas</li>
+                        <li>Jimmy AI com insights</li>
+                        <li>Automacoes (ate 20 workflows)</li>
+                        <li>Analytics completo</li>
+                        <li>Propostas comerciais</li>
+                        <li>Time Tracking avancado</li>
+                        <li>10 GB de armazenamento</li>
+                    </ul>
+                    <a href="#contato" class="pricing-cta pricing-cta-primary">Escolher Professional</a>
+                </div>
+                <div class="pricing-card animate-on-scroll animate-delay-3">
+                    <div class="pricing-name">Enterprise</div>
+                    <div class="pricing-desc">Para organizacoes com necessidades avancadas</div>
+                    <div class="pricing-price">Sob consulta</div>
+                    <div class="pricing-period">contrato anual personalizado</div>
+                    <ul class="pricing-features">
+                        <li>Usuarios ilimitados</li>
+                        <li>Multi-organizacao</li>
+                        <li>Jimmy AI ilimitada</li>
+                        <li>Automacoes ilimitadas</li>
+                        <li>API e tokens de agente</li>
+                        <li>Desktop Agent incluso</li>
+                        <li>Audit logs e compliance</li>
+                        <li>Onboarding dedicado</li>
+                        <li>SLA garantido</li>
+                    </ul>
+                    <a href="#contato" class="pricing-cta pricing-cta-secondary">Falar com vendas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: CTA Final -->
+    <section class="cta-final" id="contato">
+        <div class="section-content animate-on-scroll">
+            <h2>Pronto para transformar sua gestao de projetos?</h2>
+            <p>Agende uma demonstracao personalizada e descubra como o Trivia Tasker pode trazer visibilidade, controle e inteligencia para sua operacao.</p>
+            <div class="cta-buttons">
+                <a href="mailto:contato@triviastudio.com.br?subject=Demo Trivia Tasker" class="cta-btn-primary">
+                    Agendar Demonstracao
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="mailto:contato@triviastudio.com.br?subject=Informacoes Trivia Tasker" class="cta-btn-secondary">
+                    Solicitar Proposta
+                </a>
+            </div>
+            <div class="cta-contact">
+                <p>contato@triviastudio.com.br</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Trivia Tasker. Todos os direitos reservados. Trivia Studio.</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+</body>
+</html>
