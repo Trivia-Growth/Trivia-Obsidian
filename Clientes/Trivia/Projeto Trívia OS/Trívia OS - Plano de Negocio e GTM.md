@@ -8,7 +8,7 @@ diferencial: IA (agentes especialistas por área) sobre dado unificado
 inimigo: fragmentação
 complementa: "[[Produto OS Empresarial]]"
 molde: "[[Atlas - Plano de Negocio]] + [[Atlas - Plano de Negocio MVP]]"
-decisoes-pendentes: [nome/método-acrônimo, preço dos 3 blocos, schema padrão, biblioteca de conectores, caso inicial]
+decisoes-pendentes: [nome/método-acrônimo, preço da recorrência, schema padrão, biblioteca de conectores, caso inicial]
 ---
 
 # TRÍVIA OS — PLANO DE NEGÓCIO E GTM (v1)
@@ -21,7 +21,8 @@ Plano de negócio e go-to-market do **Trívia OS** — o produto de implementaç
 
 > **Notas desta v1:**
 > - **Entidade decidida:** o Trívia OS nasce como **linha de produto de implementação da Trívia** — irmão da Atlas no portfólio, não marca própria nem expansão do Jimmy (decisão revisável após as primeiras provas).
-> - **ICP herdado da Atlas:** dono de PME R$ 5MM–50MM. Mesma persona, dor adjacente (fragmentação operacional, não falta de clareza de IA).
+> - **ICP herdado da Atlas, com entrada mais baixa:** dono de PME a partir de R$ 2,5MM de faturamento. Mesma persona, dor adjacente (fragmentação operacional, não falta de clareza de IA).
+> - **Produto mais high-ticket do portfólio:** projetos a partir de R$ 119k, com diagnóstico de R$ 30k abatível.
 > - **Relação com a Atlas:** a Atlas (mentoria) **decide e abre**; o Trívia OS **implementa o sistema inteiro**. A "implementação inclusa" da Atlas é a ponta; o OS é a obra completa.
 > - **Nome/método ainda em aberto:** este documento usa "Trívia OS" como nome de trabalho. Proposta de método-acrônimo na Seção 04.
 
@@ -49,7 +50,7 @@ A próxima ação concreta não é escala de mídia: é **provar o produto com 3
 
 ### Por que existe um vazio
 
-A PME brasileira de R$ 5MM–50MM vive a mesma armadilha operacional. Cresceu empilhando ferramentas: um CRM aqui, planilha de financeiro ali, sistema de estoque que não fala com o de vendas, atendimento no WhatsApp solto, ads num painel que ninguém cruza com a receita. Cada ferramenta resolve um pedaço e cria uma fronteira. Nas fronteiras mora o retrabalho: gente copiando dado de um sistema pro outro, conferindo planilha, fechando caixa na unha, decidindo no escuro porque o número nunca está num lugar só.
+A PME brasileira a partir de R$ 2,5MM vive a mesma armadilha operacional. Cresceu empilhando ferramentas: um CRM aqui, planilha de financeiro ali, sistema de estoque que não fala com o de vendas, atendimento no WhatsApp solto, ads num painel que ninguém cruza com a receita. Cada ferramenta resolve um pedaço e cria uma fronteira. Nas fronteiras mora o retrabalho: gente copiando dado de um sistema pro outro, conferindo planilha, fechando caixa na unha, decidindo no escuro porque o número nunca está num lugar só.
 
 Isso tem nome: **fragmentação**. E é o inimigo do produto.
 
@@ -131,30 +132,20 @@ E é concreto, não discurso vago: os agentes conciliam o financeiro e fecham o 
 
 ### O dono certo
 
-Herdado da Atlas — **mesma persona**, com o filtro de dor ajustado para fragmentação operacional. Filtro de entrada é parte do produto: vender OS para empresa imatura ou para dono que delega tudo sem se envolver gera atrito e dano reputacional. O diagnóstico pago é o instrumento de qualificação.
+Herdado da Atlas — **mesma persona**, com entrada mais baixa de faturamento e o filtro de dor ajustado para fragmentação operacional. Filtro de entrada é parte do produto: vender OS para empresa imatura ou para dono que delega tudo sem se envolver gera atrito e dano reputacional. O diagnóstico pago é o instrumento de qualificação.
 
 |Atributo|Critério|
 |--------|--------|
-|Faturamento anual|R$ 5MM a R$ 50MM. Sweet spot R$ 10MM a R$ 30MM.|
+|Faturamento anual|A partir de R$ 2,5MM. Sweet spot R$ 10MM a R$ 30MM.|
 |Headcount|10 a 100 funcionários. Time estruturado, processos minimamente formalizados.|
 |Setor|Serviços B2B, indústria leve, varejo especializado, saúde, educação, construção, agro-tech, escritórios profissionais.|
 |Idade do dono|35 a 55. Fundador ou 2ª geração, com PnL na mão.|
 |Maturidade digital|**Já tem vários sistemas** (sinal de fragmentação madura). Usa ChatGPT pessoalmente. Não sabe levar IA pra operação.|
 |Dor central|Operação roda em sistemas que não conversam; retrabalho manual fazendo a ponte; dado morre em planilha.|
 |Gatilho de compra|Dor de crescimento (cresceu e a operação não acompanha), troca de ERP frustrada, ou FOMO pós-evento de IA.|
-|Anti-ICP|<R$ 3MM (não comporta ticket). Startup de tech (constrói interno). Dono que quer "comprar produto" e não engajar. Empresa em crise de caixa. Operação ainda informal demais pra ter o que unificar.|
+|Anti-ICP|<R$ 2,5MM (não comporta o ticket). Startup de tech (constrói interno). Dono que quer "comprar produto" e não engajar. Empresa em crise de caixa. Operação ainda informal demais pra ter o que unificar.|
 
-> *Nuance vs Atlas:* a Atlas pode atender o dono que **ainda não tem sistemas** (a dor é falta de clareza). O OS precisa de **fragmentação madura** — empresa que já acumulou ferramentas e sente o atrito. Por isso o sweet spot do OS pende para o teto do ICP (R$ 15–30MM+).
-
-### Quem compra vs quem usa
-
-|Papel|Quem é|O que importa pra ele|Como engajamos|
-|-----|------|--------------------|---------------|
-|Comprador|Dono/sócio fundador|ROI, fim do retrabalho, não virar refém, decisão por dado|Diagnóstico, planta do OS, número de impacto|
-|Patrocinador interno|Sócio ou diretor de operações|Time aceitar a mudança, migração não quebrar a operação|Kickoff, milestones de fase, governança|
-|Usuário operacional|Coordenadores de cada área|Ferramenta não atrapalhar, não perder espaço pro "robô"|Capacitação na fase de Sustentação; agentes como apoio, não substituto|
-
-Critério contratual: indicação nominal do patrocinador interno antes do kickoff da implementação (mesma regra da Atlas).
+> *Nuance vs Atlas:* o que qualifica o OS não é só o porte, é a **fragmentação madura** — empresa que já acumulou ferramentas e sente o atrito. Uma empresa de R$ 2,5MM com a operação já espalhada em vários sistemas é ICP; uma de R$ 30MM ainda informal, sem o que unificar, não é. O diagnóstico pago confirma isso antes de qualquer compromisso de implementação.
 
 -----
 
@@ -216,29 +207,24 @@ A Atlas provou o valor de **marca = método** num acrônimo. Proposta análoga p
 
 ### Lógica de cobrança
 
-Quatro princípios (herdados da Atlas, ajustados ao OS):
+O Trívia OS é **o produto mais high-ticket do portfólio**. A precificação tem um caminho único e simples, em três blocos:
 
 - **Não cobramos por hora.** Comoditiza e transforma o sócio em freelancer caro. Vendemos resultado.
 - **Não cobramos por resultado (revenue share)** neste momento — exige baseline confiável que o cliente médio não tem.
-- **Cobramos o diagnóstico como produto fechado**, com preço e escopo públicos. Baixa fricção, qualifica, e abate na implementação.
-- **Cobramos a implementação por fases** (escopo travado por fase) e a **operação como recorrência mensal** com fidelidade mínima.
+- **Diagnóstico de valor fixo (R$ 30k), abatível.** Se o cliente fecha a implementação, os R$ 30k são integralmente abatidos do valor total do projeto.
+- **Implementação a partir de R$ 119k**, escopo travado por fases, e **operação como recorrência mensal** com fidelidade mínima.
 
 ### Os três blocos comerciais
 
-#### Bloco 1 · Diagnóstico operacional (o wedge)
+#### Bloco 1 · Diagnóstico operacional (o wedge) — R$ 30.000
 
-Escopo fechado, pago, **abatível na implementação**. Entrega: mapa de todos os sistemas e fluxos de dado, ranking de dores por impacto × esforço, decisões de substituir/integrar/matar, e a **planta do OS-alvo** com escopo e fases. É produto de aquisição de baixa fricção que se paga.
+Escopo fechado, valor fixo, **abatível na implementação**. Entrega o diagnóstico operacional completo e o **plano de implementação**: mapa de todos os sistemas e fluxos de dado, ranking de dores por impacto × esforço, decisões de substituir/integrar/matar, e a **planta do OS-alvo** com escopo, fases e investimento.
 
-| Faixa | Perfil | Preço-alvo | Prazo |
-|-------|--------|-----------|-------|
-| Diagnóstico Essencial | PME R$ 5–15MM, 1–2 áreas críticas | R$ 8.000–12.000 | 2–3 semanas |
-| Diagnóstico Completo | PME R$ 15–50MM, operação multi-área | R$ 15.000–25.000 | 3–4 semanas |
+> **Os R$ 30k abatem integralmente do valor do projeto se o cliente fechar a implementação.** Na prática vira um "test drive pago": o cliente arrisca pouco, sai com um plano de implementação que vale por si só, e nós qualificamos a fundo antes de assumir um projeto de seis dígitos. Quem não fecha, pagou por um entregável real; quem fecha, não pagou nada a mais por ele.
 
-> 100% do valor do diagnóstico abate na implementação se fechada em até 60 dias. Isso transforma o diagnóstico em "test drive pago" — o cliente arrisca pouco e nós qualificamos antes de assumir um projeto grande.
+#### Bloco 2 · Implementação (projeto por fases) — a partir de R$ 119.000
 
-#### Bloco 2 · Implementação (projeto por fases)
-
-Projeto sob medida, escopo travado **por fase**. A postura padrão de substituir mantém a margem. Faixas estimadas (a calibrar com as primeiras provas):
+Projeto sob medida, **piso de R$ 119k**, escopo travado **por fase**. A postura padrão de substituir mantém a margem. O valor final é montado a partir das fases que a planta do diagnóstico definir; as faixas abaixo são a base de composição (a calibrar com as primeiras provas):
 
 | Fase | O que entrega | Faixa estimada |
 |------|---------------|----------------|
@@ -248,7 +234,7 @@ Projeto sob medida, escopo travado **por fase**. A postura padrão de substituir
 | Agentes de IA | 1 agente especialista por área, sobre o dado unificado | R$ 18.000–40.000 / agente |
 | Gestão à vista | Painéis, metas e alertas — o cockpit do dono | R$ 12.000–25.000 |
 
-> **Ticket típico de uma implementação inicial** (fundação + 2–3 módulos + 1–2 conectores + 1–2 agentes + gestão à vista): **R$ 90.000–220.000**, faseado. Isso ocupa exatamente o território que a Atlas classifica como "plataforma multi-módulo — proposta separada (R$ 60k–120k+)". **O Trívia OS é esse upsell premium, produtizado.**
+> **O projeto começa em R$ 119k** (fundação + módulos + conectores + agentes + gestão à vista, conforme a planta). Já abatido o diagnóstico, o saldo da implementação é de R$ 89k em diante. Isso ocupa exatamente o território que a Atlas classifica como "plataforma multi-módulo — proposta separada (R$ 60k–120k+)". **O Trívia OS é esse upsell premium, produtizado — o teto do portfólio.**
 
 #### Bloco 3 · Recorrência (onde vira anuidade)
 
@@ -269,8 +255,8 @@ Fidelidade mínima 12 meses, multa de 30% das parcelas restantes em rescisão an
 | ERP de prateleira (Totvs, SAP B1) | Licença + implantação rígida | R$ 80k–500k implantação + mensalidade |
 | Consultoria de transformação digital | Slides e roadmap, sem execução | R$ 150k–500k |
 | Agência de automação / integrador | Automações isoladas | R$ 15k–80k por projeto |
-| **Trívia OS · Diagnóstico** | Planta do OS + decisões | **R$ 8k–25k (abatível)** |
-| **Trívia OS · Implementação** | OS sob medida + agentes, faseado | **R$ 90k–220k inicial** |
+| **Trívia OS · Diagnóstico** | Diagnóstico + plano de implementação | **R$ 30k (abatível no projeto)** |
+| **Trívia OS · Implementação** | OS sob medida + agentes, faseado | **a partir de R$ 119k** |
 | **Trívia OS · Recorrência** | Runtime + evolução dos agentes | **R$ 4k–25k/mês** |
 
 -----
@@ -345,7 +331,7 @@ Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra → quali
 | Diagnósticos vendidos/mês | 1–2 | 4–6 |
 | Diagnóstico → implementação | ≥ 50% | ≥ 60% |
 | Implementação → recorrência | ≥ 70% | ≥ 85% |
-| Ticket médio de implementação inicial | R$ 90–150k | R$ 120–220k |
+| Ticket de implementação inicial | a partir de R$ 119k | a partir de R$ 119k |
 
 -----
 
@@ -357,16 +343,16 @@ Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra → quali
 
 | Item | Valor estimado |
 |------|----------------|
-| Diagnóstico (abatível) | R$ 8–25k |
-| Implementação inicial faseada | R$ 90–220k |
+| Diagnóstico | R$ 30k (abate no projeto se fechar) |
+| Implementação inicial faseada | a partir de R$ 119k (já inclui o diagnóstico) |
 | Recorrência ano 1 (R$ 6k/mês × 12) | R$ 72k |
-| **Receita ano 1 por cliente OS** | **~R$ 170–290k** |
+| **Receita ano 1 por cliente OS** | **a partir de ~R$ 190k** |
 | Custo de entrega (dev + APIs + infra, est.) | 35–45% da implementação |
 | **Margem de contribuição por cliente** | **alta; recorrência é quase toda margem após go-live** |
 
 ### Receita combinada (OS como linha do P&L Trívia)
 
-No regime maduro modelado pela Atlas (R$ 200k/mês combinados), a linha **"Upsell Trívia (3 projetos/mês × R$ 25k médio) = R$ 75k/mês"** é justamente o que o Trívia OS produtiza e amplia. Com tickets de implementação OS de R$ 90–220k faseados, essa linha cresce de duas formas:
+No regime maduro modelado pela Atlas (R$ 200k/mês combinados), a linha **"Upsell Trívia (3 projetos/mês × R$ 25k médio) = R$ 75k/mês"** é justamente o que o Trívia OS produtiza e amplia. Com tickets de implementação OS a partir de R$ 119k faseados, essa linha cresce de duas formas:
 
 - **Implementações ativas** — 2–4 projetos OS em andamento, reconhecimento por marco de fase.
 - **Recorrência acumulada** — cada cliente que vai a go-live adiciona R$ 4–25k/mês recorrente. É a linha que, somada, transforma o negócio em anuidade previsível.
@@ -487,7 +473,7 @@ flowchart LR
 
 1. **Nome comercial do produto** e definição final (Trívia OS é nome de trabalho).
 2. **Método-acrônimo** — aprovar MAPAS (Mapeamento · Arquitetura · Plataforma · Agentes · Sustentação) ou alternativa.
-3. **Preço dos 3 blocos** — diagnóstico (R$ 8–25k), implementação faseada, recorrência (R$ 4–25k/mês). Calibrar com custos reais das provas.
+3. **Preço dos 3 blocos** — diagnóstico R$ 30k (definido), implementação a partir de R$ 119k (definido), recorrência R$ 4–25k/mês (calibrar com custos reais das provas).
 4. **Schema padrão v1** da camada de dados.
 5. **Biblioteca inicial de conectores** prioritários.
 6. **Lista nominal** dos candidatos a implementação fundadora (3–5).
