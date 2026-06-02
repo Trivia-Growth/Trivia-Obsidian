@@ -8,7 +8,7 @@ diferencial: IA (agentes especialistas por área) sobre dado unificado
 inimigo: fragmentação
 complementa: "[[Produto OS Empresarial]]"
 molde: "[[Atlas - Plano de Negocio]] + [[Atlas - Plano de Negocio MVP]]"
-decisoes-pendentes: [nome/método-acrônimo, preço da recorrência, schema padrão, biblioteca de conectores, caso inicial]
+decisoes-pendentes: [nome/método-acrônimo, formato do suporte pós-entrega, schema padrão, biblioteca de conectores, caso inicial]
 ---
 
 # TRÍVIA OS — PLANO DE NEGÓCIO E GTM (v1)
@@ -40,7 +40,7 @@ O ponto-cego de mercado é o mesmo vazio que a Atlas explora, vista de outro ân
 
 > *"A IA só funciona de verdade porque está tudo unificado. Qualquer um pluga um chatbot. Ninguém pluga agentes que operam a empresa inteira sem ter feito a unificação antes."*
 
-O modelo comercial tem três blocos: **Diagnóstico** (escopo fechado, pago, abatível), **Implementação** (projeto por fases) e **Recorrência** (retainer de runtime e evolução dos agentes — onde o negócio vira anuidade). O backbone técnico reaplicável (schema da camada de dados, biblioteca de conectores, framework de agentes) é o que torna um produto sob medida ao mesmo tempo **repetível e escalável**.
+O modelo comercial é centrado num **projeto único de alto valor**, em dois blocos principais — **Diagnóstico** (escopo fechado, pago, abatível) e **Implementação** (projeto por fases) — mais um **Suporte pós-entrega** leve e opcional, dimensionado de propósito para não virar custo fixo na cabeça do cliente. O backbone técnico reaplicável (schema da camada de dados, biblioteca de conectores, framework de agentes) é o que torna um produto sob medida ao mesmo tempo **repetível e escalável**.
 
 A próxima ação concreta não é escala de mídia: é **provar o produto com 3 a 5 implementações** que viram cases auditáveis e padronizam o backbone. O diagnóstico pago é o wedge que qualifica o cliente, se paga e abre a implementação — exatamente o equivalente, para o OS, do que os cases pseudo-gratuitos são para a Atlas.
 
@@ -197,7 +197,7 @@ A Atlas provou o valor de **marca = método** num acrônimo. Proposta análoga p
 | **A** | Arquitetura | Decisões de substituir/integrar/matar travadas. Schema da camada de dados definido. Escopo por fases. |
 | **P** | Plataforma | Construção: fundação de dados, módulos próprios, conectores dos imprescindíveis. |
 | **A** | Agentes | Instalação dos agentes especialistas por área sobre o dado unificado + gestão à vista. |
-| **S** | Sustentação | Time do cliente operando, capacitação, governança, métricas em produção → ponte para o retainer. |
+| **S** | Sustentação | Time do cliente operando, capacitação, governança, métricas em produção → ponte para o suporte opcional. |
 
 > Acrônimo de trabalho: **MAPAS** (Mapeamento · Arquitetura · Plataforma · Agentes · Sustentação). Coerente com o produto ("a gente entrega o mapa e o território da sua operação"). **Decidir com Lucas** — alternativas e o nome comercial do produto ficam na seção de decisões.
 
@@ -212,7 +212,7 @@ O Trívia OS é **o produto mais high-ticket do portfólio**. A precificação t
 - **Não cobramos por hora.** Comoditiza e transforma o sócio em freelancer caro. Vendemos resultado.
 - **Não cobramos por resultado (revenue share)** neste momento — exige baseline confiável que o cliente médio não tem.
 - **Diagnóstico de valor fixo (R$ 30k), abatível.** Se o cliente fecha a implementação, os R$ 30k são integralmente abatidos do valor total do projeto.
-- **Implementação a partir de R$ 119k**, escopo travado por fases, e **operação como recorrência mensal** com fidelidade mínima.
+- **Implementação a partir de R$ 119k**, escopo travado por fases. **Sem mensalidade obrigatória** — o suporte pós-entrega é leve, opcional e cancelável (Bloco 3).
 
 ### Os três blocos comerciais
 
@@ -236,17 +236,19 @@ Projeto sob medida, **piso de R$ 119k**, escopo travado **por fase**. A postura 
 
 > **O projeto começa em R$ 119k** (fundação + módulos + conectores + agentes + gestão à vista, conforme a planta). Já abatido o diagnóstico, o saldo da implementação é de R$ 89k em diante. Isso ocupa exatamente o território que a Atlas classifica como "plataforma multi-módulo — proposta separada (R$ 60k–120k+)". **O Trívia OS é esse upsell premium, produtizado — o teto do portfólio.**
 
-#### Bloco 3 · Recorrência (onde vira anuidade)
+#### Bloco 3 · Suporte pós-entrega (opcional e leve)
 
-Retainer mensal de operação: runtime dos agentes (APIs, infra), monitoramento, fixes, evolução contínua e horas de roadmap. **O backbone na camada de dados cria o custo de troca que sustenta a recorrência — é o que separa agência de plataforma.**
+**Não é mensalidade obrigatória nem retainer de longo prazo — e isso é decisão de posicionamento, não esquecimento.** O OS é entregue para o cliente operar sozinho. Cobrar um custo fixo gordo todo mês daria exatamente a impressão que não queremos: a de que ele continua refém, ou de que comprou mais um SaaS caro. Por isso o suporte existe, mas é enxuto e por escolha do cliente.
 
-| Tier de recorrência | Inclui | Preço-alvo |
-|--------------------|--------|-----------|
-| Operação Base | Runtime + monitoramento + fixes + 4h evolução/mês | R$ 4.000–7.000/mês |
-| Operação Plus | Base + 8–12h evolução/mês + novos agentes priorizados | R$ 8.000–15.000/mês |
-| Board OS (fracional) | Plus + acompanhamento estratégico mensal (ponte com Atlas Board) | R$ 15.000–25.000/mês |
+O modelo:
 
-Fidelidade mínima 12 meses, multa de 30% das parcelas restantes em rescisão antecipada (mesma cláusula do Atlas Board).
+- **Estabilização inclusa no projeto.** Os primeiros 30–60 dias pós go-live entram no preço da implementação — ajustes finos, correções e acompanhamento da virada de chave, sem custo extra.
+- **Depois, suporte leve e opcional**, em dois formatos à escolha do cliente, ambos **sem fidelidade e canceláveis a qualquer momento**:
+  - **Banco de horas avulso** — compra quando precisa, usa quando quiser. Zero compromisso recorrente.
+  - **Plano leve de manutenção** — monitoramento básico + fixes prioritários + pequenas evoluções, **a partir de ~R$ 990/mês**. Valor deliberadamente baixo, para soar como "seguro", não como "custo fixo".
+- **Evoluções maiores** (novo módulo, novo agente, nova integração) são sempre **proposta própria** — projeto pontual, não mensalidade.
+
+> *Por que de propósito barato e opcional:* o produto se vende como "a sua empresa fica dona da própria operação". Um retainer pesado contradiz isso na cara. O suporte existe para segurança e continuidade, não para criar dependência financeira — e a defensabilidade do negócio vem do backbone unificado e do custo de troca da camada de dados, não de aprisionar o cliente numa fatura mensal.
 
 ### Benchmarks de mercado (âncora de preço)
 
@@ -257,7 +259,7 @@ Fidelidade mínima 12 meses, multa de 30% das parcelas restantes em rescisão an
 | Agência de automação / integrador | Automações isoladas | R$ 15k–80k por projeto |
 | **Trívia OS · Diagnóstico** | Diagnóstico + plano de implementação | **R$ 30k (abatível no projeto)** |
 | **Trívia OS · Implementação** | OS sob medida + agentes, faseado | **a partir de R$ 119k** |
-| **Trívia OS · Recorrência** | Runtime + evolução dos agentes | **R$ 4k–25k/mês** |
+| **Trívia OS · Suporte (opcional)** | Estabilização + suporte enxuto, sem fidelidade | **banco de horas ou a partir de ~R$ 990/mês** |
 
 -----
 
@@ -267,7 +269,7 @@ Fidelidade mínima 12 meses, multa de 30% das parcelas restantes em rescisão an
 
 Mesmo perfil de cliente da Atlas — dono de PME que **não compra de página fria** e compra de quem acompanha por 30–90 dias como autoridade real. Mas o motion do OS é diferente do low ticket da Atlas: ticket alto, ciclo longo, venda consultiva. O funil converge para o **diagnóstico pago** como conversão intermediária — é ele que destrava a venda grande.
 
-> *"Marca pessoal e cases geram confiança. O diagnóstico converte. O backbone retém."*
+> *"Marca pessoal e cases geram confiança. O diagnóstico converte. A implementação entrega — e o cliente fica dono da própria operação."*
 
 ### As quatro portas de entrada (land) para o OS (expand)
 
@@ -285,7 +287,7 @@ flowchart LR
     INBOUND["Inbound + Outbound"] --> DIAG
     CASES["Cases / indicação"] --> DIAG
     DIAG["Diagnóstico pago<br/>(wedge / qualificação)"] --> IMPL["Implementação faseada"]
-    IMPL --> REC["Recorrência<br/>(anuidade)"]
+    IMPL --> SUP["Suporte opcional<br/>(leve, pós-entrega)"]
 ```
 
 ### Canais de topo de funil
@@ -330,7 +332,7 @@ Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra → quali
 | Leads qualificados/mês | 8–15 | 30–50 |
 | Diagnósticos vendidos/mês | 1–2 | 4–6 |
 | Diagnóstico → implementação | ≥ 50% | ≥ 60% |
-| Implementação → recorrência | ≥ 70% | ≥ 85% |
+| Adesão a suporte pós-entrega (opcional) | — | ≥ 40% |
 | Ticket de implementação inicial | a partir de R$ 119k | a partir de R$ 119k |
 
 -----
@@ -345,28 +347,28 @@ Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra → quali
 |------|----------------|
 | Diagnóstico | R$ 30k (abate no projeto se fechar) |
 | Implementação inicial faseada | a partir de R$ 119k (já inclui o diagnóstico) |
-| Recorrência ano 1 (R$ 6k/mês × 12) | R$ 72k |
-| **Receita ano 1 por cliente OS** | **a partir de ~R$ 190k** |
+| Suporte pós-entrega (opcional, incidental) | leve — não é a base da receita |
+| **Receita por cliente OS** | **concentrada no projeto: a partir de R$ 119k** |
 | Custo de entrega (dev + APIs + infra, est.) | 35–45% da implementação |
-| **Margem de contribuição por cliente** | **alta; recorrência é quase toda margem após go-live** |
+| **Margem de contribuição por cliente** | **alta no projeto; suporte enxuto agrega margem sem virar dependência** |
 
 ### Receita combinada (OS como linha do P&L Trívia)
 
-No regime maduro modelado pela Atlas (R$ 200k/mês combinados), a linha **"Upsell Trívia (3 projetos/mês × R$ 25k médio) = R$ 75k/mês"** é justamente o que o Trívia OS produtiza e amplia. Com tickets de implementação OS a partir de R$ 119k faseados, essa linha cresce de duas formas:
+No regime maduro modelado pela Atlas (R$ 200k/mês combinados), a linha **"Upsell Trívia (3 projetos/mês × R$ 25k médio) = R$ 75k/mês"** é justamente o que o Trívia OS produtiza e amplia. Com tickets de implementação OS a partir de R$ 119k faseados, a receita vem principalmente do **volume de projetos**:
 
-- **Implementações ativas** — 2–4 projetos OS em andamento, reconhecimento por marco de fase.
-- **Recorrência acumulada** — cada cliente que vai a go-live adiciona R$ 4–25k/mês recorrente. É a linha que, somada, transforma o negócio em anuidade previsível.
+- **Implementações ativas** — 2–4 projetos OS em andamento, reconhecimento por marco de fase. É o motor da receita.
+- **Suporte pós-entrega** — upside opcional e leve, que agrega margem sem ser a base do modelo. O negócio fecha a conta pelos projetos, **não depende de uma carteira de mensalidades** para se sustentar.
 
 ### Projeção de 6–12 meses (OS)
 
 | Marco | Receita OS/mês | Composição |
 |-------|----------------|------------|
 | Mês 3 | R$ 15–40k | 1–2 diagnósticos + 1ª implementação iniciada (provas) |
-| Mês 6 | R$ 40–90k | 2–3 implementações ativas + primeiras recorrências |
-| Mês 9 | R$ 80–140k | Backbone padronizado, ciclo mais curto, recorrência somando |
-| Mês 12 | R$ 120–200k | 3–4 implementações + base de recorrência madura |
+| Mês 6 | R$ 40–90k | 2–3 implementações ativas + primeiros suportes pós-entrega |
+| Mês 9 | R$ 80–140k | Backbone padronizado, ciclo mais curto, mais projetos em paralelo |
+| Mês 12 | R$ 120–200k | 3–4 implementações simultâneas + suporte incidental |
 
-> A receita do OS **não compete** com a da Atlas — somam no mesmo caixa. A Atlas traz volume de relacionamento e ticket de entrada; o OS traz ticket alto e recorrência. Juntas, sustentam o regime de R$ 200k/mês do plano oficial mais rápido.
+> A receita do OS **não compete** com a da Atlas — somam no mesmo caixa. A Atlas traz volume de relacionamento e ticket de entrada; o OS traz o ticket mais alto do portfólio. Juntas, sustentam o regime de R$ 200k/mês do plano oficial mais rápido.
 
 -----
 
@@ -382,7 +384,9 @@ No regime maduro modelado pela Atlas (R$ 200k/mês combinados), a linha **"Upsel
 
 **04 · Cliente compra esperando que a IA "faça tudo sozinha".** *Mitigação:* expectativa explícita em contrato; agentes posicionados como apoio que opera *com* o time, não substituto; engajamento mínimo do dono e do patrocinador interno.
 
-**05 · Comoditização do discurso de "agente de IA" (12–18 meses).** *Mitigação:* o fosso não é a IA — é a **unificação + backbone proprietário**. Trancar autoridade e cases auditáveis nos primeiros 6 meses; mover rápido para recorrência, que é difícil de copiar.
+**05 · Comoditização do discurso de "agente de IA" (12–18 meses).** *Mitigação:* o fosso não é a IA — é a **unificação + backbone proprietário + custo de troca da camada de dados**. Trancar autoridade e cases auditáveis nos primeiros 6 meses; acumular biblioteca de backbone que encurta cada novo projeto e que o concorrente não tem.
+
+> *Nota sobre recorrência:* sem uma carteira de mensalidades, a receita do OS é menos previsível mês a mês do que um modelo de retainer — depende do fluxo de novos projetos. É um trade-off consciente: priorizamos o posicionamento de "cliente dono da própria operação" sobre a previsibilidade de uma assinatura. Mitiga-se mantendo pipeline de diagnósticos sempre cheio.
 
 ### Diferenciais defensáveis
 
@@ -447,8 +451,8 @@ As primeiras 3–5 implementações recebem condição especial (desconto e/ou d
 
 | Cenário | Critério | Ação |
 |---------|----------|------|
-| Confirma | 3+ implementações concluídas + backbone padronizado + 2+ recorrências ativas + diagnóstico convertendo ≥ 50% | Escala: liga mídia, contrata 2º dev, abre comercial |
-| Confirma parcial | 1–2 implementações + recorrência incipiente | Mantém estrutura, ajusta playbook de diagnóstico e precificação |
+| Confirma | 3+ implementações concluídas + backbone padronizado + pipeline de diagnósticos cheio + diagnóstico convertendo ≥ 50% | Escala: liga mídia, contrata 2º dev, abre comercial |
+| Confirma parcial | 1–2 implementações + pipeline incipiente | Mantém estrutura, ajusta playbook de diagnóstico e precificação |
 | Não confirma | 0–1 implementação + backbone não padronizou + diagnóstico não converte | Revisa ICP (fragmentação madura?), oferta e wedge |
 
 -----
@@ -460,7 +464,7 @@ flowchart LR
     LOW["Atlas low ticket<br/>SKU 01/02"] --> MENT["Atlas mentoria<br/>Ignição/Operação/Board"]
     JIMMY["Jimmy Studio<br/>marketing self-serve"] --> OS
     MENT -->|decide e prioriza| OS["Trívia OS<br/>implementação completa"]
-    OS --> REC["Recorrência<br/>runtime + evolução"]
+    OS --> SUP["Suporte opcional<br/>(leve, pós-entrega)"]
 ```
 
 - **Atlas** decide e abre o relacionamento (mentoria). **Trívia OS** implementa o sistema inteiro. A "implementação inclusa" da Atlas é a ponta do iceberg; o OS é a obra completa.
@@ -473,12 +477,12 @@ flowchart LR
 
 1. **Nome comercial do produto** e definição final (Trívia OS é nome de trabalho).
 2. **Método-acrônimo** — aprovar MAPAS (Mapeamento · Arquitetura · Plataforma · Agentes · Sustentação) ou alternativa.
-3. **Preço dos 3 blocos** — diagnóstico R$ 30k (definido), implementação a partir de R$ 119k (definido), recorrência R$ 4–25k/mês (calibrar com custos reais das provas).
+3. **Preço dos blocos** — diagnóstico R$ 30k (definido), implementação a partir de R$ 119k (definido). **Suporte pós-entrega:** validar o formato (banco de horas vs. plano leve ~R$ 990/mês) e o período de estabilização incluído (30–60 dias).
 4. **Schema padrão v1** da camada de dados.
 5. **Biblioteca inicial de conectores** prioritários.
 6. **Lista nominal** dos candidatos a implementação fundadora (3–5).
 7. **Regra de escopo** — cláusula contratual que mantém o que extrapola o backbone como proposta separada.
-8. **Contratos** — diagnóstico, implementação faseada e recorrência ao advogado.
+8. **Contratos** — diagnóstico, implementação faseada e termo de suporte pós-entrega ao advogado.
 9. **Fronteira Atlas × OS** — quando um lead é Atlas (decidir) e quando é OS direto (implementar).
 
 -----

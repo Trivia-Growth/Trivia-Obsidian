@@ -1,7 +1,7 @@
 # Execução CDQ — Bulk Upload Vendor Central
 **Data:** 2026-06-02  
 **Executado por:** JG + IA (G4 OS)  
-**Status:** ✅ Enviado — Lote ID `50040020606` em processamento
+**Status:** ✅ Concluído — Lote ID `50040020606` — **24/24 produtos atualizados com sucesso**
 
 ---
 
@@ -33,6 +33,7 @@ A partir da auditoria CDQ de 2026-06-02 (`Auditoria-CDQ-Heziom-2026-06-02.md`), 
 | Enviado em | 2026-06-02 às 18:28 |
 | Total SKUs | 24 |
 | Status inicial | Em andamento |
+| Status final | ✅ 24/24 processados — confirmado via catálogo em 2026-06-02 |
 | Vendor codes | HL8NJ (principal) |
 
 **Verificar resultado:** Vendor Central → Itens → Envios de produtos em massa → "Verificar status do upload"
@@ -85,9 +86,11 @@ A partir da auditoria CDQ de 2026-06-02 (`Auditoria-CDQ-Heziom-2026-06-02.md`), 
 
 ---
 
-## Erros no upload (não críticos)
+## Erros no upload (não críticos — resolvidos)
 
-Os 24 produtos tinham "4 atributos" marcados como "Ação necessária" — eram os campos **DM, DO, DQ, DS** (`subject#2.type` a `subject#5.type`) com valor `unknown` (herdado do template original). São campos **opcionais** e não afetam título, descrição ou CDQ. O sistema permite enviar mesmo assim.
+Os 24 produtos tinham "4 atributos" marcados como "Ação necessária" — eram os campos **DM, DO, DQ, DS** (`subject#2.type` a `subject#5.type`) com valor `unknown` (herdado do template original). São campos **opcionais** e não afetam título, descrição ou CDQ.
+
+O relatório de processamento apontou 3 produtos (Família, Discipulado Teleios, Avodah) com erro de "SKU mismatch" — mas a verificação no catálogo confirmou que **todos os 3 foram atualizados** com timestamp 2026-06-02 18:29. Os erros no relatório eram falsos positivos. Os SKUs reais desses produtos são iguais aos EANs calculados (9786552651242, 9786552651068, 9786552650795).
 
 ---
 
@@ -102,8 +105,8 @@ Os 24 produtos tinham "4 atributos" marcados como "Ação necessária" — eram 
 
 ## Próximos passos
 
-- [ ] Verificar resultado do lote `50040020606` em ~30 min
-- [ ] Se houver rejeições, identificar quais ASINs e corrigir EAN ou campos obrigatórios
+- [x] Verificar resultado do lote `50040020606` — ✅ 24/24 confirmados no catálogo
+- [x] 3 falsos positivos de SKU mismatch investigados — todos atualizados com sucesso
 - [ ] Monitorar CDQ score nos próximos dias (pode levar 24–48h para refletir)
 - [ ] Revisar imagens — 11/33 produtos têm menos de 4 imagens (próxima rodada de CDQ)
 - [ ] Considerar A+ Content upgrade para produtos sem (todos têm A+ atualmente ✅)

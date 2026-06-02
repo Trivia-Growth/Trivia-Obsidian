@@ -24,6 +24,14 @@ inicio: 2026-04-29
 
 ---
 
+## Pesquisa & Referências
+
+| Documento | Tema |
+|-----------|------|
+| [[Clientes/Trivia/JimmyStudio/Pesquisa/TRIBE v2 — AI Model of the Human Brain]] | Modelo de fundação multimodal da Meta — referência arquitetural para IA |
+
+---
+
 ## Repositório de Código
 
 ```
