@@ -17,7 +17,7 @@ A spec atual está rica, mas posiciona o Contabilia como **"sistema operacional 
 | Posicionamento | "Sistema operacional do escritório" (substitui) | **Camada por cima** do sistema contábil (não substitui) |
 | Estrutura | 10-11 módulos paralelos | **1 espinha** (financeiro do cliente) + camadas penduradas nela |
 | Distribuição | SaaS / implementação genérica | **Office-led / white-label**: vende pro escritório, que entrega aos clientes dele |
-| Integrações | Nuvem Fiscal, BrasilAPI, Asaas | **+ Integra Contador (Serpro)** como aposta central (a spec ignora) |
+| Integrações | Providers fiscais variados, BrasilAPI, Asaas | **Focus NFe** + **Integra Contador (Serpro)** como aposta central |
 | Tributos | Motor próprio de IBS/CBS | Emissão via provider; **sem motor próprio** (risco jurídico) |
 | Norte | Operacional / automação | **Inteligência**: contador vira parceiro estratégico |
 | Base de código | Implícito do zero | **Do zero**, mas com o `cbrasil-financeiro-app` como prova do loop |
@@ -86,14 +86,36 @@ Com o dado financeiro fluindo, o escritório passa a vender consultoria/advisory
 
 **Fora do MVP (roadmap):** Open Finance, DRE gerencial/centro de custo, apuração dual/SPED (fica no Contmatic), camada de inteligência.
 
+**Detalhamento completo** (fases, schema, riscos, dependências, critérios de sucesso): [[MVP-Especificacao]].
+**Apresentação comercial pro primeiro prospect (T Lima Contabilidade):** [[Proposta-TLima]].
+
 > **Sequência sugerida:** validar primeiro o **loop central** (`cliente lança → IA classifica → exporta Contmatic + emite nota`) com a C Brasil como piloto. Só depois expandir CRM, atendimento e Integra Contador. Construir o MVP inteiro antes de um cliente real tocar o loop é o erro clássico que mata projeto de studio.
+
+---
+
+## Central do Cliente (inspirada no Onvio)
+
+A espinha resolve o fluxo **cliente → escritório** (cliente lança, dado contábil sai). Mas falta o lado **escritório → cliente** — hoje guias DAS, CND, relatórios chegam por e-mail/WhatsApp e se perdem. O Onvio (Thomson Reuters/Domínio) define o padrão a seguir.
+
+**O escritório publica pro cliente, com confirmação de leitura:**
+- Guias de pagamento (DAS, DARF, DAM) com QR Pix
+- Certidões negativas (CND) e documentos contábeis
+- Relatórios fiscais mensais
+- Agenda de obrigações (o que vence quando, status)
+
+**O cliente abastece o escritório (lado já coberto pela espinha):**
+- Movimentações financeiras (fluxo de caixa, contas a pagar/receber)
+- Documentos (upload via app/web; scanner com câmera quando o app mobile vier)
+- Demandas e dúvidas
+
+Portal único, bidirecional, com histórico unificado e rastreabilidade de leitura. **Diferencial vs Onvio:** o nosso é *system-agnostic* (não exige Domínio Contábil) e o lado cliente é mais rico (gestão financeira de verdade, não só lançamento de rubricas).
 
 ---
 
 ## Decisões já tomadas
 
 - **Começar do zero** (não evoluir o cbrasil-financeiro-app).
-- **Emissão de NFS-e entra no MVP**, via provider (Nuvem Fiscal/Focus). **Sem motor próprio de IBS/CBS.**
+- **Emissão de NFS-e entra no MVP**, via **Focus NFe** (Plano B: nfe.io). **Sem motor próprio de IBS/CBS.** Critério eliminatório: provider precisa ter campos IBS/CBS implementados antes de 01/04/2026 (marco da validação ativa pela Receita). Detalhes e perguntas pra call em [[Comparativo-Provedores-Fiscais]].
 - **Integra Contador (Serpro)** como aposta de integração — funciona igual em qualquer escritório, independe do software dele.
 - **Open Finance adiado**, mas tratado como unlock da fase de inteligência.
 - **C Brasil = primeiro piloto**, mas produto **genérico** (terceiro setor = vertical futuro, não núcleo).
@@ -107,6 +129,7 @@ Com o dado financeiro fluindo, o escritório passa a vender consultoria/advisory
 3. **Modelo comercial** — manter o Modelo A (implementação R$15-35K + recorrência) como principal?
 4. **Quem é o escritório-alvo nº 2** (além da C Brasil) pra validar que o produto não ficou amarrado a um cliente só.
 5. **Acesso ao Integra Contador** — depende de certificado/credenciais Serpro; vale confirmar custo e elegibilidade cedo.
+6. **Provider fiscal** — confirmar **Focus NFe** como principal (recomendação da pesquisa comparativa) ou priorizar 2ª rodada com **Tecnospeed** antes (historicamente *o* provedor de software houses contábeis no BR; sem evidência pública robusta na 1ª rodada). Detalhes em [[Comparativo-Provedores-Fiscais]].
 
 ---
 

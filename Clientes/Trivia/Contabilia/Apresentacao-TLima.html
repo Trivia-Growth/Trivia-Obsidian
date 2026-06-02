@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contabilia · Proposta para T Lima Contabilidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol:#071925; --petrol-2:#0f2838; --petrol-3:#163647;
+    --coral:#fc544c; --coral-2:#e63f37;
+    --paper:#fafaf7; --bone:#eeeae1; --bone-2:#e4dfd2; --green:#1f9d57;
+    --ink-70:rgba(7,25,37,.7); --ink-60:rgba(7,25,37,.6); --ink-50:rgba(7,25,37,.5);
+    --ink-30:rgba(7,25,37,.3); --ink-15:rgba(7,25,37,.15); --ink-10:rgba(7,25,37,.1); --ink-06:rgba(7,25,37,.06);
+    --pap-70:rgba(250,250,247,.7); --pap-50:rgba(250,250,247,.5); --pap-15:rgba(250,250,247,.15);
+    --ff-display:"Instrument Serif","DM Serif Display",Georgia,serif;
+    --ff-body:"Inter Tight","Inter",-apple-system,sans-serif;
+    --ff-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--ff-body);color:var(--petrol);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+  .ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--coral);width:0;z-index:60;transition:width .5s ease}
+  .deck{position:relative;height:100vh;width:100vw;overflow:hidden}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6.5vh 7vw;opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease,visibility .55s;overflow-y:auto}
+  .slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+  .slide.petrol{background:var(--petrol);color:var(--paper)}
+  .slide.bone{background:var(--bone)}
+  .wrap{width:100%;max-width:1120px;margin:auto}
+
+  .eyebrow{display:inline-flex;gap:12px;align-items:baseline;font-family:var(--ff-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50);margin-bottom:22px}
+  .eyebrow .accent{color:var(--coral);font-weight:700}
+  .petrol .eyebrow{color:var(--pap-50)}
+
+  h1{font-family:var(--ff-display);font-weight:400;font-size:clamp(2.7rem,6.4vw,5.2rem);line-height:1.0;letter-spacing:-.02em}
+  h2{font-family:var(--ff-display);font-weight:400;font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.07;letter-spacing:-.02em;margin-bottom:12px}
+  h3{font-size:1.04rem;font-weight:600;letter-spacing:-.01em}
+  em{font-style:italic;color:var(--coral)}
+  p{color:var(--ink-70);font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.6}
+  .petrol p{color:var(--pap-70)}
+  .lead{font-size:clamp(1.1rem,1.6vw,1.36rem);color:var(--ink-70);max-width:760px}
+  .sub{color:var(--ink-60);margin-bottom:30px;font-size:clamp(1rem,1.45vw,1.2rem)}
+  .petrol .sub{color:var(--pap-70)}
+  .hl{color:var(--petrol);font-weight:600}.petrol .hl{color:var(--paper)}
+
+  /* cover */
+  .grain::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.04;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  .logo{display:flex;align-items:center;gap:11px;margin-bottom:34px}
+  .logo .mark{width:34px;height:34px;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ff-display);font-size:1.3rem}
+  .logo .name{font-weight:600;font-size:1.05rem;letter-spacing:-.01em}
+  .cover-for{margin-bottom:26px;padding-left:16px;border-left:3px solid var(--coral)}
+  .cover-for .cf-label{display:block;font-family:var(--ff-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50);margin-bottom:4px}
+  .cover-for .cf-name{display:block;font-family:var(--ff-display);font-size:clamp(2rem,4vw,3rem);line-height:1;letter-spacing:-.01em;color:var(--petrol)}
+  .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--ink-15);padding:9px 15px;font-size:.9rem;font-weight:500}
+  .pill .ic{width:16px;height:16px;color:var(--coral)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-15);border:1px solid var(--ink-15)}
+  .stat{background:var(--paper);padding:28px 22px}
+  .stat .num{font-family:var(--ff-display);font-size:clamp(2.4rem,4.4vw,3.6rem);line-height:.92;letter-spacing:-.02em}
+  .stat .num.c{color:var(--coral)}
+  .stat .lab{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-50);margin-top:13px}
+
+  .grid{display:grid;gap:1px;background:var(--ink-15);border:1px solid var(--ink-15)}
+  .g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+  .cell{background:var(--paper);padding:24px}
+  .cell .ico{width:42px;height:42px;border:1px solid var(--ink-15);display:flex;align-items:center;justify-content:center;color:var(--coral);margin-bottom:16px}
+  .cell h3{margin-bottom:6px}.cell p{font-size:.93rem;line-height:1.5;color:var(--ink-60)}
+  .cell.fill{background:var(--petrol)}.cell.fill h3{color:var(--paper)}.cell.fill p{color:var(--pap-70)}.cell.fill .ico{border-color:var(--pap-15);color:var(--coral)}
+
+  /* pain paths */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0 22px}
+  .path{border:1px solid var(--ink-15);padding:24px;background:var(--paper)}
+  .path.good{border-color:var(--coral);box-shadow:inset 0 0 0 1px var(--coral)}
+  .path .ph{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--ink-50)}
+  .path.good .ph{color:var(--coral)}
+  .path .seq{font-size:1rem;line-height:1.65;color:var(--ink-70)}
+  .path.good .seq{color:var(--petrol);font-weight:500}
+  .path .seq b{color:var(--coral)}
+  .punch{background:var(--petrol);color:var(--paper);padding:24px 30px;font-family:var(--ff-display);font-size:clamp(1.25rem,2.2vw,1.8rem);line-height:1.3;letter-spacing:-.01em}
+  .punch em{color:var(--coral)}
+
+  .bigquote{font-family:var(--ff-display);font-size:clamp(1.8rem,3.4vw,2.9rem);line-height:1.26;letter-spacing:-.01em;max-width:920px}
+  .bigquote .mk{color:var(--coral)}
+
+  /* comparison */
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .cmp .col{border:1px solid var(--ink-15);padding:26px;background:var(--paper)}
+  .cmp .col.have{background:var(--bone)}
+  .cmp .col h3{font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-50);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .cmp .col.bring h3{color:var(--coral)}
+  .row{display:flex;gap:12px;padding:10px 0;align-items:flex-start;border-top:1px solid var(--ink-10);font-size:.99rem}
+  .row:first-of-type{border-top:none}
+  .row .ic{width:18px;height:18px;color:var(--ink-30);margin-top:2px}.row.on .ic{color:var(--coral)}
+  .row small{display:block;color:var(--ink-50);font-size:.83rem;margin-top:2px}
+
+  /* spotlight (text + mockup) */
+  .spot{display:grid;grid-template-columns:1fr 1.05fr;gap:42px;align-items:center}
+  .spot .pt{display:flex;gap:12px;padding:9px 0;font-size:1rem;align-items:flex-start;border-top:1px solid var(--ink-10)}
+  .spot .pt:first-of-type{border-top:none}
+  .spot .pt .ic{width:18px;height:18px;color:var(--coral);margin-top:2px}
+  .callout{margin-top:18px;border-left:3px solid var(--coral);background:var(--bone);padding:14px 18px;font-size:.97rem;color:var(--petrol);line-height:1.5}
+  .callout b{color:var(--coral)}
+
+  .mock{border:1px solid var(--ink-15);background:#fff;box-shadow:0 26px 70px rgba(7,25,37,.18)}
+  .mock-bar{display:flex;align-items:center;gap:7px;padding:10px 13px;background:var(--bone);border-bottom:1px solid var(--ink-10)}
+  .mock-bar i{width:10px;height:10px;border-radius:50%}
+  .mock-bar .t{margin-left:8px;font-family:var(--ff-mono);font-size:10px;color:var(--ink-50);letter-spacing:.05em}
+  .mock-body{padding:18px}
+  .mk-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .mk-head .h{font-weight:600;font-size:.95rem}
+  .mk-head .tab{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);border:1px solid var(--ink-15);padding:4px 8px}
+  /* financeiro */
+  .kpis{display:flex;gap:12px;margin-bottom:14px}
+  .kpi{flex:1;border:1px solid var(--ink-10);padding:12px}
+  .kpi .l{font-family:var(--ff-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-50)}
+  .kpi .v{font-family:var(--ff-display);font-size:1.5rem;line-height:1;margin-top:6px}
+  .kpi .v.pos{color:var(--green)}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:50px;margin:4px 0 12px}
+  .bars span{flex:1;background:var(--bone-2);border-radius:1px}.bars span.c{background:var(--coral)}
+  .tx{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-top:1px solid var(--ink-06);font-size:.85rem}
+  .tx .lft{display:flex;align-items:center;gap:8px}.tx .d{width:7px;height:7px;border-radius:50%}
+  .tx b.pos{color:var(--green)}.tx b.neg{color:var(--coral)}
+  .mk-foot{margin-top:12px;background:var(--petrol);color:var(--paper);padding:10px 14px;font-size:.84rem;display:flex;justify-content:space-between;align-items:center}
+  .mk-foot b{color:var(--coral)}
+  /* simulador */
+  .sim{display:flex;gap:10px}
+  .sim .col{flex:1;border:1px solid var(--ink-10);padding:14px 8px;text-align:center}
+  .sim .col.best{border-color:var(--coral);box-shadow:inset 0 0 0 1px var(--coral)}
+  .sim .col .h{font-family:var(--ff-mono);font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-50)}
+  .sim .col .v{font-family:var(--ff-display);font-size:1.45rem;margin:8px 0 6px}
+  .sim .col.best .v{color:var(--coral)}
+  .sim .col .tag{font-family:var(--ff-mono);font-size:8px;letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;display:inline-block}
+  .sim .col .tag.rec{background:var(--coral);color:#fff}.sim .col .tag.cur{background:var(--bone);color:var(--ink-60)}
+  /* crm */
+  .crm{display:grid;grid-template-columns:1.45fr 1fr;gap:12px}
+  .crm .it{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:8px 0;border-top:1px solid var(--ink-06);font-size:.82rem}
+  .crm .it:first-child{border-top:none}
+  .crm .it .nm{flex:1;font-weight:500}
+  .chip-ok{font-family:var(--ff-mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;background:rgba(31,157,87,.13);color:var(--green);padding:2px 5px}
+  .chip-warn{font-family:var(--ff-mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;background:rgba(252,84,76,.13);color:var(--coral);padding:2px 5px}
+  .crm b.pos{color:var(--green);font-size:.8rem}.crm b.neg{color:var(--coral);font-size:.8rem}
+  .crm .side{background:var(--bone);padding:12px}
+  .crm .side .sh{font-family:var(--ff-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-50);margin-bottom:8px}
+  .crm .side .sl{font-size:.78rem;padding:5px 0;display:flex;justify-content:space-between;border-top:1px solid var(--ink-06)}
+  .crm .side .sl:first-of-type{border-top:none}
+  .crm .side .sl b{color:var(--coral);font-family:var(--ff-mono);font-size:.72rem}
+  .sdr{margin-top:10px;background:var(--petrol);color:var(--paper);padding:9px 11px;font-size:.76rem;display:flex;gap:8px;align-items:center;line-height:1.3}
+  .sdr .ic{width:16px;height:16px;color:var(--coral)}
+
+  /* panels */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .panel{border:1px solid var(--ink-15);padding:26px;background:var(--paper)}
+  .panel .ph{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .panel .ph .ico{width:40px;height:40px;background:var(--petrol);color:var(--paper);display:flex;align-items:center;justify-content:center}
+  .panel .ph h3{font-size:1.08rem}
+  .panel ul{list-style:none}
+  .panel li{padding:8px 0 8px 24px;position:relative;font-size:.97rem;line-height:1.5;border-top:1px solid var(--ink-06)}
+  .panel li:first-child{border-top:none}
+  .panel li::before{content:"";position:absolute;left:2px;top:15px;width:8px;height:1.5px;background:var(--coral)}
+
+  /* flow */
+  .flow{display:flex;align-items:stretch;gap:0;width:100%;margin-top:8px}
+  .stage{flex:1;border:1px solid var(--ink-15);background:var(--paper);padding:18px 14px;min-width:0}
+  .stage.k{border-color:var(--coral);box-shadow:inset 0 0 0 1px var(--coral)}
+  .stage .sh{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .stage .sh .ic{width:17px;height:17px;color:var(--coral)}
+  .stage .sh b{font-family:var(--ff-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-50)}
+  .stage .it2{font-size:.88rem;font-weight:500;padding:4px 0;line-height:1.3;color:var(--petrol)}
+  .arrow{flex:0 0 70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--coral)}
+  .arrow .ic{width:21px;height:21px}
+  .arrow span{font-family:var(--ff-mono);font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-50);text-align:center;line-height:1.2}
+  .feedrow{display:flex;gap:46px;justify-content:center;margin-top:14px}
+  .feednode{display:flex;flex-direction:column;align-items:center;gap:5px}
+  .feednode .up{color:var(--coral)}.feednode .up .ic{width:18px;height:18px;transform:rotate(-90deg)}
+  .fn{display:flex;align-items:center;gap:10px;background:var(--bone);border:1px solid var(--ink-10);padding:11px 16px}
+  .fn .ic{width:17px;height:17px;color:var(--coral)}
+  .fn b{font-weight:600;font-size:.88rem}
+  .fn small{display:block;font-weight:400;color:var(--ink-50);font-size:.76rem;margin-top:2px}
+
+  /* mermaid diagram */
+  .mmd-wrap{margin-top:14px;display:flex;justify-content:center}
+  .mmd-wrap .mermaid{width:100%;max-width:1000px;text-align:center}
+  .mmd-wrap svg{max-width:100%;height:auto}
+  .mmd-wrap .mermaid foreignObject{overflow:visible}
+  .mmd-wrap .mermaid .nodeLabel,.mmd-wrap .mermaid .edgeLabel{white-space:nowrap}
+  .legend{display:flex;gap:22px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-60)}
+  .legend .sw{width:15px;height:15px;border:1px solid;flex:0 0 auto}
+  .legend .sw.nova{background:#fff5f4;border-color:var(--coral)}
+  .legend .sw.ja{background:var(--bone);border-color:#163647}
+  .legend .sw.pess{background:var(--paper);border-color:var(--petrol);border-width:2px;border-radius:8px}
+
+  /* invest */
+  .invest{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;margin-top:12px}
+  .inv-price{text-align:left}
+  .inv-costs{border:1px solid var(--pap-15);padding:22px}
+  .ic-h{font-family:var(--ff-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pap-70);margin-bottom:14px}
+  .ic-h span{display:block;color:var(--pap-50);margin-top:3px;letter-spacing:.03em}
+  .ic-li{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid var(--pap-15);font-size:.93rem;color:var(--pap-70)}
+  .ic-li b{color:var(--paper);font-weight:600}
+  .ic-tot{display:flex;justify-content:space-between;align-items:center;padding:12px 0 2px;border-top:1px solid var(--pap-15);font-size:1rem;color:var(--paper);font-weight:600}
+  .ic-tot b{color:var(--coral);font-family:var(--ff-display);font-size:1.5rem;font-weight:400}
+  .ic-note{font-family:var(--ff-mono);font-size:.72rem;color:var(--pap-50);margin-top:12px;line-height:1.5}
+
+  /* trivia logo */
+  .tlogo{height:30px;width:auto;display:block}
+  .cover-by{display:flex;align-items:center;gap:12px;margin-top:30px}
+  .cover-by span{font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50)}
+  .cover-by .tlogo{height:26px}
+  .signoff{display:flex;align-items:center;gap:16px;margin-top:26px;flex-wrap:wrap}
+  .signoff .tlogo{height:38px}
+  .signoff .by{font-size:1rem;color:var(--ink-70)}
+
+  /* timeline */
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-15);border:1px solid var(--ink-15)}
+  .step{background:var(--paper);padding:22px 18px}
+  .step .n{font-family:var(--ff-display);font-size:2.1rem;line-height:1;color:var(--coral)}
+  .step .dur{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-50);margin:10px 0 7px}
+  .step h3{margin-bottom:5px}.step p{font-size:.87rem;color:var(--ink-60);line-height:1.45}
+
+  /* price */
+  .price-box{margin:14px 0 18px;display:inline-block;text-align:left}
+  .price-label{font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pap-50);margin-bottom:12px}
+  .price-from{font-size:1.5rem;color:var(--pap-50);text-decoration:line-through;margin-bottom:2px}
+  .price-num{font-family:var(--ff-display);font-size:clamp(3.6rem,10vw,7rem);line-height:.9;color:var(--coral);letter-spacing:-.02em}
+  .price-num span{font-size:.42em;vertical-align:super;color:var(--pap-70)}
+  .price-inst{font-size:1.15rem;color:var(--paper);margin-top:8px}.price-inst b{color:var(--coral)}
+  .price-cond{margin-top:18px;display:inline-block;background:var(--coral);color:#fff;font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:9px 15px;line-height:1.4}
+  .aster{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.02em;color:var(--pap-50);margin-top:24px;line-height:1.5}
+
+  /* nav */
+  .counter{position:fixed;bottom:24px;left:24px;font-family:var(--ff-mono);font-size:12px;letter-spacing:.1em;color:var(--ink-50);z-index:40}
+  .counter b{color:var(--petrol)}.petrol-ctx .counter b{color:var(--petrol)}
+  .dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:40}
+  .dot-n{width:7px;height:7px;background:var(--ink-30);cursor:pointer;border:none;padding:0;transition:.3s;border-radius:1px}
+  .dot-n.on{background:var(--coral);width:20px}
+  .arrows{position:fixed;bottom:18px;right:24px;display:flex;gap:9px;z-index:40}
+  .nbtn{width:46px;height:46px;border:1px solid var(--ink-15);background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--petrol);transition:.18s}
+  .nbtn .ic{width:20px;height:20px}.nbtn:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
+  .nbtn:disabled{opacity:.3;cursor:not-allowed;background:var(--paper);color:var(--petrol)}
+  .brand-foot{position:fixed;top:22px;right:26px;font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-50);z-index:40}
+  .hint{font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-50);margin-top:30px}
+
+  @media(max-width:860px){
+    .g3,.g2,.cmp,.twocol,.timeline,.stats,.paths,.spot,.invest,.crm{grid-template-columns:1fr}
+    .spot{gap:26px}.flow{flex-direction:column}.arrow{flex-basis:auto;padding:6px 0}.arrow .ic{transform:rotate(90deg)}
+    .feedrow{flex-direction:column;gap:18px}
+    .slide{padding:8vh 6vw}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/><path d="M10 21v-3h4v3"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="17" cy="14.5" r="1.2"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+  <symbol id="i-split" viewBox="0 0 24 24"><path d="M3 12h5"/><path d="M8 12l5-5h8"/><path d="M8 12l5 5h8"/><path d="M18 4l3 3-3 3"/><path d="M18 14l3 3-3 3"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17l-2.5-1.5L14 21l-2-1.5L10 21l-2.5-1.5z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="6" y="11" width="3" height="6"/><rect x="11" y="7" width="3" height="10"/><rect x="16" y="13" width="3" height="4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5l3.5 2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M12 3l9 5H3z"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 21h18"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 8-11h-6z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19c.7-3.2 3-4.8 5.5-4.8s4.8 1.6 5.5 4.8"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6"/><path d="M17.5 14.4c2 .5 3.4 1.9 4 4.1"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+</defs></svg>
+
+<div id="progress"></div>
+<div class="brand-foot">Contabilia × Trívia</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide grain active">
+    <div class="wrap">
+      <div class="logo"><span class="mark">C</span><span class="name">Contabilia</span></div>
+      <div class="cover-for">
+        <span class="cf-label">Proposta de parceria preparada para</span>
+        <span class="cf-name">T Lima Contabilidade</span>
+      </div>
+      <h1>Crescer a carteira <em>sem crescer a folha</em>.</h1>
+      <p class="lead" style="margin-top:24px">Uma camada inteligente que se pluga por cima do seu sistema contábil Domínio, automatiza a execução, e libera a T Lima pra ser consultiva em vez de só operacional.</p>
+      <div class="pill-row">
+        <span class="pill"><svg class="ic"><use href="#i-zap"/></svg> Pronto pra Reforma Tributária</span>
+        <span class="pill"><svg class="ic"><use href="#i-layers"/></svg> Pluga no seu sistema contábil Domínio</span>
+      </div>
+      <div class="cover-by"><span>Por</span><img class="tlogo" src="trivia-logo.png" alt="Trívia"></div>
+      <p class="hint">Use as setas do teclado ou os botões no canto para navegar</p>
+    </div>
+  </section>
+
+  <!-- 2 ENTENDIMENTO -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">01</span> Entendimento da operação</div>
+      <h2>Desenhamos esta proposta a partir de <em>como vocês operam</em>.</h2>
+      <p class="sub">O que mapeamos da T Lima:</p>
+      <div class="stats">
+        <div class="stat"><div class="num c">41</div><div class="lab">Clientes ativos</div></div>
+        <div class="stat"><div class="num">90%</div><div class="lab">De serviço</div></div>
+        <div class="stat"><div class="num">Simples</div><div class="lab">Regime predominante</div></div>
+        <div class="stat"><div class="num">Domínio</div><div class="lab">+ Onvio incluso</div></div>
+      </div>
+      <p style="margin-top:26px">Equipe enxuta. Por isso o Contabilia foi pensado pra <span class="hl">fazer mais com a mesma equipe</span>.</p>
+    </div>
+  </section>
+
+  <!-- 3 A DOR -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">02</span> A dor que trava o crescimento</div>
+      <h2>Emitir nota na mão <em>não escala</em>.</h2>
+      <p class="sub">Hoje a emissão de NF é manual. Com o escritório crescendo e a reforma dobrando o operacional, cada cliente novo vira mais trabalho de execução.</p>
+      <div class="paths">
+        <div class="path">
+          <div class="ph"><svg class="ic" style="width:15px;height:15px"><use href="#i-warn"/></svg> Sem solução</div>
+          <p class="seq">Mais clientes <b>→</b> mais emissão manual <b>→</b> contratar gente pra executar <b>→</b> o custo sobe rápido e a margem encolhe.</p>
+        </div>
+        <div class="path good">
+          <div class="ph"><svg class="ic" style="width:15px;height:15px"><use href="#i-trend"/></svg> Com o Contabilia</div>
+          <p class="seq">Mais clientes <b>→</b> execução automatizada <b>→</b> a mesma equipe dá conta <b>→</b> a carteira cresce e a folha não.</p>
+        </div>
+      </div>
+      <div class="punch">Continuem operando <em>100%</em>, sem o custo de contratar pra execução, que é o que mais pesa.</div>
+    </div>
+  </section>
+
+  <!-- 4 O QUE É -->
+  <section class="slide petrol">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">03</span> O que é o Contabilia</div>
+      <p class="bigquote">Não substituímos o seu sistema. Plugamos uma <span class="mk">camada inteligente por cima dele</span>, e o cliente passa a alimentar vocês com dado já organizado.</p>
+      <p style="margin-top:30px;max-width:680px">É vendido pra vocês, o escritório, e entregue aos seus clientes com a sua marca. Não competimos com o sistema contábil Domínio nem com o Onvio. Preenchemos o que nenhum dos dois faz.</p>
+    </div>
+  </section>
+
+  <!-- 5 JÁ TEM x SÓ CONTABILIA -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">04</span> Sem sobreposição</div>
+      <h2>O que vocês já têm, e o que <em>só o Contabilia traz</em>.</h2>
+      <p class="sub">Nada do que vocês já pagam é vendido de novo.</p>
+      <div class="cmp">
+        <div class="col have">
+          <h3><svg class="ic" style="width:15px;height:15px"><use href="#i-check"/></svg> Já têm no sistema Domínio + Onvio</h3>
+          <div class="row on"><svg class="ic"><use href="#i-check"/></svg> Portal de documentos (Onvio)</div>
+          <div class="row on"><svg class="ic"><use href="#i-check"/></svg> Entrega de guias e obrigações (Onvio)</div>
+          <div class="row on"><svg class="ic"><use href="#i-check"/></svg> Escrituração, SPED, folha (sistema contábil Domínio)</div>
+        </div>
+        <div class="col bring">
+          <h3><svg class="ic" style="width:15px;height:15px"><use href="#i-spark"/></svg> Só o Contabilia traz</h3>
+          <div class="row on"><svg class="ic"><use href="#i-wallet"/></svg> Sistema financeiro do cliente<small>fluxo de caixa, contas a pagar e receber</small></div>
+          <div class="row on"><svg class="ic"><use href="#i-calc"/></svg> Simulador de regime<small>Simples puro × Híbrido × Regular</small></div>
+          <div class="row on"><svg class="ic"><use href="#i-chart"/></svg> CRM com rentabilidade real e atendimento<small>quem dá lucro, SLA e agente SDR</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 SPOTLIGHT FINANCEIRO -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">05</span> Sistema financeiro do cliente</div>
+      <div class="spot">
+        <div class="txt">
+          <h2>Um financeiro que o cliente usa, e que <em>vira dado pra vocês</em>.</h2>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> O cliente organiza o caixa dele e gosta de usar todo dia</div>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> Vocês passam a ter o dado correto de cada cliente, em tempo real</div>
+          <div class="callout">Esse valor agregado é seu pra <b>cobrar mais na mensalidade</b>, ou usar pra <b>fidelizar o cliente</b> e blindar a carteira.</div>
+        </div>
+        <div class="mock">
+          <div class="mock-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">app.contabilia · financeiro</span></div>
+          <div class="mock-body">
+            <div class="mk-head"><span class="h">Padaria Aurora</span><span class="tab">Fluxo de caixa</span></div>
+            <div class="kpis">
+              <div class="kpi"><div class="l">Saldo em caixa</div><div class="v">R$ 48.250</div></div>
+              <div class="kpi"><div class="l">A receber (30d)</div><div class="v pos">R$ 12.400</div></div>
+            </div>
+            <div class="bars"><span style="height:40%"></span><span style="height:62%"></span><span style="height:48%"></span><span style="height:75%"></span><span class="c" style="height:90%"></span><span style="height:55%"></span><span style="height:70%"></span></div>
+            <div class="tx"><span class="lft"><span class="d" style="background:var(--green)"></span> Consultoria · João</span><b class="pos">+ R$ 3.000</b></div>
+            <div class="tx"><span class="lft"><span class="d" style="background:var(--coral)"></span> Fornecedor de insumos</span><b class="neg">- R$ 1.200</b></div>
+            <div class="tx"><span class="lft"><span class="d" style="background:var(--green)"></span> Serviço · Studio MB</span><b class="pos">+ R$ 2.500</b></div>
+            <div class="mk-foot"><span>Líquido após split (IBS/CBS)</span><b>R$ 2.735</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 SPOTLIGHT SIMULADOR -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">06</span> Simulador de regime</div>
+      <div class="spot">
+        <div class="txt">
+          <h2>O simulador que transforma vocês <em>em consultores</em>.</h2>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> Compara Simples puro, Híbrido e Regular com os números reais do cliente</div>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> Munição pra orientar a decisão de regime de setembro 2026</div>
+          <div class="callout">Vocês deixam de ser só operacional e passam a <b>vender estratégia</b>, com dado na mão.</div>
+        </div>
+        <div class="mock">
+          <div class="mock-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">app.contabilia · simulador</span></div>
+          <div class="mock-body">
+            <div class="mk-head"><span class="h">Studio MB · projeção 2027</span><span class="tab">Reforma</span></div>
+            <div class="sim">
+              <div class="col"><div class="h">Simples puro</div><div class="v">R$ 1.840</div><span class="tag cur">Atual</span></div>
+              <div class="col best"><div class="h">Simples Híbrido</div><div class="v">R$ 1.520</div><span class="tag rec">Recomendado</span></div>
+              <div class="col"><div class="h">Regime regular</div><div class="v">R$ 2.310</div></div>
+            </div>
+            <div class="mk-foot"><span>Economia projetada em 2027</span><b>R$ 3.840 / ano</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 SPOTLIGHT CRM -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">07</span> CRM, atendimento e SDR</div>
+      <div class="spot">
+        <div class="txt">
+          <h2>CRM, atendimento <em>e um SDR que traz cliente novo</em>.</h2>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> Rentabilidade real por cliente: quem dá lucro e quem dá prejuízo</div>
+          <div class="pt"><svg class="ic"><use href="#i-check"/></svg> Atendimento com SLA: a demanda não se perde no WhatsApp</div>
+          <div class="callout">Opção de <b>agente SDR</b> que qualifica leads automaticamente, pra crescer a carteira sem esforço de prospecção.</div>
+        </div>
+        <div class="mock">
+          <div class="mock-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">app.contabilia · clientes</span></div>
+          <div class="mock-body">
+            <div class="mk-head"><span class="h">Carteira · saúde e rentabilidade</span><span class="tab">CRM</span></div>
+            <div class="crm">
+              <div class="list">
+                <div class="it"><span class="nm">Padaria Aurora</span><span class="chip-ok">Saudável</span><b class="pos">+ R$ 420</b></div>
+                <div class="it"><span class="nm">Studio MB</span><span class="chip-ok">Saudável</span><b class="pos">+ R$ 310</b></div>
+                <div class="it"><span class="nm">Mercado Lopes</span><span class="chip-warn">Atenção</span><b class="neg">- R$ 80</b></div>
+                <div class="it"><span class="nm">Oficina Zip</span><span class="chip-warn">Deficitário</span><b class="neg">- R$ 240</b></div>
+              </div>
+              <div class="side">
+                <div class="sh">Atendimento · SLA</div>
+                <div class="sl"><span>Emissão de nota</span><b>2h</b></div>
+                <div class="sl"><span>Dúvida fiscal</span><b>24h</b></div>
+                <div class="sl"><span>Certidão</span><b>48h</b></div>
+                <div class="sdr"><svg class="ic"><use href="#i-users"/></svg> Agente SDR qualificando 3 leads</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 COMO FUNCIONA -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">08</span> Como funciona no dia a dia</div>
+      <h2>Cada lado faz <em>só o que importa</em>.</h2>
+      <div class="twocol" style="margin-top:20px">
+        <div class="panel">
+          <div class="ph"><div class="ico"><svg class="ic"><use href="#i-user"/></svg></div><h3>O cliente (PME)</h3></div>
+          <ul>
+            <li>Registra o serviço prestado e as movimentações</li>
+            <li>Acompanha o fluxo de caixa do negócio</li>
+            <li>Vê quanto entra líquido depois do imposto</li>
+            <li>Anexa documentos (foto ou PDF)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="ph"><div class="ico"><svg class="ic"><use href="#i-building"/></svg></div><h3>A T Lima</h3></div>
+          <ul>
+            <li>Emite a nota fiscal com os dados já preparados pelo sistema</li>
+            <li>Recebe XMLs e baixas direto no sistema contábil Domínio, sem reenvio manual</li>
+            <li>Recebe lançamentos com classificação sugerida por IA</li>
+            <li>Ganha tempo livre pra orientar o cliente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 DIAGRAMA -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">09</span> Como se encaixa</div>
+      <h2>Plugamos no fluxo. O <em>sistema Domínio e o Onvio continuam</em>.</h2>
+      <div class="mmd-wrap">
+        <pre class="mermaid">
+flowchart LR
+  classDef nova fill:#ffffff,stroke:#fc544c,stroke-width:1.5px,color:#071925
+  classDef ja fill:#eeeae1,stroke:#163647,stroke-width:1px,color:#071925
+  classDef pess fill:#fafaf7,stroke:#071925,stroke-width:2px,color:#071925
+  CLI(["Cliente PME"]):::pess
+  TLI(["T Lima"]):::pess
+  subgraph BOX["CONTABILIA · plataforma nova"]
+    FIN["Financeiro + IA"]
+    SIM["Simulador de regime"]
+    CRM["CRM + atendimento"]
+    EMI["Emissão de NF"]
+  end
+  NF["Emissor de NF"]:::ja
+  DOM["Sistema contábil Domínio"]:::ja
+  ONV["Onvio · portal"]:::ja
+  CLI -->|usa| BOX
+  TLI -->|opera| BOX
+  EMI -->|emite| NF
+  NF -->|XML da nota| DOM
+  CRM -->|XML + baixa| DOM
+  CLI -. já usa .-> ONV
+  class FIN,SIM,CRM,EMI nova
+  style BOX fill:#fff5f4,stroke:#fc544c,stroke-width:2px,color:#071925
+        </pre>
+      </div>
+      <div class="legend">
+        <span><i class="sw nova"></i> Contabilia · o que construímos (novo)</span>
+        <span><i class="sw ja"></i> Sistemas que já existem</span>
+        <span><i class="sw pess"></i> Quem usa</span>
+      </div>
+      <p style="margin-top:12px;text-align:center;font-size:.95rem">O <span class="hl">Onvio continua sendo o portal do cliente</span>. Não mexemos nele.</p>
+    </div>
+  </section>
+
+  <!-- 11 ENTREGA -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">10</span> O que entregamos no piloto</div>
+      <h2>A plataforma <em>rodando em produção</em>, com seus primeiros clientes.</h2>
+      <div class="grid g3" style="margin-top:22px">
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-wallet"/></svg></div><h3>Financeiro do cliente</h3><p>Portal ativo pra cada cliente do piloto.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-receipt"/></svg></div><h3>Emissão integrada</h3><p>A T Lima emite, e o XML cai automático no Domínio.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-calc"/></svg></div><h3>Simulador de regime</h3><p>Pronto pra orientar a decisão de 2027.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-chart"/></svg></div><h3>CRM, atendimento e SDR</h3><p>Rentabilidade, SLA e qualificação de leads.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-landmark"/></svg></div><h3>Status fiscal</h3><p>Situação fiscal de cada cliente, puxada da Receita.</p></div>
+        <div class="cell fill"><div class="ico"><svg class="ic"><use href="#i-check"/></svg></div><h3>Notas com IBS / CBS</h3><p>Marco regulatório atendido pela emissão.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 IMPLEMENTAÇÃO -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">11</span> Como será a implementação</div>
+      <h2>Do diagnóstico <em>à operação</em>.</h2>
+      <div class="timeline" style="margin-top:22px">
+        <div class="step"><div class="n">1</div><div class="dur">1 semana</div><h3>Diagnóstico</h3><p>Mapeamos operação, carteira e dores. Escopo final acordado.</p></div>
+        <div class="step"><div class="n">2</div><div class="dur">8 a 12 semanas</div><h3>Implementação</h3><p>Construímos e configuramos a plataforma e a integração com o sistema contábil Domínio.</p></div>
+        <div class="step"><div class="n">3</div><div class="dur">2 a 4 semanas</div><h3>Onboarding</h3><p>Treinamento da equipe e migração dos primeiros clientes.</p></div>
+        <div class="step"><div class="n">4</div><div class="dur">contínuo</div><h3>Operação</h3><p>Infra, APIs, IA, evolução e suporte.</p></div>
+      </div>
+      <p style="margin-top:22px">Precisamos de <span class="hl">~4h por semana</span> de uma pessoa de referência, uma <span class="hl">lista de clientes-piloto</span> e o <span class="hl">acesso à API do sistema contábil Domínio</span>, que solicitamos juntos.</p>
+    </div>
+  </section>
+
+  <!-- 13 INVESTIMENTO -->
+  <section class="slide petrol">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">12</span> Investimento · parceria piloto</div>
+      <h2>Uma <em>co-construção</em>, não uma venda de software pronto.</h2>
+      <div class="invest">
+        <div class="inv-price">
+          <div class="price-label">Implementação · pagamento único</div>
+          <div class="price-from">De R$ 12.900,00</div>
+          <div class="price-num">R$ 7.900<span>,00</span></div>
+          <div class="price-inst">à vista, ou <b>10x de R$ 850</b> · valor único, não é mensalidade nem anuidade</div>
+          <div class="price-cond">Condição especial válida somente para fechar na ligação</div>
+        </div>
+        <div class="inv-costs">
+          <div class="ic-h">Custos de operação <span>mensais, por conta do cliente</span></div>
+          <div class="ic-li"><span>Emissor de NF · serviço + venda*</span><b>2 × R$ 190</b></div>
+          <div class="ic-li"><span>IA de classificação</span><b>~ R$ 100</b></div>
+          <div class="ic-li"><span>Infraestrutura + WhatsApp</span><b>~ R$ 150</b></div>
+          <div class="ic-tot"><span>Estimativa total</span><b>~ R$ 630 / mês</b></div>
+          <div class="ic-note">* Cada assinatura cobre até 250 notas/mês com CNPJ ilimitado. A confirmar se emitir serviço (NFS-e) e venda (NF-e) exige duas assinaturas. Estimado, repassado sem margem da Trívia.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 PRÓXIMOS PASSOS -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">13</span> Próximos passos</div>
+      <h2>Vamos começar pelo <em>diagnóstico</em>.</h2>
+      <div class="grid g2" style="margin-top:22px">
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-chat"/></svg></div><h3>Reunião de aprofundamento</h3><p>Entender a operação atual em detalhe.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-clock"/></svg></div><h3>Diagnóstico (1 semana)</h3><p>Mapeamento completo e escopo final.</p></div>
+        <div class="cell"><div class="ico"><svg class="ic"><use href="#i-check"/></svg></div><h3>Acordo de parceria</h3><p>Escopo e investimento fechados.</p></div>
+        <div class="cell fill"><div class="ico"><svg class="ic"><use href="#i-zap"/></svg></div><h3>Kickoff</h3><p>Mãos à obra. Construímos juntos.</p></div>
+      </div>
+      <div class="signoff"><img class="tlogo" src="trivia-logo.png" alt="Trívia"><span class="by">JG Novais e Lucas. Vamos construir isso juntos.</span></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="counter"><b id="cur">1</b> / <span id="tot">14</span></div>
+<div class="dots" id="dots"></div>
+<div class="arrows">
+  <button class="nbtn" id="prev" aria-label="Anterior"><svg class="ic" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+  <button class="nbtn" id="next" aria-label="Próximo"><svg class="ic"><use href="#i-arrow"/></svg></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  if(window.mermaid){
+    mermaid.initialize({
+      startOnLoad:false,
+      theme:'base',
+      themeVariables:{
+        fontFamily:'"Inter Tight", sans-serif', fontSize:'13px',
+        lineColor:'#163647', primaryColor:'#ffffff', primaryTextColor:'#071925',
+        primaryBorderColor:'rgba(7,25,37,.2)', clusterBkg:'#fafaf7',
+        clusterBorder:'rgba(7,25,37,.18)', edgeLabelBackground:'#fafaf7', tertiaryColor:'#fafaf7'
+      },
+      flowchart:{curve:'basis', htmlLabels:true, padding:14}
+    });
+  }
+</script>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length; let i=0;
+  const prog=document.getElementById('progress');
+  const cur=document.getElementById('cur');
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+  const dotsWrap=document.getElementById('dots');
+  document.getElementById('tot').textContent=total;
+  slides.forEach((_,n)=>{const b=document.createElement('button');b.className='dot-n';b.onclick=()=>go(n);dotsWrap.appendChild(b);});
+  const dots=[...dotsWrap.children];
+  function go(n){
+    i=Math.max(0,Math.min(total-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    prog.style.width=((i+1)/total*100)+'%';
+    cur.textContent=i+1;
+    prev.disabled=i===0; next.disabled=i===total-1;
+    document.body.classList.toggle('petrol-ctx',slides[i].classList.contains('petrol'));
+    slides[i].scrollTop=0;
+    const mmd=slides[i].querySelector('.mermaid:not([data-processed])');
+    if(mmd && window.mermaid && mermaid.run){ try{ mermaid.run({nodes:[mmd]}); }catch(e){} }
+  }
+  next.onclick=()=>go(i+1); prev.onclick=()=>go(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(i+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1);
+    if(e.key==='Home')go(0); if(e.key==='End')go(total-1);
+  });
+  let sx=null;
+  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>60)go(i+(dx<0?1:-1));sx=null;},{passive:true});
+  go(0);
+</script>
+</body>
+</html>

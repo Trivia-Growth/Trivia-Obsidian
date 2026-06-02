@@ -45,6 +45,31 @@ substitui: Flowbiz
 
 ---
 
+## Campanha Plano Bomba (Coleções Heziom 2026)
+
+> Campanha de aceleração mai-jul/2026 para liberar capital empatado em estoque: 11 combos editoriais + LP dedicada + R$ 200k em Meta Ads. Origem no vault JG OS (`02 - Heziom/Crise de Caixa Abr-Jun 2026`).
+
+| Nota | Status | Cobertura |
+|---|---|---|
+| [[LP Coleções 2026 (Plano Bomba) — Configuração]] | ✅ No ar | LP `colecoes.editoraheziom.com.br`: conceito, identidade visual, estrutura, 11 combos (preços/SKUs), links âncora por combo, specs técnicas, pendências |
+| [[Plano Bomba — Tráfego Pago Meta Ads]] | 🟢 Em campanha | Arquitetura 3 campanhas CBO, verba R$ 200k (2 tranches), audiências broad + Advantage+, criativos Entity ID, KPIs/MER, cadência de revisão |
+
+---
+
+## Lançamento Bíblia 120 Anos (IPP)
+
+> Bíblia Sagrada comemorativa dos 120 anos da Igreja Presbiteriana de Pinheiros (couro preto e marrom, letra grande, R$ 159,90). Pré-lançamento em 08/07/2026, data do aniversário da igreja (fundada em 08/07/1906). LP de pré-venda no padrão técnico da Plano Bomba.
+
+| Frente | Status | Cobertura |
+|---|---|---|
+| LP de pré-venda | 🛠️ Construída (local) | HTML único + Netlify Functions, mescla visual claro/escuro (marinho `#11151C` + dourado foil `#E5B875`), hero + história da IPP + 2 variantes + cupom + FAQ. Código em `~/heziom-lp-biblia120`. Reutiliza Pixel Heziom `297709555050094` |
+| Conversão | 🛠️ Plugada | Vários CTAs → loja Tray (SKUs preta/marrom) + captura de lead (cupom **IPP120**) via `/api/leads` (Flowbiz + Meta CAPI server-side) |
+| Pacote para Claude Design | ✅ Pronto | Briefing + textos + 22 imagens otimizadas em `~/Bíblia 120 anos - Claude Design` (e `.zip` de upload) |
+
+**Pendências pré-go-live:** URLs reais dos 2 SKUs na Tray · GA4 Measurement ID (criar stream) · meta-tag de verificação de domínio Meta · nova lista Flowbiz "LP - Bíblia 120 anos" com Field IDs custom.
+
+---
+
 ## Tracking & Pixels — Implementado (LP + Ecommerce)
 
 > Infraestrutura de rastreamento operacional (Meta Pixel + CAPI server-side + GA4) já no ar, separada do CRM em construção.

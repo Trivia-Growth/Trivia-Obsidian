@@ -1,5 +1,8 @@
 # Contabilia — Plataforma de Automação Contábil para a Reforma Tributária
 
+> [!warning] Documento ORIGINAL (Lucas, mai/2026) — parcialmente SUPERADO
+> Especificação técnica inicial. Boa base de módulos e fluxos, mas vários pontos foram revistos. **Para a spec de MVP atual, ver [[MVP-Especificacao]]** (arquitetura de adapters plugáveis, T Lima emite a NF, providers atualizados). Os fundamentos da reforma estão atualizados em [[Reforma-Tributaria-Fundamentos]].
+
 ## Contexto e Problema
 
 A reforma tributária brasileira (EC 132/2023, LC 214/2025) substitui ISS, ICMS, PIS e COFINS por IBS + CBS (IVA Dual) entre 2026-2032. Durante a transição:

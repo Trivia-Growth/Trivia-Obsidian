@@ -1,5 +1,8 @@
 # Contabilia — Apresentação do Projeto
 
+> [!warning] Documento ORIGINAL (Lucas, mai/2026) — parcialmente SUPERADO
+> Esta é a visão inicial do projeto ("sistema operacional completo", provider Nuvem Fiscal, etc.). Vários pontos foram revistos no reposicionamento. **Para a visão atual, ver [[Alinhamento-Reposicionamento]] e [[MVP-Especificacao]].** Mudou: posicionamento (camada por cima, não substitui), provider fiscal (Nuvem Fiscal descontinuada → Focus/nfe.io), arquitetura plugável (Contmatic + Domínio), modelo comercial (implementação por escritório, não SaaS).
+
 ## O que é
 
 **Contabilia** é uma plataforma que automatiza a operação de escritórios de contabilidade, conectando escritório e cliente em um único sistema inteligente.
