@@ -222,6 +222,8 @@ Escopo fechado, valor fixo, **abatível na implementação**. Entrega o diagnós
 
 > **Os R$ 30k abatem integralmente do valor do projeto se o cliente fechar a implementação.** Na prática vira um "test drive pago": o cliente arrisca pouco, sai com um plano de implementação que vale por si só, e nós qualificamos a fundo antes de assumir um projeto de seis dígitos. Quem não fecha, pagou por um entregável real; quem fecha, não pagou nada a mais por ele.
 
+> *O passo a passo completo — como vender o diagnóstico, executar nas 3–4 semanas, montar a Planta do OS e fechar a implementação — está no [[Trívia OS - Playbook do Diagnóstico]].*
+
 #### Bloco 2 · Implementação (projeto por fases) — a partir de R$ 119.000
 
 Projeto sob medida, **piso de R$ 119k**, escopo travado **por fase**. A postura padrão de substituir mantém a margem. O valor final é montado a partir das fases que a planta do diagnóstico definir; as faixas abaixo são a base de composição (a calibrar com as primeiras provas):
