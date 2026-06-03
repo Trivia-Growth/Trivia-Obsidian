@@ -32,6 +32,7 @@ substitui: ClickUp + Google Sheets + OneDrive (parcial)
 | [[Orçamento Gráfico]] | ⬜ A criar | Cotações, markup ×7, comparativo |
 | [[Hub de Lançamento]] | ⬜ A criar | Materiais para marketing, checklist |
 | [[Ficha Catalográfica]] | ⬜ A criar | ISBN, metadados, distribuição multi-plataforma |
+| [[CDQ — Sistema de Cadastro Multi-Plataforma]] | 🟡 Planejado | **Feature principal:** PDF miolo → cadastro completo Literarius + Tray + BookInfo + Amazon Vendor · score CDQ por campo · export XLSM (2026-06-03) |
 | [[Contratos Editoriais]] | ⬜ A criar | Status, assinatura digital, armazenamento |
 | [[Gestão de E-book]] | ⬜ A criar | Status no fluxo, Bookwire |
 

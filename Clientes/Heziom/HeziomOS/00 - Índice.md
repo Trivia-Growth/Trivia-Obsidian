@@ -45,6 +45,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ### 📚 Editorial (Fase 2.4)
 - [[Índice Editorial]] — pipeline 9 etapas, orçamento por lauda, calendário de publicações
+- [[CDQ — Sistema de Cadastro Multi-Plataforma]] — 🟡 feature planejada: PDF miolo → cadastro completo Literarius + Tray + BookInfo + Amazon Vendor · score CDQ por campo · export XLSM (2026-06-03)
 
 ### 💬 Atendimento (Fase 2.5 — substitui Unnichat)
 - [[Índice Atendimento]] — agente WhatsApp 24/7, escalação inteligente
