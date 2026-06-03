@@ -60,13 +60,17 @@ substitui: Flowbiz
 
 > Bíblia Sagrada comemorativa dos 120 anos da Igreja Presbiteriana de Pinheiros (couro preto e marrom, letra grande, R$ 159,90). Pré-lançamento em 08/07/2026, data do aniversário da igreja (fundada em 08/07/1906). LP de pré-venda no padrão técnico da Plano Bomba.
 
+> Oferta: **R$ 69,90 com o cupom IPP120** (de R$ 159,90, −56%). Layout visual final desenvolvido no Claude Design e integrado à infra de tracking/conversão.
+
 | Frente | Status | Cobertura |
 |---|---|---|
-| LP de pré-venda | 🛠️ Construída (local) | HTML único + Netlify Functions, mescla visual claro/escuro (marinho `#11151C` + dourado foil `#E5B875`), hero + história da IPP + 2 variantes + cupom + FAQ. Código em `~/heziom-lp-biblia120`. Reutiliza Pixel Heziom `297709555050094` |
-| Conversão | 🛠️ Plugada | Vários CTAs → loja Tray (SKUs preta/marrom) + captura de lead (cupom **IPP120**) via `/api/leads` (Flowbiz + Meta CAPI server-side) |
-| Pacote para Claude Design | ✅ Pronto | Briefing + textos + 22 imagens otimizadas em `~/Bíblia 120 anos - Claude Design` (e `.zip` de upload) |
+| LP de pré-venda | 🟢 No ar (homologação) | `lp-biblia120-heziom.netlify.app`. Layout Claude Design (index.html + styles.css + script.js), mescla claro/escuro (marinho `#11151C` + dourado foil `#E5B875`), hero + história da IPP + 2 variantes + cupom + FAQ + modal exit-intent. Repo `heziom/lp-biblia120` (clone em `~/heziom-lp-biblia120`) |
+| Conversão | ✅ Plugada | Vários CTAs → loja Tray (SKUs preta/marrom) com UTMs+cupom · captura de lead (cupom **IPP120**) via `/api/leads` (Flowbiz + Meta CAPI). Pixel Heziom `297709555050094`. Função viva (retorna 400 p/ e-mail inválido) |
+| Pacote Claude Design | ✅ Usado | Briefing + textos + imagens em `~/Bíblia 120 anos - Claude Design` |
 
-**Pendências pré-go-live:** URLs reais dos 2 SKUs na Tray · GA4 Measurement ID (criar stream) · meta-tag de verificação de domínio Meta · nova lista Flowbiz "LP - Bíblia 120 anos" com Field IDs custom.
+**Deploy:** Netlify time Trívia (`lp-biblia120-heziom`), deploy manual via CLI por enquanto (auto-deploy-on-push exige conectar o repo privado `heziom` no app Netlify).
+
+**Pendências pré-go-live:** env vars no Netlify (FLOWBIZ_API_KEY + LIST_ID da nova lista, META_CAPI_TOKEN) · URLs reais dos 2 SKUs na Tray (bloco CONFIG) · GA4 Measurement ID · meta-tag de verificação de domínio Meta · apontar domínio `biblia120.editoraheziom.com.br`.
 
 ---
 
