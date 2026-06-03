@@ -1,5 +1,7 @@
 # Configuração de Tracking, Variáveis de Ambiente e Deploy — LP Bíblia 120 Anos
 
+**Status:** ✅ Env vars Netlify configuradas · ✅ GA4 stream criado (G-23VMGJTDXY) · ✅ Lista Flowbiz criada (ID 27562) · ✅ Redeploy concluído (03/06/2026 12:24)
+
 Documento operacional para finalizar a configuração da landing page. Escrito para ser executado por um agente. Cada item diz **o que fazer**, **onde** e **qual valor**.
 
 - **Repositório:** `heziom/lp-biblia120` (GitHub, branch `main`)
@@ -22,10 +24,10 @@ Sem elas o formulário de cupom retorna erro (a função `/api/leads` precisa de
 
 | Variável | Valor | Obrigatória? | Onde obter |
 |---|---|---|---|
-| `FLOWBIZ_API_KEY` | *(chave da Flowbiz/Mailclick)* | 🔴 Sim | Mesma chave usada na LP Plano Bomba (painel Flowbiz). É a mesma conta. |
-| `FLOWBIZ_LIST_ID` | *(ID numérico da lista nova)* | 🔴 Sim | Criar a lista **"LP - Bíblia 120 anos"** na Flowbiz (ver §5) e copiar o ID |
-| `META_PIXEL_ID` | `297709555050094` | 🟠 Recomendada | Pixel da Editora Heziom (já fixo) |
-| `META_CAPI_TOKEN` | *(token CAPI)* | 🟠 Recomendada | Meta Events Manager → Pixel 297709555050094 → Configurações → Conversions API → Gerar token de acesso |
+| `FLOWBIZ_API_KEY` | `8284-4c85-3340-2e5b-5ab1-e4c5-5b97-d2ff` | 🔴 Sim | ✅ Configurada (03/06/2026) — mesma chave LP Plano Bomba |
+| `FLOWBIZ_LIST_ID` | `27562` | 🔴 Sim | ✅ Configurada (03/06/2026) — lista "LP - Bíblia 120 Anos" criada |
+| `META_PIXEL_ID` | `297709555050094` | 🟠 Recomendada | ✅ Configurada (03/06/2026) |
+| `META_CAPI_TOKEN` | *(token CAPI)* | 🟠 Recomendada | ✅ Configurada (03/06/2026) — token gerado no Meta Events Manager |
 | `META_TEST_EVENT_CODE` | `TESTxxxxx` | 🟢 Só p/ teste | Meta Events Manager → Testar eventos. **Remover após validar.** |
 
 Após salvar as variáveis, **fazer um redeploy** (Deploys → Trigger deploy → Deploy site) para a função carregar os novos valores.
@@ -47,14 +49,14 @@ var CONFIG = {
   PRECO_CHEIO: 159.90,
   LEAD_ENDPOINT: '/api/leads',
   PIXEL_ID: '297709555050094',
-  GA4_ID: 'G-XXXXXXXXXX'      // ← colar o Measurement ID do stream GA4 desta LP (ver §6)
+  GA4_ID: 'G-23VMGJTDXY'      // Stream LP Bíblia 120 (criado 03/06/2026, stream ID 14998674024)
 };
 ```
 
 **Ações:**
 1. Substituir `TRAY.preta` e `TRAY.marrom` pelas URLs reais dos 2 produtos na loja Tray.
 2. Confirmar/ajustar `CUPOM` (o cupom precisa existir na Tray dando o preço de R$ 69,90).
-3. Colar o `GA4_ID` real (enquanto for `G-XXXXXXXXXX`, o GA4 não carrega de propósito).
+3. ✅ `GA4_ID` atualizado para `G-23VMGJTDXY` (commit b3878a7, 03/06/2026).
 4. Commit + push no `main` (auto-deploya). Os botões "Comprar edição preta/marrom" passam a levar à Tray com UTMs e `?cupom=IPP120`.
 
 ---
@@ -93,18 +95,18 @@ O código já dispara tudo abaixo. **Não precisa reimplementar**, só garantir 
 A função grava o lead via API Mailclick (`Subscriber.Subscribe`). Hoje usa os mesmos Field IDs custom da Plano Bomba (`CustomField40612` = Nome, `58000` = Fonte, `58001` = Combo). 
 
 **Ações:**
-1. Criar a lista **"LP - Bíblia 120 anos"** na Flowbiz e pegar o `ListID` → vai em `FLOWBIZ_LIST_ID` (§1).
+1. ✅ Lista **"LP - Bíblia 120 Anos"** criada na Flowbiz — ID `27562` (03/06/2026).
 2. Conferir os Field IDs de Nome/Fonte na lista nova. Se forem diferentes, ajustar em `netlify/functions/leads.js` (linhas `params.append('CustomFieldXXXXX', ...)`).
-3. Configurar um **AutoResponder** na lista que envia o e-mail com o cupom **IPP120** ao novo inscrito (igual ao da Plano Bomba com HEZIOM10).
+3. [ ] Configurar um **AutoResponder** na lista que envia o e-mail com o cupom **IPP120** ao novo inscrito (igual ao da Plano Bomba com HEZIOM10).
 
 ---
 
 ## 6. GA4
 
-1. GA4 → Admin → **Streams de dados → Web** → criar stream para esta LP (URL final). Nome sugerido: `LP Bíblia 120`.
-2. Copiar o **Measurement ID** (`G-XXXXXXXXXX`) → colar em `CONFIG.GA4_ID` (§2).
-3. Habilitar **Enhanced Measurement**.
-4. Em **Configurar → Eventos**, marcar como **conversão**: `generate_lead` e `add_to_cart`.
+1. ✅ Stream `LP Bíblia 120` criado — Measurement ID: `G-23VMGJTDXY`, Stream ID: `14998674024` (03/06/2026).
+2. ✅ `CONFIG.GA4_ID` atualizado (commit b3878a7).
+3. Enhanced Measurement habilitado no stream.
+4. [ ] Em **Configurar → Eventos**, marcar como **conversão**: `generate_lead` e `add_to_cart`.
 
 ---
 
@@ -141,11 +143,11 @@ Quando definir o subdomínio (ex.: `biblia120.editoraheziom.com.br`):
 
 ## 10. Checklist de validação (fazer no fim)
 
-- [ ] Variáveis de ambiente salvas no Netlify + redeploy feito
-- [ ] `CONFIG.TRAY` com URLs reais · `CONFIG.GA4_ID` real · cupom confere
-- [ ] Lista Flowbiz criada + AutoResponder do cupom ativo
+- [x] Variáveis de ambiente salvas no Netlify + redeploy feito (03/06/2026 12:24)
+- [ ] `CONFIG.TRAY` com URLs reais · cupom confere (GA4_ID já ok)
+- [x] Lista Flowbiz criada (ID 27562) · [ ] AutoResponder do cupom IPP120 pendente
 - [ ] Meta: domínio verificado + AEM priorizado + valor no `Lead`
-- [ ] GA4: stream criado + `generate_lead`/`add_to_cart` como conversão
+- [x] GA4: stream criado (G-23VMGJTDXY) · [ ] `generate_lead`/`add_to_cart` como conversão pendente
 - [ ] **Testar lead:** preencher o form na LP → conferir inscrito na Flowbiz + evento `Lead` no **Meta Test Events** (usando `META_TEST_EVENT_CODE`) + `generate_lead` no **GA4 DebugView**
 - [ ] **Testar compra:** clicar "Comprar edição preta/marrom" → deve abrir a URL da Tray com `?cupom=IPP120` e UTMs
 - [ ] Remover `META_TEST_EVENT_CODE` após validar
