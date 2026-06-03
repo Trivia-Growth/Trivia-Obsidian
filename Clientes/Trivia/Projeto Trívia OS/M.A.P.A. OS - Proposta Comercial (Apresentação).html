@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M.A.P.A. OS · Proposta Comercial · Trívia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --petrol:#071925; --petrol-2:#0f2838; --petrol-3:#163647;
+    --coral:#fc544c; --coral-2:#e63f37;
+    --paper:#fafaf7; --bone:#eeeae1; --bone-2:#e4dfd2; --green:#1f9d57;
+    --ink-70:rgba(7,25,37,.7); --ink-60:rgba(7,25,37,.6); --ink-50:rgba(7,25,37,.5);
+    --ink-30:rgba(7,25,37,.3); --ink-15:rgba(7,25,37,.15); --ink-10:rgba(7,25,37,.1); --ink-06:rgba(7,25,37,.06);
+    --pap-70:rgba(250,250,247,.7); --pap-50:rgba(250,250,247,.5); --pap-15:rgba(250,250,247,.15);
+    --ff-display:"Instrument Serif",Georgia,serif;
+    --ff-body:"Inter Tight",-apple-system,sans-serif;
+    --ff-mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--ff-body);color:var(--petrol);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--coral);width:0;z-index:60;transition:width .5s ease}
+  .deck{position:relative;height:100vh;width:100vw;overflow:hidden}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:7vh 7vw;opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease,visibility .5s;overflow-y:auto}
+  .slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+  .slide.petrol{background:var(--petrol);color:var(--paper)}
+  .slide.bone{background:var(--bone)}
+  .wrap{width:100%;max-width:1120px;margin:auto}
+
+  .eyebrow{display:inline-flex;gap:12px;align-items:baseline;font-family:var(--ff-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50);margin-bottom:22px}
+  .eyebrow .accent{color:var(--coral);font-weight:700}
+  .petrol .eyebrow{color:var(--pap-50)}
+  h1{font-family:var(--ff-display);font-weight:400;font-size:clamp(2.7rem,6.2vw,5rem);line-height:1.0;letter-spacing:-.02em}
+  h2{font-family:var(--ff-display);font-weight:400;font-size:clamp(1.9rem,4.2vw,3.2rem);line-height:1.08;letter-spacing:-.02em;margin-bottom:14px}
+  h3{font-size:1.04rem;font-weight:600;letter-spacing:-.01em}
+  em{font-style:italic;color:var(--coral)}
+  p{color:var(--ink-70);font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.6}
+  .petrol p{color:var(--pap-70)}
+  .lead{font-size:clamp(1.1rem,1.6vw,1.34rem);color:var(--ink-70);max-width:780px}
+  .petrol .lead{color:var(--pap-70)}
+  .sub{color:var(--ink-60);margin-bottom:28px;font-size:clamp(1rem,1.4vw,1.18rem)}
+  .petrol .sub{color:var(--pap-70)}
+  .hl{color:var(--petrol);font-weight:600}.petrol .hl{color:var(--paper)}
+
+  .fill{background:rgba(252,84,76,.13);color:var(--coral-2);padding:0 6px;border-radius:2px;font-weight:500}
+  .petrol .fill{background:rgba(252,84,76,.22);color:#ffb3ad}
+
+  /* cover */
+  .logo{display:flex;align-items:center;gap:11px;margin-bottom:30px}
+  .logo .mark{width:34px;height:34px;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ff-display);font-size:1.3rem}
+  .logo .name{font-weight:600;font-size:1.05rem;letter-spacing:-.01em;color:var(--paper)}
+  .cover-for{margin:26px 0;padding-left:16px;border-left:3px solid var(--coral)}
+  .cover-for .cf-label{display:block;font-family:var(--ff-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pap-50);margin-bottom:6px}
+  .cover-for .cf-name{display:block;font-family:var(--ff-display);font-size:clamp(1.8rem,3.6vw,2.7rem);line-height:1;letter-spacing:-.01em;color:var(--paper)}
+  .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--pap-15);padding:9px 15px;font-size:.9rem;font-weight:500;color:var(--paper)}
+  .pill b{color:var(--coral);font-weight:700}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink-15);border:1px solid var(--ink-15);margin-top:10px}
+  .petrol .stats{background:var(--pap-15);border-color:var(--pap-15)}
+  .stat{background:var(--paper);padding:26px 22px}
+  .petrol .stat{background:var(--petrol)}
+  .stat .num{font-family:var(--ff-display);font-size:clamp(2.2rem,4.2vw,3.2rem);line-height:.92;letter-spacing:-.02em}
+  .stat .num.c{color:var(--coral)}
+  .stat .lab{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-50);margin-top:12px}
+  .petrol .stat .lab{color:var(--pap-50)}
+
+  /* grids / cells */
+  .grid{display:grid;gap:1px;background:var(--ink-15);border:1px solid var(--ink-15)}
+  .g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+  .cell{background:var(--paper);padding:24px}
+  .cell .num{font-family:var(--ff-mono);font-size:12px;letter-spacing:.1em;color:var(--coral);margin-bottom:12px}
+  .cell h3{margin-bottom:7px}.cell p{font-size:.94rem;line-height:1.5;color:var(--ink-60)}
+
+  /* punch / quote */
+  .punch{background:var(--petrol);color:var(--paper);padding:26px 32px;font-family:var(--ff-display);font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.3;letter-spacing:-.01em;margin-top:8px}
+  .punch em{color:var(--coral)}
+
+  /* antes/depois */
+  .ba{display:flex;align-items:center;gap:28px;margin-top:26px}
+  .ba .col{position:relative;width:200px;height:140px;flex:0 0 auto}
+  .ba .lbl{position:absolute;bottom:-22px;left:0;font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em}
+  .ba .scatter{position:absolute;border:1px solid var(--pap-50);border-radius:2px;display:grid;place-items:center;font-family:var(--ff-mono);font-size:9px;color:var(--pap-50);height:28px}
+  .ba .arrow{color:var(--coral);font-size:26px}
+  .ba .os{position:absolute;inset:6% 2%;border:1.5px solid var(--coral);border-radius:2px;background:rgba(252,84,76,.14);display:flex;flex-direction:column}
+  .ba .os .head{border-bottom:1px solid rgba(252,84,76,.6);padding:5px 8px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;color:var(--coral)}
+  .ba .os .g{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px}
+  .ba .os .g div{border:1px solid var(--pap-50);border-radius:1px;display:grid;place-items:center;font-family:var(--ff-mono);font-size:8px;color:var(--pap-50)}
+
+  /* list with coral ticks */
+  .ticks{list-style:none;margin-top:8px}
+  .ticks li{padding:11px 0 11px 26px;position:relative;font-size:1.04rem;line-height:1.5;border-top:1px solid var(--ink-10)}
+  .petrol .ticks li{border-color:var(--pap-15)}
+  .ticks li:first-child{border-top:none}
+  .ticks li::before{content:"→";position:absolute;left:0;top:11px;color:var(--coral);font-weight:700}
+  .ticks li b{color:var(--petrol)}.petrol .ticks li b{color:var(--paper)}
+
+  /* method flow */
+  .flow{display:flex;gap:0;margin-top:10px}
+  .stage{flex:1;border:1px solid var(--ink-15);background:var(--paper);padding:24px 20px}
+  .stage .L{font-family:var(--ff-display);font-style:italic;color:var(--coral);font-size:2.6rem;line-height:1;margin-bottom:12px}
+  .stage h3{margin-bottom:6px}
+  .stage p{font-size:.88rem;color:var(--ink-60);line-height:1.5}
+
+  /* commercial blocks */
+  .blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink-15);border:1px solid var(--ink-15);margin-top:8px}
+  .block{background:var(--paper);padding:26px 22px;display:flex;flex-direction:column}
+  .block.k{box-shadow:inset 0 0 0 2px var(--coral)}
+  .block .bn{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-50)}
+  .block .price{font-family:var(--ff-display);font-size:1.7rem;line-height:1.05;margin:10px 0 4px}
+  .block .price.c{color:var(--coral)}
+  .block .bd{font-size:.9rem;color:var(--ink-60);line-height:1.5;margin-top:4px}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--ink-15);font-size:1.02rem}
+  .tbl td{padding:15px 20px;border-top:1px solid var(--ink-10);vertical-align:top}
+  .tbl tr:first-child td{border-top:none}
+  .tbl td.v{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tbl tr.abate td{color:var(--coral)}
+  .tbl tr.total td{border-top:2px solid var(--petrol);font-weight:700;font-size:1.12rem}
+  .tbl .lab{font-family:var(--ff-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-50);border-bottom:2px solid var(--petrol)}
+
+  /* two-col panels */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .panel{border:1px solid var(--ink-15);padding:26px;background:var(--paper)}
+  .panel h3{margin-bottom:14px}
+
+  /* callout */
+  .callout{margin-top:20px;border-left:3px solid var(--coral);background:var(--bone);padding:14px 18px;font-size:1rem;color:var(--petrol);line-height:1.5}
+  .petrol .callout{background:var(--petrol-2);color:var(--paper)}
+  .callout b{color:var(--coral)}
+
+  .hint{font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;color:var(--pap-50);margin-top:32px}
+
+  /* nav */
+  .counter{position:fixed;bottom:24px;left:24px;font-family:var(--ff-mono);font-size:12px;letter-spacing:.1em;color:var(--ink-50);z-index:40}
+  .counter b{color:var(--petrol)}.petrol-ctx .counter{color:var(--pap-50)}.petrol-ctx .counter b{color:var(--paper)}
+  .dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:40}
+  .dot-n{width:7px;height:7px;background:var(--ink-30);cursor:pointer;border:none;padding:0;transition:.3s;border-radius:1px}
+  .petrol-ctx .dot-n{background:var(--pap-15)}
+  .dot-n.on{background:var(--coral);width:20px}
+  .arrows{position:fixed;bottom:18px;right:24px;display:flex;gap:9px;z-index:40}
+  .nbtn{width:46px;height:46px;border:1px solid var(--ink-15);background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--petrol);font-size:20px;line-height:1;transition:.18s}
+  .nbtn:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
+  .nbtn:disabled{opacity:.3;cursor:not-allowed}
+  .brand-foot{position:fixed;top:22px;right:26px;font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-50);z-index:40}
+  .petrol-ctx .brand-foot{color:var(--pap-50)}
+
+  @media(max-width:860px){
+    .g3,.g2,.cmp,.twocol,.stats,.blocks{grid-template-columns:1fr}
+    .flow{flex-direction:column}
+    .ba{flex-direction:column;align-items:flex-start;gap:34px}
+    .slide{padding:8vh 6vw}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="brand-foot">Trívia · M.A.P.A. OS</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · CAPA -->
+  <section class="slide petrol active">
+    <div class="wrap">
+      <div class="logo"><span class="mark">M</span><span class="name">Trívia Studio</span></div>
+      <div class="eyebrow"><span class="accent">◆</span> PROPOSTA COMERCIAL · M.A.P.A. OS</div>
+      <h1>O sistema operacional<br/>da <em>sua empresa</em>.</h1>
+      <div class="cover-for">
+        <span class="cf-label">Proposta para</span>
+        <span class="cf-name"><span class="fill">[EMPRESA]</span></span>
+      </div>
+      <p class="lead">Unificamos sua operação num lugar só e colocamos agentes de IA especialistas operando a rotina — pra você escalar sem inchar o time.</p>
+      <div class="pill-row">
+        <span class="pill">A/C <b><span class="fill">[Contato]</span></b></span>
+        <span class="pill"><span class="fill">[DD/MM/AAAA]</span></span>
+        <span class="pill">Validade <b><span class="fill">[15]</span> dias</b></span>
+      </div>
+      <div class="hint">Use as setas ← → (ou espaço) para navegar</div>
+    </div>
+  </section>
+
+  <!-- 2 · CONTEXTO -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">01</span> O CONTEXTO</div>
+      <h2>Onde dói hoje na <span class="fill">[Empresa]</span>.</h2>
+      <p class="sub">A operação cresceu, mas roda em <span class="fill">[N]</span> sistemas que não conversam entre si.</p>
+      <div class="grid g3">
+        <div class="cell"><div class="num">01</div><h3>Não escala sem inchar</h3><p>Cada cliente novo vira mais planilha, mais gente e mais caos. O faturamento sobe e a margem não acompanha.</p></div>
+        <div class="cell"><div class="num">02</div><h3>Refém da operação</h3><p>A empresa não roda sem você e sem as 2 ou 3 pessoas que têm tudo na cabeça.</p></div>
+        <div class="cell"><div class="num">03</div><h3>Dinheiro vazando</h3><p>Retrabalho, erro entre sistemas, faturamento atrasado, lead que esfria. Sangra todo mês.</p></div>
+      </div>
+      <div class="callout">Hoje isso custa à <span class="fill">[Empresa]</span> uma estimativa de <b><span class="fill">[R$ X mil/mês (~R$ Y/ano)]</span></b> em retrabalho, erro e decisão no escuro.</div>
+    </div>
+  </section>
+
+  <!-- 3 · A CAUSA-RAIZ -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">02</span> A CAUSA-RAIZ</div>
+      <h2>Você acha que é problema de ferramenta.<br/>É <em>fragmentação</em>.</h2>
+      <p class="lead">Seus sistemas não conversam, então todo crescimento vira trabalho manual. E IA jogada em cima desse caos só piora: alucina, porque não enxerga a operação inteira.</p>
+      <div class="ba">
+        <div class="col">
+          <div class="scatter" style="left:2%;top:4%;width:56px;transform:rotate(-3deg);border-color:var(--ink-30);color:var(--ink-50)">ERP</div>
+          <div class="scatter" style="left:54%;top:0;width:50px;transform:rotate(3deg);border-color:var(--ink-30);color:var(--ink-50)">CRM</div>
+          <div class="scatter" style="left:10%;top:38%;width:46px;transform:rotate(-2deg);border-color:var(--ink-30);color:var(--ink-50)">XLS</div>
+          <div class="scatter" style="left:52%;top:44%;width:58px;transform:rotate(4deg);border-color:var(--ink-30);color:var(--ink-50)">FIN</div>
+          <div class="scatter" style="left:26%;top:70%;width:48px;transform:rotate(-4deg);border-color:var(--ink-30);color:var(--ink-50)">ADS</div>
+          <div class="lbl" style="color:var(--ink-50)">ANTES</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="col">
+          <div class="os">
+            <div class="head">M.A.P.A. OS</div>
+            <div class="g"><div style="border-color:rgba(7,25,37,.2);color:var(--ink-50)">fin</div><div style="border-color:rgba(7,25,37,.2);color:var(--ink-50)">vnd</div><div style="border-color:rgba(7,25,37,.2);color:var(--ink-50)">ops</div><div style="border-color:rgba(7,25,37,.2);color:var(--ink-50)">mkt</div></div>
+          </div>
+          <div class="lbl" style="color:var(--coral)">DEPOIS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · O QUE É -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">03</span> O QUE É</div>
+      <h2>Não é um sistema que você opera.<br/>É um sistema que <em>opera com você</em>.</h2>
+      <ul class="ticks">
+        <li><b>Unifica</b> toda a operação e os dados num lugar só — a fonte única da verdade.</li>
+        <li><b>Substitui</b> os sistemas que dá pra substituir e <b>integra</b> os poucos imprescindíveis (fiscal, pagamento).</li>
+        <li><b>Coloca um agente de IA especialista em cada área</b> executando a rotina: financeiro, vendas, operação, marketing, atendimento.</li>
+        <li><b>Entrega o controle pro seu time</b> — vocês ficam donos da operação no final, sem virar reféns de fornecedor.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 · DIFERENCIAL -->
+  <section class="slide petrol">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">04</span> POR QUE FUNCIONA</div>
+      <h2>A IA só funciona porque está <em>tudo unificado</em>.</h2>
+      <p class="lead">Unificar dado, um ERP faz. Mostrar num painel, um BI faz. Os dois param aí. O M.A.P.A. OS opera — e os agentes só ficam poderosos quando enxergam a operação inteira no mesmo lugar.</p>
+      <div class="punch" style="background:var(--petrol-2)">Qualquer um pluga um chatbot. Ninguém pluga agentes que operam a empresa toda <em>sem ter feito a unificação antes</em>.</div>
+      <ul class="ticks" style="margin-top:18px">
+        <li>Conciliam o financeiro e fecham o caixa</li>
+        <li>Respondem o cliente no WhatsApp dentro do contexto da operação</li>
+        <li>Antecipam ruptura de estoque e cruzam canais</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 · MÉTODO -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">05</span> O MÉTODO</div>
+      <h2>Primeiro a gente faz o <em>mapa</em>. Depois constrói o OS.</h2>
+      <div class="flow">
+        <div class="stage"><div class="L">M</div><h3>Mapeamento</h3><p>Diagnóstico: sistemas, onde o dado morre, as dores. Entregamos a planta do seu OS.</p></div>
+        <div class="stage"><div class="L">A</div><h3>Arquitetura</h3><p>Substituir, integrar ou matar, sistema por sistema. Escopo travado.</p></div>
+        <div class="stage"><div class="L">P</div><h3>Plataforma</h3><p>Fundação de dados, módulos próprios e conectores.</p></div>
+        <div class="stage"><div class="L">A</div><h3>Agentes</h3><p>IA por área + gestão à vista. O sistema passa a operar.</p></div>
+      </div>
+      <p class="sub" style="margin-top:22px;margin-bottom:0">Depois, seu time opera sozinho — com a gente por perto só se você quiser suporte.</p>
+    </div>
+  </section>
+
+  <!-- 7 · ESCOPO -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">06</span> O QUE ESTÁ INCLUSO</div>
+      <h2>O escopo da <span class="fill">[Empresa]</span>.</h2>
+      <table class="tbl">
+        <tr><td><b>Fundação de dados</b></td><td>Schema da fonte única da verdade + ingestão dos sistemas-fonte</td></tr>
+        <tr><td><b>Módulos próprios</b></td><td><span class="fill">[ex.: Vendas, Financeiro, Estoque]</span> substituindo <span class="fill">[sistemas atuais]</span></td></tr>
+        <tr><td><b>Conectores</b></td><td>Integração de <span class="fill">[fiscal/NF-e, pagamento, marketplace]</span></td></tr>
+        <tr><td><b>Agentes de IA</b></td><td><span class="fill">[ex.: agente de qualificação no WhatsApp, conciliação financeira]</span></td></tr>
+        <tr><td><b>Gestão à vista</b></td><td>Painéis, metas e alertas (cockpit do dono)</td></tr>
+        <tr><td><b>Capacitação + estabilização</b></td><td>Time treinado para operar sozinho + <span class="fill">[30–60]</span> dias de ajustes pós go-live, sem custo extra</td></tr>
+      </table>
+      <p class="sub" style="margin-top:16px;margin-bottom:0;font-size:.92rem">Fora do escopo (proposta separada): integrações com legados via API customizada; plataforma multi-módulo além do acima; fine-tuning de modelo; mais de <span class="fill">[N]</span> casos de uso simultâneos.</p>
+    </div>
+  </section>
+
+  <!-- 8 · COMERCIAL -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">07</span> COMO FUNCIONA</div>
+      <h2>Você não compra no escuro.</h2>
+      <div class="blocks">
+        <div class="block k"><div class="bn">01 · Diagnóstico</div><div class="price c">R$ 30.000</div><div class="bd"><b>100% abatível</b> da implementação. Entrega o diagnóstico completo e a planta do seu OS.</div></div>
+        <div class="block"><div class="bn">02 · Implementação</div><div class="price">a partir de<br/>R$ 119.000</div><div class="bd">Projeto sob medida, escopo travado por fases.</div></div>
+        <div class="block"><div class="bn">03 · Suporte</div><div class="price" style="font-size:1.25rem">opcional e leve</div><div class="bd">Sem mensalidade obrigatória: banco de horas ou plano enxuto a partir de ~R$ 990/mês, sem fidelidade.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · INVESTIMENTO -->
+  <section class="slide petrol">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">08</span> INVESTIMENTO</div>
+      <h2>O número.</h2>
+      <table class="tbl">
+        <tr class="lab"><td class="lab">Item</td><td class="lab v">Valor</td></tr>
+        <tr><td>Diagnóstico + planta do OS</td><td class="v">R$ 30.000</td></tr>
+        <tr><td>Implementação (escopo do slide 07)</td><td class="v">R$ <span class="fill">[TOTAL]</span></td></tr>
+        <tr class="abate"><td>(–) Abatimento do diagnóstico já pago</td><td class="v">– R$ 30.000</td></tr>
+        <tr class="total"><td>Saldo da implementação</td><td class="v">R$ <span class="fill">[TOTAL − 30.000]</span></td></tr>
+      </table>
+      <p style="margin-top:18px"><span class="hl">Condições:</span> <span class="fill">[30% na assinatura + saldo por marco de entrega de cada fase]</span>. Suporte pós-entrega opcional.</p>
+    </div>
+  </section>
+
+  <!-- 10 · PRAZOS -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">09</span> PRAZOS</div>
+      <h2>Por fases, com entregas reais.</h2>
+      <div class="flow">
+        <div class="stage k"><div class="L" style="font-size:1.4rem;font-style:normal;font-family:var(--ff-mono);letter-spacing:.1em"><span class="fill">[3–4]</span>sem</div><h3>Diagnóstico</h3><p>Planta do OS, escopo e investimento.</p></div>
+        <div class="stage"><div class="L" style="font-size:1.4rem;font-style:normal;font-family:var(--ff-mono);letter-spacing:.1em"><span class="fill">[—]</span></div><h3>Fundação de dados</h3><p>A fonte única da verdade no ar.</p></div>
+        <div class="stage"><div class="L" style="font-size:1.4rem;font-style:normal;font-family:var(--ff-mono);letter-spacing:.1em"><span class="fill">[—]</span></div><h3>Primeiro agente</h3><p>O caso de uso de maior impacto.</p></div>
+        <div class="stage"><div class="L" style="font-size:1.4rem;font-style:normal;font-family:var(--ff-mono);letter-spacing:.1em"><span class="fill">[—]</span></div><h3>Go-live</h3><p>Seu time operando, com estabilização inclusa.</p></div>
+      </div>
+      <p class="sub" style="margin-top:22px;margin-bottom:0">Sprints e entregas acompanhadas em tempo real — não slide.</p>
+    </div>
+  </section>
+
+  <!-- 11 · COMPROMISSO + TRÍVIA -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">10</span> O QUE FAZ DAR CERTO</div>
+      <h2>Um time dos dois lados.</h2>
+      <div class="twocol">
+        <div class="panel">
+          <h3>O que esperamos da <span class="fill">[Empresa]</span></h3>
+          <ul class="ticks">
+            <li>Patrocinador interno nomeado (destrava acessos e decisões)</li>
+            <li>Engajamento do dono/sócio nos marcos de cada fase</li>
+            <li>Acessos de leitura e disponibilidade do time</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Por que a Trívia</h3>
+          <ul class="ticks">
+            <li>Dupla complementar: técnica profunda + gestão real de PME</li>
+            <li>A gente vende o que roda em casa (Trívia, Heziom, atendimento com IA)</li>
+            <li>Backbone reaplicável e stack demonstrável ao vivo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · PRÓXIMOS PASSOS -->
+  <section class="slide petrol">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">11</span> PRÓXIMOS PASSOS</div>
+      <h2>Vamos começar.</h2>
+      <ul class="ticks" style="max-width:780px">
+        <li><b>1.</b> Aprovação desta proposta dentro da validade de <span class="fill">[15]</span> dias.</li>
+        <li><b>2.</b> Assinatura do contrato e pagamento da entrada.</li>
+        <li><b>3.</b> Kickoff + indicação do patrocinador interno + coleta de acessos.</li>
+        <li><b>4.</b> Início pela fundação de dados.</li>
+      </ul>
+      <div class="callout" style="margin-top:26px">Dúvidas? Falar com <b><span class="fill">[seu nome / contato]</span></b> · Trívia Studio</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="counter"><b id="cur">1</b> / <span id="tot">12</span></div>
+<div class="dots" id="dots"></div>
+<div class="arrows">
+  <button class="nbtn" id="prev" aria-label="Anterior">←</button>
+  <button class="nbtn" id="next" aria-label="Próximo">→</button>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length; let i=0;
+  const prog=document.getElementById('progress');
+  const cur=document.getElementById('cur');
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+  const dotsWrap=document.getElementById('dots');
+  document.getElementById('tot').textContent=total;
+  slides.forEach((_,n)=>{const b=document.createElement('button');b.className='dot-n';b.setAttribute('aria-label','Ir para tela '+(n+1));b.onclick=()=>go(n);dotsWrap.appendChild(b);});
+  const dots=[...dotsWrap.children];
+  function go(n){
+    i=Math.max(0,Math.min(total-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    prog.style.width=((i+1)/total*100)+'%';
+    cur.textContent=i+1;
+    prev.disabled=i===0; next.disabled=i===total-1;
+    document.body.classList.toggle('petrol-ctx',slides[i].classList.contains('petrol'));
+    slides[i].scrollTop=0;
+  }
+  next.onclick=()=>go(i+1); prev.onclick=()=>go(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(i+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1);
+    if(e.key==='Home')go(0); if(e.key==='End')go(total-1);
+  });
+  let sx=null;
+  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>60)go(i+(dx<0?1:-1));sx=null;},{passive:true});
+  go(0);
+</script>
+</body>
+</html>

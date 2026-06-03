@@ -39,6 +39,8 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ### 👥 Marketing e CRM (Fase 2.2 — substitui Flowbiz)
 - [[Índice Marketing e CRM]] — CRM unificado, 40k contatos, segmentação comportamental
+- [[LP Coleções 2026 (Plano Bomba) — Configuração]] — LP de catálogo dos 11 combos · `colecoes.editoraheziom.com.br` ✅ no ar
+- [[00 - Bíblia 120 — Projeto LP]] — LP de pré-venda da Bíblia 120 anos (IPP) · `ipp120.editoraheziom.com.br` ✅ no ar · cupom IPP120 → Tray, captura→Flowbiz+CAPI
 
 ### 🏪 Comercial (Fase 2.3)
 - [[Índice Comercial]] — atacado B2B, pace vs. meta CPC, pipeline, agente WhatsApp
