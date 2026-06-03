@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proposta Comercial · M.A.P.A. OS · Trívia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --petrol:#071925; --petrol-2:#0f2838; --coral:#fc544c; --coral-2:#e63f37;
+    --paper:#fafaf7; --bone:#eeeae1; --ink-70:rgba(7,25,37,.7); --ink-50:rgba(7,25,37,.5);
+    --ink-15:rgba(7,25,37,.15); --ink-08:rgba(7,25,37,.08); --pap-70:rgba(250,250,247,.7);
+    --ff-display:"Instrument Serif",Georgia,serif; --ff-body:"Inter Tight",system-ui,sans-serif; --ff-mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bone);color:var(--petrol);font-family:var(--ff-body);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
+  .page{max-width:820px;margin:24px auto;background:var(--paper);box-shadow:0 8px 40px rgba(7,25,37,.12)}
+  .pad{padding:48px 56px}
+  .serif{font-family:var(--ff-display);font-weight:400;letter-spacing:-.01em}
+  .mono{font-family:var(--ff-mono)}
+  .eyebrow{font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50)}
+  .eyebrow .mk{color:var(--coral)}
+  em{font-style:italic;color:var(--coral)}
+  h2.sec{font-family:var(--ff-display);font-weight:400;font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:8px 0 18px}
+  h3{font-size:15px;font-weight:600;margin:22px 0 6px}
+  p{margin:0 0 14px}
+  ul{margin:0 0 14px;padding-left:20px}
+  li{margin-bottom:6px}
+  strong{font-weight:600}
+  a{color:var(--coral)}
+  .muted{color:var(--ink-70)}
+  .hr{height:1px;background:var(--ink-15);border:0;margin:36px 0}
+  section{page-break-inside:avoid}
+
+  /* Cover */
+  .cover{background:var(--petrol);color:var(--paper);padding:56px 56px 44px}
+  .cover .eyebrow{color:var(--pap-70)}
+  .cover h1{font-family:var(--ff-display);font-weight:400;font-size:64px;line-height:.98;letter-spacing:-.02em;margin:14px 0 6px}
+  .cover .sub{font-size:18px;color:var(--pap-70);max-width:46ch;margin:0 0 32px}
+  .cover .meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;border-top:1px solid rgba(250,250,247,.15);padding-top:20px}
+  .cover .meta .k{font-family:var(--ff-mono);font-size:9.5px;letter-spacing:.12em;color:rgba(250,250,247,.5);text-transform:uppercase;margin-bottom:3px}
+  .cover .meta .v{font-size:14px;color:var(--paper)}
+  .tag{display:inline-block;font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;color:var(--coral);border:1px solid var(--coral);padding:3px 8px;border-radius:2px}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--ink-15);vertical-align:top}
+  thead th{font-family:var(--ff-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-50);border-bottom:2px solid var(--petrol)}
+  tr.total td{border-top:2px solid var(--petrol);border-bottom:none;font-weight:600}
+  tr.abate td{color:var(--coral)}
+  td.val{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+  th.val{text-align:right}
+
+  /* fill placeholders */
+  .fill{background:rgba(252,84,76,.12);color:var(--coral-2);padding:0 4px;border-radius:2px;font-weight:500}
+
+  /* callout */
+  .callout{border-left:3px solid var(--coral);padding:4px 0 4px 18px;color:var(--ink-70);font-style:italic;margin:18px 0}
+
+  /* method */
+  .method td:first-child{font-family:var(--ff-display);font-style:italic;color:var(--coral);font-size:20px;white-space:nowrap;width:1%}
+
+  /* signature */
+  .sign{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:18px}
+  .sign .line{border-top:1px solid var(--petrol);margin-top:34px;padding-top:6px;font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-50)}
+
+  /* screen-only helper */
+  .howto{max-width:820px;margin:24px auto 0;background:#fff5e6;border:1px solid #e8c98a;border-radius:6px;padding:14px 18px;font-size:13px;color:#7a5a1e}
+  .footer{font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-50);text-align:center;padding:24px}
+
+  @media print{
+    html,body{background:#fff}
+    .page{box-shadow:none;margin:0;max-width:none}
+    .no-print{display:none!important}
+    @page{size:A4;margin:14mm}
+    .cover{padding:40px}
+    .pad{padding:28px 0}
+  }
+</style>
+</head>
+<body>
+
+<div class="howto no-print">
+  <strong>🔧 Template.</strong> Substitua os campos destacados <span class="fill">[assim]</span> pelos dados do cliente (puxe da planta do diagnóstico). Para enviar: <em style="color:#7a5a1e">Arquivo → Imprimir → Salvar como PDF</em>. Apague este aviso antes (ele não sai no PDF).
+</div>
+
+<div class="page">
+
+  <!-- CAPA -->
+  <header class="cover">
+    <div class="eyebrow"><span class="mk">◆</span> PROPOSTA COMERCIAL · <span class="tag" style="border-color:rgba(250,250,247,.4);color:var(--pap-70)">M.A.P.A. OS</span></div>
+    <h1 class="serif">O sistema operacional<br/>da <span style="color:var(--coral)">[EMPRESA]</span>.</h1>
+    <p class="sub">Unificamos sua operação num lugar só e colocamos agentes de IA especialistas operando a rotina — pra você escalar sem inchar o time.</p>
+    <div class="meta">
+      <div><div class="k">Para</div><div class="v"><span class="fill">[Empresa]</span> · A/C <span class="fill">[Contato, cargo]</span></div></div>
+      <div><div class="k">De</div><div class="v">Trívia Studio · <span class="fill">[Seu nome]</span></div></div>
+      <div><div class="k">Data</div><div class="v"><span class="fill">[DD/MM/AAAA]</span></div></div>
+      <div><div class="k">Validade</div><div class="v"><span class="fill">[15]</span> dias</div></div>
+    </div>
+  </header>
+
+  <div class="pad">
+
+    <!-- RESUMO -->
+    <section>
+      <p class="muted">
+        A <span class="fill">[Empresa]</span> cresceu, mas a operação roda em <span class="fill">[N]</span> sistemas que não conversam entre si — o que gera retrabalho, decisão no escuro e um teto pra escalar sem inchar o time. Esta proposta apresenta a implementação do <strong>M.A.P.A. OS</strong>: unificamos a operação e os dados num sistema só, sob medida, e colocamos <strong>agentes de IA especialistas por área</strong> operando a rotina junto com o seu time. O caminho tem três blocos — Diagnóstico, Implementação por fases e Suporte opcional —, com a implementação a partir de <strong>R$ 119.000</strong> e o diagnóstico de <strong>R$ 30.000 abatido integralmente</strong>.
+      </p>
+    </section>
+
+    <hr class="hr" />
+
+    <!-- 1 CONTEXTO -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 01 · O contexto</div>
+      <h2 class="sec">Onde dói hoje na <span style="color:var(--coral)">[Empresa]</span>.</h2>
+      <ul>
+        <li><strong>Onde dói:</strong> <span class="fill">[ex.: o time gasta X horas/semana passando dado entre o ERP, planilhas e o WhatsApp; o caixa fecha atrasado; vende-se o que não tem em estoque]</span>.</li>
+        <li><strong>O que isso custa:</strong> estimamos hoje uma perda de <span class="fill">[R$ X mil/mês (~R$ Y/ano)]</span> em retrabalho, erro entre sistemas e decisão no escuro.</li>
+        <li><strong>O que trava a escala:</strong> <span class="fill">[ex.: cada cliente novo exige mais gente; a empresa depende de você e de poucas pessoas-chave]</span>.</li>
+      </ul>
+      <div class="callout">A causa-raiz é a fragmentação: os sistemas não conversam. E IA jogada em cima desse caos só piora. O M.A.P.A. OS resolve unificando primeiro, e só então operando com IA.</div>
+    </section>
+
+    <!-- 2 O QUE É -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 02 · O que é</div>
+      <h2 class="sec">Não é um sistema que você opera. É um sistema que <em>opera com você</em>.</h2>
+      <ul>
+        <li><strong>Unifica</strong> toda a operação e os dados num lugar só (a fonte única da verdade);</li>
+        <li><strong>Substitui</strong> os sistemas que dá pra substituir e <strong>integra</strong> os poucos imprescindíveis (fiscal, pagamento);</li>
+        <li><strong>Coloca um agente de IA especialista em cada área</strong> executando a rotina — financeiro, vendas, operação, marketing, atendimento;</li>
+        <li><strong>Entrega o controle</strong> pro seu time: vocês ficam donos da operação no final, sem virar reféns de fornecedor.</li>
+      </ul>
+      <p class="muted">A IA só funciona de verdade porque está tudo unificado. Qualquer um pluga um chatbot; ninguém pluga agentes que operam a empresa toda sem ter feito a unificação antes. <strong>Essa é a diferença.</strong></p>
+    </section>
+
+    <!-- 3 MÉTODO -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 03 · O método</div>
+      <h2 class="sec">Primeiro a gente faz o <em>mapa</em>. Depois constrói o OS.</h2>
+      <table class="method">
+        <tr><td>M</td><td><strong>Mapeamento</strong> — Diagnóstico: todos os sistemas, onde o dado morre, as dores. Entregamos a planta do seu OS.</td></tr>
+        <tr><td>A</td><td><strong>Arquitetura</strong> — Decisão sistema por sistema (substituir, integrar ou matar) + schema da camada de dados. Escopo travado.</td></tr>
+        <tr><td>P</td><td><strong>Plataforma</strong> — Construção: fundação de dados, módulos próprios e conectores dos imprescindíveis.</td></tr>
+        <tr><td>A</td><td><strong>Agentes</strong> — Agentes de IA por área + gestão à vista (o cockpit do dono). O sistema passa a operar.</td></tr>
+      </table>
+      <p class="muted">Depois, seu time opera sozinho — com a gente por perto só se você quiser suporte.</p>
+    </section>
+
+    <!-- 4 ESCOPO -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 04 · O que está incluso</div>
+      <h2 class="sec">O escopo da <span style="color:var(--coral)">[Empresa]</span>.</h2>
+      <table>
+        <thead><tr><th>Fase / entrega</th><th>O que inclui</th></tr></thead>
+        <tbody>
+          <tr><td>Fundação de dados</td><td>Schema da fonte única da verdade + ingestão dos sistemas-fonte</td></tr>
+          <tr><td>Módulos próprios</td><td><span class="fill">[ex.: Vendas, Financeiro, Estoque]</span> que substituem <span class="fill">[sistemas atuais]</span></td></tr>
+          <tr><td>Conectores</td><td>Integração de <span class="fill">[fiscal/NF-e, pagamento, marketplace]</span></td></tr>
+          <tr><td>Agentes de IA</td><td><span class="fill">[ex.: agente de qualificação no WhatsApp, conciliação financeira]</span></td></tr>
+          <tr><td>Gestão à vista</td><td>Painéis, metas e alertas (cockpit do dono)</td></tr>
+          <tr><td>Capacitação do time</td><td>Treinamento para o time operar sozinho</td></tr>
+          <tr><td>Estabilização</td><td><span class="fill">[30–60]</span> dias pós go-live: ajustes finos e correções, sem custo extra</td></tr>
+        </tbody>
+      </table>
+      <p class="muted"><strong>Não incluso</strong> (vira proposta separada): integrações com legados que exijam API customizada; plataforma multi-módulo além do escopo acima; treinamento de modelo de IA customizado; mais de <span class="fill">[N]</span> casos de uso simultâneos.</p>
+    </section>
+
+    <!-- 5 COMERCIAL -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 05 · Como funciona</div>
+      <h2 class="sec">Você não compra no escuro.</h2>
+      <ul>
+        <li><strong>Diagnóstico</strong> — escopo fechado, <strong>R$ 30.000</strong>, <strong>100% abatível</strong> da implementação. Entrega o diagnóstico completo e a planta do seu OS.</li>
+        <li><strong>Implementação</strong> — projeto sob medida, <strong>a partir de R$ 119.000</strong>, escopo travado por fases (Seção 04).</li>
+        <li><strong>Suporte pós-entrega</strong> — opcional e leve. Sem mensalidade obrigatória: banco de horas ou plano enxuto a partir de <strong>~R$ 990/mês</strong>, sem fidelidade.</li>
+      </ul>
+    </section>
+
+    <!-- 6 INVESTIMENTO -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 06 · Investimento</div>
+      <h2 class="sec">O número.</h2>
+      <table>
+        <thead><tr><th>Item</th><th class="val">Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Diagnóstico operacional + planta do OS</td><td class="val">R$ 30.000</td></tr>
+          <tr><td>Implementação do M.A.P.A. OS (escopo da Seção 04)</td><td class="val">R$ <span class="fill">[TOTAL]</span></td></tr>
+          <tr class="abate"><td>(–) Abatimento do diagnóstico já pago</td><td class="val">– R$ 30.000</td></tr>
+          <tr class="total"><td>Saldo da implementação</td><td class="val">R$ <span class="fill">[TOTAL − 30.000]</span></td></tr>
+          <tr><td>Suporte pós-entrega (opcional)</td><td class="val">banco de horas ou a partir de ~R$ 990/mês</td></tr>
+        </tbody>
+      </table>
+      <p class="muted"><strong>Condições de pagamento:</strong> <span class="fill">[30% na assinatura + saldo por marco de entrega de cada fase; parcelamento a combinar]</span>.</p>
+    </section>
+
+    <!-- 7 PRAZOS -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 07 · Prazos</div>
+      <table>
+        <thead><tr><th>Etapa</th><th>Prazo estimado</th></tr></thead>
+        <tbody>
+          <tr><td>Diagnóstico</td><td><span class="fill">[3–4]</span> semanas</td></tr>
+          <tr><td>Fundação de dados</td><td><span class="fill">[a definir na planta]</span></td></tr>
+          <tr><td>Primeiro agente / módulo de maior impacto</td><td><span class="fill">[a definir]</span></td></tr>
+          <tr><td>Go-live do escopo</td><td><span class="fill">[a definir]</span></td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Implementação por fases, com sprints e entregas reais acompanhadas em tempo real — não slide.</p>
+    </section>
+
+    <!-- 8 / 9 -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 08 · O que esperamos da <span style="color:var(--coral)">[Empresa]</span></div>
+      <ul>
+        <li><strong>Patrocinador interno</strong> nomeado (destrava acessos e decisões), indicado antes do kickoff;</li>
+        <li><strong>Engajamento do dono/sócio</strong> nos marcos de cada fase;</li>
+        <li><strong>Acessos de leitura</strong> aos sistemas atuais e disponibilidade do time para entrevistas e capacitação.</li>
+      </ul>
+      <h3>Por que a Trívia</h3>
+      <ul>
+        <li>Dupla complementar: técnica profunda em sistemas + gestão real de PME.</li>
+        <li>A gente vende o que roda em casa: operamos Trívia, Heziom e a própria infraestrutura de atendimento com IA sobre esse método.</li>
+        <li>Backbone reaplicável (schema, conectores, framework de agentes) e stack moderna demonstrável ao vivo.</li>
+      </ul>
+    </section>
+
+    <!-- 10 PRÓXIMOS PASSOS -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> 09 · Próximos passos</div>
+      <ol>
+        <li>Aprovação desta proposta (aceite abaixo) dentro da validade de <span class="fill">[15]</span> dias.</li>
+        <li>Assinatura do contrato e pagamento da entrada.</li>
+        <li>Kickoff + indicação do patrocinador interno + coleta de acessos.</li>
+        <li>Início pela fundação de dados.</li>
+      </ol>
+    </section>
+
+    <hr class="hr" />
+
+    <!-- ACEITE -->
+    <section>
+      <div class="eyebrow"><span class="mk">◆</span> Aceite</div>
+      <p class="muted">Ao assinar, a <span class="fill">[Empresa]</span> aprova o escopo, o investimento e as condições desta proposta.</p>
+      <div class="sign">
+        <div>
+          <div class="line"><span class="fill">[Empresa]</span> — nome / cargo</div>
+          <div class="line">Data ____ /____ /______</div>
+        </div>
+        <div>
+          <div class="line">Trívia Studio — nome / cargo</div>
+          <div class="line">Data ____ /____ /______</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="footer">Proposta válida por <span class="fill">[15]</span> dias a partir da emissão · Valores em BRL · Trívia Studio · M.A.P.A. OS</div>
+
+</div>
+
+</body>
+</html>
