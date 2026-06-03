@@ -47,6 +47,8 @@ Vender uma implementação de seis dígitos na primeira conversa é ticket alto,
 
 ## 1.2 · Qualificação antes de oferecer o diagnóstico
 
+> *Em escala, a primeira camada de qualificação é o [[Trívia OS - Teste de Prontidão pra Escalar (Spec)|Teste de Prontidão pra Escalar]] (lead magnet grátis com IA). As 4 perguntas abaixo são a qualificação manual para quem chega por indicação/outbound sem passar pelo teste.*
+
 Mesmo o diagnóstico de R$ 30k tem filtro. Quatro perguntas no WhatsApp (JimmyAtende abre, JG assume se passar):
 
 1. **Qual o faturamento aproximado da empresa nos últimos 12 meses?** *(válida: R$ 2,5MM+)*

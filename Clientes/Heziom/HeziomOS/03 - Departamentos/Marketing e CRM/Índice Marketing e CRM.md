@@ -70,6 +70,20 @@ substitui: Flowbiz
 
 ---
 
+## TRIBE Criativo Lab (Pesquisa — Neuro de Criativos, não-comercial)
+
+> Demo aberto e gratuito que aplica o modelo de pesquisa **TRIBE v2** (Meta AI) a criativos
+> de anúncio: prevê a resposta cerebral (fMRI) ao criativo e mostra quais redes acendem.
+> Licença CC-BY-NC (não-comercial), separado do Jimmy de propósito. Conteúdo de autoridade.
+
+| Frente | Status | Cobertura |
+|---|---|---|
+| [[TRIBE Criativo Lab — Visão Geral]] | 🛠️ Em construção | Repo `heziom/tribe-criativo-lab` (TRIVIAIOX + pipeline Python/HF). Setup pronto (STORY-001 ✅); inferência + deploy no HF Space é a STORY-002 |
+
+**Pendências:** criar HF Space + GPU L4 + aceitar licença TRIBE + `HF_TOKEN` · depois ligar inferência e validar 1 criativo · diligência de licenças (TRIBE/Llama/V-JEPA2/wav2vec).
+
+---
+
 ## Tracking & Pixels — Implementado (LP + Ecommerce)
 
 > Infraestrutura de rastreamento operacional (Meta Pixel + CAPI server-side + GA4) já no ar, separada do CRM em construção.

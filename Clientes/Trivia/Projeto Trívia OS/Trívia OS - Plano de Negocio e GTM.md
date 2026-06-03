@@ -338,9 +338,13 @@ JG opera Sales Navigator + lista de ~150–200 donos/mês dentro do ICP de fragm
 
 Página única: Hero (fragmentação → OS), antes/depois, o diferencial de IA defensável, os 5 gatilhos, o método (MAPAS), cases, **oferta do diagnóstico com preço visível**, FAQ, CTA para WhatsApp.
 
+#### Topo de funil — Teste de Prontidão pra Escalar (lead magnet com IA)
+
+Antes da venda, um teste grátis self-service movido a IA capta e qualifica em escala: o lead responde ~10 perguntas e recebe na hora um **Índice de Prontidão pra Escalar (0–100)** + o **custo invisível** que a operação sangra por mês + preview do OS. Entrega valor imediato, aquece e roteia o lead quente direto pro JG. Spec completa em [[Trívia OS - Teste de Prontidão pra Escalar (Spec)]].
+
 #### WhatsApp — venda
 
-Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra → qualificação automática (4 perguntas de fragmentação/porte) → JG assume e agenda call de 15 min em 24h → call de diagnóstico → **proposta de diagnóstico pago** em PDF de 1 página → diagnóstico entregue → **proposta de implementação faseada** ancorada na planta do OS → fechamento e kickoff.
+Canal de conversão central (JimmyAtende qualifica). Fluxo: lead entra (pelo teste ou direto) → qualificação automática (porte + engajamento + temperatura) → JG assume e agenda call de 15 min em 24h → call de diagnóstico → **proposta de diagnóstico pago** em PDF de 1 página → diagnóstico entregue → **proposta de implementação faseada** ancorada na planta do OS → fechamento e kickoff.
 
 ### Os cinco gatilhos de venda (mensagem)
 
