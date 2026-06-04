@@ -201,7 +201,52 @@ Se o objetivo é o que você descreveu — cada marca com DNA mais alinhado + me
 
 ---
 
-## 6. Apêndice técnico — arquivos-chave
+## 6. Síntese de equilíbrio (decisão × dor) — conclusão
+
+> Adicionado em 04/06/2026 após discussão com o JG. Esta é a leitura final que reconcilia o diagnóstico técnico com a dor declarada e com as decisões que foram **genuinamente do dono do produto**.
+
+### 6.1 Decisão deliberada vs. dívida acidental
+
+Cruzando o diagnóstico com as 80 stories, os ADRs e o histórico, ficou claro que **quase nada do que o relatório aponta como problema foi decisão consciente**. O que foi decisão (com motivo) e o que foi resíduo:
+
+| Tema | Veredito | Motivo / origem |
+|---|---|---|
+| Aprendizado por regex na "Fase 1" | **Deliberado** (STORY-017) | MVP barato; Fase 2 com LLM registrada como "depois" — mas nunca virou story |
+| Aprovar não gera aprendizado, só rejeitar | **Deliberado** (comentário em `PublicApproval.tsx:351`) | "Aprovação sem feedback só ratifica o que já estava bom" |
+| Schema `detected→confirmed→refuted` adiado | **Deliberado faseado** | Infra criada, lifecycle nunca religado |
+| `gerador-conteudo-agent` wrapper | **Deliberado** (STORY-020) | Preservar investimento no `content-creation-agent` |
+| Diversidade criativa "custo IA zero" | **Deliberado** (STORY-075-078) | "Não gastar IA no que a Meta dá de graça" — calibragem perfeita aqui |
+| OpenRouter / sem staging / migração progressiva | **Deliberado** (ADRs) | Realidade de produção com clientes reais |
+| **DNA diluído / campos descartados no save** | **Acidental (bug)** | `BrandContextForm.onSubmit` + 2 bugs de coluna em `brand-learning.ts` |
+| **Arquétipos desligados** | **Acidental (dead code)** | Entrou via Lovable, fora do processo de stories; 0 call sites |
+| **`framework_intensity` sem story** | **Acidental no processo** | Feature legítima, mas shipada via Lovable sem rastro de decisão |
+| **Imagem não aprende / blog-cover sem marca / dupla escrita** | **Acidental** | Resíduo; contradiz a postura "anti-acúmulo" declarada |
+
+**Raiz comum:** a geração de conteúdo foi marcada como "concluída" no roadmap, então seus defeitos nunca entraram no débito técnico nem no backlog. E o que o Lovable empurrou direto pra produção não passou pelo crivo de stories.
+
+### 6.2 A dor, relida
+
+As três frases da dor parecem puxar para lados opostos — *"complexo demais e pouco usado"* (quer menos), *"DNA mais rebuscado"* e *"memória que aprenda"* (parecem querer mais). A armadilha em que o sistema caiu foi tratar "rebuscado" e "aprende" como **mais peças**. Não são: **o DNA rico já é coletado e a memória já tem tabela, fila e cron — só não foram ligados.** Construir mais (HubChat, RAG, terceiro agente) é exatamente o que gerou "complexo e pouco usado". As três frases apontam para o mesmo lugar.
+
+> Nota: o HubChat (`projeto_hubchat_unificado.md`) **não é o norte** — é uma feature inacabada e pouco usada, ou seja, **sintoma da dor**, não cura. Entra na fila de candidatos a congelar/cortar, não a evoluir.
+
+### 6.3 O princípio de equilíbrio
+
+> **Religar e cortar antes de construir. IA só onde ela é o diferencial — interpretar a edição. Custo-zero em todo o resto.**
+
+Isso honra as decisões que foram suas e boas (custo controlado, faseamento, preservar produção) e ataca as três dores ao mesmo tempo, **sem inchar o sistema**.
+
+### 6.4 Sequência calibrada (do mais seguro ao mais ambicioso)
+
+1. **Leva 1 — DNA chega inteiro (custo IA zero):** corrigir os bugs do formulário e das colunas, religar arquétipos, few-shot real com exemplos de voz, filtrar "N/A" do dump. Puro ganho, dentro da régua de custo. → **STORY-081**
+2. **Leva 2 — A memória que aprende de verdade:** trocar regex por 1 chamada de IA barata que lê "antes vs. depois" da edição; fazer **aprovar = confirmar** (liga o `detected→confirmed`). Única área onde vale relaxar o custo-zero, e se paga em menos retrabalho. → **STORY-082**
+3. **Leva 3 — Cortar o excesso:** decidir o destino do HubChat e do segundo agente de chat — provavelmente congelar/aposentar. → **STORY-083**
+
+Épico que ancora as três levas: **STORY-080**.
+
+---
+
+## 7. Apêndice técnico — arquivos-chave
 
 **DNA da marca:**
 - `supabase/functions/generate-content/index.ts:2433-2469` (injeção de marca), `:854-895` (merge estratégia)
