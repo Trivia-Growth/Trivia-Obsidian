@@ -3,6 +3,7 @@ tags: [ferramentas, flowbiz, substituicao, custo, marketing]
 status: substituição-urgente
 criado: 2026-06-05
 atualizado: 2026-06-05
+backup: concluído em 05/06/2026
 ---
 
 # Flowbiz — Análise Completa e Plano de Substituição
@@ -187,7 +188,7 @@ A API `AutoResponder.Get` requer ID específico por autoresponder (não lista al
 
 - [ ] Contatar Flowbiz e solicitar não renovação do contrato
 - [ ] Confirmar cláusula de multa por cancelamento antecipado
-- [ ] **Exportar base completa de 96.718 contatos** com todas as segmentações
+- [x] **Exportar base completa de 96.692 contatos** → ✅ concluído em 05/06/2026 (ver backup abaixo)
 - [ ] Exportar os 30+ templates de e-mail usados nas campanhas
 - [ ] Documentar as automações ativas (boas-vindas, carr. abandonado, pós-compra)
 
@@ -241,12 +242,35 @@ O HeziomOS precisará implementar:
 
 ---
 
-## 9. Fontes e Referências
+## 9. Backup Exportado (05/06/2026)
+
+> **Backup completo exportado via API e salvo no OneDrive.**
+> 📁 **Pasta:** `OneDrive — Editora Heziom / Heziom / Flowbiz / backup-2026-06-05`
+
+| Pasta | Conteúdo | Quantidade |
+|-------|----------|-----------|
+| `/contatos/` | 31 JSON + 31 CSV por lista + `TODOS_CONTATOS_CONSOLIDADO.csv` | **96.692 contatos** |
+| `/campanhas/` | `campanhas_completo.json` + `campanhas_resumo.csv` | **168 campanhas** (1.336.712 envios históricos) |
+| `/listas/` | JSON completo + CSV resumido + campos personalizados (345 campos) | **40 listas** |
+| `/tags/` | `tags_completo.json` | 2 tags |
+| `/autoresponders/` | `autoresponders_completo.json` | — |
+
+**Arquivo principal para migração:** `TODOS_CONTATOS_CONSOLIDADO.csv` — todos os 96.692 contatos com campos comportamentais (último pedido, receita total, ticket médio, histórico de compras).
+
+**Campos exportados da lista Clientes (os mais ricos):**
+- Dados cadastrais: Nome, Cidade, Estado, CEP, Data de Nascimento, Gênero, Telefone
+- Último pedido: Categorias, Data, Marcas, Produtos, SKU, Quantidade, Status, Valor
+- Histórico: Data Primeiro Pedido, Qt de Pedidos, Receita Total, Tempo Médio de Recompra, Ticket Médio
+
+---
+
+## 10. Fontes e Referências
 
 - Central de ajuda: `cloudchat5.cloudhumans.com/hc/central-de-ajuda-flowbiz`
 - Documentação API: `flowbiz.readme.io`
 - API endpoint: `https://mbiz.mailclick.me/api.php/{Command}?APIKey=...`
 - Dados coletados via API em: **05/06/2026**
+- Backup salvo em: `OneDrive — Editora Heziom / Heziom / Flowbiz / backup-2026-06-05`
 
 ---
 
