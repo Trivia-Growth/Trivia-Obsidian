@@ -44,6 +44,70 @@ LP **publicada e funcionando end-to-end** desde 26/05/2026 (implementação em 1
 
 ---
 
+## Relatório GA4 — Lançamento (27/05 a 04/06/2026)
+
+> Fonte: GA4 property `464741321` (Editora Heziom — Tray). Dados coletados via API em 05/06/2026.
+> ⚠️ A property é do domínio principal (`editoraheziom.com.br` + Tray), não exclusiva da LP. Os dados incluem tráfego de todo o site.
+
+### Totais do período
+
+| Métrica | Total |
+|---|---|
+| Sessões | 33.386 |
+| Usuários únicos | 26.991 |
+| Pageviews | 68.182 |
+| Eventos totais | 281.708 |
+| `form_start` (leads iniciados) | 8.518 |
+| `form_submit` (leads enviados) | 4.248 |
+| `add_to_cart` | 2.536 |
+| `begin_checkout` | 1.100 |
+| `add_shipping_info` | 2.893 |
+| `add_payment_info` | 1.597 |
+| `view_item` | 41.598 |
+| `select_item` (clique no produto) | 6.719 |
+| `ver_colecao_click` (CTA LP) | 1.940 |
+
+### Sessões por dia (todas as páginas)
+
+| Data | Sessões | Usuários | Pageviews | Eventos |
+|---|---|---|---|---|
+| 27/05 (lançamento) | 4.544 | 4.105 | 8.573 | 39.180 |
+| 28/05 | 5.250 | 4.646 | 10.313 | 47.596 |
+| 29/05 | 3.009 | 2.794 | 6.067 | 27.638 |
+| 30/05 | 3.061 | 2.886 | 5.915 | 27.183 |
+| 31/05 | 3.063 | 2.947 | 6.080 | 28.182 |
+| 01/06 | 2.898 | 2.620 | 6.030 | 27.481 |
+| 02/06 | 3.547 | 3.085 | 7.879 | 35.074 |
+| 03/06 | 4.863 | 4.197 | 11.045 | 48.868 |
+| 04/06 (parcial) | 3.151 | 2.711 | 6.280 | 28.506 |
+| **Total** | **33.386** | **26.991** | **68.182** | **309.708** |
+
+### Top páginas do período
+
+| Página | Sessões acum. |
+|---|---|
+| `/` (LP principal) | ~11.100 |
+| `/livros/lancamentos/combo-2-devocionais-maes-da-alianca...` | ~4.200 |
+| `/biblias/biblia-solas-reformata-letra-grande` | ~3.300 |
+| `/catalogo` | ~1.400 |
+| `/colecao-reformata-biblias-solas` | ~1.880 |
+| `/series-e-combos/biblias-hernandes-dias-lopes` | ~2.030 |
+
+### Taxas calculadas
+
+| Indicador | Valor |
+|---|---|
+| Taxa lead (form_submit / sessões) | 12,7% |
+| Taxa add_to_cart / sessões | 7,6% |
+| Taxa begin_checkout / add_to_cart | 43,4% |
+| form_submit / form_start | 49,9% |
+
+### Observação
+
+Pico de tráfego: **28/05** (dia 2 do lançamento, 5.250 sessões) e **03/06** (4.863 sessões — possivelmente reativação de mídia paga ou e-mail). Queda natural de 29 a 31/05 sugerindo fim do burst de lançamento. Retomada em 02-03/06.
+
+---
+
 ## Conceito e diretrizes
 
 A LP é uma **experiência editorial imersiva**, não uma grade de cards de e-commerce. Referência principal: **Apple Books — página de produto** (cada combo = 1 seção full-width com narrativa própria, scroll cadenciado, imagem como protagonista). Mobile-first (70%+ do tráfego).

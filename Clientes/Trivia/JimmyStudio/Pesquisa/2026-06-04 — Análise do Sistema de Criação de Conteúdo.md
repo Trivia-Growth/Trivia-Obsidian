@@ -246,7 +246,108 @@ Isso honra as decisões que foram suas e boas (custo controlado, faseamento, pre
 
 ---
 
-## 7. Apêndice técnico — arquivos-chave
+## 7. Validação E2E (05/06/2026) — evidência em produção
+
+> Teste ponta-a-ponta executado na marca **interna Trívia Studio** (não-cliente), após o deploy da Leva 1 (STORY-081). Usou um usuário de teste temporário no org interno (criado e apagado no fim) e a flag `CONTENT_DNA_RICH` ligada por alguns minutos (revertida para `off`). Todos os artefatos criados foram removidos; a preferência real da marca foi preservada.
+
+### 7.1 Cobertura — todos os fluxos rodaram de verdade (com IA)
+
+| Fluxo | Função | Resultado |
+|---|---|---|
+| Config de marca | `analyze-brand` | ✅ Gerou 6 objeções, 5 crenças, 12 termos de glossário, 5 formatos — os campos que a 081.2 antes descartava |
+| Calendário | `generate-calendar` | ✅ Calendário + 2 slots (tema/funil/pilar) |
+| Copy | `generate-content` (OFF vs ON) | ✅ Ver 7.2 |
+| Imagem | `generate-image-prompt` + `generate-image` | ✅ Plano visual com cores reais da marca (#071925/#1A1A2E/#FC544C) + Playfair Display; imagem renderizada (Nano Banana Pro, gemini-3-pro-image) |
+| Aprendizado | `analyze-content-edit` → `process-learning-events` → `brand_preferences` | ⚠️ Ver 7.3 |
+
+### 7.2 Copy OFF vs ON — a prova da Leva 1 (081.3)
+
+Mesma marca, mesmo tema ("Como uma marca forte gera mais vendas no digital"), só virando a flag:
+
+- **OFF (legado):** hook ameno ("Marca forte no digital não é luxo"), tom educativo neutro, prova genérica (Amper).
+- **ON (DNA rico):** hook afiado ("Empresas com marca fraca pagam **3x mais**"), tom de autoridade do arquétipo **ruler** ("Os números não mentem", "O que seu concorrente não sabe", "máquina de vendas"), e **cases reais da marca** (Taurus 768%, blog 88k→6,3M acessos) puxados das `voice_samples`/contexto.
+
+Conclusão: o DNA da marca (arquétipo + voz + provas) entra de verdade só com a flag ligada. A 081.3 faz o que promete. O `unified_style` da imagem também passou a carregar as cores hex reais da marca.
+
+### 7.3 Aprendizado — o teste virou evidência viva do gap
+
+Edição deliberada e óbvia da copy (encurtada ~37%, emojis removidos, CTA reescrito) → o sistema **registrou o evento e processou**, mas aprendeu **zero** (`patternsCount: 0`, `preferences_created: 0`). A marca só tem 1 preferência real ("prefere textos mais concisos"), de meses de uso, e o `validation_status` segue `detected` (nunca `confirmed`).
+
+Isto confirma na prática o diagnóstico da seção 3.5: o loop está wired, mas a interpretação por **regex não capta edições reais** (tom, emoji, CTA, escolha de palavras). É exatamente o que a **STORY-082** (regex → LLM + aprovar=confirmar) resolve.
+
+### 7.4 Higiene do teste
+
+Apagados após o teste: usuário temporário, calendário+slots, contents, plano visual, drafts de imagem, e os 2 eventos de aprendizado criados. Verificação pós-limpeza: todos os contadores em 0; preferência real da marca preservada. Flag retornada a `off` (produção idêntica ao legado). Resíduos mínimos: 2 imagens de teste no storage (órfãs) e os logs de `ai_usage_costs` das chamadas (registro real de gasto, mantidos de propósito).
+
+---
+
+### 7.5 Validação da Leva 2 (05/06/2026) — memória que aprende
+
+Após implementar a Leva 2 (STORY-082.1 e .2), teste ao vivo na marca interna Trívia com as flags `LEARNING_LLM_ENABLED` e `LEARNING_VALIDATION_ENABLED` ligadas (revertidas no fim; dados de teste limpos; preferência real restaurada):
+
+- **082.1 (IA interpreta a edição):** uma edição com sinais estilísticos claros gerou **5 preferências específicas** via IA (tom assertivo focado em dados 0.90; hook por afirmação quantificável 0.80; CTA direto com urgência 0.80; vocabulário de negócio CAC/margem 0.70; evitar emojis que suavizam 0.70). O caminho regex legado só extraiu "sem emojis" (0.50). **A IA capta o porquê que a regex nunca pegou.**
+- **082.2 (aprovar = confirmar):** `confirm-brand-preferences` confirmou as 5 preferências (cruzaram 0.7 → `confirmed`, tom chegou a 1.0). O ciclo `detected→confirmed`, antes fantasma, passou a funcionar; a injeção passa a priorizar o confirmado.
+
+Conclusão: o gap central do diagnóstico (seção 3.5) está endereçado e validado em produção, atrás de flags reversíveis (default off). Falta: 082.2b (confirmação na aprovação pública do cliente) e 082.3 (remover a dupla escrita + melhorar o matching).
+
+---
+
+## 7.6 Estilos de copy, integridade de dados e anti-padronização (05/06/2026)
+
+Análise dos prompts por estilo (geração + calendário) revelou **três vocabulários de estilo desconectados** e a razão pela qual foram afrouxados.
+
+### O diagnóstico dos estilos
+- **Catálogo `STYLES`** (`src/config/contentChannels.ts:178`): riquíssimo (label, descrição, `detailedExplanation`, **`contentExample`** = post-modelo real) — usado **só no dropdown da UI**.
+- **Templates backend** `getContentTypeTemplate` (`framework-instructions.ts:336`): 30+ estilos por tipo de marca com estrutura Hook→Contexto→Insight→Aplicação→Valor + Tom — **só injetados no modo Estruturado** (`framework_intensity > 50`).
+- **Estilos do calendário** (`buildContentStyleHints`, `editorial-posture.ts`): o calendário **inventa estilos livres** (`case_real`, `mito_vs_verdade`, `consequencia_real`…) que **não existem no catálogo**.
+
+**Problemas:** (a) no modo padrão (Guiado), o estilo é só um rótulo — os templates não atuam; (b) fallback silencioso: estilo desconhecido vira **sempre `industry_insight`** (`framework-instructions.ts:~760`) → um slot "case real" vira "Análise de Mercado"; (c) o `contentExample` (few-shot perfeito) nunca chega à IA.
+
+### A razão do afrouxamento (input do piloto)
+Os estilos foram desconectados porque a copy ficava **repetitiva e com números/cases inventados** (dados que não existem). Os templates pedem "dado/métrica/case" → forçavam fabricação quando a marca não tem prova. O remédio (desligar) tirou junto a voz e a estrutura.
+
+### A estratégia: geração **consciente de evidência** + voz real + verificação
+Regra-mãe: **número só existe se houver prova real.** O estilo se adapta ao que a marca *tem*.
+1. **Integridade na copy final:** levar o `buildIntegrityRulesBlock` (hoje só no calendário) + alternativas qualitativas (sintomas, critérios, mito vs verdade, bastidores) para o `generate-content`.
+2. **Religar estilos como PRINCÍPIO, não fôrma:** injetar objetivo+tom+tipo-de-gancho do estilo no modo Guiado (que já é anti-fôrma), condicional à evidência. **Nunca** o esqueleto de 5 passos no default.
+3. **Exemplo = referência de TOM, não molde:** `contentExample`/`voice_samples` com instrução explícita "não copie a estrutura"; priorizar a voz real da marca; rotacionar exemplos.
+4. **Banco de provas real** (`authority_proof` revivido) como única fonte de número; senão, Perplexity citado; senão, qualitativo.
+5. ~~**Rede de verificação pós-geração**~~ — **DESCARTADA (05/06/2026, decisão do piloto):** a copy deve sair correta pelas **diretrizes do prompt**, não por uma etapa extra de verificação (custo/latência/complexidade). Prevenção > inspeção. A integridade fica no prompt da geração (regra anti-invenção + alternativas qualitativas da 084.1).
+6. **Anti-mesmice:** variar abertura/estrutura/ritmo entre posts (expandir a anti-repetição além do gancho) + rotação de ângulo/lente.
+
+### Risco-chave levantado pelo piloto (anti-padronização)
+Religar templates de forma rígida + um exemplo único → **toda copy igual, quadrada, com cara de IA**. Por isso o religar é **como princípio + tom** (não esqueleto), com o exemplo servindo só de referência de voz, e variação ativa entre posts. Alvo: **voz consistente, estrutura variada** (o oposto do template puro). O `framework_intensity` segue como controle de rigidez do cliente.
+
+Implementação: **épico [[STORY-084]]** (flag-gated, reversível, testável).
+
+---
+
+## 7.7 E2E completo em produção — Work Solution (05/06/2026)
+
+Teste ponta-a-ponta com **todas as flags ON** (config real), na marca **Work Solution** (org "João Novais - Trial", ramo moveleiro p/ arquitetos; tem contexto/tom, **sem** voice samples nem identidade visual). Tudo limpo no fim; marca tinha 0 preferências.
+
+| Fluxo | Resultado |
+|---|---|
+| `analyze-brand` | ✅ 6 objeções, 4 crenças, 12 termos de glossário, 5 pilares |
+| `generate-calendar` | ✅ 2 slots com estilos livres (`mito_vs_verdade`, `criterios_de_escolha`) |
+| `generate-content` (estilo livre) | ✅ on-style (5 mitos vs verdades) — **mas FABRICOU dados** (ver abaixo) |
+| `generate-image-prompt` + `generate-image` | ✅ funcionou sem identidade visual, com estilo genérico ("architectural photography") — **sem cores da marca** |
+| Aprendizado (`analyze-content-edit`→`process-learning-events` LLM) | ✅ capturou 5 prefs específicas, incl. **"remover dados numéricos"** (0.70) e **"termos genéricos p/ valores em vez de R$"** (0.90) |
+| `confirm-brand-preferences` | ✅ confirmou as 5 (detected→confirmed) |
+
+### 🔴 Achado crítico: a prevenção no prompt NÃO segurou a fabricação
+Mesmo com a regra anti-invenção + a integridade qualitativa da 084.1 + flags ON, a copy inventou: **"Cliente paga R$ 25 mil"**, **"30 a 45 dias, segundo dados do mercado"** (fonte-fantasma), e uma **% de frete/montagem**. Ou seja: as diretrizes atuais **instruem** mas não **garantem** — o modelo ainda fabrica para soar concreto.
+
+**Implicação (alinhada ao princípio "prevenção, não verificação"):** o caminho não é reintroduzir verificação — é **reforçar as diretrizes da geração**:
+- Elevar a regra anti-fabricação ao topo do prompt, com os exemplos reais que vazaram ("R$ X", "segundo dados do mercado") como proibições explícitas.
+- Para marca **sem banco de provas**, instrução dura: zero número/valor/percentual específico; só qualitativo.
+- Reviver `authority_proof` (banco de provas editável) para a marca ter números reais que a IA **pode** citar — removendo a tentação de inventar.
+
+Observação positiva: o **aprendizado capturou exatamente essa correção** — então, com o ciclo confirmado, futuras gerações da marca recebem "evitar dados numéricos" como preferência. Mas isso é reativo; a prevenção no prompt precisa melhorar.
+
+---
+
+## 8. Apêndice técnico — arquivos-chave
 
 **DNA da marca:**
 - `supabase/functions/generate-content/index.ts:2433-2469` (injeção de marca), `:854-895` (merge estratégia)
