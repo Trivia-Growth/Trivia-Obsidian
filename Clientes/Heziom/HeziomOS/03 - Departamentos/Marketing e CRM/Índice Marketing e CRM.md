@@ -24,7 +24,7 @@ substitui: Flowbiz
 
 | Métrica | Valor |
 |---|---|
-| Base de contatos (Flowbiz) | 40.000+ |
+| Base de contatos (Flowbiz) | **96.718** (backup exportado 05/06/2026) |
 | Investimento mensal Meta Ads | R$ 80.000 |
 | ROAS atual | ~2x (era 4x) |
 | CAC médio | R$ 40,00 |
@@ -40,7 +40,7 @@ substitui: Flowbiz
 | [[CRM Unificado]] | ⬜ A criar | Perfil cross-channel (CPF), B2B + B2C |
 | [[Segmentação e Réguas]] | ⬜ A criar | Comportamental, baseada em compras reais |
 | [[Campanhas]] | ⬜ A criar | Email + WhatsApp, templates, métricas |
-| [[Migração Flowbiz]] | ⬜ A criar | 40k contatos, mapeamento de campos |
+| [[Migração Flowbiz]] | 🟡 Backup concluído | 96.692 contatos exportados — ver [[Flowbiz — Funcionalidades Mapeadas]] |
 | [[ROI de Tráfego]] | ⬜ A criar | Meta Ads + Google Ads → custo por canal |
 
 ---
