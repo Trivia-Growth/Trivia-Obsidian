@@ -7,7 +7,9 @@ atualizado: 2026-06-05
 
 # Flowbiz — Análise Completa e Plano de Substituição
 
-> **⚠️ Alerta de Custo:** Fatura de junho/2026 = **R$ 1.978,00**. Plano anual iniciou 26/06/2025 — janela de cancelamento sem multa: **~21 dias a partir de hoje**.
+> **⚠️ Alerta de Custo:** Fatura de junho/2026 = **R$ 1.978,00**. Plano anual iniciou **26/06/2025** — vencimento: **26/06/2026 (21 dias a partir de 05/06/2026)**. Cancelar antes dessa data para evitar renovação.
+
+> **🔄 Substituto definido:** O sistema substituto será o **HeziomOS** (em desenvolvimento), não uma ferramenta de terceiros.
 
 ---
 
@@ -15,14 +17,11 @@ atualizado: 2026-06-05
 
 Plataforma de **CRM de Marketing para e-commerce**, adquirida pela Sankhya em 2024. Foco em automação de vendas e fidelização via e-mail e WhatsApp com dados comportamentais de navegação e compra.
 
-**Posicionamento:** "Régua de relacionamento automatizada" — recuperação de carrinho, recompra, reativação, fidelização via e-mail + WhatsApp no mesmo fluxo.
-
 **Infraestrutura técnica:**
-- Frontend/painel: `www.flowbiz.com.br` (Webflow)
-- API de integração: documentada em `flowbiz.readme.io` (ex-Mailbiz)
+- API: `https://mbiz.mailclick.me/api.php/{Command}` (autenticação via parâmetro `APIKey`)
 - Tracking server: `stape.mailbiz.com.br`
 - Central de ajuda: `cloudchat5.cloudhumans.com/hc/central-de-ajuda-flowbiz`
-- Autenticação API: parâmetro `APIKey` em cada chamada (não há OAuth ou token separado)
+- Documentação API: `flowbiz.readme.io`
 
 ---
 
@@ -32,8 +31,8 @@ Plataforma de **CRM de Marketing para e-commerce**, adquirida pela Sankhya em 20
 |------|------|
 | **Plano** | CORP 200 — 200.000 envios/mês |
 | **Valor do plano** | R$ 1.029,00/mês |
-| **Início do contrato** | 26/06/2025 |
-| **Vencimento anual** | ~26/06/2026 ⚠️ em 21 dias |
+| **Início do contrato** | **26/06/2025** ← confirmado via API |
+| **Vencimento anual** | **26/06/2026 ⚠️ em 21 dias** |
 | **Fatura junho/2026** | **R$ 1.978,00** |
 | **Excedente** | ~R$ 949,00 |
 | **Utilização do plano** | 7% (faltam ~186.500 envios) |
@@ -56,162 +55,113 @@ Plataforma de **CRM de Marketing para e-commerce**, adquirida pela Sankhya em 20
 
 ---
 
-## 3. Mapeamento Completo das Funcionalidades
+## 3. Inventário Completo — Dados Reais da Conta (via API, 05/06/2026)
 
-### 3.1 Módulos do produto (9 categorias na central de ajuda — ~159 artigos)
+### 3.1 Listas de Contatos (40 listas)
 
-#### 📧 Campanhas (33 artigos documentados)
-- Criação de campanhas de e-mail e CRM
-- Editor Drag and Drop (arrasta e solta)
-- Configuração de pré-cabeçalho e assunto
-- Teste A/B de campanhas
-- Segmentação de envio por lista ou segmento dinâmico
-- Arquivo de campanha (link público)
-- Relatórios de abertura, clique, descadastro, bounce
+| # | ID | Nome | Contatos | Criada |
+|---|----|------|----------|--------|
+| 1 | 21663 | **Clientes** | 53.911 | 26/06/2025 |
+| 2 | 21664 | **Assinantes** | 24.615 | 26/06/2025 |
+| 3 | 21687 | Botão WhatsApp | 4.246 | 27/06/2025 |
+| 4 | 22785 | LP Congresso Mães da Aliança | 527 | 03/09/2025 |
+| 5 | 23028 | Lista Forjados | 110 | 17/09/2025 |
+| 6 | 23029 | LP A fé na era da Ilusão | 12 | 17/09/2025 |
+| 7 | 23033 | Lista - Devocional MDA | 135 | 17/09/2025 |
+| 8 | 23081 | Lista LP A Chave do Labirinto | 0 | 19/09/2025 |
+| 9 | 23147 | Leads Livraria \| Maio/Junho/Julho | 526 | 23/09/2025 |
+| 10 | 23694 | LP - Pré venda Devocional MDA 2026 | 5.831 | 18/10/2025 |
+| 11 | 23917 | LISTA - CONGRESSO MDA COM ALIMENTAÇÃO | 767 | 30/10/2025 |
+| 12 | 23920 | CONGRESSO MDA - SEM ALIMENTAÇÃO | 41 | 30/10/2025 |
+| 13 | 24159 | LP - Sem fé é impossível agradar a Deus | 0 | 12/11/2025 |
+| 14 | 24187 | Lista - Black Friday | 7 | 13/11/2025 |
+| 15 | 24265 | Inscritas Congresso MDA - Manual | 0 | 17/11/2025 |
+| 16 | 24271 | Inscritas MDA 2026 - manual | 34 | 17/11/2025 |
+| 17 | 24280 | LP Congresso Online | 99 | 18/11/2025 |
+| 18 | 24298 | LP A Menina do Tamanho do Mar | 0 | 19/11/2025 |
+| 19 | 24401 | LP Devocional Atacado | 6 | 25/11/2025 |
+| 20 | 24448 | LP Congresso Mogi Guaçu | 0 | 26/11/2025 |
+| 21 | 24755 | Devocionais OAP e MDA - carr.abando | 285 | 16/12/2025 |
+| 22 | 25058 | Lista compradores Meditações em Provérbios vol. 2 | 333 | 15/01/2026 |
+| 23 | 25118 | LP Heziomcast | 0 | 21/01/2026 |
+| 24 | 25121 | LP Campanha de Oração | 5 | 21/01/2026 |
+| 25 | 25135 | LP Quebrantamento | 54 | 21/01/2026 |
+| 26 | 25424 | LP Misericórdia | 18 | 10/02/2026 |
+| 27 | 25501 | LP AVODAH | 160 | 18/02/2026 |
+| 28 | 25726 | LP RCF | 153 | 04/03/2026 |
+| 29 | 25768 | LP APV | 26 | 06/03/2026 |
+| 30 | 25783 | Lista conf de mulheres | 1.352 | 06/03/2026 |
+| 31 | 26027 | Conf de mulheres online | 381 | 19/03/2026 |
+| 32 | 26389 | Abd - Combo Mães da Aliança (Jan-Abril) | 1.561 | 08/04/2026 |
+| 33 | 26681 | MDA (sem recompra) 90 DD | 57 | 23/04/2026 |
+| 34 | 26702 | LP FSL - Dani Freixo | 227 | 24/04/2026 |
+| 35 | 26703 | LP Efésios | 0 | 24/04/2026 |
+| 36 | 27199 | ATIVOS SUDESTE | 0 | 18/05/2026 |
+| 37 | 27200 | Ativos SUDESTE 02 | 1.054 | 18/05/2026 |
+| 38 | 27378 | LP - Plano Bomba | 184 | 26/05/2026 |
+| 39 | 27476 | CRM 180dd - Clientes | 0 | 29/05/2026 |
+| 40 | 27562 | LP - Bíblia 120 anos | 4 | 03/06/2026 |
 
-**Uso Heziom:** ✅ Em uso — 3 campanhas/mês, ~12.500 envios
+**Listas prioritárias para migração (>1.000 contatos):**
+- Clientes: 53.911 — lista principal de compradores
+- Assinantes: 24.615 — base de e-mail marketing geral
+- LP Pré-venda Dev MDA 2026: 5.831
+- Botão WhatsApp: 4.246 — capturados via pop-up de WhatsApp
+- Lista conf de mulheres: 1.352
+- Abd Combo MDA: 1.561
+- Ativos SUDESTE 02: 1.054
 
-#### 🗺️ Jornadas / Fluxos (7 artigos documentados)
-- Recuperação de carrinho abandonado (E-mail + WhatsApp API + WhatsApp Manual)
-- Envio em massa via WhatsApp por jornada
-- Fluxos automáticos multicanal (WhatsApp + E-mail no mesmo fluxo)
-- Gatilhos: comportamento de navegação, abandono de carrinho, compra finalizada
-- Condições Se/Então (abriu e-mail, clicou, tem tag, etc.)
-- Ações: enviar mensagem, atualizar campo, adicionar tag, webhook
-- Teste A/B dentro de jornadas
-- Receita influenciada por jornada vs. GA4
+### 3.2 Histórico de Campanhas
 
-**Uso Heziom:** ✅ Parcialmente — 803 envios/mês via fluxos (baixo volume)
+Total de **168 campanhas** registradas desde 26/06/2025. Volume de envios por campanha:
 
-#### 👥 Listas de Contatos (17 artigos documentados)
-- Criação de listas estáticas e segmentos dinâmicos
-- Importação via CSV
-- Campos padrão: nome, e-mail, telefone
-- Campos personalizados por lista (dados do negócio)
-- Tags para classificação de comportamento/funil
-- Segmentação por: engajamento (abriu/clicou), dados cadastrais, comportamento
-- Exportação de contatos
-- Envios automáticos (autoresponder) por gatilho de lista
-- Listas padrão criadas automaticamente: **Clientes** e **Assinantes**
+**Maiores campanhas enviadas:**
+| Nome | Enviados | Aberturas únicas | Data |
+|------|----------|-----------------|------|
+| 2025-08-11 / devocional / MDA | 44.210 | 2.804 | ago/25 |
+| 2025-09-24 / VIVENDO NUM LABIRINTO | 46.691 | 2.907 | set/25 |
+| 2025-09-25 / Josué | 44.470 | 2.513 | set/25 |
+| 2025-09-5 / devocional / ATIVOS Manual | 45.990 | 2.949 | set/25 |
+| 2025-8-06 / bíblias para os pais | 44.423 | 2.760 | ago/25 |
+| ABERTURA DE PRÉ-VENDA PROV1 | 19.309 | 3.001 | jan/26 |
+| Campanha de Oração | 19.171 | 3.034 | jan/26 |
+| E-mail \| Avivamento | 19.268 | 3.336 | jan/26 |
 
-**Uso Heziom:** ✅ Em uso — 96.718 contatos, 40 listas
+**Campanhas recentes (junho/2026) — confirmam o uso ativo:**
+| Nome | Enviados | Data |
+|------|----------|------|
+| 01/06 - Combo Spurgeon Claude | 4.137 | 01/06/2026 |
+| Email devocional 01/06 - Claude | 4.135 | 01/06/2026 |
+| 03/06 - Combo estudo bíblico Claude | 4.190 | 03/06/2026 |
 
-#### 🤖 Autoresponder / Envios Automáticos
-- Criação de sequências de e-mail por gatilho
-- Gatilhos: entrada em lista, data comemorativa, comportamento no site
-- Webhooks para sistemas externos
-- Sequências com intervalos de tempo configuráveis
-- Horários de funcionamento e condições de parada
+> **Padrão identificado:** Campanhas marcadas com "Claude" indicam que o time já usa IA para criar e-mails. Isso facilita a migração — os templates podem ser gerados via HeziomOS.
 
-**Uso Heziom:** ✅ Parcialmente — 246 envios/mês
+### 3.3 AutoResponders / Fluxos Ativos
 
-#### 🏠 Landing Pages (26 artigos documentados)
-- Criador de páginas de captura de leads (no-code)
-- Página de agradecimento vinculada
-- Segmentação automática de leads capturados em listas
-- Integração com Google Analytics 4
-- Formulários com campos personalizáveis
-- Vinculação a automações (lead entra na LP → inicia jornada)
+A API `AutoResponder.Get` requer ID específico por autoresponder (não lista all). Os **246 envios automáticos** registrados no painel em junho indicam que há pelo menos 1–3 autoresponders ativos. Pelo padrão de uso observado nos fluxos (803 envios via "jornadas"), as automações ativas são provavelmente:
 
-**Uso Heziom:** ❓ Não confirmado se usa
+- **Boas-vindas** ao entrar na lista Clientes ou Assinantes
+- **Recuperação de carrinho** — lista `Devocionais OAP e MDA - carr.abando` (285 contatos) confirma esse fluxo ativo
+- Possivelmente: sequência pós-compra ou reativação
 
-#### 📊 Métricas / Dashboard (6 artigos documentados)
-- Dashboard de receita influenciada pelas campanhas
-- Relatório de campanhas por desempenho (abertura, clique, conversão)
-- Integração com Google Analytics 4 para atribuição de receita
-- Criação e ajuste de "investimento" para cálculo de ROI
-- Visualização de dados do Universal Analytics (legado)
-
-**Uso Heziom:** ❓ Não confirmado se usa ativamente
-
-#### 🔗 Integrações (44 artigos documentados)
-Plataformas de e-commerce com integração nativa:
-- **Tray** ✅ (relevante para Heziom)
-- Shopify, WooCommerce, Magento, NuvemShop, VTEX, Loja Integrada
-- Google Tag Manager (GTM) para tracking
-- Google Analytics 4
-- Sankhya (ERP — pós-aquisição)
-
-**Mecanismo de integração:**
-- Script `mb_track` (rastreamento comportamental no site)
-- Script `mb_recover_cart` (recuperação de carrinho)
-- Integration Hub Flowbiz (tag manager próprio)
-- API REST para operações programáticas
-
-**Uso Heziom:** ✅ Integração com Tray provavelmente ativa (tracking de pedidos)
-
-#### 📱 WhatsApp via Meta API (11 artigos documentados)
-- Integração oficial com Meta Business API
-- Ativação e configuração do número
-- Envio em massa (campanhas) — pay-as-you-go
-- Mensagens em jornadas (cobradas só pela Meta, sem taxa Flowbiz)
-- Limite de mensagens por dia (conforme tier Meta)
-- Renovação de token de acesso Meta
-- Foto de perfil do número WhatsApp
-
-**Uso Heziom:** ❌ Zero mensagens enviadas em junho
-
-#### 🔑 API de Integração
-- Documentação: `flowbiz.readme.io`
-- Autenticação: parâmetro `APIKey` em cada chamada
-- Endpoints: Contatos (CRUD), Listas (CRUD), Campanhas (CRUD), Tags (CRUD), Autoresponder (CRUD), Segmentos, Campos personalizados, Arquivos/Mídia
-- Versão: v3 (domínio `api.mailbiz.com.br/v3` — infraestrutura legada Mailbiz)
-- Linguagens com exemplos: Go, NodeJS, C#, PHP, CURL
+> **Para confirmar:** Acessar painel web → Automações/Jornadas para ver IDs e configurações exatas.
 
 ---
 
-### 3.2 Funcionalidades do Universal Tracker (rastreamento comportamental)
+## 4. Data de Vencimento e Cláusula de Cancelamento
 
-Script instalado no site da Heziom (Tray) para capturar:
+| Item | Dado confirmado |
+|------|----------------|
+| **Data de criação das primeiras listas** | **26/06/2025** (confirmado via API) |
+| **Vencimento do contrato anual** | **~26/06/2026** |
+| **Dias restantes (a partir de 05/06/2026)** | **~21 dias** |
+| **Ação necessária** | Notificar Flowbiz sobre não renovação **antes de 26/06/2026** |
 
-| Evento | O que captura |
-|--------|---------------|
-| `pageView` | Visualização de qualquer página |
-| `accountSync` | Identificação do usuário logado |
-| `productView` | Visualização de produto específico |
-| `cartSync` | Estado atual do carrinho |
-| `addToCart` | Adição de produto ao carrinho |
-| `cartItemUpdate` | Atualização de quantidade/item |
-| `cartSetPostalCode` | Cálculo de frete |
-| `cartSetCoupon` | Aplicação de cupom |
-| `checkoutStep` | Etapas do checkout |
-| `orderComplete` | Pedido finalizado |
+> ⚠️ **A data 26/06/2025 foi confirmada via API** — é quando as listas "Clientes" e "Assinantes" (padrão da plataforma) foram criadas, o que corresponde exatamente ao dia de ativação da conta.
 
----
-
-## 4. Estrutura de Custos Detalhada
-
-### Plano base atual
-| Plano | Envios e-mail/mês | Valor/mês |
-|-------|-------------------|-----------|
-| CORP 200 (atual) | 200.000 | **R$ 1.029,00** |
-
-### Outros planos disponíveis (página de preços — jun/2026)
-
-| Plano | Foco | Funcionalidades principais |
-|-------|------|---------------------------|
-| **Essential** | Iniciantes | Campanhas e-mail + WhatsApp, automação boas-vindas/aniversário, landing pages |
-| **Scale** | E-commerces | Fluxos básicos por WhatsApp + e-mail, campanhas, recuperador de carrinho, botão WhatsApp pop-up |
-| **Flow** | E-commerces avançados | Fluxos avançados por comportamento de compra, campanhas WhatsApp + e-mail, módulo CRM com histórico de compras, dashboard receita influenciada |
-| **Prime** | Performance máxima | Tudo do Flow + integração nativa Sankhya/Ploomes, suporte prioritário, onboarding estendido, fluxos avançados |
-
-> Todos os planos incluem: implantação 100% humanizada, especialistas em CRM, chat de ajuda.
-
-### WhatsApp — pay-as-you-go (cobrado pela Flowbiz)
-| Volume/mês | Valor unitário | Mínimo mensal |
-|-----------|---------------|---------------|
-| 1 – 5.000 | R$ 0,099 | **R$ 99,00** |
-| 5.001 – 10.000 | R$ 0,079 | — |
-| 10.001 – 25.000 | R$ 0,059 | — |
-| 25.001 – 50.000 | R$ 0,055 | — |
-| 50.001 – 1.000.000 | R$ 0,050 | — |
-
-⚠️ A Meta cobra adicionalmente por conversa. Mensagens via módulo "Jornadas" são cobradas **só pela Meta** (sem taxa Flowbiz adicional).
-
-### Por que a fatura chegou a R$ 1.978?
-- Plano CORP 200: **R$ 1.029,00**
-- Excedente identificado: **~R$ 949,00**
-- Causas prováveis: taxa mínima WhatsApp (R$99) + cobranças de e-mails excedentes de meses anteriores + eventual taxa de e-mails excedentes do plano anterior + ajuste retroativo
+**Próximo passo urgente:** Contatar o suporte Flowbiz (chat na central de ajuda) para:
+1. Confirmar a cláusula de cancelamento (multa ou não?)
+2. Solicitar não renovação do contrato anual antes de 26/06/2026
 
 ---
 
@@ -219,129 +169,84 @@ Script instalado no site da Heziom (Tray) para capturar:
 
 | Recurso | Uso real | Necessidade real |
 |---------|----------|-----------------|
-| E-mail marketing (campanhas) | 3/mês, ~12.500 envios | ✅ Sim |
+| E-mail marketing (campanhas) | ~4/mês, ~13.500 envios | ✅ Sim |
 | Autoresponder | ~246 envios/mês | ✅ Sim (básico) |
 | Fluxos de automação | ~803 envios/mês | ✅ Sim (básico) |
+| Recuperação de carrinho | ✅ Ativo (lista carr.abando com 285) | ✅ Sim |
 | Rastreamento comportamental (Tray) | Provavelmente ativo | ✅ Sim |
 | WhatsApp | 0 envios | ❌ Não usa |
-| Recuperação de carrinho | Não confirmado | ❓ A verificar |
-| Landing Pages | Não confirmado | ❓ A verificar |
+| Landing Pages | ✅ Em uso — 30+ LPs criadas | ✅ Sim |
 | Dashboard receita influenciada | Não confirmado | ❓ A verificar |
 | Limite de 200.000 envios/mês | 13.511 usados (6,7%) | ❌ 14,8x superdimensionado |
 
-**Conclusão:** A Heziom precisa de **e-mail marketing com automações básicas + tracking comportamental da Tray**. Está pagando por plano enterprise que não utiliza.
+---
+
+## 6. Plano de Migração → HeziomOS
+
+### ⚡ Fase 0 — URGENTE (antes de 26/06/2026)
+
+- [ ] Contatar Flowbiz e solicitar não renovação do contrato
+- [ ] Confirmar cláusula de multa por cancelamento antecipado
+- [ ] **Exportar base completa de 96.718 contatos** com todas as segmentações
+- [ ] Exportar os 30+ templates de e-mail usados nas campanhas
+- [ ] Documentar as automações ativas (boas-vindas, carr. abandonado, pós-compra)
+
+### Fase 1 — Módulo de E-mail no HeziomOS (desenvolvimento)
+
+O HeziomOS precisará implementar:
+- [ ] Integração com provedor de envio de e-mail transacional (ex.: Resend, Amazon SES, SendGrid)
+- [ ] Módulo de campanhas com editor de template
+- [ ] Autoresponder básico (boas-vindas, pós-compra)
+- [ ] Recuperação de carrinho via webhook Tray → HeziomOS → e-mail
+- [ ] Segmentação de contatos por comportamento de compra (já temos os dados no Literarius)
+
+### Fase 2 — Migração dos Dados
+
+- [ ] Importar base de contatos para HeziomOS (96.718 contatos)
+- [ ] Mapear as 40 listas para segmentos equivalentes no HeziomOS
+- [ ] Recriar templates de e-mail (time já usa IA — processo facilitado)
+- [ ] Configurar automações básicas
+
+### Fase 3 — Cutover
+
+- [ ] Testar envios e entregabilidade pela nova infraestrutura
+- [ ] Configurar domínio de envio próprio (SPF, DKIM, DMARC)
+- [ ] Cancelar Flowbiz antes de 26/06/2026
 
 ---
 
-## 6. Alternativas para Substituição
-
-### ✅ Opção 1 — Brevo (ex-Sendinblue) — Recomendada
-
-| Item | Detalhe |
-|------|---------|
-| **Modelo de cobrança** | Por envio (não por contato) |
-| **Custo estimado** | Plano Business ~R$150–250/mês para 20k envios/mês |
-| **Contatos** | Ilimitados |
-| **E-mail marketing** | ✅ Campanhas, automações, transacional |
-| **WhatsApp** | ✅ Disponível se necessário no futuro |
-| **Automações** | ✅ Fluxos, autoresponder, jornadas básicas |
-| **Landing Pages** | ✅ Incluídas |
-| **Integração Tray** | Via Zapier ou API REST |
-| **Tracking comportamental** | Via script (similar ao Universal Tracker) |
-| **Economia vs. atual** | **~R$1.700–1.800/mês** |
-
-### Opção 2 — Klaviyo
-
-| Item | Detalhe |
-|------|---------|
-| **Modelo** | Por contato ativo |
-| **Custo estimado** | ~R$500–800/mês para 96k contatos |
-| **Integração Tray** | ✅ Nativa |
-| **Recuperação de carrinho** | ✅ Nativa e avançada |
-| **Desvantagem** | Cobra por contato — base de 96k encarece |
-
-### Opção 3 — RD Station Marketing
-
-| Item | Detalhe |
-|------|---------|
-| **Custo estimado** | ~R$499–799/mês |
-| **Suporte** | Português, time local |
-| **Integração Tray** | ✅ Disponível |
-| **Desvantagem** | Mais caro que Brevo para o volume atual |
-
-### Opção 4 — Nativo Tray (sem ferramenta externa)
-
-| Item | Detalhe |
-|------|---------|
-| **Custo** | Incluído no plano Tray |
-| **Capacidade** | E-mail básico, recuperação de carrinho |
-| **Desvantagem** | Recursos limitados de segmentação |
-
----
-
-## 7. Plano de Substituição
-
-### ⚡ Fase 0 — Esta semana (URGENTE)
-
-- [ ] Confirmar data exata de vencimento do contrato (26/06/2025 → 26/06/2026 = **21 dias**)
-- [ ] Verificar cláusula de multa por cancelamento antecipado
-- [ ] Listar as 40 listas e identificar quais automações estão ativas
-- [ ] Identificar se o tracking da Tray está ativo (Universal Tracker instalado?)
-- [ ] Identificar se Landing Pages estão em uso
-- [ ] Exportar base de 96.718 contatos com segmentação
-
-### Fase 1 — Decisão e Setup (semanas 1–2)
-
-- [ ] Escolher substituto (Brevo recomendado)
-- [ ] Criar conta e configurar domínio de envio (DNS: SPF, DKIM, DMARC)
-- [ ] Importar base de contatos com segmentos preservados
-
-### Fase 2 — Migração (semanas 2–3)
-
-- [ ] Recriar automações ativas na nova plataforma
-- [ ] Recriar templates de e-mail
-- [ ] Testar envios e entregabilidade
-- [ ] Configurar integração com Tray (webhooks/API)
-- [ ] Se Universal Tracker em uso: avaliar alternativa (Klaviyo nativo Tray ou script próprio)
-
-### Fase 3 — Cutover (semana 3–4)
-
-- [ ] Transferir campanhas ativas para nova plataforma
-- [ ] Validar todos os fluxos funcionando
-- [ ] **Cancelar Flowbiz antes de 26/06/2026**
-
----
-
-## 8. Economia Projetada
+## 7. Economia Projetada
 
 | Cenário | Custo/mês | Economia/mês | Economia/ano |
 |---------|-----------|-------------|-------------|
 | Flowbiz atual | R$ 1.978 | — | — |
-| **Brevo** | ~R$ 200 | **~R$ 1.778** | **~R$ 21.336** |
-| Klaviyo | ~R$ 600 | ~R$ 1.378 | ~R$ 16.536 |
-| RD Station | ~R$ 650 | ~R$ 1.328 | ~R$ 15.936 |
-| Nativo Tray | R$ 0 | ~R$ 1.978 | ~R$ 23.736 |
+| **HeziomOS + provedor e-mail** | ~R$ 50–100 | **~R$ 1.878–1.928** | **~R$ 22.500–23.000** |
+
+> O custo do provedor de e-mail (ex.: Amazon SES ou Resend) para 13.500 envios/mês é praticamente zero — menos de R$50/mês. A economia é quase total.
 
 ---
 
-## 9. Questões Abertas
+## 8. Questões Abertas
 
-| Questão | Impacto na decisão |
-|---------|-------------------|
-| O Universal Tracker (script) está instalado na Tray? | Define se precisa de substituto para tracking comportamental |
-| Landing Pages da Flowbiz estão em uso? | Define se precisa de módulo LP no substituto |
-| Há recuperação de carrinho configurada? | Define prioridade da migração desse fluxo |
-| Cláusula de multa no contrato? | Define se cancela agora ou aguarda 26/06 |
-| O custo excedente de R$949 é recorrente ou pontual? | Define urgência da troca |
+| Questão | Status |
+|---------|--------|
+| Data de vencimento do contrato | ✅ Confirmado: 26/06/2026 |
+| Inventário das 40 listas | ✅ Mapeado via API |
+| Campanhas históricas | ✅ 168 campanhas mapeadas |
+| Automações/Jornadas ativas | ⚠️ Parcial — recuperação de carrinho confirmada; detalhes no painel |
+| Cláusula de multa por cancelamento | ❌ Pendente — confirmar com suporte |
+| Universal Tracker instalado na Tray | ❓ Pendente verificação |
+| Landing Pages em uso | ✅ Confirmado — 30+ LPs criadas |
+| O custo excedente de R$949 é recorrente? | ❓ Pendente |
 
 ---
 
-## 10. Fontes e Referências
+## 9. Fontes e Referências
 
 - Central de ajuda: `cloudchat5.cloudhumans.com/hc/central-de-ajuda-flowbiz`
 - Documentação API: `flowbiz.readme.io`
-- Página de planos: `flowbiz.com.br/planos`
-- Dados de uso capturados em: 05/06/2026
+- API endpoint: `https://mbiz.mailclick.me/api.php/{Command}?APIKey=...`
+- Dados coletados via API em: **05/06/2026**
 
 ---
 
