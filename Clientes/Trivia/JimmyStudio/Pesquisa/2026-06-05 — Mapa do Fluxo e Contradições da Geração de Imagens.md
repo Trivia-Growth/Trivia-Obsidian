@@ -109,17 +109,25 @@ O `unified_style` "modelo" (`IMG:2106`) reforça isso como gabarito. **Mesma doe
 - System prompt sozinho: **~800 linhas**. Mesmo diagnóstico da copy: prompt inchado = mais caro e
   menos obedecido.
 
-### IMG-5 🔴 Duas taxonomias de estilo + fallback silencioso — **idêntico ao 085.4 da copy**
-Existem **dois `IMAGE_STYLE_PRESETS`**: backend (`IMG:712`, 41 chaves) e frontend
-(`src/config/imageStyles.ts`, 41 chaves). **Eles divergem:**
-- `3d` e `3d_stylized` existem **só no FRONTEND** (o usuário pode selecionar "3D Render Realista")
-  → o backend não acha o preset → cai no **fallback genérico** ("Professional modern aesthetic",
-  `imageStyles.ts:763` / caminho "brand" de `getEnrichedStyleInstructions` `IMG:1330`).
-  **O usuário pede 3D e recebe genérico, sem aviso.**
-- `splitEducational`, `splitLight`, `editorialCarouselContent` existem **só no BACKEND**.
+### IMG-5 🟠 Dois catálogos de estilo (risco de drift) — ⚠️ CORRIGIDO em 05/06
+**Correção (auditoria revista):** a 1ª leitura afirmou que `3d`/`3d_stylized` só existiam no
+frontend e geravam fallback silencioso. **Isso estava ERRADO** — foi um bug da regex de extração
+(não capturava chaves com aspas duplas, ex.: `"3d"`). Recontagem correta:
+- **Toda chave selecionável no frontend (40) existe no backend (43).** NÃO há fallback silencioso hoje.
+- `splitEducational`, `splitLight`, `editorialCarouselContent` existem só no backend (templates internos) — ok.
 
-É o "fallback silencioso para industry_insight" da copy, em versão visual. Precisa de **uma fonte
-única** (espelhar o `styles-catalog.ts`).
+O que **de fato** resta:
+- **Dois catálogos duplicados** (`src/config/imageStyles.ts` × `IMAGE_STYLE_PRESETS` no `IMG:709`)
+  que podem **divergir no futuro** (drift). O frontend só envia a **chave** (`preferred_style`,
+  `useImageGeneration.ts:244`); o backend resolve as instruções pelo seu próprio dicionário.
+- O `promptInstructions` do frontend é usado **só** no admin "exemplos de estilo"
+  (`StyleExamplesTab.tsx:103`) — e diverge levemente do backend para a mesma chave (ex.: `3d`
+  no back cita "Octane/Redshift/PBR", no front "ray-tracing... AVOID"). Inconsistência cosmética.
+- O **fallback existe no código** (`getEnrichedStyleInstructions`, ramo `if (!preset)`) mas era
+  **silencioso**.
+
+Resolvido na 086.3 com: fallback **explícito** (log) + **teste de paridade** front⊆back (anti-drift).
+Merge num arquivo único NÃO foi feito (paridade já vale; risco do refactor Vite×Deno não se justifica).
 
 ### IMG-6 🟠 `no_text` × tipografia obrigatória — ordens opostas conforme combinação
 - Modo `no_text` (`IMG:2417`): *"NUNCA inclua texto... Qualquer texto na imagem gerada tornará ela
