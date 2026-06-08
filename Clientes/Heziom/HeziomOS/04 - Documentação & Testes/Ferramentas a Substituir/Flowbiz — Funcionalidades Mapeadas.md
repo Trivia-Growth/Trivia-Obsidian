@@ -148,9 +148,9 @@ módulo-substituto: Marketing e CRM
 ## Plano de Migração
 
 1. ✅ **Exportar base completa** — 96.692 contatos + 168 campanhas + 40 listas + 345 campos personalizados — **concluído em 05/06/2026**
-2. [ ] **Contatar Flowbiz** para confirmar cláusula de cancelamento e solicitar não renovação antes de 26/06/2026
-3. [ ] **Exportar templates de e-mail** das 168 campanhas (acesso via painel web)
-4. [ ] **Documentar automações** (boas-vindas, carrinho abandonado) com configs exatas
+2. ✅ **Exportar 168 templates de e-mail** — HTMLs completos salvos em `/templates/` (6,3 MB) — **concluído em 08/06/2026**
+3. ✅ **Documentar automações** — 10 jornadas de carrinho + 4 fluxos ativos mapeados em [[Flowbiz — Automações e Fluxos Mapeados]] — **concluído em 08/06/2026**
+4. [ ] **Contatar Flowbiz** para confirmar cláusula de cancelamento e solicitar não renovação antes de 26/06/2026
 5. [ ] **Mapear campos** para schema `crm_contacts` do Supabase (base: `TODOS_CONTATOS_CONSOLIDADO.csv`)
 6. [ ] **Enriquecer** com dados do Literarius (TipoCliente, histórico de pedidos)
 7. [ ] **Cruzar** com Tray customers (CPF/email como chave)
@@ -173,6 +173,7 @@ módulo-substituto: Marketing e CRM
 | `/listas/` | `listas_completo.json` + `listas_resumo.csv` + `campos_personalizados.json` | **40 listas + 345 campos** |
 | `/tags/` | `tags_completo.json` | 2 tags |
 | `/autoresponders/` | `autoresponders_completo.json` | ⚠️ Vazio — API não lista por ID genérico |
+| `/templates/` | **168 arquivos HTML** — HTML completo de cada e-mail enviado | **168 templates (6,3 MB)** — ✅ 08/06/2026 |
 | `/README.md` | Documentação do backup | — |
 
 **Arquivo principal para migração:** `TODOS_CONTATOS_CONSOLIDADO.csv`

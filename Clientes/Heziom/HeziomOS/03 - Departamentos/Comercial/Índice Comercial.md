@@ -48,6 +48,8 @@ substitui: WhatsApp manual + ClickUp + planilhas
 | [[Pipeline Atacado]] | ⬜ A criar | Pedidos WhatsApp, status, conversão |
 | [[Comissões CPC]] | ⬜ A criar | Faixas 0,5%–3,5%, cálculo automático |
 | [[Agente de Vendas WhatsApp]] | ⬜ A criar | Fase 3 — auto-lançamento no Literarius |
+| [[Amazon Seller Central — Mapeamento e Automação]] | ✅ Documentado | SP-API completa — 10 APIs, todos endpoints, rate limits, fluxo HeziomOS (3P) |
+| [[Amazon Vendor Central — Mapeamento e Automação]] | ✅ Documentado | SP-API completa — Retail Procurement + Direct Fulfillment, todos endpoints (1P) |
 
 ---
 
@@ -75,7 +77,7 @@ substitui: WhatsApp manual + ClickUp + planilhas
 ## Necessidades Estratégicas
 
 - **Cross-channel:** CPF como chave para saber se cliente marketplace já comprou D2C
-- **APIs ML/Amazon:** mapear o que não passa pela Tray (Fase 4)
+- **APIs ML/Amazon:** ✅ Amazon SP-API mapeada em [[Amazon Seller Central — Mapeamento e Automação]] — Mercado Livre pendente (Fase 4)
 - **Chat de vendas na Tray:** tema com IA que recomenda, mostra estoque e fecha carrinho
 - **Agente 24/7:** consulta livros, calcula frete, finaliza compra
 
