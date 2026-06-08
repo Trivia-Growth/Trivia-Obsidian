@@ -103,10 +103,51 @@ O relatório de processamento apontou 3 produtos (Família, Discipulado Teleios,
 
 ---
 
+## Descoberta pós-upload: títulos não propagavam para Amazon (2026-06-08)
+
+Após 6 dias do upload no Vendor Central, os títulos ainda exibiam as versões longas antigas no amazon.com.br.
+
+**Causa raiz:** A **BookInfo Metadados** (`bookinfometadados.com.br`) é a fonte autoritativa de metadados de livros para a Amazon BR. Ela distribui automaticamente `título + subtítulo` concatenados para a Amazon — sobrescrevendo o que foi enviado pelo Vendor Central.
+
+**Solução aplicada (2026-06-08):** Limpeza do campo `subtítulo` na BookInfo para todos os 24 produtos. Com subtítulo vazio, a Amazon receberá apenas o título curto gerado no CDQ.
+
+| ID BookInfo | Produto | Subtítulo limpo |
+|---|---|---|
+| 329266 | Família: um lugar seguro | ✅ |
+| 322331 | Discipulado Teleios | ✅ |
+| 319908 | Avodah | ✅ |
+| 308898 | Mães da aliança 2026 | ✅ |
+| 250196 | Meditações em Provérbios (Capa Comum) | ✅ |
+| 281796 | Meditações em Provérbios (Capa Dura) | ✅ |
+| 200223 | Somente pela graça | ✅ |
+| 317584 | Vícios | ✅ |
+| 276982 | Tratado sobre as Boas Obras | ✅ |
+| 281788 | O Sermão do Monte | ✅ |
+| 274139 | Anônimas | ✅ |
+| 200202 | Tratado sobre a oração | ✅ |
+| 297275 | A fé na era da ilusão | ✅ |
+| 226752 | Todo cristão é um missionário | ✅ |
+| 320813 | Tratado sobre a ceia do Senhor | ✅ |
+| 297315 | Nem silenciadas, nem iguais | ✅ |
+| 332425 | Quem é Jesus? | ✅ |
+| 317551 | Tratado sobre a misericórdia | ✅ |
+| 287442 | Tratado sobre a abnegação | ✅ |
+| 315025 | Orando as promessas de Deus | ✅ |
+| 271013 | Tratado sobre Contentamento Cristão | ✅ |
+| 288922 | Tratado sobre o domínio do pecado | ✅ |
+| 320803 | As festas do Senhor | ✅ |
+| 318154 | Restaurando e consolidando sua família | ✅ |
+
+**Propagação esperada:** 24–48h após 2026-06-08. Verificar em amazon.com.br.
+
+---
+
 ## Próximos passos
 
 - [x] Verificar resultado do lote `50040020606` — ✅ 24/24 confirmados no catálogo
 - [x] 3 falsos positivos de SKU mismatch investigados — todos atualizados com sucesso
-- [ ] Monitorar CDQ score nos próximos dias (pode levar 24–48h para refletir)
+- [x] Subtítulo limpo na BookInfo para todos os 24 produtos — ✅ 2026-06-08
+- [ ] Verificar títulos na Amazon após 2026-06-10 (24–48h de propagação)
+- [ ] Monitorar CDQ score nos próximos dias
 - [ ] Revisar imagens — 11/33 produtos têm menos de 4 imagens (próxima rodada de CDQ)
 - [ ] Considerar A+ Content upgrade para produtos sem (todos têm A+ atualmente ✅)

@@ -2,7 +2,7 @@
 tags: [ferramentas, flowbiz, substituicao, custo, marketing]
 status: substituição-urgente
 criado: 2026-06-05
-atualizado: 2026-06-05
+atualizado: 2026-06-08
 backup: concluído em 05/06/2026
 ---
 
@@ -189,7 +189,7 @@ A API `AutoResponder.Get` requer ID específico por autoresponder (não lista al
 - [ ] Contatar Flowbiz e solicitar não renovação do contrato
 - [ ] Confirmar cláusula de multa por cancelamento antecipado
 - [x] **Exportar base completa de 96.692 contatos** → ✅ concluído em 05/06/2026 (ver backup abaixo)
-- [ ] Exportar os 30+ templates de e-mail usados nas campanhas
+- [x] **Exportar os 168 templates de e-mail** → ✅ concluído em 08/06/2026 — 168 HTMLs salvos em `/templates/` (6,3 MB)
 - [ ] Documentar as automações ativas (boas-vindas, carr. abandonado, pós-compra)
 
 ### Fase 1 — Módulo de E-mail no HeziomOS (desenvolvimento)
@@ -234,7 +234,7 @@ O HeziomOS precisará implementar:
 | Data de vencimento do contrato | ✅ Confirmado: 26/06/2026 |
 | Inventário das 40 listas | ✅ Mapeado via API |
 | Campanhas históricas | ✅ 168 campanhas mapeadas |
-| Automações/Jornadas ativas | ⚠️ Parcial — recuperação de carrinho confirmada; detalhes no painel |
+| Automações/Jornadas ativas | ✅ Mapeado completo em 08/06/2026 — ver [[Flowbiz — Automações e Fluxos Mapeados]] |
 | Cláusula de multa por cancelamento | ❌ Pendente — confirmar com suporte |
 | Universal Tracker instalado na Tray | ❓ Pendente verificação |
 | Landing Pages em uso | ✅ Confirmado — 30+ LPs criadas |
@@ -254,6 +254,7 @@ O HeziomOS precisará implementar:
 | `/listas/` | JSON completo + CSV resumido + campos personalizados (345 campos) | **40 listas** |
 | `/tags/` | `tags_completo.json` | 2 tags |
 | `/autoresponders/` | `autoresponders_completo.json` | — |
+| `/templates/` | **168 arquivos HTML** — templates completos de todos os e-mails (6,3 MB) — ✅ exportado em 08/06/2026 | **168 templates** |
 
 **Arquivo principal para migração:** `TODOS_CONTATOS_CONSOLIDADO.csv` — todos os 96.692 contatos com campos comportamentais (último pedido, receita total, ticket médio, histórico de compras).
 

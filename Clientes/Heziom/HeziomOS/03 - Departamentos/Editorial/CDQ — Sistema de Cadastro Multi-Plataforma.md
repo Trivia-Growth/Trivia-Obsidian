@@ -12,6 +12,8 @@ prioridade: alta
 
 Contexto de origem: [[Execucao-CDQ-Bulk-Upload-2026-06-02]] — auditoria CDQ detectou 22/33 produtos com títulos fora do padrão; solução manual motivou a criação deste sistema.
 
+> ⚠️ **Aprendizado crítico (2026-06-08):** A **BookInfo é a fonte autoritativa de metadados para a Amazon BR** — não o Vendor Central. Ela distribui `título + subtítulo` concatenados para a Amazon, sobrescrevendo edições do XLSM. O sistema CDQ **deve publicar na BookInfo com `subtítulo` vazio** para garantir que a Amazon exiba apenas o título CDQ. Ver [[Aprendizados-CDQ-BookInfo-Amazon]] para detalhes completos.
+
 ---
 
 ## Stack
@@ -343,10 +345,49 @@ CREATE TABLE books (
 
 ---
 
+## Considerações técnicas críticas (descobertas em produção)
+
+> Referência completa: [[Aprendizados-CDQ-BookInfo-Amazon]]
+
+### BookInfo é a fonte autoritativa para Amazon BR
+
+A BookInfo distribui `titulo + subtitulo` concatenados para a Amazon, sobrescrevendo qualquer edição feita no Vendor Central. O fluxo de publicação correto é:
+
+```
+1. BookInfo  → titulo = título CDQ (≤65 chars), subtitulo = ''
+2. Literarius → PUT /TProdutoController/Produto
+3. Tray       → POST /products  
+4. Vendor     → Download XLSM (bullets + keywords)
+```
+
+### Autenticação BookInfo
+
+- Sessão CakePHP (cookie `CAKEPHP`). Login via POST `/users/login`.
+- Submissão de formulário: usar `_method=PUT` via form submit (não `fetch()` — servidor rejeita com HTTP 500 por detecção de User-Agent).
+- Confirmar sucesso por redirect para `/account/Books/success/{id}`.
+
+### Campo subtítulo — estratégia padrão
+
+- **Padrão CDQ:** `subtitulo = ''`, `titulo = título CDQ (25–65 chars)`
+- O campo de subtítulo do Literarius pode continuar preenchido (é só para o ERP interno)
+- Apenas o BookInfo precisa ter subtítulo vazio para que a Amazon exiba o título correto
+
+### Timeline de propagação
+
+| Destino | Propagação |
+|---|---|
+| Literarius | Imediato |
+| Tray | ~minutos |
+| BookInfo → Amazon | ~24–48h |
+| Vendor Central CDQ score | ~24–48h |
+
+---
+
 ## Relação com outros módulos
 
 - [[Índice Editorial]] — este módulo é parte do submódulo [[Ficha Catalográfica]]
 - [[Tray - Sync Agent — Endpoints e Estratégia]] — Fase 3: trigger após publicar
 - [[Roadmap de Integração Tray × Literarius]] — cadastro CDQ alimenta o sync
+- [[Aprendizados-CDQ-BookInfo-Amazon]] — aprendizados técnicos de produção + mapa IDs BookInfo
 - Arquivo referência: `Clientes/Heziom/Amazon Vendor/Correcoes-Catalogo-CDQ.md`
 - Script reutilizável: `/tmp/build_xlsm_final.py` (lógica de geração do XLSM)
