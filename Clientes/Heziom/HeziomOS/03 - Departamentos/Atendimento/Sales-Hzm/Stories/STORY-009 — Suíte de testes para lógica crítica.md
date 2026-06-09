@@ -3,7 +3,7 @@ id: STORY-009
 titulo: "Suíte de testes para lógica crítica"
 fase: 2
 modulo: "qualidade"
-status: backlog
+status: em-progresso
 prioridade: média
 agente_responsavel: "@dev"
 criado: 2026-06-09
@@ -37,14 +37,18 @@ Achados **#47, #71**. Independe de tenancy. Depende do CI (STORY-006) para ter v
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` (iniciada)
 
-**Branch/PR:**
+**Branch/PR:** commits `9481a77` (smoke test) e `0bbeba2` (formatBRL)
 
 **Arquivos alterados:**
--
+- `src/test/edge-functions-exist.test.ts` (smoke test CA7 da STORY-007)
+- `src/test/format.test.ts` + `src/lib/utils.ts` (formatBRL)
 
 **Notas de implementação:**
+- **Bloqueio descoberto:** o projeto **não tem lógica de negócio exportada** — tudo está embutido em componentes/edge functions. Logo, a suíte real **depende da [[STORY-010 — Camada de serviço e consolidação de config|STORY-010]]** (extrair lógica para funções puras).
+- ✅ Já entregue: smoke test de Edge Functions + testes do `formatBRL` (primeira lógica pura extraída). Suíte: **3 arquivos, 7 testes, verde** no CI.
+- ⏳ Restante (após extração da 010): forecast, agregações de Analytics, parser SSE, schemas Zod.
 
 ---
 

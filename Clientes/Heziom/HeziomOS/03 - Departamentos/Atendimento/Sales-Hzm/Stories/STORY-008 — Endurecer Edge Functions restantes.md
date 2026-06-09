@@ -3,7 +3,7 @@ id: STORY-008
 titulo: "Endurecer Edge Functions restantes"
 fase: 2
 modulo: "edge-functions"
-status: backlog
+status: em-progresso
 prioridade: média
 agente_responsavel: "@dev"
 criado: 2026-06-09
@@ -38,14 +38,17 @@ Achados **#33, #34, #39, #38** e **#31, #32** (estes dois rebaixados por single-
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` (parcial)
 
-**Branch/PR:**
+**Branch/PR:** commit `f9d46d9`
 
 **Arquivos alterados:**
--
+- `zapi-webhook`, `meta-wa-webhook` (#33), `meta-wa-send` (#32)
 
 **Notas de implementação:**
+- ✅ **CA1 (#33):** filtro `.or()` sanitizado (só dígitos/`+`) em zapi-webhook e meta-wa-webhook.
+- ✅ **CA5 (#32):** `meta-wa-send` agora exige caller com service-role (whatsapp-router) — testado, anon → 401.
+- ⏳ **Restante:** CA2 (#34 erros genéricos via `internalError`, + #45 Content-Type admin, #46 `response.ok`), CA3 (#39 padronizar catch), CA4 (#38 rate limit em predictive-ai/analyze-meeting/knowledge-import), CA5 (#31 remover fallback legado de superadmin).
 
 ---
 
