@@ -3,7 +3,7 @@ id: STORY-005
 titulo: "Type-check no build e correção de erros TS"
 fase: 1
 modulo: "qualidade"
-status: pronto
+status: em-progresso
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-06-09
@@ -37,14 +37,19 @@ Achados **#12, #68, #69, #70** (e o falso-positivo #13). Independe de tenancy. H
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` — **320 → 96 erros (70% reduzido)**
 
-**Branch/PR:**
+**Branch/PR:** commits `49309d3`, `2175529`
 
 **Arquivos alterados:**
--
+- `src/integrations/supabase/types.ts` (regenerado), `package.json`, `eslint.config.js`, +16 arquivos (auto-fix)
 
 **Notas de implementação:**
+- 🐛 **Bug descoberto (importante):** o `npm run typecheck` (e o passo do CI) usava `tsc --noEmit` **na raiz** — que só tem `references` e **não checa o `src`** (confirmei com erro proposital não detectado). Corrigido para `tsc -p tsconfig.app.json --noEmit`. O gate do CI agora é honesto.
+- ✅ **Alta alavancagem:** regenerei o `src/integrations/supabase/types.ts` do banco real → **320 → 126** (194 erros eram colunas que o compilador achava inexistentes por causa do types desatualizado — #2 da auditoria sobre schema).
+- ✅ **Imports não usados:** `eslint-plugin-unused-imports` + `--fix` → **126 → 96** (16 arquivos).
+- ⏳ **Restam 96** (correções de tipo manuais): 29 `TS2339`, 27 `TS2322`, 21 `TS6133` (vars não usadas), 7 `TS2345`, 4 `TS18047` (null-check)... Trabalho dedicado, arquivo a arquivo.
+- ⏭️ **Quando chegar a 0:** remover `continue-on-error` do `typecheck` no `ci.yml` (vira bloqueante) e promover `no-explicit-any` para erro.
 
 ---
 
