@@ -3,7 +3,7 @@ id: STORY-013
 titulo: "Quebrar componentes-gigantes e alinhar arquitetura"
 fase: 3
 modulo: "arquitetura"
-status: backlog
+status: em-progresso
 prioridade: baixa
 agente_responsavel: "@dev"
 criado: 2026-06-09
@@ -36,14 +36,16 @@ Achados **#22, #23, #66**. Independe de tenancy. Naturalmente vem **depois** da 
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` (CA3 feito)
 
-**Branch/PR:**
+**Branch/PR:** commit `920ab9a`
 
 **Arquivos alterados:**
--
+- `src/features/README.md` (removido), `CLAUDE.md`
 
 **Notas de implementação:**
+- ✅ **CA3 (#22/#66):** decisão fixada — adotar a estrutura **real** (`components/` + `pages/`), **não** a `features/` (Bulletproof React). Pasta `src/features/` morta (só README) removida; `CLAUDE.md` atualizado com a decisão + dívida registrada.
+- ⏳ **CA1/CA2/CA4 (grande, dedicado):** quebrar os componentes-gigantes (`Analytics.tsx` ~1256, `Settings.tsx` ~780, `AISettingsTab.tsx` ~679) extraindo data-fetching para hooks e cálculos para funções puras testáveis. **Depende da camada de serviço da [[STORY-010 — Camada de serviço e consolidação de config|STORY-010]]** — fazer as duas juntas numa frente dedicada (também destrava a suíte de testes da STORY-009).
 
 ---
 
