@@ -45,7 +45,8 @@ Achados **#22, #23, #66**. Independe de tenancy. Naturalmente vem **depois** da 
 
 **Notas de implementação:**
 - ✅ **CA3 (#22/#66):** decisão fixada — adotar a estrutura **real** (`components/` + `pages/`), **não** a `features/` (Bulletproof React). Pasta `src/features/` morta (só README) removida; `CLAUDE.md` atualizado com a decisão + dívida registrada.
-- ⏳ **CA1/CA2/CA4 (grande, dedicado):** quebrar os componentes-gigantes (`Analytics.tsx` ~1256, `Settings.tsx` ~780, `AISettingsTab.tsx` ~679) extraindo data-fetching para hooks e cálculos para funções puras testáveis. **Depende da camada de serviço da [[STORY-010 — Camada de serviço e consolidação de config|STORY-010]]** — fazer as duas juntas numa frente dedicada (também destrava a suíte de testes da STORY-009).
+- 🚧 **CA1/CA2 (em andamento):** **padrão estabelecido e provado** — extrair lógica pura → testar → ligar (preserva comportamento, risco baixo). Primeira fatia do `Analytics.tsx` feita (`7a6b809`): `computeKpiMetrics`, `groupConversationsByDay`, `groupOpenDealsByStage`, `groupContactsBySource` → `src/lib/analytics.ts` (testado). Analytics 1255→1224.
+- ⏳ **Restante (mesmo padrão, incremental):** demais blocos do Analytics (`performanceHistory`, `paceData`, cohort...), `Settings.tsx` (~780), `AISettingsTab.tsx` (~679). Cada bloco = extrair p/ `lib/` ou hook + teste. Pode ser tocado aos poucos sem risco.
 
 ---
 

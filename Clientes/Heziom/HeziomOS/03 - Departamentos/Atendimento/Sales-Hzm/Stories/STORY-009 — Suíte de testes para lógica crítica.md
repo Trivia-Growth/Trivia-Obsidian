@@ -48,7 +48,8 @@ Achados **#47, #71**. Independe de tenancy. Depende do CI (STORY-006) para ter v
 **Notas de implementação:**
 - **Bloqueio descoberto:** o projeto **não tem lógica de negócio exportada** — tudo está embutido em componentes/edge functions. Logo, a suíte real **depende da [[STORY-010 — Camada de serviço e consolidação de config|STORY-010]]** (extrair lógica para funções puras).
 - ✅ Já entregue: smoke test de Edge Functions + testes do `formatBRL` (primeira lógica pura extraída). Suíte: **3 arquivos, 7 testes, verde** no CI.
-- ⏳ Restante (após extração da 010): forecast, agregações de Analytics, parser SSE, schemas Zod.
+- ✅ **Agregações de Analytics testadas** (`7a6b809`): `src/test/analytics.test.ts` — 8 testes de `computeKpiMetrics`/`groupConversationsByDay`/`groupOpenDealsByStage`/`groupContactsBySource` (KPIs, conversão, receita, agrupamentos). Suíte: **4 arquivos / 15 testes**.
+- ⏳ Restante (conforme a 013 extrai mais lógica): forecast, demais cálculos do Analytics, parser SSE, schemas Zod das edge functions.
 
 ---
 
