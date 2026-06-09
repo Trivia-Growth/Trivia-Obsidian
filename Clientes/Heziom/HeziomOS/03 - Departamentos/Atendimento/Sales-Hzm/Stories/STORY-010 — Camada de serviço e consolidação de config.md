@@ -3,7 +3,7 @@ id: STORY-010
 titulo: "Camada de serviço e consolidação de config"
 fase: 2
 modulo: "arquitetura"
-status: backlog
+status: em-progresso
 prioridade: média
 agente_responsavel: "@architect"
 criado: 2026-06-09
@@ -38,14 +38,20 @@ Achados **#15, #16, #17, #18, #19, #20, #24, #25, #26, #27, #52, #67**. Independ
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` (config consolidada; camada de serviço pendente)
 
-**Branch/PR:**
+**Branch/PR:** commits `0bbeba2` (formatBRL) e `bd1689e` (env/edge)
 
 **Arquivos alterados:**
--
+- `src/config/env.ts`, `src/lib/edge.ts` (novo), `src/lib/utils.ts`, `.env.example`, +6 consumidores
 
 **Notas de implementação:**
+- ✅ **CA1 (#15/#16/#17/#18):** `config/env.ts` virou a **fonte única tipada + validada com Zod no boot** (era código morto com var inexistente). 6 arquivos migrados para `env.*`; de quebra corrigiu o bug `VITE_SUPABASE_ANON_KEY` no chat público (#53/54).
+- ✅ **CA2:** `.env.example` documenta as `VITE_*` reais.
+- ✅ **CA3 (parcial):** criado `src/lib/edge.ts` (`callEdge`/`edgeUrl`); URLs de função migradas para `env.functionsUrl`. Migrar os ~12 `fetch` manuais restantes para `callEdge` é incremental.
+- ✅ **CA5 (parcial):** `formatBRL` em `lib/utils.ts` (#67).
+- ✅ **CA6:** moot — a duplicação de `initialize-workspace` sumiu quando a STORY-014 removeu o `WorkspaceSwitcher`; sobrou só o `Onboarding` (migrado).
+- ⏳ **CA4 (grande):** camada de serviço por domínio + hooks TanStack Query, movendo o acesso direto ao Supabase dos componentes. **Frente conjunta com a STORY-013** (quebrar componentes-gigantes) — trabalho dedicado.
 
 ---
 
