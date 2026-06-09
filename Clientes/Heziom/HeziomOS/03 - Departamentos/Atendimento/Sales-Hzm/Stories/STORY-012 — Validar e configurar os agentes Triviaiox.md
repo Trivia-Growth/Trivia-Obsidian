@@ -3,7 +3,7 @@ id: STORY-012
 titulo: "Validar e configurar os agentes Triviaiox"
 fase: 2
 modulo: "agentes"
-status: backlog
+status: concluido
 prioridade: média
 agente_responsavel: "@triviaiox-master"
 criado: 2026-06-09
@@ -37,14 +37,19 @@ Relacionado aos achados **#15, #20, #22, #66, #64, #47, #12** (documentação as
 
 > Preenchido pelo agente responsável.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `concluido`
 
-**Branch/PR:**
+**Branch/PR:** commit `02c573c`
 
 **Arquivos alterados:**
--
+- `docs/framework/{tech-stack,source-tree,coding-standards}.md` (novos), `CLAUDE.md`
 
 **Notas de implementação:**
+- ✅ **CA1:** `validate-agents.js` → **12 agentes, 0 erros** (121 warnings = deps opcionais de checklists/data do `ux-design-expert`, não bloqueiam). Descobri que os 3 `devLoadAlwaysFiles` (`docs/framework/*.md`) — que o `@dev` carrega no boot — **não existiam** (nem o fallback `docs/architecture/*`). Criados com conteúdo **real** (stack, estrutura, padrões de segurança/qualidade extraídos da base).
+- ✅ **CA2:** `CLAUDE.md` agora marca a arquitetura `features/` como **alvo, não realidade**, apontando para `docs/framework/source-tree.md` (estrutura real). Corrige o drift docs↔código (#15/#20/#22/#66).
+- ✅ **CA3:** os 12 agentes core validam e seguem o formato padrão.
+- ✅ **CA5:** zero resíduos `" 2.ext"` no repo (limpeza anterior se manteve).
+- **CA4 — agentes em uso neste projeto:** `@dev` (Dex, implementação), `@qa` (Quinn, gate de qualidade), `@data-engineer` (Dara, migrations/RLS), `@devops` (Gage, CI/deploy), `@architect` (Aria, decisões estruturais), `@sm` (stories). Squad `claude-code-mastery` disponível para tarefas de Claude/MCP/hooks.
 
 ---
 
