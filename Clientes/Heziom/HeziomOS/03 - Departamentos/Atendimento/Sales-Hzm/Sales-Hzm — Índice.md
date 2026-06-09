@@ -28,6 +28,7 @@ CRM/Sistema de vendas da Heziom. Stack **React + Vite + TypeScript + Tailwind/sh
 - [[Auditoria TRIVIAIOX — Sales-Hzm|🔍 Auditoria TRIVIAIOX]] — relatório completo (75 achados)
 - [[SECURITY_DEBT|🔐 SECURITY_DEBT]] — registro de débito de segurança
 - [[Dashboard Stories|📊 Dashboard de Stories]]
+- [[Próxima Sessão|⏭️ Próxima Sessão (handoff)]]
 
 ## Padrão de referência
 
