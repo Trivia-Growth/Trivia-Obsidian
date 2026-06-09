@@ -3,7 +3,7 @@ id: STORY-011
 titulo: "Resiliência: ErrorBoundary, Sentry, QueryClient"
 fase: 2
 modulo: "arquitetura"
-status: backlog
+status: em-progresso
 prioridade: média
 agente_responsavel: "@dev"
 criado: 2026-06-09
@@ -37,14 +37,17 @@ Achados **#21, #64, #65**. Independe de tenancy.
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` | `concluido`
+**Status:** `em-progresso` (parcial)
 
-**Branch/PR:**
+**Branch/PR:** commit `ab89955`
 
 **Arquivos alterados:**
--
+- `src/lib/query-client.ts` (novo), `src/App.tsx`, `src/components/ErrorBoundary.tsx`
 
 **Notas de implementação:**
+- ✅ **CA3 (#64):** `QueryClient` centralizado em `src/lib/query-client.ts` com defaults (retry 1, staleTime 30s, refetchOnWindowFocus off, gcTime) + `onError` central de query.
+- ✅ **CA1 (#21 parcial):** "Tentar novamente" do ErrorBoundary agora **remonta** a subárvore (resetKey) em vez de só limpar estado; deixei o ponto único para plugar Sentry.
+- ⏳ **Restante:** CA1 (boundary por rota, não só global), CA2 (integrar Sentry — precisa do pacote `@sentry/react` + DSN), CA4 (unificar toast em sonner — ~18 arquivos usam `use-toast`), CA5 (rotas com `lazy`+`Suspense` — já há lazy em App.tsx, validar cobertura).
 
 ---
 

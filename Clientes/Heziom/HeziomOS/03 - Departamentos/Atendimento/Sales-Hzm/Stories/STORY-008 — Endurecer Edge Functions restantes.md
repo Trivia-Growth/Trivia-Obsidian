@@ -40,15 +40,17 @@ Achados **#33, #34, #39, #38** e **#31, #32** (estes dois rebaixados por single-
 
 **Status:** `em-progresso` (parcial)
 
-**Branch/PR:** commit `f9d46d9`
+**Branch/PR:** commits `f9d46d9` e `a63f4e9`
 
 **Arquivos alterados:**
-- `zapi-webhook`, `meta-wa-webhook` (#33), `meta-wa-send` (#32)
+- `zapi-webhook`, `meta-wa-webhook` (#33), `meta-wa-send` (#32), `manage-superadmins` (#31), `predictive-ai`, `analyze-meeting`, `knowledge-import` (#38)
 
 **Notas de implementação:**
 - ✅ **CA1 (#33):** filtro `.or()` sanitizado (só dígitos/`+`) em zapi-webhook e meta-wa-webhook.
-- ✅ **CA5 (#32):** `meta-wa-send` agora exige caller com service-role (whatsapp-router) — testado, anon → 401.
-- ⏳ **Restante:** CA2 (#34 erros genéricos via `internalError`, + #45 Content-Type admin, #46 `response.ok`), CA3 (#39 padronizar catch), CA4 (#38 rate limit em predictive-ai/analyze-meeting/knowledge-import), CA5 (#31 remover fallback legado de superadmin).
+- ✅ **CA5 (#32):** `meta-wa-send` exige caller com service-role (whatsapp-router) — testado, anon → 401.
+- ✅ **CA5 (#31):** fallback legado de superadmin removido (escalação de privilégio).
+- ✅ **CA4 (#38):** rate limit por workspace em `predictive-ai` (20/min), `analyze-meeting` (15/min), `knowledge-import` (10/min) — protege custo da IA.
+- ⏳ **Restante (info-leak, menor):** CA2 (#34 erros genéricos via `internalError`, + #45 Content-Type admin, #46 `response.ok`), CA3 (#39 padronizar `catch`).
 
 ---
 
