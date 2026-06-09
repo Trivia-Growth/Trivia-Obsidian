@@ -51,11 +51,12 @@ Achados **#7, #6, #5, #35, #36, #37, #34** (SEC-004/005/006/010). Continua alto 
 **Arquivos alterados:**
 - `supabase/functions/zapi-webhook/index.ts`, `meta-wa-webhook/index.ts`, `lead-intake/index.ts` (#35 — PII nos logs)
 
+**Decisão do piloto:** segredos ficam **no banco**, bloqueados para o frontend (mais seguro). Padrão: `REVOKE SELECT` da tabela + `GRANT SELECT` só nas colunas não-secretas para `anon`/`authenticated` (mantendo INSERT/UPDATE). O front grava o segredo, mas não lê de volta; só edge functions (`service_role`) leem.
+
 **Notas de implementação:**
-- ✅ **Feito (sem depender de decisão):** **CA4 (#35)** — os 3 webhooks pararam de logar o corpo cru (telefone/nome/e-mail/mensagem); agora só metadados. Deployado.
-- ⏳ **Aguardando decisão de armazenamento** (Vault/pgsodium vs coluna criptografada) — CA1 (segredos fora do frontend), CA2 (hashing de `api_tokens`/`inbound_webhooks`), CA3 (`lead-intake` comparar hash), CA6 (Vault). Como o banco é **temporário** e migra pro DB unificado da Heziom, o mais provável é fazer no banco definitivo.
-- ➡️ Relacionado: `api-token-create` (geração de token hasheado) está na task `task_7dfbc955` das 8 funções inexistentes.
-- ⏳ **CA5** (senha temp com `crypto` + não devolver no corpo) — pendente, pode ser feito junto do bloco de segredos.
+- ✅ **CA4 (#35):** os 3 webhooks pararam de logar o corpo cru (PII). Deployado (`57c7d0e`).
+- ✅ **CA1 — `api_key` de IA (a mais sensível):** bloqueada ponta-a-ponta (`c840a58`). Migration `20260609000003`; `AISettingsTab` não lê mais a coluna. Verificado: `has_column_privilege(authenticated, api_key, SELECT)=false`, `INSERT=true`, `service_role SELECT=true`. Build OK.
+- ⏳ **Restante → task `task_313ccf2f`** (exige refatorar o front que USA os segredos client-side): `zapi_instances` (token/client_token), `whatsapp_accounts` (access_token — inclui **mover pra Edge Function** a chamada do navegador ao Meta), `api_tokens` (hashing — CA2/CA3, ligado ao `api-token-create` da `task_7dfbc955`), e CA5 (#36/#37 senha temp).
 
 ---
 
