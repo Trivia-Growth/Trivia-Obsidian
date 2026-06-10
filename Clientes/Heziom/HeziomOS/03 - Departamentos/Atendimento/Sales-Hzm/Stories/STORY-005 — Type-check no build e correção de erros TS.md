@@ -37,19 +37,45 @@ Achados **#12, #68, #69, #70** (e o falso-positivo #13). Independe de tenancy. H
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` — **320 → 96 erros (70% reduzido)**
+**Status:** `em-progresso` — **320 → 71 erros (78% reduzido)**
 
-**Branch/PR:** commits `49309d3`, `2175529`
+**Branch/PR:** commits `49309d3`, `2175529`, `b3b7ab3`, `66ccf02`, `9e3a58a`, `d0a10bf`
 
 **Arquivos alterados:**
-- `src/integrations/supabase/types.ts` (regenerado), `package.json`, `eslint.config.js`, +16 arquivos (auto-fix)
+- `src/integrations/supabase/types.ts` (regenerado), `package.json`, `eslint.config.js`, `tsconfig.app.json`, +20 arquivos
 
-**Notas de implementação:**
-- 🐛 **Bug descoberto (importante):** o `npm run typecheck` (e o passo do CI) usava `tsc --noEmit` **na raiz** — que só tem `references` e **não checa o `src`** (confirmei com erro proposital não detectado). Corrigido para `tsc -p tsconfig.app.json --noEmit`. O gate do CI agora é honesto.
-- ✅ **Alta alavancagem:** regenerei o `src/integrations/supabase/types.ts` do banco real → **320 → 126** (194 erros eram colunas que o compilador achava inexistentes por causa do types desatualizado — #2 da auditoria sobre schema).
-- ✅ **Imports não usados:** `eslint-plugin-unused-imports` + `--fix` → **126 → 96** (16 arquivos).
-- ⏳ **Restam 96** (correções de tipo manuais): 29 `TS2339`, 27 `TS2322`, 21 `TS6133` (vars não usadas), 7 `TS2345`, 4 `TS18047` (null-check)... Trabalho dedicado, arquivo a arquivo.
-- ⏭️ **Quando chegar a 0:** remover `continue-on-error` do `typecheck` no `ci.yml` (vira bloqueante) e promover `no-explicit-any` para erro.
+**Notas de implementação (o que já foi feito):**
+- 🐛 **Bug crítico de config corrigido:** o `typecheck` usava `tsc --noEmit` **na raiz** (só tem `references`, **não checava o `src`** — confirmado com erro proposital não detectado). Corrigido para `tsc -p tsconfig.app.json --noEmit`. O gate do CI agora é honesto.
+- ✅ **Regenerei `types.ts` do banco real** → 320 → 126 (194 erros eram colunas que o compilador achava inexistentes pelo types desatualizado).
+- ✅ **Imports + variáveis não usados** (`eslint-plugin-unused-imports` + `--fix` + limpeza manual): toda a categoria `TS6133` zerada → 126 → 77.
+- ✅ **Código morto do Analytics** (2 queries não usadas + consts) + **exclusão dos testes do typecheck** (usam APIs do Node, rodam no vitest) → 77 → 71.
+- ⚠️ **Lição (regressão pega pelo próprio typecheck):** um `sed` global apagou um `const { user } = useAuth()` que **era usado** em 2 componentes do Settings (teria crashado em runtime). O `TS2552` pegou e foi corrigido (`9e3a58a`). **Moral: os erros restantes NÃO são deleção segura — exigem cuidado cirúrgico.**
+
+---
+
+## 🗺️ Mapa dos 71 erros restantes (para a sessão dedicada)
+
+Por categoria: **29 `TS2339`** (propriedade não existe) · **27 `TS2322`** (tipo incompatível) · **7 `TS2345`** · **4 `TS18047`** (possivelmente null) · **1 cada** `TS7006`/`TS2769`/`TS2352`/`TS18048`.
+
+Concentrados em poucos arquivos — atacar por cluster:
+
+| Arquivo | Erros | Raiz | Abordagem |
+|---|---|---|---|
+| **`APISettingsTab.tsx`** | **20** | ⛔ **BLOQUEADO** — o código lê colunas de `api_tokens` (`name`, `token_prefix`, `permissions`, `last_used_at`, `expires_at`) que **não existem no schema atual** (`SelectQueryError`). É o achado #5/#6: a migration de hardening da `api_tokens` (STORY-016) nunca aplicou. | **Resolver via [[STORY-004 — Proteger segredos e dados sensíveis\|STORY-004]] / `task_313ccf2f`** (aplicar a migration + regenerar `types.ts`). Estes 20 somem sozinhos quando o schema for corrigido. **Não tentar tipar no escuro.** |
+| **`Landing.tsx`** | **14** | Tipagem do `framer-motion` (`HTMLMotionProps`): `transition.ease: number[]` não casa com `Easing`. **Mesmo padrão repetido 14×.** | Tipar o `ease` como `Easing`/`as const`, ou extrair uma variant `motion` compartilhada e aplicar. 1 fix → resolve todos. |
+| **`ContactDetailSheet.tsx`** | **14** | Objeto de dados tipado como `{}`/`unknown` → acesso a `churn_risk` etc. falha; `unknown` não atribuível a `ReactNode`. | Tipar o retorno da query/objeto (interface com `churn_risk`, `upsell_score`...); cast de `unknown` no JSX. |
+| `PublicSelectionSessionChat.tsx` | 5 | Tipos de mensagem/sessão | Tipar o estado local. |
+| `PersonasSettingsTab.tsx` | 4 | inclui 1 `TS7006` (param `p` implicit any) | Anotar tipos. |
+| `RoleplayVoiceSession.tsx` | 3 | tipos de sessão/transcript | Tipar. |
+| Outros (1-2 cada) | ~11 | `Admin`, `FeatureFlagsPanel`, `use-forecast` (`SelectQueryError` na relação `workspace_members↔profiles`), `use-flows`, `use-contacts`, `AISettingsTab`, `ContactProfilePanel`, `PipelineReview`, `PublicSelection` | Caso a caso. |
+
+**Ordem sugerida para a sessão dedicada:**
+1. **Primeiro a STORY-004 / `task_313ccf2f`** (migration `api_tokens`) → derruba ~20 de uma vez (e os `SelectQueryError` de relações).
+2. **`Landing.tsx`** (14, padrão único — alto ROI).
+3. **`ContactDetailSheet.tsx`** (14, tipar o objeto).
+4. Resto, arquivo a arquivo.
+
+⏭️ **Quando chegar a 0:** remover `continue-on-error` do passo `typecheck` no `ci.yml` (vira **bloqueante**) e promover `@typescript-eslint/no-explicit-any` de `warn` para `error`.
 
 ---
 

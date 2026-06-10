@@ -11,20 +11,21 @@ atualizado: 2026-06-09
 ## Estado ao fechar (commit `4c…`/`7a6b809` + audit doc)
 - **main local == origin/main**, árvore 100% limpa.
 - **Gates:** 15 testes verdes · build OK · `npm audit` prod 0 high · CI verde.
-- **typecheck:** 96 erros (informativo, **não bloqueante** — ver STORY-005).
+- **typecheck:** **71 erros** (de 320 originais — 78% reduzido; informativo/não bloqueante — mapa completo na STORY-005).
 - **E2E completo passou** (backend 27/27 + visual login→dashboard). Banco `apzbaesprzohoalknzxd` **zerado** (0 orgs) — pronto pra criar a organização real da Heziom.
 - Dev server fica em `npm run dev -- --port 5190` (registrado como `heziom-sales` no launch global).
 
 ## Concluídas ✅
 001 (funções públicas), 002 (RLS), 003 (webhooks/OAuth), 006 (CI/CD), 012 (agentes), 014 (single-tenant).
 
-## Retomar por aqui (caminho conhecido e seguro)
-1. **STORY-013 + 010 — continuar a extração** (padrão provado: extrair lógica pura → testar → ligar). Próximos blocos:
-   - `Analytics.tsx` (ainda ~1224 linhas): `performanceHistory`, `paceData`, cohort → `src/lib/analytics.ts` + testes.
-   - Depois `Settings.tsx` (~780) e `AISettingsTab.tsx` (~679).
-   - Modelo de referência: o commit `7a6b809` (computeKpiMetrics etc.).
-2. **STORY-005 — grind dos 96 erros de TS** (arquivo a arquivo). Quando chegar a 0: tirar `continue-on-error` do `typecheck` no `ci.yml` (vira bloqueante) e promover `no-explicit-any` para error.
-3. **Tasks spin-off** (chips): `task_313ccf2f` (segredos Z-API/Meta/api_tokens), `task_7dfbc955` (8 edge functions inexistentes), `task_ef798287` (nps-csat + higiene config.toml).
+## Retomar por aqui
+1. **STORY-005 — grind dos 71 erros de TS restantes.** **Mapa completo e plano de ataque por cluster estão na própria [[STORY-005 — Type-check no build e correção de erros TS|STORY-005]].** Resumo:
+   - ⛔ **20 erros do `APISettingsTab` estão BLOQUEADOS** na migration de `api_tokens` → fazer **STORY-004/`task_313ccf2f` primeiro** (derruba ~20 de uma vez).
+   - `Landing.tsx` (14, padrão único framer-motion), `ContactDetailSheet.tsx` (14, tipar objeto), depois o resto.
+   - ⚠️ **NÃO é deleção segura** — já peguei (pelo próprio typecheck) uma regressão de `sed` global que teria crashado o Settings. Mexer com cuidado, validar build+testes a cada cluster.
+   - Quando chegar a 0: tirar `continue-on-error` do `typecheck` no `ci.yml` (vira **bloqueante**) + `no-explicit-any` → error.
+2. **STORY-013/010 — continuar extração** se quiser (padrão provado, `baa52a4`): `Settings.tsx`/`AISettingsTab.tsx`. A camada de cálculo do Analytics já está 100% extraída e testada.
+3. **Tasks spin-off** (chips): `task_313ccf2f` (segredos + api_tokens — **desbloqueia 20 erros de TS**), `task_7dfbc955` (8 edge functions inexistentes), `task_ef798287` (nps-csat + higiene config.toml).
 
 ## Caudas menores (em-progresso)
 - 004: resto dos segredos (task acima). 007: #41 SSE, #42 drag-drop optimistic. 008: #34/#39 (erros genéricos→`internalError`). 011: Sentry + unificar toast (sonner).
