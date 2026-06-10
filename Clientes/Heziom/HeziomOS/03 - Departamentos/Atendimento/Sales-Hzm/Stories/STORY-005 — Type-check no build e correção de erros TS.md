@@ -37,9 +37,14 @@ Achados **#12, #68, #69, #70** (e o falso-positivo #13). Independe de tenancy. H
 
 > Preenchido pelo `@dev`.
 
-**Status:** `em-progresso` — **320 → 71 erros (78% reduzido)**
+**Status:** `em-progresso` — **320 → 20 erros (94% reduzido); os 20 restantes BLOQUEADOS na STORY-004**
 
-**Branch/PR:** commits `49309d3`, `2175529`, `b3b7ab3`, `66ccf02`, `9e3a58a`, `d0a10bf`
+**Branch/PR:** commits `49309d3` … `db3bbe8` (15+ commits)
+
+> [!success] Tudo o que era addressável foi corrigido
+> Os **20 erros restantes são 100% no `APISettingsTab.tsx`**, todos `SelectQueryError` de colunas que **não existem** no schema (`api_tokens`: `name`/`token_prefix`/`permissions`/`last_used_at`/`expires_at`; `inbound_webhooks`: `field_mapping_json`). **Resolvem automaticamente quando a migration de hardening de `api_tokens`/`inbound_webhooks` for aplicada** ([[STORY-004 — Proteger segredos e dados sensíveis|STORY-004]] / `task_313ccf2f`) e o `types.ts` for regenerado. **Não há mais nada a tipar manualmente aqui.**
+>
+> **Sequência final para fechar a STORY-005:** (1) aplicar a STORY-004/`task_313ccf2f` → 20 → 0; (2) tornar o `typecheck` **bloqueante** no `ci.yml` (remover `continue-on-error`); (3) promover `no-explicit-any` para `error`.
 
 **Arquivos alterados:**
 - `src/integrations/supabase/types.ts` (regenerado), `package.json`, `eslint.config.js`, `tsconfig.app.json`, +20 arquivos

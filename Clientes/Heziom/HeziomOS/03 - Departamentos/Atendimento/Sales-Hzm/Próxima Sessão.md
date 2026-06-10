@@ -11,7 +11,7 @@ atualizado: 2026-06-09
 ## Estado ao fechar (commit `4c…`/`7a6b809` + audit doc)
 - **main local == origin/main**, árvore 100% limpa.
 - **Gates:** 15 testes verdes · build OK · `npm audit` prod 0 high · CI verde.
-- **typecheck:** **71 erros** (de 320 originais — 78% reduzido; informativo/não bloqueante — mapa completo na STORY-005).
+- **typecheck:** **20 erros** (de 320 — **94% reduzido**). **Os 20 são 100% do `APISettingsTab`, bloqueados no schema de `api_tokens`/`inbound_webhooks`** → resolvem com a STORY-004/`task_313ccf2f`. Nada mais a tipar à mão. Detalhe na STORY-005.
 - **E2E completo passou** (backend 27/27 + visual login→dashboard). Banco `apzbaesprzohoalknzxd` **zerado** (0 orgs) — pronto pra criar a organização real da Heziom.
 - Dev server fica em `npm run dev -- --port 5190` (registrado como `heziom-sales` no launch global).
 
