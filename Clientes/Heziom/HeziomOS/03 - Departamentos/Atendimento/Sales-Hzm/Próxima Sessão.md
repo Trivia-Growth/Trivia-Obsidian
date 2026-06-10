@@ -25,7 +25,13 @@ atualizado: 2026-06-09
    - ⚠️ **NÃO é deleção segura** — já peguei (pelo próprio typecheck) uma regressão de `sed` global que teria crashado o Settings. Mexer com cuidado, validar build+testes a cada cluster.
    - Quando chegar a 0: tirar `continue-on-error` do `typecheck` no `ci.yml` (vira **bloqueante**) + `no-explicit-any` → error.
 2. **STORY-013/010 — continuar extração** se quiser (padrão provado, `baa52a4`): `Settings.tsx`/`AISettingsTab.tsx`. A camada de cálculo do Analytics já está 100% extraída e testada.
-3. **Tasks spin-off** (chips): `task_313ccf2f` (segredos + api_tokens — **desbloqueia 20 erros de TS**), `task_7dfbc955` (8 edge functions inexistentes), `task_ef798287` (nps-csat + higiene config.toml).
+3. **Tasks spin-off:**
+   - ✅ `task_ef798287` (nps-csat + higiene config.toml) **CONCLUÍDA** (`9929f73`).
+   - ✅ `task_313ccf2f` (segredos) **CONCLUÍDA**: api_key, zapi token/client_token, whatsapp access_token bloqueados no front; chamada do Meta movida pra Edge Function `meta-wa-test`; api_tokens hasheados (`api-token-create` + lead-intake por hash, E2E ok); senha temp criptográfica. Commits `bdabd14`, `d101237`, `c014ed5`, `f6c6dce`.
+   - ✅ `task_7dfbc955` (8 edge functions inexistentes) **CONCLUÍDA — 8/8**. Infra (E2E completo): `api-token-create`, `inbound-webhook-create`, `inbound-webhook-receive`, `roleplay-voice-save`. IA (`_shared/ai.ts` + guards E2E 13/13; geração real depende de chave de IA na org real): `preparation-quiz`, `roleplay-import`, `preparation-visual` (HTML→storage), `preparation-audio` (OpenAI TTS→storage). **Allowlist do smoke test VAZIA** — toda função referenciada pelo front existe.
+   - **E2E mestre (`/tmp/e2e_master.py`): 37/37** + guards das 4 de IA 13/13. Visual: login→dashboard→Analytics (4 abas) sem erros.
+
+> ⚠️ **Pendência das funções de IA:** a geração em si (quiz/cenários/HTML/áudio) só roda com um provedor de IA configurado em `ai_providers_config` (e OpenAI especificamente para o TTS do áudio). Testar de ponta a ponta quando a org real da Heziom tiver a chave.
 
 ## Caudas menores (em-progresso)
 - 004: resto dos segredos (task acima). 007: #41 SSE, #42 drag-drop optimistic. 008: #34/#39 (erros genéricos→`internalError`). 011: Sentry + unificar toast (sonner).
