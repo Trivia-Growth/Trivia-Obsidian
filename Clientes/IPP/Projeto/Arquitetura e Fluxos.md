@@ -53,7 +53,7 @@ flowchart TD
     A -.->|"reprovada · e-mail ao solicitante"| R
 ```
 
-Aprovação em **2 níveis**: líder do departamento valida (1º) → financeiro aprova e paga (2º). Pagamento é feito **fora** (banco); o financeiro marca como `paga` com data/forma. Cada transição grava trilha de auditoria (quem, quando, de→para, comentário).
+Aprovação em **2 níveis**: o **presidente** do departamento valida (1º) → **financeiro** aprova e paga (2º). Cada departamento tem um **tesoureiro** (lança) e um **presidente** (valida) — quem lança não valida. Rascunho pode ser retomado ("Continuar"). Pagamento é feito **fora** (banco); o financeiro marca como `paga` com data/forma. Cada transição grava trilha de auditoria (quem, quando, de→para, comentário).
 
 ---
 
