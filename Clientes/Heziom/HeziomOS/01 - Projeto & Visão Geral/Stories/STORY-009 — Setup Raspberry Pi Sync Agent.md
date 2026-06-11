@@ -1,19 +1,25 @@
 ---
-tags: [story, infra, raspberry-pi, sync]
-status: backlog
+tags: [story, infra, windows-server, raspberry-pi, sync]
+status: em andamento
 fase: 1
 prioridade: alta
 criado: 2026-05-18
+atualizado: 2026-06-10
 bloqueia: [STORY-002, STORY-003, STORY-004, STORY-006]
 ---
 
-# STORY-009 — Setup Raspberry Pi como Sync Agent
+# STORY-009 — Setup Agente de Sync (Windows Server + Raspberry Pi)
+
+> **Decisão (2026-06-10):** Windows Server da Intelinove é o **alvo primário** do MVP.
+> Já tem acesso ao SQL Server Literarius, sem custo de hardware adicional.
+> Raspberry Pi permanece como plano de redundância/futuro.
+> Repo de desenvolvimento: `Org-Heziom/literarius-sync`
 
 ## Objetivo
 
-Instalar e configurar um Raspberry Pi 4 dedicado dentro da rede da Heziom para rodar o Sync Agent — o componente que lê o SQL Server do Literarius e empurra os dados para o Supabase.
+Configurar o ambiente de execução do Sync Agent (Deno) para que rode de forma contínua e monitorada, primeiramente no **Windows Server da Intelinove** e futuramente num **Raspberry Pi 4** como redundância.
 
-> Decisão de arquitetura: [[ADR-001 — Sync Agent no Raspberry Pi]]
+> Decisão de arquitetura: [[ADR-001 — Sync Agent no Raspberry Pi]] (revisar para refletir Windows first)
 
 ---
 
