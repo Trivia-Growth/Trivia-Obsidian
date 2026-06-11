@@ -1,23 +1,23 @@
-# Contrato Sinérgica — Naming "Sinérgica OS" e Resguardos da Trívia
+# Contrato Sinérgica — Naming "Sinérgica OS" e Modelo de Propriedade
 
-> Decisão (jun/2026): na proposta/entrega do Fabrício, o sistema se chama **"Sinérgica OS"** (marca do cliente na instância). Esta nota registra a análise jurídica e os resguardos embutidos no contrato pra proteger a Trívia.
+> Decisão (JG, jun/2026): é **desenvolvimento sob encomenda**. A Trívia cria o sistema PARA a Sinérgica e ENTREGA pra ela. O que for desenvolvido (código etc.) é **da Sinérgica** após a quitação. NÃO é white-label nem licença de produto da Trívia.
 
-## A questão
-Dar o nome do cliente ao sistema entregue ("Sinérgica OS") é uma entrega white-label / instância com marca do cliente. O risco é o nome do cliente dar a impressão de que a Trívia cedeu **tudo** (incluindo a tecnologia reaproveitável), diluindo a PI da Trívia ou impedindo o reuso da plataforma com outros clientes.
+## Modelo de propriedade intelectual (corrigido)
+**Cessão total à Sinérgica**, após a quitação integral, de todo o software, código-fonte e materiais desenvolvidos sob este contrato. O "Sinérgica OS" é dele: pode usar, modificar, manter, sem depender da Trívia.
 
-## Como o contrato resguarda a Trívia
+## Únicos carve-outs (por necessidade legal, não por capricho da Trívia)
+1. **Software de terceiros / open source** (bibliotecas, nuvem/hospedagem, APIs de Meta, Google e de IA, mensageria): seguem as licenças dos respectivos titulares — a Trívia não pode ceder o que não é dela. Padrão e inevitável em qualquer sistema.
+2. **(A confirmar com JG)** Reuso **não exclusivo** de blocos genéricos e know-how de caráter geral pela Trívia: NÃO reduz a propriedade da Sinérgica sobre o sistema dela (nem sobre seus dados); apenas garante que a Trívia possa seguir desenvolvendo software com técnicas/componentes genéricos sem violar exclusividade. Custa nada ao cliente. JG decide se mantém ou cede 100% sem nem isso.
 
-1. **"Sinérgica OS" = nome da instância, não do produto.** A definição do Sistema deixa claro que "Sinérgica OS" é a implementação destinada à Sinérgica, **construída sobre a plataforma e os Componentes Pré-Existentes da Trívia (M.A.P.A. OS)**. (Cláusula 1.1 "a" e 2.1)
+## Demais resguardos mantidos
+- Cessão **condicionada à quitação integral** (até lá, direitos com a Trívia).
+- Suspensão do sistema por inadimplência.
+- Limitação de responsabilidade ao valor pago.
+- LGPD: Sinérgica controladora / Trívia operadora.
+- Custos de terceiros (nuvem, APIs) por conta da Sinérgica.
+- Garantia de marca: Sinérgica responde pela denominação "Sinérgica OS" que escolheu e indeniza a Trívia por reclamação de terceiros sobre o nome.
+- Foro: Campinas/SP.
 
-2. **Cessão limitada ao código sob medida.** Só o código desenvolvido especificamente pra Sinérgica é cedido, e **somente após a quitação integral**. A plataforma, os motores/modelos de IA, os agentes em forma reutilizável, o sistema de conteúdo multicanal, conectores e frameworks **continuam 100% da Trívia**, com licença de uso ao cliente. (Cláusula 8.1 e 8.2)
-
-3. **A marca do cliente não amplia a cessão.** Cláusula nova (8.5): a denominação "Sinérgica OS" não estende a cessão à plataforma/Componentes Pré-Existentes, e a **Trívia conserva o direito de reusar a plataforma e comercializar o M.A.P.A. OS e soluções similares a terceiros, em caráter não exclusivo**.
-
-4. **Conhecimentos residuais (8.6).** A Trívia pode reaproveitar know-how, técnicas e aprendizados gerais em outros projetos (sem expor dados confidenciais da Sinérgica).
-
-5. **Garantia de marca (8.7).** A Sinérgica declara ser titular/legítima usuária do nome "Sinérgica" e da denominação "Sinérgica OS" que escolheu, e **indeniza a Trívia** por eventual reclamação de terceiros sobre esse nome.
-
-6. **Outros resguardos já no contrato:** licença revogável só por uso irregular; suspensão do sistema por inadimplência; PI condicionada à quitação; limitação de responsabilidade ao valor pago; LGPD (Sinérgica controladora / Trívia operadora); custos de terceiros por conta da Sinérgica; foro de Campinas/SP.
-
-## Resumo
-"Sinérgica OS" é só o rótulo da instância do cliente. O motor é e continua sendo a plataforma da Trívia (M.A.P.A. OS), reaproveitável e comercializável com outros clientes. Tudo amarrado no contrato (minuta .docx na mesma pasta).
+## Pendente de decisão
+- Carve-out 2 (reuso não exclusivo de blocos genéricos): manter ou não.
+- A cláusula 8 do .docx será reescrita pra esse modelo de cessão total ANTES de gerar a versão final em Word.
