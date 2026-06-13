@@ -1,7 +1,7 @@
 # TriviaEdutech — Arquitetura do Sistema
 
 > **Fase:** Brownfield Discovery — Phase 1 (@architect)
-> **Data:** 2026-06-13
+> **Data:** 2026-06-13 (atualizado: 2026-06-13 — Sprint de Segurança)
 > **Agente:** Aria (@architect)
 
 ---
@@ -56,8 +56,9 @@ LMS multi-tenant white-label. Cada organização (tenant) opera no mesmo banco d
 | Auth | Supabase Auth | JWT |
 | Deploy frontend | Netlify | — |
 | Deploy backend | Supabase CLI | — |
-| Vídeo | Mux / Panda Video / Bunny | — |
+| Vídeo | Mux / Panda Video / Vimeo | — |
 | Pagamentos | Mercado Pago | v2 |
+| IA | OpenAI / Gemini / Anthropic / OpenRouter | — |
 
 ---
 
@@ -105,6 +106,9 @@ src/
 └── integrations/supabase/
     ├── client.ts              → instância Supabase
     └── types.ts               → tipos gerados (2317 linhas)
+
+> **Nota (features/settings):** aba "IA" adicionada em Settings (Admin > Configurações) com cards por provedor, toggle de ativação, campo API key e botão "Testar conexão".
+> **Nota (features/admin):** `manage-ai` page conectada à Edge Function `manage-ai` para CRUD de provedores de IA por tenant.
 ```
 
 ---
@@ -156,30 +160,60 @@ Superadmin tenant: `00000000-0000-0000-0000-000000000001`
 | Blog | articles, article_reads |
 | Pagamentos | course_purchases, platform_subscriptions, subscriptions, mp_oauth_connections |
 | Vídeo | video_platform_settings, video_thumbnails |
+| IA | ai_provider_settings |
 | Utilitários | faq_items, notifications, nudge_log, tenant_plan_limits |
+
+### Tabela `ai_provider_settings` (nova)
+
+Armazena configuração de provedor de IA por tenant. Apenas um provedor pode estar ativo (`enabled = true`) por tenant por vez.
+
+| Coluna | Tipo | Observação |
+|--------|------|------------|
+| `id` | UUID | PK |
+| `tenant_id` | UUID | FK → tenants. RLS obrigatório |
+| `provider` | text | `openrouter` \| `openai` \| `gemini` \| `anthropic` |
+| `enabled` | boolean | Apenas 1 ativo por tenant |
+| `api_key` | text | Chave do provedor (plaintext — migrar para Vault) |
+| `model_chat` | text | Modelo usado pelo Tutor IA |
+| `model_generate` | text | Modelo usado para geração de quiz + SEO |
+| `created_at` | timestamptz | — |
+| `updated_at` | timestamptz | — |
 
 ---
 
-## Edge Functions — 16 Funções
+## Edge Functions — 17 Funções
 
-| Função | Auth | Zod | Propósito |
-|--------|------|-----|-----------|
-| `submit-quiz` | JWT ✅ | ✅ | Score server-side (respostas nunca expostas) |
-| `manage-users` | JWT ✅ | ✅ | CRUD usuários + roles |
-| `batch-enroll` | JWT ✅ | ✅ | Matrícula em massa |
-| `generate-quiz` | JWT ✅ | ✅ | AI quiz via transcrição |
-| `mp-create-preference` | JWT ✅ | ✅ | Checkout MP (preço do DB, nunca do client) |
-| `mp-oauth` | JWT ✅ | — | OAuth flow MP |
-| `video-proxy` | JWT ✅ | — | Proxy URL vídeo |
-| `panda-video` | JWT ✅ | — | API Panda Video |
-| `auto-enroll` | API Key | ✅ | Matrícula via chave externa |
-| `accept-invite` | Token | ✅ | Aceitar convite por email |
-| `create-org` | Público | ✅ | Registro de nova organização |
-| `mp-webhook` | Público | ⚠️ | Notificação MP — SEM assinatura |
-| `optimize-content` | **NENHUMA** ❌ | ✅ | AI otimização — CRÍTICO |
-| `ai-tutor` | JWT ✅ | ✅ | Tutor AI via Lovable Gateway |
-| `sitemap` | Público | — | Sitemap XML dinâmico |
-| `llms-txt` | Público | — | llms.txt para AI indexing |
+| Função | Auth | Zod | CORS | Propósito |
+|--------|------|-----|------|-----------|
+| `submit-quiz` | JWT ✅ | ✅ | Whitelist ✅ | Score server-side (respostas nunca expostas) |
+| `manage-users` | JWT ✅ | ✅ | Whitelist ✅ | CRUD usuários + roles (bug fix: create-superadmin usa upsert) |
+| `batch-enroll` | JWT ✅ | ✅ | Whitelist ✅ | Matrícula em massa |
+| `generate-quiz` | JWT ✅ | ✅ | Whitelist ✅ | AI quiz via transcrição (usa shared ai-client) |
+| `manage-ai` | JWT ✅ | ✅ | Whitelist ✅ | **NOVA** — get-providers, upsert-provider, test-connection |
+| `mp-create-preference` | JWT ✅ | ✅ | Whitelist ✅ | Checkout MP (preço do DB, nunca do client) |
+| `mp-oauth` | JWT ✅ | — | Whitelist ✅ | OAuth flow MP |
+| `video-proxy` | JWT ✅ | — | Whitelist ✅ | Proxy URL vídeo |
+| `panda-video` | JWT ✅ | — | Whitelist ✅ | API Panda Video |
+| `auto-enroll` | API Key | ✅ | Whitelist ✅ | Matrícula via chave externa |
+| `accept-invite` | Token | ✅ | Whitelist ✅ | Aceitar convite por email |
+| `create-org` | Público | ✅ | Whitelist ✅ | Registro de nova organização |
+| `mp-webhook` | HMAC ✅ | ✅ | Whitelist ✅ | Notificação MP — assinatura verificada via `MERCADOPAGO_WEBHOOK_SECRET` |
+| `optimize-content` | JWT ✅ | ✅ | Whitelist ✅ | AI otimização — autenticação JWT adicionada (era público ❌) |
+| `ai-tutor` | JWT ✅ | ✅ | Whitelist ✅ | Tutor AI via shared ai-client (migrado de Lovable Gateway) |
+| `sitemap` | Público | — | Whitelist ✅ | Sitemap XML dinâmico |
+| `llms-txt` | Público | — | Whitelist ✅ | llms.txt para AI indexing |
+
+> **CORS:** todas as funções agora usam whitelist restritiva de origens (triviaedutech.com, app.triviaedutech.com, localhost). Wildcard `"*"` completamente eliminado.
+
+### Shared Module: `_shared/ai-client.ts`
+
+Client de IA compartilhado entre Edge Functions. Elimina o acoplamento anterior com Lovable AI Gateway.
+
+- Suporte a provedores: OpenAI, Gemini, Anthropic, OpenRouter
+- Entrada: `{ provider, apiKey, model, messages[] }`
+- Saída: resposta normalizada (mesmo formato para todos os provedores)
+- Usado por: `ai-tutor`, `generate-quiz`, `optimize-content`
+- Config por tenant: lida da tabela `ai_provider_settings` em runtime
 
 ---
 
@@ -225,3 +259,38 @@ USING (tenant_id = '00000000-0000-0000-0000-000000000001')
 ```
 
 > `TenantProvider` consome `authTenantId` do `AuthContext` — ordem inviolável.
+
+---
+
+## Deploy e Infra — Netlify
+
+### `netlify.toml` (criado na Sprint de Segurança)
+
+Configura security headers e cache otimizado para o frontend.
+
+**Security Headers aplicados a todas as rotas (`/*`):**
+
+| Header | Valor |
+|--------|-------|
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains; preload` |
+| `X-Frame-Options` | `DENY` |
+| `X-Content-Type-Options` | `nosniff` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Permissions-Policy` | restricts camera, microphone, geolocation |
+| `Content-Security-Policy` | whitelist de origens permitidas |
+
+**Cache:** assets estáticos (`/assets/*`) com `Cache-Control: public, max-age=31536000, immutable`.
+
+---
+
+## Variáveis de Ambiente
+
+| Variável | Onde | Observação |
+|----------|------|------------|
+| `VITE_SUPABASE_URL` | Netlify (frontend) | — |
+| `VITE_SUPABASE_ANON_KEY` | Netlify (frontend) | Renomeada de `VITE_SUPABASE_PUBLISHABLE_KEY` |
+| `PLATFORM_API_KEY` | Supabase Secrets | Renomeada de `LOVABLE_API_KEY` (referências Lovable removidas) |
+| `MERCADOPAGO_WEBHOOK_SECRET` | Supabase Secrets | HMAC signature do mp-webhook |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Secrets (Edge Functions) | Nunca no frontend |
+
+> **Referências Lovable removidas:** `LOVABLE_API_KEY` renomeada para `PLATFORM_API_KEY`. Endpoint movido de `api.lovable.dev` para OpenRouter diretamente. CORS não inclui mais `lovable.app`.

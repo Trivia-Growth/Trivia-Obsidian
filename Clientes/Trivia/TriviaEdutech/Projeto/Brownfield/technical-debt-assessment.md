@@ -1,9 +1,42 @@
 # TriviaEdutech — Avaliação de Débito Técnico
 
 > **Fase:** Brownfield Discovery — Phase 8 (Assessment Final)
-> **Data:** 2026-06-13
+> **Data:** 2026-06-13 (atualizado: 2026-06-13 — Sprint de Segurança)
 > **Agentes:** @architect (Aria), @security (Cipher), @data-engineer (Dara), @qa (Quinn)
-> **Score geral de saúde:** 5.5/10 — Arquitetura sólida, débitos de qualidade críticos
+> **Score geral de saúde:** 6.5/10 — Sprint de Segurança concluída, débitos de qualidade pendentes
+
+---
+
+## Sprint de Segurança — Junho 2026 — Itens Implementados
+
+Os seguintes itens foram resolvidos nesta sprint e deixaram de ser débitos ativos:
+
+| ID | Item | Status Anterior | Status Atual |
+|----|------|----------------|--------------|
+| P0-002 (SEC-017) | `optimize-content` sem autenticação | ❌ CRÍTICO | ✅ RESOLVIDO — JWT implementado |
+| P0-004 (SEC-019) | `mp-webhook` sem verificação de assinatura | ❌ CRÍTICO | ✅ RESOLVIDO — HMAC via `MERCADOPAGO_WEBHOOK_SECRET` |
+| P0-001 (SEC-016) | `.env` commitado no git | ❌ EMERGÊNCIA | ⚠️ PARCIAL — `.gitignore` corrigido; limpeza do histórico git pendente (ação manual do Lucas) |
+| P0-003 (SEC-018) | `netlify.toml` ausente | ❌ CRÍTICO | ✅ RESOLVIDO — criado com security headers completos (HSTS, X-Frame-Options, nosniff, CSP, Permissions-Policy) |
+| P1-004 | CORS `"*"` em funções | ⚠️ ALTO | ✅ RESOLVIDO — todas as funções com whitelist restritiva de origens |
+| P2-007 | Dependência Lovable AI Gateway | ⚠️ MÉDIO | ✅ RESOLVIDO — migrado para `_shared/ai-client.ts` com suporte a OpenAI/Gemini/Anthropic/OpenRouter |
+| — | `LOVABLE_API_KEY` hardcoded | ⚠️ MÉDIO | ✅ RESOLVIDO — renomeada para `PLATFORM_API_KEY`, endpoint movido para OpenRouter direto |
+| — | Bug: create-superadmin falhava | ❌ BUG | ✅ RESOLVIDO — `manage-users` agora usa upsert ao invés de update |
+
+**Adições desta sprint:**
+- Nova tabela `ai_provider_settings` — configuração de provedor de IA por tenant (RLS habilitado)
+- Nova Edge Function `manage-ai` — CRUD de provedores com JWT + Zod
+- Painel de IA no Admin (aba "IA" em Configurações) — toggle, API key, teste de conexão
+- Requisito mobile P1 documentado — experiência mobile é requisito da plataforma
+
+**Score atualizado por categoria:**
+
+| Categoria | Score Original | Score Atual |
+|-----------|---------------|-------------|
+| Edge Functions segurança | 6/10 | 8/10 |
+| Deploy/Infra | 3/10 | 6/10 |
+| Arquitetura de features | 8/10 | 8.5/10 |
+
+---
 
 ---
 
@@ -26,17 +59,18 @@ O projeto tem uma **base arquitetural correta** (multi-tenancy, RLS, TanStack Qu
 
 ## P0 — CRÍTICO (Bloquear próximo deploy)
 
-### P0-001 · `.env` commitado no Git ⚠️ EMERGÊNCIA
+### P0-001 · `.env` commitado no Git ⚠️ EMERGÊNCIA — ⚠️ PARCIAL
 
 **Risco:** Credenciais Supabase, chaves de API e secrets expostos no histórico git.
 
 **Impacto:** Breach imediato se repo for público; exposure interna se privado.
 
-**Ação:**
-1. Rotacionar TODAS as chaves no Supabase Dashboard + Mercado Pago
-2. Remover do histórico: `git filter-branch --tree-filter 'rm -f .env'`
-3. Adicionar `.env` ao `.gitignore` (já deve estar — verificar)
-4. Configurar variáveis no Netlify UI (não no repo)
+**Status (2026-06-13):** `.gitignore` corrigido ✅. Limpeza do histórico git ainda pendente — ação manual necessária pelo Lucas: `git filter-branch --tree-filter 'rm -f .env' HEAD` ou usar `git-filter-repo`.
+
+**Ação pendente:**
+1. ~~Adicionar `.env` ao `.gitignore`~~ ✅ feito
+2. Remover do histórico: `git filter-branch --tree-filter 'rm -f .env'` (pendente)
+3. Rotacionar chaves se o histórico ainda não foi limpo
 
 ---
 

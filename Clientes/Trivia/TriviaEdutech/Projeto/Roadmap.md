@@ -58,6 +58,7 @@
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-025 — Documentação Completa da Plataforma]] | Documentação | pronto |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-026 — Atualizar Landing Page com Features Reais]] | Marketing/Frontend | pronto |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-027 — Internacionalização i18n PT/EN]] | Frontend/UX | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-028 — Módulo de Atividades e Avaliações]] | Avaliações/Cursos | pronto |
 
 ---
 
