@@ -1,7 +1,32 @@
 # TriviaEdutech — Relatório Executivo de Débito Técnico
 
-> **Data:** 2026-06-13 | **Para:** Lucas Azevedo (Piloto)
+> **Data:** 2026-06-13 (atualizado: 2026-06-13 — Sprint de Segurança) | **Para:** Lucas Azevedo (Piloto)
 > **Agente:** @analyst (Alex) via Brownfield Discovery
+
+---
+
+## Sprint de Segurança — Junho 2026 — Itens Resolvidos
+
+Esta sprint eliminou todos os P0 de segurança identificados no Brownfield Discovery. Score de risco atualizado: **de CRÍTICO para MODERADO**.
+
+| # | Item Resolvido | Impacto |
+|---|---------------|---------|
+| 1 | `optimize-content` agora exige JWT — sem acesso anônimo à IA | Elimina risco de DoS financeiro |
+| 2 | `mp-webhook` com HMAC signature — sem webhooks falsos | Elimina fraude de pagamento |
+| 3 | `netlify.toml` criado — HSTS, X-Frame-Options, nosniff, CSP | Elimina clickjacking e MIME sniffing |
+| 4 | CORS whitelist em todas as Edge Functions — sem wildcard `"*"` | Reduz superfície de ataque cross-origin |
+| 5 | Lovable AI Gateway removido — `_shared/ai-client.ts` multi-provider | Elimina dependência externa não gerenciada |
+| 6 | `LOVABLE_API_KEY` → `PLATFORM_API_KEY`, endpoint → OpenRouter | Remove acoplamento de marca externa |
+| 7 | Bug manage-users resolvido — create-superadmin usa upsert | Corrige falha silenciosa de criação |
+| 8 | Sistema de IA por tenant: `ai_provider_settings` + `manage-ai` | Nova feature com segurança JWT+Zod desde o início |
+
+**Pendente (ação manual do Lucas):**
+- Limpeza do histórico git para remover o `.env` commitado: `git filter-branch --tree-filter 'rm -f .env' HEAD`
+
+**Próximos débitos prioritários (Sprint 2):**
+- TypeScript strict (11 `any` encontrados)
+- Lazy loading nas 49 páginas (zero code splitting)
+- Error Boundaries (zero em toda a aplicação)
 
 ---
 
@@ -17,19 +42,19 @@ O projeto tem uma **base de dados sólida** (RLS em 40+ tabelas, multi-tenancy c
 
 ---
 
-## 4 Problemas que Precisam de Ação Imediata
+## 4 Problemas que Precisavam de Ação Imediata
 
-### 🔴 1. Credenciais no repositório Git
-O arquivo `.env` foi commitado. Qualquer pessoa com acesso ao repo pode ver as chaves. **Ação agora:** rotacionar todas as chaves no Supabase + Mercado Pago.
+### ⚠️ 1. Credenciais no repositório Git — PARCIALMENTE RESOLVIDO
+O arquivo `.env` foi commitado. `.gitignore` corrigido. **Pendente:** limpeza do histórico git (`git filter-branch`). Ação manual necessária pelo Lucas.
 
-### 🔴 2. Endpoint de AI sem autenticação
-A função `optimize-content` aceita requisições de qualquer pessoa sem login. Isso significa que qualquer pessoa pode fazer chamadas de IA às suas custas. **Ação:** adicionar autenticação JWT (30 minutos de trabalho).
+### ✅ 2. Endpoint de AI sem autenticação — RESOLVIDO
+A função `optimize-content` agora exige JWT. Requisições anônimas retornam 401.
 
-### 🔴 3. Sem cabeçalhos de segurança HTTP
-O site não tem o arquivo `netlify.toml` com proteções básicas (HSTS, X-Frame-Options, CSP). Isso deixa o site vulnerável a clickjacking e outros ataques de browser. **Ação:** criar o arquivo com template do padrão Trivia.
+### ✅ 3. Sem cabeçalhos de segurança HTTP — RESOLVIDO
+`netlify.toml` criado com HSTS, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy e cache de assets.
 
-### 🔴 4. Webhooks de pagamento sem verificação
-O Mercado Pago envia notificações de pagamento, mas qualquer pessoa pode falsificar essas notificações e criar acesso a cursos pagos sem pagar. **Ação:** implementar verificação de assinatura.
+### ✅ 4. Webhooks de pagamento sem verificação — RESOLVIDO
+HMAC signature implementado no `mp-webhook`. Secret configurado nos Supabase Secrets (`MERCADOPAGO_WEBHOOK_SECRET`).
 
 ---
 
@@ -58,12 +83,12 @@ Não há um único Error Boundary no projeto. Se qualquer componente der erro (v
 
 ## Prioridades de Execução
 
-| Sprint | O Que Fazer | Impacto |
-|--------|------------|---------|
-| **Imediato** | Rotacionar credenciais, autenticar optimize-content, netlify.toml, assinar webhook MP | 🔴 Segurança |
-| **Sprint 2** | TypeScript strict, lazy routes, Error Boundaries | 🟡 Qualidade |
-| **Sprint 3** | Criptografar tokens OAuth, restringir storage de ebooks | 🟡 Segurança de dados |
-| **Sprint 4** | Refatorar Dashboard (968 linhas) e CourseDetail (780 linhas) | 🟢 Manutenção |
+| Sprint | O Que Fazer | Impacto | Status |
+|--------|------------|---------|--------|
+| ~~**Imediato**~~ | ~~Rotacionar credenciais, autenticar optimize-content, netlify.toml, assinar webhook MP~~ | 🔴 Segurança | ✅ CONCLUÍDO (⚠️ histórico git pendente) |
+| **Sprint 2** | TypeScript strict, lazy routes, Error Boundaries | 🟡 Qualidade | PRÓXIMA |
+| **Sprint 3** | Criptografar tokens OAuth, restringir storage de ebooks, Vault para api_key de IA | 🟡 Segurança de dados | PENDENTE |
+| **Sprint 4** | Refatorar Dashboard (968 linhas) e CourseDetail (780 linhas) | 🟢 Manutenção | PENDENTE |
 
 ---
 

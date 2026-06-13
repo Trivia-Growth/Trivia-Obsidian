@@ -74,33 +74,27 @@ O projeto tem uma **base arquitetural correta** (multi-tenancy, RLS, TanStack Qu
 
 ---
 
-### P0-002 · `optimize-content` sem autenticação
+### P0-002 · `optimize-content` sem autenticação — ✅ RESOLVIDO
 
-**Risco:** Qualquer pessoa pode chamar a função e disparar chamadas à Lovable AI Gateway às custas do projeto.
+**Risco:** Qualquer pessoa pode chamar a função e disparar chamadas à AI às custas do projeto.
 
-**Impacto:** DoS financeiro (cost explosion) + vazamento de uso de AI.
-
-**Ação:** Adicionar `auth.getUser()` obrigatório. Redeployar.
+**Resolução (2026-06-13):** JWT via `auth.getUser()` implementado e deployado. Requisições sem token recebem 401.
 
 ---
 
-### P0-003 · `netlify.toml` ausente — sem security headers
+### P0-003 · `netlify.toml` ausente — sem security headers — ✅ RESOLVIDO
 
 **Risco:** Sem HSTS, X-Frame-Options, CSP, X-Content-Type-Options.
 
-**Impacto:** Clickjacking, MIME sniffing, downgrade HTTPS.
-
-**Ação:** Criar `netlify.toml` com security headers completos (template no padrão Trivia).
+**Resolução (2026-06-13):** `netlify.toml` criado com HSTS, X-Frame-Options: DENY, nosniff, Referrer-Policy, Permissions-Policy e cache de assets estáticos. Deploy aplicado.
 
 ---
 
-### P0-004 · `mp-webhook` sem verificação de assinatura
+### P0-004 · `mp-webhook` sem verificação de assinatura — ✅ RESOLVIDO
 
 **Risco:** Qualquer pessoa pode simular um webhook do Mercado Pago e criar purchases fraudulentos.
 
-**Impacto:** Acesso a cursos pagos sem pagamento real.
-
-**Ação:** Implementar validação de assinatura MP (`X-Signature` header) antes de processar.
+**Resolução (2026-06-13):** HMAC signature implementado. Webhook verifica o header `X-Signature` do Mercado Pago usando o secret `MERCADOPAGO_WEBHOOK_SECRET` (configurado nos Supabase Secrets). Requisições sem assinatura válida retornam 401.
 
 ---
 
@@ -150,20 +144,11 @@ const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 
 ---
 
-### P1-004 · CORS `"*"` em funções financeiras
+### P1-004 · CORS `"*"` em funções financeiras — ✅ RESOLVIDO
 
-**Funções afetadas:** `ai-tutor`, `mp-webhook`, `mp-create-preference`
+**Funções afetadas:** `ai-tutor`, `mp-webhook`, `mp-create-preference` (e todas as demais)
 
-**Risco:** Funções financeiras aceitam requisições de qualquer origem.
-
-**Ação:** Mover para whitelist restritiva igual ao padrão das outras funções:
-```typescript
-const ALLOWED_ORIGINS = [
-  "https://triviaedutech.com",
-  "https://app.triviaedutech.com",
-  "http://localhost:8080",
-];
-```
+**Resolução (2026-06-13):** Whitelist restritiva implementada em TODAS as Edge Functions. Nenhuma função usa `"*"` como origem. Referências a `lovable.app` removidas da whitelist.
 
 ---
 
@@ -244,13 +229,11 @@ const ALLOWED_ORIGINS = [
 
 ---
 
-### P2-007 · Dependência externa: Lovable AI Gateway
+### P2-007 · Dependência externa: Lovable AI Gateway — ✅ RESOLVIDO
 
-**Problema:** `ai-tutor` e `generate-quiz` chamam `https://api.lovable.dev/v1/chat/completions`.
+**Problema:** `ai-tutor` e `generate-quiz` chamavam `https://api.lovable.dev/v1/chat/completions`.
 
-**Risco:** Acoplamento com serviço externo não gerenciado. Se Lovable mudar API ou descontinuar, essas features param.
-
-**Ação:** Migrar para provider diretamente controlado (Anthropic API, OpenRouter, ou OpenAI via variável de ambiente do Supabase).
+**Resolução (2026-06-13):** Migrado para `_shared/ai-client.ts` com suporte nativo a OpenAI, Gemini, Anthropic e OpenRouter. Config por tenant via tabela `ai_provider_settings`. Nenhuma referência a `api.lovable.dev` permanece. Variável renomeada de `LOVABLE_API_KEY` para `PLATFORM_API_KEY`.
 
 ---
 
@@ -315,21 +298,23 @@ const ALLOWED_ORIGINS = [
 
 ## Plano de Ação — Épico de Migração
 
-### Sprint 1 — Segurança Emergencial
-- STORY-004: Rotacionar credenciais + remover .env do git
-- STORY-005: `optimize-content` — adicionar autenticação JWT
-- STORY-006: `mp-webhook` — implementar verificação de assinatura MP
-- STORY-007: Criar `netlify.toml` com security headers completos
+### Sprint 1 — Segurança Emergencial ✅ CONCLUÍDA
+- ~~STORY-004: Rotacionar credenciais + remover .env do git~~ ⚠️ PARCIAL (gitignore ok, histórico pendente)
+- ~~STORY-005: `optimize-content` — adicionar autenticação JWT~~ ✅ FEITO
+- ~~STORY-006: `mp-webhook` — implementar verificação de assinatura MP~~ ✅ FEITO
+- ~~STORY-007: Criar `netlify.toml` com security headers completos~~ ✅ FEITO
+- ~~CORS wildcard eliminado~~ ✅ FEITO (todas as funções)
+- ~~Dependência Lovable removida~~ ✅ FEITO (`_shared/ai-client.ts`)
+- ~~Sistema de IA por tenant~~ ✅ FEITO (`ai_provider_settings` + Edge Function `manage-ai`)
 
-### Sprint 2 — Qualidade Crítica
+### Sprint 2 — Qualidade Crítica (PRÓXIMA)
 - STORY-008: TypeScript strict — habilitar e corrigir erros
 - STORY-009: Lazy routes + Suspense em todas as 49 páginas
 - STORY-010: Error Boundaries (raiz + features críticas)
-- STORY-011: CORS restrictivo nas funções financeiras
 
 ### Sprint 3 — Segurança de Dados
 - STORY-012: Supabase Vault para tokens OAuth MP
-- STORY-013: Criptografia de API keys de vídeo
+- STORY-013: Criptografia de API keys de vídeo (incluindo `ai_provider_settings.api_key`)
 - STORY-014: RLS storage policies para library-files
 - STORY-015: FORCE RLS em profiles, user_roles, enrollments
 
@@ -337,9 +322,9 @@ const ALLOWED_ORIGINS = [
 - STORY-016: Refatorar Admin Dashboard (968→<300 linhas)
 - STORY-017: Refatorar CourseDetail (780→<300 linhas)
 - STORY-018: Eliminar 11 usos de `any`
-- STORY-019: Rate limiting em funções críticas
+- STORY-019: Rate limiting em funções críticas (ai-tutor, generate-quiz, create-org)
 
-### Sprint 5 — Independência de Ferramentas
-- STORY-020: Migrar AI Gateway de Lovable para provider direto
+### Sprint 5 — Independência e Testes
+- ~~STORY-020: Migrar AI Gateway de Lovable para provider direto~~ ✅ FEITO
 - STORY-021: Testes unitários — Edge Functions e hooks críticos
 - STORY-022: FORCE RLS nas tabelas remanescentes
