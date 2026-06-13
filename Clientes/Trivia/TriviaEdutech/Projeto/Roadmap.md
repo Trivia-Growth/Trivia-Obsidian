@@ -23,6 +23,7 @@
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-004 — Rotacionar credenciais e remover .env do git]] | Segurança | pronto |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-005 — netlify.toml com security headers]] | Infra | pronto |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-006 — optimize-content e mp-webhook segurança]] | Edge Functions | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-024 — Remover todas as referências à Lovable]] | Infra/Limpeza | pronto |
 
 ---
 
@@ -50,6 +51,16 @@
 
 ---
 
+## Sprint Produto — Documentação e Landing Page
+
+| Story | Módulo | Status |
+|-------|--------|--------|
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-025 — Documentação Completa da Plataforma]] | Documentação | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-026 — Atualizar Landing Page com Features Reais]] | Marketing/Frontend | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-027 — Internacionalização i18n PT/EN]] | Frontend/UX | pronto |
+
+---
+
 ## Sprint 4 — Qualidade de Código (P2)
 
 > Refatorar componentes gigantes, eliminar any, rate limiting.
@@ -67,8 +78,22 @@
 
 | Story | Módulo | Status |
 |-------|--------|--------|
-| STORY-017 — Migrar AI Gateway Lovable para provider direto | Infra | backlog |
+| STORY-017 — Migrar AI Gateway Lovable para provider direto | Infra | concluido |
 | STORY-018 — Testes unitários (Edge Functions + hooks) | Testes | backlog |
+
+---
+
+## Sprint 6 — Mobile First (P1)
+
+> Consumo de vídeo via celular é o caso de uso primário dos alunos. Experiência mobile deve ser perfeita.
+
+| Story | Módulo | Status |
+|-------|--------|--------|
+| STORY-019 — Audit mobile completo (viewport 375px em todas as telas) | Mobile | backlog |
+| STORY-020 — Player de vídeo responsivo + controles touch-friendly | Video/Mobile | backlog |
+| STORY-021 — Bottom navigation bar para alunos no mobile | UX/Mobile | backlog |
+| STORY-022 — Performance mobile (lazy images, bundle size, LCP) | Performance | backlog |
+| STORY-023 — PWA: instalação + offline básico (conteúdo em cache) | PWA | backlog |
 
 ---
 
