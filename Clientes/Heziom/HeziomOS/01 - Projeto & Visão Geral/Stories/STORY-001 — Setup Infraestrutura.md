@@ -106,13 +106,16 @@ Antes de qualquer desenvolvimento, a base técnica precisa estar no lugar: **mon
 
 ## Notas e Decisões
 
-- **1 monorepo único** `heziomos` (não 2 repos como na versão v1)
-- **Sync-agent dentro do monorepo** como `apps/sync-agent`; build gera `.exe` standalone via `deno compile`
+- **1 monorepo único** `heziomos` (não 2 repos como na versão v1) — ver [[STORY-013 — Setup Monorepo heziomos]]
+- **`literarius-sync` permanece FORA do monorepo** — repo separado, deploy independente no Windows Server Intelinove via Task Scheduler; não entra em `apps/sync-agent` (decisão 2026-06-15)
+- **3 repos entram via git subtree:** `heziom-sales` → `apps/crm`, `hubtransportadorashzm` → `apps/hub`, `tribe-criativo-lab` → `apps/tribe`
 - **Sem Lovable** — desenvolvimento todo via TRIVIAIOX + Claude Code/Codex
 - **Microsoft SSO configurado desde o dia 1** mas só ativado na entrega (ADR-0006)
 - **Endpoints LGPD desde a Fase 1** mesmo sem dados de cliente ainda — preparar `lgpd-export` e `lgpd-delete` (placeholder ok)
 - **Vault Obsidian** continua em repo separado (`Trivia-Obsidian`) — sem migração
 - **Ambientes prod + staging desde já**, conforme §6 Escopo Técnico
+- **1 projeto Supabase único** — isolamento por schema de domínio (`crm`, `hub`, `financeiro`, etc.), não por projeto separado
+- **Deploy isolado por app:** cada app tem site Netlify próprio; mudança em `apps/crm` não dispara rebuild de `apps/web`
 
 ---
 

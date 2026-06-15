@@ -9,7 +9,7 @@
 
 Repositório privado único que centraliza todo o código do HeziomOS. Substitui os repos separados existentes trazendo-os como workspaces (`apps/*`), compartilhando packages comuns e unificando CI/CD.
 
-**Onde ficará:** `github.com/Org-Heziom/heziomos` (repo privado, propriedade da Heziom — §8 Escopo Técnico)
+**Repo:** `https://github.com/Org-Heziom/heziomos.git` ✅ criado em 2026-06-15 (propriedade da Heziom — §8 Escopo Técnico)
 
 ---
 

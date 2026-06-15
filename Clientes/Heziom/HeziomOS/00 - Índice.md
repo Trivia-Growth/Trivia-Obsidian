@@ -174,6 +174,13 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 ---
 
+## Desenvolvimento
+
+- [[Monorepo — Estrutura e Setup]] — blueprint do monorepo `heziomos`: estrutura de pastas, deploy isolado por app, Supabase schema único, TRIVIAIOX, comandos git subtree
+- [[STORY-013 — Setup Monorepo heziomos]] — story de implementação do monorepo (backlog)
+
+---
+
 ## Documentação de Referência
 
 - [[DDL Banco de dados Literarius]] — schema completo do banco
