@@ -144,6 +144,16 @@
   @media(max-width:860px){.calc-op{display:none}.calc-box{min-width:100%}.phases{grid-template-columns:1fr}}
   @media(max-width:860px){.flow .ar{display:none}.flow .step{min-width:100%}.vcards{grid-template-columns:1fr}.total-bar{flex-direction:column;align-items:flex-start}.total-bar .tb-note{text-align:left}}
   @media(max-width:860px){.g3,.g2{grid-template-columns:1fr}.pay{flex-direction:column}.offer{gap:8px}}
+  /* impressao / PDF: empilha todos os slides como paginas */
+  @media print{
+    @page{size:1280px 800px;margin:0}
+    html,body{height:auto;overflow:visible;background:var(--petrol)}
+    #progress,.counter,.dots,.arrows,.brand-foot,.hint{display:none!important}
+    .deck{height:auto;width:auto;overflow:visible}
+    .slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;height:800px;width:1280px;page-break-after:always;break-after:page;overflow:hidden;display:flex!important}
+    .slide:last-child{page-break-after:auto}
+    *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  }
 </style>
 </head>
 <body>
