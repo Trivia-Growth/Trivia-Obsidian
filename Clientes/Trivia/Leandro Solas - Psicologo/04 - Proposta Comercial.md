@@ -6,24 +6,15 @@
 
 ---
 
-## 1. O contexto
+## 1. O cenário
 
-Leandro, hoje sua agenda é praticamente toda construída por indicação — o que é uma prova enorme da qualidade do seu trabalho. Mas indicação é um fluxo que você não controla: quando ela esfria, não há uma segunda torneira pra abrir. E foi exatamente isso que você sentiu nos últimos meses.
+Leandro, hoje sua agenda é construída quase toda por indicação — e isso é a prova mais direta da qualidade e da confiança que o seu trabalho gera. É o melhor tipo de reconhecimento que um profissional pode ter.
 
-A boa notícia: você tem todos os ingredientes pra uma máquina de captação previsível — autoridade (atende pacientes de médicos renomados), ticket consistente e um nicho com demanda real e pouca concorrência (brasileiros no exterior).
+## 2. O ponto de atenção
 
-O que falta é **estrutura**: um caminho para o paciente novo chegar até você, e um sistema que organize e segure quem já chegou.
+A indicação é um fluxo valioso, mas é um fluxo que **você não controla**: depende de terceiros e do timing certo. Quando um paciente encerra o processo — algo natural na terapia — não existe um canal próprio e previsível para repor essa vaga. É aí que a operação fica **vulnerável**: a sua agenda passa a oscilar por fatores que fogem do seu controle.
 
----
-
-## 2. O diagnóstico (sendo direto)
-
-O desafio não é só "fazer anúncio". Hoje:
-- A captação depende 100% de indicação.
-- Não há CRM, agendamento nem prontuário — está "tudo na cabeça".
-- Não há acompanhamento ativo do paciente entre sessões.
-
-Ou seja: mesmo trazendo mais gente, sem estrutura o paciente esfria e sai sem aviso. **Tráfego sozinho enche o balde; nós vamos tapar os furos junto.**
+O objetivo desta parceria é simples: **construir um canal de captação previsível e sob o seu controle**, funcionando lado a lado com a indicação — para que a sua agenda nunca dependa só do acaso.
 
 ---
 
@@ -33,13 +24,13 @@ Um ecossistema em que cada parte alimenta a próxima:
 
 **Atrai → Atende → Retém → Cresce**
 
-Para respeitar seu momento e seu orçamento, vamos entregar isso em **2 fases**. Começamos enxuto e forte, e avançamos conforme os resultados aparecem.
+Para respeitar o seu momento, vamos entregar isso em **2 fases**: começamos enxuto e forte, e avançamos conforme os resultados aparecem.
 
 ---
 
 ## 4. FASE 1 — Aquisição (começar agora)
 
-O foco é abrir a torneira da captação e organizar a chegada do paciente.
+O foco é abrir um canal de captação previsível e dar estrutura à chegada do novo paciente.
 
 **Incluso nesta fase:**
 
@@ -47,21 +38,20 @@ O foco é abrir a torneira da captação e organizar a chegada do paciente.
 |---------|---------|
 | 🎯 **Gestão de Tráfego Pago** | Campanhas no Meta com foco em brasileiros no exterior. Criativos, segmentação, otimização e acompanhamento. |
 | 🌐 **Site institucional** | Sua presença profissional, construindo autoridade e percepção de valor. |
-| 🗂️ **CRM / Atendimento** | Organização de todos os leads e pacientes — origem, status, acompanhamento. Fim do "tudo na cabeça". |
+| 🗂️ **CRM / Atendimento** | Organização de todos os leads e pacientes em um só lugar — origem, status e acompanhamento. |
 | 📲 **Conteúdos orgânicos (feed)** | Posicionamento de autoridade nas redes para sustentar o valor do seu trabalho. |
 
 ### Investimento — Fase 1
 
-| Item | Valor |
-|------|-------|
-| **Gestão de tráfego pago** | **R$ 2.500/mês** |
-| Site institucional | 🎁 **Cortesia** |
-| CRM / Atendimento | 🎁 **Cortesia** |
-| Conteúdos orgânicos | 🎁 **Grátis nos 3 primeiros meses** (reavaliação ao fim do período) |
-| Implantação / setup | **Sem custo** |
-| Verba de anúncios | À parte — a partir de R$ 1.500/mês, definida com você e paga direto às plataformas |
+| Serviço | Valor de tabela | Sua condição |
+|---------|:---------------:|:------------:|
+| Gestão de tráfego pago + conteúdos orgânicos | R$ 3.900/mês | **R$ 2.500/mês** *(orgânico cortesia nos 3 primeiros meses)* |
+| Site institucional | R$ 3.900 | 🎁 **Cortesia** |
+| Sistema de CRM e Atendimento | R$ 9.900 | 🎁 **Cortesia** |
+| Implantação / setup | — | **Sem custo** |
+| Verba de anúncios | — | À parte: a partir de R$ 1.500/mês, definida com você e paga direto às plataformas |
 
-> Você recebe **mais de R$ 13.000 em valor** (site + CRM + conteúdo) como cortesia de parceria, investindo apenas na gestão do tráfego.
+> 💚 **Sua economia nesta parceria:** **R$ 13.800** em serviços de cortesia (site + sistema), mais **R$ 1.400/mês** de desconto na mensalidade. Você investe apenas na gestão do tráfego.
 
 ---
 
@@ -69,7 +59,7 @@ O foco é abrir a torneira da captação e organizar a chegada do paciente.
 
 Com seu ticket atual, **1 a 2 pacientes novos por mês já cobrem todo o investimento** — e, em terapia, um paciente permanece por meses. O retorno se acumula a cada mês.
 
-E mais: com o CRM, você passa a **medir** de qual campanha veio cada paciente. Tráfego sem medição é dirigir no escuro; aqui, cada real investido é rastreável.
+E mais: com o CRM, você passa a **medir** de qual campanha veio cada paciente. Cada real investido em anúncio é rastreável — nada de achismo.
 
 ---
 
