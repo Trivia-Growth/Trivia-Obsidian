@@ -101,17 +101,23 @@ Cada pilar alimenta o próximo: anúncio → lead → IA agenda → vira pacient
 
 ---
 
-## Faseamento (roadmap de entrega)
+## Faseamento (roadmap de entrega) — ATUALIZADO 15/06
+
+> Ajustado à decisão do Leandro: **começar só com tráfego** (por budget); mídias sociais depois.
+> E aos ativos da Trívia: sistema IA + CRM **já prontos** (clonar = custo ~zero). Ver [[02 - Estrutura de Precos]].
 
 | Fase | Entregas | Objetivo | Gatilho p/ avançar |
 |------|----------|----------|--------------------|
-| **0 — Mapeamento** | Diagnóstico, marca/posicionamento, públicos, definição de verba | Base estratégica | — (já em andamento) |
-| **1 — Fundação de Aquisição** | Site institucional + LP exterior + setup tráfego + organização do feed | Começar a captar | Leads chegando |
-| **2 — Conversão** | Agente IA pré-atendimento + CRM + agendamento | Não perder lead, organizar funil | Funil rodando |
-| **3 — Operação Clínica** | Prontuário + transcrição Meet + rotina de mensagens | Reter e encantar | Pacientes na base |
-| **4 — Inteligência & Escala** | Dashboard + alertas de churn + LP clínica local + Google Ads | Escalar com previsibilidade | Operação estável |
+| **1 — Tráfego + Sistema** | Gestão de tráfego (Click-to-WhatsApp) + implementação do sistema IA pré-atendimento + CRM + integração agenda/Google Meet + tracking | Captar e medir | Leads/pacientes chegando |
+| **2 — Mídias Sociais** | Gestão de feed (16 peças/mês: arte + vídeo) + autoridade | Aquecer público, sustentar ticket | Operação estável |
+| **3 — Operação Clínica** | Transcrição Meet + resumo + prontuário + rotina de mensagens terapêuticas | Reter e encantar | Confiança consolidada |
+| **4 — Inteligência & Escala** | Dashboard + alertas de churn + LP/site + Google Ads + clínica local | Escalar com previsibilidade | — |
 
-**Proposta de início recomendada:** Fase 0 + Fase 1 (com o mapa completo apresentado para contexto).
+**Início recomendado:** Fase 1 (tráfego + sistema), apresentando o mapa completo como visão de futuro.
+
+**Por que o sistema entra já na Fase 1:** custo ~zero pra Trívia, e é ele que faz o **tracking** — sem isso o tráfego é "dirigir no escuro". Vira o diferencial que prova o resultado e justifica a continuidade (lock-in).
+
+**Sem site/LP no início:** estratégia **Click-to-WhatsApp** (anúncio → IA → agenda) cabe no budget e usa o que já existe. Site institucional fica para a Fase 4.
 
 ---
 
