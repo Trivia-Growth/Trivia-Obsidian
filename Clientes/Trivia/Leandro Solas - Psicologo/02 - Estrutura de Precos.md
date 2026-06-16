@@ -66,11 +66,11 @@
 
 | Opção | Setup sistema | Retainer | Racional |
 |-------|--------------|----------|----------|
-| **A — Recomendada** | R$ 4.900 (ou 2–3x) | R$ 2.900/mês tráfego | Equilíbrio: valoriza o sistema, cabe no budget |
-| **B — Entrada mínima** | R$ 2.900 ou parcelado em 6x | R$ 2.900/mês | Tira quase todo atrito; ganha o cliente rápido |
-| **C — Face cheio c/ desconto progressivo** | R$ 9.900 | R$ 3.900/mês (tudo) | Só se ele topar o pacote completo agora |
+| A — Recomendada | R$ 4.900 (ou 2–3x) | R$ 2.900/mês tráfego | Equilíbrio: valoriza o sistema, cabe no budget |
+| **✅ B — SELECIONADA** | **R$ 2.900 (parcelável até 6x)** | **R$ 2.900/mês** | Tira quase todo atrito; ganha o cliente rápido |
+| C — Face cheio c/ desconto progressivo | R$ 9.900 | R$ 3.900/mês (tudo) | Só se ele topar o pacote completo agora |
 
-> Todas mantêm margem alta. A escolha é de posicionamento: quanto facilitar a entrada vs. quanto faturar de cara.
+> **Decisão JG (15/06): Opção B.** Setup do sistema R$ 2.900 (parcelável), retainer de tráfego R$ 2.900/mês. Mesmo com a entrada mínima, margem recorrente ~R$ 1.900/mês + R$ 2.900 de setup quase puro.
 
 ---
 
