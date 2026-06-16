@@ -150,8 +150,17 @@
     html,body{height:auto;overflow:visible;background:var(--petrol)}
     #progress,.counter,.dots,.arrows,.brand-foot,.hint{display:none!important}
     .deck{height:auto;width:auto;overflow:visible}
-    .slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;height:800px;width:1280px;page-break-after:always;break-after:page;overflow:hidden;display:flex!important}
+    .slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;height:800px;width:1280px;padding:46px 72px!important;page-break-after:always;break-after:page;overflow:hidden;display:flex!important}
     .slide:last-child{page-break-after:auto}
+    .phases{grid-template-columns:1fr 1fr!important}
+    .vcards{grid-template-columns:repeat(3,1fr)!important}
+    .os-feats{grid-template-columns:repeat(2,1fr)!important}
+    .grid.g2{grid-template-columns:1fr 1fr!important}
+    .grid.g3{grid-template-columns:repeat(3,1fr)!important}
+    .flow{flex-direction:row!important}.flow .step{min-width:0!important}
+    .flow .ar,.calc-op{display:inline-block!important}
+    .calc{flex-direction:row!important}.calc-box{min-width:0!important}
+    .total-bar{flex-direction:row!important;align-items:center!important}
     *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   }
 </style>
@@ -215,31 +224,31 @@
     <div class="wrap">
       <div class="eyebrow"><span class="accent">03</span> O CAMINHO</div>
       <h2>O projeto em <em>2 fases</em> bem claras.</h2>
-      <p class="lead">Comecamos pela aquisicao, que traz paciente agora. Depois, com resultado na mesa, aprofundamos a operacao.</p>
+      <p class="lead">Começamos pela aquisição, que traz paciente agora. Depois, com resultado na mesa, aprofundamos a operação.</p>
       <div class="phases">
         <div class="phase now">
           <span class="ph-k"><span class="d"></span> Fase 1 &middot; Agora</span>
-          <h3>Aquisicao</h3>
-          <p>Abrir um canal previsivel de pacientes e organizar a chegada.</p>
+          <h3>Aquisição</h3>
+          <p>Abrir um canal previsível de pacientes e organizar a chegada.</p>
           <ul class="ph-list">
-            <li>Gestao de trafego pago</li>
+            <li>Gestão de tráfego pago</li>
             <li>Site institucional</li>
             <li>CRM / Atendimento</li>
-            <li>Conteudos organicos</li>
+            <li>Conteúdos orgânicos</li>
           </ul>
-          <span class="ph-when">Investimento: R$ 2.500/mes (site, CRM e organico inclusos)</span>
+          <span class="ph-when">Investimento: R$ 2.500/mês (site, CRM e orgânico inclusos)</span>
         </div>
         <div class="phase">
           <span class="ph-k"><span class="d"></span> Fase 2 &middot; Depois</span>
-          <h3>Automacao e Clinica</h3>
-          <p>Automatizar o atendimento e dar estrutura clinica completa.</p>
+          <h3>Automação e Clínica</h3>
+          <p>Automatizar o atendimento e dar estrutura clínica completa.</p>
           <ul class="ph-list">
             <li>Agente de IA</li>
             <li>Agendamento de consultas</li>
-            <li>Modulo do paciente</li>
-            <li>Gestao da clinica</li>
+            <li>Módulo do paciente</li>
+            <li>Gestão da clínica</li>
           </ul>
-          <span class="ph-when">Ativada quando o trafego provar resultado</span>
+          <span class="ph-when">Ativada quando o tráfego provar resultado</span>
         </div>
       </div>
     </div>
