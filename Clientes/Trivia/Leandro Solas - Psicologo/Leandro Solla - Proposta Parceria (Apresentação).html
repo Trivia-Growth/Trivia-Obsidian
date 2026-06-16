@@ -115,6 +115,33 @@
   .total-bar .tb-v{font-family:var(--ff-display);font-size:2.3rem;color:var(--paper);line-height:1}
   .total-bar .tb-v small{font-size:1rem;color:var(--coral)}
   .total-bar .tb-note{font-family:var(--ff-mono);font-size:11px;color:var(--pap-50);text-align:right;line-height:1.5}
+  /* etiqueta de fase */
+  .phasetag{display:inline-flex;align-items:center;gap:9px;font-family:var(--ff-mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--petrol);background:var(--coral);padding:7px 15px;border-radius:999px;margin-bottom:18px}
+  .phasetag .pt-dot{width:7px;height:7px;border-radius:50%;background:var(--petrol)}
+  .phasetag.f2{background:transparent;color:var(--coral);border:1px solid var(--coral)}
+  .phasetag.f2 .pt-dot{background:var(--coral)}
+  /* mapa das 2 fases */
+  .phases{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+  .phase{border:1px solid var(--ink-15);border-radius:18px;padding:26px;background:var(--paper)}
+  .phase.now{border-color:var(--coral);box-shadow:inset 0 0 0 2px var(--coral)}
+  .phase .ph-k{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-50);font-weight:700;margin-bottom:12px}
+  .phase.now .ph-k{color:var(--coral-2)}
+  .phase .ph-k .d{width:8px;height:8px;border-radius:50%;background:var(--ink-30)}.phase.now .ph-k .d{background:var(--coral)}
+  .phase h3{font-family:var(--ff-display);font-weight:400;font-size:1.7rem;color:var(--petrol);margin-bottom:8px}
+  .phase p{font-size:.95rem;color:var(--ink-60);margin:0 0 12px}
+  .phase .ph-list{list-style:none}
+  .phase .ph-list li{font-size:.92rem;color:var(--ink-70);padding:6px 0 6px 22px;position:relative;line-height:1.4}
+  .phase .ph-list li::before{content:"\2192";position:absolute;left:0;color:var(--coral);font-weight:700}
+  .phase .ph-when{display:block;margin-top:14px;font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-50)}
+  /* conta visual do retorno */
+  .calc{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .calc-box{flex:1;min-width:150px;border:1px solid var(--ink-15);border-radius:16px;padding:20px;background:var(--paper);display:flex;flex-direction:column;gap:8px}
+  .calc-box .cb-k{font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-50)}
+  .calc-box .cb-v{font-family:var(--ff-display);font-size:2.2rem;color:var(--petrol);line-height:1}
+  .calc-box .cb-v small{font-size:.85rem;color:var(--ink-50)}
+  .calc-box.hot{border-color:var(--coral);box-shadow:inset 0 0 0 2px var(--coral)}.calc-box.hot .cb-v{color:var(--coral-2)}
+  .calc-op{align-self:center;font-family:var(--ff-display);font-size:2rem;color:var(--coral)}
+  @media(max-width:860px){.calc-op{display:none}.calc-box{min-width:100%}.phases{grid-template-columns:1fr}}
   @media(max-width:860px){.flow .ar{display:none}.flow .step{min-width:100%}.vcards{grid-template-columns:1fr}.total-bar{flex-direction:column;align-items:flex-start}.total-bar .tb-note{text-align:left}}
   @media(max-width:860px){.g3,.g2{grid-template-columns:1fr}.pay{flex-direction:column}.offer{gap:8px}}
 </style>
@@ -173,10 +200,46 @@
     </div>
   </section>
 
+  <!-- 4 · MAPA DAS FASES -->
+  <section class="slide bone">
+    <div class="wrap">
+      <div class="eyebrow"><span class="accent">03</span> O CAMINHO</div>
+      <h2>O projeto em <em>2 fases</em> bem claras.</h2>
+      <p class="lead">Comecamos pela aquisicao, que traz paciente agora. Depois, com resultado na mesa, aprofundamos a operacao.</p>
+      <div class="phases">
+        <div class="phase now">
+          <span class="ph-k"><span class="d"></span> Fase 1 &middot; Agora</span>
+          <h3>Aquisicao</h3>
+          <p>Abrir um canal previsivel de pacientes e organizar a chegada.</p>
+          <ul class="ph-list">
+            <li>Gestao de trafego pago</li>
+            <li>Site institucional</li>
+            <li>CRM / Atendimento</li>
+            <li>Conteudos organicos</li>
+          </ul>
+          <span class="ph-when">Investimento: R$ 2.500/mes (site, CRM e organico inclusos)</span>
+        </div>
+        <div class="phase">
+          <span class="ph-k"><span class="d"></span> Fase 2 &middot; Depois</span>
+          <h3>Automacao e Clinica</h3>
+          <p>Automatizar o atendimento e dar estrutura clinica completa.</p>
+          <ul class="ph-list">
+            <li>Agente de IA</li>
+            <li>Agendamento de consultas</li>
+            <li>Modulo do paciente</li>
+            <li>Gestao da clinica</li>
+          </ul>
+          <span class="ph-when">Ativada quando o trafego provar resultado</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 4 · FASE 1 ESCOPO -->
   <section class="slide">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">03</span> FASE 1 · AQUISIÇÃO</div>
+      <div class="phasetag"><span class="pt-dot"></span> Fase 1 &middot; Começar agora</div>
+      <div class="eyebrow"><span class="accent">04</span> O QUE ENTRA</div>
       <h2>Abrir a torneira, com <em>estrutura</em>.</h2>
       <div class="grid g2">
         <div class="cell"><div class="num">Tráfego</div><h3>Gestão de Tráfego Pago</h3><p>Campanhas no Meta com foco em brasileiros no exterior: criativos, segmentação, otimização e acompanhamento.</p></div>
@@ -190,7 +253,8 @@
   <!-- 5 · POR QUE VÊM JUNTAS -->
   <section class="slide bone">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">04</span> POR QUE VÊM JUNTAS</div>
+      <div class="phasetag"><span class="pt-dot"></span> Fase 1</div>
+      <div class="eyebrow"><span class="accent">05</span> POR QUE VÊM JUNTAS</div>
       <h2>Não é desconto por <em>gentileza</em>.</h2>
       <p class="lead">Essas peças são o que fazem o tráfego dar resultado de verdade, e uma depende da outra:</p>
       <ul class="ticks">
@@ -205,39 +269,44 @@
   <!-- 6 · INVESTIMENTO -->
   <section class="slide petrol">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">05</span> INVESTIMENTO</div>
+      <div class="phasetag"><span class="pt-dot"></span> Fase 1</div>
+      <div class="eyebrow"><span class="accent">06</span> INVESTIMENTO</div>
       <h2>O que você recebe, e o que investe.</h2>
-      <div class="offer">
-        <div><span class="price-tag">Valor de tabela</span><span class="price-old">R$ 3.900/mês</span></div>
-        <div><span class="price-tag">Sua condição de largada</span><span class="price-new">R$ 2.500<span style="font-size:.4em">/mês</span></span></div>
+      <div class="vcards">
+        <div class="vcard"><span class="vc-label">Tráfego pago · mensal</span><span class="vc-old">R$ 3.900</span><span class="vc-new">R$ 2.500<small> /mês</small></span></div>
+        <div class="vcard"><span class="vc-label">Site institucional</span><span class="vc-old">R$ 3.900</span><span class="vc-new free">Incluso</span></div>
+        <div class="vcard"><span class="vc-label">Sistema de CRM</span><span class="vc-old">R$ 9.900</span><span class="vc-new free">Incluso</span></div>
       </div>
-      <div class="pay">
-        <div class="b"><div class="k">Site institucional · R$ 3.900</div><div class="v"><em>Incluso</em></div></div>
-        <div class="b"><div class="k">Sistema de CRM · R$ 9.900</div><div class="v"><em>Incluso</em></div></div>
-        <div class="b"><div class="k">Implantação / setup</div><div class="v">Sem custo</div></div>
+      <div class="total-bar">
+        <div><span class="tb-k">Sua economia na largada</span><span class="tb-v">R$ 13.800 <small>+ R$ 1.400/mês</small></span></div>
+        <div class="tb-note">Setup sem custo<br />Verba de anúncios à parte (a partir de R$ 1.500/mês)</div>
       </div>
-      <div class="callout" style="margin-top:26px">Você recebe <b>R$ 13.800</b> em estrutura inclusa na largada. Verba de anúncios à parte (a partir de R$ 1.500/mês, paga direto às plataformas). Essa é a condição dos 3 primeiros meses: com resultado na mesa, reavaliamos os valores juntos.</div>
+      <div class="callout" style="margin-top:18px">Essa é a condição dos <b>3 primeiros meses</b>. Com resultado na mesa, reavaliamos os valores juntos.</div>
     </div>
   </section>
 
   <!-- 7 · O RETORNO -->
   <section class="slide bone">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">06</span> O RETORNO</div>
-      <h2><em>1 a 2 pacientes</em> novos por mês já cobrem tudo.</h2>
-      <p class="lead">Com o seu ticket, o investimento se paga rápido, e em terapia um paciente permanece por meses. O retorno se acumula a cada mês.</p>
-      <ul class="ticks">
-        <li>Cada real investido em anúncio fica <b>rastreável</b> no CRM: você vê de qual campanha veio cada paciente.</li>
-        <li>Decisões com dado, nada de achismo.</li>
-        <li>A indicação continua firme; o tráfego vira a sua segunda torneira.</li>
-      </ul>
+      <div class="eyebrow"><span class="accent">07</span> O RETORNO</div>
+      <h2>Foco no paciente do <em>exterior</em>: R$ 1.800 por mês.</h2>
+      <p class="lead">É exatamente onde você quer intensificar. Cada brasileiro no exterior que entra rende R$ 1.800 por mês e, em terapia, permanece por meses. O investimento da Fase 1 existe para isso: trazer mais desses pacientes.</p>
+      <div class="calc">
+        <div class="calc-box"><span class="cb-k">Cada paciente do exterior</span><span class="cb-v">R$ 1.800<small> /mês</small></span></div>
+        <span class="calc-op">&times; 2</span>
+        <div class="calc-box"><span class="cb-k">2 novos no mês</span><span class="cb-v">R$ 3.600<small> /mês</small></span></div>
+        <span class="calc-op">&gt;</span>
+        <div class="calc-box hot"><span class="cb-k">Seu investimento</span><span class="cb-v">R$ 2.500<small> /mês</small></span></div>
+      </div>
+      <div class="callout">Só 2 pacientes do exterior por mês já passam do investimento. E como cada um fica meses, o retorno se acumula. Esse é o objetivo da Fase 1: encher sua agenda com esse paciente.</div>
     </div>
   </section>
 
   <!-- 8 · FASE 2 -->
   <section class="slide petrol">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">07</span> FASE 2 · QUANDO DER RESULTADO</div>
+      <div class="phasetag f2"><span class="pt-dot"></span> Fase 2 &middot; Quando der resultado</div>
+      <div class="eyebrow"><span class="accent">08</span> O QUE ENTRA</div>
       <h2>Aí a gente <em>aprofunda</em> a operação.</h2>
       <p class="lead">Com a captação rodando, automatizamos o atendimento e damos estrutura clínica completa para você ganhar tempo, escalar e encantar o paciente.</p>
       <div class="os-feats">
@@ -252,7 +321,7 @@
   <!-- 9 · SEGURANÇA -->
   <section class="slide bone">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">08</span> SEGURANÇA</div>
+      <div class="eyebrow"><span class="accent">09</span> SEGURANÇA</div>
       <h2>Feito do jeito certo, e <em>seguro</em>.</h2>
       <p class="lead">Saúde mental envolve dados sensíveis. Todo o sistema é construído com atenção à LGPD e às diretrizes do Conselho Federal de Psicologia.</p>
       <ul class="ticks">
@@ -266,7 +335,7 @@
   <!-- 10 · PRÓXIMOS PASSOS -->
   <section class="slide petrol">
     <div class="wrap">
-      <div class="eyebrow"><span class="accent">09</span> PRÓXIMOS PASSOS</div>
+      <div class="eyebrow"><span class="accent">10</span> PRÓXIMOS PASSOS</div>
       <h2>Vamos pra cima.</h2>
       <ul class="ticks" style="max-width:760px">
         <li><b>1.</b> Você me diz sua meta de pacientes novos por mês, e eu defino a verba ideal de anúncio.</li>
@@ -279,7 +348,7 @@
 
 </div>
 
-<div class="counter"><b id="cur">1</b> / <span id="tot">10</span></div>
+<div class="counter"><b id="cur">1</b> / <span id="tot">11</span></div>
 <div class="dots" id="dots"></div>
 <div class="arrows">
   <button class="nbtn" id="prev" aria-label="Anterior">←</button>
