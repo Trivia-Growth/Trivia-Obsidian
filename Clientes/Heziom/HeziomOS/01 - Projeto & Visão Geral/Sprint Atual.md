@@ -1,46 +1,62 @@
 ---
 tags: [projeto, sprint]
-sprint: 1
-inicio: 2026-04-16
+sprint: 2
+inicio: 2026-06-15
 fim: ""
-objetivo: "Infraestrutura + sync básico Literarius → Supabase"
+objetivo: "Monorepo HeziomOS — Fundação completa + Supabase unificado pronto"
 ---
 
-# Sprint 1 — Infraestrutura e Sync Base
+# Sprint 2 — Fundação do Monorepo HeziomOS
 
-**Período:** A definir
-**Objetivo:** Ter a base técnica no lugar e os primeiros dados fluindo do Literarius para o Supabase.
+**Período:** 2026-06-15 → em andamento
+**Objetivo:** Monorepo `heziomos` funcional, Supabase unificado com todas as migrations aplicadas, CI/CD operacional e frontend shell básico aguardando migração CRM/Hub.
 
 ---
 
 ## Stories do Sprint
 
-| Story | Status | Agente |
-|-------|--------|--------|
-| [[STORY-001 — Setup Infraestrutura]] | pronto | — |
-| [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria]] | backlog | — |
-| [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda]] | backlog | — |
+| Story | Título | Status | Agente |
+|-------|--------|--------|--------|
+| [[STORY-013 — Setup Monorepo heziomos]] | Setup Monorepo | ✅ concluído | @dev |
+| [[STORY-014 — Setup Supabase Unificado]] | Supabase + Migrations | ✅ concluído | @data-engineer |
+| [[STORY-015 — Instalação TRIVIAIOX]] | TRIVIAIOX Framework | ✅ concluído | @devops |
+| [[STORY-016 — CI CD Pipeline e Admins]] | CI/CD + Admins | ✅ concluído | @devops |
+| STORY-017 — Frontend Shell (apps/web) | Login + AppShell | ⏸ bloqueado | @dev |
+| STORY-018 — Migração CRM | heziom-sales → features/crm | ⏸ bloqueado | @dev |
+| STORY-019 — Migração Hub | hubtransportadorashzm → features/hub | ⏸ bloqueado | @dev |
+
+---
+
+## Estado atual do banco (ouvfthknhqcciuothrqb)
+
+✅ Migrations 0000-0007 aplicadas
+✅ 15 schemas criados: crm, hub, financeiro, comercial, editorial, atendimento, pessoas, tarefas, fiscal, lit_mirror, tray_mirror, audit, agents, lgpd, config
+✅ ~80 tabelas com RLS FORCE
+✅ João Novais e Lucas Azevedo como superadmin + owner
+✅ Workspace "Heziom Editora" criado
 
 ---
 
 ## Critério de conclusão do sprint
 
-- [ ] Supabase com dados reais do Literarius (mínimo últimos 90 dias)
-- [ ] Script Deno rodando automaticamente a cada 15 min na rede da Heziom
-- [ ] Repositório `heziom-os-app` no GitHub com deploy automático no Netlify
-- [ ] João consegue acessar o vault Obsidian e ver as mudanças sem usar terminal
+- [x] Monorepo com pnpm workspaces + Turborepo
+- [x] packages/config, shared, ui, database
+- [x] Migrations SQL aplicadas no Supabase prod
+- [x] CI/CD GitHub Actions operacional
+- [x] TRIVIAIOX doctor passando
+- [ ] Frontend shell (login + AppShell) deployado no Netlify
+- [ ] Módulo CRM funcionando (aguarda João)
+- [ ] Módulo Hub funcionando (aguarda João)
 
 ---
 
 ## Impedimentos
 
-> Liste aqui qualquer bloqueador que esteja impedindo o progresso.
-
-- Aguardando definição da máquina que rodará o Deno sync na rede da Heziom
-- Aguardando confirmação de credenciais do Supabase
+- **STORY-017/018/019:** Aguardando João finalizar heziom-sales para pegar versão definitiva antes de migrar código
+- **@heziom/database generate:** Precisa de `supabase login` no ambiente (personal access token)
 
 ---
 
 ## Próximo Sprint (previsão)
 
-Sprint 2 — Dashboard CEO (STORY-004 e STORY-005)
+Sprint 3 — Migração CRM + Hub (quando João der OK)
