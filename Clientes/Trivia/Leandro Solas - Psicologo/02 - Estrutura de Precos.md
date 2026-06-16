@@ -1,7 +1,7 @@
 # Estrutura de Preços — Leandro Solla
 
 > Rascunho interno. **DECISÃO FINAL JG (15/06/2026).**
-> Plano em [[01 - Plano e Estrutura do Projeto]] · Contexto em [[00 - Contexto e Diagnóstico]].
+> Plano em [[01 - Plano e Escopo do Projeto]] · Contexto em [[00 - Contexto e Diagnóstico]].
 
 ---
 
