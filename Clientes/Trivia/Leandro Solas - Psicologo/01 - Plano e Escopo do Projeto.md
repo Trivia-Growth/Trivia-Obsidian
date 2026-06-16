@@ -101,23 +101,34 @@ Cada pilar alimenta o próximo: anúncio → lead → IA agenda → vira pacient
 
 ---
 
-## Faseamento (roadmap de entrega) — ATUALIZADO 15/06
+## Faseamento (roadmap de entrega) — DEFINITIVO 15/06
 
-> Ajustado à decisão do Leandro: **começar só com tráfego** (por budget); mídias sociais depois.
-> E aos ativos da Trívia: sistema IA + CRM **já prontos** (clonar = custo ~zero). Ver [[02 - Estrutura de Precos]].
+> Estrutura final de 2 fases (acordada com JG). Preços em [[02 - Estrutura de Precos]].
+> Modelo "dar pra ganhar": cortesias de custo ~zero na Fase 1 pra ganhar o cliente; monetização na Fase 2.
 
-| Fase | Entregas | Objetivo | Gatilho p/ avançar |
-|------|----------|----------|--------------------|
-| **1 — Tráfego + Sistema** | Gestão de tráfego (Click-to-WhatsApp) + implementação do sistema IA pré-atendimento + CRM + integração agenda/Google Meet + tracking | Captar e medir | Leads/pacientes chegando |
-| **2 — Mídias Sociais** | Gestão de feed (16 peças/mês: arte + vídeo) + autoridade | Aquecer público, sustentar ticket | Operação estável |
-| **3 — Operação Clínica** | Transcrição Meet + resumo + prontuário + rotina de mensagens terapêuticas | Reter e encantar | Confiança consolidada |
-| **4 — Inteligência & Escala** | Dashboard + alertas de churn + LP/site + Google Ads + clínica local | Escalar com previsibilidade | — |
+### Fase 1 — Aquisição (começar agora)
+| Entrega | Cobrança |
+|---------|----------|
+| Gestão de tráfego pago (Meta, foco exterior) | **R$ 2.500/mês** |
+| Site institucional / landing page | 🎁 Cortesia |
+| CRM / Atendimento (sem agente de IA) | 🎁 Cortesia |
+| Conteúdos orgânicos (feed) | 🎁 Grátis por 3 meses, reavalia depois |
 
-**Início recomendado:** Fase 1 (tráfego + sistema), apresentando o mapa completo como visão de futuro.
+**Objetivo:** captar e medir. Verba de anúncio à parte. Sem taxa de setup.
 
-**Por que o sistema entra já na Fase 1:** custo ~zero pra Trívia, e é ele que faz o **tracking** — sem isso o tráfego é "dirigir no escuro". Vira o diferencial que prova o resultado e justifica a continuidade (lock-in).
+### Fase 2 — Automação & Operação Clínica (quando der resultado)
+| Entrega | Detalhe |
+|---------|---------|
+| Agente de IA | Pré-atendimento automático (WhatsApp) |
+| Agendamento de reuniões/consultas | Integração agenda + Google Meet |
+| Módulo do paciente | Prontuário + transcrição das sessões (Meet) + ⭐ rotina de mensagens terapêuticas |
+| Módulo gestão da clínica | Gestão das psicólogas + dashboard + alertas de churn |
 
-**Sem site/LP no início:** estratégia **Click-to-WhatsApp** (anúncio → IA → agenda) cabe no budget e usa o que já existe. Site institucional fica para a Fase 4.
+**Objetivo:** automatizar atendimento, reter e encantar, escalar com dados.
+
+**Gatilho Fase 1 → 2:** resultados do tráfego comprovados + relação consolidada.
+
+> **Por que dar site + CRM:** custo ~zero pra Trívia (JG faz na assinatura Claude). O CRM ainda viabiliza o **tracking** que prova o resultado do tráfego (lock-in). O orgânico tem custo real (~R$700/mês) — por isso é grátis só por 3 meses.
 
 ---
 
