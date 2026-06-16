@@ -51,6 +51,7 @@ atualizado: 2026-06-16
 - [ ] **Google Ads + GA4** — acesso às contas.
 - [ ] **Domínio / e-mail** — para configurar envio (Resend).
 - [ ] **Nuvem / infraestrutura** — contas existentes (se houver) ou abrir em nome da Sinérgica.
+- [ ] **Stack técnico das aplicações atuais** — **GitHub** (repositórios), **Netlify** (deploy/env/logs), **Supabase** (banco/auth/storage), DNS e demais serviços técnicos.
 - [ ] **Identidade visual** — logo, cores, materiais (para o módulo de Marketing).
 
 ## 5. Instrumento 1 — Inventário de sistemas (preencher na coleta)

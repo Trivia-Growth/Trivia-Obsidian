@@ -56,6 +56,8 @@ Cliente vindo do **G4 Sprint de IA**. Primeiro case de OS da Trívia saído do S
 - **16/06/2026:** envio do PIX da entrada; link do cartão (12x) a enviar.
 
 ## 8. Arquivos desta pasta
+- **Kickoff (início do projeto):** [[01 - Kickoff — Sinérgica OS]]
+- **Solicitação de acessos e dados (enviar ao Fabrício):** [[02 - Solicitação de Acessos e Dados — Sinérgica OS]]
 - **Contrato assinado (autoritativo):** [[Contrato_Sinergica_OS_Minuta_Assinado.pdf]]
 - Contrato final gerado (apoio): [[Contrato Sinérgica - OS (Minuta)]] (.md), `Contrato Sinérgica - OS (Minuta).docx`, `Contrato Sinérgica - OS.pdf`
 - Versão enviada ao Fabrício (histórico): `Contrato Sinérgica - OS (Minuta v2).*`
