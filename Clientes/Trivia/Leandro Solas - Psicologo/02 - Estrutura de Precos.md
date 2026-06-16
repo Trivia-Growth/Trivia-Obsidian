@@ -1,100 +1,114 @@
 # Estrutura de Preços — Leandro Solla
 
-> Rascunho interno. Valores ancorados no **custo real da Trívia** (atualizado 15/06/2026).
+> Rascunho interno. Atualizado 15/06/2026 com os **valores de face oficiais da Trívia**.
 > Plano em [[01 - Plano e Escopo do Projeto]] · Contexto em [[00 - Contexto e Diagnóstico]].
 
 ---
 
-## Realidade de custo da Trívia (base de tudo)
+## Valores de face (tabela cheia — âncora oficial)
+
+> Estes são os valores "de tabela" que JG apresenta. Estratégia combinada com o Leandro: **cobrar o valor cheio e depois ajustar** ("cobraria um valor melhor e depois ajustaríamos").
+
+| Item | Valor de face | Tipo |
+|------|--------------|------|
+| **Site institucional** | **R$ 3.900** | Setup (one-time) |
+| **Tráfego pago (Meta + Google Ads) + mídias sociais (3 posts/sem no feed) + LPs** | **R$ 3.900/mês** | Retainer |
+| **Sistema CRM + atendimento com agente de IA** | **R$ 9.900** | Setup (one-time) |
+
+**Pacote completo de face:** R$ 13.800 em setups (site + sistema) + R$ 3.900/mês.
+
+---
+
+## Custo real da Trívia (base da margem)
 
 | Item | Custo Trívia | Observação |
 |------|-------------|-----------|
-| **Gestão de tráfego pago** | **R$ 1.000/mês** | Gestor terceirizado: 4 campanhas + 12 criativos/mês |
-| **Gestão de mídias sociais** | **R$ 800/mês** | 16 demandas/mês (arte + edição de vídeo p/ feed) |
-| **Sistema IA pré-atendimento + CRM + integração agenda/Meet** | **~R$ 0** | JG implementa sozinho clonando sistema pronto, na assinatura Claude dele |
+| Gestão de tráfego pago | **R$ 1.000/mês** | Gestor terceirizado: 4 campanhas + 12 criativos/mês |
+| Mídias sociais (3 posts/sem ≈ 12/mês) | **~R$ 600–800/mês** | Arte + edição de vídeo |
+| Sistema CRM + IA + agenda/Meet | **~R$ 0** | JG clona sistema pronto, na assinatura Claude dele |
+| Site institucional | **~R$ 0** | JG desenvolve sozinho |
 
-➡️ **Implicação estratégica:** o sistema (maior "uau" percebido) tem custo zero. Tráfego e mídias têm custo duro. Logo: **usar o sistema como diferencial de alta margem** e precificar tráfego/mídias com folga acima do custo.
-
----
-
-## Princípios
-
-1. **3 componentes separados:** Setup (one-time) · Retainer (mensal) · Verba de mídia (à parte, paga pelo cliente direto às plataformas — **não é receita da Trívia**).
-2. **Começar SÓ com tráfego** (decisão do Leandro, por budget). Mídias sociais entram na fase seguinte.
-3. **Não precisa de site/LP cara no início.** Estratégia **Click-to-WhatsApp**: anúncio → agente IA de pré-atendimento → agenda. Usa o que JG já tem (custo zero), cabe no budget e entrega tracking real.
-4. **Ancorar no ROI dele:** ticket R$ 1.800/mês, terapia dura meses → **1 a 2 pacientes novos já pagam tudo.**
+➡️ **A margem é gigante.** Os dois setups (site R$3.900 + sistema R$9.900) são quase 100% margem. O retainer cheio (R$3.900) tem custo ~R$1.600 → **~R$2.300/mês de margem**. Isso dá folga enorme pra uma boa condição de entrada.
 
 ---
 
-## FASE 1 — Tráfego Pago + Sistema (início)
+## Estratégia de oferta
 
-| Item | Tipo | Valor ao cliente | Custo Trívia | Margem |
-|------|------|------------------|--------------|--------|
-| Implementação do sistema IA pré-atendimento + CRM + integração agenda/Google Meet + estrutura de campanhas e tracking | **Setup único** | **R$ 2.500** *(faixa 2.000–3.500)* | ~R$ 0 | ~R$ 2.500 |
-| Gestão de tráfego pago (4 campanhas + 12 criativos) + sistema rodando | **Retainer** | **R$ 2.200/mês** *(faixa 2.000–2.500)* | R$ 1.000 | **~R$ 1.200/mês** |
-| Verba de anúncios | **Mídia (à parte)** | **R$ 1.500–3.000/mês** | — | — (passa direto) |
+**Cenário do Leandro:** quer **começar só com tráfego** (budget). Mídias sociais depois. Está inseguro e sentiu esfriamento de pacientes.
 
-**Entrada do cliente:** ~R$ 2.500 setup + R$ 2.200/mês. **ROI: ~2 pacientes/mês cobrem o fee.**
-
-> O setup paga o sistema (que custa zero) — é a parcela de maior margem. O sistema ainda **viabiliza o tracking** que prova o resultado do tráfego e justifica a continuidade. Ganha o cliente e trava o lock-in.
+**Como apresentar:**
+1. **Mostrar o valor cheio** (a tabela de face acima) — pra ele enxergar o tamanho do ecossistema e ancorar a percepção.
+2. **Oferecer uma condição de entrada** que cabe no budget e começa pelo tráfego.
+3. **Sistema entra junto** mesmo na entrada — custo ~zero pra Trívia, e é ele que faz o **tracking** que prova o resultado do tráfego (lock-in + diferencial).
 
 ---
 
-## FASE 2 — Gestão de Mídias Sociais (add-on)
+## OFERTA DE ENTRADA RECOMENDADA (tráfego-first)
 
-| Item | Tipo | Valor ao cliente | Custo Trívia | Margem |
-|------|------|------------------|--------------|--------|
-| Gestão de mídias sociais — 16 peças/mês (arte + edição de vídeo p/ feed), posicionamento de autoridade | **Retainer add.** | **+R$ 2.000/mês** *(faixa 1.800–2.500)* | R$ 800 | **~R$ 1.200/mês** |
+> Começa por **Meta Ads (Click-to-WhatsApp)** → agente IA → agenda. Sem site/LP nesta fase (cabe no budget, usa o que já existe). Google Ads, LPs e mídias entram depois.
 
-**Acoplada à Fase 1:** retainer total ~R$ 4.200/mês · custo ~R$ 1.800 · **margem ~R$ 2.400/mês.**
+| Item | Face | **Entrada (sugerida)** | Custo | Margem |
+|------|------|------------------------|-------|--------|
+| Sistema CRM + IA + integração agenda/Meet | R$ 9.900 | **R$ 4.900** *(condição de parceria; ou 2–3x)* | ~R$ 0 | ~R$ 4.900 |
+| Gestão de tráfego (Meta, foco exterior) | parte do R$ 3.900 | **R$ 2.900/mês** | R$ 1.000 | **~R$ 1.900/mês** |
+| Verba de anúncios | — | R$ 1.500–3.000/mês (à parte) | — | passa direto |
+
+**Entrada do cliente:** ~R$ 4.900 setup + R$ 2.900/mês. **ROI: ~2–3 pacientes/mês cobrem tudo.**
+
+### Evolução (conforme resultado)
+- **+ Google Ads + LPs + mídias sociais** → retainer sobe para o face **R$ 3.900/mês**.
+- **+ Site institucional** → R$ 3.900 (Fase 4).
+- **+ Módulos clínicos** (transcrição, prontuário, mensagens terapêuticas) → upsell de margem cheia.
 
 ---
 
-## FASES SEGUINTES — Operação Clínica (upsell futuro, margem cheia)
+## Variações de entrada (escolher 1)
 
-Custo Trívia ~zero (sistemas próprios). Entram quando fizer sentido e a confiança estiver consolidada.
+| Opção | Setup sistema | Retainer | Racional |
+|-------|--------------|----------|----------|
+| **A — Recomendada** | R$ 4.900 (ou 2–3x) | R$ 2.900/mês tráfego | Equilíbrio: valoriza o sistema, cabe no budget |
+| **B — Entrada mínima** | R$ 2.900 ou parcelado em 6x | R$ 2.900/mês | Tira quase todo atrito; ganha o cliente rápido |
+| **C — Face cheio c/ desconto progressivo** | R$ 9.900 | R$ 3.900/mês (tudo) | Só se ele topar o pacote completo agora |
 
-| Módulo | Sugestão de cobrança |
-|--------|----------------------|
-| Transcrição de sessões (Meet) + resumo automático na base do paciente | Setup R$ 2.000–4.000 ou +mensalidade |
-| Prontuário digital completo | Setup R$ 3.000–6.000 |
-| ⭐ Rotina de mensagens terapêuticas (item que ele mais amou) | Setup R$ 2.000–4.000 + mensalidade |
-| Dashboard unificado + alertas de churn | Setup R$ 3.000–6.000 |
-
-> Como o custo é ~zero, qualquer valor aqui é quase margem pura. Vender pelo **valor percebido**, não pelo custo.
+> Todas mantêm margem alta. A escolha é de posicionamento: quanto facilitar a entrada vs. quanto faturar de cara.
 
 ---
 
 ## Resumo executivo (o que enviar ao Leandro)
 
-> **Início — Gestão de Tráfego Pago:**
-> - **Implantação (única):** R$ 2.500 — inclui o sistema de atendimento por IA, CRM e integração com sua agenda e Google Meet (tudo pra captar e acompanhar os leads).
-> - **Mensalidade:** R$ 2.200/mês — gestão das campanhas (4 campanhas + 12 criativos/mês) com a estrutura completa rodando.
-> - **Verba de anúncios:** à parte, a partir de R$ 1.500/mês (você define e paga direto às plataformas).
+> **Valor cheio do projeto:** site R$ 3.900 + sistema CRM/IA R$ 9.900 + gestão completa (tráfego Meta/Google + mídias + LPs) R$ 3.900/mês.
 >
-> Depois, quando fizer sentido, entra a **gestão de mídias sociais** (+R$ 2.000/mês) e os módulos clínicos.
+> **Pra começar agora, focado no tráfego (condição de parceria):**
+> - **Implantação do sistema** (IA de atendimento + CRM + integração agenda/Google Meet): **R$ 4.900**
+> - **Gestão de tráfego (Meta):** **R$ 2.900/mês**
+> - **Verba de anúncios:** à parte, a partir de R$ 1.500/mês (você paga direto às plataformas)
+>
+> Conforme os resultados, ativamos Google Ads, LPs, mídias sociais e os módulos clínicos.
 
 ---
 
 ## Argumentos de venda
 
-- **ROI direto:** "1 a 2 pacientes novos/mês já cobrem o investimento — e paciente de terapia fica meses."
-- **Tráfego que dá pra medir:** o sistema (IA + CRM + agenda) faz o tracking certinho — você vê de qual campanha veio cada paciente. Tráfego sem isso é dirigir no escuro.
-- **Atende mais rápido, ganha o jogo:** IA responde na hora, 24/7, e já agenda.
+- **ROI direto:** "2 a 3 pacientes novos/mês já cobrem o investimento — e paciente de terapia fica meses."
+- **Tráfego que dá pra medir:** o sistema faz o tracking — você vê de qual campanha veio cada paciente. Sem isso, é dirigir no escuro.
+- **Atende mais rápido, ganha o jogo:** IA responde 24/7 e já agenda.
 - **Resolve o esfriamento:** o CRM organiza o acompanhamento que hoje está "tudo na cabeça".
+- **Condição de parceria:** "te dou um valor especial pra começar, e a gente ajusta conforme cresce" — exatamente o que JG já sinalizou.
 
 ---
 
 ## Margens (visão interna)
 
-| Cenário | Receita recorrente | Custo | Margem/mês |
-|---------|-------------------|-------|-----------|
-| Fase 1 (tráfego + sistema) | R$ 2.200 | R$ 1.000 | **R$ 1.200** + R$ 2.500 setup |
-| Fase 1 + 2 (+ mídias) | R$ 4.200 | R$ 1.800 | **R$ 2.400** |
-| + módulos clínicos | + valor cheio | ~R$ 0 | quase 100% margem |
+| Cenário | Setup | Retainer/mês | Custo/mês | Margem recorrente |
+|---------|-------|--------------|-----------|-------------------|
+| Entrada (A) | R$ 4.900 | R$ 2.900 | R$ 1.000 | **R$ 1.900** |
+| + mídias + Google (face) | — | R$ 3.900 | R$ 1.600 | **R$ 2.300** |
+| + site | R$ 3.900 | — | ~0 | — |
+| + clínicos | upsell | + valor | ~0 | quase 100% |
 
 ## ⚠️ Validar antes de enviar
 
-- [ ] Confirmar setup em R$ 2.500 e retainer de tráfego em R$ 2.200.
-- [ ] Faixa de verba de mídia a sugerir (depende da meta de pacientes/mês — pergunta aberta com Leandro).
-- [ ] Confirmar estratégia Click-to-WhatsApp como destino inicial (sem LP/site nesta fase).
+- [ ] Escolher a opção de entrada (A / B / C).
+- [ ] Confirmar condição do setup do sistema (à vista R$4.900 ou parcelado).
+- [ ] Faixa de verba de mídia a sugerir (depende da meta de pacientes/mês — perguntar ao Leandro).
+- [ ] Confirmar Click-to-WhatsApp como destino inicial (sem LP/site nesta fase).
