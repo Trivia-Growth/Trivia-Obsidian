@@ -45,3 +45,30 @@ Word salvo em `Contrato Sinérgica - OS (Minuta).docx`.
 6. **Cláusula 8.3 (reuso de componentes genéricos) REMOVIDA** (decisão JG).
 7. **Garantia/estabilização REMOVIDA** (decisão JG). Vigência passa a ir até a entrega/aceite (Go-live). Suporte opcional (R$ 990/mês) mantido, à parte.
 8. Renumeração: agora 17 cláusulas (Foro = 17ª).
+
+## v3 — respostas às 12 dúvidas do Fabrício (JG, jun/2026)
+Base: v2 que o time enviou (que reincluiu garantia e a cláusula 8.4 Propriedade Prévia).
+- **Auvo**: mantido como sistema de campo e **integrado via API** (não substituir, roda liso; substituir só se ele quiser depois). Anexo I módulo 5 + Anexo IV.
+- **PCM**: aproveitar a base existente, com eventual reestruturação de backend/banco pra entrar na base única. Anexo I módulo 5.
+- **Agentes no go-live**: **1 por área** (Anexo I + Anexo II Mês 3).
+- **Garantia**: ampliada de 45 → **90 dias** (cláusula 10.1).
+- **Blueprint** formal pós-diagnóstico: cláusula 4.4 (nova).
+- **Aceite por módulo**: cláusula 4.5 (nova) — homologação 5 dias úteis, aprovação tácita.
+- **Integrações (Anexo IV, novo)**: WhatsApp, Meta Ads, Google Ads, Auvo, Fiscal/NF-e, **Resend** (e-mails).
+- **Infra estimada R$ 800–1.600/mês** (cláusula 9.2), a apurar no diagnóstico.
+- Parte crítica não cedida? Não: cessão total + entrega de código-fonte (8.1.2); só Propriedade Prévia (8.4, licença perpétua) e software de terceiros (8.2) ficam de fora.
+- Diagrama de arquitetura (camadas: canais → agentes → módulos → base única → integrações) gerado no chat pra enviar ao Fabrício. PNG salvo: `Arquitetura Sinérgica OS.png`.
+
+## v4 — devolutiva do Fabrício (7 comentários na v2) — todos aceitos
+1/2/7. **Blueprint** ao fim do diagnóstico como **marco de validação** que autoriza a construção → cláusula 4.4 reforçada + Anexo II Mês 1.
+3. **Propriedade Prévia (8.4)** NÃO abrange regras de negócio, fluxos, modelagens, estruturas de dados, agentes ou funcionalidades feitos especificamente pra Sinérgica (esses integram a cessão 8.1) → carve-out adicionado.
+4. **Limitação de responsabilidade (13.1)**: exceções para dolo, fraude, quebra de sigilo, LGPD e violação de PI → adicionado (padrão de mercado; aumenta exposição só nesses casos).
+5. **Operação/PCM**: aproveita o PCM existente (regras de negócio + integração Auvo), com ajustes/evoluções → Anexo I módulo 5 ajustado.
+6. **Garantia 90 dias** → já estava na v3.
+
+### Refinamento LGPD (JG): responsabilidade ilimitada da LGPD só vale pra conduta intencional ou operação da própria Trívia; incidentes via ferramentas de terceiros (nuvem/APIs) NÃO entram (cláusula 13.2 nova, casada com 9.3). Demais exceções (dolo, fraude, sigilo, PI) mantidas ilimitadas.
+
+> Status: **FINALIZADO e pronto para assinatura digital** (15/06/2026). Sem campos pendentes.
+> Partes: Trívia (JG, sócio proprietário) e Sinérgica (Fabrício, proprietário).
+> Testemunhas: Aline Azevedo Nazário (CPF 112.777.477-84) e Lucas Moreira Azevedo (CPF 432.312.288-83) — com 2 testemunhas, o contrato é título executivo extrajudicial.
+> Arquivos no vault: `Contrato Sinérgica - OS (Minuta).docx`, `.md`, e **`Contrato Sinérgica - OS.pdf`** (8 págs) + `Arquitetura Sinérgica OS.png`.
