@@ -19,13 +19,18 @@ criado: 2026-05-18
 | [[ContaBancaria]] | ContaBancaria, Lancamento, ControleCaixa, CaixaItens | ~7.5k | 🔴 Saldo bancário, PDV físico |
 | [[PlanoConta]] | PlanoConta, CentroResultado, AjusteManualCusto | ~2.8k | 🔴 DRE — ⚠️ bug TipoCategoria |
 | [[PedidoVenda]] | PedidoVenda, Itens, Vencimento, Status | ~104k | 🔴 Pedidos, conciliação Tray |
+| [[PedidoVendaHistorico]] | PedidoVendaHistorico | ~214k | 🟡 Audit log de trocas de status |
 | [[NotaFiscal]] | NotaFiscal, Itens, Vencimento, ProdutoPreco | ~160k | 🔴 Faturamento, fiscal |
+| [[NotaFiscalEventos]] | NotaFiscalEventos | ~36k | 🟡 Eventos SEFAZ (cancelamentos, CC-e) |
+| [[LogisticaEtiqueta]] | LogisticaEtiqueta | ~6.1k | 🟡 Etiquetas de envio e rastreamento |
 | [[Estoque]] | Estoque, MovimentoEstoque, Lancamento, Inventario | ~180k | 🔴 Posição e giro de estoque |
 | [[Produto]] | Produto, ProdutoAutor | ~7.6k | 🟡 Catálogo editorial |
+| [[MontagemKit]] | MontagemKit, MontagemKitItens | ~609 | 🟡 Kits compostos |
 | [[Consignacao]] | Consignacao, Itens, NotasDevolucao | ~9.3k | 🔴 R$1,15M em consignação aberta |
 | [[DireitoAutoral]] | DireitoAutoralFechamento, Itens, Parametro | ~14.6k | 🟡 Royalties — custo real por título |
 | [[Entrada]] | Entrada, Itens, Vencimento | ~6.2k | 🟡 NFs de compra, CMV |
 | [[Parceiro]] | Parceiro, CanalVenda, FormaPagto, TipoCliente | ~47k | 🟡 Base de clientes |
+| [[ComissaoTipo]] | ComissaoTipo | 3 | ⚪ Enum de tipos de comissão |
 
 ---
 
@@ -56,10 +61,7 @@ criado: 2026-05-18
 
 | Tabela | Por quê mapear | Prioridade |
 |---|---|---|
-| `ComissaoParametro` + `ComissaoTipo` | Regras de comissão de vendedores | 🟡 |
-| `LogisticaEtiqueta` | Rastreamento de entregas (5.230 etiquetas) | 🟡 |
-| `NotaFiscalEventos` | Cancelamentos e cartas de correção SEFAZ | 🟡 |
-| `PedidoVendaHistorico` | Auditoria completa de status (193k linhas) | 🟡 |
+| `ComissaoParametro` | Percentuais de comissão de vendedores | 🟡 |
 | `ExposicaoFeira` | Vendas em feiras (8 registros) | ⚪ |
 
 ---
