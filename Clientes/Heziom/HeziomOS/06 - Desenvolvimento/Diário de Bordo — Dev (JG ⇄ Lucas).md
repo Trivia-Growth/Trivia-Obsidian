@@ -22,6 +22,10 @@
 ## 📜 Mudanças recentes (mais novo no topo)
 
 ### 2026-06-21 — João
+- **Story 6.6 (Evolution: webhook + send + router) — Done** (PR #69, mergeado; migration aplicada + **edge functions deployadas**):
+  - `crm-evolution-webhook` (público, auth `apikey` fail-closed, dedup, dispara IA) + `crm-evolution-send` (interno service_role) + branch Evolution no `crm-whatsapp-router` (Meta → Evolution → Z-API). Front inalterado (router provider-agnostic).
+  - 🔒 **Revisão adversarial de segurança (FAIL → corrigido):** minha 1ª versão do anti-SSRF era ingênua (string) — a revisão achou e confirmou bypasses (redirect 302→interno, IPv4-mapped `::ffff:`, `fe80::`/`::`, DNS rebinding) + confusão de instância via `body.instance`. Reescrito: parsing de faixas IP, `redirect:manual`, DNS best-effort, instância = a que autenticou, normalização de telefone multi-device. Re-verificado: críticos/altos fechados. **Residual médio** (DNS rebinding fail-open) documentado + chip de follow-up. ⚠️ **Lição:** o CI não roda `deno check` nem revisão de SSRF — vale o gate de `deno check` (chip aberto).
+  - **Fila do Épico 6 → 6.7** (UI de cadastro de instância Evolution; `api_key` write-only no form).
 - **Story 6.5 (Evolution: schema `evolution_instances`) — Done** (PR #68, mergeado; migration **aplicada no banco** via CI):
   - Tabela `crm.evolution_instances` (espelha `zapi_instances`; segredo único `api_key` + `base_url`/`instance_name` self-host), índices, trigger, **RLS single-tenant** (membro=`auth.uid()`, delete=`crm.is_admin`), `api_key` **write-only** (REVOKE+GRANT por coluna). Tipos patchados; typecheck/CI verdes.
   - **Próximas:** 6.6 (webhook inbound + send Evolution — ⚠️ validar SSRF no `base_url`: https + bloquear IP interno) e 6.7 (UI de cadastro; `api_key` write-only no form). Fila do Épico 6 → **6.6**.
