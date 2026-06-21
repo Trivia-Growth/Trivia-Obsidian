@@ -3,8 +3,9 @@
 **Módulo:** Frontend / UX  
 **Sprint:** Produto  
 **Prioridade:** P2  
-**Status:** pronto  
-**Estimativa:** 2 dias
+**Status:** concluído  
+**Estimativa:** 2 dias  
+**Sincronizado:** 2026-06-17 — verificado no código (`src/i18n.ts`, `src/components/LanguageSwitcher.tsx`); entregue no commit de 13/06.
 
 ---
 

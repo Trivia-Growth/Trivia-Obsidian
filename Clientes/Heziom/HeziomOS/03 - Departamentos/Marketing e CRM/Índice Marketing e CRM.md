@@ -134,4 +134,9 @@ substitui: Flowbiz
 
 ---
 
+## Arquitetura
+- [[Arquitetura — Fonte Única de Contatos (Leads × Clientes)]] — modelo 3 camadas, lead×cliente, riqueza por origem, fluxo de sync (proposto 18/06)
+
+---
+
 *Fase: 2.2 · Prioridade: Alta (ROAS em queda de 4x→2x, Flowbiz desconectado dos dados reais)*

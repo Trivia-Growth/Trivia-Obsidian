@@ -9,3 +9,6 @@
 *.mov
 *.avi
 *.zip
+
+# Notas com segredos — apenas locais, nunca sincronizam
+*.secret.md

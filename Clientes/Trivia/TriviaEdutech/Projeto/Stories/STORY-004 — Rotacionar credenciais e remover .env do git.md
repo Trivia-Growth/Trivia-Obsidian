@@ -3,15 +3,17 @@ id: STORY-004
 titulo: Rotacionar credenciais e remover .env do git
 fase: 1
 modulo: Segurança
-status: pronto
+status: em-andamento
 prioridade: P0-emergencial
 agente_responsavel: "@devops + @dev"
 criado: 2026-06-13
-atualizado: 2026-06-13
+atualizado: 2026-06-17
 seguranca: SEC-016
 ---
 
 # STORY-004 — Rotacionar credenciais e remover .env do git
+
+> **Progresso parcial (2026-06-17):** `.env` removido do *tracking* atual (`git rm --cached`) e confirmado no `.gitignore` (CA-03 ✅). **Ainda PENDENTE e P0:** rotação das chaves Supabase (CA-01), limpeza do `.env` do **histórico** git via BFG/filter-branch (CA-02 — as chaves ainda estão em commits antigos), config no Netlify/Supabase Secrets (CA-04, CA-05). Como as chaves preenchidas hoje são públicas de frontend, o risco é baixo, mas a rotação do service role key deve ser confirmada.
 
 ## Contexto
 

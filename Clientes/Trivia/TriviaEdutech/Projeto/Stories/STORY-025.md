@@ -3,7 +3,14 @@
 **Módulo:** Documentação  
 **Sprint:** Qualidade  
 **Prioridade:** P2  
-**Status:** pronto  
+**Status:** concluido
+> **CONCLUÍDA 18/06/2026.**
+> - `docs/EDGE_FUNCTIONS.md` criado e completo (23 funções documentadas) — inclui `accept-invite`, `import-vimeo-folder`, `batch-import-vimeo` adicionados nesta entrega; secret `BATCH_IMPORT_SECRET` registrado.
+> - `PROJECT_REQUIREMENTS.md` atualizado: tabela de Edge Functions revisada (removido `panda-video` legado, adicionados `manage-ai`, `ai-tutor`, `import-vimeo-folder`, `batch-import-vimeo`, `pdf-info`, `submit-activity`).
+> - `README.md` completo com stack, setup, comandos e deploy.
+> - Guia do Administrador, Guia do Instrutor e Guia do Aluno escritos no vault (`Projeto/Docs/`).
+> - `/ajuda` e `HelpCenter.tsx` existentes no frontend com FAQ e categorias.
+> - Todos os CAs atendidos.  
 **Estimativa:** 1 dia
 
 ---

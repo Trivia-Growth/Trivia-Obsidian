@@ -1,0 +1,4 @@
+﻿ListID,ListName,SubscriberID,EmailAddress,SubscriptionStatus,BounceType,SubscriptionDate,UpdatedDate,Nome,Cidade,Estado,CEP,Data de Nascimento,Gênero,Telefone,E-mail
+27562,LP - Bíblia 120 anos,4,joaonovaisrs+ipp120ok@gmail.com,Subscribed,Not Bounced,2026-06-03,2026-06-03 16:37:17,TESTE INTERNO LP120,,,,,,,
+27562,LP - Bíblia 120 anos,3,joaonovaisrs+ipp120t3@gmail.com,Subscribed,Not Bounced,2026-06-03,2026-06-03 15:02:54,TESTE INTERNO LP120,,,,,,,
+27562,LP - Bíblia 120 anos,1,joaonovaisrs+lp120teste@gmail.com,Subscribed,Not Bounced,2026-06-03,2026-06-03 13:34:55,TESTE INTERNO LP120,,,,,,,

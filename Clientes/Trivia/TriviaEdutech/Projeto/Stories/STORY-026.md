@@ -3,8 +3,9 @@
 **Módulo:** Marketing / Frontend  
 **Sprint:** Produto  
 **Prioridade:** P1  
-**Status:** pronto  
-**Estimativa:** 4h
+**Status:** concluído  
+**Estimativa:** 4h  
+**Sincronizado:** 2026-06-17 — verificado em `src/pages/Landing.tsx` (Tutor IA, Quiz, Certificados, Comunidade, Mercado Pago/split, Trilhas presentes).
 
 ---
 

@@ -98,4 +98,20 @@
 
 ---
 
+## Sprint Conexões & Jornadas (P1) — corrigir o que "não se conversa"
+
+> Gerado a partir da auditoria [[Clientes/Trivia/TriviaEdutech/Projeto/Docs/Mapeamento-Conexoes-e-Jornadas]] (18/06/2026). Features funcionam isoladas; os "ligamentos" entre elas estão só no player (`CourseDetail.tsx`) ou não existem. Estratégia: mover efeitos de domínio para triggers no banco.
+
+| Story | Módulo | Prioridade | Status |
+|-------|--------|-----------|--------|
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-044]] — Trilhas que matriculam de verdade | Trilhas/Banco | P1 | concluido |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-045]] — Boletim unificado (provas + atividades) | Boletim | P1 | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-046]] — Motor de notificações por eventos | Notificações/Banco | P1 | concluido |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-047]] — Calendário com prazos de atividades | Calendário | P2 | concluido |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-048]] — Gamificação confiável (triggers + badges) | Gamificação/Banco | P2 | concluido |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-049]] — Navegação e páginas órfãs | Navegação | P2 | concluido |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-050]] — FAQ único e dinâmico | Ajuda/FAQ | P3 | concluido |
+
+---
+
 *Atualizar este roadmap sempre que uma nova fase ou milestone for definido.*

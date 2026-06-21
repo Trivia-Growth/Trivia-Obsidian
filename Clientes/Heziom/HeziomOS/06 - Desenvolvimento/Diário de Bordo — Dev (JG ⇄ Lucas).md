@@ -1,0 +1,57 @@
+# Diário de Bordo — Dev (JG ⇄ Lucas)
+
+> **Para que serve:** registro vivo e compartilhado de quem está fazendo o quê no HeziomOS, pra João e Lucas nunca se atropelarem trabalhando em paralelo. O **detalhe canônico** (stories, epics, ADRs) fica no **repo** (`docs/stories/BACKLOG.md`, `docs/epics/`). Aqui fica a **visão de quem-faz-o-quê + decisões + mudanças recentes**.
+>
+> **Regra:** toda entrega/mudança relevante entra aqui (mais recente no topo). Atualizado pelo Claude Code a cada entrega.
+
+---
+
+## 🚦 Quem está em quê (estado atual)
+
+| Dev | Frente | Branch / status |
+|-----|--------|-----------------|
+| **João** | Épico 6 — Atendimento Omnichannel (Onda 1 ✅ backend; Evolution 6.5–6.7 a seguir) | mergeado em `develop` |
+| **João** | **Story 5.22 — remover multi-tenancy do CRM** (3 fases, em execução) | ⚠️ mexe em 63 tabelas + 30 funções — **freeze coordenado** |
+| **Lucas** | Épico 7 — Literarius (dashboards CEO/BI) | `develop` |
+| **Lucas** | Épico 8 — débito técnico (8 stories) | `develop` |
+
+> ⚠️ **Coordenação ativa:** a 5.22 reescreve toda a camada de dados do CRM (remove `workspace_id`). Enquanto ela roda, evitar criar novas tabelas/colunas `workspace_id` no CRM. Lucas: confirmar que Épico 7/8 não dependem de `crm.workspaces`/`workspace_members`.
+
+---
+
+## 📜 Mudanças recentes (mais novo no topo)
+
+### 2026-06-20 — João
+- **Convenção de migration mudou para timestamp** (`supabase migration new`) + trava no CI que reprova PR com prefixo de versão duplicado (PR #42). Motivo: evitar a disputa do "próximo número" entre os dois. Detalhe no CLAUDE.md e em [[Supabase — Configuração e Migrations]].
+- **Fix da colisão `0027`**: a migration `0027_crm_column_level_grants` (Story 7.2, Lucas) virou `0033` — colidia com a `0027` do Épico 6. Tracking do banco acertado. PR #41 mergeado.
+- **Story 5.22 (remover multi-tenancy) em execução faseada:**
+  - ✅ **PREP** (PR #43) — `DEFAULT` no `workspace_id` de 65 tabelas, pra inserts sem o campo não quebrarem. ⚠️ corrige um furo de ordem do plano original (que quebraria inserts em produção).
+  - ✅ **Fase 1 — dados** (PR #44) — removido `workspace_id`/`useWorkspace` de 9 hooks + páginas + settings + roleplay; `types.ts` regenerado (workspace_id opcional no Insert). Verde.
+  - ✅ **Fase 1 — shell parcial** (PR #45) — NotificationBell sem filtro de workspace (filtra por `user_id`).
+  - ✅ **Fase 2 — edge functions** (PR #46, deployado) — 12 funções que exigiam `workspace_id` agora o tornam opcional com fallback p/ o workspace único (`_shared/single-tenant.ts`). Verificado com `deno check`. Backward-compatible.
+  - ✅ **CLEANUP passo 1** (PR #47) — `role` migrado pra `crm.profiles.role` (enum) + `WorkspaceProvider` lê role do profiles (não mais de `workspace_members`). Frontend desacoplado das tabelas de workspace.
+  - 📋 **CLEANUP destrutivo — RASCUNHO PRONTO P/ REVISÃO** (PR #48, em `docs/runbooks/`): SQL gerado de `pg_policies` — cria `crm.is_admin` (lê profiles.role), reescreve **255 políticas RLS** (member→autenticado, admin→is_admin), dropa 3 funções de workspace, `DROP COLUMN workspace_id` de 66 tabelas, recria 9 uniques (0 colisões), dropa `workspace_members`/`workspaces`. **NÃO aplicado** (não está em migrations/). ⚠️ **Lucas: revisar antes de aplicar (security gate).**
+  - ✅ **CLEANUP A1** (PR #49) — `crm.is_admin(uid)` lendo `profiles.role` (aditivo), pras functions trocarem `is_workspace_admin` antes do drop.
+  - ✅ **CLEANUP A2 completo** (PR #53, **mergeado + deployado**): TODAS as edge functions (27+2 helpers) limpas de `workspace_id` (deno check + verificação adversarial via workflow) + **16 telas de frontend** refatoradas (`workspace_members`→`profiles`; `workspaces` mantida; FeatureFlagsPanel→flags globais) + tipos regenerados. typecheck/lint/testes 47/47/build verdes. Edge deploy success.
+  - ✅ **Migrações aditivas** (PR #49 is_admin, #52 metas→profiles, antes role→profiles): role/metas/weight/team agora em `crm.profiles`.
+  - 🟢 **CLEANUP destrutivo — PRONTO P/ APLICAR** (PR #54): SQL **validado num BEGIN/ROLLBACK completo** (255 RLS, 66 colunas, 4 views, 16 funções, índices, lgpd/audit). **Mantém `workspaces` singleton, dropa `workspace_members`.** Mergear = aplica via supabase-migrate. ⚠️ **Lucas: revisar (security gate); promover main na mesma janela** (banco compartilhado). PRs antigos #48/#50 substituídos por #53/#54.
+  - ✅ **STORY 5.22 CONCLUÍDA (21/06)** — migração destrutiva APLICADA via CI (#54 mergeado; PR #55 develop→main go-live). `workspace_members` dropada, `workspace_id` removido de 66 tabelas, 255 RLS reescritas, 4 views/16 funções redefinidas, `workspaces` mantida singleton. **Banco e código (dev+prod) 100% single-tenant.** Smoke verde (contacts 111k, crm_dashboard, is_admin, insert sem workspace_id). Aplicou pelo fluxo correto (PR/CI, não via API direta — guarda de segurança respeitada). ⚠️ Detalhe: o migrate falhava por descompasso de history (metas #52 não estava mergeado) — resolvido mergeando #52. Job de migrate na **main** ainda falha (config/senha) → tarefa separada; banco já sincronizado via develop.
+- ⚠️ **Lucas:** confirmar que Épico 7/8 não criam novas tabelas/colunas `workspace_id` no CRM enquanto a 5.22 roda, e validar o plano de RLS antes do CLEANUP.
+
+### 2026-06-20 — Lucas
+- CI passou a **deployar edge functions e rodar migrations no push para `develop`** (não só `main`). Durante o dev, **develop = produção**.
+- Registro de epics/stories montado no repo (`docs/epics/`, `docs/stories/BACKLOG.md`) + protocolo @pm/@sm no CLAUDE.md.
+- Épico "6" antigo dele (Literarius) renumerado para **Épico 7** (João usou o 6 pro Omnichannel).
+
+---
+
+## 🧭 Decisões em aberto / a confirmar
+- [ ] Lucas valida o plano de RLS da 5.22 (Fase 3) antes do merge — story exige security gate + 2 aprovações.
+- [ ] Destino dos dados de config de `crm.workspaces` antes do DROP (Fase 3 da 5.22).
+
+---
+
+## 🔗 Referências
+- Board canônico de stories: `docs/stories/BACKLOG.md` (repo)
+- Epics: `docs/epics/README.md` (repo)
+- DevOps/CI e armadilhas: [[Supabase — Configuração e Migrations]]

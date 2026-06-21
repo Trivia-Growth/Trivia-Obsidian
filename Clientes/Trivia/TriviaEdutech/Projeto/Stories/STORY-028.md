@@ -3,8 +3,9 @@
 **Módulo:** Avaliações / Cursos  
 **Sprint:** Produto  
 **Prioridade:** P1  
-**Status:** pronto  
+**Status:** concluído  
 **Estimativa:** 5 dias  
+**Sincronizado:** 2026-06-17 — verificado no código (`src/features/activities/`, `src/pages/activities/`, `src/pages/admin/Activities.tsx`, `ActivitySubmissions.tsx`, edge function `submit-activity`); entregue no commit de 13/06.
 
 ---
 

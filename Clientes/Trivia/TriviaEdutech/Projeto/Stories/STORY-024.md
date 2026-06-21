@@ -3,8 +3,9 @@
 **Módulo:** Infraestrutura / Limpeza  
 **Sprint:** Migração  
 **Prioridade:** P1  
-**Status:** pronto  
-**Estimativa:** 2h
+**Status:** concluído  
+**Estimativa:** 2h  
+**Sincronizado:** 2026-06-17 — verificado no código (sem referências à Lovable no `src/`); entregue no commit de 13/06.
 
 ---
 

@@ -3,15 +3,17 @@ id: STORY-005
 titulo: Criar netlify.toml com security headers completos
 fase: 1
 modulo: Infra/Segurança
-status: pronto
+status: concluido
 prioridade: P0
 agente_responsavel: "@dev"
 criado: 2026-06-13
-atualizado: 2026-06-13
+atualizado: 2026-06-17
 seguranca: SEC-018
 ---
 
 # STORY-005 — Criar netlify.toml com security headers completos
+
+> **Concluído em 2026-06-17** (commit `3d90165`, junto com a STORY-031). **Verificado em produção** (`https://edutech.triviastudio.com.br`): CA-02..06 ✅ (X-Frame-Options DENY, X-Content-Type-Options nosniff, HSTS, Referrer-Policy, Permissions-Policy, X-XSS-Protection presentes); CA-07 ✅ (`index.html` → `max-age=0, must-revalidate`); CA-08 ✅ (`/assets/*` → `max-age=31536000, immutable`); CA-09 ✅ (`/blog` → 200 SPA); CA-10 ✅ (`npm run build` OK). **CSP deixada de fora de propósito** (escopo OUT — story dedicada).
 
 ## Contexto
 

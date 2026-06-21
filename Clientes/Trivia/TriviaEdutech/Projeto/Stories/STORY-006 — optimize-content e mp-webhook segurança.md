@@ -3,11 +3,11 @@ id: STORY-006
 titulo: Autenticar optimize-content e verificar assinatura mp-webhook
 fase: 1
 modulo: Segurança / Edge Functions
-status: pronto
+status: concluido
 prioridade: P0
 agente_responsavel: "@dev"
 criado: 2026-06-13
-atualizado: 2026-06-13
+atualizado: 2026-06-17
 seguranca: SEC-017, SEC-019
 ---
 
