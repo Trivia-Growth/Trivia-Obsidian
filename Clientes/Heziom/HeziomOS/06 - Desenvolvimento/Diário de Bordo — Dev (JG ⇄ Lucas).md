@@ -10,16 +10,23 @@
 
 | Dev | Frente | Branch / status |
 |-----|--------|-----------------|
-| **João** | Épico 6 — Atendimento Omnichannel (Onda 1 ✅ backend; Evolution 6.5–6.7 a seguir) | mergeado em `develop` |
-| **João** | **Story 5.22 — remover multi-tenancy do CRM** (3 fases, em execução) | ⚠️ mexe em 63 tabelas + 30 funções — **freeze coordenado** |
+| **João** | Épico 6 — Atendimento Omnichannel (Onda 1 ✅ backend; reconciliado single-tenant; retomando) | `develop` |
+| **João** | **Story 5.22 — remover multi-tenancy do CRM** | ✅ Concluída (21/06) — CRM single-tenant |
 | **Lucas** | Épico 7 — Literarius (dashboards CEO/BI) | `develop` |
-| **Lucas** | Épico 8 — débito técnico (8 stories) | `develop` |
+| **Lucas** | Épico 8 — débito técnico | ✅ Concluído |
 
-> ⚠️ **Coordenação ativa:** a 5.22 reescreve toda a camada de dados do CRM (remove `workspace_id`). Enquanto ela roda, evitar criar novas tabelas/colunas `workspace_id` no CRM. Lucas: confirmar que Épico 7/8 não dependem de `crm.workspaces`/`workspace_members`.
+> ✅ **Freeze da 5.22 encerrado.** O CRM agora é single-tenant: **não** criar colunas `workspace_id` nem usar `workspace_members`/`is_member_of_workspace`. Padrão de RLS: membro = `auth.uid() IS NOT NULL`; admin = `crm.is_admin(auth.uid())`.
 
 ---
 
 ## 📜 Mudanças recentes (mais novo no topo)
+
+### 2026-06-21 — João
+- **Épico 6 reconciliado para single-tenant** (PR #66, mergeado em `develop`):
+  - 🐛 **Bug vivo corrigido:** `Settings.tsx` puxava `workspace_id` de `zapi_instances` (coluna dropada na 5.22) → a tela de Configurações quebrava em runtime (typecheck não pegava por causa de tipos desatualizados). Tipos (`entities.ts`) limpos + `supabase-types.ts` órfão removido.
+  - 📄 **7 stories adaptadas** (6.5/6.6/6.7/6.13–6.16): RLS por `auth.uid()`/`crm.is_admin`, sem `workspace_id`/`is_member_of_workspace`, migrations por **timestamp** (corrige a colisão `0027` que a auditoria @architect/@security apontou). typecheck/build/CI verdes.
+  - **Lucas:** ao implementar essas stories, seguir o padrão single-tenant (sem workspace). As notas de auditoria de cada story foram ajustadas (onde diziam "isolamento multi-tenant" agora dizem "N/A em single-tenant").
+- **Sincronização do vault destravada** (estava 4 dias sem sync por trava `index.lock` órfã + divergência + push protection do GitHub). Convenção nova: segredos vão em `*.secret.md` (ignorado pelo Git). ⚠️ Achei segredos reais versionados no vault (Supabase/Tray/Cloudfy/Auvo) — **mascarados, mas precisam ser ROTACIONADOS**.
 
 ### 2026-06-20 — João
 - **Convenção de migration mudou para timestamp** (`supabase migration new`) + trava no CI que reprova PR com prefixo de versão duplicado (PR #42). Motivo: evitar a disputa do "próximo número" entre os dois. Detalhe no CLAUDE.md e em [[Supabase — Configuração e Migrations]].
