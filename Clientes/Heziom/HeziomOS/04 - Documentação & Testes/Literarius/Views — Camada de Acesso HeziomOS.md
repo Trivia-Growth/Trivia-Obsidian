@@ -29,7 +29,7 @@ SELECT * FROM vw_Heziom_ProdutoResumo WHERE Codigo = 4731
 |-----------|-------|
 | Servidor | `192.168.18.10` (resolução local de `VMAPP01\SQL2022`) |
 | Porta | 1433 |
-| Usuário leitura | `acessoExterno` / `ZS3D84yiB5t0` |
+| Usuário leitura | `acessoExterno` / *(senha no `Credenciais.secret.md` local — não versionar)* |
 | Database | `Literarius` |
 | Permissão | **READ ONLY** — CREATE VIEW precisa de usuário com DDL |
 

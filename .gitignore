@@ -12,3 +12,6 @@
 
 # Notas com segredos — apenas locais, nunca sincronizam
 *.secret.md
+
+# Backups de dados grandes (listas de contatos, exports) — ficam só locais
+**/Flowbiz_backup-*/

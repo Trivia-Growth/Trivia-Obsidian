@@ -14,7 +14,7 @@ atualizado: 2026-06-18
 
 - URL: https://app3.auvo.com.br/planejamento
 - Usuário: `adm.sinergica`
-- Senha: `123123`
+- Senha: *(ver `Credenciais — Sinérgica.secret.md`, local — não versionar)*
 
 ---
 
@@ -22,7 +22,7 @@ atualizado: 2026-06-18
 
 - URL: https://cloudfy.space/dashboard
 - E-mail: `engenharia@sinergicamanutencoes.com.br`
-- Senha: `S1nergic@2020`
+- Senha: *(ver `Credenciais — Sinérgica.secret.md`, local — não versionar)*
 - Instância do Zé: `ze-pcm-v2` (url: https://fascinatingsnail-evolution.cloudfy.live)
 
 ---

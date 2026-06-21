@@ -32,7 +32,7 @@ PASSO 4 — Renovação antes de expirar (proativo)
 > ⚠️ Requer login humano — a Tray usa reCAPTCHA no painel.
 
 1. Acesse `https://loja-s.tray.com.br/adm/login.php?loja=1501119`
-2. Login: `atendimento@editoraheziom.com.br` / `C-nws8krhl`
+2. Login: `atendimento@editoraheziom.com.br` / *(senha no `Credenciais.secret.md` local do HeziomOS — não versionar)*
 3. Menu lateral → **Aplicativos** → **Instalar novos aplicativos**
 4. Pesquisar **Heziom OS** → instalar
 5. A Tray redireciona para a URL de callback — o `code` aparece como parâmetro na URL
@@ -42,8 +42,8 @@ PASSO 4 — Renovação antes de expirar (proativo)
 ```python
 import requests
 
-CONSUMER_KEY    = "69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246"
-CONSUMER_SECRET = "0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6"
+CONSUMER_KEY    = "<ver Credenciais.secret.md local do HeziomOS — não versionar>"
+CONSUMER_SECRET = "<ver Credenciais.secret.md local do HeziomOS — não versionar>"
 CODE            = "<code_obtido_no_passo_1>"
 API_ADDRESS     = "loja-s.tray.com.br"  # host da loja de teste (ID 1501119)
 
@@ -174,8 +174,8 @@ def carregar_tokens():
 | Parâmetro | Valor |
 |-----------|-------|
 | **Nome do app** | Heziom OS |
-| **Consumer Key** | `69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246` |
-| **Consumer Secret** | `0a18522d3ed91b14e001b106f12e11c15543437623c28f0ce303a4946644d6e6` |
+| **Consumer Key** | `<CONSUMER_KEY no .secret.md local do HeziomOS>` |
+| **Consumer Secret** | `<CONSUMER_SECRET no .secret.md local do HeziomOS>` |
 
 > ⚠️ As chaves são únicas por integração e valem em todas as lojas que instalam o app. Nunca expô-las ao usuário final.
 
@@ -186,7 +186,7 @@ def carregar_tokens():
 | **Loja ID** | `1501119` |
 | **URL** | `https://loja-s.tray.com.br/adm/login.php?loja=1501119` |
 | **Login** | `atendimento@editoraheziom.com.br` |
-| **Senha** | `C-nws8krhl` |
+| **Senha** | `(senha no .secret.md local)` |
 | **Status** | ✅ Ativa (criada 20/05/2026 — loja de teste dedicada para parceiros) |
 | **App Heziom OS** | ✅ Instalado e autenticado (20/05/2026) |
 

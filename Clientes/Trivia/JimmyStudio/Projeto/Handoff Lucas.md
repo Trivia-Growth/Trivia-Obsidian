@@ -75,7 +75,7 @@ O `.env.test` já existe na máquina do João com as credenciais do usuário de 
 
 ```env
 PLAYWRIGHT_TEST_EMAIL=jimmy@triviastudio.com.br
-PLAYWRIGHT_TEST_PASSWORD=T3st3@#$
+PLAYWRIGHT_TEST_PASSWORD=<pegar do .env.test local do João — não versionar>
 PLAYWRIGHT_BASE_URL=https://jimmystudio.com.br
 ```
 

@@ -265,7 +265,7 @@ graph LR
 | Auth | OAuth 2.0 (consumer_key + consumer_secret + access_token) |
 | Rate Limit | **180 req/min** · 10.000 req/dia (standard) · 50.000 req/dia (corporate) |
 | Paginação | `limit` max 50 · `page` sequencial |
-| Consumer Key | `69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246` |
+| Consumer Key | `<CONSUMER_KEY no .secret.md local do HeziomOS>` |
 | Loja de teste | `1225878` (⚠️ usuário bloqueado — aguardando desbloqueio) |
 | Homologação | Até **13/08/2026** |
 

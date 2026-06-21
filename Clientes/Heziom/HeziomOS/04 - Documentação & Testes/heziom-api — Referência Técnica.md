@@ -127,7 +127,7 @@ Coloca o primeiro par `access_token`/`refresh_token` no Supabase para a renovaç
 | `META_CAPI_TOKEN` | token do Gerenciador de Eventos Meta (secret) |
 | `TRAY_WEBHOOK_SECRET` | `hz_tray_2026_xK9p4mR7vQs` (valida webhook e seed) |
 | `TRAY_API_HOST` | `https://lojatesteintegracaotray.commercesuite.com.br` |
-| `TRAY_CONSUMER_KEY` | `69a36f861247f1287200a21160e7a463a4e65ce7ad503ff0004f243c99bfb246` |
+| `TRAY_CONSUMER_KEY` | `<CONSUMER_KEY no .secret.md local do HeziomOS>` |
 | `TRAY_CONSUMER_SECRET` | consumer secret do app (secret) |
 | `TRAY_ACCESS_TOKEN` | fallback se o Supabase falhar |
 | `SUPABASE_URL` | `https://eqsjvacbhrezlgqpwipv.supabase.co` |

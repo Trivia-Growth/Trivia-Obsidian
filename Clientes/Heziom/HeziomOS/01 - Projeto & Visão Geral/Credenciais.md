@@ -1,15 +1,22 @@
-SUPABASE_DB_PASSWORD: gF7#L-husyRvjQ!
-SUPABASE_ACCESS_TOKEN: sbp_c6dfb919d49c479afc4638bd6bab7e662f715c08 
-SUPABASE_PROJECT_REF: ouvfthknhqcciuothrqb
+# Credenciais — HeziomOS
 
+> ⚠️ **Os segredos reais NÃO ficam mais aqui.** Eles estão no arquivo local `Credenciais.secret.md` (nesta mesma pasta), que é ignorado pelo Git e não sincroniza.
+> Os valores abaixo estão **mascarados de propósito**. Não coloque senha/token real nesta nota — ela vai pro GitHub.
+> 🔴 **Todos os segredos desta nota já estiveram no GitHub. Precisam ser ROTACIONADOS** (gerar novos e invalidar os antigos).
 
+## Supabase (banco + Edge Functions)
 
-LITERARIUS_HOST=192.168.18.10 
-LITERARIUS_PORT=1433 
-LITERARIUS_DB=Literarius 
-LITERARIUS_USER=acessoExterno 
-LITERARIUS_PASS= ZS3D84yiB5t0
-SUPABASE Project: https://ouvfthknhqcciuothrqb.supabase.co 
-Key publish :sb_publishable_s6ug89IRFfzWvpiRkITThg_6AANj04N 
-postgresql://postgres:[YOUR-PASSWORD]@db.ouvfthknhqcciuothrqb.supabase.co:5432/postgres
+- `SUPABASE_PROJECT_REF`: `ouvfthknhqcciuothrqb` (público, ok)
+- Projeto: https://ouvfthknhqcciuothrqb.supabase.co
+- `Key publish` (chave **pública** por design, ok versionar): `sb_publishable_s6ug89IRFfzWvpiRkITThg_6AANj04N`
+- `SUPABASE_DB_PASSWORD`: → ver `Credenciais.secret.md` (local) — 🔴 rotacionar
+- `SUPABASE_ACCESS_TOKEN`: → ver `Credenciais.secret.md` (local) — 🔴 rotacionar
+- Connection string: `postgresql://postgres:[SENHA]@db.ouvfthknhqcciuothrqb.supabase.co:5432/postgres`
 
+## Literarius (SQL Server)
+
+- `LITERARIUS_HOST`: `192.168.18.10`
+- `LITERARIUS_PORT`: `1433`
+- `LITERARIUS_DB`: `Literarius`
+- `LITERARIUS_USER`: `acessoExterno`
+- `LITERARIUS_PASS`: → ver `Credenciais.secret.md` (local) — 🔴 rotacionar
