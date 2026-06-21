@@ -22,6 +22,9 @@
 ## 📜 Mudanças recentes (mais novo no topo)
 
 ### 2026-06-21 — João
+- **Story 6.5 (Evolution: schema `evolution_instances`) — Done** (PR #68, mergeado; migration **aplicada no banco** via CI):
+  - Tabela `crm.evolution_instances` (espelha `zapi_instances`; segredo único `api_key` + `base_url`/`instance_name` self-host), índices, trigger, **RLS single-tenant** (membro=`auth.uid()`, delete=`crm.is_admin`), `api_key` **write-only** (REVOKE+GRANT por coluna). Tipos patchados; typecheck/CI verdes.
+  - **Próximas:** 6.6 (webhook inbound + send Evolution — ⚠️ validar SSRF no `base_url`: https + bloquear IP interno) e 6.7 (UI de cadastro; `api_key` write-only no form). Fila do Épico 6 → **6.6**.
 - **Story 6.11 (Broadcast WhatsApp) FECHADA — Done** (PR #67, mergeado em `develop`):
   - Backend (`0032_crm_wa_broadcast` + `crm-campaign-send`) + UI + cron já existiam (20/06). Verificado coerente pós-5.22 (a 5.22 dropou `workspace_id` de `wa_send_budgets` e redefiniu `campaign_audience_whatsapp`/`wa_budget_consume`; a função usa `SINGLE_WORKSPACE_ID`).
   - 🐛 **Regressão da 5.22 corrigida (importante):** a limpeza de `workspace_id` deixou `corsHeaders(req.headers.get("origin"))` em helpers `json` de **módulo** (fora do `Deno.serve`), onde `req` não existe → `ReferenceError` em runtime em **toda** chamada. Quebrava 5 functions: `crm-campaign-send`, `crm-preparation-audio/quiz/visual`, `crm-roleplay-import`. **Causa de fundo: o CI não roda `deno check` nas edge functions** — por isso passou. Corrigido threading `origin`.
