@@ -22,6 +22,10 @@
 ## 📜 Mudanças recentes (mais novo no topo)
 
 ### 2026-06-21 — João
+- **Story 6.11 (Broadcast WhatsApp) FECHADA — Done** (PR #67, mergeado em `develop`):
+  - Backend (`0032_crm_wa_broadcast` + `crm-campaign-send`) + UI + cron já existiam (20/06). Verificado coerente pós-5.22 (a 5.22 dropou `workspace_id` de `wa_send_budgets` e redefiniu `campaign_audience_whatsapp`/`wa_budget_consume`; a função usa `SINGLE_WORKSPACE_ID`).
+  - 🐛 **Regressão da 5.22 corrigida (importante):** a limpeza de `workspace_id` deixou `corsHeaders(req.headers.get("origin"))` em helpers `json` de **módulo** (fora do `Deno.serve`), onde `req` não existe → `ReferenceError` em runtime em **toda** chamada. Quebrava 5 functions: `crm-campaign-send`, `crm-preparation-audio/quiz/visual`, `crm-roleplay-import`. **Causa de fundo: o CI não roda `deno check` nas edge functions** — por isso passou. Corrigido threading `origin`.
+  - ⚠️ **Follow-ups (chips):** (1) adicionar `deno check` ao CI; (2) `crm-preparation-audio/visual` têm 3 erros de tipo **pré-existentes** (SupabaseClient schema `crm`×`public`), anteriores à 5.22.
 - **Épico 6 reconciliado para single-tenant** (PR #66, mergeado em `develop`):
   - 🐛 **Bug vivo corrigido:** `Settings.tsx` puxava `workspace_id` de `zapi_instances` (coluna dropada na 5.22) → a tela de Configurações quebrava em runtime (typecheck não pegava por causa de tipos desatualizados). Tipos (`entities.ts`) limpos + `supabase-types.ts` órfão removido.
   - 📄 **7 stories adaptadas** (6.5/6.6/6.7/6.13–6.16): RLS por `auth.uid()`/`crm.is_admin`, sem `workspace_id`/`is_member_of_workspace`, migrations por **timestamp** (corrige a colisão `0027` que a auditoria @architect/@security apontou). typecheck/build/CI verdes.
