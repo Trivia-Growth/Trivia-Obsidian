@@ -3,7 +3,12 @@
 **Módulo:** Boletim / Grades / Atividades
 **Sprint:** Conexões & Jornadas
 **Prioridade:** P1
-**Status:** pronto
+**Status:** concluido
+> **CONCLUÍDA 18/06/2026** (implementada após o teste E2E ter revelado que havia sido pulada na sprint).
+> - `useGrades` agora busca DUAS fontes: `quiz_attempts` + `activity_submissions` (status graded/returned, join `activities`), unificadas num modelo comum com `kind`, `title`, `feedback`.
+> - `Grades.tsx`: badge de tipo (Prova/Atividade) + feedback do instrutor abaixo do título.
+> - Verificado no preview: boletim da aluna Priscila exibe a atividade "Reflexão: O que é adorar a Deus?" 8/10, Aprovado, com feedback.
+> - Type-check OK. `PROJECT_REQUIREMENTS.md` §22 atualizado.
 **Estimativa:** meio dia
 **Origem:** [[Mapeamento-Conexoes-e-Jornadas]] — jornada quebrada #2
 

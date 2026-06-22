@@ -105,7 +105,7 @@
 | Story | Módulo | Prioridade | Status |
 |-------|--------|-----------|--------|
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-044]] — Trilhas que matriculam de verdade | Trilhas/Banco | P1 | concluido |
-| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-045]] — Boletim unificado (provas + atividades) | Boletim | P1 | pronto |
+| [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-045]] — Boletim unificado (provas + atividades) | Boletim | P1 | concluido |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-046]] — Motor de notificações por eventos | Notificações/Banco | P1 | concluido |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-047]] — Calendário com prazos de atividades | Calendário | P2 | concluido |
 | [[Clientes/Trivia/TriviaEdutech/Projeto/Stories/STORY-048]] — Gamificação confiável (triggers + badges) | Gamificação/Banco | P2 | concluido |
