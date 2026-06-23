@@ -25,7 +25,9 @@ export class TabelaComissao {
     }
     const ordenadas = [...faixas].sort((a, b) => a.minimo.centavos - b.minimo.centavos);
     for (let i = 1; i < ordenadas.length; i++) {
-      if (ordenadas[i]!.minimo.igualA(ordenadas[i - 1]!.minimo)) {
+      const atual = ordenadas[i];
+      const anterior = ordenadas[i - 1];
+      if (atual && anterior && atual.minimo.igualA(anterior.minimo)) {
         throw new ErroValidacao("Tabela não pode ter faixas com o mesmo valor mínimo");
       }
     }

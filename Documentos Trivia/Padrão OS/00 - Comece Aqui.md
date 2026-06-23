@@ -18,8 +18,8 @@ Combina:
 - **Agentes Triviaiox** executando a esteira (sem alterar o core do framework).
 - **Dois perfis:** sistema **single-repo** (isolado) e sistema **OS** (monorepo multi-domínio).
 
-Substitui o antigo [[../Padrão Projetos/Leia me Antes de começar algo|Padrão Projetos]]
-(depreciado para agentes; sem Lovable).
+Substitui o antigo [[Leia me Antes de começar algo|Padrão Projetos]] (depreciado para agentes;
+sem Lovable).
 
 ## Princípio central
 **A spec é a fonte da verdade.** O agente implementa a partir de `specs/NNNN-*/spec.md`; os

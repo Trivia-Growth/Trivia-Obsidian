@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Dinheiro } from "./dinheiro";
-import { calcularComissao, TabelaComissao } from "./tabela-comissao";
+import { TabelaComissao, calcularComissao } from "./tabela-comissao";
 
 // Tabela da matriz de decisão da spec: [5% >= R$1.000], [8% >= R$5.000]
 const tabela = TabelaComissao.de([

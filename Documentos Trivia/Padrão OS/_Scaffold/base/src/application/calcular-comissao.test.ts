@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Dinheiro, ErroValidacao } from "../domain/comissao/dinheiro";
 import { TabelaComissao } from "../domain/comissao/tabela-comissao";
 import { calcularComissaoVenda } from "./calcular-comissao";

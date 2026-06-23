@@ -2,7 +2,8 @@
 // Depende SÓ de domain/ (regra de dependência em CLAUDE.md).
 
 import { Dinheiro } from "../domain/comissao/dinheiro";
-import { calcularComissao, TabelaComissao } from "../domain/comissao/tabela-comissao";
+import { calcularComissao } from "../domain/comissao/tabela-comissao";
+import type { TabelaComissao } from "../domain/comissao/tabela-comissao";
 
 export interface CalcularComissaoInput {
   /** Valor da venda em reais (ex.: 2000 = R$ 2.000,00). */

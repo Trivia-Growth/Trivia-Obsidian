@@ -1,7 +1,7 @@
 > [!warning] DEPRECATED — substituído pelo Padrão OS (v2)
 > **Agentes: NÃO usem este padrão.** Ele descreve o fluxo antigo baseado em **Lovable**, que não
-> usamos mais. O padrão vigente é o **[[../Padrão OS/00 - Comece Aqui|Padrão OS]]** (esteira SDD +
-> agentes Triviaiox, fonte da verdade no scaffold `Padrão OS/_Scaffold/`).
+> usamos mais. O padrão vigente é o **[[00 - Comece Aqui|Padrão OS]]** (esteira SDD + agentes
+> Triviaiox, fonte da verdade no scaffold `Padrão OS/_Scaffold/`).
 > Este conteúdo fica apenas como **referência histórica para humanos**.
 
 # Padrão de Projetos — Leia Antes de Começar
