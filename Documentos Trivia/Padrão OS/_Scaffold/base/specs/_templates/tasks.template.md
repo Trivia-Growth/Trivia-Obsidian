@@ -9,6 +9,8 @@ alwaysApply: false
 > Decomposição da implementação. Cada task **mapeia para um ou mais `AC-N`** (rastreabilidade
 > spec → task → commit) e tem um **gate executável**: o comando que prova que está pronta.
 > Marque `[P]` nas tasks paralelas (sem dependência entre si). Um commit por task.
+> Na coluna "Cobre AC", escreva **cada token por extenso** (`AC-1, AC-2`) — o gate
+> `eval-spec-fidelity.mjs` procura o token completo; `AC-1,2` deixa o `AC-2` invisível.
 
 ## Plano
 | #  | Task                                  | Cobre AC | Depende de | Gate (comando)         | Status |

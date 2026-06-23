@@ -1,0 +1,21 @@
+{
+  "name": "trivia-os-app",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Projeto baseado no Padrão OS da Trivia (perfil single-repo).",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "audit:esteira": "node scripts/audit-esteira.mjs",
+    "eval:spec": "node scripts/eval-spec-fidelity.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

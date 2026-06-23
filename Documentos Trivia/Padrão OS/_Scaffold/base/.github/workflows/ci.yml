@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+
+      # Gates da esteira SDD (rastreabilidade e integridade dos docs) — não dependem de install pesado
+      - name: Auditoria da esteira
+        run: node scripts/audit-esteira.mjs
+      - name: Fidelidade spec→implementação
+        run: node scripts/eval-spec-fidelity.mjs
+      - name: Diagramas Mermaid
+        run: node scripts/validate-mermaid.mjs
+
+      # Gates de código
+      - name: Lint/format (Biome)
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
+      - name: Testes (AC)
+        run: npm test
