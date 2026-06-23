@@ -3,6 +3,13 @@
 > Uma feature/task **não está pronta por inspeção visual** — está pronta quando os **gates
 > executáveis passam**. Este arquivo é o contrato de qualidade; o `@qa` valida por ele.
 
+## Gates locais (Husky — automáticos, sem precisar rodar manualmente)
+| Hook | Quem | O que verifica |
+|------|------|----------------|
+| `pre-commit` | `@dev` a cada commit | Biome nos arquivos staged (lint + format) |
+| `commit-msg` | `@dev` a cada commit | Conventional Commits obrigatório |
+| `pre-push` | `@devops` antes do push | typecheck + testes — último check antes do CI/deploy |
+
 ## Gates executáveis (rode antes de abrir/aprovar PR)
 | Gate | Comando | O que prova |
 |------|---------|-------------|
