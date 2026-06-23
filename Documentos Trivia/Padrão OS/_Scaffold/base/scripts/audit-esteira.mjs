@@ -13,7 +13,9 @@ const IGNORE_DIRS = new Set([
   ".triviaiox-core", ".triviaiox", ".claude/skills/_disabled",
   ".cursor", ".gemini", ".windsurf",
 ]);
-const NO_FRONTMATTER_OK = new Set(["README.md", "CHANGELOG.md", "Definition-of-Done.md"]);
+const NO_FRONTMATTER_OK = new Set([
+  "README.md", "CHANGELOG.md", "Definition-of-Done.md", "pull_request_template.md",
+]);
 // Views derivadas geradas por outras ferramentas (não a fonte canônica).
 const isGenerated = (f) => {
   const r = relative(ROOT, f).replace(/\\/g, "/");

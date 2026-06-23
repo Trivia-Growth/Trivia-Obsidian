@@ -1,3 +1,9 @@
+> [!warning] DEPRECATED — substituído pelo Padrão OS (v2)
+> **Agentes: NÃO usem este padrão.** Ele descreve o fluxo antigo baseado em **Lovable**, que não
+> usamos mais. O padrão vigente é o **[[../Padrão OS/00 - Comece Aqui|Padrão OS]]** (esteira SDD +
+> agentes Triviaiox, fonte da verdade no scaffold `Padrão OS/_Scaffold/`).
+> Este conteúdo fica apenas como **referência histórica para humanos**.
+
 # Padrão de Projetos — Leia Antes de Começar
 
 Este vault documenta o **padrão Trivia de desenvolvimento** — a forma como todos os projetos de software são construídos aqui. Se você vai iniciar um projeto novo ou executar qualquer tarefa, **leia este arquivo primeiro**.
