@@ -1,7 +1,13 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.0/schema.json",
   "files": {
-    "ignore": ["scripts/**", "node_modules/**", "dist/**", "coverage/**"]
+    "ignore": [
+      "scripts/**",
+      "supabase/functions/**",
+      "node_modules/**",
+      "dist/**",
+      "coverage/**"
+    ]
   },
   "organizeImports": { "enabled": true },
   "linter": {
