@@ -21,7 +21,7 @@ alwaysApply: false
 ## Edge Functions (Deno)
 - [ ] Padrão: CORS → `requireAuth` (JWT) → rate-limit → validar Zod → lógica → resposta sem stack.
 - [ ] `service_role` só no servidor; nunca exposto ao frontend.
-- [ ] **Webhooks de terceiro**: validar assinatura HMAC com `constantTimeEqual` (ver `_shared/crypto.ts`).
+- [ ] **Webhooks de terceiro**: validar assinatura HMAC com `constantTimeEqual` (ver `base/supabase/functions/_shared/crypto.ts`).
 - [ ] Rate limiting em funções públicas (`fail-closed` no caminho sensível).
 
 ## Credenciais externas (OAuth / API keys)

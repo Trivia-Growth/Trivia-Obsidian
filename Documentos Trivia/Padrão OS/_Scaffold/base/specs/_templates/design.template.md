@@ -36,9 +36,12 @@ modelo de dados. Mostre as fronteiras com os bounded contexts existentes.>
 ### 3. Infra
 <Recursos novos (fila, cache, banco), ambientes, IaC, custo. Deploy, feature flag, reversão segura.>
 ### 4. Qualidade
-<Estratégia de teste e o que cobre os AC. Gates: cobertura, contract test, performance, segurança.>
+<Estratégia de teste e o que cobre os AC (pirâmide: unidade/integração/contrato/E2E —
+`testes/README.md`). **Budget de performance** do fluxo (`performance/README.md`): p95, query
+indexada, paginação. Gates: cobertura, contract test, performance, segurança.>
 ### 5. Observabilidade
-<Métricas, logs, tracing, alertas. SLO/SLI. Como a telemetria prova que funciona?>
+<Métricas, logs estruturados (`observabilidade/README.md`), tracing, alertas. SLO/SLI
+(`observabilidade/slo-sli.template.md`). Como a telemetria prova que funciona?>
 
 ## Mapa de dependências
 | Dependência          | Tipo        | Descrição                | Métodos / endpoints                   |

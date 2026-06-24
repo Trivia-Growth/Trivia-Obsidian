@@ -110,10 +110,24 @@ Se precisar fazer diferente do que a `spec.md` diz:
   secrets em Vault, refresh de OAuth. Ver `os-layer/seguranca/os-grade.md`.
 - **Toda dívida de segurança aceita conscientemente** vai para `docs/SECURITY_DEBT.md`.
 
-## Definition of Done
+## Definition of Done e Padrão de Qualidade
 Ver `Definition-of-Done.md` (gates executáveis). Resumo: AC verdes **pelo comando de teste** (não
 por inspeção), análise estática limpa, sem `SPEC_DEVIATION` pendente, ADRs registrados, glossário
-e `docs/STATE.md` atualizados.
+e `docs/STATE.md` atualizados. A **visão completa do que é garantido e como** (gate CI / hook /
+checklist / guia) está em `PADRAO-DE-QUALIDADE.md`.
+
+## Mapa de documentos sob demanda (puxe pelo `description`, não tudo de uma vez)
+- **Qualidade:** `PADRAO-DE-QUALIDADE.md` (matriz), `testes/README.md`, `performance/README.md`.
+- **Arquitetura/código:** exemplo de I/O em `specs/0002-registro-comissao/` (porta→adapter→
+  caso de uso→borda→teste de integração→migration). Helpers: `src/shared/log.ts`,
+  `src/interfaces/http/problem.ts`, `config/env.ts`.
+- **Banco:** `db/README.md`, `db/rls.template.sql`, `db/rls-test.md` (single-repo: schema `public`).
+- **Segurança:** `seguranca/baseline-minimo.md`, `seguranca/threat-model.template.md`,
+  `os-layer/seguranca/os-grade.md` (OS).
+- **Observabilidade/ops:** `observabilidade/README.md`, `observabilidade/slo-sli.template.md`,
+  `runbooks/`, `docs/ENVIRONMENTS.md`.
+- **Edge Functions (Supabase):** `supabase/functions/_template/index.ts` + `_shared/`.
+- **IA/LLM:** `ia/` (só em feature com LLM).
 
 ## Memória de trabalho — `docs/STATE.md`
 - **STATE.md é volátil** (em andamento, próximo passo, bloqueios); **ADR é durável** (decisão

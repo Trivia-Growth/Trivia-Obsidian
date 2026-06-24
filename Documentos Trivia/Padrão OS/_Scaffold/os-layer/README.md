@@ -28,7 +28,7 @@ os-layer/
   packages/{config,database,shared,ui}/  → pacotes compartilhados
   supabase/
     migrations/0001_schemas_dominio.sql  → schemas por domínio + RLS FORCE + audit
-    functions/_shared/     → auth, cors, crypto, rate-limit (Edge Functions Deno)
+    (Edge Functions e _shared/ vêm da base: base/supabase/functions/{_shared,_template})
   docs/ARCHITECTURE.md     → documento vivo: bounded contexts + context-map
   .github/CODEOWNERS       → review obrigatório por área
   seguranca/os-grade.md    → baseline OS-grade

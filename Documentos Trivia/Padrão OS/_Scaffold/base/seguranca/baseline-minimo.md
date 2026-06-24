@@ -18,7 +18,12 @@ alwaysApply: false
 - [ ] **RLS habilitada** em toda tabela com dado de usuário; policies por papel. Sem policy = sem acesso.
 - [ ] **Erros não vazam stack/secret** para o cliente; logue o detalhe no servidor.
 - [ ] **CORS** restrito ao domínio da app em produção (não `*`).
-- [ ] **Dependências**: sem pacote com vuln conhecida bloqueante (`npm audit`).
+- [ ] **Dependências (gate na CI):** `npm run audit:deps` (`npm audit --audit-level=high`) sem vuln alta+.
+- [ ] **Secret scanning (gate na CI):** gitleaks sem segredo commitado.
+
+## Threat model
+Feature que toca auth, PII, financeiro, novo endpoint ou integração de terceiro → faça o
+**threat model STRIDE** (`seguranca/threat-model.template.md`), conduzido por `@security`.
 
 ## Variáveis de ambiente
 | Pode no client (`VITE_*`)            | NUNCA no client                              |

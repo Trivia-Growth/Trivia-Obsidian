@@ -27,6 +27,9 @@
 - [ ] Decisões difíceis de reverter viraram **ADR** em `docs/adr/`
 - [ ] **Segurança:** sem secret no client; input validado (Zod); JWT validado; RLS na tabela.
       Dívida aceita registrada em `docs/SECURITY_DEBT.md` (baseline em `seguranca/`)
+- [ ] **Performance:** sem regressão de budget (`performance/README.md`) — query crítica indexada
+      (sem `Seq Scan` em tabela grande), lista paginada, sem N+1
+- [ ] **Observabilidade:** erro na borda em `problem+json` com `reqId`; log estruturado sem PII
 - [ ] **Se feature de IA/LLM:** checks da trilha `ia/` (evals, prompt versionado, injection)
 - [ ] Glossário atualizado se introduziu termo
 - [ ] A `spec.md` reflete o que foi construído (ou a divergência está documentada)
