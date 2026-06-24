@@ -10,8 +10,8 @@ desde: 2026-06-24
 
 # Move Gourmet
 
-> Marca de alimentos funcionais ultracongelados com operação em Salvador (BA) e São Paulo (SP).  
-> Ecommerce: [movegourmet.com.br](https://movegourmet.com.br)  
+> Marca de alimentos funcionais ultracongelados com operação em Salvador (BA) e São Paulo (SP).
+> Ecommerce: [movegourmet.com.br](https://movegourmet.com.br)
 > Shopify Admin: [admin.shopify.com/store/9ja6tr-1i](https://admin.shopify.com/store/9ja6tr-1i)
 
 ---
@@ -31,7 +31,8 @@ desde: 2026-06-24
 |---|---|
 | Shopify | Plano estimado Basic/Grow |
 | ERP | Omie (integrado via custom app) |
-| Frete | Melhor Envio (instalado), Frenet (desinstalado mas configurado) |
+| Pagamentos | Mercado Pago Cartões (provedor principal) + MP Checkout Pro + MP Pix |
+| Frete | Melhor Envio (instalado), Frenet (desinstalado mas em config) |
 | Assinatura | Appstle Subscription (Business $30/mês) |
 | Reviews | Yotpo |
 | Email/WhatsApp | SendWILL, Retentionly WhatsApp |
@@ -47,28 +48,54 @@ desde: 2026-06-24
 
 ---
 
-## Notas e Documentos
+## Documentos e Notas
 
 - [[Credenciais - Move Gourmet]]
 - [[Diagnóstico Shopify - Jun 2026]]
+- [[Problema - Pagamentos sem provedor principal]]
 
 ---
 
-## Histórico de Trabalho
+## Plano de Ação - Acompanhamento
 
-| Data | Atividade | Status |
+> Legenda: [x] resolvido | [ ] pendente | [~] em andamento
+
+### Urgente - primeiros 5 dias
+
+- [x] Corrigir falha ativa nos pagamentos - ver [[Problema - Pagamentos sem provedor principal]] *(resolvido 24/06 - Fernanda)*
+- [ ] Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify" *(resp: Agência + Omie)*
+- [ ] Configurar Omie para enviar estoque à localização SP (location_id: 92526051564) *(resp: Equipe Omie)*
+- [ ] Adicionar localização SP ao Perfil Avulsas com tarifas de frete *(resp: Agência)*
+- [ ] Adicionar tarifa de frete na zona Bahia do Perfil Geral *(resp: Agência)*
+
+### Alta prioridade - dias 6 a 15
+
+- [ ] Cadastrar telefone na localização SP (Rua Dr João Toniolo) *(resp: Agência)*
+- [ ] Excluir perfis de frete AMIGAS e BRASIL TESTE (sem uso) *(resp: Agência)*
+- [ ] Limpar produtos duplicados com "(Cópia)" e "(Plano anual via pix)" *(resp: Agência)*
+- [ ] Verificar e resolver inconsistência do Frenet (desinstalado mas aparece ativo) *(resp: Agência)*
+- [ ] Configurar Melhor Envio com CEP SP como remetente após depósito SP ativo *(resp: Agência)*
+
+### Estratégico - 30 a 60 dias
+
+- [ ] Avaliar upgrade para plano Advanced (US$299/mês) para ativar frete calculado por transportadora *(resp: Fernanda decidir)*
+- [ ] Definir política de estoque mínimo por SKU por localização *(resp: Fernanda + Omie)*
+
+---
+
+## Histórico de Atividades
+
+| Data | Atividade | Resultado |
 |---|---|---|
-| 2026-06-24 | Auditoria técnica completa do Shopify | Concluído |
-| 2026-06-24 | Diagnóstico de integração Omie | Concluído |
-| 2026-06-24 | Relatório entregue para a Fernanda | Concluído |
+| 2026-06-24 | Auditoria técnica completa do Shopify | Diagnóstico gerado |
+| 2026-06-24 | Diagnóstico de integração Omie | 2 apps conflitantes identificados |
+| 2026-06-24 | Diagnóstico de pagamentos | Provedor principal ausente identificado |
+| 2026-06-24 | Mercado Pago Cartões ativado como provedor principal | Resolvido por Fernanda |
 
 ---
 
-## Problemas Ativos
+## Próxima Sessão
 
-- [ ] Falha ativa nos pagamentos (banner no admin)
-- [ ] Omie com dois apps em paralelo conflitantes
-- [ ] Omie não alimenta estoque da localização SP
-- [ ] Perfil Avulsas (47 produtos) sem SP no frete
-- [ ] Perfil Geral sem tarifa na zona Bahia
-- [ ] Frenet em estado inconsistente (desinstalado mas aparece configurado)
+- Confirmar com a Fernanda que o time do Omie foi acionado para mapear a localização SP
+- Executar configurações de frete (Perfil Avulsas + Perfil Geral zona BA)
+- Verificar se o Appstle portal do cliente está ativo com troca de produtos habilitada
