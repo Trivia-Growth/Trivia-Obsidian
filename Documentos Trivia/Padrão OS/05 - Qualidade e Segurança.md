@@ -5,21 +5,25 @@ atualizado: 2026-06-22
 
 # 05 — Qualidade e Segurança
 
-> Espelho humano. Detalhe normativo: `_Scaffold/base/Definition-of-Done.md`, `seguranca/`,
-> `os-layer/seguranca/os-grade.md` e `ia/`. Voltar: [[00 - Comece Aqui]].
+> Espelho humano. Visão única de qualidade: [[08 - Padrão de Qualidade]]. Detalhe normativo:
+> `_Scaffold/base/PADRAO-DE-QUALIDADE.md`, `Definition-of-Done.md`, `seguranca/`, `performance/`,
+> `observabilidade/`, `testes/`, `os-layer/seguranca/os-grade.md` e `ia/`. Voltar: [[00 - Comece Aqui]].
 
 ## Definition of Done = gates executáveis
-"Pronto" não é por inspeção — é **gate verde**. Gates do projeto:
+"Pronto" não é por inspeção — é **gate verde**. Gates do projeto (todos bloqueantes na CI):
 | Gate | Comando |
 |------|---------|
-| Testes (cada AC) | `npm test` |
+| Testes (cada AC) + cobertura | `npm run test:coverage` |
 | Type-check | `npm run typecheck` |
 | Lint/format | `npm run lint` |
 | Rastreabilidade AC→task | `npm run eval:spec` |
 | Integridade da esteira | `npm run audit:esteira` |
 | Diagramas Mermaid | `node scripts/validate-mermaid.mjs` |
+| Secret scanning | gitleaks |
+| Dependências vulneráveis | `npm run audit:deps` |
 
 Tudo roda na CI (`.github/workflows/ci.yml`). A skill `/validar` (@qa) emite **PASS/CONCERNS/FAIL**.
+A matriz completa (o que é gate × hook × checklist × guia) está em [[08 - Padrão de Qualidade]].
 
 ## Segurança por perfil (sem over-engineering)
 - **Baseline mínimo (todo projeto):** sem secret no client, input validado (Zod), JWT validado,
@@ -30,6 +34,19 @@ Tudo roda na CI (`.github/workflows/ci.yml`). A skill `/validar` (@qa) emite **P
 - Dívida aceita conscientemente → `docs/SECURITY_DEBT.md` (P0 bloqueia produção).
 
 Não aplique segurança OS-grade num app simples só "por garantia" — siga o perfil.
+
+**Threat model (STRIDE):** feature que toca auth, PII, financeiro, novo endpoint ou integração de
+terceiro faz threat model conduzido por `@security` → `seguranca/threat-model.template.md`.
+
+## Performance
+Budget antes de construir, regressão é bug. Web Vitals (LCP<2,5s/INP<200ms/CLS<0,1), API p95
+< 500ms, bundle < 200KB. Banco: query crítica indexada (`explain analyze`), lista paginada, sem
+N+1. Cache com TanStack Query. → `performance/README.md`.
+
+## Observabilidade
+Erro na borda em `problem+json` com `reqId`; log estruturado (JSON) **sem PII**; health check no
+caminho crítico. SLO/SLI no que é crítico (perfil OS). → `observabilidade/README.md`,
+`observabilidade/slo-sli.template.md`. Código: `src/shared/log.ts`, `src/interfaces/http/problem.ts`.
 
 ## Trilha de produtos de IA (LLM)
 Quando a feature usa LLM, além da spec normal:

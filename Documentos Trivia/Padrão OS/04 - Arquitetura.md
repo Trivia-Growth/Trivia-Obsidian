@@ -5,18 +5,26 @@ atualizado: 2026-06-22
 
 # 04 — Arquitetura
 
-> Espelho humano. Detalhe normativo: `_Scaffold/base/CLAUDE.md` (camadas), o exemplo em
-> `specs/0001-calculo-comissao/` e `os-layer/`. Voltar: [[00 - Comece Aqui]].
+> Espelho humano. Detalhe normativo: `_Scaffold/base/CLAUDE.md` (camadas) e os exemplos em
+> `specs/0001-calculo-comissao/` (domínio puro) e `specs/0002-registro-comissao/` (camadas com
+> I/O: porta→adapter→borda). Voltar: [[00 - Comece Aqui]].
 
 ## Camadas DDD (regra de dependência)
 ```
 interfaces → application → domain ← infrastructure
 ```
 - `domain/` não importa framework/I/O nem outra camada (lógica pura, testável). Ex. no scaffold:
-  `src/domain/comissao/`.
-- `application/` orquestra casos de uso; depende só de `domain/`.
-- `infrastructure/` implementa portas do domínio (repos, adapters, Supabase).
-- `interfaces/` é a borda (API/CLI/UI).
+  `src/domain/comissao/`. A **porta de persistência** é uma interface no domínio
+  (`registro-comissao.ts`) — o domínio define o contrato, não o mecanismo.
+- `application/` orquestra casos de uso; depende só de `domain/` e das portas (injetadas).
+- `infrastructure/` implementa as portas: adapter **in-memory** (testes) e adapter **Supabase**
+  (produção) — mesmo contrato. Ex.: `src/infrastructure/comissao/`.
+- `interfaces/` é a borda (API/CLI/UI): valida com Zod, traduz erro para `problem+json`, loga com
+  `reqId`. Ex.: `src/interfaces/http/`. Helpers: `src/shared/log.ts`, `interfaces/http/problem.ts`.
+
+> **Exemplo das camadas com I/O:** `specs/0002-registro-comissao/` mostra o caminho completo
+> (porta → adapter in-memory/Supabase → caso de uso → borda HTTP → teste de integração → migration).
+> É o padrão a imitar quando a feature persiste ou chama algo externo.
 
 ## Stack de referência
 - Frontend: React + Vite + TypeScript (strict) + Tailwind + shadcn/ui + TanStack Query.

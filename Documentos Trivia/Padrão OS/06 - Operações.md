@@ -21,8 +21,11 @@ develop (integração) ← PR + CI
 
 ## CI/CD
 Pipeline em `.github/workflows/ci.yml`: auditoria da esteira → eval de fidelidade → Mermaid →
-lint → typecheck → testes. No perfil OS, somam-se deploy de migrations e Edge Functions.
-Nenhum merge para `main` sem CI verde.
+**gitleaks → npm audit** → lint → typecheck → **testes + cobertura**. Hardening: cache de npm e
+`cancel-in-progress` (cancela runs supersedidos). No perfil **OS**, há CI própria
+(`os-layer/.github/workflows/ci.yml`) com **turbo affected** (só pacotes alterados) + lint de
+migrations (proíbe DROP sem reverso). Nenhum merge para `main` sem CI verde.
+Ambientes e secrets por ambiente: `docs/ENVIRONMENTS.md`.
 
 ## Git hooks (Husky)
 
