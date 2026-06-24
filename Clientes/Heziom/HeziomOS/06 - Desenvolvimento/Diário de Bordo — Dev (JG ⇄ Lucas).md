@@ -10,7 +10,7 @@
 
 | Dev | Frente | Branch / status |
 |-----|--------|-----------------|
-| **João** | Épico 6 — Atendimento Omnichannel | ✅ Ondas 1 e 2 completas (6.1–6.16); Onda 3 (6.17+) em backlog |
+| **João** | Épico 6 — Atendimento Omnichannel | 🟢 Ondas 1, 2 e 3 **em produção** (24/06) — 13/15 da Onda 3 Done; restam só **6.18** (CTWA) e **6.23** (carrinho abandonado) |
 | **João** | **Story 5.22 — remover multi-tenancy do CRM** | ✅ Concluída (21/06) — CRM single-tenant |
 | **Lucas** | Épico 7 — Literarius (dashboards CEO/BI) | `develop` |
 | **Lucas** | Épico 8 — débito técnico | ✅ Concluído |
@@ -20,6 +20,14 @@
 ---
 
 ## 📜 Mudanças recentes (mais novo no topo)
+
+### 2026-06-24 — João
+- **🎯 ONDA 3 do Épico 6 — fechada e EM PRODUÇÃO.** 13 das 15 stories Done e no ar (6.17, 6.19, 6.20, 6.21, 6.22, 6.24, 6.25, 6.26, 6.27, 6.28, 6.29, 6.30, 6.31). Restam só **6.18** (CTWA) e **6.23** (carrinho abandonado) no backlog — ambas prontas, dependem de pré-condição externa (template Meta / Tray prod). Inbox omnichannel agora cobre WhatsApp (Meta/Z-API/Evolution) **+ Instagram DM**, com IA por número, triagem, lead scoring, A/B de campanha, qualidade de número, timeline unificada e biblioteca de recipes.
+- **Story 6.29 (Instagram DM) — Done** (PR #119, mergeado + deployado): migration `crm.instagram_accounts` (RLS + `access_token` write-only) + `crm-instagram-webhook` (público, HMAC fail-closed, envelope Messenger `entry[].messaging[]`, echo-filter, dedup por `mid`) + `crm-instagram-send` (service_role, 409 WINDOW_CLOSED) + rota Instagram no `crm-whatsapp-router` + UI (badge rosa/câmera, filtro "Instagram" no inbox, aba Instagram em Configurações). **Security gate: PASS** (`docs/security/gates/security-gate-6.29.md`). ⚠️ **Demo E2E para o App Review da Meta depende de ação tua:** App em modo Live + **Advanced Access** de `instagram_manage_messages` e `pages_messaging` (hoje Standard/Development — ver `Consulta de Acessos Meta — Stories 6.25 e 6.29.md`). O código está pronto e no ar.
+- **Story 6.25 (quality tier) — cron WIRADO.** Configurei o job `crm-wa-quality-poll-30min` (`*/30`) apontando pro `crm-meta-wa-quality-poll`. Ao fazer isso, **de novo achei crons quebrados:** 4 jobs (tray-sync, deal-monitor, campaign-dispatch, ai-escalate) estavam com o `x-cron-secret` **antigo** (dessincronizado do env) e falhando em silêncio. Recriei os 4 com o segredo certo. Os 8 crons agora autenticam.
+- **🧹 Dívida de lint do frontend descoberta e registrada (TD-1).** O job **Lint** do CI está vermelho na `develop` há tempos — não era bug da 6.29. Causa: (a) repo free-tier sem required checks (lint nunca bloqueou merge; toda a Epic 6 entrou vermelha) + (b) `biome check .` tem teto **`--max-diagnostics=20`** que mascarava o total. O número real é **571 erros** em ~120 arquivos. Saneei 20 (incl. os arquivos da 6.29) e registrei o resto como story **TD-1** (`docs/stories/active/td-1-lint-frontend.story.md`) pra esforço dedicado. Lint segue **não-bloqueante**.
+- **🚀 Release `develop → main` (#121).** Promovi as 7 stories que ainda não estavam no main (6.17/6.20/6.21/6.24/6.25/6.26/6.29). ⚠️ **Aprendizado confirmado: produção do frontend publica da `develop`, NÃO da `main`** (Netlify `hezionosdev` → `os.heziom.com.br`, auto-publish do develop — **intencional**, confirmado por JG). Então a produção já estava no ar; o merge no main é só **marcador de release**. Banco Supabase é compartilhado entre os branches → migrations no main viraram no-op. Corrigi o **CLAUDE.md** (PR #122) que dizia "Netlify conectado ao main" (errado).
+- **⏳ Rotação de secrets expostos — ação tua, JG.** Usei nesta sessão (e ficaram no chat): **Supabase Management PAT** `sbp_95b0…` e **token Netlify** `nfp_7hRH…`. Rotacionar/revogar nos painéis. Continuam pendentes os demais já listados em 21/06 (Tray, Cloudfy, Auvo, Literarius, DB password). Ver [[project_vault_secrets_rotacao]].
 
 ### 2026-06-21 — João
 - **🔎 Verificação E2E do Épico 6 — completa, com walkthrough visual.** Criei um usuário TESTE_INTERNO temporário (role manager) e injetei 2 conversas (Meta/Maria e Evolution/Joao escalada). Tudo verificado na UI ao vivo:
@@ -88,8 +96,13 @@
 ---
 
 ## 🧭 Decisões em aberto / a confirmar
-- [ ] Lucas valida o plano de RLS da 5.22 (Fase 3) antes do merge — story exige security gate + 2 aprovações.
-- [ ] Destino dos dados de config de `crm.workspaces` antes do DROP (Fase 3 da 5.22).
+- [ ] **JG:** rotacionar secrets expostos (Supabase Management PAT `sbp_95b0…`, token Netlify `nfp_7hRH…`, + Tray/Cloudfy/Auvo/Literarius/DB password) nos respectivos painéis.
+- [ ] **JG/Meta:** colocar o App em Live + solicitar Advanced Access (`instagram_manage_messages`, `pages_messaging`) para destravar o demo E2E do Instagram DM (6.29). Código já em produção.
+- [ ] **6.18 (CTWA)** e **6.23 (carrinho abandonado):** últimas 2 da Onda 3 — implementar quando as pré-condições externas (template Meta / Tray prod) estiverem prontas.
+- [ ] **TD-1 (lint frontend):** agendar esforço dedicado de saneamento (571 erros; não-bloqueante).
+- [ ] **@devops (opcional):** avaliar tornar o site Netlify secundário (`heziomos.netlify.app`, build defasado) aposentado/alinhado.
+
+> ✅ Resolvido: itens da 5.22 (plano de RLS Fase 3 / destino de `crm.workspaces`) — a 5.22 foi concluída em 21/06 (single-tenant, `workspaces` mantida singleton).
 
 ---
 
