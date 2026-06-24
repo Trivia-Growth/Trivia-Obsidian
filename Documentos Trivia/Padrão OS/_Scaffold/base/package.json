@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "description": "Projeto baseado no Padrão OS da Trivia (perfil single-repo).",
   "scripts": {
+    "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -15,6 +16,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.3.0",
+    "husky": "^9.1.0",
+    "lint-staged": "^15.2.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
   }

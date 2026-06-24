@@ -24,6 +24,21 @@ Pipeline em `.github/workflows/ci.yml`: auditoria da esteira → eval de fidelid
 lint → typecheck → testes. No perfil OS, somam-se deploy de migrations e Edge Functions.
 Nenhum merge para `main` sem CI verde.
 
+## Git hooks (Husky)
+
+Instalados automaticamente no `npm install` via `prepare`. Três hooks protegem a esteira
+localmente, antes do CI:
+
+| Hook | Quando roda | O que faz |
+|------|-------------|-----------|
+| `pre-commit` | a cada `git commit` (`@dev`) | Biome nos arquivos staged (lint + format automático) |
+| `commit-msg` | a cada `git commit` (`@dev`) | Bloqueia mensagem fora do Conventional Commits |
+| `pre-push` | a cada `git push` (`@devops`) | `npm run typecheck && npm test` — gate pré-CI/deploy |
+
+O `pre-push` é o **escudo de `@devops`**: garante que typecheck e testes passam localmente
+antes do push acionar o CI e o deploy Supabase. Husky v9 detecta `CI=true` e pula a
+instalação dos hooks no GitHub Actions automaticamente.
+
 ## Deploy (Supabase)
 - Migrations: `supabase db push` (rollback = nova migration, nunca editar a antiga).
 - Edge Functions: `supabase functions deploy`; secrets via `supabase secrets set` (refresh tokens
