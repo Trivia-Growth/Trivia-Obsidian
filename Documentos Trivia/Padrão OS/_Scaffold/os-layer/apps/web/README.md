@@ -1,4 +1,4 @@
-# apps/web — aplicação principal (perfil OS)
+r# apps/web — aplicação principal (perfil OS)
 
 Frontend feature-based, **um diretório por bounded context**:
 
