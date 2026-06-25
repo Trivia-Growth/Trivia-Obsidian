@@ -54,6 +54,7 @@ desde: 2026-06-24
 - [[Diagnóstico Shopify - Jun 2026]]
 - [[Problema - Pagamentos sem provedor principal]]
 - [[Problema - Omie sem Local de Estoque SP]]
+- [[Proposta Comercial - Correção Shopify e Omie]]
 
 ---
 
