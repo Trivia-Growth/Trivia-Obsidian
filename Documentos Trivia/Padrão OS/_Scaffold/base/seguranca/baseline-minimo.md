@@ -18,7 +18,9 @@ alwaysApply: false
 - [ ] **RLS habilitada** em toda tabela com dado de usuário; policies por papel. Sem policy = sem acesso.
 - [ ] **Erros não vazam stack/secret** para o cliente; logue o detalhe no servidor.
 - [ ] **CORS** restrito ao domínio da app em produção (não `*`).
-- [ ] **Dependências (gate na CI):** `npm run audit:deps` (`npm audit --audit-level=high`) sem vuln alta+.
+- [ ] **Dependências (gate na CI):** `npm run audit:deps` (`npm audit --omit=dev`, alta+) — vuln em
+      dep de **runtime** bloqueia. Advisory só de ferramenta de dev (test runner, bundler) é triado
+      à parte (não vai para produção), não bloqueia o build.
 - [ ] **Secret scanning (gate na CI):** gitleaks sem segredo commitado.
 
 ## Threat model

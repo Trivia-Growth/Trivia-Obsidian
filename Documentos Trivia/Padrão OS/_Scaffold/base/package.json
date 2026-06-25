@@ -14,7 +14,7 @@
     "format": "biome format --write .",
     "audit:esteira": "node scripts/audit-esteira.mjs",
     "eval:spec": "node scripts/eval-spec-fidelity.mjs",
-    "audit:deps": "npm audit --audit-level=high"
+    "audit:deps": "npm audit --omit=dev --audit-level=high"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
