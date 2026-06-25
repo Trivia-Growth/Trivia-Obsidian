@@ -44,7 +44,7 @@ desde: 2026-06-24
 | Localização | Cidade | CEP | Location ID Shopify |
 |---|---|---|---|
 | Rua Dr Gerino Silva | Lauro de Freitas / BA | 42703-160 | `85518483692` |
-| Rua Dr João Toniolo | São Paulo / SP | 02969-000 | `92526051564` |
+| Rua Dr João Toniolo, 112 - Jd São José, Pirituba | São Paulo / SP | 02969-000 | `92526051564` |
 
 ---
 

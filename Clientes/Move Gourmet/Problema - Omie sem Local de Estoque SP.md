@@ -49,7 +49,7 @@ Dentro do Omie:
 
 Dados a preencher:
 - Nome/Descrição: `Depósito São Paulo` (ou `Depósito SP`)
-- Endereço: Rua Doutor João Toniolo, CEP 02969-000, São Paulo/SP
+- Endereço: Rua Dr João Toniolo, 112 - Jd São José, Pirituba, São Paulo/SP - CEP 02969-000
 - Marcar: "Local de estoque disponível para Venda de Produto"
 - Marcar: "Local de estoque disponível para Remessa de Produto"
 

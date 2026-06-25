@@ -28,7 +28,7 @@ cliente: Move Gourmet
 | Localização | ID |
 |---|---|
 | Rua Dr Gerino Silva (Salvador) | `85518483692` |
-| Rua Dr João Toniolo (São Paulo) | `92526051564` |
+| Rua Dr João Toniolo, 112 - Jd São José, Pirituba / SP | `92526051564` |
 
 ---
 
