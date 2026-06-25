@@ -53,6 +53,7 @@ desde: 2026-06-24
 - [[Credenciais - Move Gourmet]]
 - [[Diagnóstico Shopify - Jun 2026]]
 - [[Problema - Pagamentos sem provedor principal]]
+- [[Problema - Omie sem Local de Estoque SP]]
 
 ---
 
@@ -64,7 +65,7 @@ desde: 2026-06-24
 
 - [x] Corrigir falha ativa nos pagamentos - ver [[Problema - Pagamentos sem provedor principal]] *(resolvido 24/06 - Fernanda)*
 - [ ] Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify" *(resp: Agência + Omie)*
-- [ ] Configurar Omie para enviar estoque à localização SP (location_id: 92526051564) *(resp: Equipe Omie)*
+- [ ] Configurar Omie para enviar estoque à localização SP - ver [[Problema - Omie sem Local de Estoque SP]] *(resp: Equipe Omie)*
 - [ ] Adicionar localização SP ao Perfil Avulsas com tarifas de frete *(resp: Agência)*
 - [ ] Adicionar tarifa de frete na zona Bahia do Perfil Geral *(resp: Agência)*
 
@@ -91,11 +92,12 @@ desde: 2026-06-24
 | 2026-06-24 | Diagnóstico de integração Omie | 2 apps conflitantes identificados |
 | 2026-06-24 | Diagnóstico de pagamentos | Provedor principal ausente identificado |
 | 2026-06-24 | Mercado Pago Cartões ativado como provedor principal | Resolvido por Fernanda |
+| 2026-06-25 | Auditoria do Omie - Locais de Estoque | Confirmado: nenhum local adicional configurado |
 
 ---
 
 ## Próxima Sessão
 
-- Confirmar com a Fernanda que o time do Omie foi acionado para mapear a localização SP
+- Acionar time técnico do Omie para criar Depósito SP e mapear no Shopify - ver [[Problema - Omie sem Local de Estoque SP]]
 - Executar configurações de frete (Perfil Avulsas + Perfil Geral zona BA)
 - Verificar se o Appstle portal do cliente está ativo com troca de produtos habilitada
