@@ -30,7 +30,10 @@ describe("registrarComissao (integração com repositório in-memory)", () => {
 
   it("AC-3: registrar a mesma venda duas vezes é idempotente (não duplica)", async () => {
     const deps = novasDeps();
-    const primeira = await registrarComissao({ vendaId: "v1", valorVendaReais: 2000, tabela }, deps);
+    const primeira = await registrarComissao(
+      { vendaId: "v1", valorVendaReais: 2000, tabela },
+      deps,
+    );
     const segunda = await registrarComissao({ vendaId: "v1", valorVendaReais: 9999, tabela }, deps);
 
     expect(segunda.id).toBe(primeira.id);

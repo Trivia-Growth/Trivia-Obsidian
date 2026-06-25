@@ -23,13 +23,21 @@ beforeEach(() => {
 
 describe("handleRegistrarComissao (borda HTTP)", () => {
   it("AC-1: input válido retorna 201 com a comissão", async () => {
-    const r = await handleRegistrarComissao({ vendaId: "v1", valorVendaReais: 2000 }, novasDeps(), "req-1");
+    const r = await handleRegistrarComissao(
+      { vendaId: "v1", valorVendaReais: 2000 },
+      novasDeps(),
+      "req-1",
+    );
     expect(r.status).toBe(201);
     expect("comissaoCentavos" in r.body && r.body.comissaoCentavos).toBe(10000);
   });
 
   it("AC-2: valor negativo é rejeitado na borda com 422 problem+json", async () => {
-    const r = await handleRegistrarComissao({ vendaId: "v1", valorVendaReais: -1 }, novasDeps(), "req-2");
+    const r = await handleRegistrarComissao(
+      { vendaId: "v1", valorVendaReais: -1 },
+      novasDeps(),
+      "req-2",
+    );
     expect(r.status).toBe(422);
     expect("status" in r.body && r.body.status).toBe(422);
     expect("reqId" in r.body && r.body.reqId).toBe("req-2");

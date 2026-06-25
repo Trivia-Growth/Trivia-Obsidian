@@ -4,14 +4,14 @@
 // parseado e devolve { status, body } — o transporte (Edge Function/Express) é de quem chama.
 
 import { z } from "zod";
+import {
+  type RegistrarComissaoDeps,
+  type RegistrarComissaoOutput,
+  registrarComissao,
+} from "../../application/registrar-comissao";
 import { ErroValidacao } from "../../domain/comissao/dinheiro";
 import type { TabelaComissao } from "../../domain/comissao/tabela-comissao";
 import { log } from "../../shared/log";
-import {
-  registrarComissao,
-  type RegistrarComissaoDeps,
-  type RegistrarComissaoOutput,
-} from "../../application/registrar-comissao";
 import { type ProblemDetails, problem } from "./problem";
 
 const InputSchema = z.object({
@@ -42,7 +42,11 @@ export async function handleRegistrarComissao(
 
   try {
     const out = await registrarComissao(
-      { vendaId: parsed.data.vendaId, valorVendaReais: parsed.data.valorVendaReais, tabela: deps.tabela },
+      {
+        vendaId: parsed.data.vendaId,
+        valorVendaReais: parsed.data.valorVendaReais,
+        tabela: deps.tabela,
+      },
       deps,
     );
     return { status: out.jaExistia ? 200 : 201, body: out };

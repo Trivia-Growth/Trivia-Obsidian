@@ -4,10 +4,7 @@
 // para o teste ser determinístico.
 
 import { Dinheiro } from "../domain/comissao/dinheiro";
-import type {
-  RegistroComissao,
-  RepositorioComissao,
-} from "../domain/comissao/registro-comissao";
+import type { RegistroComissao, RepositorioComissao } from "../domain/comissao/registro-comissao";
 import { calcularComissao } from "../domain/comissao/tabela-comissao";
 import type { TabelaComissao } from "../domain/comissao/tabela-comissao";
 

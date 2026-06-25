@@ -42,7 +42,7 @@ jobs:
 
       # Gates de código — só nos pacotes AFETADOS (turbo affected) para feedback rápido
       - name: Lint / typecheck / test (affected)
-        run: pnpm turbo run lint typecheck test --filter='...[origin/${{ github.base_ref || ''main'' }}]'
+        run: pnpm turbo run lint typecheck test --filter="...[origin/${{ github.base_ref || 'main' }}]"
 
   migrations:
     runs-on: ubuntu-latest
