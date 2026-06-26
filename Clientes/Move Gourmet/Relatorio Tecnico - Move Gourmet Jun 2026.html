@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Técnico — Move Gourmet</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F1C2E;
+    --coral: #F05A4A;
+    --bg: #F5F5F3;
+    --surface: #FFFFFF;
+    --border: #DDE0E5;
+    --text: #0F1C2E;
+    --text-muted: #5A6070;
+    --accent-light: #EDF1F7;
+    --resolved-text: #1B7A4A;
+    --resolved-bg: #E8F4EE;
+    --pending-text: #7A5100;
+    --pending-bg: #FFF4DC;
+    --critical-text: #8A1C1C;
+    --critical-bg: #FDEAEA;
+  }
+
+  html { background: var(--bg); }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    padding: 48px 24px 80px;
+  }
+
+  .doc {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .doc-header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--navy);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo-wrap svg { display: block; }
+
+  .doc-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+
+  .doc-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+  }
+
+  .doc-meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .doc-meta-value { font-size: 13px; color: var(--text); }
+
+  .doc-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+
+  .doc-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 1.2;
+    color: var(--navy);
+    margin-top: 6px;
+  }
+
+  .doc-subtitle { font-size: 15px; color: var(--text-muted); margin-top: 4px; }
+
+  .intro {
+    background: var(--accent-light);
+    border-left: 3px solid var(--navy);
+    padding: 18px 22px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 48px;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+
+  .section { margin-bottom: 48px; }
+
+  .section-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .problem-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 14px;
+    align-items: start;
+  }
+
+  .problem-card.critical { border-left: 3px solid #C13333; background: #FFFBFB; }
+
+  .problem-name { font-weight: 600; font-size: 14.5px; color: var(--navy); grid-column: 1; }
+
+  .problem-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    grid-column: 1;
+    margin-top: 4px;
+  }
+
+  .problem-impact {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--critical-text);
+    grid-column: 1;
+    margin-top: 6px;
+  }
+
+  .status-chip {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .status-chip.resolved { background: var(--resolved-bg); color: var(--resolved-text); }
+  .status-chip.pending  { background: var(--pending-bg);  color: var(--pending-text); }
+  .status-chip.critical { background: var(--critical-bg); color: var(--critical-text); }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+
+  thead th {
+    background: var(--bg);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 12px 16px; vertical-align: middle; }
+  tbody td:first-child { font-weight: 500; }
+
+  .plan-phase { margin-bottom: 28px; }
+
+  .plan-phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+  }
+
+  .plan-items { display: flex; flex-direction: column; gap: 8px; }
+
+  .plan-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+
+  .plan-item-num { font-weight: 700; color: var(--coral); min-width: 18px; font-size: 13px; padding-top: 1px; }
+  .plan-item-title { font-weight: 500; margin-bottom: 2px; }
+  .plan-item-resp { font-size: 12px; color: var(--text-muted); }
+
+  .proposal-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .proposal-highlight {
+    background: var(--navy);
+    padding: 24px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .proposal-highlight-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .proposal-highlight-price {
+    font-size: 36px;
+    font-family: Georgia, serif;
+    color: #FFFFFF;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .proposal-highlight-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  .proposal-scope { padding: 22px; border-bottom: 1px solid var(--border); }
+
+  .proposal-scope-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .scope-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .scope-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; }
+
+  .scope-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--coral);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .scope-item-text { color: var(--text); line-height: 1.55; }
+
+  .proposal-payment {
+    padding: 18px 22px;
+    background: var(--accent-light);
+  }
+
+  .payment-label { font-weight: 600; color: var(--navy); font-size: 14px; margin-bottom: 6px; }
+  .payment-desc  { color: var(--text-muted); font-size: 13.5px; line-height: 1.65; }
+
+  .guarantee {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+
+  .guarantee-title { font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 6px; }
+  .guarantee-text  { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; }
+
+  .next-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .next-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .next-step-num {
+    font-size: 26px;
+    font-family: Georgia, serif;
+    color: var(--coral);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .next-step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--navy); }
+  .next-step-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  .alert-resolved {
+    background: var(--resolved-bg);
+    border: 1px solid #A8D8BC;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--resolved-text);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .alert-check {
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    padding-top: 1px;
+    color: var(--resolved-text);
+  }
+
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .doc-footer-note { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .doc-footer-validity { font-size: 12px; font-weight: 600; color: var(--coral); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <header class="doc-header">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <svg width="140" height="36" viewBox="0 0 280 72" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="58" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-1" fill="#0F1C2E">TRÍV</text>
+          <text x="164" y="58" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-1" fill="#0F1C2E">I</text>
+          <text x="192" y="58" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-1" fill="#F05A4A">A</text>
+        </svg>
+      </div>
+      <div class="doc-meta">
+        <div class="doc-meta-item">
+          <span class="doc-meta-label">Data da auditoria</span>
+          <span class="doc-meta-value">24 e 25 jun 2026</span>
+        </div>
+        <div class="doc-meta-item">
+          <span class="doc-meta-label">Escopo</span>
+          <span class="doc-meta-value">Shopify + Omie</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="doc-eyebrow">Relatório Técnico de Auditoria</div>
+      <h1 class="doc-title">Diagnóstico e Proposta de Correção<br>Shopify &amp; Omie</h1>
+      <p class="doc-subtitle">Move Gourmet / Fernanda Ferrari</p>
+    </div>
+  </header>
+
+  <div class="intro">
+    Realizamos uma auditoria completa da sua loja no Shopify e da integração com o Omie. O diagnóstico revelou <strong>um problema já resolvido</strong> durante a própria auditoria e <strong>sete pendências técnicas</strong> que impactam diretamente as vendas, principalmente para clientes de São Paulo. Abaixo está o detalhamento completo e a proposta para resolver tudo em até 7 dias.
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Problemas encontrados</h2>
+    <hr class="section-rule">
+
+    <div class="alert-resolved">
+      <span class="alert-check">&#10003;</span>
+      <div>
+        <strong>Pagamentos com cartão já foram resolvidos.</strong> A loja estava sem nenhum gateway de cartão configurado como provedor principal. O banner de erro estava visível em todo o painel e impedia novas assinaturas no clube YOUMOVE. Ativamos o Mercado Pago Cartões no dia 24/06 e Fernanda confirmou a correção.
+      </div>
+    </div>
+
+    <div class="problem-list">
+
+      <div class="problem-card">
+        <span class="problem-name">1. Omie não alimenta o depósito de São Paulo</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">O Omie gerencia todo o estoque em apenas uma localização, o depósito de Salvador. A localização de São Paulo existe no Shopify (Rua Dr João Toniolo, Pirituba), mas nunca recebe dados do ERP. Qualquer estoque inserido manualmente lá é apagado na próxima sincronização do Omie.</p>
+        <p class="problem-impact">Pedidos de clientes de SP continuam saindo de Salvador, com frete mais caro e prazo maior.</p>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-name">2. Dois apps Omie rodando em paralelo</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">Existem dois apps de integração Omie-Shopify instalados ao mesmo tempo na loja: "Omie Move Gourmet" (ago/25) e "Omie Shopify" (set/25). Ambos têm tokens de acesso independentes e podem estar conflitando na leitura e escrita de pedidos e inventário.</p>
+        <p class="problem-impact">Risco de duplicidade de atualizações de estoque e conflito no processamento de pedidos.</p>
+      </div>
+
+      <div class="problem-card critical">
+        <span class="problem-name">3. Clientes de SP não conseguem finalizar compras</span>
+        <span class="status-chip critical">Crítico</span>
+        <p class="problem-desc">O perfil de frete "Avulsas", que contém os 47 principais produtos da loja, não tem São Paulo configurado como localização de envio. Quando um cliente de SP chega ao checkout, nenhuma opção de entrega aparece e a compra não pode ser concluída.</p>
+        <p class="problem-impact">Vendas para clientes de SP estão sendo perdidas neste momento.</p>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-name">4. Zona Bahia sem tarifa no Perfil Geral</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">O perfil de frete geral tem a zona da Bahia criada, mas sem nenhum valor definido. Parte dos clientes da Bahia que tentam comprar pelo perfil geral não encontram opção de frete disponível no checkout.</p>
+        <p class="problem-impact">Perda de vendas para parte da base de clientes de Salvador.</p>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-name">5. Perfis de frete vazios poluindo a configuração</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">Os perfis "AMIGAS" e "BRASIL TESTE" estão sem produtos e sem tarifas. São resíduos de tentativas anteriores que dificultam a manutenção e aumentam o risco de erros futuros.</p>
+        <p class="problem-impact">Configuração confusa e propensa a falhas operacionais.</p>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-name">6. Produtos duplicados no catálogo</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">Existem variantes duplicadas no catálogo criadas em tentativas anteriores de configurar assinatura, identificadas pelos sufixos "(Cópia)" e "(Plano anual via pix)". Esses registros geram inconsistência no inventário e podem distorcer relatórios de vendas.</p>
+        <p class="problem-impact">Relatórios de estoque e vendas com dados incorretos.</p>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-name">7. App Frenet em estado inconsistente</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">O Frenet aparece ativo nas configurações de frete, mas consta como desinstalado na lista de apps. Esta inconsistência deixa a configuração de frete em estado instável e pode causar comportamentos inesperados no checkout.</p>
+        <p class="problem-impact">Instabilidade potencial no cálculo e exibição de fretes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Resumo dos problemas</h2>
+    <hr class="section-rule">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Problema</th>
+            <th>Impacto direto</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gateway de pagamentos sem configuração</td>
+            <td style="color:var(--text-muted);font-size:13px;">Impedia vendas com cartão e assinaturas</td>
+            <td><span class="status-chip resolved" style="display:inline-flex;">Resolvido 24/06</span></td>
+          </tr>
+          <tr>
+            <td>Omie sem depósito SP cadastrado</td>
+            <td style="color:var(--text-muted);font-size:13px;">Estoque de SP nunca é alimentado</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Dois apps Omie em paralelo</td>
+            <td style="color:var(--text-muted);font-size:13px;">Risco de conflito de dados</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Perfil Avulsas sem SP no frete</td>
+            <td style="color:var(--text-muted);font-size:13px;">Clientes de SP não conseguem comprar</td>
+            <td><span class="status-chip critical" style="display:inline-flex;">Crítico</span></td>
+          </tr>
+          <tr>
+            <td>Zona Bahia sem tarifa</td>
+            <td style="color:var(--text-muted);font-size:13px;">Parte dos clientes BA sem frete</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Perfis de frete AMIGAS e BRASIL TESTE</td>
+            <td style="color:var(--text-muted);font-size:13px;">Configuração poluída</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Produtos duplicados no catálogo</td>
+            <td style="color:var(--text-muted);font-size:13px;">Inventário e relatórios incorretos</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Frenet em estado inconsistente</td>
+            <td style="color:var(--text-muted);font-size:13px;">Configuração de frete instável</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Plano de execução</h2>
+    <hr class="section-rule">
+
+    <div class="plan-phase">
+      <div class="plan-phase-label">Urgente — primeiros 3 dias</div>
+      <div class="plan-items">
+        <div class="plan-item">
+          <span class="plan-item-num">1</span>
+          <div>
+            <div class="plan-item-title">Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify"</div>
+            <div class="plan-item-resp">Trívia + equipe Omie · Requer janela de manutenção</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">2</span>
+          <div>
+            <div class="plan-item-title">Criar depósito SP no Omie e mapear na integração com Shopify</div>
+            <div class="plan-item-resp">Fernanda abre chamado no Omie + time técnico Omie configura a API</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">3</span>
+          <div>
+            <div class="plan-item-title">Adicionar SP ao perfil Avulsas com tarifas de frete para São Paulo e demais estados</div>
+            <div class="plan-item-resp">Trívia · Configuração direta no Shopify</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">4</span>
+          <div>
+            <div class="plan-item-title">Configurar tarifa de frete na zona Bahia do Perfil Geral</div>
+            <div class="plan-item-resp">Trívia · Configuração direta no Shopify</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-phase">
+      <div class="plan-phase-label">Conclusão — dias 4 a 7</div>
+      <div class="plan-items">
+        <div class="plan-item">
+          <span class="plan-item-num">5</span>
+          <div>
+            <div class="plan-item-title">Cadastrar telefone na localização SP e excluir perfis AMIGAS e BRASIL TESTE</div>
+            <div class="plan-item-resp">Trívia</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">6</span>
+          <div>
+            <div class="plan-item-title">Limpar produtos duplicados com "(Cópia)" e "(Plano anual via pix)"</div>
+            <div class="plan-item-resp">Trívia · Validação prévia com Fernanda</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">7</span>
+          <div>
+            <div class="plan-item-title">Resolver inconsistência do Frenet e configurar Melhor Envio com CEP SP como origem</div>
+            <div class="plan-item-resp">Trívia · Após depósito SP estar ativo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Proposta de serviço</h2>
+    <hr class="section-rule">
+
+    <div class="proposal-box">
+      <div class="proposal-highlight">
+        <div>
+          <div class="proposal-highlight-label">Investimento total</div>
+          <div class="proposal-highlight-price">R$ 3.400,00</div>
+          <div class="proposal-highlight-sub">Pacote completo com todos os 7 itens acima</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="proposal-highlight-label">Prazo de entrega</div>
+          <div class="proposal-highlight-price" style="font-size:28px;">7 dias</div>
+          <div class="proposal-highlight-sub">Contados a partir da aprovação</div>
+        </div>
+      </div>
+
+      <div class="proposal-scope">
+        <div class="proposal-scope-title">O que está incluído</div>
+        <div class="scope-list">
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Configuração Omie: criação do depósito SP, consolidação dos dois apps e mapeamento correto da integração com Shopify</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Configuração completa de frete: Perfil Avulsas para SP, zona Bahia no Perfil Geral, exclusão de perfis resíduos e configuração do Melhor Envio com origem SP</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Limpeza técnica da loja: remoção de produtos duplicados, resolução da inconsistência do Frenet e cadastro completo do depósito SP</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Coordenação com o time técnico do Omie e acompanhamento de todo o processo até a validação final</span></div>
+        </div>
+      </div>
+
+      <div class="proposal-payment">
+        <div class="payment-label">Pagamento somente após a entrega completa</div>
+        <div class="payment-desc">O valor é pago integralmente apenas quando todos os pontos acima estiverem resolvidos e validados. Sabemos que você já passou por situações em que agências cobraram e não entregaram. Aqui o risco é nosso.</div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-muted);margin-top:14px;line-height:1.6;">
+      <strong>Observação importante:</strong> A parte do Omie depende do envolvimento do time técnico deles para ajustar o mapeamento da integração via API. Vamos coordenar esse processo, mas o prazo pode variar conforme a disponibilidade do suporte do Omie. Recomendamos que o chamado seja aberto assim que a proposta for aprovada.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="guarantee">
+      <div class="guarantee-title">Sem entrega, sem cobrança</div>
+      <p class="guarantee-text">Cada item da proposta tem critério claro de conclusão. Você só paga quando tudo estiver funcionando e você mesma confirmar. Se por qualquer motivo não conseguirmos resolver algum ponto dentro do prazo, esse item não é cobrado.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Para começarmos</h2>
+    <hr class="section-rule">
+
+    <div class="next-steps">
+      <div class="next-step">
+        <div class="next-step-num">1</div>
+        <div class="next-step-title">Aprovação desta proposta</div>
+        <p class="next-step-desc">Com o aceite, já iniciamos a configuração das partes que dependem só do Shopify.</p>
+      </div>
+      <div class="next-step">
+        <div class="next-step-num">2</div>
+        <div class="next-step-title">Abrir chamado no Omie</div>
+        <p class="next-step-desc">Solicitar ao suporte do Omie a criação do Depósito SP e ajuste do mapeamento de integração. Pode ser feito em paralelo.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="doc-footer">
+    <p class="doc-footer-note">
+      Diagnóstico realizado em 24 e 25 de junho de 2026 com acesso autenticado ao admin Shopify e ao painel Omie da Move Gourmet.<br>
+      Trívia Digital · João Gabriel Novais
+    </p>
+    <span class="doc-footer-validity">Proposta válida até 03/07/2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
