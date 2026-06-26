@@ -101,6 +101,12 @@ Isso está alinhado com o diagnóstico de 04/06 ("complexo e pouco usado") por o
 
 **Princípio:** adicionar um modo de **comunicação** (não-venda), aditivo e reversível, sem mexer no arco existente.
 
+> **Modelo de campos decidido (25/06): HIERARQUIA.** A reforma não empilha um 3º campo: ela
+> reorganiza Intenção / Estilo / Objetivo numa hierarquia — **Intenção** decide a estrutura,
+> **Estilo** vira "Ângulo" opcional filtrado pela intenção, **Objetivo** vira "Funil" só
+> quando a intenção é vender. `framework_intensity` fica só como rigidez. Detalhe completo
+> (tabela canônica intenção→estrutura + mapa de compatibilidade legado) na STORY-126.
+
 ### Opção recomendada — novo objetivo "Informativo / Comunicado"
 Quando `objective = informational`:
 - **Desliga** o arco dor→tensão→virada→CTA (2738-2755) e usa um layout informativo: título claro + os fatos + (opcional) 1 ação simples ("agende no WhatsApp"). Sem FOMO, sem virada.
