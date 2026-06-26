@@ -45,6 +45,36 @@ Um aviso de horário não tem dor, FOMO nem virada — mas o prompt **exige** os
 
 ---
 
+## 2-bis. O post ESTÁTICO também infla — via Estilo + Objetivo (não só o carrossel)
+
+A correção do piloto (25/06): o problema não é só o arco do carrossel. Num **post estático**
+(formato provável de um "anúncio"), o arco dor→virada não roda — mas a copy **ainda sai
+inflada**, por uma via paralela: os campos **Estilo** e **Objetivo**, ambos obrigatórios e
+sem opção neutra.
+
+1. **Objetivo enquadra TUDO.** A 1ª linha do user-prompt é literal
+   (`generate-content/index.ts:2631`): `Crie conteúdo ${format} com objetivo: ${objective}`.
+   Com "Engajamento", todo o post é orientado a gerar interação — não a informar.
+2. **Estilo injeta um ângulo de autoridade.** "Análise de Mercado" = `industry_insight`
+   (`contentChannels.ts:188`). O essence injetado (`index.ts:1863-1890`) diz:
+   *ESTILO "INSIGHTS DE INDÚSTRIA": Análises, tendências e mudanças no setor. Tom: analítico,
+   data-driven, autoridade técnica* (`framework-instructions.ts:341-352`). Um aviso de horário
+   vira "análise de mercado com tom de autoridade técnica".
+3. **Os 30 estilos são todos de autoridade/storytelling/venda** — não há "Nenhum / Apenas
+   informar". O campo é **obrigatório**, então o usuário é forçado a escolher um ângulo que
+   não existe pra um aviso.
+4. **O template do estático força gancho + CTA** (`index.ts:1308-1314`):
+   `"headline": "Título impactante (max 40 chars - gancho principal)"` + campo `"cta"`.
+   Mesmo um aviso ganha um gancho e uma chamada para ação.
+5. **Até o modo Guiado (leve) empurra** (`index.ts:1851-1858`): "comece com algo que pare o
+   scroll", "traga UM insight central", "feche com CTA/pergunta".
+
+**Conclusão:** o estático não tem o arco de venda, mas a combinação **Objetivo de
+engajamento + Estilo de autoridade + template com gancho/CTA** produz o mesmo efeito —
+transforma "atendemos até 13h no dia do jogo" num post de marketing. O conserto precisa
+tratar os campos **Estilo** e **Objetivo** (torná-los neutros/opcionais no modo comunicado),
+não só desligar o arco do carrossel.
+
 ## 3. O que a CDI viveu (passo a passo)
 
 1. Quer: *"No dia do jogo do Brasil atendemos só até 13h"*.
