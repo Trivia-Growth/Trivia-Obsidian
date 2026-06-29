@@ -587,45 +587,125 @@
         <p class="problem-impact">Processo que não escala. Com 20 assinantes, o trabalho manual de trocas mensais vira gargalo operacional.</p>
       </div>
 
-      <div class="problem-group-label">Shopify e Omie</div>
+      <div class="problem-card">
+        <span class="problem-name">4. Plano Business atual limita a operação em escala</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">O Appstle está no plano <strong>Business (US$ 30/mês)</strong>, suficiente para lançar o clube com Stripe e Build-A-Box. Porém, à medida que a base cresce, surgem três limitações práticas: (a) sem <strong>Automatic Product Swap</strong> — trocar o kit padrão de todos os assinantes exige fazer assinante por assinante, manualmente; (b) sem <strong>Campaigns</strong> — não há como enviar comunicações segmentadas para a base dentro do Appstle; (c) sem <strong>Backup Payment Recovery</strong> — cobranças com falha não têm retry automático e o assinante é perdido sem chance de recuperação.</p>
+        <p class="problem-desc" style="margin-top:10px;">O <strong>Business Premium (US$ 100/mês)</strong> resolve as três limitações. A diferença de US$ 70/mês se paga com a retenção de 1 ou 2 assinantes que seriam perdidos por falha de pagamento. Recomendação: manter o Business para o lançamento e avaliar o upgrade ao atingir ~10 assinantes ativos.</p>
+      </div>
+
+    </div>
+
+    <div style="margin-top:32px;margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:14px;">Como ficará o fluxo após a correção</div>
+      <p style="font-size:13.5px;color:var(--text-muted);line-height:1.65;margin-bottom:16px;">Com o gateway correto (Stripe) e o Build-A-Box ativo, o clube passa de zero assinantes e processo manual para um ciclo de cobrança e entrega totalmente automático.</p>
+      <div class="flow-wrap">
+        <svg viewBox="0 0 740 490" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+          <defs>
+            <marker id="m-gray"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+            <marker id="m-red"   markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C13333"/></marker>
+            <marker id="m-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1B7A4A"/></marker>
+            <marker id="m-blue"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2563EB"/></marker>
+            <marker id="m-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#D97706"/></marker>
+          </defs>
+          <rect x="0"   y="0" width="352" height="40" fill="#FDEAEA"/>
+          <text x="176" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#8A1C1C">HOJE — CLUBE YOUMOVE BLOQUEADO</text>
+          <rect x="368" y="0" width="372" height="40" fill="#E8F4EE"/>
+          <text x="554" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#1B7A4A">COM A CORREÇÃO — FLUXO FUNCIONANDO</text>
+          <rect x="352" y="0" width="16" height="490" fill="#F5F5F3"/>
+          <line x1="360" y1="40" x2="360" y2="490" stroke="#DDE0E5" stroke-width="1" stroke-dasharray="5,4"/>
+          <rect x="8" y="52" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+          <text x="176" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Cliente acessa a loja</text>
+          <text x="176" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Vê produto do clube YOUMOVE, tenta assinar</text>
+          <line x1="176" y1="98" x2="176" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#m-gray)"/>
+          <rect x="8" y="112" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+          <text x="176" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Vai ao checkout com Mercado Pago</text>
+          <text x="176" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Gateway ativo, mas incompatível com assinaturas</text>
+          <line x1="176" y1="158" x2="176" y2="170" stroke="#C13333" stroke-width="2" marker-end="url(#m-red)"/>
+          <rect x="8" y="172" width="336" height="66" rx="6" fill="#FDEAEA" stroke="#C13333" stroke-width="2"/>
+          <text x="176" y="196" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">&#x2715;  Assinatura não processa</text>
+          <text x="176" y="213" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Mercado Pago não suporta a Shopify Subscriptions API.</text>
+          <text x="176" y="228" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Cobrança recorrente automática é impossível.</text>
+          <line x1="176" y1="238" x2="176" y2="250" stroke="#D97706" stroke-width="1.5" marker-end="url(#m-amber)"/>
+          <rect x="8" y="252" width="336" height="46" rx="6" fill="#FFF4DC" stroke="#D97706" stroke-width="1.5"/>
+          <text x="176" y="271" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#7A5100">Pedido manual via WhatsApp</text>
+          <text x="176" y="287" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#7A5100">Equipe processa cada troca manualmente todo mês</text>
+          <rect x="8" y="316" width="336" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="176" y="341" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10.5" fill="#5A6070">Resultado atual</text>
+          <text x="176" y="360" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">0 assinantes  ·  R$ 0 gerado  ·  Não escalável</text>
+          <rect x="368" y="52" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+          <text x="540" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Acessa a página Kit YOUMOVE</text>
+          <text x="540" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Página dedicada com Build-A-Box integrado</text>
+          <line x1="540" y1="98" x2="540" y2="110" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+          <rect x="368" y="112" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+          <text x="540" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Monta o kit pelo Build-A-Box</text>
+          <text x="540" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Escolhe produtos livremente do catálogo</text>
+          <line x1="540" y1="158" x2="540" y2="170" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+          <rect x="368" y="172" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+          <text x="540" y="191" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Escolhe plano &#8594; checkout via Stripe &#10003;</text>
+          <text x="540" y="207" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Cartão salvo para cobranças automáticas futuras</text>
+          <line x1="540" y1="218" x2="540" y2="230" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+          <rect x="368" y="232" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+          <text x="540" y="251" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Kit #1 gerado e enviado automaticamente</text>
+          <text x="540" y="267" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Pedido criado no Shopify. Nenhuma ação necessária.</text>
+          <line x1="540" y1="278" x2="540" y2="290" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+          <rect x="368" y="292" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="540" y="311" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Email automático antes da próxima entrega</text>
+          <text x="540" y="327" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">"Monte seu próximo kit" enviado X dias antes do ciclo</text>
+          <line x1="540" y1="338" x2="540" y2="350" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+          <rect x="368" y="352" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="540" y="371" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Cliente acessa o portal e remonta o kit</text>
+          <text x="540" y="387" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">Autonomia total. Zero WhatsApp. Zero trabalho manual.</text>
+          <line x1="540" y1="398" x2="540" y2="410" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+          <rect x="368" y="412" width="344" height="56" rx="6" fill="#1B7A4A"/>
+          <text x="540" y="440" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#ffffff">&#9851;  Ciclo automático — todo mês</text>
+          <text x="540" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="rgba(255,255,255,0.8)">Cobrança + pedido recorrentes sem esforço da equipe.</text>
+          <path d="M 711 440 C 730 440 730 375 711 375" stroke="#1B7A4A" stroke-width="1.5" fill="none" marker-end="url(#m-green)"/>
+          <text x="724" y="413" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#1B7A4A" transform="rotate(-90 724 413)">repete</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="problem-list">
+      <div class="problem-group-label" style="margin-top:0;">Shopify e Omie</div>
 
       <div class="problem-card">
-        <span class="problem-name">4. Omie não alimenta o depósito de São Paulo</span>
+        <span class="problem-name">5. Omie não alimenta o depósito de São Paulo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">O Omie gerencia todo o estoque em apenas uma localização, o depósito de Salvador. A localização de São Paulo existe no Shopify (Rua Dr João Toniolo, Pirituba), mas nunca recebe dados do ERP. Qualquer estoque inserido manualmente lá é apagado na próxima sincronização do Omie.</p>
         <p class="problem-impact">Pedidos de clientes de SP continuam saindo de Salvador, com frete mais caro e prazo maior.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">5. Dois apps Omie rodando em paralelo</span>
+        <span class="problem-name">6. Dois apps Omie rodando em paralelo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Existem dois apps de integração Omie-Shopify instalados ao mesmo tempo na loja: "Omie Move Gourmet" (ago/25) e "Omie Shopify" (set/25). Ambos têm tokens de acesso independentes e podem estar conflitando na leitura e escrita de pedidos e inventário.</p>
         <p class="problem-impact">Risco de duplicidade de atualizações de estoque e conflito no processamento de pedidos.</p>
       </div>
 
       <div class="problem-card critical">
-        <span class="problem-name">6. Clientes de SP não conseguem finalizar compras</span>
+        <span class="problem-name">7. Clientes de SP não conseguem finalizar compras</span>
         <span class="status-chip critical">Crítico</span>
         <p class="problem-desc">O perfil de frete "Avulsas", que contém os 47 principais produtos da loja, não tem São Paulo configurado como localização de envio. Quando um cliente de SP chega ao checkout, nenhuma opção de entrega aparece e a compra não pode ser concluída.</p>
         <p class="problem-impact">Vendas para clientes de SP estão sendo perdidas neste momento.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">7. Zona Bahia sem tarifa no Perfil Geral</span>
+        <span class="problem-name">8. Zona Bahia sem tarifa no Perfil Geral</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">O perfil de frete geral tem a zona da Bahia criada, mas sem nenhum valor definido. Parte dos clientes da Bahia que tentam comprar pelo perfil geral não encontram opção de frete disponível no checkout.</p>
         <p class="problem-impact">Perda de vendas para parte da base de clientes de Salvador.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">8. Perfis de frete vazios poluindo a configuração</span>
+        <span class="problem-name">9. Perfis de frete vazios poluindo a configuração</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Os perfis "AMIGAS" e "BRASIL TESTE" estão sem produtos e sem tarifas. São resíduos de tentativas anteriores que dificultam a manutenção e aumentam o risco de erros futuros.</p>
         <p class="problem-impact">Configuração confusa e propensa a falhas operacionais.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">9. Produtos duplicados no catálogo</span>
+        <span class="problem-name">10. Produtos duplicados no catálogo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Existem variantes duplicadas no catálogo criadas em tentativas anteriores de configurar assinatura, identificadas pelos sufixos "(Cópia)" e "(Plano anual via pix)". Esses registros geram inconsistência no inventário e podem distorcer relatórios de vendas.</p>
         <p class="problem-impact">Relatórios de estoque e vendas com dados incorretos.</p>
