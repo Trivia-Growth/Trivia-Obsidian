@@ -1,0 +1,15 @@
+# Deploy estático das LPs Heziom (cutover Flowbiz, Story 5.23).
+# Publica esta pasta inteira; o roteamento por subdomínio está em _redirects.
+# Deploy (após religar os formulários e definir o time):
+#   netlify deploy --dir "." --site <SITE_ID>            # preview (URL netlify.app)
+#   netlify deploy --dir "." --site <SITE_ID> --prod     # produção
+# Apontar no DNS (Cloudflare) só os subdomínios ATIVOS (ex.: últimos 90 dias):
+#   CNAME <subdominio>.editoraheziom.com.br -> <site>.netlify.app
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"

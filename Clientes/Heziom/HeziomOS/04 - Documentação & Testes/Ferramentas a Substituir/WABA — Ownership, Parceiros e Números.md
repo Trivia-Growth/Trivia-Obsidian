@@ -89,18 +89,29 @@ O **System User Token** foi gerado no nível do **BM** (`1195701987492301`), com
 
 Como ambos os WABAs pertencem ao mesmo BM, o token acessa **os dois números** sem configuração adicional.
 
-### Plano de migração (desligar Unnichat)
+### Plano de migração — duas fases (atualizado 27/06/2026)
 
-1. **Configurar o HeziomOS** com o Phone Number ID `762698843599806` (número principal, +55 11 94498-6855)
-2. **Testar envio/recebimento** via `crm-meta-wa-send` e `crm-meta-wa-webhook`
-3. **Configurar webhook** na Meta (apontar para a Edge Function do HeziomOS em vez da Unnichat)
-4. **Revogar acesso de parceiro** da Unnichat no BM → eles perdem controle imediatamente
-5. Os **templates aprovados** continuam no WABA (pertencem ao WABA, não ao parceiro)
-6. **Cancelar assinatura** da Unnichat
+> ⚠️ O número principal (+55 11 94498-6855) está em atendimento ativo na Unnichat. Não migrar até o HeziomOS estar 100% validado.
+
+#### Fase 1 — Ativar HeziomOS com número de testes (sem risco)
+
+1. **Cadastrar no HeziomOS** o número +55 11 93329-5843 (Phone Number ID `727100090484112`, WABA `1879204222622839`)
+2. **Registrar webhook** na Meta para o WABA `1879204222622839` apontando para `crm-meta-wa-webhook`
+3. **Testar envio/recebimento** completo via HeziomOS
+4. **Validar Instagram DM** e demais integrações
+5. Gravar vídeos para solicitação de Advanced Access da Meta
+
+#### Fase 2 — Migrar número principal (após HeziomOS redondo)
+
+1. **Registrar webhook** no WABA da Unnichat (`1140360874094314`, Phone Number ID `762698843599806`) apontando para o HeziomOS
+2. **Testar em paralelo** (Unnichat ainda ativo, HeziomOS recebendo cópia)
+3. **Revogar acesso de parceiro** da Unnichat no BM → perdem controle imediatamente
+4. Os **templates aprovados** continuam no WABA (pertencem ao WABA, não ao parceiro)
+5. **Cancelar assinatura** da Unnichat
 
 ### Segundo número (+55 11 93329-5843)
 
-Já está sob controle direto da Heziom (sem parceiro). Phone Number ID: **`727100090484112`** (WABA `1879204222622839`). Pode ser ativado no HeziomOS a qualquer momento.
+Já está sob controle direto da Heziom (sem parceiro). Phone Number ID: **`727100090484112`** (WABA `1879204222622839`). **Este é o número a usar na Fase 1.**
 
 ---
 
