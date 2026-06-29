@@ -201,6 +201,24 @@ O loop operacional mínimo que já entrega o hub:
 
 ---
 
+## 8. Limitações x como resolver (consolidado)
+
+Cada limitação da API e a forma de contornar. Nenhuma delas inviabiliza o hub — todas têm saída.
+
+| # | Limitação | Impacto no hub | Como resolver |
+|---|---|---|---|
+| 1 | **Webhook só cobre 6 entidades** (User, Task, Customer, Equipment, Invoice, Ticket) | Preventivo, checklist, GPS, orçamento, financeiro e NPS não avisam mudança | **Polling agendado** (cron paginado) para cada uma dessas áreas — ver tabela da seção 3 |
+| 2 | **Webhook é "magro"** (só id+entity+action, sem foto/checklist/peça) | O aviso não traz o conteúdo da execução | Ao receber o webhook, fazer **`GET /tasks/{id}`** (ou da entidade) pra puxar o detalhe completo |
+| 3 | **Risco de eco** (PCM cria → Auvo avisa → PCM "recebe de volta") | Reprocessar o que o próprio PCM gerou; duplicar dado | **Idempotência por `externalId`/`auvo_*_id`** + marcar a origem da mudança antes de reagir (schema já tem `auvo_sync_status`) |
+| 4 | **Webhook sem assinatura/HMAC nativo** | Endpoint público pode receber evento forjado | **7 camadas de proteção** (seção 4): token na URL, reconsulta GET, idempotência, só-enfileirar, rate-limit na borda, não-logar-segredo, rotação |
+| 5 | **Um webhook por entidade por conta** (erro 1026) | Não dá pra ter dois consumidores do mesmo evento; slot pode estar ocupado pelo PCM legado | Na virada: `GET /webhooks` → **`DELETE`** o antigo → **`POST`** o de produção. PCM é o ponto único e redistribui se precisar |
+| 6 | **`PATCH /serviceorders` não edita recorrência** (só descrição/status) | Mudar a periodicidade de um preventivo não dá por API | Recriar a Service Order com a nova recorrência, ou ajustar no painel Auvo. Tratar recorrência como definida na criação |
+| 7 | **Token expira a cada 30 min** | Chamada com token velho falha | Renovar via `POST /login` e **cachear o token** (reusar enquanto válido), não logar na URL |
+| 8 | **Rate limit 400 req/min por IP** (compartilhado entre todas as Edge Functions) | Polling pesado pode estourar o teto | **Cron agendado e paginado** (nunca on-demand por usuário); GPS só em horário operacional com `getLastKnowPosition`; cachear referências que mudam pouco |
+| 9 | **Campo é read-only na API** (GPS, foto, assinatura, checkout, checklist) | PCM não consegue "fazer" o trabalho de campo | **Fronteira fixa**: técnico segue no app Auvo; o PCM só lê esses dados. Não é limitação a "resolver", é o desenho |
+
+---
+
 ## Conclusão
 
 O modelo de PCM-hub **é viável** e já é a intenção do design novo. A escrita PCM → Auvo é total. O retorno tem dois regimes: **webhook** (rápido, mas só 6 entidades — sendo Task a que importa) e **polling agendado** (pra preventivo, GPS e financeiro). A fronteira que não muda: **o técnico continua no app Auvo**. E o cuidado nº 1 da implementação é a **segurança do endpoint de webhook**, que a API não protege sozinha — as 7 camadas acima são obrigatórias.
