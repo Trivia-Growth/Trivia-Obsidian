@@ -189,6 +189,132 @@
     background: #fff;
   }
 
+  .plan-compare {
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr;
+    gap: 0;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 24px;
+  }
+
+  .plan-compare-header {
+    grid-column: 1 / -1;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .plan-col {
+    padding: 22px 20px;
+  }
+
+  .plan-col.premium {
+    background: var(--navy);
+  }
+
+  .plan-col-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+
+  .plan-col-badge.current  { background: var(--accent-light); color: var(--text-muted); }
+  .plan-col-badge.upgrade  { background: var(--coral); color: #fff; }
+
+  .plan-col-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .plan-col.premium .plan-col-name { color: #fff; }
+
+  .plan-col-price {
+    font-size: 28px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .plan-col.premium .plan-col-price { color: var(--coral); }
+
+  .plan-col-price span {
+    font-size: 13px;
+    font-family: system-ui, sans-serif;
+    color: var(--text-muted);
+  }
+
+  .plan-col.premium .plan-col-price span { color: rgba(255,255,255,0.45); }
+
+  .plan-col-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .plan-col.premium .plan-col-desc { color: rgba(255,255,255,0.6); }
+
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+
+  .plan-features li {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .plan-col.premium .plan-features li { color: rgba(255,255,255,0.75); }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--resolved-text);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .plan-col.premium .plan-features li::before { color: var(--coral); }
+
+  .plan-arrow-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    align-self: stretch;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .plan-arrow-col svg { display: block; }
+
+  .plan-when {
+    grid-column: 1 / -1;
+    background: var(--accent-light);
+    border-top: 1px solid var(--border);
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
   .table-wrap {
     overflow-x: auto;
     border-radius: 8px;
@@ -424,6 +550,7 @@
     Realizamos uma auditoria completa da sua loja no Shopify, da integração com o Omie e da configuração do clube de assinaturas YOUMOVE no Appstle. O diagnóstico revelou <strong>um problema já resolvido</strong> durante a própria auditoria, <strong>três pendências críticas no clube</strong> que impedem o lançamento e <strong>sete pendências técnicas no Shopify e Omie</strong> que impactam as vendas, principalmente para clientes de São Paulo. Abaixo está o detalhamento completo e a proposta para resolver tudo em até 7 dias.
   </div>
 
+  <!-- ===== PROBLEMAS ENCONTRADOS ===== -->
   <section class="section">
     <h2 class="section-title">Problemas encontrados</h2>
     <hr class="section-rule">
@@ -443,7 +570,7 @@
         <span class="problem-name">1. Gateway de assinaturas incompatível</span>
         <span class="status-chip critical">Crítico</span>
         <p class="problem-desc">O Mercado Pago Cartões resolveu as vendas avulsas, mas ele não é compatível com a API de assinaturas recorrentes do Shopify. Essa API só funciona com gateways específicos: Stripe, Shopify Payments, PayPal Express e Authorize.net. O YOUMOVE usa o Appstle Subscriptions, que depende dessa API para processar cobranças mensais automáticas.</p>
-        <p class="problem-impact">Nenhuma assinatura YOUMOVE consegue processar cobrança recorrente. O clube existe na plataforma mas nunca funcionou de fato — 1 assinatura de teste cancelada, R$ 0 gerado.</p>
+        <p class="problem-impact">Nenhuma assinatura YOUMOVE consegue processar cobrança recorrente. O clube existe na plataforma mas nunca funcionou — 1 assinatura de teste cancelada, R$ 0 gerado.</p>
       </div>
 
       <div class="problem-card critical">
@@ -514,6 +641,146 @@
     </div>
   </section>
 
+  <!-- ===== YOUMOVE FLUXO + PLANO APPSTLE ===== -->
+  <section class="section">
+    <h2 class="section-title">Clube YOUMOVE — Como ficará o fluxo</h2>
+    <hr class="section-rule">
+
+    <p style="font-size:13.5px;color:var(--text-muted);line-height:1.65;margin-bottom:20px;">Com a correção do gateway (Stripe) e a ativação do Build-A-Box, o clube passa de zero assinantes e processo manual para um ciclo de cobrança e entrega totalmente automático.</p>
+
+    <div class="flow-wrap">
+      <svg viewBox="0 0 740 490" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <marker id="m-gray"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+          <marker id="m-red"   markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C13333"/></marker>
+          <marker id="m-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1B7A4A"/></marker>
+          <marker id="m-blue"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2563EB"/></marker>
+          <marker id="m-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#D97706"/></marker>
+        </defs>
+
+        <!-- Column headers -->
+        <rect x="0"   y="0" width="352" height="40" fill="#FDEAEA"/>
+        <text x="176" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#8A1C1C">HOJE — CLUBE YOUMOVE BLOQUEADO</text>
+
+        <rect x="368" y="0" width="372" height="40" fill="#E8F4EE"/>
+        <text x="554" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#1B7A4A">COM A CORREÇÃO — FLUXO FUNCIONANDO</text>
+
+        <!-- Center gutter -->
+        <rect x="352" y="0" width="16" height="490" fill="#F5F5F3"/>
+        <line x1="360" y1="40" x2="360" y2="490" stroke="#DDE0E5" stroke-width="1" stroke-dasharray="5,4"/>
+
+        <!-- LEFT (HOJE) -->
+        <rect x="8" y="52" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+        <text x="176" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Cliente acessa a loja</text>
+        <text x="176" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Vê produto do clube YOUMOVE, tenta assinar</text>
+        <line x1="176" y1="98" x2="176" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#m-gray)"/>
+
+        <rect x="8" y="112" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+        <text x="176" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Vai ao checkout com Mercado Pago</text>
+        <text x="176" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Gateway ativo, mas incompatível com assinaturas</text>
+        <line x1="176" y1="158" x2="176" y2="170" stroke="#C13333" stroke-width="2" marker-end="url(#m-red)"/>
+
+        <rect x="8" y="172" width="336" height="66" rx="6" fill="#FDEAEA" stroke="#C13333" stroke-width="2"/>
+        <text x="176" y="196" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">&#x2715;  Assinatura não processa</text>
+        <text x="176" y="213" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Mercado Pago não suporta a Shopify Subscriptions API.</text>
+        <text x="176" y="228" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Cobrança recorrente automática é impossível.</text>
+        <line x1="176" y1="238" x2="176" y2="250" stroke="#D97706" stroke-width="1.5" marker-end="url(#m-amber)"/>
+
+        <rect x="8" y="252" width="336" height="46" rx="6" fill="#FFF4DC" stroke="#D97706" stroke-width="1.5"/>
+        <text x="176" y="271" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#7A5100">Pedido manual via WhatsApp</text>
+        <text x="176" y="287" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#7A5100">Equipe processa cada troca manualmente todo mês</text>
+
+        <rect x="8" y="316" width="336" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="176" y="341" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10.5" fill="#5A6070">Resultado atual</text>
+        <text x="176" y="360" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">0 assinantes  ·  R$ 0 gerado  ·  Não escalável</text>
+
+        <!-- RIGHT (COM A CORREÇÃO) -->
+        <rect x="368" y="52" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Acessa a página Kit YOUMOVE</text>
+        <text x="540" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Página dedicada com Build-A-Box integrado</text>
+        <line x1="540" y1="98" x2="540" y2="110" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <rect x="368" y="112" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Monta o kit pelo Build-A-Box</text>
+        <text x="540" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Escolhe produtos livremente do catálogo</text>
+        <line x1="540" y1="158" x2="540" y2="170" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <rect x="368" y="172" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="191" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Escolhe plano &#8594; checkout via Stripe &#10003;</text>
+        <text x="540" y="207" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Cartão salvo para cobranças automáticas futuras</text>
+        <line x1="540" y1="218" x2="540" y2="230" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <rect x="368" y="232" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="251" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Kit #1 gerado e enviado automaticamente</text>
+        <text x="540" y="267" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Pedido criado no Shopify. Nenhuma ação necessária.</text>
+        <line x1="540" y1="278" x2="540" y2="290" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+
+        <rect x="368" y="292" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+        <text x="540" y="311" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Email automático antes da próxima entrega</text>
+        <text x="540" y="327" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">"Monte seu próximo kit" enviado X dias antes do ciclo</text>
+        <line x1="540" y1="338" x2="540" y2="350" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+
+        <rect x="368" y="352" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+        <text x="540" y="371" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Cliente acessa o portal e remonta o kit</text>
+        <text x="540" y="387" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">Autonomia total. Zero WhatsApp. Zero trabalho manual.</text>
+        <line x1="540" y1="398" x2="540" y2="410" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <rect x="368" y="412" width="344" height="56" rx="6" fill="#1B7A4A"/>
+        <text x="540" y="440" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#ffffff">&#9851;  Ciclo automático — todo mês</text>
+        <text x="540" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="rgba(255,255,255,0.8)">Cobrança + pedido recorrentes sem esforço da equipe.</text>
+
+        <!-- Loop arrow -->
+        <path d="M 711 440 C 730 440 730 375 711 375" stroke="#1B7A4A" stroke-width="1.5" fill="none" marker-end="url(#m-green)"/>
+        <text x="724" y="413" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#1B7A4A" transform="rotate(-90 724 413)">repete</text>
+
+      </svg>
+    </div>
+
+    <!-- Comparativo de planos Appstle -->
+    <div class="plan-compare">
+      <div class="plan-compare-header">Plano Appstle — atual e upgrade necessário</div>
+
+      <div class="plan-col">
+        <div class="plan-col-badge current">Plano atual</div>
+        <div class="plan-col-name">Business</div>
+        <div class="plan-col-price">US$ 30<span>/mês</span></div>
+        <div class="plan-col-desc">Suficiente para lançar o clube. Cobre tudo que é necessário para os primeiros assinantes funcionarem com Stripe e Build-A-Box.</div>
+        <ul class="plan-features">
+          <li>Stripe como gateway de assinaturas</li>
+          <li>Build-A-Box (kit personalizado por ciclo)</li>
+          <li>Portal do cliente completo</li>
+          <li>Até US$ 30.000/mês em assinaturas</li>
+        </ul>
+      </div>
+
+      <div class="plan-arrow-col">
+        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 10h12M12 6l4 4-4 4" stroke="#F05A4A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+
+      <div class="plan-col premium">
+        <div class="plan-col-badge upgrade">Upgrade recomendado</div>
+        <div class="plan-col-name">Business Premium</div>
+        <div class="plan-col-price">US$ 100<span>/mês</span></div>
+        <div class="plan-col-desc">Recomendado a partir de ~10 assinantes ativos. O custo adicional de US$ 70/mês se paga com 1 ou 2 assinaturas a mais retidas por mês.</div>
+        <ul class="plan-features">
+          <li>Tudo do Business, mais:</li>
+          <li>Automatic Product Swap (troca em massa)</li>
+          <li>Campaigns para segmentos de assinantes</li>
+          <li>Backup Payment Recovery (3 camadas de retry)</li>
+          <li>Upsell no portal do cliente</li>
+          <li>Até US$ 100.000/mês em assinaturas</li>
+        </ul>
+      </div>
+
+      <div class="plan-when">
+        <strong>Quando fazer o upgrade?</strong> Quando a operação manual de trocas começar a consumir tempo da equipe ou quando o churn por falha de pagamento aparecer nos relatórios — normalmente a partir de 10 a 15 assinantes ativos.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESUMO DOS PROBLEMAS ===== -->
   <section class="section">
     <h2 class="section-title">Resumo dos problemas</h2>
     <hr class="section-rule">
@@ -594,115 +861,7 @@
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">Clube YOUMOVE — Como ficará o fluxo</h2>
-    <hr class="section-rule">
-
-    <p style="font-size:13.5px;color:var(--text-muted);line-height:1.65;margin-bottom:20px;">Com a correção do gateway (Stripe) e a ativação do Build-A-Box, o clube passa de zero assinantes e processo manual para um ciclo de cobrança e entrega totalmente automático.</p>
-
-    <div class="flow-wrap">
-      <svg viewBox="0 0 740 490" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-        <defs>
-          <marker id="m-gray"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
-          <marker id="m-red"   markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C13333"/></marker>
-          <marker id="m-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1B7A4A"/></marker>
-          <marker id="m-blue"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2563EB"/></marker>
-          <marker id="m-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#D97706"/></marker>
-        </defs>
-
-        <!-- Column headers -->
-        <rect x="0"   y="0" width="352" height="40" fill="#FDEAEA"/>
-        <text x="176" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#8A1C1C">HOJE — CLUBE YOUMOVE BLOQUEADO</text>
-
-        <rect x="368" y="0" width="372" height="40" fill="#E8F4EE"/>
-        <text x="554" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#1B7A4A">COM A CORREÇÃO — FLUXO FUNCIONANDO</text>
-
-        <!-- Center gutter -->
-        <rect x="352" y="0" width="16" height="490" fill="#F5F5F3"/>
-        <line x1="360" y1="40" x2="360" y2="490" stroke="#DDE0E5" stroke-width="1" stroke-dasharray="5,4"/>
-
-        <!-- ===== LEFT COLUMN (HOJE) ===== -->
-
-        <!-- L1 -->
-        <rect x="8" y="52" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
-        <text x="176" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Cliente acessa a loja</text>
-        <text x="176" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Vê produto do clube YOUMOVE, tenta assinar</text>
-        <line x1="176" y1="98" x2="176" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#m-gray)"/>
-
-        <!-- L2 -->
-        <rect x="8" y="112" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
-        <text x="176" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Vai ao checkout com Mercado Pago</text>
-        <text x="176" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Gateway ativo, mas incompatível com assinaturas</text>
-        <line x1="176" y1="158" x2="176" y2="170" stroke="#C13333" stroke-width="2" marker-end="url(#m-red)"/>
-
-        <!-- L FALHA -->
-        <rect x="8" y="172" width="336" height="66" rx="6" fill="#FDEAEA" stroke="#C13333" stroke-width="2"/>
-        <text x="176" y="196" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">&#x2715;  Assinatura não processa</text>
-        <text x="176" y="213" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Mercado Pago não suporta a Shopify Subscriptions API.</text>
-        <text x="176" y="228" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Cobrança recorrente automática é impossível.</text>
-        <line x1="176" y1="238" x2="176" y2="250" stroke="#D97706" stroke-width="1.5" marker-end="url(#m-amber)"/>
-
-        <!-- L WhatsApp -->
-        <rect x="8" y="252" width="336" height="46" rx="6" fill="#FFF4DC" stroke="#D97706" stroke-width="1.5"/>
-        <text x="176" y="271" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#7A5100">Pedido manual via WhatsApp</text>
-        <text x="176" y="287" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#7A5100">Equipe processa cada troca manualmente todo mês</text>
-
-        <!-- L Result -->
-        <rect x="8" y="316" width="336" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
-        <text x="176" y="341" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10.5" fill="#5A6070">Resultado atual</text>
-        <text x="176" y="360" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">0 assinantes  ·  R$ 0 gerado  ·  Não escalável</text>
-
-        <!-- ===== RIGHT COLUMN (COM A CORREÇÃO) ===== -->
-
-        <!-- R1 -->
-        <rect x="368" y="52" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
-        <text x="540" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Acessa a página Kit YOUMOVE</text>
-        <text x="540" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Página dedicada com Build-A-Box integrado</text>
-        <line x1="540" y1="98" x2="540" y2="110" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
-
-        <!-- R2 -->
-        <rect x="368" y="112" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
-        <text x="540" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Monta o kit pelo Build-A-Box</text>
-        <text x="540" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Escolhe produtos livremente do catálogo</text>
-        <line x1="540" y1="158" x2="540" y2="170" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
-
-        <!-- R3 -->
-        <rect x="368" y="172" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
-        <text x="540" y="191" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Escolhe plano &#8594; checkout via Stripe &#10003;</text>
-        <text x="540" y="207" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Cartão salvo para cobranças automáticas futuras</text>
-        <line x1="540" y1="218" x2="540" y2="230" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
-
-        <!-- R4 -->
-        <rect x="368" y="232" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
-        <text x="540" y="251" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Kit #1 gerado e enviado automaticamente</text>
-        <text x="540" y="267" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Pedido criado no Shopify. Nenhuma ação necessária.</text>
-        <line x1="540" y1="278" x2="540" y2="290" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
-
-        <!-- R5 (blue) -->
-        <rect x="368" y="292" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
-        <text x="540" y="311" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Email automático antes da próxima entrega</text>
-        <text x="540" y="327" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">"Monte seu próximo kit" enviado X dias antes do ciclo</text>
-        <line x1="540" y1="338" x2="540" y2="350" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
-
-        <!-- R6 (blue) -->
-        <rect x="368" y="352" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
-        <text x="540" y="371" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Cliente acessa o portal e remonta o kit</text>
-        <text x="540" y="387" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">Autonomia total. Zero WhatsApp. Zero trabalho manual.</text>
-        <line x1="540" y1="398" x2="540" y2="410" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
-
-        <!-- R7 (green end) -->
-        <rect x="368" y="412" width="344" height="56" rx="6" fill="#1B7A4A"/>
-        <text x="540" y="440" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#ffffff">&#9851;  Ciclo automático — todo mês</text>
-        <text x="540" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="rgba(255,255,255,0.8)">Cobrança + pedido recorrentes sem esforço da equipe.</text>
-
-        <!-- Loop arrow (right side, between R6 and R7) -->
-        <path d="M 711 440 C 730 440 730 375 711 375" stroke="#1B7A4A" stroke-width="1.5" fill="none" marker-end="url(#m-green)"/>
-        <text x="724" y="413" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#1B7A4A" transform="rotate(-90 724 413)">repete</text>
-
-      </svg>
-    </div>
-  </section>
-
+  <!-- ===== PLANO DE EXECUÇÃO ===== -->
   <section class="section">
     <h2 class="section-title">Plano de execução</h2>
     <hr class="section-rule">
@@ -810,6 +969,7 @@
     </div>
   </section>
 
+  <!-- ===== PROPOSTA ===== -->
   <section class="section">
     <h2 class="section-title">Proposta de serviço</h2>
     <hr class="section-rule">
