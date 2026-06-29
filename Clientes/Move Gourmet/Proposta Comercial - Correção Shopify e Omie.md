@@ -99,7 +99,7 @@ Também existe uma inconsistência com o app Frenet, que aparece ativo nas confi
 
 ## Proposta de Serviço
 
-**Escopo:** Correção de todos os problemas listados acima, com execução em até 20 dias e coordenação com o time técnico do Omie para a configuração do depósito SP.
+**Escopo:** Correção de todos os problemas listados acima, com execução em até 7 dias e coordenação com o time técnico do Omie para a configuração do depósito SP.
 
 **Observação importante:** A parte do Omie exige envolvimento do time técnico deles para ajustar o mapeamento da integração. Vamos coordenar esse processo, mas o prazo pode variar conforme a disponibilidade do suporte do Omie.
 

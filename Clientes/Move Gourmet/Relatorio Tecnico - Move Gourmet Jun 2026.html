@@ -35,10 +35,7 @@
     padding: 48px 24px 80px;
   }
 
-  .doc {
-    max-width: 760px;
-    margin: 0 auto;
-  }
+  .doc { max-width: 760px; margin: 0 auto; }
 
   .doc-header {
     display: flex;
@@ -123,6 +120,19 @@
     margin-bottom: 24px;
   }
 
+  .problem-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--border);
+    margin: 22px 0 14px;
+  }
+
+  .problem-group-label:first-child { margin-top: 0; }
+
   .problem-list { display: flex; flex-direction: column; gap: 14px; }
 
   .problem-card {
@@ -172,6 +182,13 @@
   .status-chip.pending  { background: var(--pending-bg);  color: var(--pending-text); }
   .status-chip.critical { background: var(--critical-bg); color: var(--critical-text); }
 
+  .flow-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+  }
+
   .table-wrap {
     overflow-x: auto;
     border-radius: 8px;
@@ -196,6 +213,17 @@
   tbody tr:last-child { border-bottom: none; }
   tbody td { padding: 12px 16px; vertical-align: middle; }
   tbody td:first-child { font-weight: 500; }
+
+  .table-group-row td {
+    background: var(--bg);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+  }
 
   .plan-phase { margin-bottom: 28px; }
 
@@ -377,23 +405,23 @@
       <div class="doc-meta">
         <div class="doc-meta-item">
           <span class="doc-meta-label">Data da auditoria</span>
-          <span class="doc-meta-value">24 e 25 jun 2026</span>
+          <span class="doc-meta-value">24 a 29 jun 2026</span>
         </div>
         <div class="doc-meta-item">
           <span class="doc-meta-label">Escopo</span>
-          <span class="doc-meta-value">Shopify + Omie</span>
+          <span class="doc-meta-value">Shopify + Omie + YOUMOVE</span>
         </div>
       </div>
     </div>
     <div>
       <div class="doc-eyebrow">Relatório Técnico de Auditoria</div>
-      <h1 class="doc-title">Diagnóstico e Proposta de Correção<br>Shopify &amp; Omie</h1>
+      <h1 class="doc-title">Diagnóstico e Proposta de Correção<br>Shopify, Omie &amp; Clube YOUMOVE</h1>
       <p class="doc-subtitle">Move Gourmet / Fernanda Ferrari</p>
     </div>
   </header>
 
   <div class="intro">
-    Realizamos uma auditoria completa da sua loja no Shopify e da integração com o Omie. O diagnóstico revelou <strong>um problema já resolvido</strong> durante a própria auditoria e <strong>sete pendências técnicas</strong> que impactam diretamente as vendas, principalmente para clientes de São Paulo. Abaixo está o detalhamento completo e a proposta para resolver tudo em até 7 dias.
+    Realizamos uma auditoria completa da sua loja no Shopify, da integração com o Omie e da configuração do clube de assinaturas YOUMOVE no Appstle. O diagnóstico revelou <strong>um problema já resolvido</strong> durante a própria auditoria, <strong>três pendências críticas no clube</strong> que impedem o lançamento e <strong>sete pendências técnicas no Shopify e Omie</strong> que impactam as vendas, principalmente para clientes de São Paulo. Abaixo está o detalhamento completo e a proposta para resolver tudo em até 7 dias.
   </div>
 
   <section class="section">
@@ -403,56 +431,81 @@
     <div class="alert-resolved">
       <span class="alert-check">&#10003;</span>
       <div>
-        <strong>Pagamentos com cartão já foram resolvidos.</strong> A loja estava sem nenhum gateway de cartão configurado como provedor principal. O banner de erro estava visível em todo o painel e impedia novas assinaturas no clube YOUMOVE. Ativamos o Mercado Pago Cartões no dia 24/06 e Fernanda confirmou a correção.
+        <strong>Pagamentos com cartão já foram resolvidos.</strong> A loja estava sem nenhum gateway de cartão configurado como provedor principal. O banner de erro estava visível em todo o painel e impedia novas vendas com cartão. Ativamos o Mercado Pago Cartões no dia 24/06 e Fernanda confirmou a correção.
       </div>
     </div>
 
     <div class="problem-list">
 
+      <div class="problem-group-label" style="margin-top:0;">Clube YOUMOVE — Assinaturas</div>
+
+      <div class="problem-card critical">
+        <span class="problem-name">1. Gateway de assinaturas incompatível</span>
+        <span class="status-chip critical">Crítico</span>
+        <p class="problem-desc">O Mercado Pago Cartões resolveu as vendas avulsas, mas ele não é compatível com a API de assinaturas recorrentes do Shopify. Essa API só funciona com gateways específicos: Stripe, Shopify Payments, PayPal Express e Authorize.net. O YOUMOVE usa o Appstle Subscriptions, que depende dessa API para processar cobranças mensais automáticas.</p>
+        <p class="problem-impact">Nenhuma assinatura YOUMOVE consegue processar cobrança recorrente. O clube existe na plataforma mas nunca funcionou de fato — 1 assinatura de teste cancelada, R$ 0 gerado.</p>
+      </div>
+
+      <div class="problem-card critical">
+        <span class="problem-name">2. Planos YOUMOVE com configuração incorreta</span>
+        <span class="status-chip critical">Crítico</span>
+        <p class="problem-desc">Três problemas nos planos configurados no Appstle: (a) o plano "Anual à vista" não tem nenhum produto vinculado — nenhum cliente consegue assinar por ele; (b) o plano "Anual Parcelado" tem billing idêntico ao "à vista" (cobra 12 meses de uma vez), o nome está incorreto; (c) os descontos de 20% e 10% se aplicam apenas ao 1º ciclo — na renovação o cliente paga preço cheio, sem aviso, o que gera cancelamentos.</p>
+        <p class="problem-impact">Plano principal sem produto = assinatura impossível. Desconto zerado na renovação = churn previsível na 1ª renovação.</p>
+      </div>
+
       <div class="problem-card">
-        <span class="problem-name">1. Omie não alimenta o depósito de São Paulo</span>
+        <span class="problem-name">3. Build-A-Box desativado — troca de kit por WhatsApp</span>
+        <span class="status-chip pending">Pendente</span>
+        <p class="problem-desc">O Appstle inclui no plano atual a funcionalidade Build-A-Box, que permite ao cliente montar e remontar seu kit de produtos a cada ciclo diretamente pelo portal, sem contato com a equipe. Essa funcionalidade não foi ativada. A substituição atual é manual: cliente envia mensagem no WhatsApp, equipe processa o pedido.</p>
+        <p class="problem-impact">Processo que não escala. Com 20 assinantes, o trabalho manual de trocas mensais vira gargalo operacional.</p>
+      </div>
+
+      <div class="problem-group-label">Shopify e Omie</div>
+
+      <div class="problem-card">
+        <span class="problem-name">4. Omie não alimenta o depósito de São Paulo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">O Omie gerencia todo o estoque em apenas uma localização, o depósito de Salvador. A localização de São Paulo existe no Shopify (Rua Dr João Toniolo, Pirituba), mas nunca recebe dados do ERP. Qualquer estoque inserido manualmente lá é apagado na próxima sincronização do Omie.</p>
         <p class="problem-impact">Pedidos de clientes de SP continuam saindo de Salvador, com frete mais caro e prazo maior.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">2. Dois apps Omie rodando em paralelo</span>
+        <span class="problem-name">5. Dois apps Omie rodando em paralelo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Existem dois apps de integração Omie-Shopify instalados ao mesmo tempo na loja: "Omie Move Gourmet" (ago/25) e "Omie Shopify" (set/25). Ambos têm tokens de acesso independentes e podem estar conflitando na leitura e escrita de pedidos e inventário.</p>
         <p class="problem-impact">Risco de duplicidade de atualizações de estoque e conflito no processamento de pedidos.</p>
       </div>
 
       <div class="problem-card critical">
-        <span class="problem-name">3. Clientes de SP não conseguem finalizar compras</span>
+        <span class="problem-name">6. Clientes de SP não conseguem finalizar compras</span>
         <span class="status-chip critical">Crítico</span>
         <p class="problem-desc">O perfil de frete "Avulsas", que contém os 47 principais produtos da loja, não tem São Paulo configurado como localização de envio. Quando um cliente de SP chega ao checkout, nenhuma opção de entrega aparece e a compra não pode ser concluída.</p>
         <p class="problem-impact">Vendas para clientes de SP estão sendo perdidas neste momento.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">4. Zona Bahia sem tarifa no Perfil Geral</span>
+        <span class="problem-name">7. Zona Bahia sem tarifa no Perfil Geral</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">O perfil de frete geral tem a zona da Bahia criada, mas sem nenhum valor definido. Parte dos clientes da Bahia que tentam comprar pelo perfil geral não encontram opção de frete disponível no checkout.</p>
         <p class="problem-impact">Perda de vendas para parte da base de clientes de Salvador.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">5. Perfis de frete vazios poluindo a configuração</span>
+        <span class="problem-name">8. Perfis de frete vazios poluindo a configuração</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Os perfis "AMIGAS" e "BRASIL TESTE" estão sem produtos e sem tarifas. São resíduos de tentativas anteriores que dificultam a manutenção e aumentam o risco de erros futuros.</p>
         <p class="problem-impact">Configuração confusa e propensa a falhas operacionais.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">6. Produtos duplicados no catálogo</span>
+        <span class="problem-name">9. Produtos duplicados no catálogo</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">Existem variantes duplicadas no catálogo criadas em tentativas anteriores de configurar assinatura, identificadas pelos sufixos "(Cópia)" e "(Plano anual via pix)". Esses registros geram inconsistência no inventário e podem distorcer relatórios de vendas.</p>
         <p class="problem-impact">Relatórios de estoque e vendas com dados incorretos.</p>
       </div>
 
       <div class="problem-card">
-        <span class="problem-name">7. App Frenet em estado inconsistente</span>
+        <span class="problem-name">10. App Frenet em estado inconsistente</span>
         <span class="status-chip pending">Pendente</span>
         <p class="problem-desc">O Frenet aparece ativo nas configurações de frete, mas consta como desinstalado na lista de apps. Esta inconsistência deixa a configuração de frete em estado instável e pode causar comportamentos inesperados no checkout.</p>
         <p class="problem-impact">Instabilidade potencial no cálculo e exibição de fretes.</p>
@@ -477,8 +530,29 @@
         <tbody>
           <tr>
             <td>Gateway de pagamentos sem configuração</td>
-            <td style="color:var(--text-muted);font-size:13px;">Impedia vendas com cartão e assinaturas</td>
+            <td style="color:var(--text-muted);font-size:13px;">Impedia vendas com cartão</td>
             <td><span class="status-chip resolved" style="display:inline-flex;">Resolvido 24/06</span></td>
+          </tr>
+          <tr class="table-group-row">
+            <td colspan="3">Clube YOUMOVE</td>
+          </tr>
+          <tr>
+            <td>Gateway de assinaturas incompatível (Mercado Pago)</td>
+            <td style="color:var(--text-muted);font-size:13px;">Clube nunca processou nenhuma cobrança</td>
+            <td><span class="status-chip critical" style="display:inline-flex;">Crítico</span></td>
+          </tr>
+          <tr>
+            <td>Planos mal configurados (produtos, nomes, descontos)</td>
+            <td style="color:var(--text-muted);font-size:13px;">Assinatura impossível, churn na renovação</td>
+            <td><span class="status-chip critical" style="display:inline-flex;">Crítico</span></td>
+          </tr>
+          <tr>
+            <td>Build-A-Box desativado — troca só por WhatsApp</td>
+            <td style="color:var(--text-muted);font-size:13px;">Processo manual que não escala</td>
+            <td><span class="status-chip pending" style="display:inline-flex;">Pendente</span></td>
+          </tr>
+          <tr class="table-group-row">
+            <td colspan="3">Shopify e Omie</td>
           </tr>
           <tr>
             <td>Omie sem depósito SP cadastrado</td>
@@ -521,35 +595,185 @@
   </section>
 
   <section class="section">
+    <h2 class="section-title">Clube YOUMOVE — Como ficará o fluxo</h2>
+    <hr class="section-rule">
+
+    <p style="font-size:13.5px;color:var(--text-muted);line-height:1.65;margin-bottom:20px;">Com a correção do gateway (Stripe) e a ativação do Build-A-Box, o clube passa de zero assinantes e processo manual para um ciclo de cobrança e entrega totalmente automático.</p>
+
+    <div class="flow-wrap">
+      <svg viewBox="0 0 740 490" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <marker id="m-gray"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+          <marker id="m-red"   markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C13333"/></marker>
+          <marker id="m-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1B7A4A"/></marker>
+          <marker id="m-blue"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2563EB"/></marker>
+          <marker id="m-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#D97706"/></marker>
+        </defs>
+
+        <!-- Column headers -->
+        <rect x="0"   y="0" width="352" height="40" fill="#FDEAEA"/>
+        <text x="176" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#8A1C1C">HOJE — CLUBE YOUMOVE BLOQUEADO</text>
+
+        <rect x="368" y="0" width="372" height="40" fill="#E8F4EE"/>
+        <text x="554" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="700" fill="#1B7A4A">COM A CORREÇÃO — FLUXO FUNCIONANDO</text>
+
+        <!-- Center gutter -->
+        <rect x="352" y="0" width="16" height="490" fill="#F5F5F3"/>
+        <line x1="360" y1="40" x2="360" y2="490" stroke="#DDE0E5" stroke-width="1" stroke-dasharray="5,4"/>
+
+        <!-- ===== LEFT COLUMN (HOJE) ===== -->
+
+        <!-- L1 -->
+        <rect x="8" y="52" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+        <text x="176" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Cliente acessa a loja</text>
+        <text x="176" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Vê produto do clube YOUMOVE, tenta assinar</text>
+        <line x1="176" y1="98" x2="176" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#m-gray)"/>
+
+        <!-- L2 -->
+        <rect x="8" y="112" width="336" height="46" rx="6" fill="#fff" stroke="#DDE0E5" stroke-width="1.5"/>
+        <text x="176" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#0F1C2E">Vai ao checkout com Mercado Pago</text>
+        <text x="176" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5A6070">Gateway ativo, mas incompatível com assinaturas</text>
+        <line x1="176" y1="158" x2="176" y2="170" stroke="#C13333" stroke-width="2" marker-end="url(#m-red)"/>
+
+        <!-- L FALHA -->
+        <rect x="8" y="172" width="336" height="66" rx="6" fill="#FDEAEA" stroke="#C13333" stroke-width="2"/>
+        <text x="176" y="196" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">&#x2715;  Assinatura não processa</text>
+        <text x="176" y="213" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Mercado Pago não suporta a Shopify Subscriptions API.</text>
+        <text x="176" y="228" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#8A1C1C">Cobrança recorrente automática é impossível.</text>
+        <line x1="176" y1="238" x2="176" y2="250" stroke="#D97706" stroke-width="1.5" marker-end="url(#m-amber)"/>
+
+        <!-- L WhatsApp -->
+        <rect x="8" y="252" width="336" height="46" rx="6" fill="#FFF4DC" stroke="#D97706" stroke-width="1.5"/>
+        <text x="176" y="271" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#7A5100">Pedido manual via WhatsApp</text>
+        <text x="176" y="287" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#7A5100">Equipe processa cada troca manualmente todo mês</text>
+
+        <!-- L Result -->
+        <rect x="8" y="316" width="336" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="176" y="341" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10.5" fill="#5A6070">Resultado atual</text>
+        <text x="176" y="360" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#8A1C1C">0 assinantes  ·  R$ 0 gerado  ·  Não escalável</text>
+
+        <!-- ===== RIGHT COLUMN (COM A CORREÇÃO) ===== -->
+
+        <!-- R1 -->
+        <rect x="368" y="52" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="71" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Acessa a página Kit YOUMOVE</text>
+        <text x="540" y="87" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Página dedicada com Build-A-Box integrado</text>
+        <line x1="540" y1="98" x2="540" y2="110" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <!-- R2 -->
+        <rect x="368" y="112" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Monta o kit pelo Build-A-Box</text>
+        <text x="540" y="147" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Escolhe produtos livremente do catálogo</text>
+        <line x1="540" y1="158" x2="540" y2="170" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <!-- R3 -->
+        <rect x="368" y="172" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="191" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Escolhe plano &#8594; checkout via Stripe &#10003;</text>
+        <text x="540" y="207" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Cartão salvo para cobranças automáticas futuras</text>
+        <line x1="540" y1="218" x2="540" y2="230" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <!-- R4 -->
+        <rect x="368" y="232" width="344" height="46" rx="6" fill="#E8F4EE" stroke="#1B7A4A" stroke-width="1.5"/>
+        <text x="540" y="251" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1B7A4A">Kit #1 gerado e enviado automaticamente</text>
+        <text x="540" y="267" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1B7A4A">Pedido criado no Shopify. Nenhuma ação necessária.</text>
+        <line x1="540" y1="278" x2="540" y2="290" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+
+        <!-- R5 (blue) -->
+        <rect x="368" y="292" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+        <text x="540" y="311" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Email automático antes da próxima entrega</text>
+        <text x="540" y="327" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">"Monte seu próximo kit" enviado X dias antes do ciclo</text>
+        <line x1="540" y1="338" x2="540" y2="350" stroke="#2563EB" stroke-width="1.5" marker-end="url(#m-blue)"/>
+
+        <!-- R6 (blue) -->
+        <rect x="368" y="352" width="344" height="46" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+        <text x="540" y="371" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="#1E40AF">Cliente acessa o portal e remonta o kit</text>
+        <text x="540" y="387" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#1E40AF">Autonomia total. Zero WhatsApp. Zero trabalho manual.</text>
+        <line x1="540" y1="398" x2="540" y2="410" stroke="#1B7A4A" stroke-width="1.5" marker-end="url(#m-green)"/>
+
+        <!-- R7 (green end) -->
+        <rect x="368" y="412" width="344" height="56" rx="6" fill="#1B7A4A"/>
+        <text x="540" y="440" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" fill="#ffffff">&#9851;  Ciclo automático — todo mês</text>
+        <text x="540" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="rgba(255,255,255,0.8)">Cobrança + pedido recorrentes sem esforço da equipe.</text>
+
+        <!-- Loop arrow (right side, between R6 and R7) -->
+        <path d="M 711 440 C 730 440 730 375 711 375" stroke="#1B7A4A" stroke-width="1.5" fill="none" marker-end="url(#m-green)"/>
+        <text x="724" y="413" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#1B7A4A" transform="rotate(-90 724 413)">repete</text>
+
+      </svg>
+    </div>
+  </section>
+
+  <section class="section">
     <h2 class="section-title">Plano de execução</h2>
     <hr class="section-rule">
 
     <div class="plan-phase">
-      <div class="plan-phase-label">Urgente — primeiros 3 dias</div>
+      <div class="plan-phase-label">Clube YOUMOVE — dias 1 a 3</div>
       <div class="plan-items">
         <div class="plan-item">
           <span class="plan-item-num">1</span>
+          <div>
+            <div class="plan-item-title">Instalar e configurar o Stripe como gateway de assinaturas</div>
+            <div class="plan-item-resp">Trívia · Requer acesso ao painel Stripe da loja (ou criação de conta)</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">2</span>
+          <div>
+            <div class="plan-item-title">Ativar e configurar Build-A-Box com os 23 produtos do catálogo YOUMOVE</div>
+            <div class="plan-item-resp">Trívia · Definir regras de seleção (qtd mínima e máxima por kit)</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">3</span>
+          <div>
+            <div class="plan-item-title">Corrigir os 3 planos: vincular produtos ao "Anual à vista", ajustar nome do "Parcelado" e corrigir descontos de renovação</div>
+            <div class="plan-item-resp">Trívia · Alinhar nomes e descontos com Fernanda antes de aplicar</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">4</span>
+          <div>
+            <div class="plan-item-title">Configurar portal do cliente: cancelar, pausar, trocar produtos por entrega</div>
+            <div class="plan-item-resp">Trívia · Configuração no Appstle Customer Portal</div>
+          </div>
+        </div>
+        <div class="plan-item">
+          <span class="plan-item-num">5</span>
+          <div>
+            <div class="plan-item-title">Teste end-to-end: assinar → montar kit → cobrar via Stripe → gerar pedido → confirmar renovação</div>
+            <div class="plan-item-resp">Trívia + Fernanda · Validação antes de abrir para clientes reais</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-phase">
+      <div class="plan-phase-label">Shopify e Omie — dias 2 a 5</div>
+      <div class="plan-items">
+        <div class="plan-item">
+          <span class="plan-item-num">6</span>
           <div>
             <div class="plan-item-title">Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify"</div>
             <div class="plan-item-resp">Trívia + equipe Omie · Requer janela de manutenção</div>
           </div>
         </div>
         <div class="plan-item">
-          <span class="plan-item-num">2</span>
+          <span class="plan-item-num">7</span>
           <div>
             <div class="plan-item-title">Criar depósito SP no Omie e mapear na integração com Shopify</div>
             <div class="plan-item-resp">Fernanda abre chamado no Omie + time técnico Omie configura a API</div>
           </div>
         </div>
         <div class="plan-item">
-          <span class="plan-item-num">3</span>
+          <span class="plan-item-num">8</span>
           <div>
             <div class="plan-item-title">Adicionar SP ao perfil Avulsas com tarifas de frete para São Paulo e demais estados</div>
             <div class="plan-item-resp">Trívia · Configuração direta no Shopify</div>
           </div>
         </div>
         <div class="plan-item">
-          <span class="plan-item-num">4</span>
+          <span class="plan-item-num">9</span>
           <div>
             <div class="plan-item-title">Configurar tarifa de frete na zona Bahia do Perfil Geral</div>
             <div class="plan-item-resp">Trívia · Configuração direta no Shopify</div>
@@ -559,24 +783,24 @@
     </div>
 
     <div class="plan-phase">
-      <div class="plan-phase-label">Conclusão — dias 4 a 7</div>
+      <div class="plan-phase-label">Limpeza técnica — dias 5 a 7</div>
       <div class="plan-items">
         <div class="plan-item">
-          <span class="plan-item-num">5</span>
+          <span class="plan-item-num">10</span>
           <div>
             <div class="plan-item-title">Cadastrar telefone na localização SP e excluir perfis AMIGAS e BRASIL TESTE</div>
             <div class="plan-item-resp">Trívia</div>
           </div>
         </div>
         <div class="plan-item">
-          <span class="plan-item-num">6</span>
+          <span class="plan-item-num">11</span>
           <div>
             <div class="plan-item-title">Limpar produtos duplicados com "(Cópia)" e "(Plano anual via pix)"</div>
             <div class="plan-item-resp">Trívia · Validação prévia com Fernanda</div>
           </div>
         </div>
         <div class="plan-item">
-          <span class="plan-item-num">7</span>
+          <span class="plan-item-num">12</span>
           <div>
             <div class="plan-item-title">Resolver inconsistência do Frenet e configurar Melhor Envio com CEP SP como origem</div>
             <div class="plan-item-resp">Trívia · Após depósito SP estar ativo</div>
@@ -594,8 +818,8 @@
       <div class="proposal-highlight">
         <div>
           <div class="proposal-highlight-label">Investimento total</div>
-          <div class="proposal-highlight-price">R$ 3.400,00</div>
-          <div class="proposal-highlight-sub">Pacote completo com todos os 7 itens acima</div>
+          <div class="proposal-highlight-price">R$ 4.900,00</div>
+          <div class="proposal-highlight-sub">Clube YOUMOVE + Shopify + Omie — tudo incluído</div>
         </div>
         <div style="text-align:right;">
           <div class="proposal-highlight-label">Prazo de entrega</div>
@@ -607,9 +831,10 @@
       <div class="proposal-scope">
         <div class="proposal-scope-title">O que está incluído</div>
         <div class="scope-list">
-          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Configuração Omie: criação do depósito SP, consolidação dos dois apps e mapeamento correto da integração com Shopify</span></div>
-          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Configuração completa de frete: Perfil Avulsas para SP, zona Bahia no Perfil Geral, exclusão de perfis resíduos e configuração do Melhor Envio com origem SP</span></div>
-          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Limpeza técnica da loja: remoção de produtos duplicados, resolução da inconsistência do Frenet e cadastro completo do depósito SP</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text"><strong>Clube YOUMOVE:</strong> Stripe como gateway de assinaturas, Build-A-Box com catálogo completo, correção dos 3 planos (produtos, nomes, descontos), configuração do portal do cliente e teste end-to-end completo</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text"><strong>Configuração Omie:</strong> criação do depósito SP, consolidação dos dois apps e mapeamento correto da integração com Shopify</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text"><strong>Configuração completa de frete:</strong> Perfil Avulsas para SP, zona Bahia no Perfil Geral, exclusão de perfis resíduos e configuração do Melhor Envio com origem SP</span></div>
+          <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text"><strong>Limpeza técnica da loja:</strong> remoção de produtos duplicados, resolução da inconsistência do Frenet e cadastro completo do depósito SP</span></div>
           <div class="scope-item"><span class="scope-dot"></span><span class="scope-item-text">Coordenação com o time técnico do Omie e acompanhamento de todo o processo até a validação final</span></div>
         </div>
       </div>
@@ -621,7 +846,7 @@
     </div>
 
     <p style="font-size:13px;color:var(--text-muted);margin-top:14px;line-height:1.6;">
-      <strong>Observação importante:</strong> A parte do Omie depende do envolvimento do time técnico deles para ajustar o mapeamento da integração via API. Vamos coordenar esse processo, mas o prazo pode variar conforme a disponibilidade do suporte do Omie. Recomendamos que o chamado seja aberto assim que a proposta for aprovada.
+      <strong>Observação Omie:</strong> A parte do Omie depende do envolvimento do time técnico deles para ajustar o mapeamento da integração via API. Vamos coordenar esse processo, mas o prazo pode variar conforme a disponibilidade do suporte do Omie. Recomendamos que o chamado seja aberto assim que a proposta for aprovada.
     </p>
   </section>
 
@@ -640,10 +865,15 @@
       <div class="next-step">
         <div class="next-step-num">1</div>
         <div class="next-step-title">Aprovação desta proposta</div>
-        <p class="next-step-desc">Com o aceite, já iniciamos a configuração das partes que dependem só do Shopify.</p>
+        <p class="next-step-desc">Com o aceite, iniciamos a configuração do Stripe e do Build-A-Box no mesmo dia.</p>
       </div>
       <div class="next-step">
         <div class="next-step-num">2</div>
+        <div class="next-step-title">Acesso ao Stripe</div>
+        <p class="next-step-desc">Compartilhar acesso ao painel Stripe da loja, ou autorizar a criação de uma conta nova para a Move Gourmet.</p>
+      </div>
+      <div class="next-step">
+        <div class="next-step-num">3</div>
         <div class="next-step-title">Abrir chamado no Omie</div>
         <p class="next-step-desc">Solicitar ao suporte do Omie a criação do Depósito SP e ajuste do mapeamento de integração. Pode ser feito em paralelo.</p>
       </div>
@@ -652,10 +882,10 @@
 
   <footer class="doc-footer">
     <p class="doc-footer-note">
-      Diagnóstico realizado em 24 e 25 de junho de 2026 com acesso autenticado ao admin Shopify e ao painel Omie da Move Gourmet.<br>
+      Diagnóstico realizado entre 24 e 29 de junho de 2026 com acesso ao admin Shopify e análise do Appstle Subscriptions da Move Gourmet.<br>
       Trívia Digital · João Gabriel Novais
     </p>
-    <span class="doc-footer-validity">Proposta válida até 03/07/2026</span>
+    <span class="doc-footer-validity">Proposta válida até 06/07/2026</span>
   </footer>
 
 </div>
