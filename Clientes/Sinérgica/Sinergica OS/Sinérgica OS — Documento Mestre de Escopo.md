@@ -20,6 +20,81 @@ status: escopo de referência (vivo)
 
 ---
 
+## ⚡ Resumo Executivo (1 página)
+
+**O quê.** O **Sinérgica OS** é o sistema operacional único da Sinérgica Manutenções — onde a
+liderança e o escritório operam a empresa inteira a partir de um só lugar. Ele **comanda o Auvo** (que
+segue na mão do técnico, no campo) e constrói ao redor tudo que falta hoje: visão por cliente, controle
+de backlog, preventivo conforme a lei, ciclo financeiro, comercial, atendimento com IA e portal do cliente.
+
+**O problema que resolve.** Hoje a operação é coordenada por WhatsApp + planilhas + Auvo + memória das
+pessoas. Falta um cérebro central. O sintoma mais caro: **não existe visão centralizada por cliente** —
+para falar de um condomínio, o gestor abre quatro lugares.
+
+**A aposta.** O ativo mais valioso de uma empresa de manutenção é a **memória da operação** (quem fez o
+quê, em qual equipamento, quando, por quê, quanto custou). Hoje está fragmentada. O OS a unifica numa
+base única — e dela passam a fluir decisões, faturamento, prestação de contas e inteligência.
+
+**Os 11 módulos:**
+
+| # | Módulo | O que entrega de poder |
+|---|--------|------------------------|
+| 1 | **PCM / Operação** ⭐ | A espinha dorsal: Visão 360 do cliente, backlog priorizado, OS que viram tarefa no Auvo sozinhas, preventivo/PMOC que não esquece, relatórios prontos para o cliente |
+| 2 | **Atendimento (IA)** | Agentes que abrem chamado (Zé) e qualificam/conduzem vendas — atendimento 24/7 sem depender de gente livre |
+| 3 | **Comercial (CRM)** | Funil + proposta com preço padronizado + contrato, em fluxo único |
+| 4 | **Operação & Estoque** | Peças por OS **+ controle de ferramentas e kits** (custódia, quem pegou, calibração) |
+| 5 | **Financeiro** | Caixa, faturamento e **rentabilidade por contrato** — saber se cada cliente dá lucro |
+| 6 | **Marketing** | Conteúdo para **Instagram e LinkedIn** via **Jimmy Studio** (texto → imagem → publicação) |
+| 7 | **Growth** | Leitura de Meta/Google Ads — onde colocar a verba |
+| 8 | **Gestão (Cockpit)** | Painel executivo: operação, margem, atrasos, funil, caixa |
+| 9 | **Área do Cliente** | Portal do síndico: OS, histórico, documentos e situação financeira |
+| 10 | **Dados (Base Única)** | A fundação — fonte única que alimenta os agentes de IA |
+| 11 | **Inteligência & Roteirização** | A base vira decisão: **roteirização (Google Maps)**, manutenção preditiva, antecipação de churn |
+
+**Por onde começa.** Pelo **PCM** — a espinha dorsal. Sem ele bom, o resto não tem do que se alimentar.
+
+**Roadmap em 4 fases:** (1) loop operacional mínimo — PCM + Auvo + Zé; (2) fechar operacional + comercial;
+(3) ciclo financeiro; (4) crescimento (marketing, growth, portal) + go-live. Detalhe em §10.
+
+**Diferencial competitivo.** Tratar **conformidade legal** (PMOC, SPDA, calibração) como obrigação com
+prazo que o sistema cuida — raro nos concorrentes — e uma camada de **inteligência** (roteirização,
+preditiva) que a maioria não tem.
+
+**O que precisa do Fabrício para começar:** 14 decisões de produto em §11 — cada uma já vem com a nossa
+recomendação para acelerar o "OK".
+
+---
+
+## 📑 Sumário
+
+1. [Sumário Executivo](#1-sumário-executivo)
+2. [As Dores do Mercado (e o que o OS resolve)](#2-as-dores-do-mercado-e-o-que-o-os-resolve)
+   — Liderança · Operação · Técnico · Cliente · Comercial
+3. [Visão de Produto](#3-visão-de-produto)
+4. [Arquitetura de Alto Nível](#4-arquitetura-de-alto-nível)
+5. [Mapa de Módulos](#5-mapa-de-módulos)
+6. [Detalhamento por Módulo](#6-detalhamento-por-módulo)
+   - 6.1 [PCM / Operação ⭐](#61-pcm--operação--a-espinha-dorsal) *(começa por aqui)*
+   - 6.2 [Atendimento (Agentes de IA)](#62-atendimento--agentes-de-ia)
+   - 6.3 [Comercial (CRM)](#63-comercial-crm)
+   - 6.4 [Operação & Estoque (Peças + Ferramentas)](#64-operação--estoque-almoxarifado-peças--ferramentas)
+   - 6.5 [Financeiro](#65-financeiro)
+   - 6.6 [Marketing](#66-marketing-conteúdo-multicanal)
+   - 6.7 [Growth](#67-growth-análise-de-anúncios)
+   - 6.8 [Gestão (Cockpit)](#68-gestão-cockpit--painel-de-indicadores)
+   - 6.9 [Área do Cliente](#69-área-do-cliente-portal-do-síndico)
+   - 6.10 [Dados (Base Única)](#610-dados-base-única)
+   - 6.11 [Inteligência & Roteirização](#611-inteligência-da-operação--roteirização--a-base-única-virando-decisão)
+   - 6.12 [Capacidades Transversais](#612-capacidades-transversais)
+7. [Integração com o Auvo](#7-integração-com-o-auvo-a-fronteira)
+8. [Papéis e Permissões](#8-papéis-e-permissões)
+9. [Conformidade Legal & Laudos](#9-conformidade-legal--laudos-diferencial-de-domínio)
+10. [Roadmap de Construção](#10-roadmap-de-construção-fases)
+11. [Decisões em Aberto — Roteiro de Entrevista](#11-decisões-em-aberto--roteiro-de-entrevista-com-o-fabrício)
+12. [Glossário](#12-glossário-rápido)
+
+---
+
 ## 1. Sumário Executivo
 
 A Sinérgica é uma empresa de **manutenção predial e de climatização (HVAC)** que atende
@@ -478,16 +553,27 @@ recebimento), posição de caixa projetada.
 
 ### 6.6. Marketing (Conteúdo Multicanal)
 
-**Dor:** marketing reativo, sem constância; produzir post é trabalhoso.
+**Dor:** marketing reativo, sem constância; produzir post é trabalhoso e some quando a operação aperta.
+
+**Motor de conteúdo: Jimmy Studio.** A produção de conteúdo do OS é feita **absorvendo o Jimmy Studio**
+para dentro do módulo Marketing. É ele quem gera o conteúdo de ponta a ponta — redação → arte/imagem →
+peça pronta — com foco em **Instagram e LinkedIn** (o LinkedIn faz sentido pelo perfil B2B de manutenção
+predial: administradoras, síndicos profissionais, gestores prediais).
 
 **Funcionalidades:**
-- **Produção de conteúdo de ponta a ponta** — pauta/redação (IA) → geração de imagem → revisão/aprovação
-  → publicação.
-- **Calendário editorial** com fluxo de aprovação.
-- **Multicanal** — Instagram, Facebook, LinkedIn, etc. (canais a confirmar).
-- **Biblioteca de marca** — tom de voz, identidade, templates.
+- **Geração de conteúdo via Jimmy Studio** — pauta/redação + geração de imagem, produzindo a peça pronta
+  para publicar.
+- **Canais foco:** **Instagram** e **LinkedIn** (Facebook e outros, se/quando fizer sentido).
+- **Calendário editorial** com fluxo de **aprovação humana** antes de publicar.
+- **Publicação/agendamento** nos canais conectados.
+- **Biblioteca de marca** — tom de voz, identidade visual, templates da Sinérgica.
 
-**Integração:** Growth (resultado dos posts/anúncios), Comercial (lead gerado por conteúdo).
+**Integração:** **Jimmy Studio** (motor de geração), Growth (resultado dos posts/anúncios), Comercial
+(lead gerado por conteúdo).
+
+> **A confirmar (ver §11 · D9):** o **modelo de integração do Jimmy Studio** — ele é embarcado dentro
+> do OS (UI própria), consumido por API, ou roda ao lado e o OS orquestra? E o nível de automação de
+> publicação (gera+agenda com aprovação vs publica direto). Definir antes de abrir a spec do módulo.
 
 **Indicadores:** cadência de publicação, alcance/engajamento, leads atribuídos a conteúdo.
 
@@ -769,12 +855,15 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
   que a contabilidade já usa) ou a uma API de NF-e. Reconstruir emissor fiscal é poço sem fundo e fora
   do valor central do OS.
 
-**D9 — Marketing: canais e automação**
-- *Pergunta:* Quais redes e qual nível de automação de publicação?
-- *Recomendação Trívia:* Instagram + (talvez) LinkedIn como foco B2B de manutenção predial. V1 =
-  geração de conteúdo (texto + imagem) + **agendamento com aprovação humana**; publicação 100%
-  automática só depois que o fluxo de aprovação estiver maduro. Confirmar se já existe gestor de
-  redes/Meta Business configurado.
+**D9 — Marketing: Jimmy Studio, canais e automação**
+- *Definido:* canais foco = **Instagram + LinkedIn**; motor de conteúdo = **Jimmy Studio** absorvido no
+  módulo Marketing.
+- *Pergunta:* Qual o **modelo de integração do Jimmy Studio** (embarcado no OS / via API / orquestrado ao
+  lado)? Qual o nível de automação de publicação? Já existe Meta Business / gestor de páginas configurado?
+- *Recomendação Trívia:* V1 = Jimmy Studio gera (texto + imagem) + **agendamento com aprovação humana**;
+  publicação 100% automática só depois que o fluxo de aprovação estiver maduro. Sobre a integração,
+  preferir **consumo por API** (acopla menos e deixa o Jimmy Studio evoluir sozinho) — confirmar
+  viabilidade com quem mantém o Jimmy Studio.
 
 **D10 — Calendário preventivo: conteúdo da célula**
 - *Decidido:* MVP só **cor + ícone**; código de atividade e mapeamento com tipos do Auvo ficam para
