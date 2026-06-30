@@ -56,6 +56,8 @@ Esta seção é o coração do diagnóstico. Foram organizadas por quem sente a 
 | L6 | **"Quanto vou faturar e receber este mês?"** | Estimativa de cabeça | Fluxo de caixa + contas a receber + faturamento automático a partir das OS e contratos |
 | L7 | **"Por que perdi aquele cliente?"** | Sem histórico de relacionamento nem sinais de churn | CRM + indicadores de satisfação (NPS) + histórico completo no Cockpit |
 | L8 | **"Estou em conformidade legal?"** | Controle manual de laudos, ARTs, vencimentos | Gestão de **conformidade** — PMOC, SPDA, análise de água, AVCB, com alertas de vencimento (ver §9) |
+| L9 | **"Entreguei o que vendi?"** | Não se sabe se o escopo do contrato (visitas/mês, sistemas) foi cumprido até a renovação ou a reclamação | **Contrato previsto × realizado** — placar de cumprimento por cliente (§6.1) |
+| L10 | **"Refizemos de graça?"** | Serviço refeito sem saber se é garantia; custo engolido em silêncio | **Controle de garantia** por equipamento — sinaliza retrabalho dentro do prazo (§6.1) |
 
 ### 2.2. Dores da Operação / Escritório (PCM)
 
@@ -68,6 +70,8 @@ Esta seção é o coração do diagnóstico. Foram organizadas por quem sente a 
 | O5 | Relatório para o síndico é montado à mão toda vez | Relatório **diário e mensal gerados automaticamente** (texto por IA + PDF) e enviados |
 | O6 | Cadastro de equipamento sem padrão, sem histórico | **Árvore de ativos** (Cliente → Torre → Área → Equipamento) com histórico por equipamento |
 | O7 | **"Não sei com quem está cada ferramenta."** Ferramenta cara (manifold, recolhedora, megômetro) some sem dono; ninguém sabe quem pegou | **Controle de Ferramentas & Kits** — custódia em tempo real, empréstimo/devolução, histórico de posse, classificação comum/específico (ver §6.4) |
+| O8 | **Técnico parado esperando aprovação.** Custo extra fora do contrato trava a execução até alguém falar com o síndico | **Aprovação de orçamento** pelo cliente no celular — destrava a OS na hora (§6.1) |
+| O9 | **Cliente novo demora a entrar.** Cadastrar condomínio, ativos, plano e acessos é manual e inconsistente | **Onboarding de contrato** guiado — cliente operacional em horas, com padrão (§6.1) |
 
 ### 2.3. Dores do Técnico de Campo
 
@@ -184,46 +188,152 @@ em [[Mapeamento Auvo x PCM como Hub (29-06-2026)]].
 ### 6.1. PCM / Operação — *a espinha dorsal*
 
 **Por que é o coração.** É a evolução do PCM atual da Sinérgica — que funciona, mas é "pobre": não
-tem visão centralizada por cliente e não fecha as dores de operação. Este módulo é o que justifica o
-projeto inteiro do ponto de vista operacional.
+tem visão centralizada por cliente e não fecha as dores de operação. Tudo no OS gravita em torno do
+PCM: é onde a manutenção **nasce** (chamado/inspeção/plano), é **planejada**, é **executada** (via
+Auvo) e tem suas **contas prestadas**. Se o PCM for bom, todo o resto do OS tem do que se alimentar.
 
-**Funcionalidades:**
+> **Princípio do módulo: nada de tela bonita sem função.** Cada recurso abaixo existe porque (a) tira
+> um trabalho manual, (b) evita um esquecimento caro, ou (c) dá um poder de decisão que hoje não
+> existe. As features-marco vêm com **Hoje → Com o OS → Poder → Valor** para deixar explícito o que
+> muda na operação.
 
-- **Visão 360 do Cliente (feature-âncora).** Uma tela por condomínio reunindo: dados do contrato,
-  árvore de equipamentos, backlog priorizado, histórico de OS, calendário preventivo, relatórios,
-  situação financeira e linha do tempo de comunicação. *Esta é a resposta direta à dor L1.*
-- **Cadastro de Clientes/Condomínios** — dados de gestão, contatos, grupo de WhatsApp, contrato.
-- **Árvore de Ativos** — `Cliente → Torre/Bloco → Área → Sistema → Equipamento`, com ficha e
-  histórico por equipamento (qual a vida daquela bomba, daquele chiller).
-- **Backlog & Priorização GUT** — score Gravidade × Urgência × Tendência (1–5 cada, máx 125),
-  faixas (crítica ≥100, alta ≥50, média ≥20, baixa <20), indicador de saúde do contrato
-  (horas pendentes ÷ horas/semana → verde/amarelo/vermelho). Sugestão de repriorização por IA.
-- **Ordens de Serviço (Kanban)** — `solicitação → planejamento → em execução → finalizado →
-  faturado/cancelado`. Ao entrar em planejamento, gera tarefa no Auvo. Categorias: corretiva,
-  preventiva, inspeção, levantamento, emergencial.
-- **Inspeções com IA** — técnico fotografa e descreve; LLM sugere não-conformidade, norma (ex.
-  NBR 5674), prioridade GUT e esforço; técnico confirma; itens não-conformes viram backlog.
-- **Plano Preventivo & PMOC** — equipamento + periodicidade + mês/dia de início → gera OS
-  recorrentes. **Trata PMOC como tipo especial de preventivo legalmente obrigatório** (ver §9).
-- **Calendário de Manutenção** — duas visões (compacta = próxima data; calendário = grid mensal/anual
-  com status colorido). Detalhe em [[PCM — Calendário de Manutenção Preventiva (Requisito Visual)]].
-- **Cronograma & Visitas** — grade semanal; agendamento por cliente/turno/técnico com itens de
-  backlog; planejamento enviado por WhatsApp; registro de resultado por item.
-- **Relatório Diário** — um por (técnico, cliente, dia); texto por IA; enviado ao grupo do condomínio.
-- **Relatório Mensal** — PDF do período (OS, preventivas cumpridas, SLA, NPS, assinatura); batch agendado.
-- **Laudos Técnicos** — SPDA (NBR 5419:2026, wizard de 8 etapas, cálculo de risco, assinatura com
-  hash) e, futuramente, outros laudos de conformidade.
+#### ⭐ Visão 360 do Cliente — *a tela que muda tudo*
+Uma página por condomínio reunindo contrato, árvore de equipamentos, backlog, histórico de OS,
+calendário preventivo, relatórios, situação financeira e linha do tempo de comunicação.
+- **Hoje:** para falar de um condomínio, o gestor abre WhatsApp + Auvo + planilha + memória. O síndico
+  liga e ele responde *"deixa eu verificar e te retorno."*
+- **Com o OS:** abre **uma** tela e vê tudo — o que está pendente, o que foi feito, o que está vencendo.
+- **Poder:** atender com autoridade e decidir com o quadro completo na frente.
+- **Valor:** resposta na hora, menos erro, imagem de empresa que tem controle. *Responde à dor L1.*
 
-**Entidades principais:** Cliente, Contrato, Equipamento/Ativo, Backlog Item, Visita, Ordem de
-Serviço, Inspeção, Plano Preventivo (e PMOC), Relatório Diário, Relatório Mensal, Laudo.
+#### Cadastro de Clientes + Estrutura Administradora → Condomínio
+Dados de gestão, contatos, grupo de WhatsApp, contrato. Modelo preparado para **uma administradora com
+vários condomínios** (`Administradora → Condomínio → Torre/Bloco`).
+- **Por que importa:** administradoras são o comprador B2B que mais escala no setor — fechar uma traz
+  N prédios. O sistema precisa enxergar o portfólio inteiro de uma administradora **e** cada prédio
+  individualmente. *Sem isso, o crescimento via administradora vira gambiarra de planilha.*
+
+#### Árvore de Ativos + Histórico por Equipamento + Garantia
+`Cliente → Torre/Bloco → Área → Sistema → Equipamento`, com ficha e histórico de **toda intervenção**
+por equipamento.
+- **Poder:** saber a vida de cada bomba/chiller — quando foi mexido, com qual peça, quantas vezes
+  falhou. É a base da manutenção preditiva (§6.11).
+- **Controle de garantia:** quando uma corretiva é refeita no mesmo equipamento dentro do prazo de
+  garantia, o sistema **sinaliza**. *Hoje:* refaz-se o serviço sem saber se o custo é nosso. *Com o
+  OS:* fica claro o que é garantia (custo a engolir + sinal de qualidade) e o que é serviço novo (a
+  faturar). *Valor: para de vazar dinheiro em retrabalho silencioso.*
+
+#### Backlog & Priorização GUT
+Score Gravidade × Urgência × Tendência (1–5 cada, máx 125); faixas (crítica ≥100, alta ≥50, média ≥20,
+baixa <20); indicador de saúde do contrato (horas pendentes ÷ horas/semana → verde/amarelo/vermelho);
+sugestão de repriorização por IA.
+- **Hoje:** "o que faço primeiro" é decidido por quem grita mais alto no WhatsApp.
+- **Com o OS:** uma fila objetiva, defensável, por cliente.
+- **Poder:** justificar ao síndico **por que** um item espera e outro não — com critério, não achismo.
+- **Valor:** a equipe trabalha no que de fato importa; some a urgência-fabricada.
+
+#### Ordens de Serviço (Kanban) + sincronismo com o Auvo
+`solicitação → planejamento → em execução → finalizado → faturado/cancelado`. Ao entrar em
+planejamento, **gera a tarefa no Auvo automaticamente** (idempotente por `externalId = os.id`).
+Categorias: corretiva, preventiva, inspeção, levantamento, emergencial.
+- **Hoje:** abrir a OS, lançar no Auvo e avisar o técnico = **três** trabalhos manuais, com erro de
+  transcrição.
+- **Com o OS:** um clique — vira tarefa no Auvo, o técnico recebe **com o contexto e o histórico** do
+  equipamento junto.
+- **Poder:** o escritório deixa de ser digitador de Auvo.
+- **Valor:** mais velocidade, menos erro, técnico melhor informado em campo.
+
+#### Aprovação de Orçamento Extra pelo Cliente
+Quando uma corretiva exige peça/custo fora do contrato, gera um **orçamento que o síndico aprova**
+(link/WhatsApp/portal) antes da execução.
+- **Hoje:** técnico **parado em campo** esperando alguém ligar para o síndico e confirmar; ou faz e
+  cobra depois, gerando atrito.
+- **Com o OS:** o orçamento sai na hora, o síndico aprova pelo celular, a OS destrava.
+- **Poder:** decisão do cliente registrada (fim do "eu não autorizei isso").
+- **Valor:** menos tempo ocioso de técnico, zero cobrança contestada, caixa mais previsível.
+
+#### Inspeções com IA → Backlog automático
+Técnico fotografa e descreve; o LLM sugere não-conformidade, norma (ex. NBR 5674), prioridade GUT e
+esforço; o técnico confirma; itens não-conformes viram backlog.
+- **Poder:** uma vistoria vira **lista de serviço priorizada e orçável**, não um caderno de fotos
+  perdido. *Valor: a inspeção deixa de ser custo e vira gerador de demanda qualificada.*
+
+#### Plano Preventivo & PMOC — *conformidade que não esquece*
+Equipamento + periodicidade + mês/dia de início → gera OS recorrentes. Trata **PMOC como preventivo
+legalmente obrigatório** (Lei 13.589/2018, ver §9).
+- **Hoje:** o preventivo depende de alguém lembrar; uma obrigação legal esquecida vira multa ou
+  contrato perdido.
+- **Com o OS:** o plano roda sozinho e **avisa** o que vence.
+- **Poder/Valor:** dormir tranquilo sabendo que nenhuma obrigação legal passou batido. Diferencial de
+  venda raro nos concorrentes.
+
+#### Calendário de Manutenção (compacto + anual)
+Duas visões: compacta (próxima data) e calendário (grid mensal/anual com status colorido). Detalhe em
+[[PCM — Calendário de Manutenção Preventiva (Requisito Visual)]].
+- **Poder:** **provar visualmente** ao cliente o que está em dia — material de assembleia pronto.
+
+#### Cronograma & Visitas (+ roteirização)
+Grade semanal; agendamento por cliente/turno/técnico com os itens de backlog a executar; planejamento
+enviado por WhatsApp; registro de resultado por item. **Otimização de rota** via Google Maps (§6.11)
+antes de despachar para o Auvo.
+- **Poder:** planejar a semana da equipe com critério e a rota do dia com menos deslocamento.
+- **Valor:** mais visitas/dia por técnico = mais receita pela mesma folha.
+
+#### Relatórios — *prestação de contas sem trabalho manual* ⭐
+Quatro saídas, todas com a **marca do cliente** (logo do condomínio):
+- **Relatório de Visita / Atendimento** — gerado ao fechar a visita/OS, com o que foi feito e fotos
+  antes/depois.
+- **Relatório Diário** — um por (técnico, cliente, dia), texto por IA, enviado ao grupo do condomínio.
+- **Relatório Mensal** — PDF do período (OS, preventivas cumpridas, SLA, NPS, assinatura), batch agendado.
+- **Relatório sob demanda (exportável)** — o escritório escolhe **cliente + período + conteúdo** e
+  exporta um PDF/Excel pronto para enviar por WhatsApp, e-mail ou disponibilizar no portal.
+- **Hoje:** todo relatório é montado à mão, copiando de vários lugares — trabalho que ninguém quer fazer.
+- **Com o OS:** clica, gera, envia.
+- **Poder:** prestar contas com aparência profissional sempre que o cliente pedir, sem esforço.
+- **Valor:** o relatório é a **prova do serviço** que justifica o contrato e segura o cliente na
+  renovação. *Atende a dor C2 e o pedido explícito de "extrair relatório para enviar ao cliente".*
+
+#### Gestão de Contrato: Previsto × Realizado
+O contrato define escopo (ex.: 4 visitas/mês, sistemas X e Y, preventivos Z). O OS acompanha o que foi
+**efetivamente entregue** vs o **contratado**.
+- **Hoje:** ninguém sabe ao certo se entregou o que vendeu — descobre-se na hora da renovação ou da
+  reclamação.
+- **Com o OS:** um placar de cumprimento do contrato, por cliente.
+- **Poder/Valor:** evita entregar a mais (prejuízo) e a menos (churn/quebra de contrato); embasa o
+  faturamento e a renovação com dado.
+
+#### Onboarding de Contrato Novo
+Roteiro guiado ao ativar um contrato: cadastrar condomínio, mapear ativos, montar plano preventivo,
+vincular grupo de WhatsApp, criar acesso ao portal.
+- **Valor:** um cliente novo entra **operacional em horas, não em semanas**, e com padrão — sem
+  depender da memória de quem cadastrou.
+
+#### Equipe & Técnicos
+Espelho dos técnicos (fonte Auvo) enriquecido com **competências/skills** e **disponibilidade**.
+- **Por que importa:** a roteirização e a alocação inteligente precisam saber *quem sabe fazer o quê* e
+  *quem está livre quando*. Também alimenta produtividade por técnico (§6.11).
+
+#### Laudos Técnicos
+SPDA (NBR 5419:2026, wizard de 8 etapas, cálculo de risco, assinatura com hash) e, futuramente, outros
+laudos de conformidade (PMOC, água) — ver §9.
+
+---
+
+**Entidades principais:** Administradora, Cliente/Condomínio, Contrato, Equipamento/Ativo, Garantia,
+Backlog Item, Visita, Ordem de Serviço, Orçamento, Inspeção, Plano Preventivo (e PMOC), Relatório
+(visita/diário/mensal/sob-demanda), Técnico, Laudo.
 
 **Regras de negócio-chave:**
 - Idempotência PCM→Auvo via `externalId = os.id` (reenviar nunca duplica).
 - Inspeção não-conforme → backlog com `origem = inspecao`.
 - OS preventiva atrasada (data passada + status ≠ finalizado) = pendência no calendário.
+- Corretiva no mesmo equipamento dentro do prazo de garantia → flag de garantia (não fatura, conta como
+  retrabalho).
+- Custo/peça fora do escopo do contrato → exige orçamento aprovado antes de executar.
 
 **Indicadores:** SLA (abertura→despacho→execução→fechamento), % preventivo cumprido, backlog em
-semanas, taxa de não-conformidade, aderência ao PMOC.
+semanas, taxa de não-conformidade, aderência ao PMOC, **cumprimento de contrato (previsto×realizado),
+taxa de retrabalho em garantia, tempo de aprovação de orçamento**.
 
 ---
 
@@ -487,6 +597,39 @@ precisar depois:
 
 ---
 
+### 6.12. Capacidades Transversais
+
+Recursos que **não são um módulo**, mas servem a todos — e que, se não existirem, cada módulo
+reinventa pior. São baratos de construir uma vez e usados em todo lugar.
+
+#### Central de Alertas & Notificações
+Um lugar só que dispara e consolida os avisos que hoje vivem na cabeça das pessoas: SLA estourando,
+preventivo/PMOC vencendo, inadimplência, ferramenta não devolvida, calibração vencida, orçamento
+aguardando aprovação, margem de contrato negativa.
+- **Valor:** a operação passa a ser **empurrada por exceção** — o sistema chama atenção para o que
+  precisa de ação, em vez de depender de alguém varrer planilhas. Canais: in-app, WhatsApp, e-mail.
+
+#### Motor de Relatórios & Exportação
+Componente compartilhado que gera os documentos do OS (relatórios de PCM, financeiros, de conformidade)
+em **PDF/Excel com a marca certa** (Sinérgica ou logo do cliente), enviáveis por WhatsApp/e-mail ou
+publicados no portal.
+- **Valor:** "extrair e mandar para o cliente" vira um clique em qualquer parte do sistema, não um
+  retrabalho manual por módulo.
+
+#### Gestão Documental
+Repositório dos documentos da operação: contratos, ARTs, laudos, certificados de conformidade, manuais
+de equipamento, fotos de OS — vinculados ao cliente/equipamento certo, com acesso por papel.
+- **Valor:** acha-se qualquer documento pela Visão 360; o que é do cliente aparece no portal dele.
+
+#### Busca Global
+Uma caixa de busca que encontra cliente, OS, equipamento, contrato ou documento de qualquer tela.
+- **Valor:** elimina o "em que menu estava aquilo?" — velocidade de quem usa o sistema o dia todo.
+
+> Estas capacidades entram **incrementalmente**, conforme os módulos que as consomem são construídos —
+> não são um épico isolado no começo.
+
+---
+
 ## 7. Integração com o Auvo (a fronteira)
 
 Resumo (detalhe completo em [[Mapeamento Auvo x PCM como Hub (29-06-2026)]]):
@@ -651,6 +794,19 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
   alerta de não-devolução) e trata a **comum** como saldo por técnico/kit (controle leve). Calibração
   de instrumentos = incluir já no V1 o **alerta de vencimento** (baixo esforço, conecta com
   conformidade e evita laudo invalidado por instrumento descalibrado).
+
+**D13 — Garantia de serviço: prazo**
+- *Pergunta:* Qual o prazo padrão de garantia de um serviço/corretiva? Varia por tipo de serviço ou
+  por contrato?
+- *Recomendação Trívia:* Definir um **prazo padrão configurável** (ex.: 90 dias, alinhado ao CDC para
+  serviços) com possibilidade de exceção por tipo de serviço. O essencial do V1 é o **flag automático**
+  de retrabalho dentro do prazo — o número exato é parâmetro, não trava o desenvolvimento.
+
+**D14 — Aprovação de orçamento: alçada**
+- *Pergunta:* Existe um valor abaixo do qual o escritório executa sem precisar da aprovação do síndico?
+- *Recomendação Trívia:* Sim — **limite de alçada configurável por contrato** (ex.: até R$ X, executa e
+  informa; acima, exige aprovação do cliente). Reduz fricção no dia a dia sem perder controle nos
+  gastos relevantes.
 
 ---
 
