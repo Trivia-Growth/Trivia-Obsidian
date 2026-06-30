@@ -796,7 +796,7 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
 
 ## 11. Decisões em Aberto — Roteiro de Entrevista com o Fabrício
 
-> Cada item traz a **pergunta** para o Fabrício **e** a **Recomendação Trívia** — o que nós
+> Cada item traz a **pergunta** para o Fabrício **e** a **Recomendação** — o que 
 > responderíamos como especialistas do setor, para o cliente reagir a uma proposta concreta em vez de
 > partir do zero. Bloqueadores de produto, não técnicos. Origem em
 > [[Sinérgica OS — Escopo Contratual (Cláusula 3ª)]].
