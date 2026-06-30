@@ -67,6 +67,7 @@ Esta seção é o coração do diagnóstico. Foram organizadas por quem sente a 
 | O4 | Planejar a semana dos técnicos é Tetris no quadro branco | **Cronograma e Visitas** — agendamento por cliente/turno/técnico com os itens de backlog a executar |
 | O5 | Relatório para o síndico é montado à mão toda vez | Relatório **diário e mensal gerados automaticamente** (texto por IA + PDF) e enviados |
 | O6 | Cadastro de equipamento sem padrão, sem histórico | **Árvore de ativos** (Cliente → Torre → Área → Equipamento) com histórico por equipamento |
+| O7 | **"Não sei com quem está cada ferramenta."** Ferramenta cara (manifold, recolhedora, megômetro) some sem dono; ninguém sabe quem pegou | **Controle de Ferramentas & Kits** — custódia em tempo real, empréstimo/devolução, histórico de posse, classificação comum/específico (ver §6.4) |
 
 ### 2.3. Dores do Técnico de Campo
 
@@ -148,6 +149,7 @@ Esta seção é o coração do diagnóstico. Foram organizadas por quem sente a 
         └──────────────┘
 
 Canais de IA:  WhatsApp (Evolution API) ── Agentes ── OpenRouter (Gemini/Claude)
+Inteligência:  Google Maps Platform (geocoding + roteirização) ── camada de inteligência (§6.11)
 ```
 
 **Regra de ouro PCM × Auvo:** PCM é origin of truth das **decisões** (abrir, priorizar, atribuir,
@@ -163,13 +165,14 @@ em [[Mapeamento Auvo x PCM como Hub (29-06-2026)]].
 | 1 | **PCM / Operação** | Espinha dorsal — o ciclo de vida da manutenção | Evolução de software existente |
 | 2 | **Atendimento (Agentes de IA)** | Porta de entrada e relacionamento automatizado | Parcial (Zé existe) |
 | 3 | **Comercial (CRM)** | Funil: prospect → proposta → contrato | Parcial (propostas existem) |
-| 4 | **Operação & Estoque** | Peças, custo de material, suprimento | Novo |
+| 4 | **Operação & Estoque** | Peças, custo de material, suprimento + **ferramentas e kits** | Novo |
 | 5 | **Financeiro** | Caixa, faturamento, rentabilidade | Novo |
 | 6 | **Marketing** | Geração de demanda (conteúdo) | Novo |
 | 7 | **Growth** | Inteligência de anúncios | Novo |
 | 8 | **Gestão (Cockpit)** | Visão executiva e indicadores | Novo |
 | 9 | **Área do Cliente** | Transparência e prestação de contas | Novo |
 | 10 | **Dados (Base Única)** | Fundação — fonte única que alimenta a IA | Arquitetural |
+| 11 | **Inteligência & Roteirização** | Camada que transforma a base em decisão (roteirização Google Maps, preditiva) | Novo |
 
 ---
 
@@ -285,21 +288,54 @@ desconto médio vs piso, origem do lead (com Growth).
 
 ---
 
-### 6.4. Operação & Estoque
+### 6.4. Operação & Estoque (Almoxarifado: Peças + Ferramentas)
 
 **Dor:** retrabalho por falta de peça; custo de material por OS desconhecido; sem controle de
-catálogo nem de saldo.
+catálogo nem de saldo; **e ferramentas caras circulando sem dono.**
 
-**Funcionalidades:**
-- **Catálogo de materiais/peças** (com custo, unidade, fornecedor).
-- **Estoque** — saldo, entradas/saídas, mínimo, ponto de reposição; opcional: estoque por técnico/van.
+> **Distinção conceitual importante.** Uma **peça** é consumível: sai do estoque, é instalada e vira
+> custo da OS (não volta). Uma **ferramenta** é um ativo durável: é **emprestada e devolvida**, tem
+> dono/custódia em cada momento e um histórico de quem a teve. São entidades diferentes — o módulo
+> trata as duas, mas com lógicas distintas.
+
+#### 6.4.1. Peças & Materiais (consumíveis)
+- **Catálogo** (custo, unidade, fornecedor).
+- **Estoque** — saldo, entradas/saídas, mínimo, ponto de reposição; opcional por técnico/van.
 - **Consumo por OS** — peças usadas em campo (vindas do Auvo) baixam estoque e compõem o custo da OS.
-- **Separação/kit por visita** — peças previstas para a visita planejada.
-- **Compras** (escopo a confirmar) — sugestão de reposição quando abaixo do mínimo.
+- **Separação por visita** — peças previstas para a visita planejada.
+- **Compras** (a confirmar) — sugestão de reposição quando abaixo do mínimo.
 
-**Integração:** Auvo devolve peças consumidas por tarefa; PCM associa à OS; Financeiro usa para custo.
+#### 6.4.2. Ferramentas & Kits (ativos duráveis) — *dor O7*
+- **Cadastro de ferramenta** — nome, nº de patrimônio/série, foto, valor, status
+  (disponível / em uso / em manutenção / em calibração / extraviada / baixada).
+- **Classificação em dois eixos:**
+  - **Por controle:** **comum** (baixo valor, cada técnico tem o seu — controle leve) vs
+    **específico** (cara/crítica, compartilhada — controle individual rígido).
+  - **Por categoria técnica:** climatização, elétrica, hidráulica, medição/instrumentação, EPI, civil.
+- **Kits** — agrupam **N ferramentas** numa unidade atribuível (ex.: *Kit Climatização* = manifold +
+  recolhedora de gás + vacuômetro + multímetro + furadeira). O kit inteiro é atribuído a um
+  técnico ou veículo de uma vez.
+- **Custódia / posse em tempo real** — onde está cada ferramenta/kit **agora**: técnico, veículo,
+  almoxarifado, em manutenção, no cliente.
+- **Empréstimo & devolução (check-out / check-in)** — quem pegou, quando, condição na saída,
+  previsão e data efetiva de devolução, condição na volta.
+- **Histórico de posse (chain of custody)** — linha do tempo de cada ferramenta: todos que já a
+  tiveram, quando, em qual OS/visita.
+- **Vínculo com OS/visita** — quais ferramentas saíram para qual trabalho.
+- **Calibração / manutenção de instrumentos** — instrumentos de medição (megômetro, manifold,
+  alicate amperímetro) têm **validade de calibração**; o sistema controla o vencimento e alerta
+  (conecta com o painel de conformidade, §9).
+- **Alertas** — ferramenta não devolvida no prazo, calibração vencida, item dado como extraviado.
 
-**Indicadores:** giro de estoque, custo de material por OS, ruptura (OS parada por falta de peça).
+**Entidades:** Material/Peça, MovimentaçãoEstoque, Ferramenta, Kit, Categoria, Custódia,
+MovimentaçãoFerramenta (empréstimo/devolução), Calibração.
+
+**Integração:** Auvo devolve peças consumidas por tarefa; PCM associa à OS; Financeiro usa para
+custo; ferramentas previstas entram no planejamento da visita.
+
+**Indicadores:** giro de estoque, custo de material por OS, ruptura (OS parada por falta de peça),
+**taxa de devolução de ferramentas, ferramentas extraviadas/ano, custo de reposição de ferramental,
+% de instrumentos com calibração vigente.**
 
 ---
 
@@ -406,6 +442,51 @@ torna a operação **uma fonte única de verdade** — e é dessa base que os Ag
 
 ---
 
+### 6.11. Inteligência da Operação & Roteirização — *a base única virando decisão*
+
+**Tese.** O módulo Dados (§6.10) é a **fundação**; esta camada é o que faz a fundação **valer a pena**.
+Ter tudo numa base só não serve de nada se não vira decisão. Aqui o dado vira inteligência.
+
+**Princípio de captura — "garbage in, garbage out".** A qualidade da inteligência depende da
+**disciplina na captura**. Por isso o sistema é desenhado, desde o cadastro, pensando no que a IA vai
+precisar depois:
+- Endereço de cliente **geocodificado** (lat/long) já no cadastro — habilita roteirização e mapa.
+- Histórico por equipamento **estruturado** (intervenção, peça, sintoma) — não texto livre — habilita
+  preditiva.
+- **Tempo real de execução** (vindo do Auvo) — habilita produtividade e previsão.
+- **Competências/skills** do técnico cadastradas — habilitam alocação inteligente.
+
+**Capacidades de inteligência:**
+
+| # | Capacidade | O que faz | Dado necessário | Fonte |
+|---|-----------|-----------|-----------------|-------|
+| 1 | **Roteirização** *(carro-chefe)* | Otimiza a sequência de visitas do dia por técnico, minimizando deslocamento | Endereços geocodificados, janelas de turno, base do técnico, prioridade | **Google Maps Platform** + PCM |
+| 2 | **Manutenção preditiva** | Sinaliza equipamento com falha recorrente para troca/overhaul | Histórico estruturado por ativo | PCM (ativos + OS) |
+| 3 | **Repriorização do backlog** | Sugere reordenação por GUT + idade + recorrência + impacto financeiro | Backlog + histórico + custo | PCM + Financeiro |
+| 4 | **Previsão de demanda** | Antecipa carga corretiva e necessidade de peças | Sazonalidade, histórico de chamados | PCM + Estoque |
+| 5 | **Antecipação de churn** | Detecta clientes em risco (queda de NPS, reclamações, atrasos) | NPS, comunicação, SLA | Atendimento + Gestão |
+| 6 | **Inteligência de rentabilidade** | Aponta quais contratos/serviços/clientes dão lucro | Custo real × receita | Financeiro |
+| 7 | **Produtividade do técnico** | Tempo por tarefa, ociosidade, % deslocamento | Tempo de execução, GPS | Auvo → PCM |
+
+#### Roteirização — detalhe (integração Google Maps)
+- **APIs:** Geocoding (endereço → lat/long), Distance Matrix / Routes (tempo e distância entre pontos,
+  com trânsito), opcional Route Optimization.
+- **Onde roda:** no **planejamento do PCM** (Cronograma/Visitas), **antes** de empurrar as tarefas
+  para o Auvo. O OS monta a rota ótima; o Auvo executa e devolve o GPS real.
+- **Entrada:** visitas agendadas do dia, base/origem do técnico, janelas de turno (manhã/tarde),
+  prioridade dos itens, competência exigida vs competência do técnico.
+- **Saída:** ordem ótima das visitas + ETA + km estimado por rota; visualização em mapa.
+- **Cuidados:** custo por chamada de API → **cachear a matriz de distância** entre clientes fixos
+  (mudam pouco); respeitar quota; geocodificar uma vez e persistir.
+
+> **Por que isso importa para a Sinérgica:** roteirização reduz hora-deslocamento (custo direto) e
+> aumenta nº de visitas/dia por técnico (receita). É das alavancas de margem mais diretas numa
+> operação volante.
+
+**Decisões em aberto:** custo/quota do Google Maps e nível de otimização desejado — ver §11 (D11).
+
+---
+
 ## 7. Integração com o Auvo (a fronteira)
 
 Resumo (detalhe completo em [[Mapeamento Auvo x PCM como Hub (29-06-2026)]]):
@@ -484,23 +565,92 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
 
 ---
 
-## 11. Decisões em Aberto (precisam de Fabrício / produto)
+## 11. Decisões em Aberto — Roteiro de Entrevista com o Fabrício
 
-> Bloqueadores de produto, não técnicos. Recomenda-se alinhar antes de abrir as specs dos módulos
-> afetados. Origem detalhada em [[Sinérgica OS — Escopo Contratual (Cláusula 3ª)]].
+> Cada item traz a **pergunta** para o Fabrício **e** a **Recomendação Trívia** — o que nós
+> responderíamos como especialistas do setor, para o cliente reagir a uma proposta concreta em vez de
+> partir do zero. Bloqueadores de produto, não técnicos. Origem em
+> [[Sinérgica OS — Escopo Contratual (Cláusula 3ª)]].
 
-| # | Tema | Pergunta |
-|---|------|---------|
-| D1 | **Agentes comerciais** | Quais papéis (SDR/closer/CS) a Sinérgica quer? Em quais canais? Schema próprio ou extensão do Zé? |
-| D2 | **Agente de apoio ao técnico** | O que faz (dúvida técnica, diagnóstico por foto, checklist)? Por qual canal? |
-| D3 | **Financeiro completo** | Escopo mínimo de contas a pagar, fluxo de caixa e conciliação para o go-live? Integra com banco ou só CSV/OFX? |
-| D4 | **Módulo Dados** | É só arquitetura (sem tela) ou há painel de qualidade de dados / config de IA? |
-| D5 | **Portal — financeiro** | Quais dados financeiros o síndico vê (faturas, vencimentos, comprovantes)? |
-| D6 | **Portal — documentos** | Quais documentos (só laudos? contratos? certificados de conformidade)? |
-| D7 | **Conformidade legal** | Quais obrigações a Sinérgica controla hoje? Quais periodicidades valem (validar §9)? |
-| D8 | **NF-e** | Emissão de nota é integração com sistema fiscal existente ou reconstrução no OS? |
-| D9 | **Marketing — canais** | Quais redes sociais e qual nível de automação de publicação? |
-| D10 | **Calendário preventivo** | Conteúdo da célula e códigos — definir quando soubermos o que volta do Auvo (já decidido: MVP só cor/ícone) |
+**D1 — Agentes comerciais (SDR / Closer / CS)**
+- *Pergunta:* Quais papéis a Sinérgica quer? Em quais canais? Agente próprio ou extensão do Zé?
+- *Recomendação Trívia:* Começar **só com o SDR** (qualificação) no mesmo canal onde o lead chega
+  (WhatsApp). Closer e CS na Fase 4. Arquitetura: **agente separado do Zé** (contexto e objetivo
+  diferentes — Zé é operacional/pós-contrato; SDR é pré-venda), mas **mesma infraestrutura** de fila e
+  tools. Evita reescrever o motor de conversa.
+
+**D2 — Agente de apoio ao técnico**
+- *Pergunta:* O que faz (dúvida técnica, diagnóstico por foto, procedimento/norma)? Por qual canal?
+- *Recomendação Trívia:* MVP = **assistente de procedimento e norma** via WhatsApp do técnico
+  ("como faço a limpeza do evaporador do chiller X?" / "qual a periodicidade PMOC para fan-coil?").
+  Diagnóstico por foto é alto valor mas exige curadoria — Fase 4. Não competir com o app Auvo; o
+  agente **complementa** com conhecimento, não com registro.
+
+**D3 — Financeiro completo (pagar / caixa / conciliação)**
+- *Pergunta:* Escopo mínimo para o go-live? Integra com banco ou só importação?
+- *Recomendação Trívia:* Go-live com **receber + faturamento + rentabilidade por contrato** (o que
+  ataca a dor L2/L6). Contas a pagar e fluxo de caixa = **lançamento manual + importação CSV/OFX** do
+  extrato, com conciliação por baixa manual. **Sem integração bancária direta (Open Finance)** no V1 —
+  é projeto à parte. Margem por contrato é o indicador que muda o jogo; priorizar ele.
+
+**D4 — Módulo Dados (Base Única)**
+- *Pergunta:* É só arquitetura (sem tela) ou tem entregável visível?
+- *Recomendação Trívia:* É **fundação arquitetural** (Supabase, schemas por domínio) **+** uma tela
+  enxuta de **qualidade de dados**: duplicatas de cliente/equipamento, cadastros incompletos, última
+  sincronização com o Auvo. Vender "Dados" como módulo sem nenhuma tela frustra a percepção de
+  entrega — a tela de saúde de dados materializa o valor. A inteligência (§6.11) é a prova viva de que
+  a base única serve para algo.
+
+**D5 — Portal: situação financeira do síndico**
+- *Pergunta:* Quais dados financeiros o síndico vê?
+- *Recomendação Trívia:* Faturas do próprio condomínio, vencimentos, status (pago/em aberto) e
+  comprovante/2ª via. **Nunca** custo interno, margem ou rentabilidade. Views RLS dedicadas em
+  `financeiro` para o papel `cliente-sindico`.
+
+**D6 — Portal: documentos**
+- *Pergunta:* Quais documentos ficam disponíveis ao cliente?
+- *Recomendação Trívia:* Relatórios mensais, **laudos de conformidade (SPDA, PMOC, análise de água)**
+  e certificados. É exatamente a "prova para a assembleia" (dor C2) — alto valor percebido. Contrato
+  vigente também, se o Fabrício topar. Tudo por signed URL com expiração.
+
+**D7 — Conformidade legal (§9)**
+- *Pergunta:* Quais obrigações a Sinérgica controla hoje? Quais periodicidades valem?
+- *Recomendação Trívia:* Mapear com a engenharia da Sinérgica o conjunto real (provavelmente PMOC,
+  SPDA, limpeza de reservatório, AVCB). Tratar como **catálogo configurável de obrigações** (tipo +
+  periodicidade + responsável + laudo gerado), não hard-coded — cada cliente tem um subconjunto. O
+  painel de conformidade com alerta de vencimento é um **diferencial de venda** raro nos concorrentes.
+
+**D8 — NF-e**
+- *Pergunta:* Emissão de nota é integração ou reconstrução no OS?
+- *Recomendação Trívia:* **Integração**, nunca reconstrução. Conectar a um emissor existente (ex.: o
+  que a contabilidade já usa) ou a uma API de NF-e. Reconstruir emissor fiscal é poço sem fundo e fora
+  do valor central do OS.
+
+**D9 — Marketing: canais e automação**
+- *Pergunta:* Quais redes e qual nível de automação de publicação?
+- *Recomendação Trívia:* Instagram + (talvez) LinkedIn como foco B2B de manutenção predial. V1 =
+  geração de conteúdo (texto + imagem) + **agendamento com aprovação humana**; publicação 100%
+  automática só depois que o fluxo de aprovação estiver maduro. Confirmar se já existe gestor de
+  redes/Meta Business configurado.
+
+**D10 — Calendário preventivo: conteúdo da célula**
+- *Decidido:* MVP só **cor + ícone**; código de atividade e mapeamento com tipos do Auvo ficam para
+  quando soubermos o que o webhook devolve. (Ver [[PCM — Calendário de Manutenção Preventiva (Requisito Visual)]].)
+
+**D11 — Roteirização: custo e nível de otimização (Google Maps)**
+- *Pergunta:* Qual o orçamento aceitável de API e o nível de otimização desejado?
+- *Recomendação Trívia:* Começar com **otimização simples** (ordenar visitas por menor deslocamento
+  via Distance Matrix, com cache da matriz entre clientes fixos) — barato e já entrega o ganho. Route
+  Optimization API (otimização multi-restrição) só se o volume justificar. Geocodificar endereços uma
+  única vez no cadastro. Avaliar Google Maps Platform vs alternativas (Mapbox) por custo/quota.
+
+**D12 — Ferramentas: profundidade do controle**
+- *Pergunta:* Controla ferramenta **comum** também ou só a **específica** (cara/crítica)? Calibração
+  de instrumentos entra no V1?
+- *Recomendação Trívia:* V1 controla **rigorosamente a específica** (custódia individual, histórico,
+  alerta de não-devolução) e trata a **comum** como saldo por técnico/kit (controle leve). Calibração
+  de instrumentos = incluir já no V1 o **alerta de vencimento** (baixo esforço, conecta com
+  conformidade e evita laudo invalidado por instrumento descalibrado).
 
 ---
 
@@ -515,3 +665,9 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
 - **Backlog** — itens de manutenção pendentes, priorizados.
 - **Origin of truth** — sistema que é dono autoritativo de um dado.
 - **Zé** — agente de IA de atendimento no WhatsApp.
+- **Kit (de ferramentas)** — conjunto de N ferramentas atribuído como unidade a um técnico/veículo.
+- **Custódia / chain of custody** — quem detém uma ferramenta a cada momento e o histórico disso.
+- **Ferramenta comum × específica** — comum: baixo valor, controle leve. Específica: cara/crítica,
+  controle individual rígido.
+- **Roteirização** — otimização da sequência de visitas de um técnico para minimizar deslocamento.
+- **Geocodificação** — conversão de endereço em coordenadas (lat/long) para mapa e roteirização.
