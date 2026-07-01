@@ -23,27 +23,45 @@ Shopify.
 
 | Código | Local | ID Omie | Situação | Uso |
 |---|---|---|---|---|
-| 01 | **Fábrica Move** | 3390627692 | Ativo · **padrão** | Concentra TODO o estoque real hoje |
-| 09 | **SÃO PAULO** | 10009035408 | Ativo | Criado 15/05/2026, **sem saldo** ainda |
+| 01 | **Fábrica Move** | 3390627692 | Ativo · **padrão** | 1.009 itens com saldo (embalagem + produto acabado) |
+| 09 | **SÃO PAULO** | 10009035408 | Ativo | Criado 15/05/2026, **COM saldo** de produto acabado (ver correção abaixo) |
 | 04 | Assinantes | 9976573531 | Ativo | Sem saldo |
 | 02 | ANGIOCLAM VILLAS | 9590120888 | Ativo | Outro negócio (não é Move) |
 | 03 | Escolas | 9887572719 | Inativo | — |
 | 06 | Quiosques | 9976573734 | Inativo | — |
 
-**Conclusão:** o depósito "São Paulo" que estava pendente **já existe** (código 09).
-Não precisa criar — precisa é abastecer e mapear.
+**Conclusão:** o depósito "São Paulo" que estava pendente **já existe** (código 09)
+**e já tem produto acabado em estoque** (ver correção abaixo). Não precisa criar nem
+abastecer do zero. Falta **mapear** o local no Hub, e o Hub é justamente onde isso trava.
 
 ---
 
 ## Estoque
 
+> ⚠️ **CORREÇÃO 01/07/2026** — a versão anterior desta seção dizia que SP estava
+> zerado e que a API "consolidava tudo no depósito padrão". **Os dois estavam errados.**
+> Nova varredura via API (somente leitura, `ListarPosEstoque` filtrando por
+> `codigo_local_estoque`) provou que a API devolve saldo **separado por depósito** de
+> forma confiável, e que o depósito de SP **já tem produto acabado em estoque**.
+
 - Catálogo: **1.432 produtos** (muitos zerados).
-- Todo o saldo físico está no **Fábrica Move (Salvador)**. Ex.: NT CREATINE 300G = 5 un,
-  NT CREATINE = 10 un, PURA FIBER 250G = 4 un — todos no local 3390627692.
-- SÃO PAULO e Assinantes retornam saldo zero.
-- **Limitação da API:** o relatório `ListarPosEstoque` consolida no local padrão
-  (Fábrica). A leitura por local individual não é confiável por essa chamada —
-  a conferência fina do que existe fisicamente em SP tem que ser na tela do Omie.
+- **A API lê estoque por local.** Passar `codigo_local_estoque` em `ListarPosEstoque`
+  devolve o saldo daquele depósito específico. NÃO consolida no padrão (correção da
+  conclusão anterior). Provado: mesmos produtos vêm com saldos diferentes por depósito.
+- **Fábrica Move (Salvador): 1.009 itens com saldo.** Grande parte é embalagem e
+  matéria-prima (copo 200ml = 499.727, cartão de recado = 100.000, sacolas, embalagem
+  a vácuo), mais produto acabado. É onde se produz e embala.
+- **SÃO PAULO (09): 19 produtos com saldo, todos produto ACABADO e vendável.**
+  Pão de queijo grana padano (29), bombom brownie (26), pão fumeiro 340g (23),
+  pão frango orgânico 340g (22), brownie 70% (21), mini tortas / coxinhas / quiches /
+  pastéis / kits (4 a 19). SP funciona como ponto de distribuição de produto pronto,
+  coerente com o papel de expedir Sul/Sudeste.
+- ⚠️ **Dado a corrigir no Omie:** `PMUND PASTEL DE BACALHAU 65G` está com saldo **-1**
+  (negativo) em SP. Provável venda sem baixa ou ajuste manual. Time Move deve ajustar.
+- **Implicação estratégica:** os dois lados já têm o dado necessário (Omie por depósito
+  via API + Shopify por localização via API). O único elo que falta é o Omie.Hub
+  empurrar o saldo por localização. O split Salvador × SP é **tecnicamente viável** por
+  integração própria ou conector de terceiro (ex.: OMS FullComm), independente do Hub.
 
 ---
 
