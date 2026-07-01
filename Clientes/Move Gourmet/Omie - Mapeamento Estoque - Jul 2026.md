@@ -146,18 +146,24 @@ PORÉM, pela API dos pedidos, a integração está **funcionando em segundo plan
 2. **"Omie Move Gourmet" (ago/2025) é o legado morto** — chave `3c913c1e...01c` e token
    `...01ce` NÃO aparecem em nenhuma configuração do Hub. ✅ Seguro remover, confirmado.
 3. **Hub deduz estoque só do depósito PADRÃO (Fábrica Move / Salvador).** Todos os 100
-   pedidos Shopify vieram com `codigo_local_estoque: None` → cai no padrão. **Hoje NÃO há
-   divisão por local no ERP.**
+   pedidos Shopify vieram com `codigo_local_estoque: None` → cai no padrão. Ou seja, **o
+   Hub não usa a divisão por local ao processar pedidos.** (Atenção: o ERP em si TEM
+   divisão por local e SP tem saldo próprio — ver correção na seção "Estoque". O que não
+   acontece é o Hub aproveitar essa divisão.)
 4. Configuração vista na tela "Editar Loja": ERP = Omie, Categoria ERP = "Venda de Produtos
    Fabricados", Tipo Movimentação Estoque = "2 - Envia a nota fiscal de venda para Omie e
-   movimenta estoque", "Atualiza Cliente ERP" ativado. **Ainda não localizado nesta tela**
-   um campo de depósito/local de estoque — pode estar mais abaixo na mesma página ou em
-   outra aba (verificando).
+   movimenta estoque", "Atualiza Cliente ERP" ativado. ✅ **VERIFICADO 01/07: não existe
+   campo de depósito/local de estoque em lugar nenhum da UI do Hub** — nem na página
+   "Editar Loja" (vista até o rodapé), nem na ficha do produto (que carrega um saldo único).
 
 ### ⚠️ Blocker real para a divisão Salvador × SP
-Pra SP deduzir do depósito SP, é preciso configurar o mapeamento **local Shopify → depósito
-Omie** DENTRO do Omie.Hub. Esse painel está **inacessível** → depende de **suporte Omie /
-acesso do Hub pela Fernanda**. Configuração no Shopify sozinha NÃO divide o estoque no ERP.
+Pra SP deduzir do depósito SP, é preciso o mapeamento **local Shopify → depósito Omie**.
+O acesso ao Hub já foi liberado (01/07), mas a UI **não tem esse campo em lugar nenhum**
+(verificado em Editar Loja + ficha do produto). Então o mapeamento depende de: (a) o
+suporte Omie habilitar no backend, OU (b) integração própria / conector externo lendo o
+Omie por depósito via API (que funciona) e escrevendo no Shopify por localização (que a
+API do Shopify aceita). Configuração no Shopify sozinha NÃO divide o estoque no ERP.
+Chamado aberto com o suporte Omie (Kim) em 01/07, aguardando resposta.
 
 ### A verificar
 - Último pedido sincronizado é 15/06/2026 (hoje é 01/07). Confirmar se a sync ainda está
@@ -173,11 +179,14 @@ integração: ago/2025 (Omie Move Gourmet + Wix, falhou) → set/2025 (Omie Shop
 ## Próximos passos Omie
 
 - [x] Confirmar qual app de integração está ativo → **Omie Shopify (via Omie.Hub)**
-- [ ] **Destravar acesso ao painel do Omie.Hub** (suporte Omie / Fernanda) — pré-requisito
-      pra qualquer divisão de estoque por local
-- [ ] Dentro do Hub: mapear local Shopify → depósito Omie (Salvador→Fábrica Move, SP→SÃO PAULO)
+- [x] **Destravar acesso ao painel do Omie.Hub** → liberado 01/07/2026 (suporte Omie)
+- [ ] Mapear local Shopify → depósito Omie (Salvador→Fábrica Move, SP→SÃO PAULO).
+      ⚠️ **A UI do Hub não tem campo de depósito** (verificado 01/07 em "Editar Loja" e
+      na ficha do produto: o produto carrega um saldo único, sem separação por local).
+      Depende de o suporte Omie habilitar no backend, ou de integração própria / conector
+      externo. Chamado aberto com o suporte (Kim) em 01/07.
 - [x] Confirmar com Fernanda/Nat se a loja física (Shopping Barra) tem estoque próprio → **sim, controlado no Linx**
-- [ ] Abastecer / conferir saldo do depósito SÃO PAULO (09) — hoje zerado
+- [x] Conferir saldo do depósito SÃO PAULO (09) → **NÃO está zerado**: 19 produtos acabados com saldo (via API, 01/07). Corrige a premissa anterior.
 - [ ] Verificar se a sync do Hub ainda está ativa (último pedido visto: 15/06/2026)
 - [ ] Remover app legado "Omie Move Gourmet" (confirmado seguro; não é urgente)
 - [ ] Rotacionar credenciais da API Omie expostas no chat (APP_KEY 3323795676201)
