@@ -86,10 +86,21 @@ definir).
 
 ---
 
+## Modelo de negócio confirmado (2026-07-01, ver [[Especificação de Produto]] §12)
+
+- **Curso de Formação** pode ser **EAD ou presencial** — o que define é ter **Turma**, não a
+  modalidade. Presencial usa a mesma lógica de curso (catálogo/módulo/aula) do M2, só **sem vídeo**.
+- **Turma** é conceito único para EAD e presencial (cada instância tem sua modalidade e, se
+  presencial, sua Unidade).
+- **Liberação progressiva (drip)** vale para as duas modalidades (EAD libera aula, presencial
+  libera material).
+- **Recorrência** (Pagar.me) cobre **Curso de Formação** (EAD e presencial); **Curso Livre** e
+  **Curso Avulso de Música** seguem **pagamento avulso** (sem turma).
+- **Vídeo (Vimeo)** continua exclusivo do Online.
+
 ## Questões em aberto (do `docs/ESPECIFICACAO.md`, a refinar com a escola)
 
-- [ ] Curso de Formação presencial existe, ou Formação é só EAD?
-- [ ] Modelo de recorrência: mensalidade da escola, por curso, ou por turma?
+- [ ] **Granularidade da recorrência:** mensalidade por Turma ou por Curso?
 - [ ] Curso Avulso de Música é presencial, EAD, ou ambos? Precisa de agenda por professor?
 - [ ] Regras de inadimplência: bloqueia acesso? Após quantos dias?
 - [ ] Materiais complementares: por aula, por módulo, por curso — ou todos?

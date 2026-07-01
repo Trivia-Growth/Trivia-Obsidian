@@ -2,7 +2,7 @@
 tipo: espelho-repo
 projeto: Edutech IPP
 fonte: docs/ESPECIFICACAO.md (repositório de código)
-espelhado_em: 2026-07-01
+espelhado_em: 2026-07-01 (commit 547beea)
 status: RASCUNHO (exemplo para refinamento)
 ---
 
@@ -95,9 +95,9 @@ Cinco perfis. As permissões abaixo são o ponto de partida das **RLS policies**
 | Termo | Definição | Não confundir com |
 |-------|-----------|-------------------|
 | **Unidade** | Local físico da modalidade presencial (**Vila Natal**, **Pinheiros**) | Turma |
-| **Curso Livre** | Curso EAD comprável a qualquer momento, sem janela de inscrição | Curso de Formação |
-| **Curso de Formação** | Curso EAD com **período de inscrição** e **turmas** | Curso Livre |
-| **Turma** | Grupo de alunos de um Curso de Formação, com janela de inscrição e liberação progressiva | Módulo |
+| **Curso Livre** | Curso **EAD** comprável a qualquer momento, sem janela de inscrição, sem turma; pagamento avulso | Curso de Formação |
+| **Curso de Formação** | Curso com **Turma**, período de inscrição e liberação progressiva; pode ser **EAD ou presencial** (não é exclusivo de uma modalidade) | Curso Livre |
+| **Turma** | Grupo de alunos de um Curso de Formação, com janela de inscrição e liberação progressiva — **conceito único para EAD e presencial**; quando presencial, vinculada a uma **Unidade** (Vila Natal/Pinheiros); cobrada por **Recorrência** | Módulo |
 | **Matrícula** | Vínculo aluno↔(curso ou turma), com status de pagamento | Inscrição |
 | **Presença** | Registro de comparecimento por encontro (presencial), com justificativa opcional | Progresso (EAD) |
 | **Recorrência** | Cobrança periódica automática (Pagar.me) | Compra avulsa |
@@ -116,30 +116,32 @@ Cada módulo lista **definição**, **regras principais** e **candidatos a AC** 
 - **Candidatos a AC:** login; atribuição de papel; um perfil só enxerga o que seu papel permite.
 
 ### M2 — Catálogo de Cursos e Conteúdo
-- **Definição:** CRUD de cursos, módulos e aulas. Tipos de curso: **Curso Livre** e **Curso de Formação**.
-- **Regras:** aula pode ter vídeo (Vimeo) + **materiais complementares (link/documento)**; ordenação de módulos/aulas; publicação.
-- **Candidatos a AC:** criar curso e classificá-lo como Livre/Formação; anexar material do tipo link e do tipo documento; ordenar aulas.
+- **Definição:** CRUD de cursos, módulos e aulas. Tipos de curso: **Curso Livre** e **Curso de Formação** (EAD ou presencial).
+- **Regras:** aula pode ter vídeo (Vimeo, **só em curso EAD**) + **materiais complementares (link/documento)**, disponíveis em qualquer modalidade; ordenação de módulos/aulas; publicação. Curso de Formação presencial usa a mesma estrutura de curso/módulo/aula, sem o campo de vídeo.
+- **Candidatos a AC:** criar curso e classificá-lo como Livre/Formação; anexar material do tipo link e do tipo documento; ordenar aulas; curso presencial não expõe campo de vídeo.
 
 ### M3 — Modalidade Presencial
-- **Definição:** operação das unidades **Vila Natal** e **Pinheiros**.
+- **Definição:** operação das unidades **Vila Natal** e **Pinheiros** — gestão de alunos, Turma (M5), presença e envio de material (M9). **Sem vídeo** (M10 é exclusivo do Online).
 - **Regras:**
   - **Matrícula manual** (preenchimento manual) — **prioridade: destravar pagamento** rapidamente.
+  - Vínculo a uma **Turma** de Curso de Formação presencial, vinculada à Unidade; sujeita a período de inscrição e **liberação progressiva de material** (drip), igual ao EAD.
   - **Controle de presença** por encontro, com **campo de justificativa** de falta.
-- **Candidatos a AC:** matricular manualmente um aluno em uma unidade; registrar presença/falta de um encontro; anexar justificativa a uma falta.
+  - Cobrança por **Recorrência** (mensalidade), não avulsa.
+- **Candidatos a AC:** matricular manualmente um aluno em uma turma de uma unidade; registrar presença/falta de um encontro; anexar justificativa a uma falta; aluno só acessa material já liberado pelo cronograma da turma.
 
 ### M4 — Modalidade Online (EAD)
 - **Definição:** entrega de cursos EAD.
 - **Regras:**
-  - **Curso Livre:** compra a **qualquer momento**; acesso imediato após pagamento.
-  - **Curso de Formação:** exige **inscrição** dentro da janela e vínculo a uma **turma**.
+  - **Curso Livre:** compra a **qualquer momento**; acesso imediato após pagamento; **pagamento avulso** (não recorrência); sem turma.
+  - **Curso de Formação (EAD):** exige **inscrição** dentro da janela e vínculo a uma **turma**; cobrança por **Recorrência** (mensalidade); vídeo das aulas via Vimeo (M10).
 - **Candidatos a AC:** comprar Curso Livre e obter acesso; tentar inscrever em Formação fora da janela → bloqueado.
 
 ### M5 — Gestão de Turmas
-- **Definição:** administração de turmas dos Cursos de Formação.
+- **Definição:** administração de Turmas — **conceito único, usado tanto por Curso de Formação EAD quanto presencial**, distinguidas por modalidade (e, quando presencial, pela Unidade vinculada).
 - **Regras:**
   - Controlar **período de inscrição** (abre/fecha).
-  - **Liberação progressiva** do conteúdo (drip): aulas/módulos liberados por cronograma/etapa.
-- **Candidatos a AC:** definir janela de inscrição de uma turma; configurar liberação progressiva; aluno só acessa o conteúdo já liberado.
+  - **Liberação progressiva** do conteúdo (drip): aulas/módulos (EAD) ou materiais (presencial) liberados por cronograma/etapa — vale para **ambas as modalidades**.
+- **Candidatos a AC:** definir janela de inscrição de uma turma (EAD ou presencial); configurar liberação progressiva; aluno só acessa o conteúdo/material já liberado, independente da modalidade.
 
 ### M6 — Curso Avulso de Música
 - **Definição:** curso vendido individualmente com **seleção de professor** pelo aluno.
@@ -154,20 +156,21 @@ Cada módulo lista **definição**, **regras principais** e **candidatos a AC** 
 ### M8 — Pagamentos e Recorrência (Pagar.me)
 - **Definição:** cobrança de matrículas e mensalidades via **Pagar.me**.
 - **Regras:**
-  - **Recorrência** (assinatura/mensalidade) automática.
-  - Compra avulsa (Curso Livre, Curso Avulso de Música).
+  - **Recorrência** (mensalidade) automática para **Curso de Formação — EAD e presencial** (toda Turma é cobrada por recorrência).
+  - **Compra avulsa** (pagamento único) para **Curso Livre** e **Curso Avulso de Música** — não têm turma.
   - **Preços sempre calculados no backend**; webhook confirma pagamento; status de inadimplência.
-- **Candidatos a AC:** criar recorrência; webhook confirma pagamento e ativa matrícula; falha de cobrança marca inadimplência.
+- **Candidatos a AC:** criar recorrência ao matricular em uma turma (EAD ou presencial); webhook confirma pagamento e ativa matrícula; falha de cobrança marca inadimplência; Curso Livre e Curso Avulso de Música seguem fluxo de pagamento único.
+- ⚠️ **Em aberto:** granularidade da recorrência — mensalidade é por **Turma** (aluno paga de novo se trocar de turma) ou por **Curso** (mensalidade única cobre trocas de turma dentro do mesmo curso)? Ver seção 12.
 
 ### M9 — Materiais Complementares
-- **Definição:** recursos de apoio vinculados a aula/curso: **link** e **documento**.
-- **Regras:** upload de documento (Storage) e cadastro de link; visibilidade conforme matrícula.
-- **Candidatos a AC:** adicionar link; fazer upload de documento; aluno matriculado acessa, não-matriculado não.
+- **Definição:** recursos de apoio vinculados a aula/curso: **link** e **documento**. É o **principal veículo de conteúdo do presencial** (que não tem vídeo).
+- **Regras:** upload de documento (Storage) e cadastro de link; visibilidade conforme matrícula e liberação progressiva da turma (M5).
+- **Candidatos a AC:** adicionar link; fazer upload de documento; aluno matriculado acessa, não-matriculado não; presencial só libera material conforme cronograma da turma.
 
 ### M10 — Integração de Vídeo (Vimeo)
-- **Definição:** vídeos das aulas hospedados no **Vimeo**.
-- **Regras:** **puxar a thumbnail** (e metadados) do Vimeo ao cadastrar/exibir a aula.
-- **Candidatos a AC:** ao informar o vídeo Vimeo, a thumbnail é obtida e exibida automaticamente.
+- **Definição:** vídeos das aulas hospedados no **Vimeo** — **exclusivo do Online** (Curso Livre e Curso de Formação EAD); não se aplica ao presencial.
+- **Regras:** **puxar o vídeo e a thumbnail** (e metadados) do Vimeo ao cadastrar/exibir a aula.
+- **Candidatos a AC:** ao informar o vídeo Vimeo, o vídeo e a thumbnail são obtidos e exibidos automaticamente; curso/turma presencial não expõe essa opção.
 
 ---
 
@@ -236,8 +239,19 @@ Cada módulo lista **definição**, **regras principais** e **candidatos a AC** 
 
 ## 12. Questões em aberto (para refinamento)
 
-- [ ] Curso de Formação **presencial** existe, ou Formação é só EAD? (impacta M3×M4×M5)
-- [ ] Modelo de recorrência: mensalidade da escola, por curso, ou por turma?
+### Resolvidas (2026-07-01, confirmado com o piloto/JG)
+- [x] Curso de Formação **presencial** existe, ou Formação é só EAD? → **Existe.** Curso de
+  Formação pode ser EAD ou presencial; o que o define é ter **Turma** (não a modalidade).
+- [x] "Turma" é conceito único (EAD + presencial) ou dois conceitos separados? → **Único.** Mesma
+  entidade, cada instância com sua modalidade e, se presencial, sua Unidade.
+- [x] Liberação progressiva (drip) vale para o presencial também? → **Sim**, material do
+  presencial também é liberado por cronograma/etapa, igual ao EAD.
+- [x] Recorrência vale para quais modalidades/cursos? → **Curso de Formação (EAD e presencial)**;
+  Curso Livre e Curso Avulso de Música continuam **avulsos** (pagamento único).
+
+### Ainda em aberto
+- [ ] **Granularidade da recorrência:** a mensalidade é cobrada por **Turma** (nova cobrança a
+  cada turma) ou por **Curso** (uma mensalidade cobre trocas de turma dentro do mesmo curso)?
 - [ ] Curso Avulso de Música é presencial, EAD, ou ambos? Agenda por professor é necessária?
 - [ ] Regras de inadimplência: bloqueia acesso? Após quantos dias?
 - [ ] Materiais complementares: por aula, por módulo, por curso — ou todos?
