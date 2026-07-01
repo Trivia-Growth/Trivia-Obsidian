@@ -60,7 +60,7 @@ base única — e dela passam a fluir decisões, faturamento, prestação de con
 prazo que o sistema cuida — raro nos concorrentes — e uma camada de **inteligência** (roteirização,
 preditiva) que a maioria não tem.
 
-**O que precisa do Fabrício para começar:** 14 decisões de produto em §11 — cada uma já vem com a nossa
+**O que precisa do Fabrício para começar:** 15 decisões de produto em §11 — cada uma já vem com a nossa
 recomendação para acelerar o "OK".
 
 ---
@@ -272,6 +272,42 @@ Auvo) e tem suas **contas prestadas**. Se o PCM for bom, todo o resto do OS tem 
 > existe. As features-marco vêm com **Hoje → Com o OS → Poder → Valor** para deixar explícito o que
 > muda na operação.
 
+#### 🔒 Paridade com o PCM v2 — base obrigatória (não regredir) + o que o OS acrescenta
+> Auditamos o **código inteiro** do PCM v2 (12 módulos, 28 tabelas, 24 edge functions). O OS deve
+> entregar **100% do que o PCM faz hoje** como linha de base — e ir além. Abaixo, features reais do v2
+> que estavam implícitas no escopo e agora ficam **explícitas**, para não perdermos nada na migração.
+
+Features do v2 a **preservar e melhorar**:
+- **Catálogo real de tipos de serviço** (hoje mapeado a IDs do Auvo): Corretiva, Ar-Condicionado, Bomba,
+  Quadro Elétrico, Luminária, Porta/Portão, Extintor, Hidrante, **Rondas** (semanal/diária por cliente),
+  Levantamento e Atendimento Emergencial. *(O OS mantém esse catálogo — não uma lista genérica.)*
+- **Decisão de material no levantamento:** ao levantar um serviço, registrar quem fornece o material —
+  *cliente compra* / *Sinérgica fornece com markup* / *vira proposta de execução* — com o markup aplicado.
+- **Vínculo de OS (pai-filho):** uma corretiva pode gerar/atrelar OS filhas, mantendo a árvore do chamado.
+- **Estimativa de esforço por IA:** o backlog já calcula horas estimadas com justificativa — o OS mantém
+  e passa a **aprender com o realizado** (esforço estimado × real).
+- **Citação normativa por IA:** cada item de backlog/inspeção cita a norma (NBR etc.) — base de qualidade.
+- **Inspeção por sistema predial** (12 sistemas: estrutural, hidrossanitário, elétrico, SPDA, cobertura,
+  fachada, áreas comuns, equipamentos, incêndio, ar-condicionado, elevadores, geral), com análise de foto
+  por IA (descrição, norma, GUT, esforço, título de backlog pronto).
+- **Importação de inspeção/laudo legado** (PDF e XLS): extrai itens via IA e estrutura no backlog —
+  acelera a migração do histórico de papel/planilha.
+- **Rondas recorrentes** (diária/semanal) além do preventivo mensal→anual — o calendário mostra ambos.
+- **Resultado por item de visita** (executado/adiado/parcial/cancelado) + flags de "planejamento enviado"
+  e "relatório enviado".
+- **Contrato com visitas/semana, visitas/mês e horas/visita** — alimenta a saúde do backlog e o
+  previsto×realizado.
+- **Relatório diário automático** ao fechar a visita no Auvo (ou manual, com **preview** antes de enviar).
+- **Questionário do Auvo → backlog:** respostas de checklist no fim da visita geram itens de backlog.
+- **Laudo SPDA completo** (edifício/dimensões, pontos de medição de resistência, nível de proteção I–IV,
+  agentes de IA: analisador de foto, consultor NBR, diagnóstico, redator).
+- **Leads/prospects** que hoje convivem no cadastro de clientes do PCM → migram para o **Comercial**,
+  mantendo **uma identidade única** de cliente (centralidade).
+
+O que o OS **acrescenta** sobre essa base: gestão de ativos de verdade (abaixo), Visão 360, conformidade
+legal (§9), inteligência e roteirização (§6.11), garantia, contrato previsto×realizado, central de alertas
+e relatórios sob demanda — sempre com a régua de **mais inteligência, mais qualidade, mais centralidade**.
+
 #### ⭐ Visão 360 do Cliente — *a tela que muda tudo*
 Uma página por condomínio reunindo contrato, árvore de equipamentos, backlog, histórico de OS,
 calendário preventivo, relatórios, situação financeira e linha do tempo de comunicação.
@@ -288,15 +324,32 @@ vários condomínios** (`Administradora → Condomínio → Torre/Bloco`).
   N prédios. O sistema precisa enxergar o portfólio inteiro de uma administradora **e** cada prédio
   individualmente. *Sem isso, o crescimento via administradora vira gambiarra de planilha.*
 
-#### Árvore de Ativos + Histórico por Equipamento + Garantia
-`Cliente → Torre/Bloco → Área → Sistema → Equipamento`, com ficha e histórico de **toda intervenção**
-por equipamento.
-- **Poder:** saber a vida de cada bomba/chiller — quando foi mexido, com qual peça, quantas vezes
-  falhou. É a base da manutenção preditiva (§6.11).
-- **Controle de garantia:** quando uma corretiva é refeita no mesmo equipamento dentro do prazo de
-  garantia, o sistema **sinaliza**. *Hoje:* refaz-se o serviço sem saber se o custo é nosso. *Com o
-  OS:* fica claro o que é garantia (custo a engolir + sinal de qualidade) e o que é serviço novo (a
-  faturar). *Valor: para de vazar dinheiro em retrabalho silencioso.*
+#### ⭐ Gestão de Ativos / Equipamentos do Cliente — *o maior salto sobre o PCM atual*
+> **Pedido explícito do Fabrício.** Hoje o PCM só **espelha** o equipamento do Auvo (uma lista plana
+> com nome + categoria, usada só para anexar um plano preventivo). Não há ficha, hierarquia, histórico
+> nem ciclo de vida. O OS transforma isso em **gestão de ativos de verdade** — e o PCM passa a ser o
+> **dono** do ativo (cadastra no OS, empurra para o Auvo via `externalId`; o Auvo vira espelho de campo).
+
+A gestão de ativos cobre:
+- **Ficha técnica completa** por equipamento: tipo, marca, modelo, nº de série, **capacidade**
+  (ex.: BTU/TR para climatização), fabricante, data de instalação, fotos, **QR code**, manuais e
+  documentos anexos.
+- **Hierarquia de localização:** `Cliente → Torre/Bloco → Área → Sistema → Equipamento` (hoje é lista
+  plana). Permite "todos os ativos da Torre A" ou "o histórico daquela bomba específica".
+- **Histórico unificado por ativo:** toda OS (corretiva/preventiva), inspeção, peça trocada,
+  medição/leitura e laudo daquele equipamento numa **linha do tempo única**. *(Hoje: não existe.)*
+- **Plano preventivo / PMOC por ativo:** cada equipamento carrega sua periodicidade e obrigações.
+- **Ciclo de vida / status:** operando · em manutenção · parado · substituído · baixado.
+- **Garantia (fabricante + serviço):** alerta quando uma corretiva é refeita no mesmo equipamento
+  dentro do prazo — separa retrabalho (custo a engolir) de serviço novo (a faturar).
+
+- **Hoje:** o equipamento é uma linha cacheada do Auvo, sem prontuário; "qual a vida desse chiller?"
+  não tem resposta.
+- **Com o OS:** cada ativo tem um **prontuário completo** com tudo que já aconteceu nele.
+- **Poder:** decidir **trocar vs. consertar** com dados, provar conformidade por equipamento, planejar
+  o preventivo certo.
+- **Valor:** é o **alicerce** do preventivo/PMOC, da garantia, dos laudos e da manutenção preditiva
+  (§6.11). Sem gestão de ativos robusta, o "controle por cliente" fica oco.
 
 #### Backlog & Priorização GUT
 Score Gravidade × Urgência × Tendência (1–5 cada, máx 125); faixas (crítica ≥100, alta ≥50, média ≥20,
@@ -310,7 +363,7 @@ sugestão de repriorização por IA.
 #### Ordens de Serviço (Kanban) + sincronismo com o Auvo
 `solicitação → planejamento → em execução → finalizado → faturado/cancelado`. Ao entrar em
 planejamento, **gera a tarefa no Auvo automaticamente** (idempotente por `externalId = os.id`).
-Categorias: corretiva, preventiva, inspeção, levantamento, emergencial.
+Categorias e **tipos de serviço seguem o catálogo real** do v2 (ver paridade acima): corretiva, preventiva (AC, bomba, quadro, extintor, hidrante…), ronda/inspeção, levantamento, emergencial.
 - **Hoje:** abrir a OS, lançar no Auvo e avisar o técnico = **três** trabalhos manuais, com erro de
   transcrição.
 - **Com o OS:** um clique — vira tarefa no Auvo, o técnico recebe **com o contexto e o histórico** do
@@ -896,6 +949,16 @@ executivo; agentes comerciais (SDR/closer/CS) e agente de apoio ao técnico. Go-
 - *Recomendação Trívia:* Sim — **limite de alçada configurável por contrato** (ex.: até R$ X, executa e
   informa; acima, exige aprovação do cliente). Reduz fricção no dia a dia sem perder controle nos
   gastos relevantes.
+
+**D15 — Gestão de ativos: ficha técnica e hierarquia**
+- *Pergunta:* Quais campos da ficha de equipamento são obrigatórios para a Sinérgica (marca, modelo,
+  nº de série, capacidade/BTU, fabricante, data de instalação…)? A hierarquia `Torre/Bloco → Área →
+  Sistema → Equipamento` reflete como vocês organizam os prédios?
+- *Recomendação Trívia:* Ficha enxuta obrigatória (tipo, identificação, localização, capacidade) +
+  campos opcionais ricos (fotos, QR, manuais, garantia). Hierarquia **configurável** — nem todo
+  condomínio tem "Torre"; tratar a localização como níveis flexíveis. Como o PCM passa a ser **dono**
+  do ativo (e empurra para o Auvo), confirmar com o Fabrício a migração dos equipamentos que hoje
+  vivem no Auvo para o cadastro mestre do OS.
 
 ---
 
