@@ -62,16 +62,19 @@ mesma lógica de curso, sem vídeo. Escrita restrita a Secretaria/Administrativo
 ## Tasks (tasks.md)
 | # | Task | Status |
 |---|------|--------|
-| 0 | Mockup do catálogo aprovado pelo JG (CA0) | todo |
-| 1 | Value objects tipo/modalidade/status + agregado `Curso` (domínio) | todo |
-| 2 | Migration schema `educacao` + `cursos` + enums + CHECK + RLS FORCE | todo |
-| 3 | Policies RLS de `cursos` + testes pgTAP | todo |
-| 4 | Teste pgTAP do CHECK `chk_livre_so_ead` | todo |
-| 5 | Casos de uso `CriarCurso`/`EditarCurso` (application) | todo |
-| 6 | Casos de uso `PublicarCurso`/`DespublicarCurso` (application) | todo |
-| 7 | Zod na borda + repositório Supabase de cursos (infrastructure) | todo |
-| 8 | Auditoria em `audit.events` | todo |
-| 9 | Tela de catálogo (Secretaria/Administrativo) | todo |
+| 0 | Mockup do catálogo aprovado pelo JG (CA0) | **bloqueada** — precisa mockup |
+| 1 | Value objects tipo/modalidade/status + agregado `Curso` (domínio) | done |
+| 2 | Migration schema `educacao` + `cursos` + enums + CHECK + RLS FORCE | done |
+| 3 | Policies RLS de `cursos` + testes pgTAP | done |
+| 4 | Teste pgTAP do CHECK `chk_livre_so_ead` | done |
+| 5 | Casos de uso `CriarCurso`/`EditarCurso` (application) | done |
+| 6 | Casos de uso `PublicarCurso`/`DespublicarCurso` (application) | done |
+| 7 | Zod na borda + repositório Supabase de cursos (infrastructure) | done |
+| 8 | Auditoria em `audit.events` (via trigger — SPEC_DEVIATION resolvido) | done |
+| 9 | Tela de catálogo (Secretaria/Administrativo) | **bloqueada** — precisa mockup (CA0) |
+
+> **Status: 8/9 tasks concluídas e verificadas** (vitest, pgTAP, typecheck). Só resta a UI (task 9),
+> que depende de mockup aprovado — mesma situação da 0005.
 
 ## Decisões / ADRs relacionados
 - ADR-0005 — Modelo de Curso: tipo (Livre/Formação) × modalidade (EAD/Presencial) num só agregado (`docs/adr/0005-modelo-curso-tipo-e-modalidade.md` no repo).
