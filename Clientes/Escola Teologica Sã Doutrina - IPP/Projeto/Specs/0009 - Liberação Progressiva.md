@@ -17,7 +17,7 @@ atualizado: 2026-07-01
 **Tier:** pequeno (feature isolada — `product.md` + `spec.md` + `tasks.md`, sem `design.md`)
 **Status:** rascunho (specs escritas, aguardando `/clarificar` + `@dev`)
 **Módulo (ESPECIFICACAO.md):** M5 — Gestão de Turmas (liberação progressiva / drip)
-**Depende de:** 0005 (Identidade), 0007 (Matrícula), 0008 (Gestão de Turmas)
+**Depende de:** 0005 (Identidade), 0010 (Matrícula), 0008 (Gestão de Turmas)
 **Repo:** `specs/0009-liberacao-progressiva/`
 
 ---

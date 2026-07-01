@@ -17,7 +17,7 @@ atualizado: 2026-07-01
 **Tier:** pequeno (feature isolada — não exige `design.md`)
 **Status:** rascunho (specs escritas, ainda não clarificadas/aprovadas nem implementadas)
 **Módulo (ESPECIFICACAO.md):** M4 — Modalidade Online (EAD)
-**Depende de:** 0006 (Identidade), 0010 (Catálogo), 0011 (Pagamento avulso)
+**Depende de:** 0005 (Identidade), 0006 (Catálogo), 0010 (Matrícula), 0011 (Pagamento avulso)
 **Repo:** `specs/0013-ead-curso-livre/`
 
 ---

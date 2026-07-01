@@ -40,7 +40,7 @@ real com o Vimeo é a feature 0018); curso **Presencial** não expõe campo de v
 ## Fora de escopo
 - Integração real do Vimeo (embed/thumbnail/metadados) — feature 0018 / M10.
 - Materiais Complementares (link/documento) — feature própria M9.
-- Liberação progressiva (drip) por cronograma da Turma — feature 0011 / M5.
+- Liberação progressiva (drip) por cronograma da Turma — feature 0009 / M5.
 - Progresso por aula e Presença (M7 / M3).
 - CRUD do Curso, Modalidade e classificação — feature 0006 (dependência).
 - Matrícula / Inscrição / pagamento (M7 / M8) e Curso Avulso de Música (M6).

@@ -42,7 +42,7 @@ RLS. É o principal veículo de conteúdo do **presencial**, que não tem vídeo
 - Inadimplência bloqueia acesso ao material? Após quantos dias? (fora dos AC por ora)
 
 ## Fora de escopo
-- Cronograma/drip de liberação progressiva (feature 0011 — aqui só consumimos o sinal).
+- Cronograma/drip de liberação progressiva (feature 0009 — aqui só consumimos o sinal).
 - Ancorar material em Módulo/Curso (questão em aberto).
 - Vídeo (Vimeo, M10); versionamento/preview/antivírus.
 - Bloqueio por inadimplência e regras de pagamento (M8).

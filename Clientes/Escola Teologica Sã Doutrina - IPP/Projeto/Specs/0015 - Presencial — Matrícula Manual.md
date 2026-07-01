@@ -17,7 +17,7 @@ atualizado: 2026-07-01
 **Tier:** pequeno (exige `spec.md` + `tasks.md`; sem `design.md`)
 **Status:** rascunho (specs escritas, aguardando clarificação/`@dev`)
 **Módulo (ESPECIFICACAO.md):** M3 — Modalidade Presencial
-**Depende de:** 0008 (Catálogo/Curso de Formação), 0010 (Gestão de Turmas), 0011 (Pagamentos/Recorrência), 0005 (Identidade e Acesso)
+**Depende de:** 0006 (Catálogo/Curso de Formação), 0008 (Gestão de Turmas), 0010 (Matrículas), 0011 (Pagamentos/Recorrência), 0005 (Identidade e Acesso)
 **Repo:** `specs/0015-presencial-matricula-manual/`
 
 ---
