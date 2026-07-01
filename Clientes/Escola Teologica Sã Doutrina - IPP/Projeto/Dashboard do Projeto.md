@@ -24,7 +24,7 @@ SORT fase ASC, atualizado DESC
 ```dataview
 TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "em-progresso"
+WHERE status = "em-progresso" AND file.name != "_Template — Story"
 SORT atualizado DESC
 ```
 
@@ -35,7 +35,7 @@ SORT atualizado DESC
 ```dataview
 TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "em-review"
+WHERE status = "em-review" AND file.name != "_Template — Story"
 SORT atualizado DESC
 ```
 
@@ -46,7 +46,7 @@ SORT atualizado DESC
 ```dataview
 TABLE modulo AS "Módulo", prioridade AS "Prioridade"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "pronto" AND fase = 1
+WHERE status = "pronto" AND fase = 1 AND file.name != "_Template — Story"
 SORT prioridade ASC
 ```
 
@@ -57,7 +57,7 @@ SORT prioridade ASC
 ```dataview
 TABLE modulo AS "Módulo", prioridade AS "Prioridade"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "backlog" AND fase = 1
+WHERE status = "backlog" AND fase = 1 AND file.name != "_Template — Story"
 SORT prioridade ASC
 ```
 
@@ -68,7 +68,7 @@ SORT prioridade ASC
 ```dataview
 TABLE modulo AS "Módulo", atualizado AS "Atualizado"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "bloqueado"
+WHERE status = "bloqueado" AND file.name != "_Template — Story"
 SORT atualizado DESC
 ```
 
@@ -79,7 +79,7 @@ SORT atualizado DESC
 ```dataview
 TABLE modulo AS "Módulo", atualizado AS "Concluído em"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "concluido"
+WHERE status = "concluido" AND file.name != "_Template — Story"
 SORT atualizado DESC
 ```
 
@@ -90,7 +90,7 @@ SORT atualizado DESC
 ```dataview
 TABLE rows.file.link AS "Stories", length(rows) AS "Total"
 FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status != "_Template Story"
+WHERE file.name != "_Template — Story"
 GROUP BY fase
 ```
 

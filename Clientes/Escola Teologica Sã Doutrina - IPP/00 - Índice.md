@@ -18,10 +18,12 @@ inicio: 2026-06-30
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status das stories) | [[Dashboard do Projeto]] |
+| Dashboard (status de épicos/stories) | [[Dashboard do Projeto]] |
+| Backlog (board de épicos + stories) | [[Backlog]] |
 | Roadmap (fases e milestones) | [[Roadmap]] |
+| Épicos | [[Projeto/Épicos/]] |
 | Stories | [[Projeto/Stories/]] |
-| Especificação de produto (fonte: repo) | *(no repositório: `docs/ESPECIFICACAO.md`)* |
+| Especificação de produto (espelho do repo) | [[Especificação de Produto]] |
 | Arquitetura / bounded contexts (fonte: repo) | *(no repositório: `docs/ARCHITECTURE.md`)* |
 | Estado de trabalho — volátil (fonte: repo) | *(no repositório: `docs/STATE.md`)* |
 | Dívida de segurança (fonte: repo) | *(no repositório: `docs/SECURITY_DEBT.md`)* |

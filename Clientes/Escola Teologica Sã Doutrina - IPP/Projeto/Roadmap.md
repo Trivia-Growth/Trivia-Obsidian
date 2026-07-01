@@ -24,7 +24,9 @@
     specs).
 - **Próximo passo (em aberto):** aguardando o João mandar a **1ª feature de negócio** no chat com
   o dev (Lucas). Ao chegar, entra pela esteira `@pm/@analyst` → `specs/0005-<slug>/` → `@sm` →
-  `@dev`.
+  `@dev`. Em paralelo, no vault: `@pm` cria o épico em [[Projeto/Épicos/]] e o `@sm` quebra em
+  stories em [[Projeto/Stories/]] — ver [[Backlog]] (padrão espelhado do HeziomOS,
+  `docs/epics/`+`docs/stories/`).
 
 ---
 
