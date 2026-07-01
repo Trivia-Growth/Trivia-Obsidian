@@ -1,12 +1,26 @@
 ---
 tipo: auditoria
-status: plano-aguardando-execução
+status: executado
 data: 2026-07-01
 autor: Claude Code (auditoria cirúrgica multi-agente)
 escopo: 218 notas do vault HeziomOS cruzadas com o repo real (heziomos @ develop)
 ---
 
 # Auditoria e Plano de Limpeza do Vault — HeziomOS
+
+> ✅ **EXECUTADO em 2026-07-01.** Log resumido:
+> - **Criado `_Histórico/`** (Stories, CEO Dashboard, Decisões, Sales-Hzm, Desenvolvimento, heziom-api) + 2 notas-ponte ([[Estado Atual — Espelho dos Épicos]] e o `_LEIA` do Sales-Hzm).
+> - **Arquivados:** cluster Financeiro-standalone/Pi (Backlog, Roadmap, Sprint Atual, Sessão, CEO Dashboard×4, ADR-001/002, STORY-001..006/009/013..016, Features Expandidas, Roadmap Tray, Módulos e Escopo), pasta **Sales-Hzm** inteira (24 stories + 9 notas), STORY-010/011/012 (heziom-api), e 6 snapshots concluídos de Dev.
+> - **Corrigidas** as 6 notas que enganavam (Índice Atendimento, Índice Marketing/CRM, Índice Financeiro, Índice dos Processos, KR1, KR3) + ~10 notas de arquitetura (Arquitetura v3, Monorepo Estrutura, Supabase, Réplica Literarius, Tray Sync, Fonte Única de Contatos, Logística, LP Coleções, ADRs, `00 - Índice`, Setup João/Repositório).
+> - **Dedupe:** `Escopo Tecnico.md` (bruto) deletado; alias `Escopo Tecnico` adicionado ao Complemento Técnico → links preservados.
+> - **`Dashboard do Projeto.md`** arquivado (não deletado — tinha 3 links de entrada).
+> - **Segredos:** lembretes de rotação consolidados em [[Credenciais]] (§ Rotação pendente).
+>
+> **Desvios do plano (por segurança):**
+> 1. Os "stubs" `DDL Banco de dados Literarius.md` e `PUML Tabelas Literarius.md` **NÃO foram deletados** — a auditoria os julgou vazios pela contagem de linhas, mas têm 178KB/60KB de conteúdo real (DDL + diagrama ER) numa única linha. Mantidos.
+> 2. `Flowbiz_backup/` e material de marketing (Bíblia 120, TRIBE) **não movidos** para fora do vault — mover ~130 arquivos para OneDrive é passo manual do JG (mover dentro do git não reduz peso do repo). Sinalizado abaixo (§4G).
+>
+> **Pendências manuais para o JG:** rotacionar segredos (§3 / [[Credenciais]]); mover peso morto para OneDrive (§4G); invalidar API key Flowbiz.
 
 > **O que é isto:** varredura das 218 notas do vault, cada uma lida por inteiro, com as datas de criação/alteração (via git) e **toda afirmação de "pronto/substituído" cruzada com o código real** em `heziomos @ develop`. O objetivo é uma limpeza cirúrgica: separar o que é verdade viva, o que é conhecimento de domínio que não expira, e o que é legado de fases anteriores que hoje confunde quem implementa.
 >

@@ -1,24 +1,23 @@
 # HeziomOS — Índice
 
+> ⚠️ **ATUALIZADO 2026-07-01 — leia primeiro.** Este índice foi escrito na fase de planejamento (mai/2026) e descreve módulos por "Fase 2.x" como se fossem futuros. **Muitos já estão em produção.** Para o estado real, use **[[Estado Atual — Espelho dos Épicos]]** (espelho de `docs/epics/README.md` do repo). O plano da limpeza de hoje está em [[_Auditoria e Plano de Limpeza do Vault — 2026-07-01]]. Notas de planejamento legadas (Backlog, Roadmap, Sprint Atual, CEO Dashboard, ADRs Pi, STORY-0XX) foram movidas para a pasta **`_Histórico/`** — os links `[[...]]` continuam funcionando por nome.
+
 Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conexões entre módulos e fontes de dados.
 
-**Mapeamento da Operação:** [[Mapeamento Completo da Operação Heziom]] — 🔴 documento-mãe: 7 departamentos, 11 sistemas integrados, 6 a substituir, fluxo editorial completo, regras de negócio, canais de venda, prioridades (19/05/2026) ✅
-**Módulos e Escopo Completo:** [[HeziomOS — Módulos e Escopo Completo]] — 🔴 proposta expandida: 6 novos módulos (Editorial, CRM, Atendimento, Comercial, Pessoas, Tarefas) + faseamento + decisões pendentes (19/05/2026) ✅
-**Arquitetura Fase 1 (Financeiro):** [[HeziomOS — Arquitetura e Fluxos]] — proposta técnica: 10 fluxos, 4 camadas, cronograma, stack completa, modelo de dados (19/05/2026) ✅
-**Complemento Técnico (Conselho):** [[HeziomOS — Complemento Técnico v2 (Conselho)]] — 🔴 documento aprovado: stack, segurança em profundidade, LGPD, RLS agentes, fluxo bancário 3 camadas, resiliência, custos (Mar/2026) ✅
-**Arquitetura (histórico):** [[HeziomOS — Arquitetura]] — blueprint inicial do módulo financeiro (15/04/2026); consultar só como referência.
+**🟢 Arquitetura vigente:** [[HeziomOS — Arquitetura v3]] — doc único de arquitetura (stack, monorepo, schemas por domínio, segurança/LGPD, RNFs).
+**🟢 Estado atual (módulos/épicos):** [[Estado Atual — Espelho dos Épicos]] — o que está em produção (E1–E18).
+**Base contratual (Conselho):** [[HeziomOS — Complemento Técnico v2 (Conselho)]] — documento aprovado: segurança em profundidade, LGPD, custos (Mar/2026).
+**Mapeamento da Operação:** [[Mapeamento Completo da Operação Heziom]] — documento-mãe de negócio: departamentos, processos, regras, canais de venda.
 
-> 🗺️ **Mapa estrutural do vault:** [[Mapa do Vault]] — inventário completo de pastas e notas + log de organização.
+> _Versões antigas de arquitetura (v1, v2), "Módulos e Escopo Completo" e o "Mapa do Vault" foram para `_Histórico/` — superadas pela v3 + Espelho._
 
 ---
 
 ## Acompanhamento do Projeto
 
-- [[Dashboard do Projeto]] — status das stories em tempo real (requer plugin Dataview)
-- [[Roadmap]] — 3 fases com milestones e critérios de saída
-- [[Sprint Atual]] — o que está sendo construído agora
-- [[Backlog]] — todas as stories por fase e prioridade
+- **[[Estado Atual — Espelho dos Épicos]]** — ✅ estado real (E1–E18); fonte viva é `docs/stories/BACKLOG.md` no repo
 - [[Setup João]] — como acessar e contribuir com este vault
+- _(Histórico, em `_Histórico/`:)_ [[Dashboard do Projeto]] · [[Roadmap]] · [[Sprint Atual]] · [[Backlog]] — planejamento da fase inicial (mai/2026), superado
 
 ---
 

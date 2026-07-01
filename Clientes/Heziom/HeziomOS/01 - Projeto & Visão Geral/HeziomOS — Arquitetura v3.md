@@ -10,9 +10,17 @@ base: Escopo Tecnico v2 (Conselho) + Mapeamento Completo da Operacao + Modulos e
 
 # HeziomOS — Arquitetura v3
 
-> ℹ️ **Nota 2026-07-01 (ajustes vs. o código real):** esta é a melhor referência de arquitetura do vault e o núcleo segue válido, com 3 ajustes: (1) o sync **não é Raspberry Pi** — é servidor **Windows da Heziom** (ADR-0005); (2) **CRM e Hub são `features/` de um único `apps/web`**, não apps separados; (3) a lista canônica de Épicos e ADRs vive em `docs/` do repo `heziomos` (E1–E18, ADRs 0001–0016). O restante permanece atual.
+> ✅ **DOC VIGENTE DE ARQUITETURA — consolidado em 2026-07-01.** Este é o **único** documento de arquitetura ativo do vault (as versões v1/v2 foram para `_Histórico/`). O **desenho** abaixo (single-tenant, monorepo, schemas por domínio, Edge Functions + Inngest, RLS FORCE, segurança/LGPD) continua **em vigor**. Onde o texto era um plano de mai/2026, ajustei para o que foi implementado. Para o **estado de cada módulo/entrega**, a fonte viva é **[[Estado Atual — Espelho dos Épicos]]** (e `docs/epics/README.md` no repo).
+>
+> **Ajustes-chave vs. o código real (2026-07-01):**
+> 1. **Sync Literarius** roda em **servidor Windows da Heziom (Intelinove)** via repo **separado `literarius-sync`** — não é Raspberry Pi nem um `apps/sync-agent` dentro do monorepo (ADR-0005).
+> 2. **CRM, Hub, Financeiro, Literarius, Auth são `features/` de um único `apps/web`** — não apps separados. Apps reais: `apps/web` + `apps/agent-runtime`.
+> 3. **Schemas existentes hoje:** `crm`, `hub`, `financeiro`/`lit_mirror_financeiro`, `lit_mirror`, `tray_mirror`, `audit`, `agents`, `lgpd`, `config`. Os schemas `editorial`, `comercial`, `pessoas`, `tarefas`, `fiscal` da §6 são **planejados, não criados**.
+> 4. **Nomes de Edge Function** na §5 são ilustrativos/antigos; os reais são prefixados `crm-*`/`hub-*` (ex.: `ceo-dashboard-summary`, `crm-tray-webhook`).
+> 5. **ADRs:** o repo tem **0001–0016** (esta nota lista só até 0010).
+> 6. **Roadmap (§9/§13/§16):** as Fases 1–4 viraram os **Épicos E1–E18** — ver Espelho. As "Fase 1 MVP" e "Próximos Passos" já foram **concluídas**.
 
-Versão estrutural consolidada do HeziomOS após as decisões de produto, repositório, runtime de agentes, banco de dados e requisitos não-funcionais. Substitui [[HeziomOS — Arquitetura e Fluxos]] (19/05/2026) e [[HeziomOS — Arquitetura]] (15/04/2026, módulo financeiro), agora marcadas como histórico.
+Versão estrutural do HeziomOS. Substitui [[HeziomOS — Arquitetura e Fluxos]] (v2) e [[HeziomOS — Arquitetura]] (v1), ambas em `_Histórico/`.
 
 ---
 
@@ -493,25 +501,15 @@ Webhooks da Tray e da Meta Cloud API são **eventualmente consistentes**: podem 
 
 ## 13. Roadmap Consolidado
 
-### Fase 1 — Visibilidade (4–6 semanas)
-Dashboard CEO + sync Literarius + briefing Teams. Stories 001–006 + 010 LGPD + 011 SSO.
-
-### Fase 2 — Inteligência Assistida (8–12 semanas)
-| Sprint | Módulo | Entrega |
-|---|---|---|
-| 2.1 | Tarefas | Boards por departamento, substitui ClickUp |
-| 2.2 | CRM | Migração Flowbiz, perfil unificado |
-| 2.3 | Comercial | Dashboard de vendas, pipeline atacado |
-| 2.4 | Editorial | Calendário + Orçamento + Pipeline kanban |
-| 2.5 | Atendimento | WhatsApp Agent v1 (rastreio, FAQ, disponibilidade) |
-| 2.6 | Financeiro | Aprovação pagamentos + Conciliação OFX |
-| 2.7 | Pessoas | Comissões CPC automáticas |
-
-### Fase 3 — Autonomia (3–6 meses)
-Agentes autônomos com aprovação humana mínima; CNAB; >95% conciliação; ML/Amazon.
-
-### Fase 4 — Expansão (6–12 meses)
-Marketplaces diretos, tema Tray com chat IA, comunidade Heziom (assinaturas), portal do autor.
+> ⚠️ **Superado (2026-07-01).** O modelo de Fases 1–4 abaixo foi substituído pelo **sistema de Épicos E1–E18** do repo. Estado vivo: **[[Estado Atual — Espelho dos Épicos]]** e `docs/epics/README.md`.
+>
+> Mapa rápido de-para (Fase → Épico real):
+> - Fase 1 (Visibilidade: Dashboard CEO, sync, briefing) → **E1–E4** ✅ + parte do **E10** (dashboards financeiros, Story 10.1 ✅)
+> - Fase 2.2 (CRM, migração Flowbiz) → **E5** ✅ ~90%
+> - Fase 2.5 (Atendimento WhatsApp) → **E6/E9/E16/E17** ✅ em produção
+> - Fase 2.6 (Financeiro: aprovação/conciliação) → **E10** 🔄 (só dashboards no ar; aprovação/CNAB/conciliação em branch não mergeada)
+> - Fase 2.1/2.3/2.4/2.7 (Tarefas, Comercial, Editorial, Pessoas) → **não iniciados** (sem épico aberto)
+> - Fase 3/4 (autonomia, marketplaces) → backlog futuro
 
 ---
 
@@ -548,13 +546,7 @@ Economia esperada com substituição (ClickUp, Flowbiz, Unnichat, Qive, Power BI
 
 ## 16. Próximos Passos Imediatos
 
-1. **STORY-011** — criar story de setup do Microsoft SSO no Supabase Auth (configurado, desligado em dev).
-2. **STORY-010** — criar story de endpoints LGPD (export + delete) com placeholder.
-3. **Repositório `heziomos`** — inicializar monorepo conforme estrutura §5.
-4. **`docs/adr/`** — escrever ADR-0001 a ADR-0010.
-5. **Coordenar com equipe Literarius** — solicitar views otimizadas (D4) e correção do PlanoConta (D3).
-6. **Setup servidor sync** — validar admin Heziom, instalar Deno + Tailscale, configurar cofre de credenciais.
-7. **Aprovação do CEO** sobre threshold (D1) e nomeação do DPO (D5).
+> ✅ **Concluídos (2026-07-01).** Itens 1–4 e 6 já foram feitos: monorepo inicializado (E1), ADRs escritos (0001–0016), SSO e LGPD implementados, servidor de sync no ar (`literarius-sync` no Windows Server). O que resta são decisões de negócio pendentes, listadas em §15 (threshold de alçada D1, DPO D5, PlanoConta D3). Para o backlog atual, ver [[Estado Atual — Espelho dos Épicos]].
 
 ---
 
@@ -568,14 +560,11 @@ Economia esperada com substituição (ClickUp, Flowbiz, Unnichat, Qive, Power BI
 
 ## Referências
 
-- [[Escopo Tecnico]] — base contratual (§§ 1–9)
-- [[Mapeamento Completo da Operação Heziom]] — entrevistas e processos
-- [[HeziomOS — Módulos e Escopo Completo]] — módulos detalhados Fase 2+
-- [[Mapa Completo de APIs e Capacidades]] — inventário técnico
-- [[Estudo de APIs — Capacidades e Gaps]] — gaps de integração
-- [[Roadmap]] — entregas Fase 1 (sincronizar com este doc)
-- [[Roadmap de Integração Tray × Literarius]] — D2C
-- Stories: [[STORY-001 — Setup Infraestrutura]], [[STORY-002 — Deno Sync TituloFinanceiro e ContaBancaria]], [[STORY-003 — Deno Sync NotaFiscal e PedidoVenda]], [[STORY-004 — Dashboard CEO Posição Financeira]], [[STORY-005 — Dashboard CEO DRE MTD]], [[STORY-006 — Alertas Teams Briefing 7h]]
+- [[Estado Atual — Espelho dos Épicos]] — **estado vivo** dos módulos (E1–E18)
+- [[HeziomOS — Complemento Técnico v2 (Conselho)]] — base contratual/segurança (Conselho); alias `Escopo Tecnico`
+- [[Mapeamento Completo da Operação Heziom]] — entrevistas e processos de negócio
+- [[Mapa Completo de APIs e Capacidades]] · [[Estudo de APIs — Capacidades e Gaps]] — inventário técnico de integrações
+- _Stories/roadmap originais (STORY-00X, Roadmap) → arquivados em `_Histórico/`; backlog atual em `docs/stories/BACKLOG.md` no repo._
 
 ---
 
