@@ -214,22 +214,23 @@ Cada módulo lista **definição**, **regras principais** e **candidatos a AC** 
 
 ## 11. Mapa módulo → specs de feature (a criar)
 
-| Módulo | Feature(s) `specs/NNNN-*` sugerida(s) | Épico correspondente no vault |
-|--------|----------------------------------------|-------------------------------|
-| M1 | `identidade-e-acesso` | [[Projeto/Épicos/]] (a criar) |
-| M2 | `catalogo-cursos`, `conteudo-aulas` | [[Projeto/Épicos/]] (a criar) |
-| M3 | `presencial-matricula-manual`, `presencial-presenca` | [[Projeto/Épicos/]] (a criar) |
-| M4 | `ead-curso-livre`, `ead-curso-formacao` | [[Projeto/Épicos/]] (a criar) |
-| M5 | `gestao-turmas`, `liberacao-progressiva` | [[Projeto/Épicos/]] (a criar) |
-| M6 | `curso-avulso-musica` | [[Projeto/Épicos/]] (a criar) |
-| M7 | `matriculas-progresso` | [[Projeto/Épicos/]] (a criar) |
-| M8 | `pagamentos-pagarme`, `recorrencia` | [[Projeto/Épicos/]] (a criar) |
-| M9 | `materiais-complementares` | [[Projeto/Épicos/]] (a criar) |
-| M10 | `integracao-vimeo` | [[Projeto/Épicos/]] (a criar) |
+| Módulo | Feature(s) `specs/NNNN-*` sugerida(s) | Espelho no vault |
+|--------|----------------------------------------|-------------------|
+| M1 | `identidade-e-acesso` | [[Projeto/Specs/]] (a criar) |
+| M2 | `catalogo-cursos`, `conteudo-aulas` | [[Projeto/Specs/]] (a criar) |
+| M3 | `presencial-matricula-manual`, `presencial-presenca` | [[Projeto/Specs/]] (a criar) |
+| M4 | `ead-curso-livre`, `ead-curso-formacao` | [[Projeto/Specs/]] (a criar) |
+| M5 | `gestao-turmas`, `liberacao-progressiva` | [[Projeto/Specs/]] (a criar) |
+| M6 | `curso-avulso-musica` | [[Projeto/Specs/]] (a criar) |
+| M7 | `matriculas-progresso` | [[Projeto/Specs/]] (a criar) |
+| M8 | `pagamentos-pagarme`, `recorrencia` | [[Projeto/Specs/]] (a criar) |
+| M9 | `materiais-complementares` | [[Projeto/Specs/]] (a criar) |
+| M10 | `integracao-vimeo` | [[Projeto/Specs/]] (a criar) |
 
 > Abrir cada feature com a skill `/nova-feature` (repo), espelhando `specs/0001-*` (exemplo de
-> referência). No vault, cada linha desta tabela vira um `EPIC-XXX` em [[Projeto/Épicos/]] quando o
-> `@pm` priorizar o módulo.
+> referência). No vault, cada linha desta tabela vira uma nota em [[Projeto/Specs/]] (a partir de
+> `_Template — Spec.md`) quando o `@pm`/`@analyst` abrir a spec no repo — sem épico/story
+> intermediário, a spec é a unidade neste padrão.
 
 ---
 

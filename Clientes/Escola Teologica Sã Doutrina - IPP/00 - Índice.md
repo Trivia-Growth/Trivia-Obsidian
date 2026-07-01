@@ -18,11 +18,9 @@ inicio: 2026-06-30
 
 | Seção | Link |
 |-------|------|
-| Dashboard (status de épicos/stories) | [[Dashboard do Projeto]] |
-| Backlog (board de épicos + stories) | [[Backlog]] |
+| Dashboard (status das specs) | [[Dashboard do Projeto]] |
 | Roadmap (fases e milestones) | [[Roadmap]] |
-| Épicos | [[Projeto/Épicos/]] |
-| Stories | [[Projeto/Stories/]] |
+| Specs (espelho de `specs/NNNN-*` do repo) | [[Projeto/Specs/]] |
 | Especificação de produto (espelho do repo) | [[Especificação de Produto]] |
 | Arquitetura / bounded contexts (fonte: repo) | *(no repositório: `docs/ARCHITECTURE.md`)* |
 | Estado de trabalho — volátil (fonte: repo) | *(no repositório: `docs/STATE.md`)* |

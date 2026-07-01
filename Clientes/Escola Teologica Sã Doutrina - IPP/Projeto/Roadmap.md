@@ -23,10 +23,10 @@
   - Gates verdes no novo layout (build/typecheck/lint/test via turbo, audit de esteira, eval de
     specs).
 - **Próximo passo (em aberto):** aguardando o João mandar a **1ª feature de negócio** no chat com
-  o dev (Lucas). Ao chegar, entra pela esteira `@pm/@analyst` → `specs/0005-<slug>/` → `@sm` →
-  `@dev`. Em paralelo, no vault: `@pm` cria o épico em [[Projeto/Épicos/]] e o `@sm` quebra em
-  stories em [[Projeto/Stories/]] — ver [[Backlog]] (padrão espelhado do HeziomOS,
-  `docs/epics/`+`docs/stories/`).
+  o dev (Lucas). Ao chegar, entra pela esteira `@pm/@analyst` → `specs/0005-<slug>/` (product.md +
+  spec.md + tasks.md; `design.md` só se tier arquitetural) → `@sm` → `@dev`. No vault, a mesma
+  feature ganha uma nota-espelho em [[Projeto/Specs/]] (não há épico/story neste padrão — a spec
+  **é** a unidade, ver `_Template — Spec.md`).
 
 ---
 

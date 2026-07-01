@@ -1,85 +1,41 @@
 # Dashboard — Edutech IPP
 
-*Atualizado automaticamente a partir do frontmatter das stories e épicos.*
+*Atualizado a partir do frontmatter das specs. Espelha `specs/NNNN-*/` do repositório (Padrão OS
+v2 — sem épico/story, a feature é a spec).*
 
-> Ainda **sem épicos/stories de negócio criados** (status: descoberta). O que existe hoje no
-> repositório são apenas o scaffold do Padrão OS e as 4 specs de exemplo/fundação (0001–0004), que
-> não são negócio real — ver [[Roadmap]]. Board completo em [[Backlog]].
-
----
-
-## Épicos
-
-```dataview
-TABLE status AS "Status", fase AS "Fase", modulo AS "Módulo", atualizado AS "Atualizado"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Épicos"
-WHERE file.name != "_Template — Épico"
-SORT fase ASC, atualizado DESC
-```
+> Ainda **sem specs de negócio criadas** (status: descoberta). O que existe hoje no repositório
+> (`0001`–`0004`) é scaffold/exemplo de referência do framework, não negócio real — ver [[Roadmap]].
 
 ---
 
-## Em Progresso
+## Rascunho / Em Review
 
 ```dataview
-TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "em-progresso" AND file.name != "_Template — Story"
+TABLE tier AS "Tier", modulo AS "Módulo", fase AS "Fase", atualizado AS "Atualizado"
+FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Specs"
+WHERE (status = "rascunho" OR status = "em review") AND file.name != "_Template — Spec"
 SORT atualizado DESC
 ```
 
 ---
 
-## Em Review (aguardando QA)
+## Aprovadas (prontas para implementar)
 
 ```dataview
-TABLE modulo AS "Módulo", agente_responsavel AS "Agente", atualizado AS "Atualizado"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "em-review" AND file.name != "_Template — Story"
-SORT atualizado DESC
+TABLE tier AS "Tier", modulo AS "Módulo", fase AS "Fase", atualizado AS "Atualizado"
+FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Specs"
+WHERE status = "aprovado" AND file.name != "_Template — Spec"
+SORT fase ASC
 ```
 
 ---
 
-## Prontas para Iniciar (Fase 1)
+## Implementadas
 
 ```dataview
-TABLE modulo AS "Módulo", prioridade AS "Prioridade"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "pronto" AND fase = 1 AND file.name != "_Template — Story"
-SORT prioridade ASC
-```
-
----
-
-## Backlog (Fase 1)
-
-```dataview
-TABLE modulo AS "Módulo", prioridade AS "Prioridade"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "backlog" AND fase = 1 AND file.name != "_Template — Story"
-SORT prioridade ASC
-```
-
----
-
-## Bloqueadas
-
-```dataview
-TABLE modulo AS "Módulo", atualizado AS "Atualizado"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "bloqueado" AND file.name != "_Template — Story"
-SORT atualizado DESC
-```
-
----
-
-## Concluídas
-
-```dataview
-TABLE modulo AS "Módulo", atualizado AS "Concluído em"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE status = "concluido" AND file.name != "_Template — Story"
+TABLE tier AS "Tier", modulo AS "Módulo", atualizado AS "Concluído em"
+FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Specs"
+WHERE status = "implementado" AND file.name != "_Template — Spec"
 SORT atualizado DESC
 ```
 
@@ -88,12 +44,13 @@ SORT atualizado DESC
 ## Resumo por Fase
 
 ```dataview
-TABLE rows.file.link AS "Stories", length(rows) AS "Total"
-FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Stories"
-WHERE file.name != "_Template — Story"
+TABLE rows.file.link AS "Specs", length(rows) AS "Total"
+FROM "Clientes/Escola Teologica Sã Doutrina - IPP/Projeto/Specs"
+WHERE file.name != "_Template — Spec"
 GROUP BY fase
 ```
 
 ---
 
-*Status possíveis: `backlog` · `pronto` · `em-progresso` · `em-review` · `concluido` · `bloqueado`*
+*Status possíveis (iguais ao `spec.md` do repo): `rascunho` · `em review` · `aprovado` ·
+`implementado`. Tier: `trivial` · `pequeno` · `arquitetural`.*
