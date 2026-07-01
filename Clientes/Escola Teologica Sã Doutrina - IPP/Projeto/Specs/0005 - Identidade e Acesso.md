@@ -48,9 +48,9 @@ RLS futura usar. Convite de usuário é exclusivo de Secretaria/Administrativo.
 ## Tasks (tasks.md)
 | # | Task | Status |
 |---|------|--------|
-| 1 | Value object `Papel` (domínio) | todo |
-| 2 | Migration enum + tabela `administracao.perfis` | todo |
-| 3 | RLS de `administracao.perfis` + testes pgTAP | todo |
+| 1 | Value object `Papel` (domínio) | done |
+| 2 | Migration enum + tabela `administracao.perfis` (RLS enable+FORCE) | done |
+| 3 | RLS de `administracao.perfis` + testes pgTAP | todo (próxima) |
 | 4 | `custom_access_token_hook` + habilitar no `config.toml` | todo |
 | 5 | Caso de uso `ConvidarUsuario` (application) | todo |
 | 6 | Edge Function `admin-invite-user` | todo |
