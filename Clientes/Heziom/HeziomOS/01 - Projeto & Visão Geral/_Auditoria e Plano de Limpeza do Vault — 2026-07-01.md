@@ -97,7 +97,8 @@ Mover `03 - Departamentos/Atendimento/Sales-Hzm/` **inteira** para `_Histórico/
 |---|---|
 | `01/HeziomOS — Arquitetura v3.md` | É a melhor da pasta. Trocar "Raspberry Pi" → "Windows Server + Tailscale (ADR-0005)"; anotar que CRM/Hub são `features/` de `apps/web` (não apps separados); apontar `docs/` do repo como fonte canônica de épicos/ADRs |
 | `06/Monorepo — Estrutura e Setup.md` | Corrigir topologia `apps/crm`+`apps/hub` (subtrees) → `apps/web` único com `features/crm` e `features/hub`; status "planejado" → "implementado/histórico" |
-| `06/Supabase — Configuração e Migrations.md` | Convenção de migration mudou de sequencial (0000-0006) para **timestamp**; manter dados do projeto (ref/região) |
+| `06/Supabase — Configuração e Migrations.md` | As migrations 0000-0006 descritas **conferem 1:1 com o repo** (não deletar); só falta registrar que a convenção virou **timestamp a partir de 0007+**. Corrigir a linha "aplicadas em ordem sequencial" |
+| `06/Monorepo — Estrutura e Setup.md` ⚠️ | **Maior risco do bloco Dev:** é a nota mais linkada (7 entradas) e descreve `apps/crm`/`apps/hub` como apps separados — o real é `apps/web` único com `features/`. Induz alguém a procurar pasta que não existe. ATUALIZAR topologia + remover "Deploy Isolado por App"; **não deletar** (quebraria os 7 links) |
 | `06/Monorepo — Plano de Implementação.md` | Marcar CONCLUÍDO (fases 5/6 já feitas) → histórico |
 | `06/Avaliação Multi Agent.md` | Snapshot de 16/06; vários achados HIGH já corrigidos (ex.: `crm-deal-monitor` **tem** auth hoje). Marcar como "snapshot histórico — não representa estado atual" |
 | `06/Atendimento — Mapeamento de Arquitetura.md` | Proposta de criar área "Atendimento" no header **já foi implementada** (`nav.ts`) → virar histórico |
@@ -114,6 +115,21 @@ Mover `03 - Departamentos/Atendimento/Sales-Hzm/` **inteira** para `_Histórico/
 - **`01/Escopo Tecnico.md`** (texto bruto, formatação quebrada) é duplicata do **`01/HeziomOS — Complemento Técnico v2 (Conselho).md`** (versão limpa). Como `[[Escopo Tecnico]]` é o nome mais linkado (Arquitetura v3, Setup do Repositório, STORY-001): **renomear o Complemento para "Escopo Tecnico"** e descartar o bruto, preservando o alvo dos links. *(Prioridade Média)*
 - **`01/Dashboard do Projeto.md`** — dashboard Dataview que aponta para pasta inexistente (`Projeto/Stories`); retorna vazio há tempos. **DELETAR** (sem link de entrada por wikilink). *(Prioridade Alta — lixo quebrado)*
 - **`Sales-Hzm/Dashboard Stories.md`** e **`Sales-Hzm/Guia — Adaptação`** — utilitário Dataview quebrado + guia mais impreciso (já superado pela própria Arquitetura). DELETAR ou arquivar em bloco.
+- **`04/DDL Banco de dados Literarius.md`** (2 linhas) e **`04/PUML Tabelas Literarius.md`** (1 linha) — stubs vazios, restos de import, sem wikilink de entrada. **DELETAR** (o schema real do Literarius está em `04/Literarius/Schema Detalhado.md`). *(Prioridade Baixa)*
+- **`04/Ferramentas a Substituir/Unnichat — Funcionalidades Mapeadas.md`** — superada pela `Unnichat — Mapeamento Completo v2.md`. MESCLAR na v2 ou arquivar.
+
+### 4I. 📦 ARQUIVAR — snapshots/planos concluídos de Desenvolvimento & Ferramentas
+
+Mover para `_Histórico/` (todos concluídos ou superados; a maioria é órfã, risco baixo):
+
+- `06/Monorepo — Plano de Implementação.md` *(decisões batem com o real; plano cumprido — 0 links de entrada)*
+- `06/Avaliação Multi Agent.md` *(snapshot 16/06; achados HIGH já corrigidos — ex.: `crm-deal-monitor` HOJE tem auth; renomear com a data no título; valor forense)*
+- `06/Atendimento — Mapeamento de Arquitetura e Modularização.md` *(propunha criar a área "Atendimento" no header — **já implementada** via Épico 9, confirmado em `nav.ts`; preservar o inventário técnico)*
+- `06/Consulta de Acessos Meta — Stories 6.25 e 6.29.md` *(snapshot 24/06 superado pela "Meta App Review" de 30/06; **antes de arquivar, preservar os IDs Meta** — WABAs, System Users, IG ID — que a sucessora não repete)*
+- `04/Ferramentas a Substituir/Atendimento + Vendas — Mapeamento e Backlog.md` *(é o documento-mãe que gerou o Épico 6, hoje 15/15 Done → histórico)*
+- `04/Ferramentas a Substituir/Flowbiz — Análise e Substituição.md` *(Flowbiz desligado ~30/06 → histórico)*
+
+> **Sobre a subpasta `Ferramentas a Substituir/`:** o restante (mapeamentos de Unnichat, Flowbiz, ClickUp, Qive, WABA) é **referência de migração válida → MANTER como histórico** — documenta o que o HeziomOS precisou replicar. Duas notas dessa pasta são ATUAIS/vivas: `Captura de Leads das LPs no HeziomOS` (Story 5.23 cutover InProgress) e `Flowbiz — Landing Pages (Inventário)` (insumo do cutover) e `Meta App Review — Advanced Access` na raiz (ação pendente, a nota mais recente do vault).
 
 ### 4G. 🚚 MOVER PARA FORA DO VAULT TÉCNICO (peso/ruído)
 
