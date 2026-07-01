@@ -52,18 +52,18 @@ real com o Vimeo é a feature 0018); curso **Presencial** não expõe campo de v
 ## Tasks (tasks.md)
 | # | Task | Status |
 |---|------|--------|
-| 1 | Value objects `StatusPublicacao`/`Ordem` (domínio) | todo |
-| 2 | Agregados `Modulo`/`Aula` + invariante vídeo-só-EAD | todo |
-| 3 | Migration `educacao.modulos` + `educacao.aulas` | todo |
-| 4 | RLS FORCE (leitura publicado p/ aluno; escrita dono/secretaria/admin) | todo |
-| 5 | Constraint/trigger vídeo só em EAD + pgTAP | todo |
-| 6 | Casos de uso `CriarModulo`/`CriarAula` (application) | todo |
-| 7 | Caso de uso `ReordenarConteudo` (application) | todo |
-| 8 | Caso de uso `PublicarConteudo` (application) | todo |
-| 9 | Adapter de repositório Supabase (infrastructure) | todo |
-| 10 | Mockup do editor aprovado pelo JG | todo |
-| 11 | UI do editor de conteúdo | todo |
-| 12 | UI de listagem para o Aluno (só publicado) | todo |
+| 1 | Value objects `StatusPublicacao`/`Ordem` (domínio) | done |
+| 2 | Agregados `Modulo`/`Aula` + invariante vídeo-só-EAD | done |
+| 3 | Migration `educacao.modulos` + `educacao.aulas` | done |
+| 4 | RLS FORCE (leitura publicado p/ aluno; escrita dono/secretaria/admin) | done |
+| 5 | Constraint/trigger vídeo só em EAD + pgTAP | done |
+| 6 | Casos de uso `CriarModulo`/`CriarAula` (application) | done |
+| 7 | Caso de uso `ReordenarConteudo` (application) | done |
+| 8 | Caso de uso `PublicarConteudo` (application) | done |
+| 9 | Adapter de repositório Supabase (infrastructure) | done |
+| 10 | Mockup do editor aprovado pelo JG | bloqueada — mockup |
+| 11 | UI do editor de conteúdo | bloqueada — mockup |
+| 12 | UI de listagem para o Aluno (só publicado) | bloqueada — mockup |
 
 ## Decisões / ADRs relacionados
 - Sem ADR próprio (não introduz decisão difícil de reverter).
