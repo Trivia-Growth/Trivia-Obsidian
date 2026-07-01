@@ -21,6 +21,15 @@ escopo: 218 notas do vault HeziomOS cruzadas com o repo real (heziomos @ develop
 > 2. `Flowbiz_backup/` e material de marketing (Bíblia 120, TRIBE) **não movidos** para fora do vault — mover ~130 arquivos para OneDrive é passo manual do JG (mover dentro do git não reduz peso do repo). Sinalizado abaixo (§4G).
 >
 > **Pendências manuais para o JG:** rotacionar segredos (§3 / [[Credenciais]]); mover peso morto para OneDrive (§4G); invalidar API key Flowbiz.
+>
+> ---
+> **2º round — consolidação de duplicatas (2026-07-01, mesmo dia):**
+> - **`01` — família arquitetura de 4 → 1 viva:** arquivadas v1, v2, "Módulos e Escopo Completo" e "Mapa do Vault"; deletado "Escopo Tecnico" bruto (alias no Complemento). **[[HeziomOS — Arquitetura v3]] atualizada no corpo** (não só banner): sync Windows, `features/` não apps, schemas reais vs planejados, functions `crm-*`, ADRs 0001–0016, Roadmap Fase 1–4 → de-para com Épicos E1–E18, "Próximos Passos" marcados concluídos.
+> - **`02`:** "Interligação Completa entre Módulos" (doc-visão, proposta, módulos inexistentes) → `_Histórico/Sistema/`.
+> - **`04`:** pares `API-*-docx` (duplicatas de conversão) + "Unnichat — Funcionalidades Mapeadas" (v1, superada pela v2) → `_Histórico/Duplicatas/`. Schema do Literarius: `_índice` do Banco de Dados vira o hub de navegação (dumps `Schema Detalhado`/`DDL` mantidos como brutos complementares, não duplicatas).
+> - **`00 - Índice`:** bloco de arquitetura consolidado (só v3 + Espelho + Complemento); link do Unnichat → v2.
+> - **`03`/`05`/`06`:** sem duplicatas reais (notas 1-por-tópico); os specs financeiros de `02/Módulos` e os KRs de `03/Financeiro` são **complementares** (spec técnico × processo de negócio), não duplicados — mantidos com os banners de correção.
+> - **Total:** 145 ativas + 75 arquivadas.
 
 > **O que é isto:** varredura das 218 notas do vault, cada uma lida por inteiro, com as datas de criação/alteração (via git) e **toda afirmação de "pronto/substituído" cruzada com o código real** em `heziomos @ develop`. O objetivo é uma limpeza cirúrgica: separar o que é verdade viva, o que é conhecimento de domínio que não expira, e o que é legado de fases anteriores que hoje confunde quem implementa.
 >

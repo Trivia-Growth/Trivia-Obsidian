@@ -89,9 +89,9 @@ criado: 2026-05-18
 ## Referências
 
 - [[Mapeamento Completo de Tabelas]] — todas as 150 tabelas com classificação
-- [[Réplica Supabase — Schema e Estratégia de Sync]] — quais replicar e com que frequência
-- [[ADR-001 — Sync Agent no Raspberry Pi]]
+- [[Réplica Supabase — Schema e Estratégia de Sync]] — spec de sync (⚠️ arquitetura Pi superada → hoje é `lit_mirror` + `literarius-sync` no Windows Server)
 - [[Estudo de APIs — Capacidades e Gaps]]
+- _Dumps brutos completos: `Schema Detalhado.md` (anotado) e `DDL Banco de dados Literarius.md` (CREATE TABLE cru)_
 
 ---
 
