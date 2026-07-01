@@ -1,0 +1,99 @@
+Conversation with Omie
+Started on July 1, 2026 at 10:24 AM America/Sao_Paulo time -03 (GMT-0300)
+
+---
+
+10:24 AM | Visitor: [Image] Bom dia, não estou conseguindo acessar o Omie hub
+
+10:24 AM | Visitor: [Image]
+
+10:31 AM | Visitor: falar com atendente
+
+10:39 AM | Omie: Oi! Passando para avisar que já recebemos sua mensagem. 
+ 
+ Um especialista vai assumir o atendimento em breve. 
+ 
+ Se quiser adiantar mais algum detalhe que ache importante, pode enviar por aqui, isso pode ajudar a agilizar seu atendimento. 
+ 
+ Caso sua dúvida envolva o acesso ao sistema, você também pode enviar o convite para ajuda@omie.com.br com perfil de administrador. Caso não lembre como realizar esse procedimento, basta clicar aqui (https://ajuda.omie.com.br/pt-BR/articles/499026-enviando-um-convite-de-acesso-para-um-usuario) para visualizar o passo a passo. (Se já tiver feito, pode ignorar esta etapa.)
+
+10:42 AM | Kim from Omie: Bom dia, tudo bem? Kim por aqui! Qual é o seu e-mail de acesso ao Hub por gentileza?
+
+10:43 AM | Visitor: joaonovais@triviastudio.com.br
+
+10:43 AM | Visitor: esse que eu acesso o app do omie
+
+10:50 AM | Visitor: olá?
+
+10:51 AM | Kim from Omie: Certo, me confirma seu CNPJ por favor?
+
+10:52 AM | Visitor: 44.389.173/0001-19
+
+11:04 AM | Kim from Omie: Perfeito, estou validando.
+
+11:07 AM | Visitor: ok
+
+11:07 AM | Visitor: aguardo
+
+11:28 AM | Visitor: Conseguiu verificar?
+
+11:56 AM | Visitor: olá?
+
+11:56 AM | Visitor: ainda está aí?
+
+12:05 PM | Kim from Omie: Desculpe-me a demora, me tira uma dúvida, o usuário associado a esse CNPJ que acessa o Hub é o 
+movegourmet@gmail.com
+
+12:05 PM | Kim from Omie: Você tem acesso a esse usuário no Omie?
+
+12:07 PM | Visitor: sim
+
+12:07 PM | Visitor: mas preciso acessar com o meu que está como admin
+
+12:09 PM | Visitor: pq esse nao temos acesso a todo momento
+
+12:11 PM | Kim from Omie: Assim, como esse e-mail de acesso ao Hub é único, você precisa estar logada no Omie com esse que passei, e daí abrir o Hub que funciona.
+
+12:12 PM | Kim from Omie: É possível depois de acessar, mudar o e-mail se for o caso.
+
+12:21 PM | Visitor: nao dá pra ter mais de um usuário?
+
+12:26 PM | Kim from Omie: No Hub atualmente apenas um usuário é permitido por vez, portanto não é possível multiplos usuários.
+
+02:55 PM | Visitor: entendi
+
+02:55 PM | Visitor: aproveitando
+
+02:55 PM | Visitor: onde que eu devo cadastrar pra vincular o local de estoque do Shopify a um depósito específico no Omie?
+
+03:11 PM | Visitor: Notei que minha loja "Shopify" está integrada ao Omie via Omie.Hub (app Omie Shopify, ativo desde set/2025). Preciso dividir o estoque entre dois depósitos que já existem no Omie: Fábrica Move (Salvador, padrão) e SÃO PAULO (código 09). O objetivo é que pedidos de clientes atendidos pela localização "Rua Dr João Toniolo, SP" no Shopify baixem do depósito SÃO PAULO no Omie, e os demais continuem baixando do depósito padrão em Salvador. 
+ Pergunta: o Omie.Hub suporta vincular uma localização do Shopify a um depósito específico do Omie (multi-CD), ou o Hub sempre sincroniza estoque só a partir do depósito padrão? Se suportar, como habilito essa configuração?
+
+03:36 PM | Visitor: olá?
+
+03:40 PM | Kim from Omie: Me diz uma coisa, qual é o nome do estoque que você precisa vincular a loja da Shopify?
+
+03:42 PM | Visitor: Temos um estoque em salvador, outro em São Paulo e uma loja de shopping. Preciso adicionar cada um desses estoques no omie
+
+03:43 PM | Visitor: daí estava fazendo justamente essa configuração na shopify e agora ia fazer no omie pra vincular um com o outro e ter o controle de estoque de cada produto em cada localização
+
+03:45 PM | Visitor: pra quando um cliente de SP e região comprar sair do estoque de SP e quando for Bahia e região sai do estoque de lá. Entende?
+
+04:11 PM | Kim from Omie: Entendo, me diz uma coisa, por exemplo na Shopify, na própria Shopify você vende para clientes de São Paulo e de Salvador por exemplo?
+
+04:11 PM | Visitor: Isso, vendemos pra ambos
+
+04:12 PM | Visitor: vende para o brasil todo
+
+04:13 PM | Visitor: [Image] daí cadastramos duas zonasno Spotify e no oie, pra enviar do estoque mais próximo do cliente
+
+04:14 PM | Visitor: omie*
+
+04:14 PM | Visitor: porém o hub omie nao tem onde fazer essa configuração
+
+04:15 PM | Visitor: e é aí que estando o problema
+
+04:16 PM | Visitor: está*
+
+---
+Exported from Omie on July 1, 2026 at 04:26 PM America/Sao_Paulo time -03 (GMT-0300)

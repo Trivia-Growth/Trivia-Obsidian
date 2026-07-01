@@ -176,6 +176,68 @@ integração: ago/2025 (Omie Move Gourmet + Wix, falhou) → set/2025 (Omie Shop
 
 ---
 
+## Suporte Omie — chamado 01/07/2026
+
+Canal: chat Omie (Intercom), atendente **Kim**. Transcrição completa salva em
+[[assets/suporte-omie-chat-01jul2026.txt]].
+
+**Confirmado pelo Kim:**
+- **O Hub aceita só UM usuário por vez.** O login do Hub está amarrado ao usuário
+  `movegourmet@gmail.com`. Pra abrir o Hub, é preciso estar logado no Omie com esse
+  usuário. Dá pra trocar qual e-mail é o usuário do Hub, mas nunca ter dois simultâneos.
+  Impacto operacional: a Trívia/JG não conseguem usar o admin próprio e o do Hub ao
+  mesmo tempo — tem que logar com o `movegourmet@gmail.com` pra mexer no Hub.
+
+**Ainda SEM resposta definitiva (aguardando):**
+- A pergunta central — se o Hub vincula localização Shopify → depósito Omie — **não foi
+  respondida**. O Kim ficou na fase de entender o cenário (perguntou se a loja vende pra
+  SP e Salvador etc.). Não confirmou nem negou o multi-CD. Pergunta em aberto no chat.
+
+---
+
+## Plano B — se o Hub não fizer o split
+
+> Contexto: a varredura via API (01/07) provou que o **dado por depósito já existe e é
+> legível** (Omie devolve saldo por local; Shopify aceita estoque por localização). O
+> único elo que não faz a ponte é o Omie.Hub. Logo, "o Hub não faz" **não é beco sem
+> saída** — o Hub é um integrador substituível/complementável.
+
+**Reframe do objetivo:** o que a Fernanda quer é "pedido de SP sai de SP" (frete + prazo).
+Isso tem 2 partes: **(a) origem do envio** = SP (é o que economiza frete) e **(b)
+acuracidade de estoque** por depósito. A parte (a), que dá a economia real, pode ser
+resolvida sem depender do Hub.
+
+| Caminho | Quem faz | Custo | Resolve |
+|---|---|---|---|
+| **1. Híbrido pragmático** | Trívia configura | Baixo, sem mensalidade | Frete de SP (a). Omie fica consolidado + conferência manual |
+| **2. Conector / OMS de terceiro** (ex.: FullComm) | Contrata | Mensalidade | (a) + (b) pronto, sem a Trívia manter código |
+| **3. Integração própria** | Trívia constrói | Dev + manutenção | (a) + (b) sob medida, sem mensalidade |
+
+**1. Híbrido pragmático (tentar primeiro):** localizações de envio do Shopify + Melhor
+Envio com CEP de SP como origem pros pedidos de SP. Faz o frete sair de SP de verdade.
+Omie continua baixando do padrão; a Move confere SP na mão. Barato e rápido. Bom se o
+volume de pedidos de SP ainda for baixo.
+
+**2. Conector/OMS de terceiro:** senta em cima e faz o roteamento/split que o Hub não faz.
+FullComm é candidato (integra Omie), mas visto só por fonte secundária — confirmar em call
+que faz Omie por depósito → Shopify por localização. Tira o peso de manutenção da Trívia.
+
+**3. Integração própria:** Trívia lê o Omie por depósito (API testada, funciona) e escreve
+no Shopify por localização (API do Shopify aceita). Máximo controle, sem mensalidade, mas
+é código pra manter só pra um cliente.
+
+⚠️ **Caveat p/ caminhos 2 e 3:** se algo externo passar a escrever estoque no Shopify, é
+preciso **desligar/escopar a sync de estoque do Hub**, senão os dois brigam pelo número.
+
+**Antes de escolher, responder:**
+1. **Quantos pedidos de SP por mês?** Pouco → caminho 1 (ou deixar como está e revisar).
+   Volume relevante → caminho 2 ou 3.
+2. **Perguntar ao Kim** (junto do chamado atual): "dá pra o Hub escrever numa localização
+   específica do Shopify e eu montar uma 2ª conexão pro 2º depósito?". Provável não, mas
+   se sim resolve sem custo.
+
+---
+
 ## Próximos passos Omie
 
 - [x] Confirmar qual app de integração está ativo → **Omie Shopify (via Omie.Hub)**
