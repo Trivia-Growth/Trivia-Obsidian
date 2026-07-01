@@ -30,7 +30,7 @@ Financeiro e Professor. É pré-requisito das vendas (0013/0014/0015/0019) e do 
 Agregado **Matrícula**: vínculo aluno↔(um Curso Livre **ou** uma Turma), com **status derivado do
 pagamento** (`pendente`/`ativa`/`inadimplente`/`cancelada`, ADR-0007 — `docs/adr/0007-matricula-agregado-central.md`
 no repo). Sobre ela: **Progresso** por aula no EAD e **histórico do aluno**. As transições de status
-são disparadas pela feature de pagamento (M8/0011); esta spec modela o agregado e a máquina de estados.
+são disparadas pela feature de pagamento (M8 — 0011 pagamento / 0012 recorrência); esta spec modela o agregado e a máquina de estados.
 
 ## Critérios de aceite
 - [ ] CA0 — Mockup das telas de leitura aprovado pelo JG antes de codar UI
@@ -44,7 +44,7 @@ são disparadas pela feature de pagamento (M8/0011); esta spec modela o agregado
 
 ## Fora de escopo
 - Telas/fluxos de venda que criam a Matrícula (0013/0014/0015/0019).
-- Cobrança, recorrência e webhook do Pagar.me que dispara as transições (M8/0011).
+- Cobrança, recorrência e webhook do Pagar.me que dispara as transições (M8 — 0011 pagamento / 0012 recorrência).
 - Regra de inadimplência (bloqueia acesso? após quantos dias?) — questão aberta §12.
 - Presença (M3), janela de inscrição e liberação progressiva/drip (M5).
 - Curso Avulso de Música e seleção de professor (M6/0015).
@@ -53,7 +53,7 @@ são disparadas pela feature de pagamento (M8/0011); esta spec modela o agregado
 ## Questões em aberto (ESPECIFICACAO §12)
 - Granularidade da recorrência: mensalidade por Turma ou por Curso? (afeta se a Matrícula é por turma
   ou reaproveitada entre turmas do mesmo curso).
-- Inadimplência bloqueia acesso? após quantos dias? (efeito da transição é do M8/0011).
+- Inadimplência bloqueia acesso? após quantos dias? (efeito da transição é do M8 — 0011 pagamento / 0012 recorrência).
 - Curso Avulso de Música é EAD/presencial/ambos? (define se tem Progresso).
 - Menores de idade: responsável financeiro/legal no cadastro?
 

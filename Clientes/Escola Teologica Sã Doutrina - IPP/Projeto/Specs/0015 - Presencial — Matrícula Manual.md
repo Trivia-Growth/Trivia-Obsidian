@@ -46,7 +46,7 @@ ADR-0001). Presença é a 0016.
 - Registro de Presença e justificativa de falta (feature 0016 / M3).
 - Cadastro/onboarding de novo aluno ou Perfil (aluno já existe — 0005).
 - Criação/config de Turma, janela de inscrição e liberação progressiva (M5/0010).
-- Fluxo de pagamento em si: Pagar.me, webhook, inadimplência, bloqueio (M8/0011).
+- Fluxo de pagamento em si: Pagar.me, webhook, inadimplência, bloqueio (M8 — 0011 pagamento / 0012 recorrência).
 - Matrícula EAD, Curso Livre, Curso Avulso de Música, pagamento avulso.
 - Cálculo do valor da mensalidade (nasce na Turma/Curso, backend).
 - UI rica de gestão de matrículas.
