@@ -119,12 +119,22 @@ PORÉM, pela API dos pedidos, a integração está **funcionando em segundo plan
 - O 1º pedido (08/09/2025) coincide com a criação do app **"Omie Shopify" (04/09/2025)**.
 
 ### Conclusões travadas
-1. **Integração viva = Omie.Hub, usando o app "Omie Shopify"** (set/2025).
-2. **"Omie Move Gourmet" (ago/2025) é o legado morto** — precede qualquer pedido em 1 mês,
-   era da fase Wix (cancelada). ✅ Seguro remover.
+1. **Integração viva = Omie.Hub, usando o app "Omie Shopify"** (set/2025). ✅ **PROVA
+   DEFINITIVA (01/07/2026):** acesso ao Hub liberado — tela "Lojas > Editar" (loja
+   "Shopify") mostra Chave API Loja Shopify terminada em `e9eb` e Senha API terminada
+   em `b243`, batendo exatamente com as credenciais do app **"Omie Shopify"**
+   (chave `3fa05824...e9eb`, token `...b243`). Já não é mais inferência por data — é
+   confirmação direta.
+2. **"Omie Move Gourmet" (ago/2025) é o legado morto** — chave `3c913c1e...01c` e token
+   `...01ce` NÃO aparecem em nenhuma configuração do Hub. ✅ Seguro remover, confirmado.
 3. **Hub deduz estoque só do depósito PADRÃO (Fábrica Move / Salvador).** Todos os 100
    pedidos Shopify vieram com `codigo_local_estoque: None` → cai no padrão. **Hoje NÃO há
    divisão por local no ERP.**
+4. Configuração vista na tela "Editar Loja": ERP = Omie, Categoria ERP = "Venda de Produtos
+   Fabricados", Tipo Movimentação Estoque = "2 - Envia a nota fiscal de venda para Omie e
+   movimenta estoque", "Atualiza Cliente ERP" ativado. **Ainda não localizado nesta tela**
+   um campo de depósito/local de estoque — pode estar mais abaixo na mesma página ou em
+   outra aba (verificando).
 
 ### ⚠️ Blocker real para a divisão Salvador × SP
 Pra SP deduzir do depósito SP, é preciso configurar o mapeamento **local Shopify → depósito
