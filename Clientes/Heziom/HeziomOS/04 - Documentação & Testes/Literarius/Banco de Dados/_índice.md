@@ -6,6 +6,8 @@ criado: 2026-05-18
 
 # Literarius DB — Índice de Documentação
 
+> ℹ️ **Nota 2026-07-01:** este é o dicionário de dados do ERP Literarius (válido). O destino de sync **não** é mais "Raspberry Pi + tabelas `lit_*` soltas" (spec antiga) — é o schema **`lit_mirror`** no Supabase, populado pelo repo `literarius-sync` (Windows Server). Os dicionários de 18/06 desta pasta já refletem isso.
+
 > Schema mapeado diretamente do SQL Server em produção via pymssql.  
 > Conexão: `192.168.18.10:1433` · Base: `Literarius` · Data: 2026-05-18
 

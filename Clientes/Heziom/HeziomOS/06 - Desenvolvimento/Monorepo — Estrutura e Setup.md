@@ -1,7 +1,8 @@
 # Monorepo HeziomOS — Estrutura e Setup
 
-> **Status:** planejado · **Implementação:** pendente (ver [[STORY-013 — Setup Monorepo heziomos]])
-> **Decisão:** ADR-0001 (pnpm workspaces + Turborepo) — [[HeziomOS — Arquitetura v3]]
+> ⚠️ **ATUALIZADO 2026-07-01 — topologia divergiu do blueprint abaixo.** O monorepo está **implementado e em produção** há semanas (não "planejado/pendente"). E, importante: **NÃO existem `apps/crm` nem `apps/hub` como apps/subtrees separados** — CRM e Hub são **`features/` dentro de um único `apps/web`** (`apps/web/src/features/{auth,crm,financeiro,hub,literarius}`). O deploy é **único** (develop→Netlify), não isolado por app. Ignore as seções "Deploy Isolado por App" e a importação via `git subtree` de `apps/crm`/`apps/hub` — não refletem o real. Blueprint mantido como registro histórico da decisão.
+>
+> **Decisão:** ADR-0002 (pnpm workspaces + Turborepo) — [[HeziomOS — Arquitetura v3]]
 
 ---
 

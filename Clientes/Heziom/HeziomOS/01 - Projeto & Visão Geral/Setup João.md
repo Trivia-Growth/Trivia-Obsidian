@@ -23,8 +23,8 @@ O GitHub Desktop sincroniza os arquivos entre sua máquina e o repositório comp
 ## Passo 2 — Clonar o repositório
 
 1. No GitHub Desktop, clique em **"Clone a repository from the Internet..."**
-2. Busque por `HezionOS` (ou cole a URL do repositório)
-3. Escolha onde salvar no seu computador (ex: `Documentos/HezionOS`)
+2. Busque por `HeziomOS` (ou cole a URL do repositório)
+3. Escolha onde salvar no seu computador (ex: `Documentos/HeziomOS`)
 4. Clique em **Clone**
 
 ---
@@ -34,7 +34,7 @@ O GitHub Desktop sincroniza os arquivos entre sua máquina e o repositório comp
 1. Acesse **obsidian.md** e baixe o app (gratuito)
 2. Instale normalmente
 3. Na tela inicial, clique em **"Open folder as vault"**
-4. Navegue até a pasta onde clonou o repositório e selecione a pasta `HezionOS` (a pasta interna, que contém os arquivos `.md`)
+4. Navegue até a pasta onde clonou o repositório e selecione a pasta `HeziomOS` (a pasta interna, que contém os arquivos `.md`)
 
 ---
 

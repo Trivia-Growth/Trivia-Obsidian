@@ -1,9 +1,11 @@
 ---
 tags: [adr, decisao, infra, sync, raspberry-pi]
-status: decidido
+status: superado
 data: 2026-05-18
 decisores: [Lucas Azevedo (Trivia)]
 ---
+
+> 🚫 **SUPERADO (2026-07-01).** Esta decisão foi revista: o sync roda no **servidor Windows da Heziom (Intelinove)**, não em Raspberry Pi (ver `docs/adr/0005-sync-agent-servidor-heziom.md` no repo). O Pi ficou como plano de redundância/futuro. Mantido só como registro histórico.
 
 # ADR-001 — Sync Agent rodando em Raspberry Pi dedicado
 

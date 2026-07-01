@@ -10,6 +10,8 @@ base: Escopo Tecnico v2 (Conselho) + Mapeamento Completo da Operacao + Modulos e
 
 # HeziomOS — Arquitetura v3
 
+> ℹ️ **Nota 2026-07-01 (ajustes vs. o código real):** esta é a melhor referência de arquitetura do vault e o núcleo segue válido, com 3 ajustes: (1) o sync **não é Raspberry Pi** — é servidor **Windows da Heziom** (ADR-0005); (2) **CRM e Hub são `features/` de um único `apps/web`**, não apps separados; (3) a lista canônica de Épicos e ADRs vive em `docs/` do repo `heziomos` (E1–E18, ADRs 0001–0016). O restante permanece atual.
+
 Versão estrutural consolidada do HeziomOS após as decisões de produto, repositório, runtime de agentes, banco de dados e requisitos não-funcionais. Substitui [[HeziomOS — Arquitetura e Fluxos]] (19/05/2026) e [[HeziomOS — Arquitetura]] (15/04/2026, módulo financeiro), agora marcadas como histórico.
 
 ---

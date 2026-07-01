@@ -6,6 +6,8 @@ atualizado: 2026-05-11
 
 # KR3 — Dia a Dia
 
+> ⚠️ **ATUALIZADO 2026-07-01 — status 🟢 inflados.** Itens como "Recepção/verificação de NFs" (Qive), "OFX Santander/Stone" (conciliação automática) e "Contas a pagar" (aprovação por alçada + CNAB) NÃO estão em produção — Qive não está integrado, conciliação não importa OFX, CNAB não existe (parte só na branch não mergeada). Em produção só o aging de recebíveis (Story 10.1). Corrigir a coluna de status; o passo a passo do processo manual permanece válido.
+
 Processos operacionais executados com frequência diária ou conforme necessidade. São a rotina financeira da equipe.
 
 > **Ferramentas principais:** Literarius · Santander Internet Banking · Stone Portal · Pagar.me / Tray · Teams · Arquivei

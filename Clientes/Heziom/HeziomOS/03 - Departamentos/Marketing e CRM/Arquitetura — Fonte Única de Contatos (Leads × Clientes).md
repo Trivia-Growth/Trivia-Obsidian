@@ -1,13 +1,16 @@
 ---
 tags: [heziom, crm, arquitetura, contatos, fonte-unica, leads, decisao]
-status: proposto-aguarda-alinhamento
+status: implementado
 criado: 2026-06-18
+atualizado: 2026-07-01
 autor: JG Novais + Claude (Trivia)
 relacionado: [HeziomOS — Arquitetura v3, Flowbiz — Funcionalidades Mapeadas, Tray - Clientes, ADR-0015]
 adr-repo: docs/adr/0015-arquitetura-contatos-fonte-unica.md (Org-Heziom/heziomos)
 ---
 
 # Arquitetura — Fonte Única de Contatos (Leads × Clientes)
+
+> ✅ **ATUALIZADO 2026-07-01 — implementado.** Esta arquitetura foi aprovada e está em produção (Épico 5). As stories listadas abaixo como "abertas" já foram concluídas: **5.8** (`tray_mirror` — migration 0018), **5.10** (`contact_identities` — migration 0015), **5.11** (views higienizadas — migration 0017). A regra estrita lead×cliente também está em prod (migration `..._crm_lifecycle_strict_purchase.sql`). Ressalva: a Tray conectada é a **loja de teste** (não produção).
 
 > Decisão de como a tabela de contatos do CRM (`crm.contacts`) serve o **sistema inteiro** (comercial, logística, marketing, financeiro), distingue **lead × cliente** e **preserva a riqueza de cada origem**. Espelho da [[ADR-0015]] no repo. Alinhado à [[HeziomOS — Arquitetura v3]].
 

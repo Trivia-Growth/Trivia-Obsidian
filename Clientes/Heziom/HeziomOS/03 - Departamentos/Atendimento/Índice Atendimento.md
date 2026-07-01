@@ -1,15 +1,18 @@
 ---
 tags: [heziom, atendimento, módulo]
-status: planejado
+status: em-produção
 criado: 2026-05-19
+atualizado: 2026-07-01
 fase: 2.5
-substitui: Unnichat
+substitui: Unnichat (desligamento em andamento)
 ---
 
 # Atendimento — Índice do Módulo
 
-> Módulo que substitui a Unnichat e viabiliza atendimento 24/7 via agentes autônomos no WhatsApp, com escalação inteligente para humanos.
-> Referência: [[Mapeamento Completo da Operação Heziom]] §9 e [[HeziomOS — Módulos e Escopo Completo]]
+> ✅ **ATUALIZADO 2026-07-01:** este módulo NÃO é mais "planejado" — está **em produção**. Painel de conversas (Épico 16), agente de IA com RAG + tool-use e agente de vendas Tray (Épico 17), escalação IA→humano e atendimento como módulo próprio no header (Épico 9) estão todos no ar. A Unnichat está em processo de desligamento (cutover do número principal — Story 6.34). Fonte de verdade: `docs/stories/BACKLOG.md` e [[Estado Atual — Espelho dos Épicos]].
+
+> _(Texto original, mantido como registro da visão inicial:)_ Módulo que substitui a Unnichat e viabiliza atendimento 24/7 via agentes autônomos no WhatsApp, com escalação inteligente para humanos.
+> Referência: [[Mapeamento Completo da Operação Heziom]] §9
 
 ---
 
@@ -34,10 +37,10 @@ substitui: Unnichat
 
 | Submódulo | Status | Nota |
 |---|---|---|
-| [[Agente de Atendimento v1]] | ⬜ A criar | Rastreio, FAQ, disponibilidade — Fase 2 |
-| [[Agente de Atendimento v2]] | ⬜ A criar | Trocas, vendas assistidas — Fase 3 |
-| [[Painel de Conversas]] | ⬜ A criar | Histórico unificado, métricas |
-| [[Escalação Inteligente]] | ⬜ A criar | Regras de quando escalar para humano/vendedor |
+| Agente de Atendimento (IA) | ✅ Em produção | Épico 17 — orquestrador com RAG (`crm-ai-orchestrator`), especialistas (`crm-specialist-runner`), catálogo Tray |
+| Agente de vendas | ✅ Em produção | Épico 17 — RAG do catálogo Tray + conduz a compra |
+| Painel de Conversas | ✅ Em produção | Épico 16 — fila, 1ª resposta, métricas (`crm-conversation-load`, `crm-atendimento-metrics`) |
+| Escalação Inteligente | ✅ Em produção | `crm-ai-escalate` — IA→humano com regras/handoff |
 
 ---
 
@@ -86,4 +89,4 @@ graph TD
 
 ---
 
-*Fase: 2.5 · Prioridade: Média (Unnichat funciona mas limita — sem IA, sem autonomia)*
+*Módulo em produção (Épicos 6/9/16/17). Unnichat em desligamento (Story 6.34). Detalhe vivo no `docs/stories/BACKLOG.md`.*

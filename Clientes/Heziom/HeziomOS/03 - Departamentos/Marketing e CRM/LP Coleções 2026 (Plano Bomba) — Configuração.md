@@ -8,7 +8,7 @@ url: https://colecoes.editoraheziom.com.br
 
 # LP Coleções 2026 (Plano Bomba) — Configuração da Landing Page
 
-> Landing page de catálogo de alta conversão dos 11 combos editoriais da campanha **Combos Vencedores — Plano Bomba** da Editora Heziom. Objetivo: liberar capital de giro (estoque empatado do Q1/2026) e tracionar lançamentos.
+> ⚠️ **Resíduo pós-cutover (2026-07-01):** as menções abaixo à captura de lead via **CRM Flowbiz** (lista ID 27378 / campo `Fonte` / Mailclick) estão **desatualizadas** — o Flowbiz foi desligado no cutover ~30/06. A captura de lead das LPs agora vai para o **HeziomOS via `crm-lead-intake`** (Story 5.23). Confirmar se esta LP específica já foi religada/rehospedada.
 > **URL no ar:** [colecoes.editoraheziom.com.br](https://colecoes.editoraheziom.com.br) ✅
 > Tracking completo em [[Meta CAPI — Configuração Tray Ecommerce]] · Tráfego pago em [[Plano Bomba — Tráfego Pago Meta Ads]]
 

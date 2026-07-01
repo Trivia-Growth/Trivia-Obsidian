@@ -1,13 +1,16 @@
 ---
 tags: [heziom, logística, expedição, módulo]
-status: parcial
+status: planejado
 criado: 2026-05-19
+atualizado: 2026-07-01
 fase: 1 (sync estoque) + 2 (painel logístico)
 ---
 
 # Logística e Expedição — Índice do Módulo
 
-> Parcialmente coberto pela Fase 1 (sync estoque). Módulo completo inclui painel logístico, integração com Shipping Insights, e gestão multi-ponto.
+> ℹ️ **Nota 2026-07-01:** o módulo "Logística" descrito aqui **não foi iniciado** (não existe `features/logistica`). O rastreio/transportadoras já funcionam, mas dentro do módulo **`hub`** (Shipping Insights — functions `hub-*`: Correios, Mandaê, Melhor Envio, Meli, Vipp), que é um módulo próprio, não este. Corrigi o `status` de "parcial" para "planejado" para não confundir.
+
+> _(Texto original:)_ Parcialmente coberto pela Fase 1 (sync estoque). Módulo completo inclui painel logístico, integração com Shipping Insights, e gestão multi-ponto.
 > Referência: [[Mapeamento Completo da Operação Heziom]] §7 e [[HeziomOS — Módulos e Escopo Completo]]
 
 ---

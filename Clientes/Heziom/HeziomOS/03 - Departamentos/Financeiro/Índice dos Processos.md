@@ -6,6 +6,8 @@ atualizado: 2026-05-11
 
 # Índice dos Processos Financeiros — Heziom
 
+> ⚠️ **ATUALIZADO 2026-07-01 — os status 🟢 desta página estão INFLADOS.** Escrito em mai/2026 como aspiração. Hoje, em produção, o Financeiro é **só dashboards de leitura** (Story 10.1). Marque como **backlog/em desenvolvimento** (não "🟢 Substituído") tudo que depende de: conciliação bancária automática, CNAB 240, captura Qive de NF-e, aprovação por alçada e sync de gateways — **nada disso está em produção** (parte só na branch não mergeada `feat/10-financeiro-fase2`). Referências a "STORY-002/003/004/005" são fantasma (a convenção real é decimal — Épico 10). Fonte de verdade: `docs/epics/epic-10-financeiro.md`.
+
 Mapa central de todos os processos financeiros documentados pelo time da Heziom. Cada processo está classificado quanto ao seu status no HeziomOS e possui link para o detalhamento e vídeo correspondente.
 
 **Legenda de status HeziomOS:**

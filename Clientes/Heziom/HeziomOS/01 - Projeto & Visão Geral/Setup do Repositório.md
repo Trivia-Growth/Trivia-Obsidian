@@ -79,7 +79,7 @@ Acessar `https://github.com/[org]/settings`:
 gh auth status
 
 # Criar repo na org Heziom
-gh repo create heziom/heziomos \
+gh repo create Org-Heziom/heziomos \
   --private \
   --description "HeziomOS — sistema operacional da Heziom (monorepo)" \
   --add-readme \
@@ -87,7 +87,7 @@ gh repo create heziom/heziomos \
 
 # Clonar para a máquina local
 cd ~/Documents/GitHub
-gh repo clone heziom/heziomos
+gh repo clone Org-Heziom/heziomos
 cd heziomos
 ```
 
@@ -100,7 +100,7 @@ Sem branch protection, qualquer pessoa pode fazer push direto em `main` e quebra
 ### 3.1. Via CLI
 
 ```bash
-gh api repos/heziom/heziomos/branches/main/protection \
+gh api repos/Org-Heziom/heziomos/branches/main/protection \
   --method PUT \
   --field required_status_checks='{"strict":true,"contexts":["lint","typecheck","test"]}' \
   --field enforce_admins=false \
@@ -178,21 +178,21 @@ Necessárias para os workflows de CI/CD rodarem.
 ### 5.2. Configurar via CLI
 
 ```bash
-gh secret set SUPABASE_ACCESS_TOKEN --repo heziom/heziomos
+gh secret set SUPABASE_ACCESS_TOKEN --repo Org-Heziom/heziomos
 # (cola o token quando pedir)
 
-gh secret set SUPABASE_PROJECT_REF_PROD --repo heziom/heziomos
+gh secret set SUPABASE_PROJECT_REF_PROD --repo Org-Heziom/heziomos
 # ...repetir para cada secret
 ```
 
 ### 5.3. Ambientes (Environments) para isolamento prod/staging
 
 ```bash
-gh api repos/heziom/heziomos/environments/production --method PUT \
+gh api repos/Org-Heziom/heziomos/environments/production --method PUT \
   --field deployment_branch_policy:='{"protected_branches":true,"custom_branch_policies":false}' \
   --field reviewers:='[{"type":"User","id":<ID_DO_LUCAS>}]'
 
-gh api repos/heziom/heziomos/environments/staging --method PUT
+gh api repos/Org-Heziom/heziomos/environments/staging --method PUT
 ```
 
 - `production` exige aprovação manual antes de rodar workflows críticos (deploy de migration, deploy de edge function)
@@ -228,7 +228,7 @@ gh api orgs/heziom/invitations --method POST \
   --field role='admin'
 
 # Conceder acesso ao repo (depois que a pessoa aceitou)
-gh api repos/heziom/heziomos/collaborators/<github-handle> \
+gh api repos/Org-Heziom/heziomos/collaborators/<github-handle> \
   --method PUT \
   --field permission='read'   # ou maintain, write, etc.
 ```
@@ -360,7 +360,7 @@ Resumo executável (depois de criar org e configurar secrets):
 
 ```bash
 # 1. Criar repo
-gh repo create heziom/heziomos \
+gh repo create Org-Heziom/heziomos \
   --private \
   --description "HeziomOS — sistema operacional da Heziom (monorepo)" \
   --add-readme \
@@ -368,7 +368,7 @@ gh repo create heziom/heziomos \
 
 # 2. Clonar
 cd ~/Documents/GitHub
-gh repo clone heziom/heziomos
+gh repo clone Org-Heziom/heziomos
 cd heziomos
 
 # 3. Inicializar monorepo
@@ -391,7 +391,7 @@ pnpm add -Dw turbo @biomejs/biome typescript vitest
 # (gerar conforme templates do TRIVIAIOX)
 
 # 7. Branch protection
-gh api repos/heziom/heziomos/branches/main/protection \
+gh api repos/Org-Heziom/heziomos/branches/main/protection \
   --method PUT \
   --input branch-protection.json   # arquivo com as regras de §3.1
 
@@ -413,9 +413,9 @@ git push -u origin main
 
 Checklist após executar tudo acima:
 
-- [ ] `gh repo view heziom/heziomos` mostra o repo privado
-- [ ] `gh api repos/heziom/heziomos/branches/main/protection` mostra branch protection ativa
-- [ ] `gh secret list --repo heziom/heziomos` lista todas as secrets necessárias
+- [ ] `gh repo view Org-Heziom/heziomos` mostra o repo privado
+- [ ] `gh api repos/Org-Heziom/heziomos/branches/main/protection` mostra branch protection ativa
+- [ ] `gh secret list --repo Org-Heziom/heziomos` lista todas as secrets necessárias
 - [ ] Abrir um PR de teste: status checks rodam, review obrigatório, force push bloqueado
 - [ ] `pnpm install` na raiz funciona sem erros
 - [ ] `pnpm turbo run lint typecheck test` passa nos placeholders
@@ -426,7 +426,7 @@ Checklist após executar tudo acima:
 
 | O que | Onde |
 |---|---|
-| Código | https://github.com/heziom/heziomos |
+| Código | https://github.com/Org-Heziom/heziomos |
 | Docs | Este vault, `Clientes/Heziom/HeziomOS/` |
 | Issues / Stories | Issues do repo + sincronizadas com vault (`Stories/STORY-XXX.md`) |
 | ADRs | `docs/adr/` no repo |

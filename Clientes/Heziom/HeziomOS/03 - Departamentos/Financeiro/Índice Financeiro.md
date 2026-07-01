@@ -8,8 +8,10 @@ substitui: Power BI externo + planilhas Excel + processos manuais
 
 # Financeiro — Índice do Módulo
 
-> Módulo prioritário do HeziomOS (definido pelo CEO). Absorve dashboards, DRE, fluxo de caixa, aprovação de pagamentos, conciliação bancária e agente financeiro autônomo.
-> Referência: [[Mapeamento Completo da Operação Heziom]] §8 e [[HeziomOS — Arquitetura e Fluxos]]
+> ⚠️ **ATUALIZADO 2026-07-01 — leia antes de usar os status abaixo.** O que está **em produção** hoje (Épico 10, Story 10.1, em `develop`) é o conjunto de **dashboards de LEITURA** sobre o espelho `lit_mirror_financeiro`: Dashboard CEO, DRE (por CentroResultado), Posição Financeira, Contas a Receber (aging), Estoque, Faturamento (`apps/web/src/features/financeiro`). **NÃO estão em produção:** conciliação bancária automática, CNAB 240, captura Qive de NF-e, aprovação de pagamentos por alçada — parte disso existe só na branch **não mergeada** `feat/10-financeiro-fase2` (e mesmo lá sem CNAB, com conciliação virada read-only). Onde este índice marcar esses itens como "⬜ Fase 1 / não iniciado", está **subestimando** (o dashboard já existe); onde as notas KR marcarem como "🟢 Substituído", está **inflando**. Fonte de verdade: `docs/epics/epic-10-financeiro.md`.
+
+> _(Texto original:)_ Módulo prioritário do HeziomOS (definido pelo CEO). Absorve dashboards, DRE, fluxo de caixa, aprovação de pagamentos, conciliação bancária e agente financeiro autônomo.
+> Referência: [[Mapeamento Completo da Operação Heziom]] §8
 
 ---
 

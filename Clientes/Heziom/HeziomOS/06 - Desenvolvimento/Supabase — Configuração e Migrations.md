@@ -1,5 +1,7 @@
 # Supabase — Configuração e Migrations
 
+> ℹ️ **Nota 2026-07-01:** os dados do projeto e as migrations `0000`–`0006` descritas aqui conferem com o repo. **Mas a convenção de nomenclatura mudou:** a partir de `0007+` as migrations passaram a usar **timestamp** (ex. `20260701210000_*.sql`), não mais numeração sequencial `000X`. Onde o texto diz "aplicadas em ordem sequencial", vale só para as primeiras; hoje há ~99 migrations e o CI aplica no push (develop e main). Fonte viva: pasta `supabase/migrations/` do repo.
+
 ## Identificação do Projeto
 
 | Campo | Valor |

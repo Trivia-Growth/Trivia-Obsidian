@@ -1,10 +1,12 @@
 ---
 tags: [adr, decisao, segurança, raspberry-pi, firewall, sync]
-status: decidido
+status: superado
 data: 2026-05-18
 decisores: [Lucas Azevedo (Trivia)]
 relacionado: [[ADR-001 — Sync Agent no Raspberry Pi]]
 ---
+
+> 🚫 **SUPERADO (2026-07-01).** O hardening aqui é específico de Linux/Raspberry Pi; o alvo real virou o servidor Windows da Heziom (ver ADR-001 superado + `docs/adr/0005` no repo). Os princípios (role read-only, service key com escopo mínimo, defesa em camadas) seguem válidos; a implementação `ufw`/`systemd` não. Registro histórico.
 
 # ADR-002 — Modelo de Segurança do Sync Agent (Raspberry Pi)
 

@@ -6,6 +6,8 @@ atualizado: 2026-05-11
 
 # KR1 — Contabilidade Mensal
 
+> ⚠️ **ATUALIZADO 2026-07-01 — status 🟢 inflados.** Os itens marcados "🟢 Substituído" que dependem de **CNAB 240, conciliação bancária automática, captura Qive de NF-e ou sync de gateways** NÃO estão em produção (só na branch não mergeada `feat/10-financeiro-fase2`, e sem CNAB). Só o faturamento por canal e o aging (Story 10.1) estão de fato no ar. As menções a "STORY-002/003/004" são fantasma → é o Épico 10. O mapeamento do processo manual abaixo continua válido; o que precisa correção é a coluna de status.
+
 19 subprocessos executados pela equipe financeira, majoritariamente na **primeira semana de cada mês** referente ao mês anterior.
 
 > **Contexto:** Os processos abaixo alimentam o fechamento mensal enviado à contabilidade externa (Contabil Ribeiro LTDA, Rua Mário, 45 – Guarulhos/SP).

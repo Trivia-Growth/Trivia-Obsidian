@@ -1,5 +1,6 @@
 ---
 tags: [heziom, arquitetura, segurança, lgpd, conselho, aprovado]
+aliases: ["Escopo Tecnico", "Escopo Técnico"]
 status: aprovado
 criado: 2026-03
 apresentado-a: Conselho Heziom
@@ -7,6 +8,8 @@ autor: Lucas (Tech Lead)
 versão: v2.0
 classificação: Confidencial
 ---
+
+> ℹ️ Documento contratual/institucional do Conselho (mar/2026). Consolidou a nota bruta "Escopo Tecnico" (removida na limpeza de 2026-07-01; este é o texto limpo, e o alias `Escopo Tecnico` aponta para cá). Detalhes técnicos de deploy foram superados pela [[HeziomOS — Arquitetura v3]] e pelo estado real do código.
 
 # HeziomOS — Complemento Técnico: Infraestrutura, Segurança e Confiabilidade
 

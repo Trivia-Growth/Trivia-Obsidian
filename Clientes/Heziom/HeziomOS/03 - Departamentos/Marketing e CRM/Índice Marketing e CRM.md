@@ -1,15 +1,18 @@
 ---
 tags: [heziom, marketing, crm, módulo]
-status: planejado
+status: em-produção
 criado: 2026-05-19
+atualizado: 2026-07-01
 fase: 2.2
-substitui: Flowbiz
+substitui: Flowbiz (desligado no cutover ~30/06)
 ---
 
 # Marketing e CRM — Índice do Módulo
 
-> Módulo que unifica CRM B2B + B2C, absorve 40k+ contatos do Flowbiz, integra dados reais de compra (Tray + Literarius), e viabiliza segmentações impossíveis hoje.
-> Referência: [[Mapeamento Completo da Operação Heziom]] §6 e [[HeziomOS — Módulos e Escopo Completo]]
+> ✅ **ATUALIZADO 2026-07-01:** o CRM/Marketing NÃO é mais "a criar" — o núcleo está **em produção** (Épico 5, ~90%). Flowbiz **desligado** (cutover ~30/06; 80.098 contatos + 166 templates migrados). Falta só destravar réguas/ROI por credenciais de terceiros (Story 5.6). Fonte de verdade: `docs/stories/BACKLOG.md` e [[Estado Atual — Espelho dos Épicos]].
+
+> _(Texto original, mantido como registro:)_ Módulo que unifica CRM B2B + B2C, absorve contatos do Flowbiz, integra dados reais de compra (Tray + Literarius), e viabiliza segmentações impossíveis hoje.
+> Referência: [[Mapeamento Completo da Operação Heziom]] §6
 
 ---
 
@@ -37,11 +40,11 @@ substitui: Flowbiz
 
 | Submódulo | Status | Nota |
 |---|---|---|
-| [[CRM Unificado]] | ⬜ A criar | Perfil cross-channel (CPF), B2B + B2C |
-| [[Segmentação e Réguas]] | ⬜ A criar | Comportamental, baseada em compras reais |
-| [[Campanhas]] | ⬜ A criar | Email + WhatsApp, templates, métricas |
-| [[Migração Flowbiz]] | 🟡 Backup concluído | 96.692 contatos exportados — ver [[Flowbiz — Funcionalidades Mapeadas]] |
-| [[ROI de Tráfego]] | ⬜ A criar | Meta Ads + Google Ads → custo por canal |
+| CRM Unificado | ✅ Em produção | Perfil cross-channel — [[Arquitetura — Fonte Única de Contatos (Leads × Clientes)]], `crm.contacts` fonte única |
+| Segmentação e Réguas | ✅ Em produção | `crm-segment-refresh` + motor de fluxos `crm-flow-engine`/`crm-flow-daily-triggers` |
+| Campanhas | ✅ Em produção | E-mail (Resend Batch) + WhatsApp: `crm-campaign-send`, tracking `crm-email-track` |
+| Migração Flowbiz | ✅ Concluída (18/06) | 80.098 contatos + 166 templates migrados; Flowbiz desligado no cutover ~30/06 |
+| ROI de Tráfego | ✅ Em produção (parcial) | `crm-performance-calculator` + `crm-campaign-conversion-attribution`; conectores Meta/Google Ads aguardam credenciais (Story 5.6/5.5) |
 
 ---
 

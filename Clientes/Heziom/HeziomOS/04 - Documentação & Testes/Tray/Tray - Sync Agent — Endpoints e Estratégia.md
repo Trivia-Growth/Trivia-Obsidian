@@ -6,8 +6,7 @@ criado: 2026-05-19
 
 # Tray — Sync Agent: Endpoints e Estratégia
 
-> Quais endpoints sincronizar, com que frequência, como mapear para o Supabase,
-> e como integrar com o sync do Literarius.
+> ⚠️ **ATUALIZADO 2026-07-01 — arquitetura mudou.** O pseudocódigo de "sync via Raspberry Pi + cron + Flask" e as tabelas `tray_orders`/`tray_payments` desta nota **não** refletem o real: a ingestão Tray hoje é por **Edge Functions** (`crm-tray-sync`, `crm-tray-sync-products`, `crm-tray-poll-abandoned-carts`, `crm-tray-webhook`, `hub-tray-poll-orders`, `hub-tray-webhook`) para o schema **`tray_mirror`** (Story 5.8). A **lista de endpoints Tray** abaixo continua válida como referência; só a estratégia de sync (Pi/cron) está superada.
 
 ---
 

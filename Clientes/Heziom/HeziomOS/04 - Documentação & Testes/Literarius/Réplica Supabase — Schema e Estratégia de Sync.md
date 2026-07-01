@@ -6,9 +6,9 @@ criado: 2026-05-18
 
 # Réplica Literarius → Supabase — Schema e Estratégia
 
-> O HeziomOS nunca lê o Literarius diretamente em tempo de execução.  
-> O Raspberry Pi sync agent copia as tabelas necessárias para o Supabase.  
-> O dashboard, as Edge Functions e os agentes de IA leem **apenas o Supabase**.
+> ⚠️ **ATUALIZADO 2026-07-01 — arquitetura de sync mudou.** Isto foi a spec original. Na implementação real: (1) o sync **não roda em Raspberry Pi** — roda em **servidor Windows da Heziom (Intelinove)** via repo separado `literarius-sync` (ADR-0005); (2) os dados **não** ficam em tabelas `lit_*` soltas — ficam no **schema `lit_mirror`** (sub-schemas `_financeiro`/`_fiscal`/`_cadastro`, migration `..._lit_mirror_financeiro_schema.sql`). Os dicionários de 18/06 desta mesma pasta já usam a nomenclatura correta. O DDL/colunas abaixo seguem úteis como referência; só a narrativa de "Pi + tabelas soltas" está superada.
+>
+> _(Spec original:)_ O HeziomOS nunca lê o Literarius diretamente em tempo de execução. O sync agent copia as tabelas necessárias para o Supabase. O dashboard, as Edge Functions e os agentes de IA leem **apenas o Supabase**.
 
 ---
 
