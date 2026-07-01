@@ -12,6 +12,21 @@
 | [[Projeto/PROJECT_REQUIREMENTS]] | Requisitos completos da plataforma |
 | [[Projeto/Arquitetura]] | Stack, estrutura de pastas, decisões técnicas |
 | [[Projeto/Stories/_Template Story]] | Template para criar novas stories |
+| [[Mapeamento - Configuracoes dos Agentes]] | Visão conceitual de como um agente é configurado |
+| [[Implementacao/00 - Guia de Implementacao]] | **Guia completo para reconstruir os agentes em outro sistema** |
+
+---
+
+## Reimplementar em outro sistema
+
+Documentação de implementação em [[Implementacao/00 - Guia de Implementacao]]:
+
+1. [[Implementacao/01 - Modelo de Dados]] — tabelas, RLS multi-tenant, criptografia
+2. [[Implementacao/02 - Montagem do Prompt]] — os 8 blocos, cabeçalho literal, tools
+3. [[Implementacao/03 - Loop de Orquestracao]] — runtime do agent-runner, tool use, handoff
+4. [[Implementacao/04 - Especialistas, APIs e Agenda]] — multi-agent, BYOA, agenda
+5. [[Implementacao/05 - Canais de Entrada e Saida]] — webhooks, senders, áudio
+6. [[Implementacao/06 - LLM, Custo e Seguranca]] — cliente LLM, preços, guard, env
 
 ---
 

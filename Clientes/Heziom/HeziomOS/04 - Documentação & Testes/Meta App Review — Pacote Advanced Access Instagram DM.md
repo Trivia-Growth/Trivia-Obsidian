@@ -1,14 +1,22 @@
 # Meta App Review — Pacote Advanced Access Instagram DM
 
-**App:** Jornadas Flowbiz (`717205734571633`)  
+**App:** HeziomOS (ex-"Jornadas Flowbiz", ID `717205734571633`)  
 **Criado em:** 2026-06-27  
 **Referência:** Story 6.33 — CA6 (gravar vídeos + submeter) e CA7 (App para Live)
 
 ---
 
+## Status (atualizado 2026-06-30)
+
+> 🔴 **O App JÁ ESTÁ "Ao vivo" desde 28/06** (foi para Live pra ligar a automação de comentários — Epic 14). **Isso parou os Directs do público:** a permissão `instagram_manage_messages` está em **Standard access** e nunca passou por App Review, então ao virar Live a Meta deixou de entregar Direct de quem não é testador. Confirmado com dados de produção (consulta 30/06): último Direct inbound em **27/06 13:42 BRT, 0 desde 28/06** (envio segue normal). Comentário continua funcionando porque `instagram_manage_comments` já está em Advanced Access.
+>
+> ✅ **Interim que JÁ funciona:** conta **testadora** do app (Funções do app → Usuários de teste) recebe Direct normalmente mesmo com o app no ar — testado ao vivo 30/06, caiu no inbox. O time pode estressar o atendimento por aí enquanto a análise não sai.
+>
+> 🎯 **Falta só:** gravar o vídeo (o próprio DM de testador que já cai no inbox serve de demonstração) + submeter o Advanced Access com os textos abaixo. Isso libera o Direct para o público geral.
+
 ## Contexto rápido
 
-O HeziomOS já recebe e envia DMs do @editoraheziom em produção (E2E validado 27/06). O App está em modo **Development** — só admins/testers conseguem testar. Para atender qualquer cliente via Instagram, precisa de **Advanced Access** nas duas permissões abaixo.
+O HeziomOS recebe e envia DMs do @editoraheziom em produção (E2E validado 27/06). Para atender **qualquer cliente** (não só testadores) via Instagram com o app no ar, é preciso **Advanced Access** nas duas permissões abaixo.
 
 ---
 
@@ -141,7 +149,9 @@ distributed to third parties).
 
 ## CA7 — Mudar o App para modo Live
 
-> Fazer **após** submeter o App Review, ou em paralelo.
+> ✅ **JÁ FEITO (28/06)** — o app está em "Ao vivo". ⚠️ Porém foi virado Live **antes** de submeter o App Review da permissão de mensagem, e foi exatamente isso que parou os Directs do público (ver **Status** no topo). A submissão do Advanced Access ficou pendente e é o que falta.
+>
+> _(Histórico do plano original)_ Fazer **após** submeter o App Review, ou em paralelo.
 
 **Pré-requisitos do modo Live:**
 - [ ] Privacy Policy URL configurada em App Settings → Basic (pode usar `editoraheziom.com.br/privacidade` ou similar)
