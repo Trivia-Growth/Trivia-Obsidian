@@ -22,11 +22,12 @@
     negócio ainda.
   - Gates verdes no novo layout (build/typecheck/lint/test via turbo, audit de esteira, eval de
     specs).
-- **Próximo passo (em aberto):** aguardando o João mandar a **1ª feature de negócio** no chat com
-  o dev (Lucas). Ao chegar, entra pela esteira `@pm/@analyst` → `specs/0005-<slug>/` (product.md +
-  spec.md + tasks.md; `design.md` só se tier arquitetural) → `@sm` → `@dev`. No vault, a mesma
-  feature ganha uma nota-espelho em [[Projeto/Specs/]] (não há épico/story neste padrão — a spec
-  **é** a unidade, ver `_Template — Spec.md`).
+- **2026-07-01 — 1ª feature de negócio aberta: `specs/0005-identidade-e-acesso/`** (tier
+  arquitetural). Autenticação Supabase + os 5 papéis expostos como claim `user_role` no JWT via
+  Custom Access Token Hook (ADR-0004). `product.md`+`design.md`+`domain.md`+`spec.md` (7 AC)
+  +`tasks.md` (9 tasks) prontos e pushados; gates `audit:esteira`/`eval:spec` verdes. Espelho no
+  vault: [[Projeto/Specs/0005 - Identidade e Acesso]]. **Próximo passo: `@dev` implementa** — essa
+  feature bloqueia todo M2+ (nenhuma outra nasce sem RLS por papel).
 
 ---
 
