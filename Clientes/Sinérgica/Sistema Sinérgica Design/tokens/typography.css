@@ -1,0 +1,38 @@
+/* Sinérgica — Tipografia
+   Display/UI: Poppins  •  Assinatura tech / labels: Saira */
+:root {
+  --font-display: 'Poppins', system-ui, sans-serif;  /* títulos e corpo */
+  --font-brand:   'Saira', system-ui, sans-serif;     /* wordmark / labels caixa-alta */
+  --font-ui:      'Poppins', system-ui, sans-serif;
+
+  /* Escala tipográfica (1.25 — terça maior) */
+  --fs-display: 64px;
+  --fs-h1:      44px;
+  --fs-h2:      34px;
+  --fs-h3:      26px;
+  --fs-h4:      20px;
+  --fs-lg:      18px;
+  --fs-body:    16px;
+  --fs-sm:      14px;
+  --fs-xs:      12px;
+  --fs-label:   11px;   /* eyebrow / tagline em caixa-alta */
+
+  /* Pesos */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+  --fw-black:   800;
+
+  /* Altura de linha */
+  --lh-tight:   1.05;
+  --lh-snug:    1.18;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  /* Tracking */
+  --ls-tight:   -0.02em;
+  --ls-normal:  0;
+  --ls-label:   0.16em;   /* tagline "MANUTENÇÕES PATRIMONIAIS" */
+  --ls-wide:    0.28em;
+}

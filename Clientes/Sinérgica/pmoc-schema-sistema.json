@@ -1,0 +1,305 @@
+{
+  "module": "pmoc",
+  "version": "1.0",
+  "description": "Schema de dados para o módulo PMOC do sistema Sinérgica Campo",
+  "stack": "Supabase (PostgreSQL) + React/TypeScript + Netlify",
+
+  "tables": {
+
+    "pmoc_contracts": {
+      "description": "Contrato PMOC por imóvel — vigência, ART, status",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "property_id":      { "type": "uuid", "fk": "pmoc_properties.id", "required": true },
+        "technician_name":  { "type": "text", "default": "Fabrício Medeiros" },
+        "crea":             { "type": "text" },
+        "art_number":       { "type": "text" },
+        "art_date":         { "type": "date" },
+        "start_date":       { "type": "date", "required": true },
+        "end_date":         { "type": "date", "required": true },
+        "status":           { "type": "text", "enum": ["ativo", "encerrado", "renovar"], "default": "ativo" },
+        "notes":            { "type": "text" },
+        "created_at":       { "type": "timestamptz", "default": "now()" },
+        "updated_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    },
+
+    "pmoc_properties": {
+      "description": "Imóvel / cliente com sistema de climatização",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "client_id":        { "type": "uuid", "fk": "clients.id", "notes": "tabela já existente no sistema" },
+        "name":             { "type": "text", "required": true, "notes": "Nome do imóvel (ex: Cond. Flores)" },
+        "type":             { "type": "text", "enum": ["residencial", "comercial", "industrial", "saude", "outro"] },
+        "address":          { "type": "text" },
+        "city":             { "type": "text", "default": "Campinas" },
+        "state":            { "type": "text", "default": "SP" },
+        "zipcode":          { "type": "text" },
+        "cnpj_cpf":         { "type": "text" },
+        "contact_name":     { "type": "text" },
+        "contact_role":     { "type": "text" },
+        "contact_phone":    { "type": "text" },
+        "contact_email":    { "type": "text" },
+        "created_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    },
+
+    "pmoc_equipment": {
+      "description": "Inventário de equipamentos por imóvel",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "property_id":      { "type": "uuid", "fk": "pmoc_properties.id", "required": true },
+        "tag":              { "type": "text", "required": true, "notes": "Código único por imóvel: AC-01, AC-02..." },
+        "type":             { "type": "text", "enum": ["split-hiwall", "cassete", "piso-teto", "duto", "vrf-vrv", "fancoil", "central-agua-gelada", "self-contained", "janeleiro", "portatil", "outro"] },
+        "brand":            { "type": "text" },
+        "model":            { "type": "text" },
+        "serial_evap":      { "type": "text" },
+        "serial_cond":      { "type": "text" },
+        "capacity_btu":     { "type": "integer", "notes": "BTU/h" },
+        "location":         { "type": "text", "notes": "Descrição livre (ex: Bloco A, 3° andar)" },
+        "environment":      { "type": "text", "notes": "Ambiente específico (ex: Sala de reunião 302)" },
+        "floor":            { "type": "text" },
+        "refrigerant":      { "type": "text", "enum": ["R-22", "R-410A", "R-32", "R-404A", "R-407C", "outro"], "default": "R-410A" },
+        "power_kw":         { "type": "numeric" },
+        "phase":            { "type": "text", "enum": ["mono", "bi", "tri"] },
+        "install_date":     { "type": "date" },
+        "condition":        { "type": "text", "enum": ["bom", "regular", "ruim", "critico"], "default": "bom" },
+        "photo_url":        { "type": "text" },
+        "active":           { "type": "boolean", "default": true },
+        "notes":            { "type": "text" },
+        "created_at":       { "type": "timestamptz", "default": "now()" },
+        "updated_at":       { "type": "timestamptz", "default": "now()" }
+      },
+      "unique": ["property_id", "tag"]
+    },
+
+    "pmoc_schedules": {
+      "description": "Cronograma de visitas geradas automaticamente pelo sistema",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "contract_id":      { "type": "uuid", "fk": "pmoc_contracts.id", "required": true },
+        "property_id":      { "type": "uuid", "fk": "pmoc_properties.id", "required": true },
+        "scheduled_date":   { "type": "date", "required": true },
+        "maintenance_type": { "type": "text", "enum": ["mensal", "trimestral", "semestral", "anual"], "required": true },
+        "month_ref":        { "type": "integer", "notes": "Mês de referência 1-12" },
+        "year_ref":         { "type": "integer" },
+        "status":           { "type": "text", "enum": ["agendado", "realizado", "atrasado", "cancelado"], "default": "agendado" },
+        "record_id":        { "type": "uuid", "fk": "pmoc_records.id", "notes": "Preenchido quando executado" },
+        "auvo_os_id":       { "type": "text", "notes": "ID da OS no Auvo (opcional)" },
+        "created_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    },
+
+    "pmoc_records": {
+      "description": "Ficha de registro / laudo de cada visita executada",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "schedule_id":      { "type": "uuid", "fk": "pmoc_schedules.id" },
+        "contract_id":      { "type": "uuid", "fk": "pmoc_contracts.id", "required": true },
+        "property_id":      { "type": "uuid", "fk": "pmoc_properties.id", "required": true },
+        "executed_date":    { "type": "date", "required": true },
+        "time_start":       { "type": "time" },
+        "time_end":         { "type": "time" },
+        "maintenance_type": { "type": "text", "enum": ["mensal", "trimestral", "semestral", "anual", "corretiva"] },
+        "technician_name":  { "type": "text" },
+        "auvo_os_number":   { "type": "text" },
+        "equipment_records": {
+          "type": "jsonb",
+          "notes": "Array de objetos por equipamento atendido",
+          "schema": [
+            {
+              "equipment_id": "uuid",
+              "tag":          "text",
+              "services":     ["text"],
+              "conformity":   "conforme | nao-conforme",
+              "observations": "text"
+            }
+          ]
+        },
+        "checklist": {
+          "type": "jsonb",
+          "notes": "Checklist estruturado de itens executados",
+          "schema": {
+            "mensal":       { "items": [{ "id": "text", "label": "text", "checked": "boolean" }] },
+            "trimestral":   { "items": [{ "id": "text", "label": "text", "checked": "boolean" }] },
+            "semestral":    { "items": [{ "id": "text", "label": "text", "checked": "boolean" }] },
+            "anual":        { "items": [{ "id": "text", "label": "text", "checked": "boolean" }] }
+          }
+        },
+        "materials_used":   { "type": "jsonb", "schema": [{ "item": "text", "qty": "number", "obs": "text" }] },
+        "nonconformities":  { "type": "jsonb", "schema": [{ "equipment_id": "uuid", "tag": "text", "description": "text", "severity": "alta|media|baixa", "action": "text", "deadline": "date" }] },
+        "observations":     { "type": "text" },
+        "pending_items":    { "type": "text" },
+        "next_visit_date":  { "type": "date" },
+        "technician_signed": { "type": "boolean", "default": false },
+        "client_signed":    { "type": "boolean", "default": false },
+        "pdf_url":          { "type": "text", "notes": "URL do laudo PDF gerado" },
+        "created_at":       { "type": "timestamptz", "default": "now()" },
+        "updated_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    },
+
+    "pmoc_microbio_analysis": {
+      "description": "Laudos de análise microbiológica semestrais",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "contract_id":      { "type": "uuid", "fk": "pmoc_contracts.id", "required": true },
+        "property_id":      { "type": "uuid", "fk": "pmoc_properties.id", "required": true },
+        "analysis_date":    { "type": "date", "required": true },
+        "lab_name":         { "type": "text" },
+        "lab_accreditation": { "type": "text", "notes": "Número de acreditação INMETRO" },
+        "collection_points": { "type": "integer" },
+        "fungi_ufc_m3":     { "type": "numeric", "notes": "Resultado fungos (limite: 750 UFC/m³)" },
+        "ie_ratio":         { "type": "numeric", "notes": "Relação interior/exterior (limite: 1,5)" },
+        "coliforms_result": { "type": "text", "enum": ["ausencia", "presenca"] },
+        "status":           { "type": "text", "enum": ["conforme", "nao-conforme", "pendente"], "default": "pendente" },
+        "report_number":    { "type": "text" },
+        "report_url":       { "type": "text" },
+        "corrective_action_needed": { "type": "boolean", "default": false },
+        "notes":            { "type": "text" },
+        "created_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    },
+
+    "pmoc_nonconformity_log": {
+      "description": "Registro consolidado de não-conformidades e ações corretivas",
+      "columns": {
+        "id":               { "type": "uuid", "pk": true, "default": "gen_random_uuid()" },
+        "record_id":        { "type": "uuid", "fk": "pmoc_records.id" },
+        "contract_id":      { "type": "uuid", "fk": "pmoc_contracts.id" },
+        "equipment_id":     { "type": "uuid", "fk": "pmoc_equipment.id" },
+        "tag":              { "type": "text" },
+        "description":      { "type": "text", "required": true },
+        "severity":         { "type": "text", "enum": ["alta", "media", "baixa"] },
+        "recommended_action": { "type": "text" },
+        "responsible":      { "type": "text" },
+        "deadline":         { "type": "date" },
+        "completed_at":     { "type": "date" },
+        "status":           { "type": "text", "enum": ["aberto", "em-andamento", "fechado"], "default": "aberto" },
+        "created_at":       { "type": "timestamptz", "default": "now()" }
+      }
+    }
+  },
+
+  "checklist_definitions": {
+    "description": "Definição canônica dos checklists por tipo de manutenção (referência para o front-end e geração de laudos)",
+    "mensal": {
+      "evaporadora": [
+        { "id": "m_e_01", "label": "Limpeza dos filtros de ar (lavagem ou aspiração)" },
+        { "id": "m_e_02", "label": "Limpeza do painel frontal e gabinete externo" },
+        { "id": "m_e_03", "label": "Verificação e desobstrução do dreno de condensado" },
+        { "id": "m_e_04", "label": "Verificação de ruídos e vibrações anormais" },
+        { "id": "m_e_05", "label": "Verificação das temperaturas de insuflamento e retorno" },
+        { "id": "m_e_06", "label": "Verificação do funcionamento de todos os modos" },
+        { "id": "m_e_07", "label": "Verificação do controle remoto / painel de comando" },
+        { "id": "m_e_08", "label": "Verificação visual de vazamentos de refrigerante" },
+        { "id": "m_e_09", "label": "Verificação de odores anormais" }
+      ],
+      "condensadora": [
+        { "id": "m_c_01", "label": "Verificação visual de acúmulo de sujeira nas aletas" },
+        { "id": "m_c_02", "label": "Verificação de ruídos e vibrações" },
+        { "id": "m_c_03", "label": "Verificação de obstruções ao fluxo de ar" },
+        { "id": "m_c_04", "label": "Verificação do estado da fiação elétrica aparente" }
+      ]
+    },
+    "trimestral": {
+      "evaporadora": [
+        { "id": "t_e_01", "label": "Limpeza completa da serpentina evaporadora" },
+        { "id": "t_e_02", "label": "Limpeza e higienização da bandeja de condensado" },
+        { "id": "t_e_03", "label": "Verificação e limpeza das pás do ventilador" },
+        { "id": "t_e_04", "label": "Verificação e aperto das conexões elétricas" },
+        { "id": "t_e_05", "label": "Medição da corrente elétrica do motor do ventilador" },
+        { "id": "t_e_06", "label": "Verificação do estado dos rolamentos" },
+        { "id": "t_e_07", "label": "Verificação da integridade do isolamento térmico" }
+      ],
+      "condensadora": [
+        { "id": "t_c_01", "label": "Limpeza das aletas condensadoras" },
+        { "id": "t_c_02", "label": "Limpeza das pás do ventilador condensador" },
+        { "id": "t_c_03", "label": "Verificação e aperto das conexões elétricas" },
+        { "id": "t_c_04", "label": "Medição da corrente elétrica do compressor e ventilador" },
+        { "id": "t_c_05", "label": "Verificação visual do estado do compressor" }
+      ],
+      "sistema": [
+        { "id": "t_s_01", "label": "Verificação do nível de gás refrigerante (delta-t mín. 8°C)" },
+        { "id": "t_s_02", "label": "Verificação de vazamentos nas conexões de refrigerante" },
+        { "id": "t_s_03", "label": "Verificação do funcionamento dos protetores e alarmes" },
+        { "id": "t_s_04", "label": "Registro de temperatura de bulbo seco (insuflamento/retorno)" }
+      ]
+    },
+    "semestral": {
+      "limpeza_profunda": [
+        { "id": "s_l_01", "label": "Limpeza química da serpentina evaporadora (bactericida/fungicida)" },
+        { "id": "s_l_02", "label": "Limpeza química da serpentina condensadora" },
+        { "id": "s_l_03", "label": "Higienização completa do gabinete interno e externo" },
+        { "id": "s_l_04", "label": "Limpeza do dreno com jato de pressão" }
+      ],
+      "eletrico": [
+        { "id": "s_e_01", "label": "Medição de tensão de alimentação (desvio ≤ ±10% do nominal)" },
+        { "id": "s_e_02", "label": "Medição de corrente em todas as fases" },
+        { "id": "s_e_03", "label": "Verificação do estado dos capacitores" }
+      ],
+      "refrigeracao": [
+        { "id": "s_r_01", "label": "Verificação de pressão do sistema (manifold gauge)" },
+        { "id": "s_r_02", "label": "Verificação do superaquecimento e subresfriamento" },
+        { "id": "s_r_03", "label": "Verificação de vazamentos com detector eletrônico" }
+      ],
+      "microbiologico": [
+        { "id": "s_m_01", "label": "Coleta de amostra microbiológica do ar (laboratório INMETRO)", "mandatory": true },
+        { "id": "s_m_02", "label": "Emissão de laudo microbiológico", "mandatory": true },
+        { "id": "s_m_03", "label": "Arquivamento do laudo (validade 6 meses)", "mandatory": true }
+      ]
+    },
+    "anual": {
+      "revisao_geral": [
+        { "id": "a_r_01", "label": "Inspeção completa de tubulações e conexões" },
+        { "id": "a_r_02", "label": "Verificação da integridade dos suportes e fixações" },
+        { "id": "a_r_03", "label": "Verificação do estado das buchas e vedações" },
+        { "id": "a_r_04", "label": "Avaliação da vida útil dos componentes" },
+        { "id": "a_r_05", "label": "Verificação e recarga de gás refrigerante (se necessário)" },
+        { "id": "a_r_06", "label": "Troca de filtros de ar quando danificados" },
+        { "id": "a_r_07", "label": "Emissão de relatório técnico anual completo" }
+      ],
+      "documentacao": [
+        { "id": "a_d_01", "label": "Renovação da ART para o próximo período" },
+        { "id": "a_d_02", "label": "Atualização do inventário de equipamentos" },
+        { "id": "a_d_03", "label": "Emissão de novo PMOC ou aditivo" }
+      ]
+    }
+  },
+
+  "business_rules": {
+    "schedule_generation": "Ao criar um contrato, gerar automaticamente todas as visitas (12 mensais, 4 trimestrais, 2 semestrais, 1 anual) para o período de vigência",
+    "overdue_alert": "Visita com status=agendado e scheduled_date < hoje → atualizar para atrasado automaticamente (cron job diário)",
+    "art_renewal_alert": "30 dias antes do end_date do contrato → notificar para renovar ART",
+    "microbio_alert": "Análise microbiológica deve ser realizada a cada 180 dias — alertar quando próxima coleta < 30 dias",
+    "pdf_generation": "Após salvar pmoc_records → gerar PDF do laudo com logo Sinérgica e enviar por e-mail ao responsável do imóvel",
+    "nonconformity_severity_high": "NC de criticidade=alta → notificação imediata ao engenheiro responsável"
+  },
+
+  "ui_modules": {
+    "dashboard_pmoc": {
+      "description": "Visão geral de todos os contratos PMOC ativos",
+      "widgets": [
+        "Total de contratos ativos",
+        "Visitas do mês atual (realizadas / pendentes / atrasadas)",
+        "Análises microbiológicas vencendo nos próximos 30 dias",
+        "Contratos vencendo nos próximos 60 dias",
+        "NCs abertas por severidade"
+      ]
+    },
+    "pmoc_contract_detail": {
+      "description": "Detalhe de um contrato — inventário, cronograma, histórico de laudos",
+      "tabs": ["Identificação", "Inventário", "Cronograma", "Laudos", "Análises Micro.", "Não-Conformidades"]
+    },
+    "pmoc_record_form": {
+      "description": "Formulário de campo para preenchimento do laudo (mobile-first)",
+      "flow": "Selecionar contrato → confirmar data → marcar equipamentos atendidos → preencher checklist → registrar NCs → assinar → gerar PDF"
+    }
+  },
+
+  "integrations": {
+    "auvo": "Criar OS no Auvo ao agendar visita; atualizar status quando OS for concluída",
+    "pdf_engine": "Gerar PDF do laudo com template Sinérgica após cada registro",
+    "email": "Enviar laudo PDF por e-mail ao responsável do imóvel após cada visita"
+  }
+}

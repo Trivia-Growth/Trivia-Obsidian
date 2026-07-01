@@ -1,0 +1,73 @@
+<!-- @dsCard group="Components" viewport="720x440" name="App — Primitivos de Operação" subtitle="KPI tipográfico, status, prioridade GUT, aba, nav" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Saira:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;font-family:var(--font-ui);background:var(--app-bg);padding:22px;color:var(--app-ink)}
+  .brand{font-family:var(--font-brand)}.tnum{font-variant-numeric:tabular-nums}
+  .lbl{display:flex;align-items:center;gap:8px;font-family:var(--font-brand);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1C2748;margin:0 0 10px}
+  .lbl:before{content:"";width:4px;height:13px;background:var(--app-cta);border-radius:2px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .panel{background:#fff;border:1px solid var(--app-border);border-radius:8px;overflow:hidden}
+  .kpi{display:grid;grid-template-columns:1fr 1fr}
+  .kc{padding:14px 16px}.kc+.kc{border-left:1px solid var(--app-border-2)}
+  .kc .k{font-family:var(--font-brand);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--app-ink-3)}
+  .kc .v{font-family:var(--font-brand);font-size:30px;font-weight:700;color:#1C2748;line-height:1;margin-top:6px}
+  .kc .d{font-size:11px;font-weight:700;margin-top:6px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .stat{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+  .stat .b{width:6px;height:16px;border-radius:2px}
+  .prio{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--app-ink-2)}
+  .prio .dot{width:7px;height:7px;border-radius:50%}
+  .tab{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:2px solid;font-size:12.5px;font-weight:600}
+  .nav{display:flex;flex-direction:column;gap:3px;background:#141C36;border-radius:8px;padding:8px;width:210px}
+  .ni{display:flex;align-items:center;gap:11px;font-size:13px;padding:8px 10px;border-radius:6px;position:relative}
+  .btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:9px 16px;border-radius:6px}
+</style></head><body>
+  <div class="grid">
+    <div style="grid-column:1 / -1">
+      <p class="lbl">KPI Rail (Saira tabular)</p>
+      <div class="panel kpi">
+        <div class="kc"><div class="k">OS Abertas</div><div class="v tnum">12</div><div class="d" style="color:#1E8E45">↗ +3 hoje</div></div>
+        <div class="kc"><div class="k">Backlog GUT</div><div class="v tnum">23</div><div class="d" style="color:#D6362B">↘ 4 críticos</div></div>
+        <div class="kc"><div class="k">SLA no Prazo</div><div class="v tnum">87<span style="font-size:16px;color:var(--app-ink-3)">%</span></div><div class="d" style="color:#1E8E45">↗ +2pp</div></div>
+        <div class="kc"><div class="k">T. Médio OS</div><div class="v tnum">2.3<span style="font-size:16px;color:var(--app-ink-3)">d</span></div><div class="d" style="color:#1E8E45">↗ −0.4d</div></div>
+      </div>
+    </div>
+    <div>
+      <p class="lbl">Status</p>
+      <div class="row" style="gap:14px">
+        <span class="stat"><span class="b" style="background:#B4B6BE"></span><span style="color:var(--app-ink-2)">Solicitação</span></span>
+        <span class="stat"><span class="b" style="background:#2B375E"></span><span style="color:#2B375E">Planejado</span></span>
+        <span class="stat"><span class="b" style="background:#F4A300"></span><span style="color:#946000">Em andamento</span></span>
+        <span class="stat"><span class="b" style="background:#1E8E45"></span><span style="color:#1E8E45">Concluído</span></span>
+      </div>
+      <p class="lbl" style="margin-top:18px">Prioridade GUT</p>
+      <div class="row" style="gap:14px">
+        <span class="prio"><span class="dot" style="background:#D6362B"></span>Crítica</span>
+        <span class="prio"><span class="dot" style="background:#E8731B"></span>Alta</span>
+        <span class="prio"><span class="dot" style="background:#F4A300"></span>Média</span>
+        <span class="prio"><span class="dot" style="background:#B4B6BE"></span>Baixa</span>
+      </div>
+      <p class="lbl" style="margin-top:18px">Botões</p>
+      <div class="row">
+        <span class="btn" style="background:#E8731B;color:#fff;box-shadow:0 2px 0 0 #C5590C">+ Nova OS</span>
+        <span class="btn" style="background:#fff;border:1px solid var(--app-border);color:#1C2748">Filtros</span>
+      </div>
+    </div>
+    <div>
+      <p class="lbl">Aba de módulo</p>
+      <div class="row" style="background:#fff;border:1px solid var(--app-border);border-radius:8px;padding:0 8px">
+        <span class="tab" style="border-color:#E8731B;color:#1C2748">PCM <span style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#E8731B">Operação</span></span>
+        <span class="tab" style="border-color:transparent;color:var(--app-ink-2)">Comercial</span>
+      </div>
+      <p class="lbl" style="margin-top:18px">Navegação (sidebar navy)</p>
+      <div class="nav">
+        <span class="ni" style="background:rgba(255,255,255,.07);color:#fff;font-weight:600">
+          <span style="position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:0 2px 2px 0;background:#E8731B"></span>
+          <span style="color:#E8731B">▦</span>Painel <span class="brand tnum" style="margin-left:auto;font-size:10px;font-weight:700;background:#E8731B;color:#fff;padding:1px 6px;border-radius:4px">12</span></span>
+        <span class="ni" style="color:rgba(244,242,236,.55)">▤ Ordens de Serviço</span>
+        <span class="ni" style="color:rgba(244,242,236,.55)">▥ Backlog GUT</span>
+      </div>
+    </div>
+  </div>
+</body></html>

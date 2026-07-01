@@ -1,0 +1,641 @@
+<!-- @dsCard group="App · Sinérgica OS" viewport="1500x980" name="PCM · Painel de Operações" subtitle="Rebranding autoral — instrumento de operação" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Saira:wght@400;500;600;700;800&family=Saira+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: {
+      sans:['Poppins','system-ui','sans-serif'],
+      brand:['Saira','sans-serif'],
+      cond:['"Saira Semi Condensed"','Saira','sans-serif'],
+    },
+    colors: {
+      navy:{DEFAULT:'#1C2748',deep:'#141C36',900:'#0F1528',soft:'#2B375E',line:'#2E3A60'},
+      paper:'#F4F2EC', card:'#FFFFFF',
+      line:{DEFAULT:'#E5E2D9',soft:'#EDEAE2'},
+      ink:{DEFAULT:'#1A2138',2:'#585E72',3:'#8C8F9B',4:'#B4B6BE'},
+      orange:{DEFAULT:'#E8731B',deep:'#D2630F',soft:'#FBEEE0'},
+      amber:'#F4A300',
+    },
+  }}}
+</script>
+<style>
+  body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+  .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{scrollbar-width:none}
+  .tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  .reveal{opacity:0;transform:translateY(8px);animation:rv .5s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rv{to{opacity:1;transform:none}}
+  /* subtle paper grain */
+  .grain:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style>
+</head>
+<body class="bg-paper text-ink grain">
+<div id="app" class="flex h-screen overflow-hidden relative z-[2]"></div>
+
+<script>
+const MODULOS = [
+  {id:'pcm',label:'PCM',sub:'Operação',icon:'hard-hat'},
+  {id:'atendimento',label:'Atendimento',sub:'Agente Zé',icon:'bot'},
+  {id:'comercial',label:'Comercial',sub:'CRM & Propostas',icon:'briefcase'},
+  {id:'financeiro',label:'Financeiro',sub:'Recebíveis & Margem',icon:'bar-chart-3'},
+  {id:'operacao',label:'Estoque',sub:'Materiais & Consumo',icon:'package'},
+  {id:'marketing',label:'Marketing',sub:'Conteúdo & Calendário',icon:'megaphone'},
+  {id:'growth',label:'Growth',sub:'Leads & ROAS',icon:'trending-up'},
+  {id:'gestao',label:'Cockpit',sub:'KPIs & MRR',icon:'gauge'},
+  {id:'area-cliente',label:'Portal',sub:'Área do Síndico',icon:'user-circle'},
+];
+const PCM_NAV = [
+  {titulo:'Operação',items:[
+    {label:'Painel',icon:'layout-dashboard',page:'painel'},
+    {label:'Ordens de Serviço',icon:'clipboard-list',badge:'12',page:'ordens'},
+    {label:'Backlog GUT',icon:'list-tree',badge:'23',page:'backlog'},
+    {label:'Inspeções',icon:'shield-check',page:'cockpit'}]},
+  {titulo:'Preventivo',items:[
+    {label:'Plano de Manutenção',icon:'calendar-range',page:'plano'},
+    {label:'Preventivas',icon:'wrench',badge:'4',page:'plano'}]},
+  {titulo:'Gestão',items:[
+    {label:'Cockpit & KPIs',icon:'gauge',page:'cockpit'},
+    {label:'Relatório Mensal',icon:'file-bar-chart-2',page:'cockpit'},
+    {label:'Laudo SPDA',icon:'zap',page:'plano'}]},
+];
+let pcmPage='painel';
+// KPIs — rail tipográfico, sem ícones decorativos
+const KPIS = [
+  {label:'OS Abertas',valor:'12',unidade:'',delta:'+3',dir:'up',hint:'hoje'},
+  {label:'Em Andamento',valor:'05',unidade:'',delta:'2 téc.',dir:'flat',hint:'em campo'},
+  {label:'Backlog GUT',valor:'23',unidade:'',delta:'4 críticos',dir:'down',hint:'pendentes'},
+  {label:'SLA no Prazo',valor:'87',unidade:'%',delta:'+2pp',dir:'up',hint:'vs. semana'},
+  {label:'Inspeções',valor:'08',unidade:'',delta:'3',dir:'up',hint:'esta semana'},
+  {label:'Preventivas',valor:'04',unidade:'',delta:'7 dias',dir:'down',hint:'a vencer'},
+  {label:'Técnicos',valor:'03',unidade:'',delta:'1 livre',dir:'flat',hint:'em campo'},
+  {label:'T. Médio OS',valor:'2.3',unidade:'d',delta:'-0.4d',dir:'up',hint:'vs. mês'},
+];
+const OS_RECENTES = [
+  {numero:'CH-047',titulo:'Vazamento em cano no térreo',condominio:'Cond. Primavera',cat:'Corretiva',resp:'A. Lima',prioridade:'critica',status:'solicitacao'},
+  {numero:'CH-046',titulo:'Troca de lâmpada — corredor 3º',condominio:'Res. Vila Verde',cat:'Corretiva',resp:'R. Souza',prioridade:'alta',status:'andamento'},
+  {numero:'CH-045',titulo:'Portão eletrônico travado',condominio:'Res. Alamedas',cat:'Corretiva',resp:'R. Souza',prioridade:'alta',status:'andamento'},
+  {numero:'CH-044',titulo:"Revisão da bomba d'água",condominio:'Ed. Central Park',cat:'Preventiva',resp:'A. Lima',prioridade:'media',status:'planejado'},
+  {numero:'CH-043',titulo:'Vistoria SPDA anual',condominio:'Cond. Jardins',cat:'Preventiva',resp:'M. Dias',prioridade:'media',status:'solicitacao'},
+];
+const BACKLOG_TOP = [
+  {titulo:'Infiltração na fachada — causa raiz desconhecida',score:125,prioridade:'critica',condominio:'Ed. Horizonte',g:5,u:5,t:5},
+  {titulo:'Quadro elétrico de área comum sem proteção',score:80,prioridade:'alta',condominio:'Res. Alamedas',g:5,u:4,t:4},
+  {titulo:'Elevador — manutenção atrasada há 30 dias',score:60,prioridade:'alta',condominio:'Cond. Primavera',g:4,u:5,t:3},
+];
+const STATUS_MAP = {
+  solicitacao:{label:'Solicitação',bar:'#B4B6BE',fg:'text-ink-2'},
+  planejado:{label:'Planejado',bar:'#2B375E',fg:'text-navy-soft'},
+  andamento:{label:'Em andamento',bar:'#F4A300',fg:'text-[#946000]'},
+  concluido:{label:'Concluído',bar:'#1E8E45',fg:'text-[#1E8E45]'},
+};
+const PRIO_MAP = {
+  critica:{label:'Crítica',c:'#D6362B'},
+  alta:{label:'Alta',c:'#E8731B'},
+  media:{label:'Média',c:'#F4A300'},
+  baixa:{label:'Baixa',c:'#B4B6BE'},
+};
+let active='pcm';
+const user={name:'Marina Costa',role:'Gestora de Operações'};
+const initials=user.name.split(' ').slice(0,2).map(w=>w[0].toUpperCase()).join('');
+const firstName=user.name.split(' ')[0];
+const hoje = new Date(2026,5,28).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});
+
+function sectionLabel(txt,extra=''){
+  return `<div class="flex items-center gap-2.5 ${extra}">
+    <span class="w-1 h-3.5 bg-orange rounded-sm"></span>
+    <span class="font-brand text-[12px] font-bold tracking-[0.16em] uppercase text-navy">${txt}</span>
+  </div>`;
+}
+function kpiCell(k,i){
+  const dc=k.dir==='up'?'text-[#1E8E45]':k.dir==='down'?'text-[#D6362B]':'text-ink-3';
+  const di=k.dir==='up'?'arrow-up-right':k.dir==='down'?'arrow-down-right':'arrow-right';
+  const isLeftCol = i%4===0;
+  return `<div class="reveal px-5 py-4 ${isLeftCol?'':'border-l border-line-soft'}" style="animation-delay:${i*40}ms">
+    <div class="font-brand text-[10.5px] font-semibold tracking-[0.14em] uppercase text-ink-3">${k.label}</div>
+    <div class="mt-2 flex items-baseline gap-0.5">
+      <span class="font-brand tnum text-[34px] leading-none font-bold text-navy">${k.valor}</span>
+      ${k.unidade?`<span class="font-brand text-base font-semibold text-ink-3">${k.unidade}</span>`:''}
+    </div>
+    <div class="mt-2 flex items-center gap-1.5">
+      <span class="inline-flex items-center gap-0.5 text-[11px] font-bold ${dc}"><i data-lucide="${di}" class="w-3 h-3"></i>${k.delta}</span>
+      <span class="text-[11px] text-ink-3">${k.hint}</span>
+    </div></div>`;
+}
+function osRow(os,i){
+  const s=STATUS_MAP[os.status], p=PRIO_MAP[os.prioridade];
+  return `<div class="group grid grid-cols-[auto_1fr_auto_auto] items-center gap-4 px-5 py-3 hover:bg-paper/70 transition-colors reveal" style="animation-delay:${i*45}ms">
+    <div class="flex items-center gap-3">
+      <span class="w-[3px] h-9 rounded-full shrink-0" style="background:${p.c}"></span>
+      <span class="font-brand tnum text-[13px] font-bold text-navy w-[58px] whitespace-nowrap">${os.numero}</span>
+    </div>
+    <div class="min-w-0">
+      <p class="text-[13.5px] font-semibold text-ink truncate">${os.titulo}</p>
+      <p class="text-[11.5px] text-ink-3 truncate mt-0.5">${os.condominio} &middot; ${os.cat} &middot; ${os.resp}</p>
+    </div>
+    <div class="hidden md:flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full" style="background:${p.c}"></span>
+      <span class="text-[11.5px] font-medium text-ink-2 w-12">${p.label}</span>
+    </div>
+    <div class="flex items-center gap-2.5 pl-1">
+      <span class="inline-flex items-center gap-1.5 text-[11.5px] font-semibold ${s.fg}">
+        <span class="w-1.5 h-4 rounded-sm" style="background:${s.bar}"></span>${s.label}</span>
+      <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-ink-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+    </div></div>`;
+}
+function backlogRow(item,i){
+  const p=PRIO_MAP[item.prioridade];
+  return `<div class="px-5 py-3.5 flex gap-3.5 hover:bg-paper/70 transition-colors reveal" style="animation-delay:${i*60}ms">
+    <div class="shrink-0 flex flex-col items-center pt-0.5">
+      <span class="font-brand tnum text-[15px] font-bold leading-none" style="color:${p.c}">${item.score}</span>
+      <span class="font-brand text-[8px] tracking-widest uppercase text-ink-4 mt-1">score</span>
+    </div>
+    <div class="w-px bg-line-soft self-stretch"></div>
+    <div class="flex-1 min-w-0">
+      <p class="text-[12.5px] font-semibold text-ink leading-snug">${item.titulo}</p>
+      <div class="flex items-center justify-between mt-2">
+        <p class="text-[11.5px] text-ink-3">${item.condominio}</p>
+        <div class="flex items-center gap-1 font-brand tnum text-[10px] text-ink-3">
+          <span class="px-1 py-0.5 rounded bg-line-soft" title="Gravidade">G${item.g}</span>
+          <span class="px-1 py-0.5 rounded bg-line-soft" title="Urgência">U${item.u}</span>
+          <span class="px-1 py-0.5 rounded bg-line-soft" title="Tendência">T${item.t}</span>
+        </div>
+      </div></div></div>`;
+}
+function dashboard(){
+  return `<div class="flex flex-col gap-5 max-w-[1180px]">
+    <!-- Cabeçalho de operação -->
+    <div class="flex items-end justify-between gap-6 flex-wrap reveal">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="font-brand text-[11px] font-bold tracking-[0.18em] uppercase text-orange">PCM</span>
+          <span class="w-1 h-1 rounded-full bg-ink-4"></span>
+          <span class="font-brand text-[11px] font-semibold tracking-[0.14em] uppercase text-ink-3">Centro de Operações</span>
+        </div>
+        <h1 class="font-brand text-[30px] font-bold text-navy leading-none">Painel de Operações</h1>
+        <p class="text-[13px] text-ink-2 mt-2">5 ordens em andamento, 4 itens críticos no backlog — priorize as corretivas de hoje.</p>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <div class="hidden lg:flex items-center gap-2 px-3 py-2 rounded-md border border-line bg-card text-ink-2">
+          <i data-lucide="calendar" class="w-4 h-4 text-ink-3"></i>
+          <span class="text-[12.5px] font-medium capitalize">${hoje}</span>
+        </div>
+        <button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-line bg-card text-[13px] font-semibold text-navy hover:border-ink-3 transition whitespace-nowrap">
+          <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>Filtros</button>
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange text-white text-[13px] font-bold hover:bg-orange-deep transition shadow-[0_2px_0_0_#C5590C] whitespace-nowrap">
+          <i data-lucide="plus" class="w-4 h-4"></i>Nova OS</button>
+      </div>
+    </div>
+
+    <!-- KPI rail tipográfico -->
+    <div class="bg-card border border-line rounded-lg overflow-hidden">
+      <div class="grid grid-cols-2 md:grid-cols-4">
+        ${KPIS.slice(0,4).map((k,i)=>kpiCell(k,i)).join('')}
+      </div>
+      <div class="border-t border-line-soft grid grid-cols-2 md:grid-cols-4">
+        ${KPIS.slice(4).map((k,i)=>kpiCell(k,i+4)).join('')}
+      </div>
+    </div>
+
+    <!-- OS + Backlog -->
+    <div class="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] gap-5">
+      <div class="bg-card border border-line rounded-lg overflow-hidden">
+        <div class="px-5 py-4 flex items-center justify-between border-b border-line-soft">
+          ${sectionLabel('Ordens de Serviço')}
+          <span class="inline-flex items-center gap-1 text-[12px] text-navy font-bold cursor-pointer group">Ver todas<i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i></span>
+        </div>
+        <div class="divide-y divide-line-soft">${OS_RECENTES.map(osRow).join('')}</div>
+      </div>
+      <div class="bg-card border border-line rounded-lg overflow-hidden">
+        <div class="px-5 py-4 border-b border-line-soft">${sectionLabel('Top Backlog GUT')}</div>
+        <div class="divide-y divide-line-soft">${BACKLOG_TOP.map(backlogRow).join('')}</div>
+        <div class="px-5 py-3 border-t border-line-soft bg-paper/40">
+          <span class="inline-flex items-center gap-1 text-[12px] text-navy font-bold cursor-pointer group">Abrir backlog completo<i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function emConstrucao(m){
+  return `<div class="flex-1 flex flex-col items-center justify-center gap-5 text-center p-12 min-h-[460px] reveal">
+    <div class="relative">
+      <div class="w-[72px] h-[72px] rounded-xl bg-navy flex items-center justify-center">
+        <i data-lucide="${m.icon}" class="w-8 h-8 text-paper/90"></i>
+      </div>
+      <span class="absolute -right-2 -bottom-2 w-7 h-7 rounded-lg bg-orange flex items-center justify-center border-[3px] border-paper"><i data-lucide="hammer" class="w-3.5 h-3.5 text-white"></i></span>
+    </div>
+    <div><h2 class="font-brand text-[22px] font-bold text-navy">Módulo ${m.label}</h2>
+      <p class="text-[13px] text-ink-2 mt-1.5 max-w-sm">${m.sub} — esta área entra no roadmap do Sinérgica OS.</p></div>
+    <span class="inline-flex items-center gap-2 font-brand text-[11px] font-bold uppercase tracking-[0.14em] text-orange bg-orange-soft border border-orange/20 rounded-md px-3.5 py-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-orange"></span>Em construção</span></div>`;
+}
+/* ============ HELPERS DE PÁGINA ============ */
+function pageHeader(eyebrow,title,sub,actions=''){
+  return `<div class="flex items-end justify-between gap-6 flex-wrap reveal mb-5">
+    <div>
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="font-brand text-[11px] font-bold tracking-[0.18em] uppercase text-orange">PCM</span>
+        <span class="w-1 h-1 rounded-full bg-ink-4"></span>
+        <span class="font-brand text-[11px] font-semibold tracking-[0.14em] uppercase text-ink-3">${eyebrow}</span>
+      </div>
+      <h1 class="font-brand text-[30px] font-bold text-navy leading-none">${title}</h1>
+      <p class="text-[13px] text-ink-2 mt-2">${sub}</p>
+    </div>
+    <div class="flex items-center gap-2.5">${actions}</div>
+  </div>`;
+}
+const btnGhost=(ic,txt)=>`<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-line bg-card text-[13px] font-semibold text-navy hover:border-ink-3 transition whitespace-nowrap"><i data-lucide="${ic}" class="w-4 h-4"></i>${txt}</button>`;
+const btnPrimary=(ic,txt)=>`<button class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange text-white text-[13px] font-bold hover:bg-orange-deep transition shadow-[0_2px_0_0_#C5590C] whitespace-nowrap"><i data-lucide="${ic}" class="w-4 h-4"></i>${txt}</button>`;
+
+/* ============ ORDENS DE SERVIÇO (tabela) ============ */
+const OS_FULL=[
+  {numero:'CH-047',titulo:'Vazamento em cano no térreo',condominio:'Cond. Primavera',cat:'Corretiva',resp:'A. Lima',sla:'Hoje',slaC:'#D6362B',prioridade:'critica',status:'solicitacao'},
+  {numero:'CH-046',titulo:'Troca de lâmpada — corredor 3º',condominio:'Res. Vila Verde',cat:'Corretiva',resp:'R. Souza',sla:'2 dias',slaC:'#946000',prioridade:'alta',status:'andamento'},
+  {numero:'CH-045',titulo:'Portão eletrônico travado',condominio:'Res. Alamedas',cat:'Corretiva',resp:'R. Souza',sla:'1 dia',slaC:'#D6362B',prioridade:'alta',status:'andamento'},
+  {numero:'CH-044',titulo:"Revisão da bomba d'água",condominio:'Ed. Central Park',cat:'Preventiva',resp:'A. Lima',sla:'5 dias',slaC:'#585E72',prioridade:'media',status:'planejado'},
+  {numero:'CH-043',titulo:'Vistoria SPDA anual',condominio:'Cond. Jardins',cat:'Inspeção',resp:'M. Dias',sla:'8 dias',slaC:'#585E72',prioridade:'media',status:'solicitacao'},
+  {numero:'CH-042',titulo:'Limpeza de calhas — bloco B',condominio:'Res. Vila Verde',cat:'Preventiva',resp:'J. Pinto',sla:'No prazo',slaC:'#1E8E45',prioridade:'baixa',status:'concluido'},
+  {numero:'CH-041',titulo:'Reparo de infiltração na garagem',condominio:'Ed. Horizonte',cat:'Corretiva',resp:'A. Lima',sla:'Atrasado',slaC:'#D6362B',prioridade:'critica',status:'andamento'},
+  {numero:'CH-040',titulo:'Manutenção do gerador',condominio:'Cond. Primavera',cat:'Preventiva',resp:'M. Dias',sla:'No prazo',slaC:'#1E8E45',prioridade:'media',status:'concluido'},
+  {numero:'CH-039',titulo:'Substituição de disjuntor — QGBT',condominio:'Res. Alamedas',cat:'Corretiva',resp:'R. Souza',sla:'3 dias',slaC:'#946000',prioridade:'alta',status:'planejado'},
+];
+const FILTROS_OS=[{k:'todas',l:'Todas',n:9},{k:'solicitacao',l:'Solicitação',n:2},{k:'planejado',l:'Planejado',n:2},{k:'andamento',l:'Em andamento',n:3},{k:'concluido',l:'Concluído',n:2}];
+let filtroOS='todas';
+function osTableRow(os,i){
+  const s=STATUS_MAP[os.status],p=PRIO_MAP[os.prioridade];
+  return `<tr class="group border-b border-line-soft hover:bg-paper/70 transition-colors reveal" style="animation-delay:${i*35}ms">
+    <td class="pl-5 pr-2 py-3"><div class="flex items-center gap-3"><span class="w-[3px] h-8 rounded-full" style="background:${p.c}"></span><span class="font-brand tnum text-[13px] font-bold text-navy whitespace-nowrap">${os.numero}</span></div></td>
+    <td class="px-2 py-3"><p class="text-[13px] font-semibold text-ink">${os.titulo}</p></td>
+    <td class="px-2 py-3 text-[12.5px] text-ink-2 whitespace-nowrap">${os.condominio}</td>
+    <td class="px-2 py-3"><span class="text-[11.5px] font-semibold px-2 py-0.5 rounded bg-line-soft text-ink-2 whitespace-nowrap">${os.cat}</span></td>
+    <td class="px-2 py-3 text-[12.5px] text-ink-2 whitespace-nowrap">${os.resp}</td>
+    <td class="px-2 py-3"><span class="inline-flex items-center gap-1.5 text-[12px] font-semibold whitespace-nowrap"><span class="w-1.5 h-1.5 rounded-full" style="background:${p.c}"></span><span class="text-ink-2">${p.label}</span></span></td>
+    <td class="px-2 py-3 font-brand tnum text-[12.5px] font-bold whitespace-nowrap" style="color:${os.slaC}">${os.sla}</td>
+    <td class="px-2 py-3"><span class="inline-flex items-center gap-1.5 text-[11.5px] font-semibold ${s.fg} whitespace-nowrap"><span class="w-1.5 h-4 rounded-sm" style="background:${s.bar}"></span>${s.label}</span></td>
+    <td class="pr-5 pl-2 py-3 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 text-ink-4 opacity-0 group-hover:opacity-100 transition-opacity inline"></i></td>
+  </tr>`;
+}
+function ordensPage(){
+  const rows=OS_FULL.filter(o=>filtroOS==='todas'||o.status===filtroOS);
+  const th='text-left font-brand text-[10.5px] font-bold tracking-[0.1em] uppercase text-ink-3 py-3';
+  return `${pageHeader('Ordens de Serviço','Ordens de Serviço','9 ordens ativas · 2 atrasadas exigem atenção imediata.',btnGhost('sliders-horizontal','Filtros')+btnGhost('download','Exportar')+btnPrimary('plus','Nova OS'))}
+  <div class="flex items-center gap-1.5 mb-4 flex-wrap reveal">
+    ${FILTROS_OS.map(f=>{const on=f.k===filtroOS;return `<button data-osf="${f.k}" class="osfilter inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-[12.5px] font-semibold transition ${on?'bg-navy text-white':'bg-card border border-line text-ink-2 hover:border-ink-3'}">
+      ${f.l}<span class="font-brand tnum text-[10px] font-bold px-1.5 py-0.5 rounded ${on?'bg-white/15 text-white':'bg-line-soft text-ink-3'}">${f.n}</span></button>`}).join('')}
+  </div>
+  <div class="bg-card border border-line rounded-lg overflow-hidden reveal">
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead><tr class="border-b border-line bg-paper/40">
+          <th class="${th} pl-5">OS</th><th class="${th}">Título</th><th class="${th}">Condomínio</th><th class="${th}">Categoria</th><th class="${th}">Responsável</th><th class="${th}">Prioridade</th><th class="${th}">SLA</th><th class="${th}">Status</th><th class="pr-5"></th>
+        </tr></thead>
+        <tbody>${rows.map(osTableRow).join('')}</tbody>
+      </table>
+    </div>
+    <div class="flex items-center justify-between px-5 py-3 border-t border-line-soft bg-paper/40">
+      <span class="text-[12px] text-ink-3">Mostrando <b class="text-ink-2 tnum">${rows.length}</b> de <b class="text-ink-2 tnum">${OS_FULL.length}</b> ordens</span>
+      <div class="flex items-center gap-1">
+        <button class="w-7 h-7 rounded border border-line bg-card flex items-center justify-center text-ink-3 hover:border-ink-3"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+        <button class="w-7 h-7 rounded bg-navy text-white font-brand tnum text-[12px] font-bold">1</button>
+        <button class="w-7 h-7 rounded border border-line bg-card font-brand tnum text-[12px] text-ink-2 hover:border-ink-3">2</button>
+        <button class="w-7 h-7 rounded border border-line bg-card flex items-center justify-center text-ink-3 hover:border-ink-3"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ============ PLANO DE MANUTENÇÃO (matriz de calendário) ============ */
+const PLANO_AREAS=[
+  {area:'Bloco 1 / Térreo / Recepção',equip:[
+    {nome:'Aquecedor de Ar XPTO 3000',freqs:['Diária','Mensal'],mDay:11},
+    {nome:'Condicionador de Ar tipo janela ABCSSQ',freqs:['Mensal','Diária'],mDay:11},
+    {nome:'Exaustor 498ADC',freqs:['Mensal'],mDay:11},
+    {nome:"Bomba d'água ABC123456",freqs:['Diária','Mensal'],mDay:11},
+    {nome:'Chiller XPTO 10000',freqs:['Diária','Mensal'],mDay:11},
+  ]},
+  {area:'Bloco 1 / Térreo / Hall',equip:[
+    {nome:'Difusores de insuflamento e retorno XPTO2020ABC',freqs:['Mensal','Diária'],mDay:11},
+    {nome:'Dispositivo de bloqueio e balanceamento ABC12312321',freqs:['Mensal'],mDay:11},
+    {nome:'Quadro elétrico geral QGBT-01',freqs:['Diária','Mensal'],mDay:18},
+  ]},
+];
+const HOJE_DIA=15;
+function diaCell(d,freq,mDay){
+  // estados: passado=baixado(verde "1/1"); hoje=navy; futuro=programado(amber "0/1"); mensal=só no mDay
+  if(freq==='Mensal'){
+    if(d===mDay) return `<td class="border border-white text-center" style="background:#FBEEE0"><span class="font-brand tnum text-[8px] font-bold text-orange-deep">1/1</span></td>`;
+    return `<td class="border border-line-soft bg-paper/30"></td>`;
+  }
+  // Diária
+  let pend = (d===7||d===23); // pendência exemplo
+  if(d<HOJE_DIA){
+    return `<td class="border border-white text-center relative" style="background:#E6F3EA"><span class="font-brand tnum text-[8px] font-bold text-[#1E8E45]">1/1</span>${pend?'<span class="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#D6362B]"></span>':''}</td>`;
+  }
+  if(d===HOJE_DIA){
+    return `<td class="border-2 border-navy text-center relative z-10" style="background:#fff"><span class="font-brand tnum text-[8px] font-bold text-navy">·</span></td>`;
+  }
+  return `<td class="border border-white text-center" style="background:#FDF6E8"><span class="font-brand tnum text-[8px] font-bold text-[#B26A00]">0/1</span></td>`;
+}
+function equipBlock(eq){
+  const days=Array.from({length:31},(_,i)=>i+1);
+  return `<div class="mb-3">
+    <div class="flex items-center gap-2 mb-1">
+      <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-orange"></i>
+      <span class="font-brand text-[12px] font-bold text-navy">Equipamento: ${eq.nome}</span>
+    </div>
+    <div class="overflow-x-auto border border-line rounded-md">
+      <table class="border-collapse" style="min-width:760px">
+        <thead><tr>
+          <th class="bg-navy text-white font-brand text-[9px] font-semibold uppercase tracking-wide px-2 py-1 text-left sticky left-0" style="width:130px">Dezembro/2024</th>
+          ${days.map(d=>`<th class="bg-navy/90 text-white/90 font-brand tnum text-[8.5px] font-semibold text-center border-l border-navy-line" style="width:21px">${d}</th>`).join('')}
+        </tr></thead>
+        <tbody>
+        ${eq.freqs.map(fr=>`<tr>
+          <td class="bg-paper font-brand text-[10px] font-semibold text-ink-2 px-2 py-0.5 border-t border-line sticky left-0">${fr}</td>
+          ${days.map(d=>diaCell(d,fr,eq.mDay)).join('')}
+        </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+function planoPage(){
+  return `${pageHeader('Preventivo · Cronograma','Plano de Manutenção','Calendário de atividades programadas e baixadas por equipamento.',btnGhost('printer','Imprimir')+btnGhost('download','Exportar PDF')+btnPrimary('plus','Nova atividade'))}
+  <!-- Ficha + legenda -->
+  <div class="bg-card border border-line rounded-lg overflow-hidden mb-5 reveal">
+    <div class="grid md:grid-cols-[1fr_auto] gap-4 p-5">
+      <div class="grid grid-cols-3 gap-5">
+        <div><div class="font-brand text-[9px] font-bold tracking-[0.14em] uppercase text-ink-3">Empresa</div><div class="text-[13px] font-semibold text-navy mt-0.5">Real Building Enterprise LTDA</div></div>
+        <div><div class="font-brand text-[9px] font-bold tracking-[0.14em] uppercase text-ink-3">Unidade de manutenção</div><div class="text-[13px] font-semibold text-navy mt-0.5">Real Building · Curitiba</div></div>
+        <div><div class="font-brand text-[9px] font-bold tracking-[0.14em] uppercase text-ink-3">Período</div><div class="font-brand tnum text-[13px] font-semibold text-navy mt-0.5">01/12/2024 – 31/12/2024</div></div>
+      </div>
+      <div class="flex flex-col gap-2 md:border-l md:border-line-soft md:pl-5">
+        <span class="font-brand text-[9px] font-bold tracking-[0.14em] uppercase text-ink-3">Legenda</span>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <span class="inline-flex items-center gap-1.5 text-[11px] text-ink-2"><span class="w-3.5 h-3.5 rounded-sm border border-white" style="background:#FDF6E8"></span>Programadas</span>
+          <span class="inline-flex items-center gap-1.5 text-[11px] text-ink-2"><span class="w-3.5 h-3.5 rounded-sm border border-white" style="background:#E6F3EA"></span>Baixadas</span>
+          <span class="inline-flex items-center gap-1.5 text-[11px] text-ink-2"><span class="w-2 h-2 rounded-full bg-[#D6362B]"></span>Há pendências</span>
+          <span class="inline-flex items-center gap-1.5 text-[11px] text-ink-2"><span class="w-3.5 h-3.5 rounded-sm border-2 border-navy bg-white"></span>Hoje</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-card border border-line rounded-lg p-5 reveal relative overflow-hidden">
+    <img src="../../assets/symbol-laranja.png" class="absolute -right-10 -top-10 w-44 opacity-[0.05] pointer-events-none" alt="">
+    <div class="flex items-center gap-2.5 mb-4 relative">
+      <span class="w-1 h-3.5 bg-orange rounded-sm"></span>
+      <span class="font-brand text-[15px] font-bold text-navy">Dezembro 2024</span>
+      <span class="font-brand tnum text-[11px] font-semibold text-ink-3 ml-2">8 equipamentos · 2 áreas</span>
+    </div>
+    ${PLANO_AREAS.map(a=>`<div class="mb-5 relative">
+      <div class="inline-flex items-center gap-2 mb-2.5">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-orange"></i>
+        <span class="font-brand text-[12px] font-bold tracking-wide uppercase text-orange-deep">Área: ${a.area}</span>
+      </div>
+      ${a.equip.map(equipBlock).join('')}
+    </div>`).join('')}
+  </div>`;
+}
+
+/* ============ BACKLOG GUT (matriz/infográfico) ============ */
+const BACKLOG_FULL=[
+  {titulo:'Infiltração na fachada — causa raiz desconhecida',score:125,prioridade:'critica',condominio:'Ed. Horizonte',g:5,u:5,t:5},
+  {titulo:'Quadro elétrico de área comum sem proteção',score:80,prioridade:'alta',condominio:'Res. Alamedas',g:5,u:4,t:4},
+  {titulo:'Elevador — manutenção atrasada há 30 dias',score:60,prioridade:'alta',condominio:'Cond. Primavera',g:4,u:5,t:3},
+  {titulo:'Bomba de incêndio sem teste semestral',score:48,prioridade:'alta',condominio:'Ed. Central Park',g:4,u:4,t:3},
+  {titulo:'Corrosão em guarda-corpo da sacada',score:36,prioridade:'media',condominio:'Cond. Jardins',g:3,u:3,t:4},
+  {titulo:'Iluminação de emergência intermitente',score:27,prioridade:'media',condominio:'Res. Vila Verde',g:3,u:3,t:3},
+  {titulo:'Pintura descascando no hall social',score:12,prioridade:'baixa',condominio:'Res. Alamedas',g:2,u:2,t:3},
+  {titulo:'Vazamento lento em registro do jardim',score:8,prioridade:'baixa',condominio:'Cond. Primavera',g:2,u:2,t:2},
+];
+function gutMatrix(){
+  // 5x5: linhas Gravidade 5..1, colunas Urgência 1..5; célula colorida por intensidade; bolhas = itens
+  const heat=(g,u)=>{const p=g*u; if(p>=20)return '#FBE3D6'; if(p>=12)return '#FDF0DD'; if(p>=6)return '#FBF6E9'; return '#F1F4F0';};
+  let cells='';
+  for(let g=5;g>=1;g--){
+    cells+=`<div class="flex items-center"><span class="font-brand tnum text-[10px] font-bold text-ink-3 w-4 text-center">${g}</span>`;
+    for(let u=1;u<=5;u++){
+      const items=BACKLOG_FULL.filter(it=>it.g===g&&it.u===u);
+      cells+=`<div class="relative flex items-center justify-center" style="width:46px;height:46px;background:${heat(g,u)};border:1px solid #fff">
+        ${items.map(it=>{const p=PRIO_MAP[it.prioridade];const sz=10+it.t*3;return `<span class="rounded-full flex items-center justify-center text-white font-brand tnum font-bold shadow-sm" style="width:${sz}px;height:${sz}px;background:${p.c};font-size:8px" title="${it.titulo}">${it.t}</span>`}).join('')}
+      </div>`;
+    }
+    cells+=`</div>`;
+  }
+  cells+=`<div class="flex"><span class="w-4"></span>${[1,2,3,4,5].map(u=>`<span class="font-brand tnum text-[10px] font-bold text-ink-3 text-center" style="width:46px">${u}</span>`).join('')}</div>`;
+  return `<div class="inline-block">
+    <div class="flex">
+      <div class="flex items-center"><span class="font-brand text-[9px] font-bold tracking-widest uppercase text-ink-3" style="writing-mode:vertical-rl;transform:rotate(180deg)">Gravidade</span></div>
+      <div>${cells}</div>
+    </div>
+    <div class="text-center font-brand text-[9px] font-bold tracking-widest uppercase text-ink-3 mt-1" style="margin-left:16px">Urgência →</div>
+  </div>`;
+}
+function backlogItemRow(it,i){
+  const p=PRIO_MAP[it.prioridade];const max=125;const pct=Math.round(it.score/max*100);
+  return `<div class="flex items-center gap-4 px-5 py-3 border-b border-line-soft hover:bg-paper/70 transition-colors reveal" style="animation-delay:${i*30}ms">
+    <span class="font-brand tnum text-[11px] font-bold text-ink-4 w-5">${String(i+1).padStart(2,'0')}</span>
+    <div class="flex-1 min-w-0">
+      <p class="text-[13px] font-semibold text-ink truncate">${it.titulo}</p>
+      <p class="text-[11.5px] text-ink-3 mt-0.5">${it.condominio}</p>
+    </div>
+    <div class="flex items-center gap-1 font-brand tnum text-[10px] text-ink-2 shrink-0">
+      <span class="px-1.5 py-0.5 rounded bg-line-soft" title="Gravidade">G${it.g}</span>
+      <span class="px-1.5 py-0.5 rounded bg-line-soft" title="Urgência">U${it.u}</span>
+      <span class="px-1.5 py-0.5 rounded bg-line-soft" title="Tendência">T${it.t}</span>
+    </div>
+    <div class="hidden lg:flex items-center gap-2 w-36 shrink-0">
+      <div class="flex-1 h-1.5 rounded-full bg-line-soft overflow-hidden"><div class="h-full rounded-full" style="width:${pct}%;background:${p.c}"></div></div>
+      <span class="font-brand tnum text-[14px] font-bold w-7 text-right" style="color:${p.c}">${it.score}</span>
+    </div>
+  </div>`;
+}
+function backlogPage(){
+  const dist=[{l:'Crítica',n:1,c:'#D6362B'},{l:'Alta',n:3,c:'#E8731B'},{l:'Média',n:2,c:'#F4A300'},{l:'Baixa',n:2,c:'#B4B6BE'}];
+  const tot=dist.reduce((a,b)=>a+b.n,0);
+  return `${pageHeader('Operação · Priorização','Backlog GUT','Matriz de priorização Gravidade × Urgência × Tendência — 8 itens em aberto.',btnGhost('sliders-horizontal','Filtros')+btnPrimary('plus','Novo item'))}
+  <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-5">
+    <div class="bg-card border border-line rounded-lg p-5 reveal">
+      <div class="flex items-center gap-2.5 mb-4">${'<span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="font-brand text-[12px] font-bold tracking-[0.16em] uppercase text-navy">Matriz GUT</span>'}</div>
+      ${gutMatrix()}
+      <div class="flex items-center gap-3 mt-4 pt-4 border-t border-line-soft flex-wrap">
+        ${dist.map(d=>`<span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-ink-2"><span class="w-2.5 h-2.5 rounded-full" style="background:${d.c}"></span>${d.l}</span>`).join('')}
+        <span class="text-[10.5px] text-ink-3 ml-auto">Bolha = tendência (T)</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-5">
+      <div class="bg-card border border-line rounded-lg p-5 reveal">
+        <div class="flex items-center justify-between mb-3"><span class="font-brand text-[12px] font-bold tracking-[0.16em] uppercase text-navy flex items-center gap-2.5"><span class="w-1 h-3.5 bg-orange rounded-sm"></span>Distribuição por prioridade</span><span class="font-brand tnum text-[11px] text-ink-3">${tot} itens</span></div>
+        <div class="flex h-3 rounded-full overflow-hidden">${dist.map(d=>`<div style="width:${d.n/tot*100}%;background:${d.c}" title="${d.l}"></div>`).join('')}</div>
+        <div class="grid grid-cols-4 gap-3 mt-4">${dist.map(d=>`<div><div class="font-brand tnum text-[24px] font-bold leading-none" style="color:${d.c}">${d.n}</div><div class="text-[11px] text-ink-3 mt-1">${d.l}</div></div>`).join('')}</div>
+      </div>
+      <div class="bg-card border border-line rounded-lg overflow-hidden reveal flex-1">
+        <div class="px-5 py-4 border-b border-line-soft flex items-center justify-between">${sectionLabel('Itens priorizados')}<span class="font-brand tnum text-[11px] text-ink-3">ordenado por score</span></div>
+        <div>${BACKLOG_FULL.map(backlogItemRow).join('')}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ============ COCKPIT (gráficos + infográficos) ============ */
+function lineChart(values,w,h,color,fill){
+  const max=100,min=60,pad=4;
+  const xs=(i)=>pad+i*((w-pad*2)/(values.length-1));
+  const ys=(v)=>h-pad-((v-min)/(max-min))*(h-pad*2);
+  const pts=values.map((v,i)=>`${xs(i).toFixed(1)},${ys(v).toFixed(1)}`).join(' ');
+  const area=`${pad},${h-pad} ${pts} ${(w-pad)},${h-pad}`;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" class="w-full" style="height:${h}px">
+    <polygon points="${area}" fill="${fill}"/>
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  </svg>`;
+}
+function donut(segs,size){
+  const tot=segs.reduce((a,b)=>a+b.v,0);let acc=0;const stops=[];
+  segs.forEach(s=>{const a=acc/tot*100,b=(acc+s.v)/tot*100;stops.push(`${s.c} ${a.toFixed(1)}% ${b.toFixed(1)}%`);acc+=s.v;});
+  const hole=size*0.56;
+  return `<div class="relative shrink-0" style="width:${size}px;height:${size}px;border-radius:50%;background:conic-gradient(${stops.join(',')})">
+    <div class="absolute rounded-full bg-card flex flex-col items-center justify-center" style="inset:${(size-hole)/2}px">
+      <span class="font-brand tnum font-extrabold text-navy leading-none" style="font-size:${size*0.18}px">${tot}</span>
+      <span class="font-brand font-semibold text-ink-3" style="font-size:${size*0.06}px;letter-spacing:.1em">OS / MÊS</span>
+    </div></div>`;
+}
+function gauge(pct,size){
+  const r=size/2-12,cx=size/2,cy=size/2,C=Math.PI*r;const len=pct/100*C;
+  return `<svg viewBox="0 0 ${size} ${size/2+12}" style="width:${size}px">
+    <path d="M${cx-r} ${cy} A${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="#EDEAE2" stroke-width="14" stroke-linecap="round"/>
+    <path d="M${cx-r} ${cy} A${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="#E8731B" stroke-width="14" stroke-linecap="round" stroke-dasharray="${len.toFixed(1)} ${C.toFixed(1)}"/>
+    <text x="${cx}" y="${cy-6}" text-anchor="middle" class="font-brand" style="font-size:26px;font-weight:800;fill:#1C2748">${pct}%</text>
+    <text x="${cx}" y="${cy+8}" text-anchor="middle" style="font-size:9px;letter-spacing:.1em;fill:#8C8F9B;font-weight:600">SLA NO PRAZO</text>
+  </svg>`;
+}
+function barsH(data){
+  const max=Math.max(...data.map(d=>d.v));
+  return data.map(d=>`<div class="flex items-center gap-3">
+    <span class="text-[12px] text-ink-2 w-28 truncate text-right">${d.l}</span>
+    <div class="flex-1 h-5 rounded bg-line-soft overflow-hidden"><div class="h-full rounded flex items-center justify-end pr-2" style="width:${Math.max(d.v/max*100,12)}%;background:${d.c}"><span class="font-brand tnum text-[10px] font-bold text-white">${d.v}</span></div></div>
+  </div>`).join('');
+}
+const CICLO=[{l:'Inspeção',ic:'search'},{l:'Diagnóstico',ic:'clipboard-list'},{l:'Plano',ic:'calendar-range'},{l:'Execução',ic:'wrench'},{l:'Validação',ic:'shield-check'}];
+function cockpitPage(){
+  const slaTrend=[78,81,79,84,85,87];
+  const meses=['Jul','Ago','Set','Out','Nov','Dez'];
+  const cats=[{l:'Corretiva',v:32,c:'#E8731B'},{l:'Preventiva',v:41,c:'#1C2748'},{l:'Inspeção',v:18,c:'#F4A300'}];
+  const cond=[{l:'Cond. Primavera',v:24,c:'#1C2748'},{l:'Res. Alamedas',v:19,c:'#2B375E'},{l:'Ed. Central Park',v:16,c:'#E8731B'},{l:'Cond. Jardins',v:13,c:'#F4A300'},{l:'Res. Vila Verde',v:9,c:'#B4B6BE'}];
+  return `${pageHeader('Gestão · Visão consolidada','Cockpit de Operações','Indicadores de SLA, volume e produtividade — dezembro/2024.',btnGhost('calendar','Dezembro 2024')+btnGhost('download','Exportar'))}
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <!-- SLA trend -->
+    <div class="lg:col-span-2 bg-card border border-line rounded-lg p-5 reveal">
+      <div class="flex items-center justify-between mb-4">${sectionLabel('SLA no prazo · 6 meses')}<span class="inline-flex items-center gap-1 font-brand tnum text-[12px] font-bold text-[#1E8E45]"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i>+9pp</span></div>
+      ${lineChart(slaTrend,560,150,'#E8731B','rgba(232,115,27,0.10)')}
+      <div class="flex justify-between mt-1 px-1">${meses.map(m=>`<span class="font-brand text-[10px] text-ink-3">${m}</span>`).join('')}</div>
+    </div>
+    <!-- Gauge -->
+    <div class="bg-card border border-line rounded-lg p-5 reveal flex flex-col">
+      ${sectionLabel('Meta do mês')}
+      <div class="flex-1 flex items-center justify-center">${gauge(87,200)}</div>
+      <div class="flex items-center justify-between text-[11px] text-ink-3 pt-3 border-t border-line-soft"><span>Meta: <b class="text-ink-2 tnum">90%</b></span><span>Faltam <b class="text-orange tnum">3pp</b></span></div>
+    </div>
+    <!-- Donut categorias -->
+    <div class="bg-card border border-line rounded-lg p-5 reveal">
+      ${sectionLabel('OS por categoria')}
+      <div class="flex items-center gap-4 mt-3">
+        ${donut(cats,140)}
+        <div class="flex flex-col gap-2.5">${cats.map(c=>`<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm" style="background:${c.c}"></span><span class="text-[12px] text-ink-2 flex-1">${c.l}</span><span class="font-brand tnum text-[13px] font-bold text-navy">${c.v}</span></div>`).join('')}</div>
+      </div>
+    </div>
+    <!-- Bars condomínio -->
+    <div class="lg:col-span-2 bg-card border border-line rounded-lg p-5 reveal">
+      <div class="mb-4">${sectionLabel('OS por condomínio · top 5')}</div>
+      <div class="flex flex-col gap-2.5">${barsH(cond)}</div>
+    </div>
+    <!-- Infográfico ciclo de manutenção (símbolo) -->
+    <div class="lg:col-span-3 bg-navy-deep rounded-lg p-6 reveal relative overflow-hidden">
+      <img src="../../assets/symbol-offwhite.png" class="absolute right-6 top-1/2 -translate-y-1/2 w-40 opacity-10 pointer-events-none hidden md:block" alt="">
+      <div class="flex items-center gap-2.5 mb-5 relative">
+        <span class="w-1 h-3.5 bg-orange rounded-sm"></span>
+        <span class="font-brand text-[12px] font-bold tracking-[0.16em] uppercase text-amber">Ciclo de Manutenção Preventiva</span>
+      </div>
+      <div class="flex items-center gap-2 md:gap-4 relative flex-wrap">
+        ${CICLO.map((c,i)=>`<div class="flex items-center gap-2 md:gap-4">
+          <div class="flex flex-col items-center gap-2 min-w-[88px]">
+            <div class="w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center"><i data-lucide="${c.ic}" class="w-5 h-5 text-orange"></i></div>
+            <span class="font-brand text-[11px] font-bold text-white text-center">${c.l}</span>
+            <span class="font-brand tnum text-[9px] font-bold text-paper/40">0${i+1}</span>
+          </div>
+          ${i<CICLO.length-1?'<i data-lucide="arrow-right" class="w-4 h-4 text-orange/60 shrink-0"></i>':'<i data-lucide="refresh-cw" class="w-4 h-4 text-orange shrink-0"></i>'}
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+const PCM_PAGES={painel:dashboard,ordens:ordensPage,plano:planoPage,backlog:backlogPage,cockpit:cockpitPage};
+
+function render(){
+  const modulo=MODULOS.find(m=>m.id===active);
+  document.getElementById('app').innerHTML=`
+  <!-- Sidebar -->
+  <aside class="w-[228px] shrink-0 bg-navy-deep flex flex-col relative overflow-hidden">
+    <img src="../../assets/symbol-offwhite.png" class="absolute -left-12 bottom-24 w-48 opacity-[0.045] pointer-events-none" alt="">
+    <div class="px-5 pt-6 pb-5 relative">
+      <img src="../../assets/logo-h-offwhite.png" class="h-[26px] w-auto" alt="Sinérgica">
+      <div class="flex items-center gap-1.5 mt-3 pl-0.5">
+        <span class="w-1 h-1 rounded-full bg-orange"></span>
+        <span class="font-brand text-[9px] font-bold tracking-[0.22em] uppercase text-paper/45">Sistema Operacional</span>
+      </div>
+    </div>
+    <div class="h-px bg-navy-line/50 mx-5"></div>
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-5 no-scrollbar relative">
+      ${active==='pcm' ? PCM_NAV.map(g=>`<div>
+        <p class="px-2.5 font-brand text-[10px] font-bold text-paper/35 uppercase tracking-[0.18em] mb-2">${g.titulo}</p>
+        <div class="space-y-0.5">
+        ${g.items.map(it=>{const on=it.page===pcmPage;return `<button data-page="${it.page}" class="navbtn w-full flex items-center gap-3 pl-3 pr-2.5 py-2 rounded-md text-[13px] transition-all relative ${on?'bg-white/[0.07] text-white font-semibold':'text-paper/55 hover:bg-white/[0.04] hover:text-paper/90'}">
+          ${on?'<span class=\"absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r bg-orange\"></span>':''}
+          <i data-lucide="${it.icon}" class="w-[17px] h-[17px] shrink-0 ${on?'text-orange':''}"></i>
+          <span class="truncate flex-1 text-left">${it.label}</span>
+          ${it.badge?`<span class="font-brand tnum text-[10px] font-bold px-1.5 py-0.5 rounded ${on?'bg-orange text-white':'bg-white/[0.08] text-paper/60'}">${it.badge}</span>`:''}</button>`}).join('')}
+        </div>
+      </div>`).join('') : `<div class="px-3 pt-6 text-center"><p class="text-[12px] text-paper/45 leading-relaxed">A navegação deste módulo<br>aparece quando ele for construído.</p></div>`}
+    </nav>
+    <div class="px-3 py-3 relative">
+      <div class="h-px bg-navy-line/50 mb-3 mx-2"></div>
+      <button class="w-full flex items-center gap-3 pl-3 pr-2.5 py-2 rounded-md text-[13px] text-paper/55 hover:bg-white/[0.04] hover:text-paper/90 transition"><i data-lucide="settings" class="w-[17px] h-[17px]"></i>Configurações</button>
+      <button class="w-full flex items-center gap-3 pl-3 pr-2.5 py-2 rounded-md text-[13px] text-paper/55 hover:bg-white/[0.04] hover:text-paper/90 transition"><i data-lucide="log-out" class="w-[17px] h-[17px]"></i>Sair</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <header class="bg-card border-b border-line shrink-0">
+      <div class="flex items-stretch gap-0 px-3 overflow-x-auto no-scrollbar">
+        ${MODULOS.map(m=>{const a=m.id===active;return `<button data-mod="${m.id}" class="modtab group flex items-center gap-2.5 px-3.5 py-3 whitespace-nowrap border-b-2 transition-colors shrink-0 ${a?'border-orange':'border-transparent hover:border-line'}">
+          <i data-lucide="${m.icon}" class="w-[18px] h-[18px] ${a?'text-orange':'text-ink-3 group-hover:text-navy'}"></i>
+          <div class="text-left">
+            <div class="text-[12.5px] font-semibold leading-none ${a?'text-navy':'text-ink-2 group-hover:text-navy'}">${m.label}</div>
+            <div class="text-[9.5px] tracking-wide uppercase leading-none mt-1 ${a?'text-orange/80':'text-ink-4'}">${m.sub}</div>
+          </div></button>`}).join('')}
+        <div class="ml-auto pl-4 flex items-center gap-2 shrink-0">
+          <button class="w-9 h-9 rounded-md flex items-center justify-center text-ink-3 hover:bg-paper hover:text-navy transition relative"><i data-lucide="search" class="w-[18px] h-[18px]"></i></button>
+          <button class="w-9 h-9 rounded-md flex items-center justify-center text-ink-3 hover:bg-paper hover:text-navy transition relative"><i data-lucide="bell" class="w-[18px] h-[18px]"></i><span class="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-orange ring-2 ring-card"></span></button>
+          <div class="w-px h-6 bg-line mx-1"></div>
+          <div class="flex items-center gap-2.5">
+            <div class="text-right hidden md:block"><p class="text-[12.5px] font-bold text-navy leading-tight">${user.name}</p><p class="text-[10.5px] text-ink-3 leading-tight">${user.role}</p></div>
+            <div class="w-9 h-9 rounded-md bg-navy flex items-center justify-center text-paper font-brand text-[13px] font-bold">${initials}</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="flex-1 overflow-y-auto p-6">
+      ${active==='pcm' ? PCM_PAGES[pcmPage]() : emConstrucao(modulo)}
+    </main>
+  </div>`;
+  document.querySelectorAll('.modtab').forEach(b=>b.onclick=()=>{active=b.dataset.mod;render();const m=document.querySelector('main');if(m)m.scrollTop=0;});
+  document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{pcmPage=b.dataset.page;render();const m=document.querySelector('main');if(m)m.scrollTop=0;});
+  document.querySelectorAll('.osfilter').forEach(b=>b.onclick=()=>{filtroOS=b.dataset.osf;render();});
+  if(window.lucide) lucide.createIcons();
+}
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>render();</script>
+</body></html>

@@ -1,0 +1,93 @@
+<!-- @dsCard group="Web" viewport="1440x900" name="Landing — Hero & Serviços" subtitle="Site institucional Sinérgica" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font-ui);background:var(--sin-offwhite);color:var(--sin-ink)}
+  .gr{background:var(--sin-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* NAV */
+  nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:26px 56px;z-index:5}
+  nav img{height:38px}
+  nav .links{display:flex;gap:34px;align-items:center}
+  nav .links a{color:#dfe3ef;text-decoration:none;font-size:15px;font-weight:500}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-ui);font-weight:600;font-size:15px;border-radius:14px;padding:12px 24px;cursor:pointer;border:0;text-decoration:none}
+  .btn-primary{background:var(--sin-gradient);color:#fff;box-shadow:var(--shadow-orange)}
+  .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+
+  /* HERO */
+  .hero{position:relative;min-height:620px;background:var(--sin-navy-deep);overflow:hidden;padding:150px 56px 90px}
+  .hero .warm{position:absolute;inset:0;background:radial-gradient(70% 70% at 100% 0%, rgba(247,166,0,.28) 0%, rgba(22,30,64,0) 60%)}
+  .hero .wm{position:absolute;right:-160px;bottom:-200px;width:720px;opacity:.06}
+  .hero .inner{position:relative;max-width:840px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-brand);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sin-amber);border:1px solid rgba(247,166,0,.4);border-radius:999px;padding:7px 16px;margin-bottom:26px}
+  .hero h1{margin:0;font-size:66px;line-height:1.04;font-weight:800;letter-spacing:-.025em;color:#fff}
+  .hero p{margin:24px 0 36px;font-size:20px;line-height:1.55;color:var(--sin-ink-on-dark-2);max-width:600px}
+  .hero .cta{display:flex;gap:16px}
+
+  /* SERVICES */
+  .svc{padding:84px 56px;max-width:1280px;margin:0 auto}
+  .svc .lead{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:44px}
+  .svc h2{margin:10px 0 0;font-size:42px;font-weight:800;letter-spacing:-.02em;max-width:560px;line-height:1.08}
+  .svc .lead p{margin:0;max-width:360px;color:var(--sin-ink-2);font-size:16px;line-height:1.6}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:#fff;border:1px solid var(--sin-line);border-radius:20px;padding:32px;box-shadow:var(--shadow-md)}
+  .card .ic{width:56px;height:56px;border-radius:16px;background:var(--sin-gradient);display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:var(--shadow-orange)}
+  .card h3{margin:0 0 10px;font-size:21px;font-weight:700}
+  .card p{margin:0;color:var(--sin-ink-2);font-size:15px;line-height:1.55}
+  .card .more{margin-top:18px;display:inline-block;color:var(--sin-orange);font-weight:600;font-size:14px;text-decoration:none}
+</style></head><body>
+
+  <nav>
+    <img src="../../assets/logo-h-offwhite.png" alt="Sinérgica">
+    <div class="links">
+      <a href="#">Serviços</a><a href="#">Sobre</a><a href="#">Projetos</a><a href="#">Contato</a>
+      <a href="#" class="btn btn-primary">Solicitar diagnóstico</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="warm"></div>
+    <img class="wm" src="../../assets/symbol-offwhite.png" alt="">
+    <div class="inner">
+      <span class="eyebrow">Manutenções Patrimoniais</span>
+      <h1>A engenharia preventiva que <span class="gr">protege o patrimônio</span> do seu condomínio.</h1>
+      <p>Manutenção predial de alto padrão, com cuidado técnico especializado para cada operação do edifício — sem imprevistos, sem "incêndios" para apagar.</p>
+      <div class="cta">
+        <a href="#" class="btn btn-primary">Solicitar diagnóstico</a>
+        <a href="#" class="btn btn-outline">Conhecer serviços</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="svc">
+    <div class="lead">
+      <div>
+        <span class="eyebrow" style="color:var(--sin-orange);border-color:rgba(239,126,37,.35)">O que fazemos</span>
+        <h2>Sistemas prediais complexos exigem <span class="gr">soluções técnicas</span>.</h2>
+      </div>
+      <p>Atuação integrada em elétrica, hidráulica e estrutura, com planejamento que reduz custos e imprevistos na gestão condominial.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>Elétrica</h3>
+        <p>Diagnóstico, adequação de quadros e manutenção preventiva de instalações de baixa e média tensão.</p>
+        <a class="more" href="#">Ver detalhes →</a>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-4-7-12-7-12S5 11 5 15a7 7 0 0 0 7 7Z"/></svg></div>
+        <h3>Hidráulica</h3>
+        <p>Prevenção de vazamentos, recuperação de prumadas e gestão da rede hidrossanitária do edifício.</p>
+        <a class="more" href="#">Ver detalhes →</a>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+        <h3>Estrutura</h3>
+        <p>Inspeção predial, tratamento de patologias e laudos técnicos que protegem a vida útil da estrutura.</p>
+        <a class="more" href="#">Ver detalhes →</a>
+      </div>
+    </div>
+  </section>
+
+</body></html>

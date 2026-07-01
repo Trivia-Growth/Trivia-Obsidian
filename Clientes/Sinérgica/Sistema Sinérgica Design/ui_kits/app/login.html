@@ -1,0 +1,95 @@
+<!-- @dsCard group="App · Sinérgica OS" viewport="1500x980" name="Login" subtitle="Acesso da equipe — split navy / papel" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Saira:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config={theme:{extend:{
+    fontFamily:{sans:['Poppins','sans-serif'],brand:['Saira','sans-serif']},
+    colors:{navy:{DEFAULT:'#1C2748',deep:'#141C36',900:'#0F1528',line:'#2E3A60'},
+      paper:'#F4F2EC',orange:{DEFAULT:'#E8731B',deep:'#D2630F',soft:'#FBEEE0'},amber:'#F4A300',
+      ink:{DEFAULT:'#1A2138',2:'#585E72',3:'#8C8F9B',4:'#B4B6BE'},line:{DEFAULT:'#E5E2D9',soft:'#EDEAE2'}}}}}
+</script>
+<style>
+  body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+  .tnum{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body class="bg-paper">
+<div class="min-h-screen grid lg:grid-cols-[1.05fr_1fr]">
+
+  <!-- Painel de marca (navy) -->
+  <div class="relative bg-navy-deep overflow-hidden hidden lg:flex flex-col justify-between p-12">
+    <img src="../../assets/symbol-offwhite.png" class="absolute -right-24 -bottom-24 w-[560px] opacity-[0.06] pointer-events-none" alt="">
+    <div class="absolute right-0 top-0 h-full w-1.5 bg-orange"></div>
+    <img src="../../assets/logo-h-offwhite.png" class="h-8 w-auto relative" alt="Sinérgica">
+    <div class="relative max-w-md">
+      <div class="flex items-center gap-2 mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange"></span>
+        <span class="font-brand text-[11px] font-bold tracking-[0.2em] uppercase text-amber">Sistema Operacional</span>
+      </div>
+      <h2 class="font-brand text-[34px] leading-[1.1] font-bold text-white">A engenharia preventiva que protege o patrimônio.</h2>
+      <p class="text-[14px] text-paper/55 mt-4 leading-relaxed">Operação, atendimento e gestão dos contratos de manutenção predial da Sinérgica — em um só lugar.</p>
+    </div>
+    <div class="relative flex items-center gap-8 font-brand">
+      <div><div class="tnum text-[26px] font-bold text-white">24/7</div><div class="text-[10px] tracking-widest uppercase text-paper/40 mt-1">Atendimento Zé</div></div>
+      <div class="w-px h-8 bg-navy-line"></div>
+      <div><div class="tnum text-[26px] font-bold text-white">9</div><div class="text-[10px] tracking-widest uppercase text-paper/40 mt-1">Módulos</div></div>
+      <div class="w-px h-8 bg-navy-line"></div>
+      <div><div class="tnum text-[26px] font-bold text-white">GUT</div><div class="text-[10px] tracking-widest uppercase text-paper/40 mt-1">Priorização</div></div>
+    </div>
+  </div>
+
+  <!-- Formulário -->
+  <div class="flex items-center justify-center p-6 sm:p-12">
+    <div class="w-full max-w-[380px]">
+      <div class="lg:hidden flex items-center justify-center w-14 h-14 rounded-lg bg-navy mb-6 p-2.5">
+        <img src="../../assets/symbol-offwhite.png" class="w-full h-full object-contain" alt="">
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-1 h-3.5 bg-orange rounded-sm"></span>
+        <span class="font-brand text-[11px] font-bold tracking-[0.16em] uppercase text-ink-3">Acesso restrito</span>
+      </div>
+      <h1 class="font-brand text-[26px] font-bold text-navy">Entrar no Sinérgica OS</h1>
+      <p class="text-[13.5px] text-ink-2 mt-1.5 mb-7">Use suas credenciais da equipe Sinérgica.</p>
+
+      <form class="space-y-4" onsubmit="return false">
+        <div>
+          <label class="block font-brand text-[11px] font-semibold tracking-wide uppercase text-ink-3 mb-1.5">E-mail</label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-ink-4 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="email" value="marina@sinergica.com.br"
+              class="w-full pl-9 pr-3 py-2.5 rounded-md border border-line bg-white text-ink text-[13.5px] focus:outline-none focus:border-orange focus:ring-2 focus:ring-orange/20 transition" />
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block font-brand text-[11px] font-semibold tracking-wide uppercase text-ink-3">Senha</label>
+            <a href="#" class="text-[11.5px] font-semibold text-orange hover:underline">Esqueci a senha</a>
+          </div>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-ink-4 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="password" value="senha123"
+              class="w-full pl-9 pr-3 py-2.5 rounded-md border border-line bg-white text-ink text-[13.5px] focus:outline-none focus:border-orange focus:ring-2 focus:ring-orange/20 transition" />
+          </div>
+        </div>
+        <button type="submit"
+          class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 text-white text-[14px] font-bold rounded-md bg-orange hover:bg-orange-deep transition shadow-[0_2px_0_0_#C5590C]">
+          Entrar<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </form>
+
+      <div class="flex items-center gap-3 my-6">
+        <div class="flex-1 h-px bg-line"></div>
+        <span class="text-[11px] text-ink-4 font-medium">ou</span>
+        <div class="flex-1 h-px bg-line"></div>
+      </div>
+      <button class="w-full inline-flex items-center justify-center gap-2.5 py-2.5 px-4 text-[13.5px] font-semibold text-navy rounded-md border border-line bg-white hover:border-ink-3 transition">
+        <i data-lucide="building-2" class="w-4 h-4 text-ink-3"></i>Entrar com SSO corporativo</button>
+
+      <p class="text-center text-[11px] text-ink-4 mt-8 font-brand tracking-wide">SINÉRGICA OS · v2 · TRÍVIA STUDIO</p>
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+</body></html>

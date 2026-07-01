@@ -1,0 +1,19 @@
+/* Sinérgica — Sombras, traços e efeitos */
+:root {
+  /* Sombras suaves, frias (base navy) */
+  --shadow-sm:  0 1px 2px rgba(22,30,64,.06), 0 1px 3px rgba(22,30,64,.08);
+  --shadow-md:  0 4px 12px rgba(22,30,64,.10), 0 2px 4px rgba(22,30,64,.06);
+  --shadow-lg:  0 18px 40px rgba(22,30,64,.16);
+  --shadow-orange: 0 10px 28px rgba(239,126,37,.32);
+
+  /* Realce do gradiente em texto */
+  --text-gradient: var(--sin-gradient);
+
+  /* Overlays sobre fotografia (posts usam véu navy + brilho âmbar) */
+  --veil-navy:   linear-gradient(180deg, rgba(22,30,64,.10) 0%, rgba(22,30,64,.82) 100%);
+  --veil-warm:   radial-gradient(120% 80% at 0% 100%, rgba(247,166,0,.45) 0%, rgba(22,30,64,0) 55%);
+  --glass:       rgba(22,30,64,.55);
+
+  --ring:        0 0 0 3px rgba(239,126,37,.35);
+  --transition:  180ms cubic-bezier(.4,0,.2,1);
+}

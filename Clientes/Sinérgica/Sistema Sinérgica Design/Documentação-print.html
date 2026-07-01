@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinérgica OS · Design System</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Saira:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config={theme:{extend:{
+    fontFamily:{sans:['Poppins','system-ui','sans-serif'],brand:['Saira','sans-serif']},
+    colors:{
+      navy:{DEFAULT:'#1C2748',deep:'#141C36',900:'#0F1528',soft:'#2B375E',line:'#2E3A60'},
+      paper:'#F4F2EC',card:'#FFFFFF',
+      line:{DEFAULT:'#E5E2D9',soft:'#EDEAE2'},
+      ink:{DEFAULT:'#1A2138',2:'#585E72',3:'#8C8F9B',4:'#B4B6BE'},
+      orange:{50:'#FDF1E6',100:'#FBE3CC',200:'#F7C79A',300:'#F3AB68',400:'#EF8F3B',500:'#E8731B',600:'#D2630F',700:'#AE4F0C',800:'#8A3E0B',900:'#5E2A08',DEFAULT:'#E8731B',deep:'#D2630F',soft:'#FBEEE0'},
+      amber:'#F4A300',
+    },
+  }}}
+</script>
+<style>
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+  .tnum{font-variant-numeric:tabular-nums}
+  .grain:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .eyebrow{font-family:'Saira',sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  .h2{font-family:'Saira',sans-serif;font-weight:700;letter-spacing:-.01em}
+  section{scroll-margin-top:80px}
+
+  /* ===== PRINT ===== */
+  @page { size: A4; margin: 0; }
+  @media print {
+    *,*::before,*::after{ -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      animation-delay:-99s !important; animation-duration:.001s !important;
+      animation-iteration-count:1 !important; animation-fill-mode:both !important;
+      transition-duration:0s !important; }
+    html,body{ background:#F4F2EC !important; }
+    .grain:before{ display:none !important; }
+    nav.sticky{ display:none !important; }
+    a[href]{ text-decoration:none !important; }
+    /* não cortar blocos no meio */
+    section{ break-inside:avoid; }
+    section h2,h3{ break-after:avoid; }
+    .bg-card,.rounded-lg,.rounded-xl,table,svg,img{ break-inside:avoid; }
+    header{ break-after:page; }
+    #cor,#tipografia,#componentes,#telas,#principios{ break-before:page; }
+    main{ padding-top:28px !important; padding-bottom:28px !important; }
+    footer{ break-before:page; }
+  }
+</style>
+</head>
+<body class="bg-paper text-ink grain">
+
+<!-- NAV fixa -->
+<nav class="sticky top-0 z-30 bg-paper/85 backdrop-blur border-b border-line">
+  <div class="max-w-[1080px] mx-auto px-6 h-14 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 rounded-md bg-navy flex items-center justify-center p-1"><img src="assets/symbol-offwhite.png" class="w-full h-full object-contain" alt=""></div>
+      <span class="font-brand text-[15px] font-bold text-navy">Sinérgica OS</span>
+      <span class="hidden sm:inline text-[11px] text-ink-3 font-medium border-l border-line pl-2.5">Design System</span>
+    </div>
+    <div class="hidden md:flex items-center gap-5 text-[12.5px] font-semibold text-ink-2">
+      <a href="#simbolo" class="hover:text-orange transition">Símbolo</a>
+      <a href="#cor" class="hover:text-orange transition">Cor</a>
+      <a href="#tipografia" class="hover:text-orange transition">Tipografia</a>
+      <a href="#componentes" class="hover:text-orange transition">Componentes</a>
+      <a href="#telas" class="hover:text-orange transition">Telas</a>
+    </div>
+    <a href="ui_kits/app/index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange text-white text-[12.5px] font-bold hover:bg-orange-deep transition shadow-[0_2px_0_0_#C5590C]">Abrir o produto →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="relative overflow-hidden bg-navy-deep text-white">
+  <img src="assets/symbol-offwhite.png" class="absolute -right-20 -bottom-28 w-[460px] opacity-[0.06] pointer-events-none" alt="">
+  <div class="absolute left-0 top-0 h-full w-1.5 bg-orange"></div>
+  <div class="max-w-[1080px] mx-auto px-6 py-20 relative">
+    <img src="assets/logo-h-offwhite.png" class="h-9 mb-10" alt="Sinérgica">
+    <div class="flex items-center gap-2 mb-5">
+      <span class="w-1.5 h-1.5 rounded-full bg-orange"></span>
+      <span class="eyebrow text-amber">Sistema Operacional · Manutenções Patrimoniais</span>
+    </div>
+    <h1 class="font-brand font-bold text-[clamp(40px,6vw,68px)] leading-[1.02] max-w-3xl">O design system do <span class="text-orange">Sinérgica OS</span>.</h1>
+    <p class="text-[16px] text-paper/60 mt-5 max-w-xl leading-relaxed">Identidade, princípios, tokens, componentes e telas do sistema operacional que gerencia a manutenção predial da Sinérgica — direção <b class="text-paper/90">industrial / instrumento de operação</b>.</p>
+    <div class="flex flex-wrap items-center gap-8 mt-12 font-brand">
+      <div><div class="tnum text-[30px] font-bold">9</div><div class="text-[10px] tracking-[0.16em] uppercase text-paper/40 mt-1">Módulos</div></div>
+      <div class="w-px h-9 bg-navy-line"></div>
+      <div><div class="tnum text-[30px] font-bold">5</div><div class="text-[10px] tracking-[0.16em] uppercase text-paper/40 mt-1">Telas mockadas</div></div>
+      <div class="w-px h-9 bg-navy-line"></div>
+      <div><div class="tnum text-[30px] font-bold">2</div><div class="text-[10px] tracking-[0.16em] uppercase text-paper/40 mt-1">Fontes · Saira + Poppins</div></div>
+      <div class="w-px h-9 bg-navy-line"></div>
+      <div><div class="tnum text-[30px] font-bold text-orange">1</div><div class="text-[10px] tracking-[0.16em] uppercase text-paper/40 mt-1">Laranja cirúrgico</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-[1080px] mx-auto px-6 py-16 space-y-24">
+
+  <!-- SÍMBOLO -->
+  <section id="simbolo">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">01 · A Marca</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-3">O símbolo é um ciclo de manutenção.</h2>
+    <p class="text-[15px] text-ink-2 max-w-2xl leading-relaxed mb-10">A engrenagem com duas setas envolvendo um edifício resume o produto: <b>manutenção contínua que protege o patrimônio</b>. Cada elemento tem leitura própria e vira recurso gráfico no sistema — marca-d'água, tile de app e infográfico de ciclo.</p>
+    <div class="grid md:grid-cols-[320px_1fr] gap-8 items-center">
+      <div class="relative bg-navy-deep rounded-xl p-10 flex items-center justify-center">
+        <div class="absolute left-0 top-0 h-full w-1.5 bg-orange rounded-l-xl"></div>
+        <img src="assets/symbol-laranja.png" class="w-44 h-44 object-contain" alt="Símbolo Sinérgica">
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="bg-card border border-line rounded-lg p-4"><div class="w-9 h-9 rounded-lg bg-orange-soft text-orange flex items-center justify-center mb-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v3m0 14v3m10-10h-3M5 12H2m15.5-6.5-2 2m-7 7-2 2m11 0-2-2m-7-7-2-2"/><circle cx="12" cy="12" r="3.5"/></svg></div><div class="font-brand text-[13px] font-bold text-navy">Engrenagem</div><p class="text-[12px] text-ink-2 mt-1 leading-snug">Operação, processo, PCM — o motor que mantém o prédio funcionando.</p></div>
+        <div class="bg-card border border-line rounded-lg p-4"><div class="w-9 h-9 rounded-lg bg-orange-soft text-orange flex items-center justify-center mb-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.8-3.4L23 10M1 14l4.7 4.4A9 9 0 0 0 20.5 15"/></svg></div><div class="font-brand text-[13px] font-bold text-navy">Setas / Ciclo</div><p class="text-[12px] text-ink-2 mt-1 leading-snug">Manutenção preventiva e contínua: inspeção → execução → validação.</p></div>
+        <div class="bg-card border border-line rounded-lg p-4"><div class="w-9 h-9 rounded-lg bg-orange-soft text-orange flex items-center justify-center mb-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div><div class="font-brand text-[13px] font-bold text-navy">Edifício</div><p class="text-[12px] text-ink-2 mt-1 leading-snug">O patrimônio do síndico — o que o sistema existe para preservar.</p></div>
+      </div>
+    </div>
+    <!-- usos do símbolo -->
+    <h3 class="font-brand text-[13px] font-bold tracking-[0.1em] uppercase text-ink-3 mt-12 mb-4">Usos no sistema</h3>
+    <div class="grid sm:grid-cols-4 gap-4">
+      <div class="rounded-lg overflow-hidden border border-line"><div class="bg-navy-deep h-28 relative overflow-hidden flex items-end p-3"><img src="assets/symbol-offwhite.png" class="absolute -right-6 -bottom-8 w-28 opacity-[0.09]" alt=""><span class="text-[11px] font-semibold text-paper/70 relative">Marca-d'água</span></div></div>
+      <div class="rounded-lg overflow-hidden border border-line"><div class="bg-paper h-28 flex items-center justify-center"><div class="w-12 h-12 rounded-lg bg-navy p-2.5"><img src="assets/symbol-offwhite.png" class="w-full h-full object-contain" alt=""></div></div><div class="px-3 py-2 text-[11px] font-semibold text-ink-2 bg-card border-t border-line">Tile / Avatar</div></div>
+      <div class="rounded-lg overflow-hidden border border-line"><div class="bg-card h-28 flex items-center justify-center"><img src="assets/symbol-laranja.png" class="w-12 h-12 object-contain" alt=""></div><div class="px-3 py-2 text-[11px] font-semibold text-ink-2 bg-card border-t border-line">Favicon laranja</div></div>
+      <div class="rounded-lg overflow-hidden border border-line"><div class="bg-orange h-28 flex items-center justify-center"><img src="assets/symbol-offwhite.png" class="w-12 h-12 object-contain" alt=""></div><div class="px-3 py-2 text-[11px] font-semibold text-ink-2 bg-card border-t border-line">Sobre laranja</div></div>
+    </div>
+  </section>
+
+  <!-- COR -->
+  <section id="cor">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">02 · Cor</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-3">Navy estrutura. Laranja é cirúrgico.</h2>
+    <p class="text-[15px] text-ink-2 max-w-2xl leading-relaxed mb-10">O navy carrega a estrutura (sidebar, tinta, numerais). O laranja aparece <b>só</b> onde precisa de energia: ação principal, item ativo, prioridade crítica e alerta. Sobre <b>papel quente</b> — nunca o slate frio dos dashboards genéricos.</p>
+
+    <!-- Gradiente da marca -->
+    <div class="rounded-xl overflow-hidden border border-line mb-8">
+      <div class="h-24 flex items-end p-4" style="background:linear-gradient(110deg,#EE7B22,#F8A634)"><span class="font-brand text-[12px] font-bold text-white/90">Gradiente da marca · 110° · #EE7B22 → #F8A634</span></div>
+    </div>
+
+    <!-- Rampa laranja -->
+    <h3 class="font-brand text-[13px] font-bold tracking-[0.1em] uppercase text-ink-3 mb-3">Rampa Laranja <span class="text-ink-4 font-medium normal-case tracking-normal">— ação, data-viz, profundidade</span></h3>
+    <div class="grid grid-cols-5 sm:grid-cols-11 gap-1.5 mb-3">
+      <div><div class="h-14 rounded-md border border-line" style="background:#FDF1E6"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">50</div></div>
+      <div><div class="h-14 rounded-md" style="background:#FBE3CC"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">100</div></div>
+      <div><div class="h-14 rounded-md" style="background:#F7C79A"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">200</div></div>
+      <div><div class="h-14 rounded-md" style="background:#F3AB68"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">300</div></div>
+      <div><div class="h-14 rounded-md" style="background:#EF8F3B"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">400</div></div>
+      <div><div class="h-14 rounded-md ring-2 ring-navy ring-offset-2 ring-offset-paper" style="background:#E8731B"></div><div class="text-[9px] font-brand tnum text-navy font-bold mt-1 text-center">500</div></div>
+      <div><div class="h-14 rounded-md" style="background:#D2630F"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">600</div></div>
+      <div><div class="h-14 rounded-md" style="background:#AE4F0C"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">700</div></div>
+      <div><div class="h-14 rounded-md" style="background:#8A3E0B"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">800</div></div>
+      <div><div class="h-14 rounded-md" style="background:#5E2A08"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">900</div></div>
+      <div><div class="h-14 rounded-md" style="background:#F4A300"></div><div class="text-[9px] font-brand tnum text-ink-3 mt-1 text-center">amber</div></div>
+    </div>
+    <p class="text-[12px] text-ink-3 mb-8">Ação = <b class="text-orange">500</b> · hover = <b class="text-orange-600">600</b> · texto laranja = 700–900 · fundos de selo = 50–100.</p>
+
+    <!-- Governança do laranja -->
+    <div class="grid sm:grid-cols-2 gap-4 mb-10">
+      <div class="bg-card border border-line rounded-lg p-5">
+        <div class="flex items-center gap-2 mb-3"><span class="w-5 h-5 rounded-full bg-[#E7F6EC] text-[#1E8E45] flex items-center justify-center text-[12px] font-bold">✓</span><span class="font-brand text-[12px] font-bold tracking-wide uppercase text-[#1E8E45]">Use laranja em</span></div>
+        <ul class="text-[13px] text-ink-2 space-y-1.5 leading-snug">
+          <li>• Botão de ação principal (1 por bloco)</li>
+          <li>• Indicador de item / aba ativa</li>
+          <li>• Prioridade crítica e alta (GUT)</li>
+          <li>• Linha-destaque em gráficos (SLA)</li>
+        </ul>
+      </div>
+      <div class="bg-card border border-line rounded-lg p-5">
+        <div class="flex items-center gap-2 mb-3"><span class="w-5 h-5 rounded-full bg-[#FCEAE8] text-[#C5362B] flex items-center justify-center text-[12px] font-bold">✕</span><span class="font-brand text-[12px] font-bold tracking-wide uppercase text-[#C5362B]">Evite laranja em</span></div>
+        <ul class="text-[13px] text-ink-2 space-y-1.5 leading-snug">
+          <li>• Preenchimentos decorativos amplos</li>
+          <li>• Fundos de página ou de card</li>
+          <li>• Vários botões laranja na mesma tela</li>
+          <li>• Texto corrido (baixa legibilidade)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Navy + neutros + semânticas -->
+    <div class="grid sm:grid-cols-4 gap-3">
+      <div><div class="h-16 rounded-md" style="background:#1C2748"></div><div class="text-[11px] font-semibold text-navy mt-1.5">Navy</div><div class="text-[10px] font-brand tnum text-ink-3">#1C2748</div></div>
+      <div><div class="h-16 rounded-md" style="background:#141C36"></div><div class="text-[11px] font-semibold text-navy mt-1.5">Navy Deep</div><div class="text-[10px] font-brand tnum text-ink-3">#141C36</div></div>
+      <div><div class="h-16 rounded-md border border-line" style="background:#F4F2EC"></div><div class="text-[11px] font-semibold text-navy mt-1.5">Papel quente</div><div class="text-[10px] font-brand tnum text-ink-3">#F4F2EC</div></div>
+      <div><div class="h-16 rounded-md border border-line" style="background:#E5E2D9"></div><div class="text-[11px] font-semibold text-navy mt-1.5">Hairline</div><div class="text-[10px] font-brand tnum text-ink-3">#E5E2D9</div></div>
+    </div>
+    <h3 class="font-brand text-[13px] font-bold tracking-[0.1em] uppercase text-ink-3 mt-8 mb-3">Semânticas & Prioridade GUT</h3>
+    <div class="flex flex-wrap gap-2.5">
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#1E8E45"></span>Concluído / no prazo</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#F4A300"></span>Em andamento</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#2B375E"></span>Planejado</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#D6362B"></span>Crítica</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#E8731B"></span>Alta</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card border border-line text-[12px] font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:#B4B6BE"></span>Baixa</span>
+    </div>
+  </section>
+
+  <!-- TIPOGRAFIA -->
+  <section id="tipografia">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">03 · Tipografia</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-3">Saira engenheira. Poppins conduz.</h2>
+    <p class="text-[15px] text-ink-2 max-w-2xl leading-relaxed mb-10"><b>Saira</b> (tabular) dá o caráter técnico — títulos, KPIs, códigos de OS e numerais. <b>Poppins</b> conduz o texto de interface e o corpo. <span class="text-ink-3">Substituições Google Fonts dos tipos das peças — confirmar fonte oficial no manual.</span></p>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="bg-navy-deep rounded-xl p-7 text-white">
+        <span class="eyebrow text-amber">Saira · Display / Dados</span>
+        <div class="font-brand text-[52px] font-bold leading-none mt-3">Painel de Operações</div>
+        <div class="font-brand tnum text-[40px] font-bold text-orange mt-2">87% · CH-047</div>
+        <div class="font-brand text-[11px] tracking-[0.16em] uppercase text-paper/50 mt-3">Pesos 500 · 700 · 800 — tabular-nums</div>
+      </div>
+      <div class="bg-card border border-line rounded-xl p-7">
+        <span class="eyebrow text-ink-3">Poppins · Interface / Corpo</span>
+        <div class="text-[19px] font-semibold text-navy mt-3 leading-snug">Manutenção planejada reduz imprevistos.</div>
+        <p class="text-[14px] text-ink-2 mt-2 leading-relaxed">A engenharia preventiva protege as finanças e a estrutura do patrimônio — texto de leitura confortável em 14–16px, peso 400/500.</p>
+        <div class="flex gap-4 mt-4 pt-4 border-t border-line-soft text-[12px] text-ink-3"><span><b class="text-ink">Aa</b> 400</span><span><b class="text-ink">Aa</b> 500</span><span><b class="text-ink">Aa</b> 600</span><span><b class="text-ink">Aa</b> 700</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTES -->
+  <section id="componentes">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">04 · Componentes</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-3">Primitivos de operação.</h2>
+    <p class="text-[15px] text-ink-2 max-w-2xl leading-relaxed mb-10">Hairlines em vez de sombras; raios contidos (6–10px); status e prioridade como traço + texto, não pílula gorda.</p>
+    <div class="grid sm:grid-cols-2 gap-5">
+      <!-- Botões -->
+      <div class="bg-card border border-line rounded-lg p-5">
+        <div class="font-brand text-[11px] font-bold tracking-[0.12em] uppercase text-ink-3 mb-3">Botões</div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange text-white text-[13px] font-bold shadow-[0_2px_0_0_#C5590C]">+ Nova OS</button>
+          <button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-line text-[13px] font-semibold text-navy">Filtros</button>
+          <button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-navy text-white text-[13px] font-semibold">Institucional</button>
+        </div>
+      </div>
+      <!-- Status / prioridade -->
+      <div class="bg-card border border-line rounded-lg p-5">
+        <div class="font-brand text-[11px] font-bold tracking-[0.12em] uppercase text-ink-3 mb-3">Status & Prioridade</div>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#1E8E45]"><span class="w-1.5 h-4 rounded-sm bg-[#1E8E45]"></span>Concluído</span>
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#946000]"><span class="w-1.5 h-4 rounded-sm bg-[#F4A300]"></span>Em andamento</span>
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-ink-2"><span class="w-1.5 h-1.5 rounded-full bg-[#D6362B]"></span>Crítica</span>
+        </div>
+      </div>
+      <!-- KPI rail -->
+      <div class="bg-card border border-line rounded-lg overflow-hidden sm:col-span-2">
+        <div class="font-brand text-[11px] font-bold tracking-[0.12em] uppercase text-ink-3 px-5 pt-4">KPI Rail tipográfico</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 mt-2">
+          <div class="px-5 py-4"><div class="font-brand text-[10px] font-semibold tracking-[0.14em] uppercase text-ink-3">OS Abertas</div><div class="font-brand tnum text-[32px] font-bold text-navy leading-none mt-1.5">12</div><div class="text-[11px] font-bold text-[#1E8E45] mt-1.5">↗ +3 hoje</div></div>
+          <div class="px-5 py-4 border-l border-line-soft"><div class="font-brand text-[10px] font-semibold tracking-[0.14em] uppercase text-ink-3">Backlog</div><div class="font-brand tnum text-[32px] font-bold text-navy leading-none mt-1.5">23</div><div class="text-[11px] font-bold text-[#D6362B] mt-1.5">↘ 4 críticos</div></div>
+          <div class="px-5 py-4 border-l border-line-soft"><div class="font-brand text-[10px] font-semibold tracking-[0.14em] uppercase text-ink-3">SLA</div><div class="font-brand tnum text-[32px] font-bold text-navy leading-none mt-1.5">87<span class="text-base text-ink-3">%</span></div><div class="text-[11px] font-bold text-[#1E8E45] mt-1.5">↗ +2pp</div></div>
+          <div class="px-5 py-4 border-l border-line-soft"><div class="font-brand text-[10px] font-semibold tracking-[0.14em] uppercase text-ink-3">T. Médio</div><div class="font-brand tnum text-[32px] font-bold text-navy leading-none mt-1.5">2.3<span class="text-base text-ink-3">d</span></div><div class="text-[11px] font-bold text-[#1E8E45] mt-1.5">↗ −0.4d</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="text-[12.5px] text-ink-3 mt-4">Componentes React de marca (Button, Badge, Checklist, Card) em <code class="font-brand text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded text-[11px]">components/core/</code> · primitivos do app em <code class="font-brand text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded text-[11px]">components/app/</code>.</p>
+  </section>
+
+  <!-- TELAS -->
+  <section id="telas">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">05 · Telas do Produto</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-3">Cinco telas mockadas.</h2>
+    <p class="text-[15px] text-ink-2 max-w-2xl leading-relaxed mb-10">Painel, Ordens de Serviço, Plano de Manutenção, Backlog GUT e Cockpit — com tabelas, listas, matriz de calendário, gráficos e infográficos. Tudo no mesmo shell navegável.</p>
+    <div class="grid sm:grid-cols-2 gap-5">
+      <a href="ui_kits/app/index.html" class="group block rounded-xl overflow-hidden border border-line bg-card hover:border-orange/50 hover:shadow-[0_12px_30px_rgba(28,39,72,.10)] transition-all">
+        <div class="aspect-[16/10] bg-paper overflow-hidden border-b border-line"><img src="screenshots/app-tables.png" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform" alt=""></div>
+        <div class="p-4 flex items-center justify-between"><div><div class="font-brand text-[15px] font-bold text-navy">Painel & Ordens</div><div class="text-[12px] text-ink-3">KPI rail · tabela de OS · backlog</div></div><i class="text-orange font-bold">→</i></div>
+      </a>
+      <a href="ui_kits/app/index.html" class="group block rounded-xl overflow-hidden border border-line bg-card hover:border-orange/50 hover:shadow-[0_12px_30px_rgba(28,39,72,.10)] transition-all">
+        <div class="aspect-[16/10] bg-paper overflow-hidden border-b border-line"><img src="screenshots/pg-plano-full.png" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform" alt=""></div>
+        <div class="p-4 flex items-center justify-between"><div><div class="font-brand text-[15px] font-bold text-navy">Plano de Manutenção</div><div class="text-[12px] text-ink-3">Matriz de calendário por equipamento</div></div><i class="text-orange font-bold">→</i></div>
+      </a>
+      <a href="ui_kits/app/index.html" class="group block rounded-xl overflow-hidden border border-line bg-card hover:border-orange/50 hover:shadow-[0_12px_30px_rgba(28,39,72,.10)] transition-all">
+        <div class="aspect-[16/10] bg-paper overflow-hidden border-b border-line"><img src="screenshots/pg-cockpit-final.png" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform" alt=""></div>
+        <div class="p-4 flex items-center justify-between"><div><div class="font-brand text-[15px] font-bold text-navy">Cockpit & KPIs</div><div class="text-[12px] text-ink-3">Linha · gauge · donut · ciclo</div></div><i class="text-orange font-bold">→</i></div>
+      </a>
+      <a href="ui_kits/app/login.html" class="group block rounded-xl overflow-hidden border border-line bg-card hover:border-orange/50 hover:shadow-[0_12px_30px_rgba(28,39,72,.10)] transition-all">
+        <div class="aspect-[16/10] bg-navy-deep overflow-hidden border-b border-line flex items-center justify-center"><img src="assets/symbol-offwhite.png" class="w-20 h-20 object-contain opacity-90 group-hover:scale-105 transition-transform" alt=""></div>
+        <div class="p-4 flex items-center justify-between"><div><div class="font-brand text-[15px] font-bold text-navy">Login</div><div class="text-[12px] text-ink-3">Split navy / papel</div></div><i class="text-orange font-bold">→</i></div>
+      </a>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-6 text-[12.5px]">
+      <a href="ui_kits/social/index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-line bg-card font-semibold text-navy hover:border-ink-3 transition">Marketing · Posts →</a>
+      <a href="ui_kits/web/index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-line bg-card font-semibold text-navy hover:border-ink-3 transition">Marketing · Landing →</a>
+    </div>
+  </section>
+
+  <!-- PRINCÍPIOS -->
+  <section id="principios">
+    <div class="flex items-center gap-2.5 mb-2"><span class="w-1 h-3.5 bg-orange rounded-sm"></span><span class="eyebrow text-orange">06 · Princípios</span></div>
+    <h2 class="h2 text-[34px] text-navy mb-8">Instrumento de operação.</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="bg-card border border-line rounded-lg p-5"><div class="font-brand tnum text-[22px] font-bold text-orange">01</div><div class="font-brand text-[15px] font-bold text-navy mt-1">Papel quente, não slate frio</div><p class="text-[13px] text-ink-2 mt-1.5 leading-snug">O fundo herda o off-white da marca. Diferencia de todo dashboard genérico.</p></div>
+      <div class="bg-card border border-line rounded-lg p-5"><div class="font-brand tnum text-[22px] font-bold text-orange">02</div><div class="font-brand text-[15px] font-bold text-navy mt-1">Laranja com parcimônia</div><p class="text-[13px] text-ink-2 mt-1.5 leading-snug">Só ação, ativo, crítico e alerta. Restrição lê como sofisticação.</p></div>
+      <div class="bg-card border border-line rounded-lg p-5"><div class="font-brand tnum text-[22px] font-bold text-orange">03</div><div class="font-brand text-[15px] font-bold text-navy mt-1">Dado em primeiro lugar</div><p class="text-[13px] text-ink-2 mt-1.5 leading-snug">Saira tabular, KPI rail tipográfico, hairlines. Sem ornamento que não informe.</p></div>
+      <div class="bg-card border border-line rounded-lg p-5"><div class="font-brand tnum text-[22px] font-bold text-orange">04</div><div class="font-brand text-[15px] font-bold text-navy mt-1">O símbolo como narrativa</div><p class="text-[13px] text-ink-2 mt-1.5 leading-snug">A engrenagem-ciclo vira marca-d'água e infográfico — reforça o conceito de manutenção contínua.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-navy-deep text-paper/60 relative overflow-hidden">
+  <img src="assets/symbol-offwhite.png" class="absolute -left-16 -bottom-20 w-72 opacity-[0.05]" alt="">
+  <div class="max-w-[1080px] mx-auto px-6 py-12 relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div>
+      <img src="assets/logo-h-offwhite.png" class="h-7 mb-3" alt="Sinérgica">
+      <p class="text-[12px] text-paper/40 max-w-sm leading-relaxed">Design system do Sinérgica OS · direção instrumento de operação. Fontes substituídas (Saira/Poppins) — confirmar tipos oficiais no manual da marca.</p>
+    </div>
+    <div class="flex flex-col gap-1.5 text-[12.5px]">
+      <a href="readme.md" class="hover:text-orange transition">↳ README técnico</a>
+      <a href="ui_kits/app/index.html" class="hover:text-orange transition">↳ Abrir o produto</a>
+      <span class="font-brand text-[10px] tracking-[0.16em] uppercase text-paper/30 mt-2">Sinérgica OS · v2 · Trívia Studio</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+addEventListener('load', () => {
+  (async () => {
+    try { await document.fonts.ready; } catch (e) {}
+    const imgs = Array.from(document.images).filter((i) => !i.complete);
+    await Promise.race([
+      Promise.allSettled(imgs.map((i) => i.decode())),
+      new Promise((r) => setTimeout(r, 8000)),
+    ]);
+    setTimeout(() => window.print(), 500);
+  })();
+});
+</script>
+
+</body></html>

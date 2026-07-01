@@ -1,0 +1,6 @@
+/* Sinérgica — Webfonts
+   Poppins   → títulos, UI e corpo (substituto próximo do tipo usado nos posts).
+   Saira     → assinatura "tech" da marca / wordmark / labels em caixa-alta.
+   Substituição sinalizada ao cliente: arquivos oficiais do logotipo não foram
+   fornecidos — Poppins/Saira são os equivalentes Google Fonts mais próximos. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Saira:wght@400;500;600;700&display=swap');

@@ -1,0 +1,71 @@
+/* Sinérgica — Sistema de cores
+   Extraído diretamente dos logos e peças oficiais (POSTS + assinaturas PNG). */
+:root {
+  /* ---- Marca / Primárias ---- */
+  --sin-navy:        #202B59;   /* Azul Sinérgica — cor institucional principal */
+  --sin-navy-deep:   #161E40;   /* Azul profundo — fundos, sombras, contraste */
+  --sin-navy-soft:   #2E3C70;   /* Azul claro — estados hover sobre navy */
+
+  --sin-orange:      #EF7E25;   /* Laranja Sinérgica — energia, ação, destaque */
+  --sin-orange-deep: #E06A14;   /* Laranja escuro — hover / pressed */
+  --sin-amber:       #F7A600;   /* Âmbar/dourado — fim do gradiente, brilho */
+
+  /* Gradiente da marca (engrenagem + palavras de destaque) */
+  --sin-gradient:        linear-gradient(110deg, #EE7B22 0%, #F8A634 100%);
+  --sin-gradient-vivid:  linear-gradient(120deg, #E96A16 0%, #F9A937 55%, #F7A600 100%);
+  --sin-gradient-warm:   linear-gradient(180deg, #F8A634 0%, #EE7B22 100%);
+
+  /* ---- Neutros (quentes, alinhados ao off-white da marca) ---- */
+  --sin-offwhite:    #F8F7F5;   /* Off-white oficial — fundo claro padrão */
+  --sin-paper:       #FFFFFF;
+  --sin-mist:        #EDF0F3;   /* Cinza-azulado frio — superfícies secundárias */
+  --sin-line:        #E2E1DC;   /* Bordas / divisores em fundo claro */
+  --sin-line-cool:   #D6DBE2;
+
+  --sin-ink:         #1B2138;   /* Texto principal sobre claro */
+  --sin-ink-2:       #4A5168;   /* Texto secundário */
+  --sin-ink-3:       #8A90A2;   /* Texto terciário / legendas */
+  --sin-ink-on-dark: #F4F5F8;   /* Texto sobre navy */
+  --sin-ink-on-dark-2: #A8B0CC; /* Texto secundário sobre navy */
+
+  /* ---- Semânticas ---- */
+  --sin-success:     #2FAE4E;   /* Verde dos selos de checagem dos posts */
+  --sin-warning:     #F7A600;
+  --sin-danger:      #E23B2E;   /* Vermelho dos alertas (extintor / "!") */
+  --sin-info:        #2E3C70;
+
+  /* ---- Aliases semânticos ---- */
+  --bg:              var(--sin-offwhite);
+  --surface:         var(--sin-paper);
+  --surface-alt:     var(--sin-mist);
+  --surface-dark:    var(--sin-navy);
+  --border:          var(--sin-line);
+  --text:            var(--sin-ink);
+  --text-muted:      var(--sin-ink-2);
+  --accent:          var(--sin-orange);
+  --primary:         var(--sin-navy);
+
+  /* ---- Rampa Laranja (data-viz, profundidade de UI, estados) ----
+     Construída a partir do gradiente da marca (#EE7B22 → #F8A634).
+     Use os tons médios (500/600) para ação; claros (50-200) para fundos
+     de selo/realce; escuros (700-900) para texto laranja e pressed. */
+  --orange-50:   #FDF1E6;
+  --orange-100:  #FBE3CC;
+  --orange-200:  #F7C79A;
+  --orange-300:  #F3AB68;
+  --orange-400:  #EF8F3B;
+  --orange-500:  #E8731B;   /* base de ação no produto */
+  --orange-600:  #D2630F;   /* hover / pressed */
+  --orange-700:  #AE4F0C;
+  --orange-800:  #8A3E0B;
+  --orange-900:  #5E2A08;
+  --amber-400:   #F7B733;
+  --amber-500:   #F4A300;   /* fim quente do gradiente */
+  --amber-600:   #C98700;
+
+  /* Aplicações de laranja por contexto (governança de uso) */
+  --orange-action:   var(--orange-500);  /* botão primário, link de ação */
+  --orange-active:   var(--orange-500);  /* indicador de item/aba ativa */
+  --orange-critical: #D6362B;            /* prioridade crítica (vermelho-laranja) */
+  --orange-tint:     #FBEEE0;            /* fundo de selo "em construção", soft */
+}

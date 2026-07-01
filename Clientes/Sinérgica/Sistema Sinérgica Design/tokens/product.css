@@ -1,0 +1,47 @@
+/* Sinérgica OS — Tokens de PRODUTO
+   A UI do app é um dashboard SaaS multi-módulo (React + Tailwind + Lucide).
+   O scaffold do repositório usa emerald/blue/slate genéricos; aqui aplicamos a
+   MARCA Sinérgica: navy como acento institucional/ativo, laranja como CTA/destaque,
+   e mantemos um ramp neutro frio (slate) para as superfícies do produto. */
+:root {
+  /* ---- Acento do produto: navy estrutural + laranja cirúrgico ---- */
+  --app-accent:        #1C2748;             /* navy institucional (sidebar, ativo, foco) */
+  --app-accent-weak:   rgba(255,255,255,.07);
+  --app-cta:           #E8731B;             /* laranja — só ação principal / crítico / ativo */
+  --app-cta-hover:     #D2630F;
+
+  /* ---- Papel quente (NÃO o slate frio de dashboard genérico) ---- */
+  --app-bg:        #F4F2EC;   /* papel quente — herda o off-white da marca */
+  --app-surface:   #FFFFFF;
+  --app-surface-2: #EDEAE2;   /* hover de linha */
+  --app-border:    #E5E2D9;   /* hairline quente */
+  --app-border-2:  #EDEAE2;
+  --app-ink:       #1A2138;
+  --app-ink-2:     #585E72;
+  --app-ink-3:     #8C8F9B;
+  --app-ink-4:     #B4B6BE;
+
+  /* ---- Status do dashboard (semânticas funcionais preservadas) ---- */
+  --st-success-bg: #E7F6EC;  --st-success-fg: #1E8E45;  /* SLA no prazo, concluído */
+  --st-info-bg:    #EAEEF8;  --st-info-fg:    #2E3C70;  /* planejado */
+  --st-warn-bg:    #FDF1DF;  --st-warn-fg:    #B26A00;  /* em andamento */
+  --st-danger-bg:  #FCEAE8;  --st-danger-fg:  #C5362B;  /* crítico / inadimplência */
+  --st-neutral-bg: #EFF1F4;  --st-neutral-fg: #5A6175;  /* solicitação / rascunho */
+
+  /* ---- Prioridade (pontos GUT) ---- */
+  --prio-critica: #E23B2E;
+  --prio-alta:    #EF7E25;
+  --prio-media:   #F7A600;
+  --prio-baixa:   #C2C7D2;
+
+  /* ---- KPI tints ---- */
+  --kpi-pos-bg: #E7F6EC;  --kpi-pos-fg: #1E8E45;
+  --kpi-neu-bg: #EAEEF8;  --kpi-neu-fg: #2E3C70;
+  --kpi-neg-bg: #FDEEDF;  --kpi-neg-fg: #C26512;
+
+  /* Raios do produto — contidos (instrumento de operação, não card inflado) */
+  --app-r:    6px;
+  --app-r-lg: 10px;
+  /* Fonte técnica para dados/numerais: Saira tabular */
+  --app-num:  'Saira', system-ui, sans-serif;
+}
