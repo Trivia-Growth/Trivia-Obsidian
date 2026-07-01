@@ -50,13 +50,17 @@ RLS futura usar. Convite de usuário é exclusivo de Secretaria/Administrativo.
 |---|------|--------|
 | 1 | Value object `Papel` (domínio) | done |
 | 2 | Migration enum + tabela `administracao.perfis` (RLS enable+FORCE) | done |
-| 3 | RLS de `administracao.perfis` + testes pgTAP | todo (próxima) |
-| 4 | `custom_access_token_hook` + habilitar no `config.toml` | todo |
-| 5 | Caso de uso `ConvidarUsuario` (application) | todo |
-| 6 | Edge Function `admin-invite-user` | todo |
-| 7 | Auditoria em `audit.events` | todo |
-| 8 | `AuthContext` expõe `papel` (frontend) | todo |
-| 9 | Tela mínima de convite (Secretaria/Administrativo) | todo |
+| 3 | RLS de `administracao.perfis` + testes pgTAP | done |
+| 4 | `custom_access_token_hook` + habilitar no `config.toml` | done |
+| 5 | Caso de uso `ConvidarUsuario` (application) | done |
+| 6 | Edge Function `admin-invite-user` | done |
+| 7 | Auditoria em `audit.events` | done |
+| 8 | `AuthContext` expõe `papel` (frontend) | done |
+| 9 | Tela mínima de convite (Secretaria/Administrativo) | **bloqueada** — precisa mockup aprovado pelo JG |
+
+> **Status: 8/9 tasks concluídas e verificadas** (vitest 44/44, deno 8/8, pgTAP 8/8, E2E real no
+> stack local). Só resta a UI (task 9), que depende de mockup aprovado. Núcleo de Identidade/RLS
+> pronto — destrava a implementação de M2+ (specs 0006+).
 
 ## Decisões / ADRs relacionados
 - ADR-0004 — Papel do usuário via Custom Access Token Hook (`docs/adr/0004-papel-via-jwt-custom-claim.md` no repo).
