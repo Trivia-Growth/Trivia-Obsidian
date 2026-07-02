@@ -1,6 +1,6 @@
 ---
 audiência: humano
-atualizado: 2026-06-22
+atualizado: 2026-07-01
 ---
 
 # 05 — Qualidade e Segurança
@@ -17,6 +17,7 @@ atualizado: 2026-06-22
 | Type-check | `npm run typecheck` |
 | Lint/format | `npm run lint` |
 | Rastreabilidade AC→task | `npm run eval:spec` |
+| Arquitetura (dependência DDD) | `npm run arch:check` |
 | Integridade da esteira | `npm run audit:esteira` |
 | Diagramas Mermaid | `node scripts/validate-mermaid.mjs` |
 | Secret scanning | gitleaks |
@@ -30,7 +31,8 @@ A matriz completa (o que é gate × hook × checklist × guia) está em [[08 - P
   RLS em toda tabela, CORS restrito. → `seguranca/baseline-minimo.md`.
 - **OS-grade (multi-domínio / PII / financeiro / integrações):** soma RLS FORCE, `audit.*`
   append-only, schemas por domínio, Vault para refresh tokens, webhooks HMAC
-  (`constantTimeEqual`). → `os-layer/seguranca/os-grade.md`.
+  (`constantTimeEqual`), **idempotência monetária + invariante de ledger**, **outbox** para
+  eventos, **SAST (Semgrep) + SBOM/dependency review** na CI. → `os-layer/seguranca/os-grade.md`.
 - Dívida aceita conscientemente → `docs/SECURITY_DEBT.md` (P0 bloqueia produção).
 
 Não aplique segurança OS-grade num app simples só "por garantia" — siga o perfil.

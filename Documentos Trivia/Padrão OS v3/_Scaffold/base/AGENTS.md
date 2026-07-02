@@ -98,6 +98,10 @@ As skills da esteira ficam em `.claude/skills/` e roteiam para os donos de coman
 > Pedido tipo *"seguindo o padrão, vamos iniciar o projeto com essas especificações — peça para
 > os agentes do Triviaiox desenvolverem"* → é o gatilho da `/iniciar-projeto`. Não pule para
 > código: o kickoff decide perfil e tier e **anuncia** a cadeia de agentes antes de executar.
+>
+> **Codex:** as skills são playbooks em markdown puro — leia e siga
+> `.claude/skills/<nome>/SKILL.md` (ex.: `.claude/skills/iniciar-projeto/SKILL.md` para o
+> kickoff). Não dependem de mecanismo do Claude Code; valem para qualquer agente.
 
 ## Quadro completo de agentes (15)
 `@triviaiox-master` (orquestra), `@pm`, `@po`, `@sm`, `@analyst`, `@architect`,

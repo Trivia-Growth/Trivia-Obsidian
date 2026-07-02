@@ -1,6 +1,6 @@
 ---
 audiência: humano
-atualizado: 2026-06-22
+atualizado: 2026-07-01
 ---
 
 # 01 — Metodologia (esteira SDD)
@@ -31,6 +31,12 @@ domínio?*
 **Escalonamento dinâmico:** passou de ~5 passos atômicos ou surgiu dependência complexa → suba de
 tier. Na dúvida, suba (é barato). **Não** produza artefato a mais do que o tier pede
 (`ANTI-PADROES.md`).
+
+## Epic e story (vocabulário Triviaiox)
+O core do Triviaiox fala `PRD → epic → story`; aqui isso **mapeia 1:1** nos artefatos canônicos —
+**epic = a pasta `specs/NNNN-<slug>/`** (o contrato é a `spec.md`) e **story = uma task de
+`tasks.md`**. Não são artefatos novos: são os nomes que os agentes usam para as mesmas coisas
+(tabela completa em `_Scaffold/base/AGENTS.md`).
 
 ## Artefatos e rastreabilidade
 A corrente que garante qualidade: **`AC → task → gate → commit`**.

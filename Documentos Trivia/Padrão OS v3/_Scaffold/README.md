@@ -18,8 +18,10 @@ _Scaffold/
 2. Preencha `docs/PROJECT.md` (perfil = single-repo) e `docs/glossary.md`.
 3. Instale deps (`npm install`) e confira os gates: `npm test`, `npm run eval:spec`,
    `npm run audit:esteira`.
-4. Abra a primeira feature com a skill `/nova-feature`. Use `specs/0001-calculo-comissao/` como
-   exemplo de referência.
+4. Instale o Triviaiox + squad (seção abaixo) — é o que dá vida aos agentes.
+5. Kickoff: skill `/iniciar-projeto` (ou a frase *"seguindo o padrão, vamos iniciar o projeto com
+   essas especificações"*). Features seguintes: `/nova-feature`, espelhando
+   `specs/0001-calculo-comissao/`.
 
 ### Perfil OS (monorepo multi-domínio)
 1. Faça o single-repo acima primeiro (a metodologia é a mesma).
@@ -28,9 +30,10 @@ _Scaffold/
    compartilhados para `packages/`, rode a migration de schemas, aplique segurança OS-grade.
 
 ## Triviaiox
-Instale o Triviaiox no repo (`npx triviaiox-core install`) e copie `squads/trivia-os/` para
-`squads/`. Os agentes passam a seguir a esteira SDD (ver `squads/trivia-os/README.md`). **O core
-do Triviaiox não é alterado.**
+Instale o Triviaiox no repo (`npx triviaiox-core install`), copie `squads/trivia-os/` para
+`squads/` e siga os **5 passos** do `squads/trivia-os/README.md` — em especial o snippet de
+`core-config` (remapeia os caminhos que os agentes leem) e o payload `claude/` (subagentes +
+hook de autoridade; o installer do Triviaiox não os traz). **O core do Triviaiox não é alterado.**
 
 ## Princípio anti-drift
 Conteúdo **normativo** mora aqui (no scaffold). O vault **referencia**, não duplica. Se algo no

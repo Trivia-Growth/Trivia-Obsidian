@@ -1,0 +1,16 @@
+{
+  "_comment": "Merge no .claude/settings.json do PROJETO. Garante o hook de autoridade de push para QUALQUER sessão (não só subagentes): a regra 'só @devops faz push' passa a ser aplicada por máquina, não por prosa. O hook é fail-closed.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/enforce-git-push-authority.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 ---
 audiência: humano
-atualizado: 2026-06-24
+atualizado: 2026-07-01
 ---
 
 # 08 — Padrão de Qualidade
@@ -21,8 +21,10 @@ scaffold: cada barra de qualidade tem o seu **enforcement**, perfil e dono. Prin
 
 ## O que é bloqueante na CI hoje (🟢)
 Rastreabilidade AC→task (`eval:spec`), integridade da esteira (`audit:esteira`), Mermaid,
-**lint** (Biome), **typecheck**, **testes + cobertura** (threshold), **secret scanning**
-(gitleaks) e **dependências vulneráveis** (`npm audit` alto+). Nenhum merge para `main` sem tudo verde.
+**lint** (Biome), **typecheck**, **arquitetura DDD** (`arch:check` — dependency-cruiser falha o
+build se `domain/` importar framework/camada), **testes + cobertura** (threshold), **secret
+scanning** (gitleaks) e **dependências vulneráveis** (`npm audit` alto+). No perfil **OS** somam
+**SAST (Semgrep)** e **dependency review + SBOM**. Nenhum merge para `main` sem tudo verde.
 
 ## Pilares cobertos
 - **Confiabilidade/método:** rastreabilidade, testes de aceite, runbooks, ADRs.
@@ -32,5 +34,5 @@ Rastreabilidade AC→task (`eval:spec`), integridade da esteira (`audit:esteira`
 - **Observabilidade:** erro `problem+json` com `reqId`, log sem PII, SLO/SLI.
 - **IA/LLM:** evals, prompt versionado, OWASP LLM Top 10 ([[05 - Qualidade e Segurança]]).
 
-→ Matriz completa (30 itens) com comando, perfil e dono: `_Scaffold/base/PADRAO-DE-QUALIDADE.md`.
+→ Matriz completa (36 itens) com comando, perfil e dono: `_Scaffold/base/PADRAO-DE-QUALIDADE.md`.
 A skill `/validar` (@qa) roda os gates e emite **PASS / CONCERNS / FAIL**.

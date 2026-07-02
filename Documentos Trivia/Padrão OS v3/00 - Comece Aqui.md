@@ -1,7 +1,7 @@
 ---
 audiência: humano
-padrão: Padrão OS v2
-atualizado: 2026-06-22
+padrão: Padrão OS v3
+atualizado: 2026-07-01
 ---
 
 # Padrão OS — Comece Aqui
@@ -11,7 +11,7 @@ atualizado: 2026-06-22
 > contradisser o scaffold, **o scaffold vence**. Não duplicamos norma aqui — referenciamos.
 
 ## O que é
-O **Padrão OS** é o padrão único (v2) da Trivia para construir software **com agentes de IA**.
+O **Padrão OS** é o padrão único (v3) da Trivia para construir software **com agentes de IA**.
 Combina:
 - **Esteira SDD** (Spec-Driven Development): Lean Inception → DDD → Technical Design → Spec →
   Tasks, com **gates executáveis**.
@@ -38,8 +38,11 @@ inspeção — só por **gate verde**.
 - [[09 - Receitas (Banco, Edge, HTTP)]] — RLS, migration, Edge Function, borda HTTP, port/adapter.
 
 ## Como começar um projeto (resumo)
-1. Copie `_Scaffold/base/` para o repositório novo.
-2. Preencha `docs/PROJECT.md` e `docs/glossary.md`.
-3. Abra a primeira feature com a skill `/nova-feature`, espelhando o exemplo
-   `specs/0001-calculo-comissao/`.
+1. Copie `_Scaffold/base/` para o repositório novo e instale o squad
+   (`_Scaffold/squads/trivia-os/` — agentes, hook de autoridade, config).
+2. Diga ao agente: *"seguindo o padrão, vamos iniciar o projeto com essas especificações"* —
+   isso aciona a skill **`/iniciar-projeto`**, que decide o perfil, preenche `docs/PROJECT.md`,
+   decompõe as especificações em features (epics) e orquestra os agentes, **anunciando cada
+   etapa e o porquê** (ADR, spec, tasks visíveis).
+3. Features seguintes: `/nova-feature`, espelhando `specs/0001-calculo-comissao/`.
 4. Detalhes em [[07 - Como usar o Scaffold]].

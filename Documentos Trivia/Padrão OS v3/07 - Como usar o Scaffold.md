@@ -1,6 +1,6 @@
 ---
 audiência: humano
-atualizado: 2026-06-22
+atualizado: 2026-07-01
 ---
 
 # 07 — Como usar o Scaffold
@@ -20,7 +20,8 @@ _Scaffold/
 2. `npm install`.
 3. Preencha `docs/PROJECT.md` (perfil = single-repo) e `docs/glossary.md`.
 4. Confira os gates: `npm test`, `npm run typecheck`, `npm run eval:spec`, `npm run audit:esteira`.
-5. Abra a primeira feature: skill `/nova-feature`. Espelhe `specs/0001-calculo-comissao/`.
+5. Kickoff: skill `/iniciar-projeto` (ou a frase "seguindo o padrão, vamos iniciar o projeto…").
+   Features seguintes: `/nova-feature`, espelhando `specs/0001-calculo-comissao/`.
 
 ## Promover para OS
 Quando houver fronteira de domínio real ([[03 - Perfis de Projeto]]):
@@ -32,7 +33,12 @@ Quando houver fronteira de domínio real ([[03 - Perfis de Projeto]]):
 ## Instalar o Triviaiox
 1. `npx triviaiox-core install` (não editamos o core do framework).
 2. Copie `_Scaffold/squads/trivia-os/` para `squads/`.
-3. Aplique `squads/trivia-os/rules/core-config-snippet.yaml` ao `core-config.yaml` do projeto.
+3. Aplique `squads/trivia-os/rules/core-config-snippet.yaml` ao `core-config.yaml` do projeto —
+   **as duas partes** (remapeamento de caminhos + technical preferences).
+4. Copie `squads/trivia-os/claude/agents/` → `.claude/agents/` e `claude/hooks/` →
+   `.claude/hooks/`; faça merge do `claude/settings-snippet.json` no `.claude/settings.json`
+   (subagentes + hook de autoridade — o installer do Triviaiox não os traz).
+5. Smoke test: `/iniciar-projeto` responde; `git push` fora do @devops é bloqueado pelo hook.
 
 ## Manutenção do padrão
 - O padrão é versionado em [[CHANGELOG]]. Norma nova entra **no scaffold** (não só aqui).
