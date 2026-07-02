@@ -7,7 +7,7 @@ tags:
   - urgente
 cliente: Move Gourmet
 data_identificacao: 2026-06-25
-status: aberto
+status: corrigido
 ---
 
 # Problema - Omie sem Local de Estoque SP
@@ -15,9 +15,18 @@ status: aberto
 > Identificado em: 25/06/2026
 > Impacto: CRÍTICO - a localização São Paulo no Shopify nunca receberá estoque enquanto isso não for resolvido
 
+> ⚠️ **PREMISSA CORRIGIDA (01/07/2026):** a auditoria via API do Omie provou que este
+> achado (25/06) estava **errado** — o Omie **tem 6 locais de estoque cadastrados**,
+> incluindo um "SÃO PAULO" (código 09) criado em 15/05/2026, **já com saldo de produto
+> acabado**. O que de fato não existe é o **mapeamento desse local dentro do Omie.Hub**
+> (o conector que fala com o Shopify) — problema mais estreito e diferente do descrito
+> abaixo. Ver levantamento completo e plano de ação em
+> [[Omie - Mapeamento Estoque - Jul 2026]]. Este documento fica só como registro
+> histórico do diagnóstico original.
+
 ---
 
-## Achado
+## Achado (histórico — ver correção acima)
 
 A seção **Configurações > Locais de Estoque** do Omie está completamente vazia — **nenhum registro encontrado**.
 
@@ -79,12 +88,14 @@ Este passo exige o envolvimento do time técnico do Omie - é um ajuste na integ
 
 | Data | Ação | Por |
 |---|---|---|
-| 2026-06-25 | Confirmado que Omie não tem Locais de Estoque configurados | G4 OS / João |
+| 2026-06-25 | Confirmado que Omie não tem Locais de Estoque configurados (achado depois refutado) | G4 OS / João |
+| 2026-07-01 | Auditoria via API (somente leitura) refuta o achado: existem 6 locais, incl. SP com saldo. Problema real é o mapeamento no Omie.Hub | Trívia |
 
 ---
 
 ## Links
 
 - [[Move Gourmet - Hub]]
+- [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento correto e plano de ação atual
 - Omie - Locais de Estoque: https://app.omie.com.br/gestao/move-3y9kty30/#CFG
 - Shopify - Localizações: https://admin.shopify.com/store/9ja6tr-1i/settings/locations
