@@ -43,6 +43,8 @@ jobs:
         run: npm run lint
       - name: Type-check
         run: npm run typecheck
+      - name: Arquitetura (regra de dependência DDD)
+        run: npm run arch:check
 
       # Testes + cobertura (threshold bloqueante em vitest.config.ts)
       - name: Testes com cobertura (AC)

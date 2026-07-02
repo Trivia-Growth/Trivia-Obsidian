@@ -41,3 +41,12 @@ alwaysApply: false
 ## SLO/SLI (perfil OS / serviço crítico)
 Defina SLI (o que mede) e SLO (o alvo) para o caminho crítico — template em
 `observabilidade/slo-sli.template.md`. Dono: `@reliability`.
+
+## Tracing distribuído (perfil OS — quando a requisição cruza serviços)
+Log correlacionado por `reqId` resolve o single-repo. Quando o fluxo atravessa
+**Edge Function → domínio → banco → integração externa**, adote **OpenTelemetry**:
+- Propague o `traceparent` (W3C) na borda e nas chamadas de saída; o `reqId` do log vira atributo
+  do span (log e trace se cruzam).
+- Instrumente só o caminho crítico primeiro (auto-instrumentation de HTTP/Postgres já paga o
+  custo); exporte para o backend disponível (Grafana Tempo, Honeycomb, etc.).
+- Não é gate: é guia do perfil OS. Dono: `@reliability`.

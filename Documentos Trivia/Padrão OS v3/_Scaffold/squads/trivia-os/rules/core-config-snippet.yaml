@@ -1,7 +1,29 @@
-# Trecho para o core-config.yaml do PROJETO (technical preferences).
-# Aplique no core-config.yaml gerado pelo Triviaiox — NÃO edite o core do framework.
-# Aponta os agentes ao artefato canônico SDD do Padrão OS.
+# Trecho para o core-config.yaml do PROJETO (Padrão OS v3).
+# Aplique SOBRE o core-config.yaml gerado pelo Triviaiox — NÃO edite o core do framework.
+# Duas partes: (1) REMAPEAMENTO dos caminhos que os agentes do core leem de verdade
+# (sem isto, @sm/@dev procuram docs/prd.md e docs/stories/, que não existem no Padrão OS);
+# (2) technicalPreferences apontando ao artefato canônico SDD.
 
+# ── Parte 1: remapear o que o core lê ────────────────────────────────────────
+# Epic ≡ pasta specs/NNNN-<slug>/ · story ≡ task de tasks.md (ver base/AGENTS.md).
+prd:
+  prdFile: specs/                      # não há PRD único; product.md por feature arquitetural
+  prdSharded: true
+  prdShardedLocation: specs/           # cada specs/NNNN-*/ é um "epic" no vocabulário do core
+  epicFilePattern: "[0-9][0-9][0-9][0-9]-*/spec.md"   # o contrato do epic é a spec.md da pasta
+architecture:
+  architectureFile: docs/adr/          # decisões duráveis; design.md por feature em specs/NNNN-*/
+  architectureSharded: true
+  architectureShardedLocation: specs/
+devStoryLocation: specs/               # story = task de tasks.md; NÃO criar docs/stories/
+devLoadAlwaysFiles:                    # contexto base do Padrão OS (espelha CLAUDE.md)
+  - CLAUDE.md
+  - docs/STATE.md
+  - docs/PROJECT.md
+qa:
+  qaLocation: specs/                   # veredito PASS/CONCERNS/FAIL registrado na feature
+
+# ── Parte 2: preferências técnicas (artefato canônico SDD) ───────────────────
 technicalPreferences:
   methodology: spec-driven-development
   artifacts:
@@ -9,17 +31,27 @@ technicalPreferences:
     canonical: [product.md, domain.md, design.md, spec.md, tasks.md]
     adr: docs/adr/
     reference_example: specs/0001-calculo-comissao/
-  story_is_view_of: tasks.md      # não criar story como artefato paralelo
+  vocabulary_mapping:                  # equivalência Triviaiox ⇄ Padrão OS (base/AGENTS.md)
+    prd: product.md
+    epic: specs/NNNN-<slug>/           # a feature inteira; spec.md é o contrato (AC)
+    story: task de tasks.md            # visão de execução — nunca arquivo paralelo
+    architecture_doc: design.md + ADR
+  story_is_view_of: tasks.md
+  kickoff_skill: /iniciar-projeto      # gatilho: "iniciar o projeto seguindo o padrão"
   gates:
     audit: "node scripts/audit-esteira.mjs"
     fidelity: "node scripts/eval-spec-fidelity.mjs"
     tests: "npm test"
     typecheck: "npm run typecheck"
     lint: "npm run lint"
+    arch: "npm run arch:check"         # regra de dependência DDD verificada por máquina
+  qa_gate_vocabulary: [PASS, CONCERNS, FAIL, WAIVED]   # único vocabulário de veredito
   profiles:
     single_repo:
       security: seguranca/baseline-minimo.md
     os_monorepo:
       security: os-layer/seguranca/os-grade.md
       monorepo: [pnpm-workspaces, turborepo]
-  ai_features_track: ia/          # evals, prompt versioning, injection (OWASP LLM Top 10)
+  ai_features_track: ia/               # evals, prompt versioning, injection (OWASP LLM Top 10)
+  authority:
+    git_push_pr_cicd: "@devops"        # exclusivo — aplicado pelo hook enforce-git-push-authority

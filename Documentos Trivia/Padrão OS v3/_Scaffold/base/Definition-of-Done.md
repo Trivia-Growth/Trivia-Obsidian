@@ -16,13 +16,14 @@
 | Testes (AC) | `npm test` (`vitest run`) | cada `AC` da spec tem teste verde |
 | Type-check | `npm run typecheck` | TypeScript strict sem erro |
 | Lint/format | `npm run lint` | Biome sem finding |
+| Arquitetura | `npm run arch:check` | regra de dependência DDD (domain puro) sem violação |
 | Rastreabilidade | `npm run eval:spec` | todo `AC` coberto por task; `SPEC_DEVIATION` contados |
 | Esteira | `npm run audit:esteira` | frontmatter, links e specs íntegros |
 | Diagramas (se houver Mermaid) | `node scripts/validate-mermaid.mjs` | blocos Mermaid válidos |
 
 ## Checklist (todo PR)
 - [ ] Todos os `AC` da `spec.md` **verdes pelo gate** (`npm test`) — não por inspeção
-- [ ] `npm run typecheck`, `npm run lint`, `npm run eval:spec`, `npm run audit:esteira` passam
+- [ ] `npm run typecheck`, `npm run lint`, `npm run arch:check`, `npm run eval:spec`, `npm run audit:esteira` passam
 - [ ] Nenhum `SPEC_DEVIATION` pendente sem resolução
 - [ ] Decisões difíceis de reverter viraram **ADR** em `docs/adr/`
 - [ ] **Segurança:** sem secret no client; input validado (Zod); JWT validado; RLS na tabela.

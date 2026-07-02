@@ -33,6 +33,26 @@ alwaysApply: false
 
 Fallback ao expirar: tentar refresh → se falhar, retornar 503 + alerta (Teams) — nunca silenciar.
 
+## Financeiro (quando há dinheiro em jogo)
+- [ ] **Chave de idempotência em toda mutação monetária** (`idempotency_key unique` por operação
+      de negócio, não só `request_id` técnico) — retry de rede nunca pode cobrar duas vezes.
+- [ ] **Invariante de ledger verificada por teste**: lançamentos em partidas (débito = crédito);
+      um teste de integração soma as partidas e falha se o ledger não fechar. Saldo é **derivado**
+      do ledger, nunca coluna editável.
+- [ ] Valor monetário em **centavos (integer)** — ver ADR-0001 do scaffold.
+
+## Integrações assíncronas (eventos / filas / webhooks de saída)
+- [ ] **Outbox pattern**: evento gravado na mesma transação do dado; entrega por worker com
+      retry — falha de rede não perde nem duplica evento (consumidor idempotente).
+- [ ] Chamada a terceiro no caminho crítico tem **timeout + retry com backoff + circuit breaker**
+      (falha do terceiro não derruba o domínio).
+
+## Supply chain (CI da os-layer)
+- [ ] **SAST (Semgrep)** bloqueante na CI — pega padrão de vulnerabilidade que lint não vê
+      (injection, crypto insegura, SSRF).
+- [ ] **SBOM (CycloneDX)** gerado por release + **dependency review** bloqueante em PR — árvore
+      transitiva visível, dependência nova com vuln alta não entra.
+
 ## LGPD
 - [ ] Schema `lgpd.*` para consentimentos, export e delete; trilha em `audit.*`.
 - [ ] Dado pessoal minimizado e com base legal; export/delete sob demanda.

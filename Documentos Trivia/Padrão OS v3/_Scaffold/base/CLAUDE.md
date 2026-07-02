@@ -68,6 +68,13 @@ O ciclo e a autoridade de cada agente estão em `AGENTS.md`. Resumo do fluxo can
 `@dev` (implementa por task) → `@qa` (valida AC pelo gate) → `@devops` (único com push).
 Features de IA/LLM passam por `@prompt-engineer` (ver `ia/`).
 
+- **Kickoff de projeto novo** ("iniciar o projeto seguindo o padrão", "peça para os agentes do
+  Triviaiox desenvolverem") → rode a skill `/iniciar-projeto`. Não pule para código.
+- Vocabulário do Triviaiox: **epic = pasta `specs/NNNN-<slug>/`; story = task de `tasks.md`**
+  (tabela de equivalência em `AGENTS.md`). Não crie PRD/epic/story como arquivos paralelos.
+- **Anuncie o que vai produzir e por quê** antes de produzir (transparência declarativa —
+  `AGENTS.md`). Decisão autônoma se registra no artefato, nunca só no chat.
+
 ## Linguagem ubíqua
 - Use **exatamente** os termos de `docs/glossary.md` e do `domain.md` da feature. Mesmo nome no
   código, na spec e na conversa. Não invente sinônimos.

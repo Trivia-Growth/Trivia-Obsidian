@@ -14,7 +14,8 @@
     "format": "biome format --write .",
     "audit:esteira": "node scripts/audit-esteira.mjs",
     "eval:spec": "node scripts/eval-spec-fidelity.mjs",
-    "audit:deps": "npm audit --omit=dev --audit-level=high"
+    "audit:deps": "npm audit --omit=dev --audit-level=high",
+    "arch:check": "depcruise src --config .dependency-cruiser.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
@@ -29,6 +30,7 @@
     "husky": "^9.1.0",
     "lint-staged": "^15.2.0",
     "typescript": "^5.6.0",
-    "vitest": "^2.1.0"
+    "vitest": "^2.1.0",
+    "dependency-cruiser": "^16.3.0"
   }
 }

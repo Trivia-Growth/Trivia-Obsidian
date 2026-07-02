@@ -32,7 +32,7 @@ alwaysApply: false
 | 8 | Lint + format limpos | 🟢 Gate CI + 🪝 | `npm run lint` (Biome) | ambos | @dev |
 | 9 | TypeScript strict sem erro | 🟢 Gate CI + 🪝 | `npm run typecheck` | ambos | @dev |
 | 10 | Cobertura ≥ threshold | 🟢 Gate CI | `npm run test:coverage` (`vitest.config.ts`) | ambos | @qa |
-| 11 | Dependência aponta só para dentro (DDD) | 📖 Guia | `CLAUDE.md`, `04 - Arquitetura` | ambos | @architect |
+| 11 | Dependência aponta só para dentro (DDD) | 🟢 Gate CI | `npm run arch:check` (`.dependency-cruiser.cjs`) | ambos | @architect |
 | 12 | Conventional commits | 🪝 Hook | `commit-msg` (commitlint) | ambos | @dev |
 | 13 | Sem over-engineering (YAGNI, tier certo) | 📖 Guia | `ANTI-PADROES.md` | ambos | @architect |
 | **Segurança** |
@@ -44,6 +44,10 @@ alwaysApply: false
 | 19 | Threat model STRIDE (auth/PII/financeiro/integração) | 📖 Guia | `seguranca/threat-model.template.md` | quando aplicável | @security |
 | 20 | Dívida de segurança registrada (P0 bloqueia) | ☑️ DoD | `docs/SECURITY_DEBT.md` | ambos | @security |
 | 21 | OS-grade: audit append-only, Vault, HMAC webhook | 📖 Guia | `os-layer/seguranca/os-grade.md` | OS | @security |
+| 21a | SAST (padrões de vulnerabilidade além do lint) | 🟢 Gate CI* | Semgrep (`os-layer` CI) | OS | @security |
+| 21b | Supply chain: SBOM + dependency review em PR | 🟢 Gate CI* | CycloneDX + dependency-review-action (`os-layer` CI) | OS | @security |
+| 21c | Mutação monetária idempotente + invariante de ledger | ☑️ DoD / 📖 | `os-layer/seguranca/os-grade.md` §Financeiro | OS financeiro | @data-engineer |
+| 21d | Rate limiting na borda pública | ☑️ DoD / 📖 | `os-grade.md` §Edge; borda HTTP | OS | @security |
 | **Performance** |
 | 22 | Budget (Web Vitals / p95 / bundle) sem regressão | ☑️ DoD / 📖 | `performance/README.md` | ambos | @dev |
 | 23 | Query crítica indexada; lista paginada; sem N+1 | ☑️ DoD / 📖 | `performance/README.md`, `db/README.md` | ambos | @data-engineer |
@@ -52,17 +56,24 @@ alwaysApply: false
 | 25 | Erro na borda em `problem+json` com `reqId` | ☑️ DoD / 📖 | `src/interfaces/http/problem.ts` | ambos | @dev |
 | 26 | Log estruturado, sem PII | ☑️ DoD / 📖 | `src/shared/log.ts`, `observabilidade/` | ambos | @dev |
 | 27 | SLO/SLI no caminho crítico | 📖 Guia | `observabilidade/slo-sli.template.md` | OS / crítico | @reliability |
+| 27a | Tracing distribuído (OpenTelemetry) no fluxo multi-serviço | 📖 Guia | `observabilidade/README.md` §Tracing | OS | @reliability |
+| 27b | Evento assíncrono com outbox/idempotência | 📖 Guia | `os-grade.md` §Integrações | OS c/ integração | @architect |
 | **Produtos de IA (LLM)** |
 | 28 | Evals com casos adversariais | 📖 Guia | `ia/evals.md` | quando há LLM | @prompt-engineer |
 | 29 | Prompt versionado + defesa contra injection | 📖 Guia | `ia/prompt-e-injection.md` | quando há LLM | @prompt-engineer |
 | 30 | OWASP LLM Top 10 revisado | 📖 Guia | `ia/README.md` | quando há LLM | @security/@qa |
 
-> \* Item 24 é gate quando o projeto tem app web (liga Lighthouse CI/size-limit); até lá, é guia + DoD.
+> \* Item 24 é gate quando o projeto tem app web (liga Lighthouse CI/size-limit + axe-core no
+> Playwright); itens 21a/21b são gates só no perfil OS (CI da `os-layer`). Até lá, guia + DoD.
+> Práticas avaliadas e **não adotadas** (anti-over-engineering, ver CHANGELOG v3): mutation
+> testing (custo de CI alto vs. ganho com cobertura+AC já bloqueantes), contract testing Pact
+> (sem fronteira consumidor/produtor real ainda — reavaliar quando OS tiver 2+ serviços),
+> semantic-release (CHANGELOG manual versionado atende o padrão).
 
 ## Como rodar tudo localmente (espelho da CI)
 ```bash
 npm run audit:esteira && npm run eval:spec && node scripts/validate-mermaid.mjs \
-  && npm run lint && npm run typecheck && npm run test:coverage \
+  && npm run lint && npm run typecheck && npm run arch:check && npm run test:coverage \
   && npm run audit:deps
 # secret scanning: gitleaks detect (se instalado localmente)
 ```

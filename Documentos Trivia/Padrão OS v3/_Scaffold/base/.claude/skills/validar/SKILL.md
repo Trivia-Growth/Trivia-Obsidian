@@ -10,7 +10,7 @@ Valida a feature **pelos gates executáveis**, não por inspeção. **Dono:** `@
 ## Passos
 1. Rode os gates (ver `Definition-of-Done.md`):
    - `npm test` — cada `AC` da spec tem teste verde
-   - `npm run typecheck` · `npm run lint`
+   - `npm run typecheck` · `npm run lint` · `npm run arch:check` (regra de dependência DDD)
    - `npm run eval:spec` — todo `AC` coberto por task; conta `SPEC_DEVIATION`
    - `npm run audit:esteira` — frontmatter/links/specs íntegros
    - `node scripts/validate-mermaid.mjs` se houver diagrama

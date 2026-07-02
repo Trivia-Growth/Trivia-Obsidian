@@ -1,0 +1,17 @@
+# CODEOWNERS — perfil single-repo (Padrão OS v3)
+# Dá ao @devops uma forma declarativa de saber quem revisa o quê (antes só existia na os-layer).
+# Ajuste os handles ao time do projeto; GitHub exige review dos donos quando branch protection ativa.
+
+*                       @trivia-growth/eng
+
+# Fonte da verdade da esteira — mudança aqui é mudança de contrato
+/specs/                 @trivia-growth/eng-leads
+/docs/adr/              @trivia-growth/eng-leads
+/CLAUDE.md              @trivia-growth/eng-leads
+/AGENTS.md              @trivia-growth/eng-leads
+
+# Banco e segurança têm donos próprios
+/db/                    @trivia-growth/data
+/supabase/              @trivia-growth/data
+/seguranca/             @trivia-growth/security
+/.github/               @trivia-growth/devops

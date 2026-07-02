@@ -16,9 +16,9 @@ alwaysApply: false
 | #  | Task                                  | Cobre AC | Depende de | Gate (comando)         | Status |
 |----|---------------------------------------|----------|------------|------------------------|--------|
 | 1  | <modelar agregado no domínio>         | AC-1     | —          | `<test do domínio>`    | todo   |
-| 2  | <caso de uso na application>          | AC-1,2   | 1          | `<test do caso de uso>`| todo   |
+| 2  | <caso de uso na application>          | AC-1, AC-2 | 1        | `<test do caso de uso>`| todo   |
 | 3  | <adapter/repo na infrastructure>      | AC-2     | 1          | `<test de integração>` | todo   |
-| 4  | <endpoint na interface> `[P]`         | AC-1,2   | 2,3        | `<test de aceite>`     | todo   |
+| 4  | <endpoint na interface> `[P]`         | AC-1, AC-2 | 2,3      | `<test de aceite>`     | todo   |
 
 > Uma task só vira `done` quando o **gate passa** — não por inspeção visual.
 
