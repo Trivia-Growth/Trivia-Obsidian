@@ -18,7 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          # Node 22: dependency-cruiser 18+ e vitest 3+ exigem ≥22 (ver package.json engines).
+          node-version: "22"
           cache: npm
       - run: npm ci
 
@@ -51,3 +52,15 @@ jobs:
       # Testes + cobertura (threshold bloqueante em vitest.config.ts)
       - name: Testes com cobertura (AC)
         run: npm run test:coverage
+
+  # Migrations: DROP sem reverso e CREATE POLICY sem GRANT (ver scripts/lint-migrations.mjs).
+  # Separado porque roda mesmo em PR que não toca código, e é barato.
+  migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Lint de migrations
+        run: node scripts/lint-migrations.mjs
