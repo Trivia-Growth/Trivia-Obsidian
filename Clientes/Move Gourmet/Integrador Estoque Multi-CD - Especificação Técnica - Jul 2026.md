@@ -8,7 +8,7 @@ tags:
   - arquitetura
 cliente: Move Gourmet
 data: 2026-07-02
-status: especificação
+status: em-implementação
 ---
 
 # Integrador de Estoque Multi-CD (Omie ↔ Shopify) — Especificação Técnica
@@ -42,6 +42,38 @@ status: especificação
 >   `etapa "70"`. A etapa de faturamento **não é o "50" genérico** — mapear o Kanban real.
 > - **Saldos:** Salvador **1.009** itens com saldo; SP **19** (produtos Move congelados;
 >   `PMUND PASTEL DE BACALHAU` está **-1**, ajustar no Omie). Catálogo total 1.432 (29 págs).
+
+## 0. Estado atual (02/07/2026) — DECISÃO: construir e colocar em produção
+
+**Decisão tomada:** seguir o **caminho 3 do Plano B — integração própria** (ver
+[[Omie - Mapeamento Estoque - Jul 2026]]). O Hub não faz o split e não há conector de
+prateleira confiável; vamos construir o integrador e **resolver de vez**.
+
+**O que já está pronto:**
+- ✅ Spec técnica completa das duas APIs + padrões de engenharia (este documento).
+- ✅ **Certificação via API do Omie ao vivo** (banner abaixo): depósitos, leitura por local,
+  estrutura do pedido, origem SFY, prova de que o Hub crava Salvador em tudo.
+- ✅ Lado Omie do cruzamento de SKU: 1.432 `cCodigo` extraídos (todos com `cCodInt` vazio →
+  casar por `cCodigo`).
+
+**Onde travou / próximo passo imediato:** para o lado Shopify (cruzamento de SKU + construir),
+precisamos de token da Admin API. ⚠️ **A Shopify desativou a criação de apps personalizados
+legados a partir de 01/01/2026** — o caminho `shpat_` direto não existe mais. Então o token
+sai pelo **Dev Dashboard → criar app → instalar na loja Move Gourmet → gerar Admin API access
+token** (escopos read: products, inventory, locations; para produção também write_inventory +
+fulfillment). Não mexer no app "Omie Shopify" (é o do Hub, vivo).
+
+**Fila de execução (produção):**
+1. Criar/instalar o app no Dev Dashboard e obter o token da Admin API do Shopify.
+2. Cruzamento de SKU (Omie `cCodigo` ↔ Shopify `variant.sku`) — de-risca antes de codar.
+3. Mapear o Kanban real da Omie (etapa de faturamento; vistos "60"/"70", não "50").
+4. Fase 0 (PoC leitura+escrita) → Fase 1 (sync de estoque, cutover do Hub via Strangler Fig).
+
+> 🔒 **Segurança:** o client secret `shpss_...` de um app OAuth criado por engano no Dev
+> Dashboard foi colado no chat (02/07) → **excluir esse app** ou rotacionar. Credenciais Omie
+> (APP_KEY 3323795676201) e o futuro token Shopify seguem como pendência de rotação.
+
+---
 
 ## Índice
 1. Problema e objetivo

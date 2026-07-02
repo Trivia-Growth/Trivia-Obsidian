@@ -110,10 +110,20 @@ desde: 2026-06-24
 
 ## Próxima Sessão
 
-- Aguardar resposta do suporte Omie (Kim) sobre mapeamento local Shopify → depósito no Hub — ver [[Omie - Mapeamento Estoque - Jul 2026]]
-- Se Omie não resolver: decidir entre as 3 opções do "Plano B" (híbrido pragmático / conector terceiro / integração própria)
+> **DECISÃO 02/07: construir integrador próprio Omie↔Shopify multi-CD e colocar em produção.**
+> O Hub é single-location (não resolve o split). Spec técnica completa + certificada via API em
+> [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
+
+**Fila de execução (produção):**
+- [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub)
+- [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
+- [ ] Mapear a etapa de faturamento no Kanban da Omie (vistos "60"/"70", não "50")
+- [ ] Fase 0 (PoC leitura+escrita) → Fase 1 (sync de estoque, cutover do Hub via Strangler Fig)
+- [ ] Excluir/rotacionar o app OAuth criado por engano (client secret `shpss_` exposto no chat 02/07)
+
+**Pendências paralelas:**
 - Configurar Melhor Envio com CEP de SP como origem para pedidos de SP
 - Remover app legado "Omie Move Gourmet" (já confirmado seguro — só falta executar)
 - Rotacionar credenciais Omie (APP_KEY/APP_SECRET) expostas no chat durante a auditoria
-- Verificar se a sync do Hub ainda está ativa (último pedido visto: 15/06/2026)
+- Ajustar no Omie o saldo -1 do `PMUND PASTEL DE BACALHAU` em SP
 - Verificar se o Appstle portal do cliente está ativo com troca de produtos habilitada

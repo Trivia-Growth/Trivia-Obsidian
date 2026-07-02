@@ -246,6 +246,22 @@ preciso **desligar/escopar a sync de estoque do Hub**, senão os dois brigam pel
 
 ---
 
+## Decisão 02/07/2026 — construir integrador próprio (ir para produção)
+
+Confirmado que o **Hub é single-location** (não há campo de depósito em lugar nenhum da UI) →
+decisão de **construir o integrador próprio** (Plano B, caminho 3) e resolver de vez.
+Especificação técnica completa + certificada em
+[[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
+
+**Certificado via API do Omie (02/07, somente leitura):** depósitos reais (Salvador
+`3390627692`, SP `10009035408`); `PosicaoEstoque` lê por local; origem `SFY` é real; o Hub
+crava Salvador em todos os itens; SP tem 19 SKUs com saldo; 1.432 produtos, casamento por
+`cCodigo` (`cCodInt` vazio).
+
+**Fila de execução:** (1) token Admin API do Shopify via Dev Dashboard → instalar na loja
+(apps legados foram desativados pela Shopify em 01/01/2026); (2) cruzamento de SKU; (3) mapear
+Kanban de faturamento da Omie; (4) Fase 0 → Fase 1 com cutover do Hub (Strangler Fig).
+
 ## Próximos passos Omie
 
 - [x] Confirmar qual app de integração está ativo → **Omie Shopify (via Omie.Hub)**
