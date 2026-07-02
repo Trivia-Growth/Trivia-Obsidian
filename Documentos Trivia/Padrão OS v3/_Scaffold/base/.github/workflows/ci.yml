@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Cancela runs supersedidos da mesma ref (economia + feedback mais rápido).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+
+      # Gates da esteira SDD (rastreabilidade e integridade dos docs) — baratos, rodam primeiro
+      - name: Auditoria da esteira
+        run: node scripts/audit-esteira.mjs
+      - name: Fidelidade spec→implementação
+        run: node scripts/eval-spec-fidelity.mjs
+      - name: Diagramas Mermaid
+        run: node scripts/validate-mermaid.mjs
+
+      # Gates de segurança (BLOQUEANTES)
+      - name: Secret scanning (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Dependências vulneráveis (npm audit)
+        run: npm run audit:deps
+
+      # Gates de código
+      - name: Lint/format (Biome)
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
+
+      # Testes + cobertura (threshold bloqueante em vitest.config.ts)
+      - name: Testes com cobertura (AC)
+        run: npm run test:coverage
