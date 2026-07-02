@@ -1,3 +1,17 @@
 node_modules/
 coverage/
 dist/
+
+# Build/cache de ferramentas — nunca versionar (geram falso positivo de lint; ver biome.json)
+.turbo/
+supabase/.temp/
+*.tsbuildinfo
+
+# Segredos e ambiente — só o .env.example é versionado
+.env
+.env.local
+.env.*.local
+
+# SBOM e artefatos de CI gerados localmente
+sbom.json
+gitleaks

@@ -1,3 +1,7 @@
 #!/bin/sh
-echo "▶ pre-push: typecheck + testes (gate pré-CI)"
-npm run typecheck && npm test
+# Escudo do @devops: espelho FIEL da CI antes de o código sair da máquina.
+# Roda a mesma sequência de gates do pipeline (esteira, lint, typecheck, arquitetura, migrations,
+# cobertura e — se o projeto tiver — build e e2e). Se passar aqui, o pipeline deve passar.
+# Emergência real: `git push --no-verify` (registre o porquê; o CI ainda vai cobrar).
+echo "▶ pre-push: ci:local (espelho da CI)"
+npm run ci:local

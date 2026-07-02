@@ -15,6 +15,7 @@ const IGNORE_DIRS = new Set([
 ]);
 const NO_FRONTMATTER_OK = new Set([
   "README.md", "CHANGELOG.md", "Definition-of-Done.md", "pull_request_template.md",
+  "MEMORY.md", // índice do sistema de memória do Claude Code — não é doc SDD
 ]);
 // Views derivadas geradas por outras ferramentas (não a fonte canônica).
 const isGenerated = (f) => {
@@ -53,6 +54,10 @@ const isSkillDialect = (f) =>
   f.replace(/\\/g, "/").includes("/.claude/skills/") ||
   /(?:^|\/)(skill|subagent)\.template\.md$/.test(f.replace(/\\/g, "/"));
 
+// Sistema de memória do Claude Code: outro dialeto (frontmatter name/description/metadata, SEM
+// alwaysApply). Não é doc SDD — o audit não deve exigir o schema da esteira nele.
+const isMemoryDialect = (f) => f.replace(/\\/g, "/").includes("/.claude/memory/");
+
 const files = walk(ROOT).filter((f) => !isGenerated(f));
 
 // 1) Frontmatter + dialeto
@@ -63,7 +68,9 @@ for (const f of files) {
   if (!fm) { err(f, "sem frontmatter"); continue; }
   if (!fm.name) err(f, "frontmatter sem `name`");
   if (!fm.description) err(f, "frontmatter sem `description`");
-  if (isSkillDialect(f)) {
+  if (isMemoryDialect(f)) {
+    // memória: só exige name/description (já checados). alwaysApply não se aplica.
+  } else if (isSkillDialect(f)) {
     if ("alwaysApply" in fm) err(f, "dialeto skill não deve ter `alwaysApply`");
   } else {
     if (!("alwaysApply" in fm)) err(f, "doc sem `alwaysApply`");

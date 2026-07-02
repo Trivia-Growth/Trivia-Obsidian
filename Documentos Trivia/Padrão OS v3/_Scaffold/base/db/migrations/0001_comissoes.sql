@@ -16,6 +16,10 @@ create index if not exists comissoes_venda_id_idx on public.comissoes (venda_id)
 -- RLS: sem policy = sem acesso. Baseline mínimo exige RLS habilitada em toda tabela.
 alter table public.comissoes enable row level security;
 
+-- GRANT obrigatório: RLS só é avaliada DEPOIS do privilégio de tabela. Sem isto, o role
+-- authenticated é negado antes da policy rodar — a tabela fica inacessível (ver db/rls.template.sql).
+grant select, insert on public.comissoes to authenticated;
+
 -- Leitura: usuários autenticados com papel financeiro/ceo.
 create policy "comissoes_select" on public.comissoes
   for select to authenticated

@@ -1,0 +1,20 @@
+# Config do gitleaks (secret scanning) — gate BLOQUEANTE na CI e no ci:local.
+# Herda o conjunto de regras padrão do gitleaks e só acrescenta uma allowlist mínima.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Falsos positivos conhecidos — mantenha ESTRITO (todo item aqui é um segredo que o scanner deixa de checar)."
+# O framework Triviaiox é vendorizado dentro do projeto e traz exemplos de credencial (ex.:
+# sk-live-... em checklists de exemplo) que NÃO são segredos reais. Ignorar só esse diretório —
+# nunca o código do projeto. Se você não vendoriza o Triviaiox, remova estas linhas.
+paths = [
+  '''\.triviaiox-core/''',
+  '''\.triviaiox/''',
+]
+# Exemplos/placeholders reconhecíveis em docs e .env.example (não são segredos vivos).
+regexes = [
+  '''EXAMPLE''',
+  '''your[-_]?(api[-_]?)?key[-_]?here''',
+  '''VITE_SUPABASE_ANON_KEY''',  # chave pública por design (anon), pode aparecer em .env.example
+]

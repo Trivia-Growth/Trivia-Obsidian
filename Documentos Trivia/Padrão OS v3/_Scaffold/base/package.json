@@ -19,7 +19,8 @@
     "eval:spec": "node scripts/eval-spec-fidelity.mjs",
     "audit:deps": "npm audit --omit=dev --audit-level=high",
     "arch:check": "depcruise src --config .dependency-cruiser.cjs",
-    "lint:migrations": "node scripts/lint-migrations.mjs"
+    "lint:migrations": "node scripts/lint-migrations.mjs",
+    "ci:local": "node scripts/ci-local.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

@@ -44,6 +44,12 @@ create index if not exists idx_contacts_ws_created   on crm.contacts (workspace_
 alter table crm.contacts enable row level security;
 alter table crm.contacts force row level security;
 
+-- GRANT obrigatório (schema de domínio): sem USAGE no schema, o role nem enxerga a tabela; sem
+-- GRANT na tabela, o privilégio nega antes da RLS rodar. A RLS é que filtra as linhas — o GRANT
+-- só abre a porta (ver db/rls.template.sql). Schema de domínio precisa dos DOIS.
+grant usage on schema crm to authenticated;
+grant select, insert, update, delete on crm.contacts to authenticated;
+
 create policy "contacts: select do próprio workspace" on crm.contacts
   for select using (
     workspace_id in (select workspace_id from crm.workspace_members where user_id = auth.uid())
@@ -68,6 +74,12 @@ create table if not exists audit.events (
 
 alter table audit.events enable row level security;
 alter table audit.events force row level security;
+
+-- Append-only reforçado no nível de PRIVILÉGIO (não só na policy): concede insert+select, nunca
+-- update/delete — o role authenticated fica sem o privilégio de mutar, além das policies de deny.
+-- Defense-in-depth: a imutabilidade não depende só da RLS.
+grant usage on schema audit to authenticated;
+grant select, insert on audit.events to authenticated;
 
 -- Append-only: ninguém atualiza ou apaga, nem service_role.
 create policy "audit: deny update" on audit.events for update using (false);
