@@ -16,8 +16,14 @@ _Scaffold/
 ```
 
 ## Iniciar um projeto single-repo
-1. Copie `_Scaffold/base/` para a raiz do repositório novo.
-2. `npm install`.
+1. Copie `_Scaffold/base/` para a raiz do repositório novo — **com os dotfiles**:
+   `cp -R "_Scaffold/base/." <repo-novo>/` (o ponto final importa; `base/*` perde `.github/`,
+   `.husky/` e `.gitignore`, e aí **a CI nunca roda na PR**). Confirme:
+   `ls <repo-novo>/.github/workflows/` deve mostrar `ci.yml` e `deploy.yml`.
+2. `npm install` (o `package-lock.json` já vem no scaffold — commite-o; o `npm ci` da CI depende dele).
+2b. **CD (deploy via GitHub):** configure os secrets `SUPABASE_ACCESS_TOKEN`,
+   `SUPABASE_PROJECT_ID` e `SUPABASE_DB_PASSWORD` nos environments `production` (e `staging`,
+   se usar) — instruções no topo de `.github/workflows/deploy.yml` e em `docs/ENVIRONMENTS.md`.
 3. Preencha `docs/PROJECT.md` (perfil = single-repo) e `docs/glossary.md`.
 4. Confira os gates: `npm test`, `npm run typecheck`, `npm run eval:spec`, `npm run audit:esteira`.
 5. Kickoff: skill `/iniciar-projeto` (ou a frase "seguindo o padrão, vamos iniciar o projeto…").

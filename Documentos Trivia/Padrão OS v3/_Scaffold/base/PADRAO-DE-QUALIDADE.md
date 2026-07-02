@@ -28,6 +28,7 @@ alwaysApply: false
 | 5 | Sem `SPEC_DEVIATION` pendente | ☑️ DoD | `Definition-of-Done.md` | ambos | @dev |
 | 6 | Decisão difícil de reverter vira ADR | ☑️ DoD / 📖 | `docs/adr/`, `ANTI-PADROES.md` | ambos | @architect |
 | 7 | Runbook para incidente recorrente | 📖 Guia | `runbooks/` | ambos | @reliability |
+| 7a | Deploy (migrations + Edge Functions) pela esteira, não manual | 🟢 Gate CI | `.github/workflows/deploy.yml` | ambos | @devops |
 | **Código / Arquitetura** |
 | 8 | Lint + format limpos | 🟢 Gate CI + 🪝 | `npm run lint` (Biome) | ambos | @dev |
 | 9 | TypeScript strict sem erro | 🟢 Gate CI + 🪝 | `npm run typecheck` | ambos | @dev |

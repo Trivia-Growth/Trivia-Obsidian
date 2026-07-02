@@ -42,10 +42,16 @@ O `pre-push` é o **escudo de `@devops`**: garante que typecheck e testes passam
 antes do push acionar o CI e o deploy Supabase. Husky v9 detecta `CI=true` e pula a
 instalação dos hooks no GitHub Actions automaticamente.
 
-## Deploy (Supabase)
-- Migrations: `supabase db push` (rollback = nova migration, nunca editar a antiga).
-- Edge Functions: `supabase functions deploy`; secrets via `supabase secrets set` (refresh tokens
-  no Vault). CORS fixo no domínio de produção.
+## Deploy (Supabase) — via GitHub, não manual
+O caminho canônico é o **CD** (`.github/workflows/deploy.yml`): merge em `develop` deploya
+staging, merge em `main` deploya produção — migrations (`supabase db push`) e Edge Functions
+(`supabase functions deploy`) rodam **na esteira**, com os secrets nos environments do GitHub.
+Como a branch protection só deixa mergear com CI verde, todo deploy já passou pelos gates.
+- **Manual pela CLI = só emergência**, seguindo `runbooks/rollback-deploy.md` (e registrando).
+- Rollback de migration = **nova** migration com o reverso (nunca editar a antiga); Edge Function
+  = `git revert` + novo deploy pela esteira.
+- Secrets de runtime via `supabase secrets set` (refresh tokens no Vault). CORS fixo no domínio
+  de produção. Secrets do CD: ver `docs/ENVIRONMENTS.md`.
 
 ## Runbooks e observabilidade
 - **Runbooks** (cenário → sintomas → procedimento → validação → rollback) para incidentes

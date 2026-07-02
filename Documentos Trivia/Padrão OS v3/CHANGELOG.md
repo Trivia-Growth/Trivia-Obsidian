@@ -4,6 +4,32 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.1.0 — 2026-07-02
+Correções vindas do **primeiro uso real** do padrão (feedback do Lucas): a CI não rodava na PR e
+o deploy de banco/Edge Functions não existia como esteira — era comando manual documentado em prosa.
+
+**Corrigido (CI que não rodava na PR — três causas somadas)**
+- **`package-lock.json` agora vem no scaffold** (gerado com `--package-lock-only`): o `npm ci` e o
+  `cache: npm` da CI **falham sem lockfile**, e o scaffold não trazia um — todo projeto novo nascia
+  com a CI quebrada no primeiro passo.
+- **gitleaks via CLI em vez da action**: a `gitleaks-action@v2` exige `GITLEAKS_LICENSE` em repos
+  de organização (caso da Trivia-Growth) e falhava. A CLI é MIT/grátis — sem secret nenhum.
+- **Instrução de cópia com dotfiles** (`cp -R "base/." destino/`) no `07` e no README do scaffold:
+  copiar `base/*` perde `.github/`, `.husky/` e `.gitignore` em silêncio — a causa mais comum de
+  "a CI nem aparece na PR". Com passo de verificação (`ls .github/workflows/`).
+
+**Adicionado**
+- **CD via GitHub** (`.github/workflows/deploy.yml`): merge em `develop` deploya staging, merge em
+  `main` deploya produção — `supabase db push` (migrations) + `supabase functions deploy` (Edge
+  Functions) na esteira, com secrets por environment do GitHub (`SUPABASE_ACCESS_TOKEN`,
+  `SUPABASE_PROJECT_ID`, `SUPABASE_DB_PASSWORD` — tabela em `docs/ENVIRONMENTS.md`). Deploy manual
+  pela CLI vira exceção de emergência (runbook), não fluxo. Motivo: branch protection + CI verde já
+  garantem que só código validado chega ao merge — o deploy tinha que ser consequência do merge,
+  não um comando que alguém lembra de rodar. Matriz de qualidade ganha o item 7a (dono: @devops).
+- `06 - Operações` reescrito na seção Deploy; `07` e `ENVIRONMENTS.md` com setup dos secrets.
+
+**Triviaiox:** nenhuma mudança nesta rodada.
+
 ## v3.0.0 — 2026-07-01
 Auditoria profunda + correção (Fable 5) com **simulação do kickoff real** como critério de aceite:
 *"seguindo o padrão vamos iniciar o projeto com essas especificações; peça para os agentes do

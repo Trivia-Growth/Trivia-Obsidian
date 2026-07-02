@@ -35,7 +35,18 @@ supabase secrets list                # sem mostrar valores
 ```
 Rotacione ao suspeitar de vazamento; registre rotação. Refresh token de OAuth no Vault (perfil OS).
 
+## Secrets do CD (GitHub → Settings → Environments)
+O `deploy.yml` deploya migrations + Edge Functions no merge. Crie os environments `production`
+(branch `main`) e, se usar staging, `staging` (branch `develop`); em **cada um**, configure:
+| Secret | O que é | Onde obter |
+|---|---|---|
+| `SUPABASE_ACCESS_TOKEN` | token de acesso da conta/org | supabase.com/dashboard/account/tokens |
+| `SUPABASE_PROJECT_ID` | ref do projeto daquele ambiente | URL/settings do projeto Supabase |
+| `SUPABASE_DB_PASSWORD` | senha do banco (para `db push`) | definida na criação do projeto |
+
 ## Promoção dev → staging → prod
-1. Merge para `develop` → CI verde → deploy de staging → smoke test.
-2. Merge `develop` → `main` (PR, 1 aprovação) → CI verde → deploy de produção (`@devops`).
-3. Smoke test pós-deploy; se falhar, `runbooks/rollback-deploy.md`.
+1. Merge para `develop` → CI verde → **CD deploya staging automaticamente** → smoke test.
+2. Merge `develop` → `main` (PR, 1 aprovação) → CI verde → **CD deploya produção** (autoridade:
+   `@devops`, que faz o merge).
+3. Smoke test pós-deploy; se falhar, `runbooks/rollback-deploy.md`. Deploy manual pela CLI é
+   exceção de emergência, nunca o fluxo normal.
