@@ -115,6 +115,7 @@ desde: 2026-06-24
 > [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
 
 **Fila de execução (produção):**
+- [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5) instalado, CLAUDE.md com invariantes de domínio. Local: `~/Documents/Obsidian/Github/Move Gourmet`
 - [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub)
 - [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
 - [ ] Mapear a etapa de faturamento no Kanban da Omie (vistos "60"/"70", não "50")
