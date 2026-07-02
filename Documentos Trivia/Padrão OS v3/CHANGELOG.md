@@ -4,6 +4,21 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.3.1 — 2026-07-02
+Revisão de especialista de ponta a ponta (varredura de consistência após as muitas rodadas
+v3.0→v3.3). Correções de coerência — nada estrutural, só o que ficou desalinhado entre edições:
+- **`base/CLAUDE.md` dizia "Padrão OS v2"** (a fonte da verdade que o agente lê em runtime!) → v3.
+- **os-layer inconsistente com a base:** `engines.node` era `>=20` (base já `>=22`, e o próprio CI
+  do os-layer roda 22) → alinhado; e o CI do os-layer ainda usava `gitleaks-action` (a que exige
+  GITLEAKS_LICENSE e falha calada), enquanto a base já tinha migrado para o gitleaks CLI → migrado
+  também. Sem isso, projeto OS repetiria o bug de secret-scan que a base já tinha resolvido.
+- **Cabeçalho/menções stale de Husky** em `06`, `08` e no README do scaffold (a seção já descrevia
+  Lefthook, mas o título/legenda diziam Husky) → corrigidos.
+- **Versão do squad `trivia-os`** alinhada a 3.3.0 (acompanha o padrão; mudou nesta sessão).
+- Verificado: package.json ↔ package-lock coerentes; todos os scripts/gates apontam para arquivo
+  existente; `.dependency-cruiser` bate com as 4 camadas de `src/`; links markdown do vault sem
+  quebra; gates node-only todos verdes.
+
 ## v3.3.0 — 2026-07-02
 Troca de **infra caseira por ferramentas opensource consagradas** — o `ci-local.mjs` era um
 task-runner reinventado e parte do `lint-migrations.mjs` reinventava um SQL linter. A pergunta

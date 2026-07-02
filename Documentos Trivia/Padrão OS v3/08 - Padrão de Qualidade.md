@@ -15,7 +15,7 @@ scaffold: cada barra de qualidade tem o seu **enforcement**, perfil e dono. Prin
 
 ## Os quatro tipos de enforcement
 - 🟢 **Gate CI** — falha o build automaticamente (bloqueante). É o nível mais forte.
-- 🪝 **Hook local** (Husky) — pega o problema antes do push/commit.
+- 🪝 **Hook local** (Lefthook) — pega o problema antes do commit/push (`lefthook.yml`).
 - ☑️ **Checklist DoD** — verificado no PR ([[05 - Qualidade e Segurança]]).
 - 📖 **Guia** — padrão documentado, aplicado e revisado por agente.
 

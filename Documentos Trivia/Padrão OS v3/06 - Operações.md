@@ -27,10 +27,10 @@ Pipeline em `.github/workflows/ci.yml`: auditoria da esteira → eval de fidelid
 migrations (proíbe DROP sem reverso). Nenhum merge para `main` sem CI verde.
 Ambientes e secrets por ambiente: `docs/ENVIRONMENTS.md`.
 
-## Git hooks (Husky)
+## Git hooks (Lefthook)
 
-Instalados automaticamente no `npm install` via `prepare`. Três hooks protegem a esteira
-localmente, antes do CI:
+Instalados automaticamente no `npm install` via `prepare` (`lefthook install`). Três hooks
+protegem a esteira localmente, antes do CI:
 
 | Hook | Quando roda | O que faz |
 |------|-------------|-----------|

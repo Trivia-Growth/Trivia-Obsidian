@@ -1,7 +1,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Squad: Trivia OS
 # Domain: Padrão OS da Trivia — esteira SDD sobre os agentes Triviaiox
-# Version: 3.0.0
+# Version: 3.3.0 (acompanha o Padrão OS)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Este squad NÃO redefine agentes nem toca no core do Triviaiox (.triviaiox-core/).
@@ -11,7 +11,7 @@
 squad:
   name: trivia-os
   display_name: "Trivia OS — Esteira SDD"
-  version: "3.0.0"
+  version: "3.3.0"
   domain: "Spec-Driven Development sobre os agentes Triviaiox"
   description: |
     Camada da Trivia que faz os agentes Triviaiox seguirem o Padrão OS:
@@ -19,7 +19,7 @@ squad:
     baseline de segurança por perfil e trilha de IA. Sem alterar o core do Triviaiox.
   keywords: [trivia, padrao-os, sdd, spec-driven, ddd, gates, supabase]
   created_at: "2026-06-22"
-  updated_at: "2026-07-01"
+  updated_at: "2026-07-02"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Artefato canônico × agente (espelha base/AGENTS.md — fonte da verdade)
