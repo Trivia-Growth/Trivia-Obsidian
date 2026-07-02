@@ -641,23 +641,29 @@ Persistir o estado em `order_sync.state`. Cada transição é um ponto de retry;
 
 ---
 
-## 13. Pontos a validar empiricamente (antes de codar)
+## 13. Pontos a validar empiricamente
 
-1. **Mapeamento inteiro↔label dos depósitos** `01`/`09` (o inteiro real de `codigo_local_estoque`).
-2. **`origem_pedido`** — confirmar que "API" serve e diferenciar canal pelo `codigo_pedido_integracao`
-   (não há "SFY" oficial).
-3. **Payload dos webhooks Omie** — capturar um POST real (RequestBin) e confirmar strings
+**✅ Já certificados via API (02/07):**
+- Inteiros dos depósitos (Salvador `3390627692`, SP `10009035408`).
+- `PosicaoEstoque` funciona e lê por depósito; `data` opcional; nomes de campo por método.
+- `origem_pedido="SFY"` é real (Hub usa); `codigo_local_estoque` fica em `det[].inf_adic`.
+- Prova de que o Hub crava Salvador em todos os itens; SP tem 19 SKUs com saldo.
+- Casamento de SKU é por `cCodigo` (`cCodInt` vazio).
+
+**Ainda a validar (não dava só por leitura de API):**
+1. **Etapa de faturamento real** — mapear o Kanban da conta (vistos "60"/"70"); qual coluna
+   dispara NF-e/baixa. **Não hard-codar "50".** (Só um teste de escrita em sandbox confirma.)
+2. **Payload dos webhooks Omie** — capturar um POST real (RequestBin) e confirmar strings
    exatos dos tópicos na tela do painel.
-4. **`saldo` vs `fisico − reservado`** — ver como a conta da Move reserva pedidos; escolher a
-   base a publicar.
-5. **Desligar a sync de estoque do Hub** — confirmar com suporte Omie se é escopável (só
+3. **`nSaldo` vs `fisico − reservado`** — ver como a conta reserva pedidos; escolher a base a
+   publicar (nos testes o `reservado` veio 0, mas confirmar em pedido aberto).
+4. **Desligar a sync de estoque do Hub** — confirmar com suporte Omie se é escopável (só
    estoque) ou se o Hub sai inteiro.
-6. **Auditoria de SKU** — quantos casam `codigo`(Omie)↔`sku`(Shopify); divergência é a causa
-   nº1 de falha silenciosa.
-7. **Order Routing nativo** — checar no admin real a estratégia do painel (decide entre
-   "deixar rotear" vs. "corrigir via move").
-8. **Faturamento** — validar em conta real que `TrocarEtapaPedido "50"` emite NF-e e baixa do
-   local certo, e o comportamento se o depósito não tiver saldo.
+5. **Auditoria de SKU Omie↔Shopify** — quantos `cCodigo` batem com `variant.sku` (precisa da
+   API do Shopify para cruzar).
+6. **Order Routing nativo do Shopify** — checar no admin a estratégia do painel.
+7. **Faturamento end-to-end** — validar em conta real que a troca de etapa emite NF-e e baixa
+   do local certo, e o comportamento se o depósito não tiver saldo (teste de escrita).
 
 ---
 

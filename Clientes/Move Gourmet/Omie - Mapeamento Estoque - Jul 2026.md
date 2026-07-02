@@ -149,11 +149,13 @@ PORÉM, pela API dos pedidos, a integração está **funcionando em segundo plan
    confirmação direta.
 2. **"Omie Move Gourmet" (ago/2025) é o legado morto** — chave `3c913c1e...01c` e token
    `...01ce` NÃO aparecem em nenhuma configuração do Hub. ✅ Seguro remover, confirmado.
-3. **Hub deduz estoque só do depósito PADRÃO (Fábrica Move / Salvador).** Todos os 100
-   pedidos Shopify vieram com `codigo_local_estoque: None` → cai no padrão. Ou seja, **o
-   Hub não usa a divisão por local ao processar pedidos.** (Atenção: o ERP em si TEM
-   divisão por local e SP tem saldo próprio — ver correção na seção "Estoque". O que não
-   acontece é o Hub aproveitar essa divisão.)
+3. **Hub deduz estoque só do depósito PADRÃO (Fábrica Move / Salvador).** ✅ **CERTIFICADO
+   VIA API (02/07):** os 100 pedidos Shopify (origem `SFY`, `codigo_pedido_integracao` `OH…`)
+   têm **todos os itens com `codigo_local_estoque = 3390627692` (Salvador)** — não é `None`
+   como se supôs antes; o Hub **crava Salvador explicitamente em todo item**. Nenhum vai pra
+   SP. Ou seja, **o Hub não usa a divisão por local.** (O ERP TEM a divisão e SP tem 19 SKUs
+   com saldo — o que falta é o Hub aproveitar isso. Detalhes técnicos e correções na spec
+   [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].)
 4. Configuração vista na tela "Editar Loja": ERP = Omie, Categoria ERP = "Venda de Produtos
    Fabricados", Tipo Movimentação Estoque = "2 - Envia a nota fiscal de venda para Omie e
    movimenta estoque", "Atualiza Cliente ERP" ativado. ✅ **VERIFICADO 01/07: não existe
