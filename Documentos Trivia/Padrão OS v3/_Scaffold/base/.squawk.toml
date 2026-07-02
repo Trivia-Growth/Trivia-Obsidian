@@ -1,0 +1,19 @@
+# Squawk — linter de migrations PostgreSQL (segurança: locks, breaking change, downtime).
+# https://squawkhq.com/docs/rules   Instale: `npm i -D squawk-cli` (ou brew/binário).
+# Roda no pre-push (via lint-migrations.mjs, best-effort) e BLOQUEIA na CI (squawk-action).
+#
+# Squawk cobre SEGURANÇA de migration. A correção SEMÂNTICA de RLS (CREATE POLICY exige GRANT)
+# NÃO é coberta por ele — fica no check custom em scripts/lint-migrations.mjs.
+
+# Onde estão as migrations (o CLI também aceita caminho por argumento).
+[default]
+# Regras opt-in úteis para o perfil da Trivia (mutação segura sob carga):
+# - require-concurrent-index-creation: CREATE INDEX sem CONCURRENTLY trava escrita.
+# - constraint-missing-not-valid: ADD CONSTRAINT sem NOT VALID valida a tabela inteira (lock).
+# - prefer-robust-stmts: statements idempotentes/robustos.
+# Ative/exclua conforme a dor real; comece permissivo e aperte.
+
+# Exemplos de exclusão (descomente se um alerta for ruído consciente no seu contexto):
+# excluded_rules = ["prefer-text-field"]
+
+# Ignorar pontual dentro do SQL: `-- squawk-ignore <regra>` na linha acima do statement.

@@ -12,7 +12,7 @@ alwaysApply: false
 
 ## Legenda de enforcement
 - 🟢 **Gate CI** — falha o build automaticamente (bloqueante).
-- 🪝 **Hook local** — Husky, antes do push/commit.
+- 🪝 **Hook local** — Lefthook, antes do commit/push (`lefthook.yml`; paralelo).
 - ☑️ **Checklist DoD** — verificado no PR (`Definition-of-Done.md`).
 - 📖 **Guia** — padrão documentado, aplicado pelo agente/dev e revisado por agente.
 
@@ -34,7 +34,7 @@ alwaysApply: false
 | 9 | TypeScript strict sem erro | 🟢 Gate CI + 🪝 | `npm run typecheck` | ambos | @dev |
 | 10 | Cobertura ≥ threshold | 🟢 Gate CI | `npm run test:coverage` (`vitest.config.ts`) | ambos | @qa |
 | 11 | Dependência aponta só para dentro (DDD) | 🟢 Gate CI | `npm run arch:check` (`.dependency-cruiser.cjs`) | ambos | @architect |
-| 12 | Conventional commits | 🪝 Hook | `commit-msg` (commitlint) | ambos | @dev |
+| 12 | Conventional commits | 🪝 Hook | Lefthook `commit-msg` (commitlint) | ambos | @dev |
 | 13 | Sem over-engineering (YAGNI, tier certo) | 📖 Guia | `ANTI-PADROES.md` | ambos | @architect |
 | **Segurança** |
 | 14 | Sem segredo commitado | 🟢 Gate CI | gitleaks | ambos | @security |
@@ -43,6 +43,7 @@ alwaysApply: false
 | 17 | JWT validado; sem secret no client | ☑️ DoD / 📖 | `baseline-minimo.md` | ambos | @security |
 | 18 | RLS em toda tabela (+ FORCE no OS) | ☑️ DoD / 📖 | `db/rls.template.sql`, `db/rls-test.md` | ambos | @data-engineer |
 | 18a | CREATE POLICY tem GRANT (RLS roda após privilégio) | 🟢 Gate CI | `npm run lint:migrations` | ambos | @data-engineer |
+| 18b | Migration segura (sem lock/breaking-change perigoso) | 🟢 Gate CI | Squawk (`.squawk.toml`, squawk-action) | ambos | @data-engineer |
 | 19 | Threat model STRIDE (auth/PII/financeiro/integração) | 📖 Guia | `seguranca/threat-model.template.md` | quando aplicável | @security |
 | 20 | Dívida de segurança registrada (P0 bloqueia) | ☑️ DoD | `docs/SECURITY_DEBT.md` | ambos | @security |
 | 21 | OS-grade: audit append-only, Vault, HMAC webhook | 📖 Guia | `os-layer/seguranca/os-grade.md` | OS | @security |
@@ -76,12 +77,25 @@ alwaysApply: false
 
 ## Como rodar tudo localmente (espelho da CI)
 ```bash
-npm run ci:local   # mesma sequência da CI, fail-fast; roda também no pre-push
+npm run ci:local   # = `lefthook run pre-push`: a MESMA bateria do pipeline, em paralelo
 ```
-`ci:local` (`scripts/ci-local.mjs`) executa esteira → fidelidade → Mermaid → lint:migrations →
-lint → typecheck → arch:check → (build/e2e se houver) → testes+cobertura, e trata gitleaks como
-best-effort local (o gate bloqueante é o da CI). **Se `ci:local` passa, o pipeline deve passar** —
-essa é a garantia que evita "só quebrou na pipeline".
+`ci:local` é o **espelho da CI** definido em `lefthook.yml` (uma fonte só para hook e comando):
+esteira, fidelidade, Mermaid, migrations (Squawk + RLS-GRANT), lint (Biome, back+front), typecheck,
+arch:check, (build/e2e se houver) e testes+cobertura. Squawk e gitleaks são best-effort local
+(bloqueiam na CI). **Se `ci:local` passa, o pipeline deve passar** — a garantia que evita "só
+quebrou na pipeline".
+
+### Ferramentas (tudo opensource, nada caseiro além do essencial)
+| Papel | Ferramenta | Cobre |
+|---|---|---|
+| Orquestrador de gates | **Lefthook** | commit/push, paralelo — 1 arquivo (`lefthook.yml`) |
+| Lint + format (back+front) | **Biome** | JS/TS/JSX/TSX/JSON/CSS |
+| Tipos | **tsc** | TypeScript strict |
+| Arquitetura | **dependency-cruiser** | regra de dependência DDD |
+| Testes + cobertura | **Vitest** | AC, threshold |
+| Segurança de migration | **Squawk** | lock/breaking-change em Postgres |
+| Segredos | **gitleaks** | secret scanning |
+| RLS-GRANT (semântico) | `scripts/lint-migrations.mjs` | única regra sem tool pronto |
 
 > **Local não substitui o CI real.** Gate que precisa de Docker/banco (RLS/pgTAP, e2e) pode ser
 > pulado local. Antes de considerar pronto, confira `gh pr checks` (o CI de verdade rodou e está

@@ -69,6 +69,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      # DROP sem reverso + CREATE POLICY sem GRANT (ver scripts/lint-migrations.mjs).
-      - name: Lint de migrations
+      - name: Squawk (segurança de migration)
+        uses: sbdchd/squawk-action@v2
+        with:
+          pattern: |
+            db/migrations/*.sql
+            supabase/migrations/*.sql
+      # Convenções Trivia que o Squawk não cobre (RLS-GRANT semântico).
+      - name: Convenções de migration (RLS-GRANT)
         run: node scripts/lint-migrations.mjs

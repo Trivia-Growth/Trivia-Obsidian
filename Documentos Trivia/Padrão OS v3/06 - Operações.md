@@ -35,16 +35,18 @@ localmente, antes do CI:
 | Hook | Quando roda | O que faz |
 |------|-------------|-----------|
 | `pre-commit` | a cada `git commit` (`@dev`) | Biome nos arquivos staged (lint + format) — leve, roda sempre |
-| `commit-msg` | a cada `git commit` (`@dev`) | Bloqueia mensagem fora do Conventional Commits |
-| `pre-push` | a cada `git push` (`@devops`) | `npm run ci:local` — **espelho fiel da CI** (não só typecheck+test) |
+| `commit-msg` | a cada `git commit` (`@dev`) | Bloqueia mensagem fora do Conventional Commits (commitlint) |
+| `pre-push` | a cada `git push` (`@devops`) | `npm run ci:local` — **espelho fiel da CI** (bateria completa, paralelo) |
 
-O `pre-push` é o **escudo de `@devops`**: roda `ci:local` — a mesma sequência de gates do pipeline
-(esteira, lint de migrations, lint, typecheck, arquitetura, cobertura e, se houver, build/e2e), na
-mesma ordem e com o mesmo fail-fast. A ideia é que **nada que passe local quebre na pipeline** — a
-lição da primeira rodada real (10 bugs pegos só no CI). O peso fica no pre-push, não no pre-commit,
-de propósito: commit é frequente e cerimônia pesada ali atrapalha (`ANTI-PADROES.md`); push é o
-gatilho real do CI. Emergência: `git push --no-verify` (registre o porquê — o CI ainda cobra).
-Husky v9 detecta `CI=true` e pula a instalação dos hooks no GitHub Actions automaticamente.
+Orquestrador: **Lefthook** (`lefthook.yml`) — substitui husky + lint-staged por um arquivo só,
+rodando os comandos **em paralelo** (mais rápido). O `pre-push` é o **escudo de `@devops`**: roda
+`ci:local` (= `lefthook run pre-push`) — a mesma bateria do pipeline (esteira, Squawk + RLS-GRANT
+nas migrations, Biome, typecheck, arquitetura, cobertura e, se houver, build/e2e). Hook e comando
+manual são a MESMA definição, não duas listas que divergem. A ideia é que **nada que passe local
+quebre na pipeline** — a lição da 1ª rodada real (10 bugs pegos só no CI). O peso fica no pre-push,
+não no pre-commit, de propósito: commit é frequente e cerimônia pesada ali atrapalha
+(`ANTI-PADROES.md`); push é o gatilho real do CI. Emergência: `git push --no-verify` (registre o
+porquê — o CI ainda cobra). Lefthook não roda em `CI=true` (os hooks não se instalam no Actions).
 
 > **Local é ensaio, CI é prova.** Gate que precisa de Docker/banco (RLS/pgTAP, e2e) pode ser
 > pulado local — por isso o `/validar` (@qa) exige `gh pr checks` verde (CI real rodou de verdade),
