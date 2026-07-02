@@ -21,9 +21,10 @@ _Scaffold/
    `.husky/` e `.gitignore`, e aí **a CI nunca roda na PR**). Confirme:
    `ls <repo-novo>/.github/workflows/` deve mostrar `ci.yml` e `deploy.yml`.
 2. `npm install` (o `package-lock.json` já vem no scaffold — commite-o; o `npm ci` da CI depende dele).
-2b. **CD (deploy via GitHub):** configure os secrets `SUPABASE_ACCESS_TOKEN`,
-   `SUPABASE_PROJECT_ID` e `SUPABASE_DB_PASSWORD` nos environments `production` (e `staging`,
-   se usar) — instruções no topo de `.github/workflows/deploy.yml` e em `docs/ENVIRONMENTS.md`.
+2b. **CD (deploy via GitHub):** no projeto Supabase, Settings → Integrations → GitHub → conecte
+   o repo → ative "Deploy to production" (sem token nenhum — ver `docs/ENVIRONMENTS.md`).
+   Declare cada Edge Function/Storage bucket real em `supabase/config.toml` (a integração só
+   deploya o que estiver lá). `deploy.yml` é fallback só para monorepo multi-projeto.
 3. Preencha `docs/PROJECT.md` (perfil = single-repo) e `docs/glossary.md`.
 4. Confira os gates: `npm test`, `npm run typecheck`, `npm run eval:spec`, `npm run audit:esteira`.
 5. Kickoff: skill `/iniciar-projeto` (ou a frase "seguindo o padrão, vamos iniciar o projeto…").

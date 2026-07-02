@@ -4,6 +4,29 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.1.1 — 2026-07-02
+Ajuste vindo de mais um feedback do primeiro uso real (Lucas testou a GitHub Integration nativa
+do Supabase direto no dashboard — não era isso que o `deploy.yml` da v3.1.0 recomendava).
+
+**Corrigido — caminho de CD trocado de Action para integração nativa**
+- v3.1.0 tinha resolvido "deploy só é manual" com um `.github/workflows/deploy.yml` (Action +
+  `SUPABASE_ACCESS_TOKEN` em secret). Esse token é de **conta inteira** — não existe token nativo
+  do Supabase restrito a um projeto/org (limitação confirmada, sem solução no produto ainda:
+  github.com/supabase/supabase/issues/18584). Preocupação legítima do Lucas em não expor acesso
+  a todas as orgs num secret do GitHub.
+- O Supabase tem solução melhor e nativa para isto: **Dashboard do projeto → Settings →
+  Integrations → GitHub → "Deploy to production"**. A conexão nasce amarrada a um
+  projeto+repositório específico (sem token de conta), aplica migrations e — se declarados em
+  **`supabase/config.toml`** — Edge Functions e Storage buckets. Funciona no plano Free.
+- **`supabase/config.toml` criado no scaffold** (não existia): é ele que a integração lê para
+  saber quais funções/buckets deployar; sem ele a integração aplicaria só migrations em silêncio.
+- `deploy.yml` **rebaixado a fallback**, documentado para o caso real em que a integração nativa
+  não serve (monorepo com mais de um projeto Supabase no mesmo repo). Se usado, exige desligar
+  "Deploy to production" na integração (evita aplicar a mesma migration duas vezes) e gerar o
+  `SUPABASE_ACCESS_TOKEN` de uma **conta de automação** convidada só ao projeto/org da CI —
+  nunca da conta pessoal (procedimento documentado em `docs/ENVIRONMENTS.md`).
+- `06`, `07`, README do scaffold e matriz de qualidade (item 7a) atualizados para o novo caminho.
+
 ## v3.1.0 — 2026-07-02
 Correções vindas do **primeiro uso real** do padrão (feedback do Lucas): a CI não rodava na PR e
 o deploy de banco/Edge Functions não existia como esteira — era comando manual documentado em prosa.

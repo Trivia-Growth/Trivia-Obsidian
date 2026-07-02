@@ -1,9 +1,17 @@
-# CD — deploy de banco (migrations) e Edge Functions via GitHub, não manual.
-# Autoridade: @devops (o merge que dispara isto já passou pelo CI verde — branch protection).
-# Deploy manual pela CLI é só emergência, seguindo runbooks/rollback-deploy.md.
+# CD — FALLBACK. O caminho canônico é a GitHub Integration nativa do Supabase
+# (Dashboard do projeto → Settings → Integrations → GitHub → "Deploy to production"):
+# ela aplica migrations + Edge Functions/Storage declarados em supabase/config.toml no merge,
+# sem token de conta nenhum — o acesso nasce amarrado só àquele projeto/repo. Configure por lá
+# primeiro (ver docs/ENVIRONMENTS.md); ative este workflow SÓ se a integração nativa não servir
+# (ex.: monorepo com mais de um projeto Supabase por repo, ou automação que ela não cobre).
 #
-# Secrets necessários (Settings → Secrets and variables → Actions), por environment:
-#   SUPABASE_ACCESS_TOKEN  → token pessoal/da org (supabase.com/dashboard/account/tokens)
+# Se ativar este workflow, DESLIGUE "Deploy to production" na integração nativa — os dois juntos
+# tentam aplicar a mesma migration em paralelo.
+#
+# Secrets necessários (Settings → Secrets and variables → Actions), por environment — gere o
+# SUPABASE_ACCESS_TOKEN de uma conta-bot convidada só para este projeto/org, nunca da sua conta
+# pessoal (ver docs/ENVIRONMENTS.md §Conta de automação):
+#   SUPABASE_ACCESS_TOKEN  → PAT da conta-bot (supabase.com/dashboard/account/tokens)
 #   SUPABASE_PROJECT_ID    → ref do projeto (ex.: abcdefghijklmnop)
 #   SUPABASE_DB_PASSWORD   → senha do banco (necessária para `db push`)
 # Com staging: crie os environments "staging" e "production" no GitHub e configure os

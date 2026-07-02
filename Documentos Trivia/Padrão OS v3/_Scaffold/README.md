@@ -19,8 +19,10 @@ _Scaffold/
    não roda na PR).
 2. Preencha `docs/PROJECT.md` (perfil = single-repo) e `docs/glossary.md`.
 3. Instale deps (`npm install`; commite o `package-lock.json` que já vem no scaffold) e confira
-   os gates: `npm test`, `npm run eval:spec`, `npm run audit:esteira`. Para o **CD** (migrations
-   + Edge Functions no merge), configure os secrets do `deploy.yml` (ver `docs/ENVIRONMENTS.md`).
+   os gates: `npm test`, `npm run eval:spec`, `npm run audit:esteira`. Para o **CD**: ative a
+   GitHub Integration nativa do Supabase no projeto (Settings → Integrations → GitHub → "Deploy
+   to production") e declare as Edge Functions/Storage reais em `supabase/config.toml` — ver
+   `docs/ENVIRONMENTS.md`. Sem token de conta; `deploy.yml` é fallback só para monorepo.
 4. Instale o Triviaiox + squad (seção abaixo) — é o que dá vida aos agentes.
 5. Kickoff: skill `/iniciar-projeto` (ou a frase *"seguindo o padrão, vamos iniciar o projeto com
    essas especificações"*). Features seguintes: `/nova-feature`, espelhando

@@ -1,0 +1,28 @@
+# Declaração do projeto Supabase — lida pela CLI e pela GitHub Integration nativa
+# (Dashboard → Project Settings → Integrations → GitHub → "Deploy to production").
+# SEM esta declaração, a integração aplica migrations mas NÃO deploya Edge Functions/Storage —
+# ela só sabe o que existe lendo este arquivo, não escaneando supabase/functions/.
+
+project_id = "<preencher com o project ref — ver Settings → General>"
+
+[api]
+enabled = true
+port = 54321
+
+[db]
+port = 54322
+
+[studio]
+enabled = true
+port = 54323
+
+# Cada Edge Function real precisa de uma entrada aqui para a GitHub Integration deployá-la
+# no merge à branch de produção. Copie o bloco ao criar uma função a partir de
+# supabase/functions/_template/. verify_jwt=false só se a função valida o JWT ela mesma
+# (ver _shared/auth.ts) — nunca desligue a validação sem substituí-la.
+# [functions.nome-da-funcao]
+# verify_jwt = true
+
+# Storage buckets que devem ser criados/atualizados no deploy (se o projeto usar Storage):
+# [storage.buckets.nome-do-bucket]
+# public = false

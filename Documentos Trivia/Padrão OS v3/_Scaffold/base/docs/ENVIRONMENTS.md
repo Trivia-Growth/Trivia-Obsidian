@@ -35,18 +35,47 @@ supabase secrets list                # sem mostrar valores
 ```
 Rotacione ao suspeitar de vazamento; registre rotação. Refresh token de OAuth no Vault (perfil OS).
 
-## Secrets do CD (GitHub → Settings → Environments)
-O `deploy.yml` deploya migrations + Edge Functions no merge. Crie os environments `production`
-(branch `main`) e, se usar staging, `staging` (branch `develop`); em **cada um**, configure:
+## CD (banco + Edge Functions) — caminho canônico: GitHub Integration nativa
+No **próprio projeto Supabase**: Settings → Integrations → GitHub → conecte o repositório →
+ative **"Deploy to production"**. A partir daí, todo merge na `production branch` configurada
+(`main`) aplica automaticamente:
+- **Migrations** de `supabase/migrations/`;
+- **Edge Functions** e **Storage buckets** — mas **só os que estiverem declarados em
+  `supabase/config.toml`** (`[functions.<nome>]` / `[storage.buckets.<nome>]`); a integração lê o
+  `config.toml`, não escaneia `supabase/functions/`. Toda função nova precisa da entrada lá.
+
+**Por que este é o caminho certo (não o Action com token):** o acesso nasce amarrado *àquele
+projeto e àquele repositório* no momento em que você conecta — nenhum Personal Access Token de
+conta (que carregaria acesso à sua conta inteira) precisa existir como secret do GitHub. Funciona
+no plano Free; *branching* (banco de preview por PR) é que exige Pro+.
+
+- **Staging:** conecte a integração de novo a partir do **projeto Supabase de staging**, com
+  `production branch = develop`. Cada projeto Supabase tem sua própria conexão/branch.
+- **Confira antes de confiar:** um "required check" da integração no PR falha o merge se a
+  migration for inválida — ative-o na proteção da branch.
+
+## Fallback: CD via Action (`deploy.yml`) — só se a integração nativa não servir
+Casos reais: monorepo com **mais de um projeto Supabase no mesmo repo** (a integração nativa é
+1 projeto ↔ 1 repo/pasta), ou passo de deploy que a integração não cobre. Se usar, **desligue**
+"Deploy to production" na integração para não aplicar a mesma migration duas vezes, e gere o
+`SUPABASE_ACCESS_TOKEN` de uma **conta de automação**, nunca da sua conta pessoal:
+
+### Conta de automação (para o token do fallback)
+Um PAT do Supabase carrega os privilégios da conta inteira — não existe token nativo restrito a
+um projeto. Para isolar: crie uma conta Supabase separada (ex.: `ci@seudominio` ou um alias seu),
+convide-a como membro **apenas** da organização/projeto que a CI precisa tocar (Team/Enterprise:
+dá para restringir por *project-scoped role*, sem ver os outros projetos da org), e gere o PAT
+**a partir dessa conta**. É essa conta-bot que vai no secret — nunca a sua conta principal.
+
 | Secret | O que é | Onde obter |
 |---|---|---|
-| `SUPABASE_ACCESS_TOKEN` | token de acesso da conta/org | supabase.com/dashboard/account/tokens |
+| `SUPABASE_ACCESS_TOKEN` | PAT da conta de automação (não da sua conta pessoal) | supabase.com/dashboard/account/tokens, logado como a conta-bot |
 | `SUPABASE_PROJECT_ID` | ref do projeto daquele ambiente | URL/settings do projeto Supabase |
 | `SUPABASE_DB_PASSWORD` | senha do banco (para `db push`) | definida na criação do projeto |
 
 ## Promoção dev → staging → prod
-1. Merge para `develop` → CI verde → **CD deploya staging automaticamente** → smoke test.
-2. Merge `develop` → `main` (PR, 1 aprovação) → CI verde → **CD deploya produção** (autoridade:
-   `@devops`, que faz o merge).
+1. Merge para `develop` → CI verde → **integração/CD deploya staging automaticamente** → smoke test.
+2. Merge `develop` → `main` (PR, 1 aprovação) → CI verde → **integração/CD deploya produção**
+   (autoridade: `@devops`, que faz o merge).
 3. Smoke test pós-deploy; se falhar, `runbooks/rollback-deploy.md`. Deploy manual pela CLI é
    exceção de emergência, nunca o fluxo normal.

@@ -43,15 +43,17 @@ antes do push acionar o CI e o deploy Supabase. Husky v9 detecta `CI=true` e pul
 instalação dos hooks no GitHub Actions automaticamente.
 
 ## Deploy (Supabase) — via GitHub, não manual
-O caminho canônico é o **CD** (`.github/workflows/deploy.yml`): merge em `develop` deploya
-staging, merge em `main` deploya produção — migrations (`supabase db push`) e Edge Functions
-(`supabase functions deploy`) rodam **na esteira**, com os secrets nos environments do GitHub.
+Caminho canônico: **GitHub Integration nativa do Supabase** (Dashboard do projeto → Settings →
+Integrations → GitHub → "Deploy to production"). Merge na branch de produção aplica migrations +
+Edge Functions/Storage **declarados em `supabase/config.toml`** — sem token de conta no GitHub,
+porque a conexão nasce amarrada a um projeto e um repositório específicos. Detalhe e fallback
+(`deploy.yml` via Action, só para monorepo com múltiplos projetos Supabase): `docs/ENVIRONMENTS.md`.
 Como a branch protection só deixa mergear com CI verde, todo deploy já passou pelos gates.
 - **Manual pela CLI = só emergência**, seguindo `runbooks/rollback-deploy.md` (e registrando).
 - Rollback de migration = **nova** migration com o reverso (nunca editar a antiga); Edge Function
   = `git revert` + novo deploy pela esteira.
 - Secrets de runtime via `supabase secrets set` (refresh tokens no Vault). CORS fixo no domínio
-  de produção. Secrets do CD: ver `docs/ENVIRONMENTS.md`.
+  de produção.
 
 ## Runbooks e observabilidade
 - **Runbooks** (cenário → sintomas → procedimento → validação → rollback) para incidentes
