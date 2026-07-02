@@ -26,6 +26,7 @@ alwaysApply: false
 | 3 | Cada `AC` tem teste de aceite verde | 🟢 Gate CI | `npm test` / `test:coverage` | ambos | @qa |
 | 4 | Diagramas Mermaid válidos | 🟢 Gate CI | `validate-mermaid.mjs` | ambos | @architect |
 | 5 | Sem `SPEC_DEVIATION` pendente | ☑️ DoD | `Definition-of-Done.md` | ambos | @dev |
+| 5a | Revisão adversarial antes do PASS (tenta quebrar, não confirma) | ☑️ DoD / 📖 | `.claude/skills/revisao-adversarial` | ambos | @qa + @security |
 | 6 | Decisão difícil de reverter vira ADR | ☑️ DoD / 📖 | `docs/adr/`, `ANTI-PADROES.md` | ambos | @architect |
 | 7 | Runbook para incidente recorrente | 📖 Guia | `runbooks/` | ambos | @reliability |
 | 7a | Deploy (migrations + Edge Functions) pela esteira, não manual | 🟢/📖* | GitHub Integration nativa do Supabase (fallback: `.github/workflows/deploy.yml`) | ambos | @devops |

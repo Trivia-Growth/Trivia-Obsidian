@@ -26,6 +26,16 @@ atualizado: 2026-07-01
 Tudo roda na CI (`.github/workflows/ci.yml`). A skill `/validar` (@qa) emite **PASS/CONCERNS/FAIL**.
 A matriz completa (o que é gate × hook × checklist × guia) está em [[08 - Padrão de Qualidade]].
 
+## Revisão adversarial (obrigatória antes do PASS)
+**Gate verde prova que o caminho feliz funciona — não que a feature está correta.** Antes de dar
+PASS, `@qa` (+ `@security` na superfície de ataque) roda a `/revisao-adversarial`: em vez de
+confirmar, **assume que está quebrado e tenta prová-lo** — valores de borda, erro/falha parcial,
+concorrência e idempotência, buraco/ambiguidade na spec, integridade e autorização de dado (RLS),
+abuso. É a passada que "sempre acha erro" porque a revisão confirmatória tem viés de confirmação
+(você lê esperando que funcione). Achado reproduzido vira **teste de regressão** e volta ao `@dev`
+(veredito **FAIL**); não é opinião — ou reproduz, ou descarta com motivo. Complementa (não
+substitui) o self-critique do `@dev`, que é o autor se revisando — aqui é um olhar **independente**.
+
 ## Segurança por perfil (sem over-engineering)
 - **Baseline mínimo (todo projeto):** sem secret no client, input validado (Zod), JWT validado,
   RLS em toda tabela, CORS restrito. → `seguranca/baseline-minimo.md`.

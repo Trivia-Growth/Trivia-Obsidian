@@ -123,6 +123,11 @@ por inspeção), análise estática limpa, sem `SPEC_DEVIATION` pendente, ADRs r
 e `docs/STATE.md` atualizados. A **visão completa do que é garantido e como** (gate CI / hook /
 checklist / guia) está em `PADRAO-DE-QUALIDADE.md`.
 
+> **Gate verde não é "correto", é "o caminho feliz funciona".** Antes de dar PASS, faça a
+> **revisão adversarial** (`/revisao-adversarial`): assuma que a feature está quebrada e tente
+> prová-lo (borda, erro parcial, concorrência, buraco na spec, abuso). É a passada que pega o que
+> o checklist confirmatório não vê — achado reproduzido vira teste e volta ao `@dev`.
+
 ## Mapa de documentos sob demanda (puxe pelo `description`, não tudo de uma vez)
 - **Qualidade:** `PADRAO-DE-QUALIDADE.md` (matriz), `testes/README.md`, `performance/README.md`.
 - **Arquitetura/código:** exemplo de I/O em `specs/0002-registro-comissao/` (porta→adapter→

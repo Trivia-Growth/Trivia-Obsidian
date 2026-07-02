@@ -4,6 +4,31 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.4.0 — 2026-07-02
+Adicionada a **revisão adversarial** ao fluxo de validação — prática que o JG (João) aplica na mão
+("sempre acho erro quando peço") e que **não existia como passo** no padrão. A revisão do padrão era
+100% confirmatória (checklist "tem teste? gate verde?"), que sofre de viés de confirmação; a
+adversarial inverte a postura: **assume que a feature está quebrada e tenta prová-lo**.
+
+**Adicionado**
+- **Skill `/revisao-adversarial`** (`@qa` + `@security`): passada obrigatória ANTES do PASS. Para
+  cada `AC`, gera hipóteses de falha concretas e tenta reproduzi-las — valores de borda, erro/falha
+  parcial, concorrência/idempotência, buraco na spec, integridade+autorização (RLS), abuso,
+  suposições implícitas. Saída falsificável (reproduz = achado vira teste e FAIL; não reproduz =
+  descarta com motivo), não opinião. Pode rodar como **subagente** (contexto isolado = menos viés).
+- Amarrada no fluxo: `/validar` (passo 7, obrigatório antes do PASS), `/revisar-pr` (checklist),
+  `Definition-of-Done`, matriz de qualidade (item 5a), `AGENTS.md` (fluxo + mapa de skills),
+  `CLAUDE.md`, `config.yaml` do squad (skill_routing) e docs humanos `02`/`05`.
+
+**Diagnóstico (o que já existia e por que não bastava)**
+- Triviaiox **tem o DNA**, mas escopado: `@security` (Cipher) "pensa como atacante / red team" e
+  `@qa` (Quinn) tem "adversarial thinking" **só para stories que tocam LLM** (injection/jailbreak).
+- Havia `self-critique-checklist` (autor revisando o próprio código — mesmos pontos cegos) e
+  `spec-critique` (crítica da spec, não da implementação). Faltava a passada **independente** de
+  correção geral sobre a feature pronta. A skill nova a orquestra sobre @qa+@security.
+- Distinção registrada: self-critique = autor, antes da revisão; revisão adversarial = olhar
+  independente, no gate. As duas, não uma.
+
 ## v3.3.1 — 2026-07-02
 Revisão de especialista de ponta a ponta (varredura de consistência após as muitas rodadas
 v3.0→v3.3). Correções de coerência — nada estrutural, só o que ficou desalinhado entre edições:

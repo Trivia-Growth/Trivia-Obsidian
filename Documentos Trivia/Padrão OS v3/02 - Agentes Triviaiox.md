@@ -33,10 +33,13 @@ O Padrão OS **não altera o core do Triviaiox**. Usa os mecanismos de extensão
 @architect   → domain/design/ADR (só no tier que exige)
 @sm          → tasks.md (AC → task → gate)
 @dev         → implementa task a task (1 commit/task, git local)
-@qa          → valida cada AC pelo gate (/validar) + security gate
+@qa          → valida cada AC pelo gate (/validar) + revisão adversarial (tenta quebrar)
 @devops      → ÚNICO com git push / PR / CI-CD
 ```
-Features de IA/LLM somam `@prompt-engineer` (ver [[05 - Qualidade e Segurança]]).
+Features de IA/LLM somam `@prompt-engineer` (ver [[05 - Qualidade e Segurança]]). A **revisão
+adversarial** (`/revisao-adversarial`, @qa + @security) é obrigatória antes do PASS — assume que a
+feature está quebrada e tenta prová-lo; é a passada que "sempre acha erro" que a revisão
+confirmatória não pega.
 
 ## Autoridade (preservada do Triviaiox — e aplicada por máquina)
 `@devops` é **exclusivo** em `git push`, `gh pr create/merge`, MCP e CI/CD. `@dev` faz git
@@ -46,5 +49,5 @@ do `@devops` — a regra não depende de o agente lembrar dela.
 
 ## Skills da esteira → agente
 `/iniciar-projeto`→@pm (kickoff) · `/clarificar`→@pm · `/nova-feature`→@sm+@dev · `/validar`→@qa ·
-`/revisar-pr`→@qa · `/auditar`→@architect · `/handoff`→qualquer.
+`/revisao-adversarial`→@qa+@security · `/revisar-pr`→@qa · `/auditar`→@architect · `/handoff`→qualquer.
 (As skills ficam em `_Scaffold/base/.claude/skills/`.)

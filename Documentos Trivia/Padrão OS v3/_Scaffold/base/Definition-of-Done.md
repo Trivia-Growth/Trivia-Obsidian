@@ -41,6 +41,9 @@ paralelo. Se passar local, o CI deve passar. Individualmente, para depurar:
 - [ ] `npm run ci:local` **verde** localmente (espelho da CI)
 - [ ] **CI real verde no PR:** `gh pr checks` sem vermelho e **sem check obrigatório pulado**
       (⚠️ gate que exige Docker/banco — RLS/pgTAP, e2e — não pode ter sido silenciosamente pulado)
+- [ ] **Revisão adversarial** (`/revisao-adversarial`) feita: tentou-se quebrar cada `AC` (borda,
+      erro parcial, concorrência, buraco na spec, abuso); achados reproduzidos viraram teste e foram
+      corrigidos. Gate verde prova o caminho feliz, não a correção.
 - [ ] Nenhum `SPEC_DEVIATION` pendente sem resolução
 - [ ] Decisões difíceis de reverter viraram **ADR** em `docs/adr/`
 - [ ] **Segurança:** sem secret no client; input validado (Zod); JWT validado; RLS na tabela.

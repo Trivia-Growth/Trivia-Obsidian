@@ -20,13 +20,18 @@ Valida a feature **pelos gates executáveis**, não por inspeção. **Dono:** `@
    - `gh run view --log-failed` no run do PR para ler o que quebrou, se houver.
    Uma story só é "pronta" quando o **pipeline** está verde — o local é o ensaio, o CI é a prova.
 3. Confira a `tasks.md`: toda task `done` tem gate que de fato passa.
-3. **Segurança:** rode o checklist do perfil (`seguranca/baseline-minimo.md`; em OS,
+4. **Segurança:** rode o checklist do perfil (`seguranca/baseline-minimo.md`; em OS,
    `os-grade.md`). Dívida aceita está em `docs/SECURITY_DEBT.md`?
-4. **Se feature de IA/LLM:** evals passam no limiar; caso adversarial sem falha (`ia/`).
-5. Cruze a saída com a `spec.md`: AC implementados batem com o contrato; nada de "fora de escopo".
+5. **Se feature de IA/LLM:** evals passam no limiar; caso adversarial sem falha (`ia/`).
+6. Cruze a saída com a `spec.md`: AC implementados batem com o contrato; nada de "fora de escopo".
+7. **Revisão adversarial (obrigatória antes do PASS):** gate verde prova que o caminho feliz
+   funciona — não que a feature está correta. Rode `/revisao-adversarial` (tente **quebrar** cada
+   `AC`: borda, erro parcial, concorrência, buraco na spec, abuso). Achado reproduzido → **FAIL**
+   (vira teste e volta ao `@dev`). É a passada que pega o que o checklist não vê.
 
 ## Resultado (gate)
-Emita um veredito: **PASS** (tudo verde, **incluindo o CI real do PR**) · **CONCERNS** (passa, mas
-com ressalva registrada) · **FAIL** (gate vermelho, OU um check obrigatório do CI não rodou de
-verdade — não segue para PR/merge). Em FAIL, liste o que falhou e devolva ao `@dev`.
+Emita um veredito: **PASS** (tudo verde, **incluindo o CI real do PR** e a **revisão adversarial
+sem achado reproduzível**) · **CONCERNS** (passa, mas com ressalva registrada) · **FAIL** (gate
+vermelho, check obrigatório do CI não rodou, OU a revisão adversarial reproduziu um bug — não segue
+para PR/merge). Em FAIL, liste o que falhou e devolva ao `@dev`.
 Lembrete: só `@devops` faz merge/push — e só com `gh pr checks` verde.

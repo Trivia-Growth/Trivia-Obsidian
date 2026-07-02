@@ -49,6 +49,7 @@ skill_routing:
   /clarificar:   "@pm"
   /nova-feature: ["@sm", "@dev"]
   /validar:      "@qa"
+  /revisao-adversarial: ["@qa", "@security"]   # tenta quebrar cada AC antes do PASS
   /revisar-pr:   "@qa"
   /auditar:      "@architect"
   /handoff:      any
