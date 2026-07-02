@@ -34,13 +34,21 @@ localmente, antes do CI:
 
 | Hook | Quando roda | O que faz |
 |------|-------------|-----------|
-| `pre-commit` | a cada `git commit` (`@dev`) | Biome nos arquivos staged (lint + format automático) |
+| `pre-commit` | a cada `git commit` (`@dev`) | Biome nos arquivos staged (lint + format) — leve, roda sempre |
 | `commit-msg` | a cada `git commit` (`@dev`) | Bloqueia mensagem fora do Conventional Commits |
-| `pre-push` | a cada `git push` (`@devops`) | `npm run typecheck && npm test` — gate pré-CI/deploy |
+| `pre-push` | a cada `git push` (`@devops`) | `npm run ci:local` — **espelho fiel da CI** (não só typecheck+test) |
 
-O `pre-push` é o **escudo de `@devops`**: garante que typecheck e testes passam localmente
-antes do push acionar o CI e o deploy Supabase. Husky v9 detecta `CI=true` e pula a
-instalação dos hooks no GitHub Actions automaticamente.
+O `pre-push` é o **escudo de `@devops`**: roda `ci:local` — a mesma sequência de gates do pipeline
+(esteira, lint de migrations, lint, typecheck, arquitetura, cobertura e, se houver, build/e2e), na
+mesma ordem e com o mesmo fail-fast. A ideia é que **nada que passe local quebre na pipeline** — a
+lição da primeira rodada real (10 bugs pegos só no CI). O peso fica no pre-push, não no pre-commit,
+de propósito: commit é frequente e cerimônia pesada ali atrapalha (`ANTI-PADROES.md`); push é o
+gatilho real do CI. Emergência: `git push --no-verify` (registre o porquê — o CI ainda cobra).
+Husky v9 detecta `CI=true` e pula a instalação dos hooks no GitHub Actions automaticamente.
+
+> **Local é ensaio, CI é prova.** Gate que precisa de Docker/banco (RLS/pgTAP, e2e) pode ser
+> pulado local — por isso o `/validar` (@qa) exige `gh pr checks` verde (CI real rodou de verdade),
+> não só o comando local. Uma story só é "pronta" com o pipeline verde.
 
 ## Deploy (Supabase) — via GitHub, não manual
 Caminho canônico: **GitHub Integration nativa do Supabase** (Dashboard do projeto → Settings →

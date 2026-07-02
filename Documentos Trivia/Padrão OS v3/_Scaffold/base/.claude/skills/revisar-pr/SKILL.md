@@ -11,7 +11,8 @@ do Biome).
 ## Checklist de review
 - [ ] PR linka a `spec.md` e lista os `AC` cobertos.
 - [ ] **Rastreabilidade:** cada `AC` entregue tem task em `tasks.md` e teste correspondente.
-- [ ] **Gates verdes** no CI (testes, typecheck, lint, `eval:spec`, `audit:esteira`).
+- [ ] **CI real verde** (`gh pr checks`): todos os checks passaram e **nenhum obrigatório foi
+      pulado** — gate que precisa de Docker/banco (RLS/pgTAP, e2e) rodou de verdade, não "skipped".
 - [ ] Nada **fora de escopo** da spec foi implementado.
 - [ ] Nenhum `SPEC_DEVIATION` pendente sem resolução (corrigir código OU atualizar spec+ADR).
 - [ ] Decisão difícil de reverter tem **ADR**.

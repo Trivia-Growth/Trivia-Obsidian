@@ -50,3 +50,12 @@ Quando houver fronteira de domínio real ([[03 - Perfis de Projeto]]):
 ## Manutenção do padrão
 - O padrão é versionado em [[CHANGELOG]]. Norma nova entra **no scaffold** (não só aqui).
 - Antes de release do padrão, rode `npm run audit:esteira` e `npm run eval:spec` no scaffold.
+- **Rode a CI de verdade antes de fechar versão** (lição da 1ª rodada real — 10 bugs que só a
+  pipeline pegou: incompatibilidade pnpm/Node, deps com vuln, config de tooling). Config de CI
+  escrita e "revisada no olho" não é config testada. Antes de marcar uma versão do padrão:
+  1. Gere um repo descartável a partir de `base/` (`cp -R "base/." /tmp/smoke && cd /tmp/smoke`),
+     `npm install`, `npm run ci:local` — precisa ficar **verde de ponta a ponta**.
+  2. Suba num GitHub de teste e confirme que **`ci.yml` e `deploy.yml` rodam** e passam no Actions
+     real (não só localmente) — inclusive os jobs `migrations` e os gates de segurança.
+  3. Só então marque a versão no CHANGELOG. Versão do padrão que nunca rodou num Actions real é
+     candidata a repetir os mesmos 10 bugs no primeiro projeto que a usar.

@@ -58,8 +58,38 @@ rollback;
 supabase test db   # roda os testes pgTAP em supabase/tests/
 ```
 
+## ⚠️ Pegadinha: `throws_ok` só serve para INSERT / WITH CHECK
+RLS bloqueia de **dois jeitos diferentes**, e o teste erra se não distinguir:
+- **INSERT** (e o `WITH CHECK` de UPDATE) → **lança erro** `42501 (insufficient_privilege)`.
+  Aqui `throws_ok(..., '42501', ...)` funciona.
+- **SELECT / UPDATE / DELETE** filtrados pelo `USING` → **NÃO lançam erro**: simplesmente afetam
+  **0 linhas** (a linha fica invisível para o papel). `throws_ok` aqui **falha o teste** esperando
+  um erro que nunca vem.
+
+Para SELECT/UPDATE/DELETE, teste por **efeito** (linhas afetadas / valor antes-depois), não por erro:
+```sql
+-- analista NÃO pode atualizar → o UPDATE não lança, apenas afeta 0 linhas
+set local request.jwt.claims = '{"sub":"u1","user_role":"analista"}';
+update public.comissoes set comissao_centavos = 999 where venda_id = 'v-existente';
+select is(
+  (select comissao_centavos from public.comissoes where venda_id = 'v-existente'),
+  100,  -- valor ORIGINAL: prova que o update não pegou (0 linhas afetadas, sem erro)
+  'analista não altera comissão (RLS filtra silenciosamente, não lança 42501)'
+);
+
+-- alternativa: checar a contagem afetada
+with upd as (
+  update public.comissoes set comissao_centavos = 999 where venda_id = 'v-existente' returning 1
+)
+select is( (select count(*)::int from upd), 0, 'update por analista afeta 0 linhas' );
+```
+Regra prática: **INSERT bloqueado → `throws_ok`. UPDATE/SELECT/DELETE bloqueado → `is`/contagem.**
+
 ## O que sempre cobrir
-- Papel sem permissão **bloqueado** (o caso que mais quebra em produção).
+- Papel sem permissão **bloqueado** (o caso que mais quebra em produção) — usando o método certo
+  por comando (ver pegadinha acima).
 - Papel com permissão **liberado** (não trancar demais).
 - Multi-tenant: usuário de um tenant **não lê** dado de outro tenant.
 - Tabela `audit.*` (perfil OS): UPDATE/DELETE negados inclusive para `service_role`.
+- **GRANT existe**: uma tabela com RLS mas sem `GRANT` ao papel nega tudo por privilégio, antes da
+  policy — o teste de "papel com permissão liberado" pega isso (falha se o GRANT foi esquecido).

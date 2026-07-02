@@ -4,7 +4,7 @@
 
 Data: 19 de junho de 2026
 Uso: interno Trívia — visão de produto e arquitetura
-Relacionados: [[00 - Índice — Sinérgica]] (contrato Sinérgica OS) · [[Auvo-API-Mapeamento-Completo]] · [[Mapeamento de Capacidades Auvo vs PCM (19-06-2026)]]
+Relacionados: [[00 - Índice — Sinérgica]] (contrato Sinérgica OS) · [[Auvo-API-Mapeamento-Completo 1]] · [[Mapeamento de Capacidades Auvo vs PCM (19-06-2026)]]
 
 ---
 

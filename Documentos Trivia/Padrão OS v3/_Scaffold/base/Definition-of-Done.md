@@ -6,24 +6,36 @@
 ## Gates locais (Husky — automáticos, sem precisar rodar manualmente)
 | Hook | Quem | O que verifica |
 |------|------|----------------|
-| `pre-commit` | `@dev` a cada commit | Biome nos arquivos staged (lint + format) |
+| `pre-commit` | `@dev` a cada commit | Biome nos arquivos staged (lint + format) — leve, roda sempre |
 | `commit-msg` | `@dev` a cada commit | Conventional Commits obrigatório |
-| `pre-push` | `@devops` antes do push | typecheck + testes — último check antes do CI/deploy |
+| `pre-push` | `@devops` antes do push | **`npm run ci:local` — espelho FIEL da CI** (não só typecheck+test) |
 
-## Gates executáveis (rode antes de abrir/aprovar PR)
+> **Por que o peso está no pre-push, não no pre-commit:** o commit é frequente — encher de build/
+> e2e ali vira cerimônia e atrapalha o ritmo (`ANTI-PADROES.md`). O push é o gatilho real do
+> pipeline, então é ali que roda o espelho completo. Emergência: `git push --no-verify` (registre
+> o porquê; o CI ainda cobra). Quem não é `@devops` nem chega ao push (hook de autoridade).
+
+## Gates executáveis — um comando (`npm run ci:local`) roda todos, na ordem da CI
+`ci:local` é o **espelho local do pipeline**: mesma sequência, mesmo fail-fast. Se passar local,
+o CI deve passar. Individualmente, para depurar:
 | Gate | Comando | O que prova |
 |------|---------|-------------|
-| Testes (AC) | `npm test` (`vitest run`) | cada `AC` da spec tem teste verde |
-| Type-check | `npm run typecheck` | TypeScript strict sem erro |
-| Lint/format | `npm run lint` | Biome sem finding |
-| Arquitetura | `npm run arch:check` | regra de dependência DDD (domain puro) sem violação |
-| Rastreabilidade | `npm run eval:spec` | todo `AC` coberto por task; `SPEC_DEVIATION` contados |
 | Esteira | `npm run audit:esteira` | frontmatter, links e specs íntegros |
-| Diagramas (se houver Mermaid) | `node scripts/validate-mermaid.mjs` | blocos Mermaid válidos |
+| Rastreabilidade | `npm run eval:spec` | todo `AC` coberto por task; `SPEC_DEVIATION` contados |
+| Diagramas | `node scripts/validate-mermaid.mjs` | blocos Mermaid válidos |
+| Migrations | `npm run lint:migrations` | DROP com reverso; **CREATE POLICY com GRANT** |
+| Lint/format | `npm run lint` | Biome sem finding |
+| Type-check | `npm run typecheck` | TypeScript strict sem erro |
+| Arquitetura | `npm run arch:check` | regra de dependência DDD (domain puro) sem violação |
+| Build (se houver) | `npm run build` | compila sem erro |
+| Testes (AC) + cobertura | `npm run test:coverage` | cada `AC` tem teste verde; threshold |
+| E2E (se houver) | `npm run test:e2e` | fluxos críticos ponta a ponta |
 
 ## Checklist (todo PR)
 - [ ] Todos os `AC` da `spec.md` **verdes pelo gate** (`npm test`) — não por inspeção
-- [ ] `npm run typecheck`, `npm run lint`, `npm run arch:check`, `npm run eval:spec`, `npm run audit:esteira` passam
+- [ ] `npm run ci:local` **verde** localmente (espelho da CI)
+- [ ] **CI real verde no PR:** `gh pr checks` sem vermelho e **sem check obrigatório pulado**
+      (⚠️ gate que exige Docker/banco — RLS/pgTAP, e2e — não pode ter sido silenciosamente pulado)
 - [ ] Nenhum `SPEC_DEVIATION` pendente sem resolução
 - [ ] Decisões difíceis de reverter viraram **ADR** em `docs/adr/`
 - [ ] **Segurança:** sem secret no client; input validado (Zod); JWT validado; RLS na tabela.
