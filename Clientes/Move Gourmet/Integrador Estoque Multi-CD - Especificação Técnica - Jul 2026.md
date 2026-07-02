@@ -20,6 +20,29 @@ status: especificação
 > implementar (com JSON/GraphQL/SQL reais). Contexto em
 > [[Omie - Mapeamento Estoque - Jul 2026]] e [[Configuração Frete Shopify - Jun 2026]].
 
+> ✅ **CERTIFICADO VIA API (02/07/2026, somente leitura, credenciais reais).** Não é só
+> documentação — os pontos-chave foram batidos na API do Omie ao vivo. O que a checagem
+> confirmou e **corrigiu**:
+> - **Depósitos (inteiros reais):** Salvador/Fábrica Move = **`3390627692`**; SÃO PAULO =
+>   **`10009035408`** (os "01"/"09" são só o código de exibição). Usados nos exemplos abaixo.
+> - **`PosicaoEstoque` FUNCIONA e lê por depósito** — mesmo produto: Salvador `saldo=5`, SP
+>   `saldo=0`. E o campo **`data` é OPCIONAL** (funcionou sem ele) — corrige a doc, que dizia
+>   ser obrigatório e ser a causa da "falha" antiga.
+> - **Nomes de campo diferem por método:** `ListarPosEstoque` → `nSaldo/fisico/reservado/`
+>   `nPendente/nCMC/cCodigo/nCodProd/cCodInt`; `PosicaoEstoque` → `saldo/fisico/reservado/`
+>   `pendente/cmc`.
+> - **`cCodInt` (codigo_produto_integracao) vem VAZIO** nos produtos → o casamento de SKU tem
+>   que ser pelo **`cCodigo`**.
+> - **`origem_pedido = "SFY"` é REAL e é o que o Hub grava** (corrige a doc, que só citava
+>   "API"/"MLV"). Os 100 pedidos do Hub estão como `SFY`, `codigo_pedido_integracao` prefixado
+>   **`OH`** (Omie.Hub).
+> - **Prova do problema:** TODO item de TODO pedido do Hub tem `codigo_local_estoque =`
+>   `3390627692` (Salvador). O Hub **crava Salvador em tudo** — nenhum item vai pra SP.
+> - **Etapas são customizadas nesta conta:** pedido ERP em `etapa "60"`, pedidos do Hub em
+>   `etapa "70"`. A etapa de faturamento **não é o "50" genérico** — mapear o Kanban real.
+> - **Saldos:** Salvador **1.009** itens com saldo; SP **19** (produtos Move congelados;
+>   `PMUND PASTEL DE BACALHAU` está **-1**, ajustar no Omie). Catálogo total 1.432 (29 págs).
+
 ## Índice
 1. Problema e objetivo
 2. Arquitetura geral
@@ -285,28 +308,34 @@ Só do backend (o secret nunca vai ao browser; a API bloqueia CORS/localhost).
 
 ### 6.1 `estoque/consulta/` — leitura de saldo
 
-**`PosicaoEstoque`** (1 produto, tempo real). Params: `codigo_local_estoque` (int, obrig),
-`id_prod` **ou** `cod_int`, `data` (dd/mm/aaaa, **obrig** — era isto que faltava antes!),
-`apenas_saldo` ("S"/"N"). Retorno: `saldo`, `fisico`, `reservado`, `pendente`, `cmc`,
-`estoque_minimo`, `codigo_local_estoque`.
+**`PosicaoEstoque`** (1 produto, tempo real) — ✅ certificado ao vivo. Params:
+`codigo_local_estoque` (int, obrig), `id_prod` **ou** `cod_int`, `data` (dd/mm/aaaa,
+**OPCIONAL** — certificado: funciona sem; sem `data` devolve a posição atual), `apenas_saldo`.
+Retorno: `saldo`, `fisico`, `reservado`, `pendente`, `cmc`, `estoque_minimo`,
+`codigo_local_estoque` (campos **sem** prefixo `n`).
 ```json
-// request
+// request real (id_prod = nCodProd)
 { "call":"PosicaoEstoque","app_key":"...","app_secret":"...",
-  "param":[{ "codigo_local_estoque":1, "cod_int":"SKU-X", "data":"02/07/2026", "apenas_saldo":"N" }] }
-// response
-{ "codigo_status":"0","descricao_status":"SUCESSO","saldo":42.00,"fisico":45.00,
-  "reservado":3.00,"pendente":10.00,"cmc":18.75,"codigo_local_estoque":1 }
+  "param":[{ "codigo_local_estoque":3390627692, "id_prod":3391736370, "data":"02/07/2026" }] }
+// response real (CREATINE 300G em Salvador)
+{ "codigo_status":"0","descricao_status":"Posição de estoque ... obtida com sucesso.",
+  "saldo":5,"fisico":5,"reservado":0,"pendente":0,"cmc":147.60,"codigo_local_estoque":3390627692 }
+// mesmo produto em SP (10009035408) → saldo:0, fisico:0  ← prova de leitura por depósito
 ```
 
-**`ListarPosEstoque`** (catálogo paginado — o poller usa este). Params: `nPagina`,
-`nRegPorPagina` (≤100), `dDataPosicao` (obrig), `cExibeTodos` ("S" inclui zerados),
+**`ListarPosEstoque`** (catálogo paginado — o poller usa este) — ✅ certificado. Params:
+`nPagina`, `nRegPorPagina` (≤100), `dDataPosicao` (obrig), `cExibeTodos` ("S" inclui zerados),
 `codigo_local_estoque` (filtra depósito). Retorno: `nPagina`, `nTotPaginas`, `nTotRegistros`,
-`produtos[]` com `nCodProd`, `cCodInt`, `cDescricao`, `fisico`, `saldo`, `reservado`,
-`pendente`, `cmc`.
+`produtos[]` com **`nCodProd`, `cCodigo` (SKU), `cCodInt` (vazio!), `cDescricao`, `fisico`,
+`nSaldo`, `reservado`, `nPendente`, `nCMC`, `nPrecoUnitario`** (⚠️ prefixo `n` em saldo/
+pendente/CMC — diferente do PosicaoEstoque).
 ```json
 { "call":"ListarPosEstoque","app_key":"...","app_secret":"...",
   "param":[{ "nPagina":1,"nRegPorPagina":100,"dDataPosicao":"02/07/2026",
-             "cExibeTodos":"S","codigo_local_estoque":1 }] }
+             "cExibeTodos":"S","codigo_local_estoque":3390627692 }] }
+// → { "nTotPaginas":29,"nTotRegistros":1432,"produtos":[
+//      {"nCodProd":3391736370,"cCodigo":"76823","cCodInt":"","cDescricao":"NT CREATINE 300G",
+//       "fisico":5,"nSaldo":5,"reservado":0,"nPendente":0,"nCMC":147.60} ...] }
 ```
 > ⚠️ Nomes de paginação **variam por método**: `ListarPosEstoque` usa `nPagina`/`nRegPorPagina`;
 > `geral/produtos` e `produtos/pedido` usam `pagina`/`registros_por_pagina`/`total_de_paginas`.
@@ -323,32 +352,39 @@ Objeto `pedido_venda_produto`: `cabecalho`, `det[]`, `informacoes_adicionais`, `
 `det[].produto.{codigo_produto,quantidade,valor_unitario}`.
 
 🔑 **O split fica em `det[].inf_adic.codigo_local_estoque`** (por item — não no cabeçalho).
+✅ Certificado: pedidos reais têm o `codigo_local_estoque` exatamente aí (chaves do `inf_adic`
+incluem `codigo_local_estoque`, `nao_movimentar_estoque`, `nao_gerar_financeiro`, etc.).
 ```json
 { "call":"IncluirPedido","app_key":"...","app_secret":"...","param":[{
   "cabecalho":{ "codigo_pedido_integracao":"SHOPIFY-1055012345","codigo_cliente":3792227,
-    "data_previsao":"02/07/2026","etapa":"10","codigo_parcela":"000","origem_pedido":"API" },
+    "data_previsao":"02/07/2026","etapa":"10","codigo_parcela":"000","origem_pedido":"SFY" },
   "det":[
     { "ide":{"codigo_item_integracao":"SHOPIFY-1055012345-1"},
       "produto":{"codigo_produto":4422421,"quantidade":2,"unidade":"UN","valor_unitario":89.90},
-      "inf_adic":{"codigo_local_estoque":1} },                     // ← Salvador
+      "inf_adic":{"codigo_local_estoque":3390627692} },           // ← Salvador (inteiro real)
     { "ide":{"codigo_item_integracao":"SHOPIFY-1055012345-2"},
       "produto":{"codigo_produto":4422500,"quantidade":1,"unidade":"UN","valor_unitario":129.90},
-      "inf_adic":{"codigo_local_estoque":9} } ],                   // ← São Paulo
+      "inf_adic":{"codigo_local_estoque":10009035408} } ],        // ← São Paulo (inteiro real)
   "informacoes_adicionais":{"consumidor_final":"S","numero_pedido_cliente":"#1001"},
   "frete":{"modalidade":"9"} }] }
 // response → { "codigo_pedido":4599123456, "codigo_status":"0", "numero_pedido":"78367" }
 ```
-- `origem_pedido`: aceitos oficialmente **"API"** e "MLV". **Não há "SFY"** documentado →
-  usar "API" e diferenciar canal pelo prefixo `SHOPIFY-` do `codigo_pedido_integracao`.
+- ✅ **`origem_pedido = "SFY"` é REAL** (certificado: é o que o Hub grava nos 100 pedidos
+  Shopify). Usar `"SFY"` (compatível com o Hub) — a doc pública só citava "API"/"MLV", mas a
+  conta aceita "SFY". `codigo_pedido_integracao` prefixado (o Hub usa `OH...`; use `SHOPIFY-...`).
 - `inf_adic.nao_movimentar_estoque="S"` = item não baixa (não usar no fluxo normal).
 
 ### 6.3 Faturamento e baixa de estoque
-Não existe `FaturarPedido`. Fatura-se **movendo para a etapa a faturar** (padrão **`"50"`**),
-que valida e emite a NF-e. A **baixa de estoque ocorre no faturamento** (não na inclusão) e
-sai **do `codigo_local_estoque` de cada item**.
+Não existe `FaturarPedido`. Fatura-se **movendo para a etapa a faturar**, que valida e emite a
+NF-e. A **baixa de estoque ocorre no faturamento** (não na inclusão) e sai **do
+`codigo_local_estoque` de cada item**.
+> ⚠️ **Etapa é customizada por conta — certificado ao vivo.** O "50 genérico" da doc **não
+> vale aqui**: nesta conta um pedido ERP está em `etapa "60"` e os 100 pedidos do Hub estão em
+> `etapa "70"`. **Mapear o Kanban real da Move** (quais colunas existem e qual dispara
+> faturamento/NF-e) antes de codar o `TrocarEtapaPedido`. Não hard-codar "50".
 ```json
 { "call":"TrocarEtapaPedido","app_key":"...","app_secret":"...",
-  "param":[{ "codigo_pedido":4599123456, "etapa":"50" }] }
+  "param":[{ "codigo_pedido":4599123456, "etapa":"<etapa-de-faturamento-da-conta>" }] }
 ```
 Acompanhar autorização por `StatusPedido`/`ConsultarPedido` ou webhook de NF-e emitida.
 
@@ -356,7 +392,11 @@ Acompanhar autorização por `StatusPedido`/`ConsultarPedido` ou webhook de NF-e
 `ListarProdutosResumido` (carga do mapa): `produto_servico_resumido[]` com `codigo_produto`
 (nCodProd), **`codigo`** (= SKU), `codigo_produto_integracao`, `descricao`. `ConsultarProduto`
 por `codigo`/`codigo_produto`/`codigo_produto_integracao`; traz `inativo`, `ean`, `unidade`.
-- **Casar Shopify `variant.sku` ↔ Omie `codigo`** (ou `codigo_produto_integracao`, mais robusto).
+- **Casar Shopify `variant.sku` ↔ Omie `codigo`/`cCodigo`.** ⚠️ Certificado: o
+  `codigo_produto_integracao`/`cCodInt` vem **VAZIO** nos produtos → não dá pra casar por ele;
+  o casamento é pelo **`cCodigo`**. Formatos vistos: SKUs numéricos (`76823`) em produtos de
+  revenda "NT…" e `PRDxxxxx` (`PRD00732`) nos produtos Move congelados. **Auditar se esses
+  `cCodigo` batem com os `variant.sku` do Shopify** (causa nº1 de falha silenciosa).
 - Filtrar `inativo="N"`. Tratar **kits** (baixa por componente — sincronizar componentes, não
   o kit-pai) e **variações** (mapear a variação, não o produto-pai) à parte.
 
@@ -638,11 +678,11 @@ Persistir o estado em `order_sync.state`. Cada transição é um ponto de retry;
 env. Padrão Trívia (Netlify Functions + Supabase) atende — atenção ao timeout de função no
 poller de lote (usar job/agendador dedicado se necessário).
 
-**Mapa de locations ↔ depósitos:**
-| Shopify Location | ID | Omie depósito | codigo_local_estoque |
+**Mapa de locations ↔ depósitos (✅ inteiros certificados via API):**
+| Shopify Location | ID Shopify | Omie depósito | `codigo_local_estoque` (inteiro real) |
 |---|---|---|---|
-| Rua Dr Gerino Silva (Salvador) | `85518483692` | Fábrica Move | 01 |
-| Rua Dr João Toniolo (SP) | `92526051564` | SÃO PAULO | 09 |
+| Rua Dr Gerino Silva (Salvador) | `85518483692` | Fábrica Move (padrão) | **`3390627692`** |
+| Rua Dr João Toniolo (SP) | `92526051564` | SÃO PAULO | **`10009035408`** |
 | Shopping Barra (retirada) | — | Linx (fora do Omie) | — (ver ressalva no mapeamento) |
 
 ---
