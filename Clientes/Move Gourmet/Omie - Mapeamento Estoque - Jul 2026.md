@@ -48,6 +48,10 @@ abastecer do zero. Falta **mapear** o local no Hub, e o Hub é justamente onde i
 - **A API lê estoque por local.** Passar `codigo_local_estoque` em `ListarPosEstoque`
   devolve o saldo daquele depósito específico. NÃO consolida no padrão (correção da
   conclusão anterior). Provado: mesmos produtos vêm com saldos diferentes por depósito.
+- ℹ️ **Correção sobre `PosicaoEstoque`** (02/07): o método que "falhou" antes na verdade
+  **existe e é o correto** para saldo em tempo real de 1 produto por local — o erro foi
+  ausência do parâmetro `data` (obrigatório, dd/mm/aaaa) e uso de `nCodProd` em vez de
+  `id_prod`/`cod_int`. `ObterEstoqueProduto` é que não existe. Detalhes na spec do integrador.
 - **Fábrica Move (Salvador): 1.009 itens com saldo.** Grande parte é embalagem e
   matéria-prima (copo 200ml = 499.727, cartão de recado = 100.000, sacolas, embalagem
   a vácuo), mais produto acabado. É onde se produz e embala.
@@ -224,7 +228,9 @@ que faz Omie por depósito → Shopify por localização. Tira o peso de manuten
 
 **3. Integração própria:** Trívia lê o Omie por depósito (API testada, funciona) e escreve
 no Shopify por localização (API do Shopify aceita). Máximo controle, sem mensalidade, mas
-é código pra manter só pra um cliente.
+é código pra manter só pra um cliente. ✅ **Mapeamento técnico completo das duas APIs feito
+em 02/07** — endpoints, auth, rate limits, webhooks, fluxos e fases em
+[[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
 
 ⚠️ **Caveat p/ caminhos 2 e 3:** se algo externo passar a escrever estoque no Shopify, é
 preciso **desligar/escopar a sync de estoque do Hub**, senão os dois brigam pelo número.

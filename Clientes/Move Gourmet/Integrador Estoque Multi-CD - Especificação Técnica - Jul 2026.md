@@ -199,26 +199,45 @@ formato `gid://shopify/Location/...`. Query `locations` já devolve só as ativa
 filtrar `fulfillsOnlineOrders`/`hasActiveInventory`.
 
 ### Escrita de estoque por local (o cerne)
-- **`inventorySetQuantities`** (SET absoluto) — `name: "on_hand"`, `reason: "correction"`,
-  `referenceDocumentUri` (trilha de auditoria), array `quantities[{ inventoryItemId,
-  locationId, quantity, compareQuantity }]`. `compareQuantity` = valor que lemos (falha se
-  mudou no meio → protege contra corrida). ⚠️ Desde a versão **`2026-04`** exige o diretório
-  **`@idempotent`** com chave de idempotência (retry seguro).
+- **`inventorySetQuantities`** (SET absoluto) — `name` aceita só **`"available"` ou
+  `"on_hand"`**; `reason: "correction"`; `referenceDocumentUri` (trilha de auditoria); array
+  `quantities[{ inventoryItemId, locationId, quantity, changeFromQuantity }]`.
+- 🚨 **BREAKING CHANGE 2026-04 (não errar isto):** os campos `compareQuantity` e
+  `ignoreCompareQuantity` foram **REMOVIDOS**. O campo de concorrência agora é
+  **`changeFromQuantity`** e é **obrigatório informar** em cada item: um **inteiro** (ativa
+  o compare-and-set — falha com `CHANGE_FROM_QUANTITY_STALE` se o valor atual no Shopify não
+  bater) **ou `null`** (desliga a checagem). **Omitir o campo gera erro.** Muitos exemplos
+  antigos na web ainda mostram `compareQuantity` — não usar na `2026-07`.
+- **Teto documentado:** máximo **250 itens** por chamada (arrays de input do Shopify). O
+  lote de sync usa até 250 `quantities` por request → ~2.800 níveis viram **~12 chamadas**.
+- **Idempotência:** a doc recente suporta a diretiva `@idempotent(key: ...)` na mutation —
+  usar uma chave estável por lote de sync para retry seguro.
 - **`inventoryActivate`** (ou `inventoryBulkToggleActivation`) — antes de setar, o item
   precisa estar **ativo (tracked) naquela location**; senão não existe `InventoryLevel`.
+  `inventoryBulkToggleActivation` é ideal no onboarding dos ~1.400 produtos nos dois CDs.
 - **SET, não ADJUST:** para sync de ERP use sempre SET (determinístico); ADJUST (delta) só
   para eventos incrementais e acumula erro em reentrega.
 - **`committed`/`incoming` são derivados — nunca escrever.**
+
+> **Decisão a validar — setar `available` ou `on_hand`?** As duas são válidas em `name`.
+> - Setar **`on_hand`** = espelhar o **físico** do Omie (`fisico`); o Shopify recalcula
+>   `available = on_hand − committed − …`, mantendo o controle do `committed` da venda. Mais
+>   correto conceitualmente, evita dupla contagem do que já está vendido.
+> - Setar **`available`** = espelhar o **disponível** do Omie (`fisico − reservado`); é o
+>   número que a vitrine usa direto. É o padrão da maioria dos integradores ERP, mas cuidado
+>   para não subtrair o reservado duas vezes (Omie `reservado` + Shopify `committed`).
+> Recomendação: **setar `on_hand` com o `fisico` do Omie** e deixar o Shopify gerir o
+> committed — a menos que a Move queira que o `reservado` do Omie também segure a vitrine.
+> Confirmar na Fase 0 com dados reais.
 
 ### Rate limits + volume
 - GraphQL cost-based (leaky bucket): Standard = balde **1.000 pontos**, restore **100/s**
   (Plus = 10x). Mutation = **10 pontos base** + custo do payload. Ler
   `extensions.cost.throttleStatus.currentlyAvailable` e só disparar a próxima quando houver
   saldo. THROTTLED → esperar ~1s.
-- **Lote é a chave:** `inventorySetQuantities` aceita **array `quantities`** → mandar muitos
-  itens por chamada. ~2.800 níveis (1.400 SKU × 2 locations) viram **~10–15 chamadas**,
-  síncronas, custo trivial. (⚠️ a doc **não** publica um teto numérico por chamada — o "250"
-  é heurística; confirmar empiricamente e ajustar o tamanho do lote.)
+- **Lote é a chave:** `inventorySetQuantities` aceita **array `quantities`** com até **250
+  itens** (teto documentado dos arrays de input). ~2.800 níveis (1.400 SKU × 2 locations)
+  viram **~12 chamadas**, síncronas, custo trivial.
 - **Bulk Operations** (`bulkOperationRunQuery` p/ ler catálogo inteiro em JSONL;
   `bulkOperationRunMutation` p/ escrever) só valem se o catálogo crescer 1–2 ordens de
   grandeza. Para o volume atual, batching de `inventorySetQuantities` é mais simples.
@@ -307,8 +326,8 @@ Componentes mínimos do integrador:
    `codigo_pedido_integracao`.
 2. **Payload dos webhooks Omie** — estrutura campo-a-campo não publicada; capturar um POST
    real (RequestBin) no ambiente de teste.
-3. **Teto de itens por `inventorySetQuantities`** — sem número oficial; medir e calibrar o
-   lote.
+3. **`available` vs `on_hand`** — decidir qual estado espelhar (ver box na seção 6);
+   validar na Fase 0 com dados reais como o Omie expõe `fisico`/`reservado`/`nSaldo`.
 4. **Order Routing nativo do Shopify** — checar no admin real da Move qual estratégia o
    painel oferece (decide entre "deixar rotear" vs. "corrigir via move").
 5. **Desligar a sync de estoque do Hub** — confirmar com o suporte Omie se é possível

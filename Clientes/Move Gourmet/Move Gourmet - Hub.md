@@ -55,6 +55,7 @@ desde: 2026-06-24
 - [[Problema - Pagamentos sem provedor principal]]
 - [[Problema - Omie sem Local de Estoque SP]] *(achado original refutado — ver nota abaixo)*
 - [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento atual + plano de ação estoque
+- [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
 - [[Proposta Comercial - Correção Shopify e Omie]]
 
