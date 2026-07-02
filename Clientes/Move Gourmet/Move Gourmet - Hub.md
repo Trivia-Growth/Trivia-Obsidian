@@ -118,6 +118,7 @@ desde: 2026-06-24
 - [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5). Local: `~/Documents/Obsidian/Github/Move Gourmet`
 - [x] **Padrão OS v3 aplicado** (02/07): scaffold base (esteira SDD), `docs/PROJECT.md` com identidade + 11 invariantes de domínio, exemplos de comissão do scaffold removidos
 - [x] **Spec da Fase 0 escrita** (02/07): `specs/0001-poc-sync-estoque` (product+design+spec 5 AC+domain+tasks); eval:spec verde. Tasks 1–4 (domínio/config/cliente Omie/mapa) não dependem do token
+- [x] **Backlog completo criado** (02/07): `docs/ROADMAP.md` + 8 épicos (`specs/0001`–`0008`) em 4 fases (validação → Fluxo A estoque → Fluxo B pedido → operação); eval:spec verde em todos
 - [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub) — destrava tasks 5–7 + cruzamento de SKU
 - [ ] `npm install` no repo p/ ligar os gates/hooks (husky trava sem deps → commits com `--no-verify` até lá)
 - [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
