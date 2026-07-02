@@ -115,8 +115,11 @@ desde: 2026-06-24
 > [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
 
 **Fila de execução (produção):**
-- [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5) instalado, CLAUDE.md com invariantes de domínio. Local: `~/Documents/Obsidian/Github/Move Gourmet`
-- [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub)
+- [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5). Local: `~/Documents/Obsidian/Github/Move Gourmet`
+- [x] **Padrão OS v3 aplicado** (02/07): scaffold base (esteira SDD), `docs/PROJECT.md` com identidade + 11 invariantes de domínio, exemplos de comissão do scaffold removidos
+- [x] **Spec da Fase 0 escrita** (02/07): `specs/0001-poc-sync-estoque` (product+design+spec 5 AC+domain+tasks); eval:spec verde. Tasks 1–4 (domínio/config/cliente Omie/mapa) não dependem do token
+- [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub) — destrava tasks 5–7 + cruzamento de SKU
+- [ ] `npm install` no repo p/ ligar os gates/hooks (husky trava sem deps → commits com `--no-verify` até lá)
 - [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
 - [ ] Mapear a etapa de faturamento no Kanban da Omie (vistos "60"/"70", não "50")
 - [ ] Fase 0 (PoC leitura+escrita) → Fase 1 (sync de estoque, cutover do Hub via Strangler Fig)
