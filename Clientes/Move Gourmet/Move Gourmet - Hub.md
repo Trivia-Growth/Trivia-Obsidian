@@ -120,7 +120,9 @@ desde: 2026-06-24
 - [x] **Spec da Fase 0 escrita** (02/07): `specs/0001-poc-sync-estoque` (product+design+spec 5 AC+domain+tasks); eval:spec verde. Tasks 1–4 (domínio/config/cliente Omie/mapa) não dependem do token
 - [x] **Backlog completo criado** (02/07): `docs/ROADMAP.md` + 8 épicos (`specs/0001`–`0008`) em 4 fases (validação → Fluxo A estoque → Fluxo B pedido → operação); eval:spec verde em todos
 - [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub) — destrava tasks 5–7 + cruzamento de SKU
+- [x] **Supabase provisionado** (02/07): ref `lygxygsjxbpfqujvydxf` — destrava o épico 0002 (fundação/banco)
 - [ ] `npm install` no repo p/ ligar os gates/hooks (husky trava sem deps → commits com `--no-verify` até lá)
+- [ ] ⚠️ **Rotacionar o Management PAT do Supabase (`sbp_`)** exposto no chat 02/07 (token de conta inteira)
 - [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
 - [ ] Mapear a etapa de faturamento no Kanban da Omie (vistos "60"/"70", não "50")
 - [ ] Fase 0 (PoC leitura+escrita) → Fase 1 (sync de estoque, cutover do Hub via Strangler Fig)
