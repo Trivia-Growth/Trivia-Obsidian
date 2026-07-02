@@ -56,6 +56,7 @@ desde: 2026-06-24
 - [[Problema - Omie sem Local de Estoque SP]] *(achado original refutado — ver nota abaixo)*
 - [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento atual + plano de ação estoque
 - [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
+- [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador: SKUs do site não batem com o Omie (só 9/124); ação do cliente
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
 - [[Proposta Comercial - Correção Shopify e Omie]]
 
@@ -113,6 +114,13 @@ desde: 2026-06-24
 > **DECISÃO 02/07: construir integrador próprio Omie↔Shopify multi-CD e colocar em produção.**
 > O Hub é single-location (não resolve o split). Spec técnica completa + certificada via API em
 > [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
+
+> 🚨 **ACHADO CRÍTICO (02/07) — SKUs do Shopify:** cruzamento real Omie×Shopify mostrou que a
+> loja tem **124 variantes, 97 (78%) SEM SKU** e só **9 casam** com os 1.432 do Omie. Os SKUs do
+> Shopify são códigos curtos que não batem com os do Omie. **Isso bloqueia qualquer sincronização
+> por SKU** (nossa e provavelmente a do próprio Hub). **Ação do cliente:** preencher o campo SKU
+> dos produtos no Shopify com o `codigo` do Omie. É pré-requisito para o integrador funcionar.
+> Detalhe completo + listas + texto pronto pra Fernanda em [[Achado - SKUs Shopify x Omie - Jul 2026]].
 
 **Fila de execução (produção):**
 - [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5). Local: `~/Documents/Obsidian/Github/Move Gourmet`
