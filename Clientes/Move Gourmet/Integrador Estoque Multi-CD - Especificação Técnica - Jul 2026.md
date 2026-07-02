@@ -521,7 +521,10 @@ mutation SetEstoque($input: InventorySetQuantitiesInput!) {
 `CHANGE_FROM_QUANTITY_STALE` se não bater → re-ler e reenviar) **ou** `null` (desliga a
 checagem). Omitir = erro.
 - **Máx 250 itens** por chamada (teto de arrays de input). ~12 chamadas para ~2.800 níveis.
-- `@idempotent(key:...)` disponível → chave estável por lote para retry seguro.
+- 🚨 `@idempotent(key:...)` é **OBRIGATÓRIO** (VERIFICADO 02/07 na loja real) e vai no **CAMPO**:
+  `inventorySetQuantities(input:$input) @idempotent(key:$key)` — NÃO na operação `mutation` (senão
+  "can't be applied to mutations, allowed: fields"). Sem ele: "directive is required". Chave = hash
+  do lote. O integrador já implementa assim.
 - `inventoryActivate(inventoryItemId, locationId, available, onHand)` /
   `inventoryBulkToggleActivation` — ativar tracking antes de setar (onboarding dos ~1.400 SKU
   nas 2 locations).
