@@ -2,7 +2,7 @@
 
 Data: 19 de junho de 2026
 Uso: interno Trívia — decisão de arquitetura e roadmap técnico
-Relacionados: [[Mapeamento de Capacidades Auvo vs PCM (19-06-2026)]] · [[Relatório de Integração Auvo (19-06-2026)]] · [[Auvo-API-Mapeamento-Completo]]
+Relacionados: [[Mapeamento de Capacidades Auvo vs PCM (19-06-2026)]] · [[Relatório de Integração Auvo (19-06-2026)]] · [[Auvo-API-Mapeamento-Completo 1]]
 
 ---
 
