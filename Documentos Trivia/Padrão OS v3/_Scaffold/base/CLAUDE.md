@@ -6,7 +6,7 @@ alwaysApply: true
 
 # CLAUDE.md — Padrão OS da Trivia (convenções para agentes de IA)
 
-Este projeto segue o **Padrão OS v2** da Trivia: **Spec-Driven Development (SDD)** orquestrado
+Este projeto segue o **Padrão OS v3** da Trivia: **Spec-Driven Development (SDD)** orquestrado
 pelos agentes **Triviaiox**. Leia este arquivo antes de implementar qualquer coisa. **Ele é a
 fonte da verdade que o agente lê em runtime** — a documentação no Obsidian (vault) é só espelho
 humano.

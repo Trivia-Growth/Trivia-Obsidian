@@ -4,6 +4,40 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.3.0 — 2026-07-02
+Troca de **infra caseira por ferramentas opensource consagradas** — o `ci-local.mjs` era um
+task-runner reinventado e parte do `lint-migrations.mjs` reinventava um SQL linter. A pergunta
+("existe lib que faça isso?") tem resposta madura, e a qualidade agora vale para **tudo que sobe**
+(back, front, SQL, config), não só migration.
+
+**Trocado**
+- **Lefthook** substitui husky + lint-staged + `scripts/ci-local.mjs`. Um só `lefthook.yml` define
+  `pre-commit` (Biome nos staged, leve), `commit-msg` (commitlint) e `pre-push` (bateria completa,
+  **em paralelo** — vê todos os vermelhos de uma vez). `npm run ci:local` agora é
+  `lefthook run pre-push`: hook e comando manual viram a MESMA definição, impossível divergirem.
+  Removidos `.husky/`, `.lintstagedrc.json`, `scripts/ci-local.mjs`; `prepare` = `lefthook install`.
+- **Squawk** (`.squawk.toml` + `sbdchd/squawk-action` na CI) assume a **segurança de migration**
+  (locks, breaking change, downtime) — bem mais robusto que o regex de DROP. Roda best-effort no
+  pre-push (via `lint-migrations.mjs`) e bloqueia na CI.
+- `scripts/lint-migrations.mjs` enxugado para o que **nenhum tool pronto cobre**: a regra
+  semântica **CREATE POLICY exige GRANT** (+ GRANT USAGE em schema de domínio) e a convenção
+  DROP-com-reverso. O resto foi delegado ao Squawk.
+
+**Mantido (já eram as ferramentas certas)**
+- **Biome** como lint+format único de back E front (JS/TS/JSX/TSX/JSON/CSS) — não há "super-linter"
+  faltando; Biome já é o all-in-one do lado JS/TS. dependency-cruiser (arquitetura), Vitest
+  (testes), gitleaks (segredos) seguem.
+
+**Decisão registrada (anti-over-engineering, `ANTI-PADROES.md`)**
+- Agregadores poliglotas (**Trunk.io**, **MegaLinter**) foram avaliados e **não adotados**: para
+  um repo TS + SQL, Biome + Lefthook + Squawk cobrem com muito menos maquinaria (sem Docker/serviço
+  hosted). Reavaliar só se o stack virar de fato poliglota (várias linguagens além de TS/SQL).
+- Nenhum linter pronto cobre "CREATE POLICY sem GRANT" (é correção semântica de RLS, não segurança
+  de lock) — por isso esse único check custom permanece; todo o resto é opensource de prateleira.
+
+**Docs:** DoD, `PADRAO-DE-QUALIDADE` (tabela de ferramentas + itens 12/18a/18b), `06`, `07`, README
+e `/validar` atualizados; `package-lock.json` regenerado (lefthook no lugar de husky/lint-staged).
+
 ## v3.2.0 — 2026-07-02
 **Hardening pós-primeira-pipeline-real.** O scaffold nunca tinha rodado num GitHub Actions de
 verdade; a primeira feature real de um projeto pegou **10 bugs**, todos do tipo que só a pipeline

@@ -18,9 +18,11 @@ _Scaffold/
 ## Iniciar um projeto single-repo
 1. Copie `_Scaffold/base/` para a raiz do repositório novo — **com os dotfiles**:
    `cp -R "_Scaffold/base/." <repo-novo>/` (o ponto final importa; `base/*` perde `.github/`,
-   `.husky/` e `.gitignore`, e aí **a CI nunca roda na PR**). Confirme:
-   `ls <repo-novo>/.github/workflows/` deve mostrar `ci.yml` e `deploy.yml`.
-2. `npm install` (o `package-lock.json` já vem no scaffold — commite-o; o `npm ci` da CI depende dele).
+   `.gitignore`, `.gitleaks.toml`, `.squawk.toml`, `.dependency-cruiser.cjs`, e aí **a CI nunca
+   roda na PR**). Confirme: `ls <repo-novo>/.github/workflows/` mostra `ci.yml` e `deploy.yml`, e
+   existe `lefthook.yml` na raiz.
+2. `npm install` (instala deps e roda `lefthook install` = ativa os git hooks; o `package-lock.json`
+   já vem no scaffold — commite-o, o `npm ci` da CI depende dele).
 2b. **CD (deploy via GitHub):** no projeto Supabase, Settings → Integrations → GitHub → conecte
    o repo → ative "Deploy to production" (sem token nenhum — ver `docs/ENVIRONMENTS.md`).
    Declare cada Edge Function/Storage bucket real em `supabase/config.toml` (a integração só
