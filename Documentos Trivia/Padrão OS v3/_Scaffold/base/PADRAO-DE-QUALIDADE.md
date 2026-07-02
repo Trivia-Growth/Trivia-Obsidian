@@ -42,6 +42,7 @@ alwaysApply: false
 | 16 | Input validado na borda (Zod) | ☑️ DoD / 📖 | `seguranca/baseline-minimo.md` | ambos | @dev |
 | 17 | JWT validado; sem secret no client | ☑️ DoD / 📖 | `baseline-minimo.md` | ambos | @security |
 | 18 | RLS em toda tabela (+ FORCE no OS) | ☑️ DoD / 📖 | `db/rls.template.sql`, `db/rls-test.md` | ambos | @data-engineer |
+| 18a | CREATE POLICY tem GRANT (RLS roda após privilégio) | 🟢 Gate CI | `npm run lint:migrations` | ambos | @data-engineer |
 | 19 | Threat model STRIDE (auth/PII/financeiro/integração) | 📖 Guia | `seguranca/threat-model.template.md` | quando aplicável | @security |
 | 20 | Dívida de segurança registrada (P0 bloqueia) | ☑️ DoD | `docs/SECURITY_DEBT.md` | ambos | @security |
 | 21 | OS-grade: audit append-only, Vault, HMAC webhook | 📖 Guia | `os-layer/seguranca/os-grade.md` | OS | @security |
@@ -75,9 +76,15 @@ alwaysApply: false
 
 ## Como rodar tudo localmente (espelho da CI)
 ```bash
-npm run audit:esteira && npm run eval:spec && node scripts/validate-mermaid.mjs \
-  && npm run lint && npm run typecheck && npm run arch:check && npm run test:coverage \
-  && npm run audit:deps
-# secret scanning: gitleaks detect (se instalado localmente)
+npm run ci:local   # mesma sequência da CI, fail-fast; roda também no pre-push
 ```
-A skill `/validar` (@qa) executa esses gates e emite **PASS / CONCERNS / FAIL**.
+`ci:local` (`scripts/ci-local.mjs`) executa esteira → fidelidade → Mermaid → lint:migrations →
+lint → typecheck → arch:check → (build/e2e se houver) → testes+cobertura, e trata gitleaks como
+best-effort local (o gate bloqueante é o da CI). **Se `ci:local` passa, o pipeline deve passar** —
+essa é a garantia que evita "só quebrou na pipeline".
+
+> **Local não substitui o CI real.** Gate que precisa de Docker/banco (RLS/pgTAP, e2e) pode ser
+> pulado local. Antes de considerar pronto, confira `gh pr checks` (o CI de verdade rodou e está
+> verde, sem check obrigatório "skipped"). O `/validar` (@qa) exige isso.
+
+A skill `/validar` (@qa) executa esses gates + o CI real e emite **PASS / CONCERNS / FAIL**.

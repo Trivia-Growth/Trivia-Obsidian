@@ -4,6 +4,59 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.2.0 — 2026-07-02
+**Hardening pós-primeira-pipeline-real.** O scaffold nunca tinha rodado num GitHub Actions de
+verdade; a primeira feature real de um projeto pegou **10 bugs**, todos do tipo que só a pipeline
+revela (nenhum pegável por inspeção). Esta versão traz cada correção **de volta ao scaffold** (para
+não repetir no próximo projeto) e, onde possível, transforma a pegadinha em **gate automático** em
+vez de só documentação — a filosofia do padrão ("pronto = gate verde por comando").
+
+**Adicionado — o pre-push virou espelho fiel da CI**
+- `scripts/ci-local.mjs` + `npm run ci:local`: roda a MESMA sequência da CI, na mesma ordem, com
+  fail-fast. `build` e `test:e2e` entram automaticamente se o projeto os declarar (backend puro
+  não tem, frontend/OS tem — sem editar o script). gitleaks é best-effort local (o gate
+  bloqueante é o da CI).
+- `.husky/pre-push` agora roda `ci:local` (antes: só `typecheck + test`). Era essa lacuna que
+  deixava lint completo, arch-check, migrations e cobertura só aparecerem na pipeline. Peso no
+  pre-push, não no pre-commit (commit é frequente; ver `ANTI-PADROES.md`).
+- **`/validar` (@qa) e `/revisar-pr` passam a exigir o CI REAL** (`gh pr checks` verde, sem check
+  obrigatório "skipped"), não só o comando local. Fecha o furo em que um gate que precisa de
+  Docker/banco (RLS/pgTAP, e2e) era pulado local e a story era considerada pronta sem ele ter
+  rodado nunca.
+
+**Adicionado — pegadinhas de Postgres/Supabase viraram gate + doc**
+- **Lint de migrations** (`scripts/lint-migrations.mjs`, `npm run lint:migrations`, job na CI):
+  além de DROP-sem-reverso, agora **falha o build se um CREATE POLICY não tiver GRANT
+  correspondente** (bug #7 — RLS só é avaliada após o privilégio de tabela; sem GRANT ao role, a
+  policy nunca roda e a tabela fica inacessível **em produção**, não só no teste). Regra também no
+  `db/rls.template.sql` (agora com GRANT obrigatório) e nas duas migrations de exemplo.
+- `db/rls-test.md`: documentada a pegadinha do `throws_ok` (bug #8) — INSERT/WITH CHECK **lançam**
+  42501, mas SELECT/UPDATE/DELETE filtrados pelo USING **não lançam**, afetam 0 linhas
+  silenciosamente. Exemplo de como testar por efeito (`is`/contagem) em vez de erro.
+
+**Corrigido — tooling do scaffold que só quebrava rodando (trazido ao scaffold)**
+- **Node 22** na CI (base + os-layer) e em `package.json > engines`: dependency-cruiser 18 e
+  vitest 3 exigem ≥22; a CI estava em Node 20 (bug #6). Bump coordenado de vitest → ^3.2,
+  @vitest/coverage-v8 → ^3.2, @types/node → ^22, dependency-cruiser → ^18, e `package-lock.json`
+  regenerado (o `npm ci` da CI depende do lockfile — ele agora vem no scaffold).
+- **pnpm/action-setup sem `version:`** na CI da os-layer (bug #1): declarar `version: 9` no
+  workflow E `packageManager` no package.json faz a action abortar — o campo do json manda.
+- **biome.json + .gitignore** ignoram `.turbo/` e `supabase/.temp/` (bug #3 — dezenas de falsos
+  positivos de lint em cache de ferramenta). `.gitignore` também cobre `.env*`, `sbom.json`.
+- **`.gitleaks.toml`** no scaffold com allowlist ESTRITO para `.triviaiox-core/`/`.triviaiox/`
+  (bug #4 — o framework vendorizado traz exemplos de credencial que o gitleaks lê como leak real).
+  Todo projeto que vendoriza o Triviaiox batia nesse falso positivo no primeiro scan.
+- **`audit-esteira.mjs`** trata `.claude/memory/` como dialeto próprio (bug #2 — o sistema de
+  memória do Claude Code tem frontmatter sem `alwaysApply`; o audit exigia o schema SDD nele).
+
+**Processo**
+- `07 - Como usar o Scaffold`: fechar versão do padrão agora **exige rodar a CI de verdade**
+  (repo descartável + `ci:local` verde + Actions real com `ci.yml`/`deploy.yml` passando). Config
+  de CI "revisada no olho" ≠ testada — foi exatamente o que gerou os 10 bugs.
+
+**Nota:** o CD via GitHub Integration nativa do Supabase (v3.1.1) foi confirmado no uso real como o
+caminho certo — o `deploy.yml` com token segue como fallback só para monorepo multi-projeto (bug #9).
+
 ## v3.1.1 — 2026-07-02
 Ajuste vindo de mais um feedback do primeiro uso real (Lucas testou a GitHub Integration nativa
 do Supabase direto no dashboard — não era isso que o `deploy.yml` da v3.1.0 recomendava).
