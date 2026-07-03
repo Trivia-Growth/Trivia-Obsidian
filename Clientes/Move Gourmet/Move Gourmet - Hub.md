@@ -56,7 +56,8 @@ desde: 2026-06-24
 - [[Problema - Omie sem Local de Estoque SP]] *(achado original refutado — ver nota abaixo)*
 - [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento atual + plano de ação estoque
 - [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
-- [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador: SKUs do site não batem com o Omie (só 9/124); ação do cliente
+- [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador dos SKUs + diagnóstico verificado no Hub (03/07: Hub casa por SKU, sem GID; nosso integrador dispensa a limpeza)
+- `Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx` ← planilha p/ a Nat confirmar o de-para (30 alta, 10 revisar, 7 kit); base p/ o `product_map`
 - [[Integrador - Status de Construção - Jul 2026]] ← diário do que foi construído + onde paramos (Fluxo A pronto)
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
 - [[Proposta Comercial - Correção Shopify e Omie]]
