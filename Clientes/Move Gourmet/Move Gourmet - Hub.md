@@ -58,6 +58,7 @@ desde: 2026-06-24
 - [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
 - [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador dos SKUs + diagnóstico verificado no Hub (03/07: Hub casa por SKU, sem GID; nosso integrador dispensa a limpeza)
 - `Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx` ← planilha p/ a Nat confirmar o de-para (30 alta, 10 revisar, 7 kit); base p/ o `product_map`
+- [[Modelo de Sincronização de Estoque (regra oficial) - Jul 2026]] ← regra por tipo de item (final/variante/kit); kits = estoque próprio, ingrediente nunca é produto (verificado 03/07)
 - [[Integrador - Status de Construção - Jul 2026]] ← diário do que foi construído + onde paramos (Fluxo A pronto)
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
 - [[Proposta Comercial - Correção Shopify e Omie]]
