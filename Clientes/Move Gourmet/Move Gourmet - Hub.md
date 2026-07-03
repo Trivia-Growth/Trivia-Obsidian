@@ -57,6 +57,7 @@ desde: 2026-06-24
 - [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento atual + plano de ação estoque
 - [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
 - [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador: SKUs do site não batem com o Omie (só 9/124); ação do cliente
+- [[Integrador - Status de Construção - Jul 2026]] ← diário do que foi construído + onde paramos (Fluxo A pronto)
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
 - [[Proposta Comercial - Correção Shopify e Omie]]
 
@@ -70,7 +71,7 @@ desde: 2026-06-24
 
 - [x] Corrigir falha ativa nos pagamentos - ver [[Problema - Pagamentos sem provedor principal]] *(resolvido 24/06 - Fernanda)*
 - [~] Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify" *(01/07: confirmado com PROVA definitiva via Hub que "Omie Shopify" é o app vivo e "Omie Move Gourmet" é seguro remover — falta só executar a remoção, ver [[Omie - Mapeamento Estoque - Jul 2026]])*
-- [~] Configurar Omie para enviar estoque à localização SP *(achado original de 25/06 estava ERRADO — o depósito SP existe e já tem saldo. O que falta é o Omie.Hub mapear local Shopify→depósito Omie, travado por limitação da UI do Hub; chamado aberto com suporte Omie. Ver [[Omie - Mapeamento Estoque - Jul 2026]])*
+- [~] Split de estoque Salvador×SP *(02/07: decidido construir integrador próprio — Fluxo A PRONTO no código e provado no real; ver [[Integrador - Status de Construção - Jul 2026]]. Bloqueio agora é a correção dos SKUs no Shopify pelo cliente, ver [[Achado - SKUs Shopify x Omie - Jul 2026]])*
 - [x] Adicionar localização SP às tarifas de frete *(01/07: consolidado num único "Perfil Geral" com origens Salvador+SP, ver [[Configuração Frete Shopify - Jun 2026]])*
 - [x] Adicionar tarifa de frete na zona Bahia do Perfil Geral *(01/07: Bahia incluída na zona Norte/Nordeste do Perfil Geral)*
 
@@ -106,6 +107,9 @@ desde: 2026-06-24
 | 2026-07-01 | Auditoria via API do Omie (locais, produtos, estoque, pedidos) | Refuta achado de 25/06: 6 locais existem, SP tem saldo real |
 | 2026-07-01 | Identificação definitiva do app Shopify↔Omie ativo | "Omie Shopify" confirmado vivo (credenciais batem no Hub); "Omie Move Gourmet" seguro remover |
 | 2026-07-01 | Acesso ao Omie.Hub liberado + investigação do mapeamento local→depósito | Confirmado: Hub NÃO tem campo de depósito na UI; chamado aberto com suporte Omie (Kim) |
+| 2026-07-02 | Construção do integrador próprio (repo `integradormovegourmet`, padrão Trivia) | Backlog de 8 épicos; fundação + banco Supabase |
+| 2026-07-02 | Cruzamento de SKU Omie×Shopify (via API) | 🚨 Achado crítico: só 9/124 casam; 97 sem SKU |
+| 2026-07-02 | Token Shopify resolvido (client_credentials) + Fluxo A construído | ✅ Sync de estoque por CD PRONTO no código, provado no real (shadow + write @idempotent) |
 
 ---
 
