@@ -75,6 +75,21 @@
 
 ---
 
+## 📌 Anotações e ações do JG (definidas na reunião)
+
+1. **Reestruturar a precificação do Leandro (para os pacientes):**
+   - **Avulso maior, mensal menor** (por sessão), alargando a diferença para empurrar o pacote.
+   - Criar um **plano trimestral** (condição melhor ainda que o mensal).
+   - *Objetivo: previsibilidade e mitigar o delay de reposição.*
+2. **Pesquisa e análise de branding:** decidir se **tudo fica sob a marca "Leandro Sola"** ou se **cria-se um nome próprio para a clínica**.
+3. **Faturamento 100% pela clínica (CNPJ):**
+   - Pagar **R$ 180/hora** de consulta ao psicólogo e **cobrar R$ 250** do paciente.
+   - **Piso de preço dos psicólogos da clínica:** não pode ser **< 50% da consulta individual do Leandro** (avulso R$ 500 → **mínimo R$ 250**), porque os psicólogos precisam passar autoridade.
+   - Margem: R$ 250 − R$ 180 = **R$ 70/consulta** (~R$ 2.100/mês por psicólogo em 30h).
+4. **Pesquisa contábil e de impostos** de como fica quando o faturamento passar a ser pelo CNPJ (regime, alíquotas, serviços de psicologia).
+
+> ⚠️ Havia um 5º item em branco nas anotações do JG — confirmar se falta algo.
+
 ## ❓ Pendências / próximos passos
 
 - [ ] JG volta com **o plano de início** (prometido no fim da reunião).
