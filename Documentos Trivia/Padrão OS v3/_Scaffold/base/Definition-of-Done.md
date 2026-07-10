@@ -52,6 +52,9 @@ paralelo. Se passar local, o CI deve passar. Individualmente, para depurar:
       (sem `Seq Scan` em tabela grande), lista paginada, sem N+1
 - [ ] **Observabilidade:** erro na borda em `problem+json` com `reqId`; log estruturado sem PII
 - [ ] **Se feature de IA/LLM:** checks da trilha `ia/` (evals, prompt versionado, injection)
+- [ ] **Se integração de sync/espelho:** checklist de `integracoes/sync-espelho.md` (watermark
+      durável, fuso provado por smoke test, cancelamento/DELETE propagam, sem coluna-constante,
+      dead-letter, watchdog externo ao agente)
 - [ ] Glossário atualizado se introduziu termo
 - [ ] A `spec.md` reflete o que foi construído (ou a divergência está documentada)
 - [ ] `docs/STATE.md` atualizado (próximo passo, decisões, bloqueios)

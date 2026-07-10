@@ -10,17 +10,26 @@ fonte: Tray API v2 — developers.tray.com.br
 > Gestão de cupons de desconto e campanhas promocionais.
 > Base para medir ROI de marketing cruzando com dados financeiros do Literarius.
 
+> ⚠️ **CORRIGIDO 08/07/2026** (ver [[Tray — Auditoria de Capacidades vs Produção]]): o recurso oficial é **`/discount_coupons`**, NÃO `/coupons`. Wrapper de resposta `DiscountCoupon`; body em `application/x-www-form-urlencoded`. Vínculos (cliente/produto/categoria/marca) via `POST /discount_coupons/create_relationship/:id` (máx. 100 por POST); `coupon_type` + `local_application` definem qual relationship usar.
+
 ---
 
 ## Endpoints
 
 ```
-GET    /coupons             → Listar cupons/promoções
-GET    /coupons/:id         → Detalhe do cupom
-POST   /coupons             → Criar cupom
-PUT    /coupons/:id         → Atualizar cupom
-DELETE /coupons/:id         → Remover cupom
+GET    /discount_coupons             → Listar cupons/promoções
+GET    /discount_coupons/:id         → Detalhe do cupom
+POST   /discount_coupons             → Criar cupom
+PUT    /discount_coupons/:id         → Atualizar cupom
+DELETE /discount_coupons/:id         → Remover cupom
+POST   /discount_coupons/create_relationship/:id  → Vincular a cliente/produto/categoria/marca
+GET    /discount_coupons/customer_relationship/:id
+GET    /discount_coupons/product_relationship/:id
+GET    /discount_coupons/category_relationship/:id
+GET    /discount_coupons/brand_relationship/:id
 ```
+
+~~`/coupons` (todos os verbos)~~ — **path errado**, era suposição.
 
 ---
 

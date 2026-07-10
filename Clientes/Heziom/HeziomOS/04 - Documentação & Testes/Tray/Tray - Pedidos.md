@@ -6,15 +6,18 @@ tipo: endpoint
 
 # Tray — Pedidos (`/orders`)
 
+> ⚠️ **CORRIGIDO 08/07/2026** (ver [[Tray — Auditoria de Capacidades vs Produção]]): a ESCRITA de status e rastreio via `PUT /orders/:id` usa os campos **`status_id`** (não a string `status`) e **`tracking_number`** (não `sending_code`, que é o campo de LEITURA). Para gerenciar os TIPOS de status da loja há um recurso separado: `/orders/statuses`. O detalhe completo do pedido também está disponível em `GET /orders/:id/full` (equivalente ao `/complete` já validado).
+
 ## Endpoints
 
 | Método | Path | Uso |
 |--------|------|-----|
-| `GET` | `/orders` | Lista pedidos (filtros: `date`, `status`, `customer_id`) |
+| `GET` | `/orders` | Lista pedidos (filtros: `date`, `status`, `customer_id`, `modified`) |
 | `GET` | `/orders/:id` | Dados básicos do pedido |
-| `GET` | `/orders/:id/complete` | Pedido completo com produtos, pagamento e entrega |
-| `PUT` | `/orders/:id` | Atualiza status, rastreio, etc. |
+| `GET` | `/orders/:id/complete` | Pedido completo com produtos, pagamento e entrega (validado; `/full` é equivalente) |
+| `PUT` | `/orders/:id` | Atualiza status/rastreio → campos **`status_id`** + **`tracking_number`** |
 | `PUT` | `/orders/:id/cancel` | Cancela pedido |
+| `GET/POST/PUT/DELETE` | `/orders/statuses` | Gerencia os TIPOS de status da loja (nome, cor, open/closed) |
 
 ### Filtros úteis para financeiro (`GET /orders`)
 

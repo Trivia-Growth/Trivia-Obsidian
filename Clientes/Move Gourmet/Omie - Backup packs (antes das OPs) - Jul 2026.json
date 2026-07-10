@@ -1,0 +1,335 @@
+{
+  "geradoEm": "2026-07-05T00:32:01.061Z",
+  "obs": "Backup ANTES de padronizar receitas + lançar OPs dos packs pastel/empada (Move Gourmet)",
+  "saldos": {
+    "Salvador": {
+      "4224701": {
+        "saldo": -8.024,
+        "desc": "REQUEIJAO SEM LACTOSE"
+      },
+      "PRD00678": {
+        "saldo": 7,
+        "desc": "PMUND EMPADA DE FRANGO ORGANICO 71G"
+      },
+      "PRD00681": {
+        "saldo": 57,
+        "desc": "PMUND PASTEL DE FRANGO 65G"
+      },
+      "PRD00686": {
+        "saldo": 1.176,
+        "desc": "RECHEIO DE BACALHAU"
+      },
+      "PRD00693": {
+        "saldo": 62,
+        "desc": "PMUND PASTEL DE BACALHAU 65G"
+      },
+      "PRD00716": {
+        "saldo": 1.5,
+        "desc": "MASSA DE PASTEL"
+      },
+      "PRD00717": {
+        "saldo": 0,
+        "desc": "MASSA DE EMPADA"
+      },
+      "PRD00719": {
+        "saldo": 0,
+        "desc": "GEMA 21G"
+      },
+      "PRD00728": {
+        "saldo": 34,
+        "desc": "PMUND EMPADA DE BACALHAU PORTUGUES 76G"
+      },
+      "PRD00752": {
+        "saldo": 0,
+        "desc": "KIT PASTEL DE FRANGO ORGÂNICO 70g - 6 Unid"
+      },
+      "PRD00766": {
+        "saldo": 1,
+        "desc": "PJFS  EMPADA DE FRANGO ORGANICO 71g - 6 UNID"
+      },
+      "PRD00767": {
+        "saldo": 0,
+        "desc": "PJFS EMPADA DE BACALHAU PORTUGUÊS 76g - 6 UNID"
+      },
+      "PRD00770": {
+        "saldo": 0,
+        "desc": "KIT PASTEL DE BACALHAU 65G - 6 UNID"
+      },
+      "PRD00838": {
+        "saldo": -20.24375,
+        "desc": "GEMA"
+      },
+      "PRD01135": {
+        "saldo": -25.076,
+        "desc": "RECHEIO DE FRANGO"
+      }
+    },
+    "SaoPaulo": {
+      "4224701": {
+        "saldo": 0,
+        "desc": "REQUEIJAO SEM LACTOSE"
+      },
+      "PRD00678": {
+        "saldo": 0,
+        "desc": "PMUND EMPADA DE FRANGO ORGANICO 71G"
+      },
+      "PRD00681": {
+        "saldo": 0,
+        "desc": "PMUND PASTEL DE FRANGO 65G"
+      },
+      "PRD00686": {
+        "saldo": 0,
+        "desc": "RECHEIO DE BACALHAU"
+      },
+      "PRD00693": {
+        "saldo": -1,
+        "desc": "PMUND PASTEL DE BACALHAU 65G"
+      },
+      "PRD00716": {
+        "saldo": 0,
+        "desc": "MASSA DE PASTEL"
+      },
+      "PRD00717": {
+        "saldo": 0,
+        "desc": "MASSA DE EMPADA"
+      },
+      "PRD00719": {
+        "saldo": 0,
+        "desc": "GEMA 21G"
+      },
+      "PRD00728": {
+        "saldo": 0,
+        "desc": "PMUND EMPADA DE BACALHAU PORTUGUES 76G"
+      },
+      "PRD00752": {
+        "saldo": 6,
+        "desc": "KIT PASTEL DE FRANGO ORGÂNICO 70g - 6 Unid"
+      },
+      "PRD00766": {
+        "saldo": 0,
+        "desc": "PJFS  EMPADA DE FRANGO ORGANICO 71g - 6 UNID"
+      },
+      "PRD00767": {
+        "saldo": 0,
+        "desc": "PJFS EMPADA DE BACALHAU PORTUGUÊS 76g - 6 UNID"
+      },
+      "PRD00770": {
+        "saldo": 4,
+        "desc": "KIT PASTEL DE BACALHAU 65G - 6 UNID"
+      },
+      "PRD00838": {
+        "saldo": 0,
+        "desc": "GEMA"
+      },
+      "PRD01135": {
+        "saldo": 0,
+        "desc": "RECHEIO DE FRANGO"
+      }
+    }
+  },
+  "malhas": {
+    "PRD00770": {
+      "ident": {
+        "codFamilia": "",
+        "codProduto": "PRD00770",
+        "descrFamilia": "PRODUTOS MOVE",
+        "descrProduto": "KIT PASTEL DE BACALHAU 65G - 6 UNID",
+        "idFamilia": 9440083356,
+        "idProduto": 9721460051,
+        "pesoBrutoProduto": 0,
+        "pesoLiqProduto": 0,
+        "tipoProduto": "03",
+        "unidProduto": "KIT"
+      },
+      "itens": [
+        {
+          "codFamMalha": "",
+          "codProdMalha": "PRD00716",
+          "dAltProdMalha": "21/03/2025",
+          "dIncProdMalha": "21/03/2025",
+          "descrFamMalha": "SUBPRODUTO",
+          "descrProdMalha": "MASSA DE PASTEL",
+          "hAltProdMalha": "11:01:02",
+          "hIncProdMalha": "11:01:02",
+          "idFamMalha": 9678250869,
+          "idMalha": 9721460052,
+          "idProdMalha": 9680240328,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 0.05,
+          "tipoProdMalha": "03",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "KG"
+        },
+        {
+          "codFamMalha": "",
+          "codProdMalha": "PRD00686",
+          "dAltProdMalha": "21/03/2025",
+          "dIncProdMalha": "21/03/2025",
+          "descrFamMalha": "ESTOQUE REFRIGERADO",
+          "descrProdMalha": "RECHEIO DE BACALHAU",
+          "hAltProdMalha": "11:01:02",
+          "hIncProdMalha": "11:01:02",
+          "idFamMalha": 9477454659,
+          "idMalha": 9721460053,
+          "idProdMalha": 9668606129,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 0.018,
+          "tipoProdMalha": "03",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "KG"
+        },
+        {
+          "codFamMalha": "",
+          "codProdMalha": "4224701",
+          "dAltProdMalha": "21/03/2025",
+          "dIncProdMalha": "21/03/2025",
+          "descrFamMalha": "ESTOQUE REFRIGERADO",
+          "descrProdMalha": "REQUEIJAO SEM LACTOSE",
+          "hAltProdMalha": "11:01:02",
+          "hIncProdMalha": "11:01:02",
+          "idFamMalha": 9477454659,
+          "idMalha": 9721460054,
+          "idProdMalha": 9568352439,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 0.003,
+          "tipoProdMalha": "99",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "KG"
+        },
+        {
+          "codFamMalha": "",
+          "codProdMalha": "PRD00719",
+          "dAltProdMalha": "21/03/2025",
+          "dIncProdMalha": "21/03/2025",
+          "descrFamMalha": "SUBPRODUTO",
+          "descrProdMalha": "GEMA 21G",
+          "hAltProdMalha": "11:01:02",
+          "hIncProdMalha": "11:01:02",
+          "idFamMalha": 9678250869,
+          "idMalha": 9721460055,
+          "idProdMalha": 9680940731,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 0.004,
+          "tipoProdMalha": "03",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "KG"
+        }
+      ]
+    },
+    "PRD00767": {
+      "ident": {
+        "codFamilia": "",
+        "codProduto": "PRD00767",
+        "descrFamilia": "PRODUTOS MOVE",
+        "descrProduto": "PJFS EMPADA DE BACALHAU PORTUGUÊS 76g - 6 UNID",
+        "idFamilia": 9440083356,
+        "idProduto": 9721447973,
+        "pesoBrutoProduto": 0,
+        "pesoLiqProduto": 0,
+        "tipoProduto": "03",
+        "unidProduto": "PCT"
+      },
+      "itens": []
+    },
+    "PRD00766": {
+      "ident": {
+        "codFamilia": "",
+        "codProduto": "PRD00766",
+        "descrFamilia": "PRODUTOS MOVE",
+        "descrProduto": "PJFS  EMPADA DE FRANGO ORGANICO 71g - 6 UNID",
+        "idFamilia": 9440083356,
+        "idProduto": 9720972306,
+        "pesoBrutoProduto": 0,
+        "pesoLiqProduto": 0,
+        "tipoProduto": "03",
+        "unidProduto": "PCT"
+      },
+      "itens": [
+        {
+          "codFamMalha": "",
+          "codProdMalha": "PRD00678",
+          "dAltProdMalha": "20/03/2025",
+          "dIncProdMalha": "20/03/2025",
+          "descrFamMalha": "PRODUTOS MOVE",
+          "descrProdMalha": "PMUND EMPADA DE FRANGO ORGANICO 71G",
+          "hAltProdMalha": "16:47:19",
+          "hIncProdMalha": "16:47:19",
+          "idFamMalha": 9440083356,
+          "idMalha": 9720972668,
+          "idProdMalha": 9663470447,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 6,
+          "tipoProdMalha": "03",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "UN"
+        }
+      ]
+    },
+    "PRD00752": {
+      "ident": {
+        "codFamilia": "",
+        "codProduto": "PRD00752",
+        "descrFamilia": "PRODUTOS MOVE",
+        "descrProduto": "KIT PASTEL DE FRANGO ORGÂNICO 70g - 6 Unid",
+        "idFamilia": 9440083356,
+        "idProduto": 9720865830,
+        "pesoBrutoProduto": 0,
+        "pesoLiqProduto": 0,
+        "tipoProduto": "03",
+        "unidProduto": "KIT"
+      },
+      "itens": [
+        {
+          "codFamMalha": "",
+          "codProdMalha": "PRD00681",
+          "dAltProdMalha": "20/03/2025",
+          "dIncProdMalha": "20/03/2025",
+          "descrFamMalha": "PRODUTOS MOVE",
+          "descrProdMalha": "PMUND PASTEL DE FRANGO 65G",
+          "hAltProdMalha": "14:51:51",
+          "hIncProdMalha": "14:51:51",
+          "idFamMalha": 9440083356,
+          "idMalha": 9720868801,
+          "idProdMalha": 9663472005,
+          "percPerdaProdMalha": 0,
+          "pesoBrutoProdMalha": 0,
+          "pesoLiqProdMalha": 0,
+          "quantProdMalha": 6,
+          "tipoProdMalha": "03",
+          "uAltProdMalha": "P000662876",
+          "uIncProdMalha": "P000662876",
+          "unidProdMalha": "UN"
+        }
+      ]
+    }
+  },
+  "plano": [
+    {
+      "pack": "PRD00766 empada frango",
+      "acao": "OP +1 (receita ok 6x PRD00678)"
+    },
+    {
+      "pack": "PRD00767 empada bacalhau",
+      "acao": "criar receita 6x PRD00728 (id 9690924786); OP +5"
+    },
+    {
+      "pack": "PRD00770 pastel bacalhau",
+      "acao": "trocar receita cru->6x PRD00693 (id 9676303830); OP +10"
+    }
+  ]
+}

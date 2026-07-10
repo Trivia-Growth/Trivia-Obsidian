@@ -89,10 +89,21 @@ GET /customers?limit=50&page=1            → Paginação
 | `cpf` / `cnpj` | `Parceiro.CnpjCpf` | Chave alternativa (mais confiável) |
 | `name` | `Parceiro.Nome` | Pode divergir (abreviações) |
 | `type` (PF/PJ) | `Parceiro.TipoPessoa` | Direto |
-| — | `Parceiro.ClienteTipoCliente` | Tray não tem segmentação por tipo (igreja, livraria, etc.) |
+| `/customers/profiles` | `Parceiro.ClienteTipoCliente` | ✅ **A Tray TEM segmentação** — perfis/grupos de cliente (ver correção abaixo) |
 | — | `Parceiro.ClienteLimiteCredito` | Não existe na Tray |
 
-> **Gap:** Literarius tem 47k parceiros com 7 tipos de cliente (igrejas, livrarias, distribuidores, ONGs, PF, funcionários, empresas). A Tray não segmenta — todos são "clientes". O HeziomOS pode enriquecer o CRM cruzando os dois.
+> ⚠️ **CORRIGIDO 08/07/2026** (ver [[Tray — Auditoria de Capacidades vs Produção]]): a afirmação anterior ("a Tray não segmenta clientes") está **ERRADA**. A Tray oferece **Perfis de Cliente** (`/customers/profiles` — equivale a grupos/segmentos, campo `approved`) e **Listas de Preço B2B** (`/price-lists` + `/price-lists/:id/values`). Combinando os dois dá **preço de atacado por grupo** (igrejas, IPP, livrarias, revendas) direto na loja. É a **maior alavanca B2B ainda não usada** — mapear os 7 tipos de `ClienteTipoCliente` do Literarius para perfis Tray.
+
+> **Gap real:** Literarius tem 47k parceiros com 7 tipos de cliente. Hoje esses tipos NÃO estão sincronizados para os perfis da Tray — o HeziomOS pode (e deveria) espelhar a segmentação criando `/customers/profiles` e vinculando clientes + listas de preço B2B.
+
+### Endpoints B2B (oficial)
+
+```
+GET/POST/PUT/DELETE /customers/profiles          → grupos/segmentos de cliente
+POST   /customers/:customer_id/profiles/:profile_id  → vincular cliente ao grupo
+GET/POST/PUT/DELETE /price-lists                 → tabelas de preço B2B (com hífen)
+GET/POST/PUT/DELETE /price-lists/:id/values      → preços por produto/variação na tabela
+```
 
 ---
 

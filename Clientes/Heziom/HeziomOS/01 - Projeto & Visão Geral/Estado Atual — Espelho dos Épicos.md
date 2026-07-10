@@ -1,7 +1,7 @@
 ---
 tipo: espelho
 status: vivo
-data: 2026-07-02
+data: 2026-07-05
 fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomos
 ---
 
@@ -24,7 +24,7 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 | E7 | Literarius BFF & LGPD | 🔄 Em progresso (7.1/7.2 Done) |
 | E8 | Resolução de Débito Técnico | 🔄 Reaberto |
 | E9 | Atendimento como Módulo Próprio | ✅ Concluído (em prod) |
-| E10 | Módulo Financeiro | 🔄 Em progresso — **só a Story 10.1 (dashboards de leitura) está em produção**; conciliação/CNAB/Qive/aprovação estão em branch não mergeada |
+| E10 | Módulo Financeiro | 🔄 CORRIGIDO 05/07: **10.1–10.5 Done na main/prod** (dashboards, aging, aprovação, DRE, conciliação v1) — a nota anterior sobre "branch não mergeada" estava DEFASADA. Fase 2 planejada: 10.7–10.16 (PR #262) |
 | E11 | SDD Process | ✅ Done |
 | E12 | reqId em todas as functions | ✅ Done |
 | E13 | Quality / Coverage / Splitting | 🔄 Em andamento |
@@ -37,6 +37,14 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 | E20 | Motor de envio de e-mail em escala (40k+) — fila + worker + rampa + circuit breaker | 📋 Planning (criado 02/07 — mapeamento do marketing; hoje campanha corta em 5k silenciosamente) |
 | E21 | Construtor visual de e-mails (drag-and-drop) | 📋 Planning (mockup aprovado pelo JG 02/07 — condições: design system + mobile) |
 | E22 | Construtor de landing pages | 📋 Planning (fase 2 — após E20/E21) |
+| E29 | Comercial ERP — vendas do Literarius (canais, pace vs meta, funil, rankings, devoluções, consignação) | 📋 Draft (PR #262, 05/07) |
+| E30 | Editorial — catálogo, margem, preços c/ vigência, royalties, projetos | 📋 Draft (PR #262, 05/07) |
+| E31 | Estoque & Operações — giro/ABC, inventário, transferências, snapshot, recebimento | 📋 Draft (PR #262, 05/07) |
+| E32 | Liderança / Cockpit Executivo — reconstrói CEO+BI consolidando os módulos | 📋 Draft (PR #262, 05/07) |
+| E33 | Acessos granulares do coordenador (por módulo) — admin define quais módulos cada coordenador acessa, com gestão dentro deles | 📋 Draft (spec pronta, PR #291, 06/07) — ver [[Epic 33 — Acessos Granulares do Coordenador]] |
+| E38 | Integração Tray Completa (loja de teste → produção-ready) — fecha go-live seguro + camada estratégica | 📋 Draft (spec + 11 stories no vault, 08/07) — ver [[_Epic 37 — Integração Tray Completa (spec)]]. ✅ Nº CONFIRMADO **E38** no repo (09/07; E37 do repo = Operação de Vendas). Stories 38.1–38.11 em docs/stories. |
+
+> Nota: a tabela acima é o snapshot de 02/07 e NÃO reflete os épicos abertos depois no repo (E35 Simulador de Frete, E36 Vindi Links de Pagamento). O E37 é o próximo trabalho registrado no vault.
 
 ## De onde vieram as stories antigas do vault
 
@@ -44,3 +52,48 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 - `STORY-010..012` → eram do **outro repo** `heziom-api` (Tray↔Meta CAPI) → movidas para `_Histórico/heziom-api/`.
 - `STORY-013..016` (fundação do monorepo) = **Épico 1**, concluído → arquivadas em `_Histórico/Stories/`.
 - `Sales-Hzm/STORY-015..024` = viraram os Épicos 5/6/16/17 → ver `_Histórico/Sales-Hzm/`.
+
+## Atualização 2026-07-05 — Cobertura total + reorganização em 5 módulos
+
+- **`literarius-sync` atingiu COBERTURA TOTAL do ERP** (59 tabelas úteis das 188; 16 novas em
+  05/07 com contagem fonte×espelho exata, incl. preços c/ vigência, inventários, transferências,
+  NFS-e, numeração de NF, projetos editoriais). Motor declarativo: adicionar tabela = 1 entrada.
+- **Agendador próprio** (Task Scheduler via pacote fechado) instalado na VMAPP01 na conta
+  joao.novais; falta registrar as 2 tarefas (senha admin) e DESATIVAR o job antigo no Tactical.
+- **Reorganização do consumo em 5 módulos** (diretriz JG): ver
+  [[HeziomOS — Módulos Literarius (Plano 2026-07-05)]] — Financeiro (fiscal+contábil+financeiro),
+  Comercial (+vendas ERP), Editorial (novo), Estoque (novo), Liderança (camada executiva).
+  Epics E29–E32 + Epic 10 Fase 2 (10.7–10.16) com 28 stories profundas no PR #262.
+- **Correção desta nota:** o status anterior do E10 ("10.2–10.6 em branch não mergeada") estava
+  defasado — 10.1–10.5 estão Done na main/produção desde o cutover de 02/07.
+
+## Atualização 2026-07-06 — Papel coordenador e acessos granulares (E33)
+
+- **Papel `coordenador`** criado e em produção (stories 23.8–23.10, PRs #288/#290): vê todas as
+  conversas, transfere atendimento, exclui tags, e o admin escolhe por pessoa quais **abas de
+  Configurações de Atendimento** ele acessa. Hotfix da transferência incluído (WITH CHECK).
+- **Epic 33 aberto** ([[Epic 33 — Acessos Granulares do Coordenador]], PR #291): admin define,
+  por coordenador, quais **módulos do sistema** (Atendimento, Comercial, Logística, Marketing,
+  Relatórios, Liderança, Financeiro) a pessoa acessa, com **acesso de gestão** dentro deles.
+  Ponto-chave: Financeiro, Liderança/BI e gestão de Campanhas travam no backend (exigem gerência),
+  então a liberação desce ao backend controlada pelo módulo liberado à pessoa (`can_manage_area`),
+  nunca como passe geral. Stories 33.1–33.4 (dados+helpers → backend por área → frontend+gate →
+  security gate). Aguardando implementação.
+
+## Atualização 2026-07-08 — Auditoria Tray + Epic 37 (integração completa, produção-ready)
+
+- **Auditoria exaustiva da integração Tray** (25 docs do vault × API oficial): ver
+  [[Tray — Auditoria de Capacidades vs Produção]]. Conclusão: o que está no ar (ponte CAPI +
+  sync CRM de leitura) é uma fatia do que a Tray oferece. Achou **6 endpoints errados** no vault
+  (`/abandoned-carts`→`/carts`; `/coupons`→`/discount_coupons`; NF-e→`POST /orders/:id/invoices`;
+  status/rastreio→`status_id`+`tracking_number`; B2B existe via `/customers/profiles`+`/price-lists`;
+  webhooks só 9 escopos, sem transação/NF/carrinho → polling) e **1 risco crítico**: refresh token
+  de uso único disputado entre `heziom-api` e HeziomOS na mesma loja. As 5 notas de origem já foram
+  corrigidas com banner "⚠️ CORRIGIDO 08/07".
+- **Epic 37 aberto (nº provisório)** — [[_Epic 37 — Integração Tray Completa (spec)]] + 11 stories
+  (37.1–37.11) em `Stories/Epic 37 — Integração Tray Completa/`. Fase 0 (parametrização multi-loja,
+  dono do refresh, correção de endpoints, webhook+polling+evidências de homologação) → Fase 2
+  (conciliação financeira, carrinho abandonado via `/carts`, NF-e) → Fase 3 (preço B2B, sync de
+  catálogo, estoque+Multi-CD, newsletter+scripts). Tudo validado na loja de teste **1501119** e
+  parametrizado para o cutover à loja de produção **1345958** ser só config. Homologação Tray até
+  **13/08/2026**.

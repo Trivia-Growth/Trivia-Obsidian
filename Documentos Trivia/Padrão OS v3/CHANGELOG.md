@@ -4,6 +4,42 @@
 > aqui. Owner do padrão: <definir>. Processo: PR no vault + scaffold; rodar `audit:esteira` e
 > `eval:spec` antes de marcar a versão.
 
+## v3.5.0 — 2026-07-04
+Norma nova de **integrações de sincronização (espelho/ETL)** — classe de sistema que o padrão não
+cobria e que falha de um jeito próprio: **silenciosamente e com gate verde**. Origem: revisão
+adversarial completa do `literarius-sync` (sync ERP Literarius → Supabase do HeziomOS), em produção
+há semanas com dashboards "funcionando" e **6 críticos invisíveis**: janela incremental sem
+watermark (parada >1h = perda permanente com log `success`), fuso do driver podendo deixar a janela
+no futuro (zero linhas por ciclo, sem erro), NF cancelada que nunca propagava (`Cancelada=0` no
+WHERE congela o espelho), 4 colunas de contrato gravadas como constantes (`data_pagamento: null`
+→ DRE do consumidor sempre vazio), conciliação bancária inoperante por design (FK hardcoded null)
+e zero alerta com o agente morto (alerta interno não cobre processo que não roda). Nenhum era
+pegável por inspeção, teste unitário (que testava uma CÓPIA do mapper) ou log.
+
+**Adicionado**
+- **`base/integracoes/sync-espelho.md`**: 12 regras + checklist DoD próprio. Núcleo: watermark
+  durável com relógio da FONTE (nunca `agora − lookback`); fuso provado por smoke test permanente
+  (registro alterado chega com valor certo); estado destrutivo propaga (transição não pode sair do
+  WHERE; reconciliação de DELETE + `deleted_at` escrito E lido); proibido coluna de contrato com
+  constante no mapper; lote com fallback linha-a-linha + dead-letter (erro permanente não retenta);
+  **watchdog no destino** (dead man's switch — o alarme mora onde o defunto não mora) + agendador
+  validado pós-reboot; bootstrap paginado de primeira classe; preferir views do dono da fonte a
+  refazer JOIN; schema do espelho com UM dono (repo consumidor) + smoke de `onConflict` por tabela;
+  sem NOLOCK em dado financeiro; testes importam o mapper REAL; `sync_log` por tabela sem config
+  morta.
+- Amarrada no fluxo: `Definition-of-Done` (item condicional "se sync/espelho"), matriz de
+  qualidade (**itens 27c–27g**, seção nova), `CLAUDE.md` do scaffold (mapa de docs sob demanda),
+  nota `09 - Receitas` (+ seção; título ganha "Sync") e `00 - Comece Aqui`.
+
+**Diagnóstico (por que a lacuna existia)**
+- O padrão cobria integração assíncrona **transacional** (outbox/idempotência, item 27b os-grade),
+  mas não **replicação contínua de dados** — onde o modo de falha dominante não é "operação
+  falhou" e sim "operação 'deu certo' com dado errado/faltando". Gates verdes convencionais não
+  enxergam: o processo roda, loga sucesso e corrompe o BI. Daí a ênfase em smoke tests de ponta a
+  ponta (dado de verdade atravessando) e watchdog externo, não só checklist de código.
+- Reforça a v3.4.0: foi a **revisão adversarial** ("assuma quebrado e prove") que achou os 6 — a
+  revisão confirmatória tinha passado.
+
 ## v3.4.0 — 2026-07-02
 Adicionada a **revisão adversarial** ao fluxo de validação — prática que o JG (João) aplica na mão
 ("sempre acho erro quando peço") e que **não existia como passo** no padrão. A revisão do padrão era

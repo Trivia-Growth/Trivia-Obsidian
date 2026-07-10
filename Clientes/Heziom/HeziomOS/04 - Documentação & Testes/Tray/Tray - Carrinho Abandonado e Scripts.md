@@ -8,18 +8,22 @@ fonte: Tray API v2 — developers.tray.com.br (inferido do padrão da plataforma
 # Tray — Carrinho Abandonado e Scripts
 
 > Endpoints para recuperação de vendas perdidas e injeção de scripts de conversão.
-> Endpoints inferidos do padrão da plataforma — confirmar disponibilidade com documentação oficial após desbloqueio.
+
+> ⚠️ **CORRIGIDO 08/07/2026** (ver [[Tray — Auditoria de Capacidades vs Produção]]): **NÃO existe endpoint `/abandoned-carts`** na API oficial da Tray. A recuperação de carrinho é construída sobre a **API de Listagem de Carrinho** (`GET /carts`, paginada, lista TODOS os carrinhos incl. os não finalizados) + `GET /carts/{session_id}/complete` para o detalhe. Corrigir o env `TRAY_ABANDONED_CARTS_PATH` (hoje aponta para `/abandoned-carts`, errado).
 
 ---
 
-## Carrinho Abandonado (Abandoned Carts)
+## Carrinho Abandonado (via API de Listagem de Carrinho)
 
-### Endpoints (provável)
+### Endpoints (oficial)
 
 ```
-GET /abandoned-carts        → Listar carrinhos abandonados
-GET /abandoned-carts/:id    → Detalhe do carrinho
+GET /carts                       → Lista TODOS os carrinhos (paginado) — filtrar os não finalizados
+GET /carts/{session_id}/complete → Detalhe do carrinho (produtos, frete, valores)
+GET /carts/{session_id}          → Carrinho por sessão
 ```
+
+~~`GET /abandoned-carts` / `GET /abandoned-carts/:id`~~ — **não existem** (era inferência do padrão de outras plataformas).
 
 ### Campos esperados
 
@@ -39,7 +43,7 @@ GET /abandoned-carts/:id    → Detalhe do carrinho
 ```
 Tray: carrinho abandonado detectado (>30min sem checkout)
     ↓
-HeziomOS: GET /abandoned-carts?date=últimas_24h
+HeziomOS: GET /carts (paginado) → filtrar carrinhos não finalizados das últimas 24h
     ↓ Filtrar: valor > R$50, cliente com email
     ↓
 Ação automática:
@@ -117,7 +121,7 @@ Editar manualmente no tema:
 
 | Funcionalidade | Como | Impacto |
 |---|---|---|
-| **Painel de carrinhos abandonados** | `GET /abandoned-carts` diário | Visibilidade de receita perdida |
+| **Painel de carrinhos abandonados** | `GET /carts` (paginado) diário, filtrando não finalizados | Visibilidade de receita perdida |
 | **Automação de remarketing** | Carrinho >R$50 → email com cupom | Recuperar 5-15% dos abandonos |
 | **Gestão de pixels/tags** | CRUD via `/scripts` | Marketing sem depender de dev |
 | **Exit-intent programático** | Injetar popup via script | Converter visitantes saindo |

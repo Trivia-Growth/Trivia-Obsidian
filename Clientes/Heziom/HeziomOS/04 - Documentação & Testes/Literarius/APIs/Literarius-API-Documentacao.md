@@ -3,6 +3,50 @@
 > Documentado em 2026-05-18 via chamadas exploratórias. Atualizado 2026-05-19 (duplo-check).  
 > Base URL: `http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest`
 
+> ## ✅ VALIDAÇÃO EMPÍRICA COMPLETA — 2026-07-04 (~80 chamadas read-only, throttle 250–300ms)
+> Corrige afirmações abaixo que ficaram desatualizadas. **Onde este bloco contradisser o resto do
+> documento, este bloco vence.** Detalhe completo: `HeziomOs-Literarius-sync/docs/API-VALIDACAO-2026-07-04.md`.
+>
+> 1. **PAGINAÇÃO EXISTE** (a seção "sem paginação" está ERRADA): `?page=N` (50/página, fixo —
+>    `pageSize`/`limit` são ignorados) funciona em Parceiro, Produto, PedidoVenda, NotaFiscal,
+>    Receber e Pagar. Fim de lista = `data: []` com `sucess: true`. Ordenação por id/código asc.
+> 2. **FILTRO INCREMENTAL `?dataAlt=` (não documentado pelo fornecedor)**: funciona com
+>    semântica `>=` em **Receber, Pagar e Produto** (combina com `page`) e **aceita data E HORA**
+>    (`?dataAlt=2026-07-03T12:00:00` validado). É **ignorado silenciosamente** em Parceiro,
+>    PedidoVenda e NotaFiscal (retorna lista sem filtro — cuidado: não dá erro). `dataInicio`
+>    não existe em lugar nenhum.
+> 3. **TTituloFinanceiroController — pendências da seção 6 RESPONDIDAS**: `/Receber/` e `/Pagar/`
+>    sem ID retornam lista paginada (43 campos, parceiro aninhado). **`rateios[]` vem EMBUTIDO e
+>    populado** (idTituloFinanceiroRateio, planoConta, centroResultado, percentual, valor, sinal,
+>    alteradoManual) — a premissa "rateio só via SQL" caiu. **`baixas[]` vem SEMPRE VAZIO** (campo
+>    existe, nunca populado — testado em títulos antigos, recentes e pagos; modos lista e item) →
+>    **data de pagamento continua indisponível via API**; DRE por regime de caixa segue exigindo
+>    SQL (`vwTituloFinanceiroBaixasComRateio`). `situacao = 1` em 100% das amostras (mesmo bug do
+>    banco). Não há campo `dataPagamento` no título; há `pago` (bool) e `valorPago`.
+> 4. **Controllers NÃO documentados descobertos**: `TInventarioController/Inventario/` (todos os
+>    1.579 inventários com `items[]`: qtdeContada, saldoEstoque, qtdeDiferenca — **não pagina**,
+>    payload único de ~7–10s) e `TFormaPagtoController/FormaPagto/` (17 formas: taxa, prazo,
+>    aVista, codigoExterno).
+> 5. **Produto embute `precos[]`** (= ProdutoPreco: dataVigencia, faixaInicial/Final, tipoCliente,
+>    descontoMaximo), `autores[]` (com nome e participação), `imagens[]`, `camposExtra[]`,
+>    `produtoParceiro[]`. **Produto NÃO expõe custo** (CustoMedio segue só via SQL).
+> 6. **NotaFiscal: a LISTA não traz status de cancelamento, mas a NF POR ID (108 campos) traz**
+>    (`situacao`, `nFeStatus`, `nFeProtocoloCancelamento`, `nFeDataHoraCancelamento`,
+>    `nFeJustificativaCancelamento`) + `items[]`/`venctos[]`/`volumes[]` embutidos. Para sync em
+>    massa a API segue inadequada (item a item é caro); espelho fiscal continua via SQL.
+> 6b. **Métodos extras descobertos**: `TParceiroController/Transportadora/` (21),
+>    `/Vendedor/` (48), `/TipoCliente/` (7), `/Cliente/{id}`, `/Fornecedor/{id}`;
+>    `TOperacaoFiscalController` existe (vazio). `PedidoVendaStatus/{emp}/{status}` NÃO pagina e
+>    o status 6 estoura timeout de 90s — não usar programaticamente. Domínio de status de pedido
+>    com dados: 1 (241), 3 (25), 4 (28), 5 (14), 7 (145), 8 (42), 9 (2), 6 (gigante/timeout).
+> 6c. **Contagens 04/07/2026**: 49.857 parceiros · 5.146 produtos · 26.630 pedidos · 38.640 NFs ·
+>    54.097 receber + 3.764 pagar. Maior id de título 60.186 vs 57.861 existentes → **~2.3k
+>    títulos DELETADOS na fonte** (espelho upsert-only nunca remove — reconciliação necessária).
+> 7. **CPF/CNPJ hoje vem como STRING com zeros preservados** (11/14 dígitos) em Parceiro — o bug
+>    de zeros comidos (story 5.4, 18/06) não se reproduz mais no Parceiro.
+> 8. Latências medidas: listas 0,2–1,9s/página; `PedidoVendaStatus/{emp}/{status}` 6s (241 rows);
+>    Inventario 7–10s. Sem rate limit do lado deles (e-mail do fornecedor) — **manter throttle**.
+
 > ⚠️ **Não é 100% read-only!** O endpoint `PUT /TPedidoVendaController/PedidoVenda` permite **criar e atualizar pedidos**. O `GET /PedidoVendaStatus/{emp}/{num}/{status}` **altera status** do pedido em produção. Demais controllers são somente leitura.
 
 ### Resumo de Capacidades (atualizado 19/05/2026)

@@ -62,6 +62,12 @@ alwaysApply: false
 | 27 | SLO/SLI no caminho crítico | 📖 Guia | `observabilidade/slo-sli.template.md` | OS / crítico | @reliability |
 | 27a | Tracing distribuído (OpenTelemetry) no fluxo multi-serviço | 📖 Guia | `observabilidade/README.md` §Tracing | OS | @reliability |
 | 27b | Evento assíncrono com outbox/idempotência | 📖 Guia | `os-grade.md` §Integrações | OS c/ integração | @architect |
+| **Integrações de sincronização (espelho/ETL)** |
+| 27c | Watermark durável por tabela + relógio da fonte (nunca janela de relógio local) | ☑️ DoD / 📖 | `integracoes/sync-espelho.md` §1 | quando há sync | @data-engineer |
+| 27d | Fuso horário provado por smoke test (registro alterado chega com valor certo) | ☑️ DoD / 📖 | `sync-espelho.md` §2 | quando há sync | @qa |
+| 27e | Cancelamento/estorno/DELETE propagam (reconciliação + `deleted_at` escrito e lido) | ☑️ DoD / 📖 | `sync-espelho.md` §3 | quando há sync | @data-engineer |
+| 27f | Sem coluna de contrato com constante; lote com dead-letter linha a linha | ☑️ DoD / 📖 | `sync-espelho.md` §4–5 | quando há sync | @dev |
+| 27g | Watchdog no destino (dead man's switch) + agendador validado pós-reboot | ☑️ DoD / 📖 | `sync-espelho.md` §6 | quando há sync | @reliability |
 | **Produtos de IA (LLM)** |
 | 28 | Evals com casos adversariais | 📖 Guia | `ia/evals.md` | quando há LLM | @prompt-engineer |
 | 29 | Prompt versionado + defesa contra injection | 📖 Guia | `ia/prompt-e-injection.md` | quando há LLM | @prompt-engineer |

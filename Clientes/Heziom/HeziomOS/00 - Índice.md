@@ -177,6 +177,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 - [[Monorepo — Estrutura e Setup]] — blueprint do monorepo `heziomos`: estrutura de pastas, deploy isolado por app, Supabase schema único, TRIVIAIOX, comandos git subtree
 - [[STORY-013 — Setup Monorepo heziomos]] — story de implementação do monorepo (backlog)
+- [[Prompt — Clonar Módulo de Atendimento (novo OS)]] — 🆕 prompt de handoff para portar o inbox de Atendimento (conversas WhatsApp + IA) para outro OS: arquitetura, inventário de arquivos, ordem com gates e regras invioláveis (verify_jwt, RLS, sem realtime)
 
 ---
 

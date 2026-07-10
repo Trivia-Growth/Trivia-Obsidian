@@ -140,6 +140,8 @@ checklist / guia) está em `PADRAO-DE-QUALIDADE.md`.
   `runbooks/`, `docs/ENVIRONMENTS.md`.
 - **Edge Functions (Supabase):** `supabase/functions/_template/index.ts` + `_shared/`.
 - **IA/LLM:** `ia/` (só em feature com LLM).
+- **Sync/espelho de dados:** `integracoes/sync-espelho.md` (só em projeto que replica dados de
+  fonte externa — ERP, e-commerce, CRM; 12 regras + checklist DoD próprio).
 
 ## Memória de trabalho — `docs/STATE.md`
 - **STATE.md é volátil** (em andamento, próximo passo, bloqueios); **ADR é durável** (decisão

@@ -35,7 +35,8 @@ inspeção — só por **gate verde**.
 - [[06 - Operações]] — git, CI/CD, runbooks, observabilidade.
 - [[07 - Como usar o Scaffold]] — copiar `base/`, aplicar `os-layer/`, instalar o squad.
 - [[08 - Padrão de Qualidade]] — o que é garantido e **como** (gate / hook / checklist / guia).
-- [[09 - Receitas (Banco, Edge, HTTP)]] — RLS, migration, Edge Function, borda HTTP, port/adapter.
+- [[09 - Receitas (Banco, Edge, HTTP)]] — RLS, migration, Edge Function, borda HTTP, port/adapter,
+  sync/espelho de dados.
 
 ## Como começar um projeto (resumo)
 1. Copie `_Scaffold/base/` para o repositório novo e instale o squad

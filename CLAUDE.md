@@ -18,8 +18,12 @@ Timezone: America/São_Paulo (GMT-3). Idioma: Português brasileiro.
                             TriviaEdutech, GeradordeLP
 /Documentos Trivia        → Documentos internos da Trivia
     Clientes              → Material de clientes
-    Padrão Projetos       → Padrões de projeto
-    _Template Projeto     → Template base para novos projetos
+    Padrão OS v3          → PADRÃO ATUAL (SDD + Triviaiox). Fonte da verdade p/ código:
+                            _Scaffold/ (base = single-repo · os-layer = OS · squads/trivia-os).
+                            Guia humano: notas 00–09 + CHANGELOG (espelho do scaffold).
+    Padrão OS             → geração v2 (espelho anterior — superado pelo v3)
+    Padrão Projetos       → LEGADO (era Lovable, depreciado para agentes)
+    _Template Projeto     → template antigo (pré-Padrão OS)
 /Clippings                → Recortes/artigos salvos (web clipper)
 /Novos Negócios Bruno Nardon → Notas de novos negócios / mentorias
 /Triviaiox-main           → Framework Triviaiox (código, NÃO é nota — ver aviso)
@@ -36,7 +40,13 @@ mover para repositórios próprios é uma dívida técnica conhecida (decisão a
 
 ## Convenções
 - Idioma: Português brasileiro.
-- Pastas de cliente seguem o padrão de `Documentos Trivia/_Template Projeto`
-  (00 - Índice, Projeto/Dashboard, Roadmap, Stories, etc.).
+- **Padrão atual = Padrão OS v3** (`Documentos Trivia/Padrão OS v3/`): esteira SDD, código em
+  `specs/NNNN-<slug>/` (product/domain/design/spec/tasks), gates verdes, agentes Triviaiox.
+  A fonte da verdade que o agente lê é o scaffold `_Scaffold/base/CLAUDE.md`.
+- **Antes de estruturar o vault de um projeto, cheque a geração do padrão instalada no repo**
+  (v3 SDD `specs/NNNN` — com epic = pasta specs/NNNN e story = task — vs. gerações anteriores
+  epic/story em arquivos, como o HeziomOS). Não assuma a partir de outro projeto.
+- Pastas de cliente mais antigas ainda seguem `Documentos Trivia/_Template Projeto`
+  (00 - Índice, Projeto/Dashboard, Roadmap, Stories, etc.) — legado, não usar em projeto novo.
 - Não criar pastas de scaffold vazias no topo — poluem a navegação e não sincronizam.
 - Nomes de pasta sem sufixo " 2" (artefato de conflito do macOS) — manter limpos.

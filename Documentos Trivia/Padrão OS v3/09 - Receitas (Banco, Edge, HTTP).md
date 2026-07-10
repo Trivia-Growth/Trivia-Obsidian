@@ -1,9 +1,9 @@
 ---
 audiência: humano
-atualizado: 2026-06-24
+atualizado: 2026-07-04
 ---
 
-# 09 — Receitas (Banco, Edge Functions, HTTP)
+# 09 — Receitas (Banco, Edge Functions, HTTP, Sync)
 
 > Espelho humano. **Fonte da verdade: o scaffold** (código e templates abaixo). Esta nota é o
 > índice navegável das receitas operacionais. Voltar: [[00 - Comece Aqui]].
@@ -31,6 +31,16 @@ persistência, borda, banco).
 - **Handler de exemplo** (Zod + problem+json + log): `_Scaffold/base/src/interfaces/http/registrar-comissao.ts`.
 - **Log estruturado** (JSON, reqId, sem PII): `_Scaffold/base/src/shared/log.ts`.
 - **Config tipada** (Zod, fail-fast): `_Scaffold/base/config/env.ts`.
+
+## Integrações de sincronização (espelho / ETL contínuo)
+- **Norma completa + checklist DoD**: `_Scaffold/base/integracoes/sync-espelho.md` — 12 regras
+  para qualquer processo que replica dados de fonte externa (ERP, e-commerce, CRM) para um
+  espelho lido por BI/produto.
+- As que mais salvam: **watermark durável** (nunca janela de relógio), **fuso provado por smoke
+  test**, **cancelamento/DELETE propagam** (reconciliação + `deleted_at`), **sem coluna gravada
+  como constante**, **dead-letter por linha**, **watchdog fora do agente** (dead man's switch).
+- Origem: revisão adversarial do `literarius-sync` (04/07/2026) — 6 críticos silenciosos em
+  produção, nenhum visível por log ou inspeção. Ver CHANGELOG v3.5.0.
 
 ## Persistência (porta + adapter)
 - Porta no domínio: `_Scaffold/base/src/domain/comissao/registro-comissao.ts`.
