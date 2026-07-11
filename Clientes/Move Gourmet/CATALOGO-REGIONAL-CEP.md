@@ -1,0 +1,81 @@
+---
+titulo: Catálogo Regional por CEP (Move Gourmet) — Definições e Plano
+data: 2026-07-11
+autor: Trívia Digital
+status: DEFINIDO — a abrir como feature; nada codado ainda
+---
+
+# Catálogo Regional por CEP — Move Gourmet
+
+> Decisão do JG (11/07): seguir com a **Opção A** — gate de CEP na entrada +
+> catálogo filtrado por região — para resolver de vez o problema do mesmo
+> catálogo servindo dois CDs (Salvador/BA e SP) com estoques diferentes.
+
+## 1. Problema que estamos resolvendo
+Site com catálogo único e **dois centros de distribuição** (Salvador e SP) com
+estoques/produtos diferentes. Cliente tenta comprar item que existe num CD mas
+não no outro (ou fresco que só é feito num CD), a compra trava e a pessoa
+desiste. O objetivo é o cliente **só ver o que realmente chega até ele**,
+falhando cedo (na entrada) e não no checkout.
+
+Observação importante: o Shopify **não** bloqueia a venda só porque um CD está
+zerado — ele fatura do CD que tem saldo, desde que o local esteja ativo no canal
+e exista frete até o CEP. O problema real é **entregabilidade por região**
+(fresco/sob encomenda que só existe num CD), não quantidade.
+
+## 2. Definições travadas com o JG (11/07)
+1. **Disponibilidade por região é GERENCIÁVEL** — não é regra fixa derivada só do
+   estoque. Move Gourmet decide qual produto aparece em qual região.
+2. **CEP obrigatório de verdade na entrada** — sem CEP, não navega.
+3. **CEP fora da área atendida → mostra só o catálogo NACIONAL** (o que consegue
+   enviar, ex.: seco/industrializado), escondendo o regional/fresco.
+
+## 3. Modelo de região
+- Cada produto tem um conjunto de regiões no `product_map`, ex.:
+  `["NACIONAL"]`, `["BA"]`, `["BA","SP"]`.
+  - `NACIONAL` = todo mundo vê (enviável pra qualquer CEP).
+  - `BA` / `SP` = só quem está na região vê (fresco/local).
+- CEP → região por faixa: **BA 40000–48999**, **SP 01000–19999**, resto → só NACIONAL.
+- Visível pro cliente = produtos `NACIONAL` **ou** cuja região casa com a do CEP.
+
+## 4. Arquitetura por camada
+1. **Cadastro de região (fonte de gestão): painel do integrador (`web/`)**, não o
+   Shopify. Coluna "Região" editável por produto e em lote (Nat/Fernanda marcam com
+   um clique). Evita depender do escopo `write_products` do Shopify pra gerir.
+2. **Filtro do site vem do integrador, não do Shopify.** O gate chama um endpoint
+   leve — `GET /catalogo-regiao?cep=XXXXX` (Edge Function lendo `product_map`) —
+   que devolve os produtos visíveis pra aquela região. Assim o filtro **não**
+   depende de metafield no Shopify (fugimos do bloqueio de `write_products`).
+3. **Gate de CEP na entrada (tema Shopify):** modal obrigatório, guarda CEP+região
+   em cookie, filtra as coleções pela resposta do endpoint. Botão "trocar CEP".
+4. **Guarda-dura no checkout:** Shopify Function de validação lê o CEP (atributo do
+   carrinho) e **bloqueia finalizar** se houver item fora da região — rede de
+   segurança contra link direto / carrinho antigo.
+
+## 5. O que precisamos fazer (a partir de agora)
+1. **Verificar o tema da loja** (Liquid padrão vs. headless) — muda como o gate é
+   feito. É read-only, não depende de token. **Primeiro passo.**
+2. **Abrir como feature no padrão do repo** (`specs/NNNN-catalogo-regional/`):
+   product → design → domain → spec → tasks.
+3. **Mockup do gate de CEP** pra o JG aprovar o visual **antes** de codar (regra:
+   validar design antes de UI).
+4. **Banco/integrador:** adicionar campo de regiões no `product_map` + Edge
+   Function `catalogo-regiao`.
+5. **Painel (`web/`):** coluna "Região" editável (individual + lote).
+6. **Tema:** modal de CEP + filtro das coleções via endpoint.
+7. **Checkout:** Shopify Function de validação por região (grava CEP como atributo
+   do carrinho).
+
+## 6. Bloqueios / dependências conhecidos
+- **Novo token do Supabase** — pra o integrador escrever o campo de região no
+  `product_map` (o antigo foi rotacionado). Ver [[project_movegourmet_reconciliacao]].
+- **Escopo `write_products` no Shopify** — só necessário se algum dia formos gravar
+  metafield; o desenho atual evita isso ao servir o filtro pelo integrador.
+- **Shopify Functions** — a validação de checkout exige app/deploy de Functions
+  (dá pra desenhar sem, mas o deploy depende de acesso).
+- **Tema** — confirmar se dá pra customizar (acesso ao tema / código).
+
+## 7. Relacionados
+- Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
+- Projeto guarda-chuva: [[project_move_gourmet]].
+- Handoff da reconciliação: `RECONCILIACAO-CATALOGO-HANDOFF.md` (mesma pasta).
