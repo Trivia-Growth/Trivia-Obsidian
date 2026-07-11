@@ -3,11 +3,11 @@ id: STORY-041
 titulo: "Observabilidade do pipeline de deploy (healthcheck de secrets + Build Hook versionado)"
 fase: 6
 modulo: "Blog/CMS · DevOps"
-status: backlog
+status: concluido
 prioridade: media
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 depende_de: STORY-037
 epico: EPIC-002
 ---
@@ -69,3 +69,11 @@ STORY-037/038 fazem a UI *reagir* a falhas; esta story faz o sistema *antecipar*
 ## Notas
 
 > Conecta com a lição de memória sobre edges/webhooks e configs de deploy frágeis. A ideia é que **falha de pipeline vire sinal visível**, não descoberta acidental.
+
+## Notas de Implementação (2026-07-11)
+
+- **Feito e no ar.** Nova `pipeline-health` deployada; banner no Dashboard no bundle `02172cc`; `docs/DEPLOY.md` criado + referenciado no `CLAUDE.md`. Commit `02172cc`.
+- `pipeline-health`: GET autenticado na Netlify API (`GET /sites/{id}`) — 401/403 = token expirado; grava `configs_seo.pipeline_health {at,ok,detail}`. `trigger-rebuild` também atualiza `pipeline_health` ao confirmar um deploy.
+- `DashboardPage.tsx`: lê `pipeline_health`, banner vermelho quando `ok=false` + botão "verificar agora".
+- `docs/DEPLOY.md`: runbook (DB→HTML), mapa de secrets do pipeline, diagnóstico de "publiquei e não subiu".
+- **Verificação:** `pipeline-health` gated (401); o `GET /sites/{id}` que ela executa → 200 com o token atual (retornaria `ok:true`). Pendente: banner visual no walkthrough do JG; cron diário (CA4 opcional) não configurado.

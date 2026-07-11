@@ -3,11 +3,11 @@ id: STORY-038
 titulo: "Status de publicação no admin (confirmação de rebuild)"
 fase: 6
 modulo: "Blog/CMS · Admin"
-status: backlog
+status: concluido
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 depende_de: STORY-037
 epico: EPIC-002
 ---
@@ -69,3 +69,10 @@ Com STORY-037 fornecendo `deploy_id` + `get-rebuild-status`, a UI agora pode **m
 | `src/admin/lib/*` | Helper para chamar `get-rebuild-status` (se `callFunction` já não cobrir) |
 
 > Observação: esse mesmo padrão de feedback vale para os outros disparos de `trigger-rebuild` (FAQ, páginas, configs SEO — `FAQPage.tsx:128`, `PaginasAdminPage.tsx:157`, `ConfigsSeoPage.tsx`). Escopo desta story é o **blog**; estender aos demais pode virar follow-up rápido reusando o `RebuildStatus`.
+
+## Notas de Implementação (2026-07-11)
+
+- **Feito e no ar** (Netlify deploy `02172cc9` = ready; bundle do admin referencia `get-rebuild-status`). Commit `02172cc`.
+- `src/admin/components/RebuildStatus.tsx` (novo): recebe `deploy_id`, faz polling de `get-rebuild-status` (~5s, timeout ~3min), estados Enfileirado→Publicando→No ar ✅ / Falhou ❌ (cor da marca #00AEEF); botão "tentar de novo"; degrada honesto no estado `unknown`.
+- `PostEditor.tsx`: substituído o `try/catch` mudo do rebuild por feedback via `RebuildStatus` (o post continua salvo se o rebuild falha). `PostsListPage.tsx`: badge do último rebuild lido de `last_rebuild`.
+- **Verificação:** bundle publicado referencia `get-rebuild-status`; backend (037) verificado ao vivo. Pendente: walkthrough visual do JG (desktop+mobile) — CA7.

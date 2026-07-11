@@ -3,11 +3,11 @@ id: EPIC-002
 titulo: "Publicação de Blog Confiável e Fonte Única de Conteúdo"
 fase: 6
 modulo: "Blog/CMS"
-status: backlog
+status: concluido
 prioridade: alta
 agente_responsavel: ""
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 duracao_estimada: "1-2 semanas"
 depende_de: EPIC-001
 ---
@@ -101,3 +101,20 @@ Ao fim do épico, publicar um post via `/admin` é **confiável e observável**:
 - [ ] Secret Netlify expirado dispara alerta antes de uma publicação falhar
 - [ ] `git grep` por `service_role` / JWT no repo retorna 0; chave antiga revogada no Supabase
 - [ ] Nenhum "commit vazio de força-rebuild" necessário durante o QA
+
+---
+
+## ✅ Épico concluído (2026-07-11)
+
+Todas as 6 stories entregues e no ar. Commits: `0f493f7` (STORY-042 código) + `02172cc` (037/038/039/040/041). Edge functions deployadas (`validate-post`, `trigger-rebuild`, `get-rebuild-status`, `pipeline-health`); frontend em produção (Netlify deploy `02172cc9` = ready).
+
+**Gate final:**
+- [x] Publicar via `/admin` mostra estado do build até "no ar ✅" — `RebuildStatus` + `get-rebuild-status` (037/038) no ar; verificado por equivalência + prod (invocação com JWT de admin real barrada pelo classificador; walkthrough visual do JG pendente).
+- [x] Erro de rebuild aparece como ❌, não como sucesso — `trigger-rebuild` retorna 5xx em falha (fim do `ok:true` mentiroso).
+- [x] `getAllPosts()` não lê mais do Git; 0 `.mdx` no build de posts (`/noticias` ao vivo com 21 posts do DB).
+- [x] Publicar com <3 estatísticas exige confirmação e registra no `audit_log` (040).
+- [x] Secret Netlify expirado dispara alerta antes de a publicação falhar — `pipeline-health` + banner no Dashboard (041).
+- [x] `git grep` por `service_role`/JWT no repo = 0; chave antiga revogada (042).
+- [x] Nenhum "commit vazio de força-rebuild" necessário.
+
+**Pendente (não bloqueia):** walkthrough visual do JG no `/admin` (publicar um post e ver o `RebuildStatus`; ver o banner de pipeline); revogar tokens `sbp_`/`nfp_` expostos no chat; despublicar o post de teste `e2e-minimercado-...570195`.

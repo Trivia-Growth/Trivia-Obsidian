@@ -3,11 +3,11 @@ id: STORY-037
 titulo: "trigger-rebuild retorna estado do deploy (fim do fire-and-forget)"
 fase: 6
 modulo: "Blog/CMS · Rebuild"
-status: pronto
+status: concluido
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 epico: EPIC-002
 ---
 
@@ -75,3 +75,12 @@ Para **confirmar** que o site atualizou, é preciso consultar a **Netlify Deploy
 
 - **`NETLIFY_AUTH_TOKEN` nos secrets do Supabase.** Hoje só existe no GitHub Actions (`deploy.yml`). Confirmar com JG geração de um token dedicado (idealmente com escopo mínimo à Deploys API do site). Sem ele, a story degrada para `state:'unknown'` (ainda melhor que hoje, mas não confirma conclusão).
 - Netlify `site_id`: `f95cfc51-9cf1-4f00-912b-a57755b7107f` (do 00 - Índice).
+
+## Notas de Implementação (2026-07-11)
+
+- **Feito e no ar.** `trigger-rebuild` reescrita + nova `get-rebuild-status`, ambas deployadas via CLI. Commit `02172cc`.
+- `trigger-rebuild`: captura o `deploy_id` real via Netlify API (poll até ~9s pelo deploy novo ≠ o de antes do disparo), grava `deploy_id`+`state` em `configs_seo.last_rebuild`, cooldown retorna `next_allowed_at`, e em falha de disparo retorna **HTTP 5xx** (nunca mais `ok:true` mentiroso — fecha o gap do incidente 25/05). Atualiza `pipeline_health` oportunisticamente.
+- `get-rebuild-status`: `GET /sites/{id}/deploys/{deploy_id}`, mapeia estado Netlify → contrato (`enqueued|building|ready|error|unknown|not_found`); sem token degrada para `unknown`.
+- Secrets `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID` setados no Supabase.
+- **Verificação:** functions gated (401 sem/JWT-inválido); caminho real na Netlify API 200 (GET /sites/{id} e /deploys/{id}); último deploy `ready`. E2E de invocação com JWT de admin real **não** executado ao vivo (criar admin em prod é barrado pelo classificador de segurança) — verificado por equivalência (auth path idêntico ao `list-users`, validado após a STORY-042) + prod ao vivo.
+- Pendente: CA (validação visual do JG no admin).

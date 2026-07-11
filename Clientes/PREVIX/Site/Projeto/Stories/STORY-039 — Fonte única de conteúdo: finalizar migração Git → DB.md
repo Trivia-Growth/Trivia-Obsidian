@@ -3,11 +3,11 @@ id: STORY-039
 titulo: "Fonte única de conteúdo: finalizar migração Git → DB e aposentar leitura do Git"
 fase: 6
 modulo: "Blog/CMS · Conteúdo"
-status: backlog
+status: concluido
 prioridade: alta
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 depende_de: STORY-037, STORY-042
 epico: EPIC-002
 ---
@@ -75,3 +75,12 @@ A STORY-024 previa concluir o cutover ("5 posts existentes saem do Git, ficam em
 
 - **Perda de post editado só no Git** se a migração não capturar a última versão do `.mdx`. Mitigação: CA3/CA4 (auditoria de paridade antes de deletar; arquivar em vez de deletar de imediato).
 - **Rotas 404** se um slug sumir. Mitigação: comparar `getStaticPaths` antes/depois.
+
+## Notas de Implementação (2026-07-11)
+
+- **Feito e no ar.** Commit `02172cc`; build do Netlify verde em produção.
+- **Auditoria de paridade (11/07):** os 19 slugs `.mdx` do Git JÁ estavam publicados no DB (21 posts vivos, todos publicados). O merge do Git já adicionava 0 posts → o flip DB-only é **no-op comprovado** (nenhum post some). Não foi preciso rodar migração.
+- `getAllPosts()` agora lê **só** o DB (removido o merge com `getCollection('blog')`). Os 19 `.mdx` movidos p/ `docs/legacy-blog/` (git mv); `.gitkeep` mantém `src/content/blog/` para o glob do Astro.
+- **Verificação:** `npm run build` verde local (validate-schema OK, os 4 posts-âncora renderizando do DB) + `/noticias` ao vivo com **21 posts** + os 4 âncora → 200.
+- `CLAUDE.md` atualizado (fonte única = DB). CA1-CA7 atendidos.
+- Achado à parte (fora de escopo): 2 posts publicados sem `.mdx` nasceram no admin — 1 é de teste (`e2e-minimercado-...570195`) e está visível ao vivo; sugerido despublicar (decisão do JG).

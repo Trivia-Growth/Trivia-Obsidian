@@ -3,11 +3,11 @@ id: STORY-040
 titulo: "Gate de qualidade Jimmy 3.0 no fluxo DB (validação real no publish)"
 fase: 6
 modulo: "Blog/CMS · Qualidade"
-status: backlog
+status: concluido
 prioridade: media
-agente_responsavel: ""
+agente_responsavel: "@dev"
 criado: 2026-07-08
-atualizado: 2026-07-08
+atualizado: 2026-07-11
 depende_de: STORY-039
 epico: EPIC-002
 ---
@@ -75,3 +75,11 @@ Depois de STORY-039 (Git aposentado), o lint de build fica **sem alvo**. Ou seja
 
 1. **Régua do gate:** confirmação explícita (proposto) vs. bloqueio duro vs. só warning? Proposta: confirmação explícita — segura sem travar o editor.
 2. Quais regras são "erro" (exigem confirmação) vs. "warning" (só avisam)? Proposta acima.
+
+## Notas de Implementação (2026-07-11)
+
+- **Feito e no ar.** `validate-post` editada+deployada; UI no bundle `02172cc`. Commit `02172cc`.
+- `validate-post` retorna erros ESTRUTURAIS e avisos SEPARADOS (`{ ok, errors, warnings }`).
+- `PostEditor.tsx`: `runPublishGate()` chama `validate-post` server-side no publish; com erros → modal "Publicar fora do padrão Jimmy 3.0?" listando as violações (Voltar e ajustar / Publicar mesmo assim). Confirmar publica e grava no `audit_log` (`acao:'publish'`, `payload_after.publicado_com_violacao_jimmy3`). Rascunho/agendamento não acionam o gate. `validate-post` indisponível → degrada para publicar (não trava). Painel de lint mostra erros (vermelho) + avisos.
+- **Régua confirmada:** confirmação explícita (meio-termo), não bloqueio duro — coerente com ADR-010. `acao='publish-com-violacao'` seria rejeitado pelo CHECK de `audit_log.acao`; usei `acao='publish'` + flag no payload.
+- **Verificação:** deploy OK; build verde. Pendente: walkthrough do JG.
