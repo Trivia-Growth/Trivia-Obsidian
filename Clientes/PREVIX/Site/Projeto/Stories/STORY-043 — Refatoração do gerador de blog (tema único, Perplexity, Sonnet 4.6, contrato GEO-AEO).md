@@ -304,24 +304,21 @@ Alterados:
 - `deno check` -> limpo em `mapper.ts`, `_shared/ai-gateway.ts`, `_shared/perplexity.ts` e `generate-post/index.ts` (resolveu as deps jsr do Supabase).
 - `npm run typecheck` (astro check) -> **0 erros em `src/`**. Os 191 erros restantes são todos ruído pré-existente de `Deno`/imports remotos em `supabase/functions/**` (o `build` não roda astro check; deploy das edges é manual). Os 2 erros de `cta_titulo/cta_texto` do baseline (CA24) foram eliminados.
 
-### Runbook de deploy (ORDEM IMPORTA)
+### Deploy — FEITO em produção (11/07/2026, projeto yqexjddpotlaqraljwvl)
 
-Aplicar o backend ANTES do frontend ir ao ar, senão um save com `geo_meta` falha (mitigado pelo retry defensivo, mas o correto é a ordem):
+JG autorizou ("eu rodo, você aprova"). O gate de auto-mode barra deploy de prod com PAT do chat, então precisou aprovação direta. Executado nesta ordem:
 
-```bash
-supabase link --project-ref yqexjddpotlaqraljwvl   # se ainda não linkado
-supabase db push                                    # aplica a migration geo_meta
-supabase functions deploy generate-post
-supabase functions deploy validate-post
-# frontend: deploy automático no push para main (Netlify)
-```
+1. Migration `geo_meta`: aplicada via Management API `POST /v1/projects/{ref}/database/query` (o `supabase db push` precisaria da senha do Postgres, que não estava disponível). Coluna confirmada (`jsonb`, nullable) e registrada em `supabase_migrations.schema_migrations` (para o `db push` futuro não reaplicar).
+2. `supabase functions deploy generate-post --use-api` (bundlou `index.ts` + `mapper.ts` + `_shared/*`; o `mapper.test.ts` ficou fora, como esperado).
+3. `supabase functions deploy validate-post --use-api`.
+4. Smoke test: `OPTIONS` -> 204; `POST` sem auth -> 401 (função no ar e protegida).
 
-Requisito: secret `OPENROUTER_API_KEY` já configurado no Supabase (a MESMA chave serve pesquisa + redação). Sem ela a edge retorna 500 antes de gerar (não é caso de fallback).
+`OPENROUTER_API_KEY` já estava configurada no projeto (a MESMA chave serve pesquisa + redação). Frontend: no ar via push para main (Netlify), com save resiliente (retry sem `geo_meta`).
 
-### Pendências (não bloqueiam a implementação)
+### Pendências
 
-- CA26 (validação ao vivo): gerar um post real a partir só do tema, com a edge deployada, e confirmar Perplexity + mapeador + save + validate-post sem erro duro. É QA pós-deploy — não dá para rodar localmente (precisa da edge no ar + secret).
-- Rotação de segredos (fora do escopo da story, ver [[project_previx_token_rotacao]]): os 3 PATs Supabase e a service_role key seguem pendentes de rotação.
+- CA26 (validação ao vivo): JG gerar um post real a partir só do tema pela UI `/admin/posts` e confirmar Perplexity + mapeador + save + validate-post sem erro duro. Infra já está no ar; falta a geração real (precisa login admin — não dá para forjar auth daqui).
+- Rotação de segredos (fora do escopo da story, ver [[project_previx_token_rotacao]]): os 3 PATs Supabase (inclusive o `sbp_...430` usado agora neste deploy) e a service_role key seguem pendentes de rotação.
 
 ## QA
 
