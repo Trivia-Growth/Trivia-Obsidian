@@ -188,3 +188,22 @@ peças — o E41 costura, não porta as ~30 tabelas do Jimmy:
 5. Fidelidade do motor por golden tests.
 6. Colunas de timestamp seguem o padrão do schema: `created_at`/`updated_at` (reusa
    `crm.update_updated_at_column()`).
+
+---
+
+## 🚧 Implementação — 11/07/2026 (núcleo do motor PRONTO)
+
+Branch `feat/40-estudio-conteudo` (7 commits, push de backup no GitHub, **sem PR** — PR por épico). Nada em produção ainda.
+
+**Entregue e validado:**
+- **40.2 (InReview)** — 8 tabelas `content_*` + RLS fechada + triggers de transição/aprovação (carimbo de aprovador feito NO BANCO) + bucket `crm-content-studio` + seed Editora Heziom. Bateria adversarial **38/38** em PG isolado (`scripts/sql-validation/e40-content-studio/`).
+- **40.1 (InProgress)** — **ADR 0024**: Anthropic NATIVO via plumbing da casa (prompt caching real), SSE só na edge do Estúdio (`_shared/ai-stream.ts`; `callLLM` intocado), contrato `meta/delta/retry/done/error` com persistência ANTES do `done`. Achados: Jimmy real roda `claude-sonnet-4` (rótulo "4.6" era só nome — o porte JÁ nasce com modelo melhor); OpenRouter usa PONTO nos ids. **CA4/CA6 pendem de chave de IA** (scripts prontos em `scripts/spikes/e40-estudio/`).
+- **40.5 (InReview)** — edge `crm-content-generate`: motor das 5 intenções com **golden gerado executando o fonte do Jimmy** (paridade byte a byte), RPC transacional `rpc_content_persist_geracao`, validação server-side (+1 retry), custo observado em `content_ai_costs` (sem quota), rate-limit anti-acidente.
+- **40.6 (InProgress)** — prompt editorial cirúrgico (VOZ da marca × PÚBLICO do lançamento × ASSUNTO), regras sagradas (citação bíblica só se fornecida; título/autor literais; oferta/link literais; sem emoji/travessão), `brand-facts.ts` compartilhado com a Helena com **paridade byte a byte do SALES_GUARDRAILS provada por teste** (agora no CI). Goldens: 7 combos, 120k chars.
+- **40.7 (InProgress)** — guardrails: integrity tail EDITORIAL por recência (invariante testada: NADA concatena depois do tail — e o teste pegou 2 furos reais no handler), anti-mesmice (arquétipos de abertura + sorteio de gancho + diretiva criativa 30%). Bateria viva de 10 iscas pronta (`bateria-guardrails.ts`), pende de chave.
+- **42.1 (InReview)** — `editorial.livros_ficha` criada (bateria 5/5).
+- **Revisão adversarial multi-agente** (6 lentes × 2 refutadores, 44 agentes): **18 achados confirmados e corrigidos** (commit `5f96a1e`) — destaques: GRANT USAGE faltando no schema editorial (mataria a 42.1 em prod), INSERT de slot nascendo "aprovado" bypassava o gate manager+, desconexão do cliente no meio do stream perdia o post, cache write não contabilizado no custo.
+
+**Estado dos testes:** 388 deno + 238 vitest + typecheck + biome — tudo verde.
+
+**Bloqueios (JG):** ① exportar `ANTHROPIC_API_KEY` ou `OPENROUTER_API_KEY` p/ rodar as baterias vivas (gate de RELEASE do motor, não de dev); ② mockups das telas (40.3/40.4/40.8/40.10/40.13/42.2); ③ sessão de DNA da Editora + fichas de 2-3 livros; ④ template do Amazon Vendor (42.4).
