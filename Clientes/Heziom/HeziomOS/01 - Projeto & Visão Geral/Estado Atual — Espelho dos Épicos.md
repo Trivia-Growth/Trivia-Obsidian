@@ -1,7 +1,7 @@
 ---
 tipo: espelho
 status: vivo
-data: 2026-07-05
+data: 2026-07-11
 fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomos
 ---
 
@@ -37,9 +37,9 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 | E20 | Motor de envio de e-mail em escala (40k+) — fila + worker + rampa + circuit breaker | 📋 Planning (criado 02/07 — mapeamento do marketing; hoje campanha corta em 5k silenciosamente) |
 | E21 | Construtor visual de e-mails (drag-and-drop) | 📋 Planning (mockup aprovado pelo JG 02/07 — condições: design system + mobile) |
 | E22 | Construtor de landing pages | 📋 Planning (fase 2 — após E20/E21) |
-| E29 | Comercial ERP — vendas do Literarius (canais, pace vs meta, funil, rankings, devoluções, consignação) | 📋 Draft (PR #262, 05/07) |
-| E30 | Editorial — catálogo, margem, preços c/ vigência, royalties, projetos | 📋 Draft (PR #262, 05/07) |
-| E31 | Estoque & Operações — giro/ABC, inventário, transferências, snapshot, recebimento | 📋 Draft (PR #262, 05/07) |
+| E29 | Comercial ERP — vendas do Literarius (canais, pace vs meta, funil, rankings, devoluções, consignação) | 🔄 IMPLEMENTADO 11/07 (4 telas Vendas ERP) — **PR #364 aberto** (merge conjunto c/ E31 Fase B) + sync PR #3 (specs) |
+| E30 | Editorial — catálogo, margem, preços c/ vigência, royalties, projetos | ✅ EM PROD 10/07 (PR #359) — 5 telas; resta CA6 30.4 (incorrido, fase 2) + walkthrough JG |
+| E31 | Estoque & Operações — giro/ABC, inventário, transferências, snapshot, recebimento | 🔄 Analítica (5 telas) EM PROD 10/07 (#362/#363); Fase B (alertas + reabastecimento) no **PR #364** |
 | E32 | Liderança / Cockpit Executivo — reconstrói CEO+BI consolidando os módulos | 📋 Draft (PR #262, 05/07) |
 | E33 | Acessos granulares do coordenador (por módulo) — admin define quais módulos cada coordenador acessa, com gestão dentro deles | 📋 Draft (spec pronta, PR #291, 06/07) — ver [[Epic 33 — Acessos Granulares do Coordenador]] |
 | E38 | Integração Tray Completa (loja de teste → produção-ready) — fecha go-live seguro + camada estratégica | 📋 Draft (spec + 11 stories no vault, 08/07) — ver [[_Epic 37 — Integração Tray Completa (spec)]]. ✅ Nº CONFIRMADO **E38** no repo (09/07; E37 do repo = Operação de Vendas). Stories 38.1–38.11 em docs/stories. |
@@ -97,3 +97,33 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
   catálogo, estoque+Multi-CD, newsletter+scripts). Tudo validado na loja de teste **1501119** e
   parametrizado para o cutover à loja de produção **1345958** ser só config. Homologação Tray até
   **13/08/2026**.
+
+## Atualização 2026-07-11 — E30 em prod, E31 Fase B + E29 implementados (PR #364)
+
+- **E30 Editorial: EM PRODUÇÃO 10/07** (PR #359, épico inteiro em 1 dia): área Editorial com 5
+  telas (catálogo+ficha, margem com limiar 2×, preços/desconto por canal, royalties manager+,
+  projetos). Espelho `produtos_estoque` 8.381/8.381 exato. Resta: CA6 da 30.4 (incorrido, fase
+  2/VPN) + walkthrough do JG.
+- **E31 Estoque: analítica (5 telas) EM PRODUÇÃO 10/07** (PRs #362/#363). Achado: o "78% não
+  gira" era por TÍTULO — em R$ parado são 15,4%. **Fase B implementada 10–11/07**: motor de
+  alertas (latch + digest in-app/Teams + cron diário) e reabastecimento (sugestão por
+  cobertura-alvo) — no PR #364.
+- **E29 Comercial ERP: implementado 11/07** — 4 telas novas no módulo **Vendas ERP** (manager+):
+  Vendas, Funil, Ranking, Consignação. Achados: consignação `C`=COMPRA (custódia recebida,
+  R$ 1,21M — DEVEMOS) × `V`=VENDA (concedida, R$ 449k) — o "R$ 1,6M com clientes" somava os
+  dois; R$ 253k concedidos há +90d sem acerto; 99,1% dos clientes sem tipo; NF tipo 6
+  (devolução) estava FORA do espelho (spec corrigida no sync). Fixes pós-implementação já
+  commitados: âncora das séries em `max(data_emissao)` (não `now()`) e corte de janela em
+  meia-noite BRT (eliminou mês-fantasma na borda; commits 8fa2a67+727032a, validados em PG 17
+  isolado com dados reais).
+- **PRs abertos para merge conjunto (autorizado pelo JG)**: heziomos **#364** (E31 Fase B + E29)
+  e literarius-sync **#3** (specs novas, incl. vwNotaFiscalVendaDevolucao).
+- **Sync na VMAPP01: agendador próprio ATIVO 11/07** — pacote instalado com 3 tarefas
+  (HeziomOS-Sync 15min, HeziomOS-Reconcile 03:15, HeziomOS-Snapshot 03:45), ciclos com 0 erros.
+  A task do Tactical (`taskrunner -p 60`) é SEMANAL (segundas 08:00) e não conflita no dia a dia;
+  pendente desativar (local + pedir exclusão à Intelinove) antes de segunda 13/07 08:00.
+- **Pendências para a próxima sessão** (JG encerrou esta): revisão adversarial completa do
+  E29 + Fase B (não rodou — limite de gastos da org; relançar do zero); pós-merge do #364:
+  gerar pacote do sync atualizado c/ specs E29 + carga one-shot das tabelas novas + backfill
+  `exposicao_feira` (726 NFs, CSV em `e29data/nf_feira_backfill.csv` no repo) + E2E prod nas
+  6 telas novas + marcar stories Done.
