@@ -37,12 +37,14 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 | E20 | Motor de envio de e-mail em escala (40k+) — fila + worker + rampa + circuit breaker | 📋 Planning (criado 02/07 — mapeamento do marketing; hoje campanha corta em 5k silenciosamente) |
 | E21 | Construtor visual de e-mails (drag-and-drop) | 📋 Planning (mockup aprovado pelo JG 02/07 — condições: design system + mobile) |
 | E22 | Construtor de landing pages | 📋 Planning (fase 2 — após E20/E21) |
-| E29 | Comercial ERP — vendas do Literarius (canais, pace vs meta, funil, rankings, devoluções, consignação) | 🔄 IMPLEMENTADO 11/07 (4 telas Vendas ERP) — **PR #364 aberto** (merge conjunto c/ E31 Fase B) + sync PR #3 (specs) |
+| E29 | Comercial ERP — vendas do Literarius (canais, pace vs meta, funil, rankings, devoluções, consignação) | ✅ **MERGEADO 11/07 (PR #364)** — 4 telas Vendas ERP; revisão adversarial aplicada (3 achados). Pós-merge: carga one-shot + backfill feira + E2E prod |
 | E30 | Editorial — catálogo, margem, preços c/ vigência, royalties, projetos | ✅ EM PROD 10/07 (PR #359) — 5 telas; resta CA6 30.4 (incorrido, fase 2) + walkthrough JG |
-| E31 | Estoque & Operações — giro/ABC, inventário, transferências, snapshot, recebimento | 🔄 Analítica (5 telas) EM PROD 10/07 (#362/#363); Fase B (alertas + reabastecimento) no **PR #364** |
+| E31 | Estoque & Operações — giro/ABC, inventário, transferências, snapshot, recebimento | ✅ Analítica EM PROD 10/07 (#362/#363); **Fase B (alertas + reabastecimento) MERGEADA 11/07 (PR #364)** |
 | E32 | Liderança / Cockpit Executivo — reconstrói CEO+BI consolidando os módulos | 📋 Draft (PR #262, 05/07) |
 | E33 | Acessos granulares do coordenador (por módulo) — admin define quais módulos cada coordenador acessa, com gestão dentro deles | 📋 Draft (spec pronta, PR #291, 06/07) — ver [[Epic 33 — Acessos Granulares do Coordenador]] |
 | E38 | Integração Tray Completa (loja de teste → produção-ready) — fecha go-live seguro + camada estratégica | 📋 Draft (spec + 11 stories no vault, 08/07) — ver [[_Epic 37 — Integração Tray Completa (spec)]]. ✅ Nº CONFIRMADO **E38** no repo (09/07; E37 do repo = Operação de Vendas). Stories 38.1–38.11 em docs/stories. |
+| E40 | Estúdio de Conteúdo IA (porte do Jimmy Studio) — Marca (voz: Editora+autores) × Lançamento (público por livro) × posts por intenção + imagem plugável + calendário + pontes (Helena/e-mail/pauta/LP) | 📋 Draft 11/07 (18 stories + dossiê de porte) — ver [[Epic 40 — Estúdio de Conteúdo IA]]. PR #365 mergeado (docs). Jornada/Analytics → E41 |
+| E42 | Ficha Mestre do Livro (Book Info) — cadastro rico por título em `editorial.livros_ficha` (ISBN, sinopses, público do livro); fonte única p/ Estúdio, Amazon Vendor, Tray, LPs | 📋 Draft 11/07 (4 stories) — ver [[Epic 42 — Ficha Mestre do Livro]] |
 
 > Nota: a tabela acima é o snapshot de 02/07 e NÃO reflete os épicos abertos depois no repo (E35 Simulador de Frete, E36 Vindi Links de Pagamento). O E37 é o próximo trabalho registrado no vault.
 
@@ -127,3 +129,29 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
   gerar pacote do sync atualizado c/ specs E29 + carga one-shot das tabelas novas + backfill
   `exposicao_feira` (726 NFs, CSV em `e29data/nf_feira_backfill.csv` no repo) + E2E prod nas
   6 telas novas + marcar stories Done.
+
+## Atualização 2026-07-11 (tarde) — #364 MERGEADO + Estúdio de Conteúdo (E40) e Ficha Mestre (E42) planejados
+
+- **PR #364 MERGEADO na `main`** (deploy automático de migrations + edges): E29 Comercial ERP
+  (4 telas Vendas ERP) + E31 Fase B (alertas de cobertura + reabastecimento). A revisão
+  adversarial do E29 (que não tinha rodado) **rodou nesta sessão** — 41 agentes, 3 achados
+  confirmados e corrigidos antes do merge: (1) RLS de `crm.metas_comerciais` era FOR ALL +
+  GRANT ALL (manager podia dar DELETE via PostgREST) → FOR SELECT; (2) faltava índice
+  `idx_nf_exposicao_feira` (seq scan O(feiras×notas), 50ms→5,5ms); (3) `dataBr` do
+  RankingComercial mostrava o dia anterior (day-shift UTC→BRT). CI verde, 228 testes.
+  - **PENDENTE pós-merge (JG):** carga one-shot das tabelas novas via sync (VPN) + backfill
+    `exposicao_feira` (726 NFs) + E2E prod nas telas novas + marcar stories Done. Smoke pós-deploy.
+- **E40 Estúdio de Conteúdo IA + E42 Ficha Mestre do Livro planejados** (docs mergeados, PR #365):
+  porte do motor de conteúdo do **Jimmy Studio** para a área Marketing, adaptado à Editora
+  (Marca=voz Editora+autores × Lançamento=público por livro × Ficha Mestre=cadastro perene).
+  Validado por cruzamento multi-agente com TODOS os módulos do OS + crítica adversarial (16
+  fixes) + dossiê de porte linha-a-linha ([[Estúdio de Conteúdo — Dossiê de Porte (Jimmy)]],
+  1.748 linhas). Snapshot das flags do Jimmy: todas ON (confirmado via Management API).
+  Ver [[Epic 40 — Estúdio de Conteúdo IA]] e [[Epic 42 — Ficha Mestre do Livro]].
+  - **PENDENTE JG p/ implementar:** mockups das telas + sessão de DNA da Editora + fichas de
+    2-3 livros + rotacionar os 2 PATs `sbp_` do Jimmy expostos no chat. E41 (Jornada CTWA:
+    anúncio→Helena→conversão) é a fase 2, reusa ~70% do que já existe.
+- **Ordem de implementação:** #364 já mergeado (piso de timestamp das migrations do E40 fica
+  fixo em > 20260727110000); E42 (42.1/42.2) antes da 40.4; caminho crítico p/ o 1º post:
+  40.1 (spike provider/streaming — CA1 flags já feito) ‖ 40.2 (migração `crm.content_*`) →
+  40.5 → 40.6 → 40.7 → 40.8.
