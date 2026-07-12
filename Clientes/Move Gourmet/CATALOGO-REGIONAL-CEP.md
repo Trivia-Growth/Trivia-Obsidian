@@ -111,9 +111,22 @@ Shopify e **redireciona pro checkout hospedado do Yampi**. Consequências:
    gravar metafield/tag de região no Shopify).
 
 **Revisão do desenho:** camadas 1–3 seguem como planejado. Camada 4 muda de "Shopify
-Function" para "trava na página /cart + (a validar) config de região no Yampi".
-**Próximo passo real:** mockup do gate de CEP pra o JG aprovar, e checar no painel do
-Yampi se há restrição por região/CEP nativa.
+Function" para "trava na página /cart".
+
+### Yampi tem restrição por CEP nativa? SIM, mas é global (não por produto)
+Verificado na doc do Yampi (não deu pra ver o painel da loja — não estamos logados no
+Yampi e não digito senha). Recurso **"Restrição de regiões para entrega"** em
+Configurações > Logística > Gerenciar:
+- É uma **blocklist global de faixas de CEP** que a loja NÃO atende. Bloqueia no
+  carrinho e no checkout com mensagem, impedindo criar o pedido.
+- **NÃO é por produto.** Não dá pra dizer "produto X só BA, produto Y nacional". É tudo
+  ou nada pra loja inteira. Frete do Yampi também é por loja/carrinho, não por produto.
+- **Conclusão:** o Yampi NÃO resolve o catálogo regional por produto. Serve só como
+  **rede de segurança grossa** pra CEPs que NENHUM CD atende (que no nosso desenho já
+  cai no catálogo nacional). A diferenciação por produto/região continua tendo que ser
+  **antes do Yampi**, no tema (gate na entrada + filtro da vitrine + trava no /cart).
+
+**Próximo passo real:** mockup do gate de CEP pra o JG aprovar o visual antes de codar.
 
 ## 8. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
