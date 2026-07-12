@@ -75,7 +75,47 @@ e exista frete até o CEP. O problema real é **entregabilidade por região**
   (dá pra desenhar sem, mas o deploy depende de acesso).
 - **Tema** — confirmar se dá pra customizar (acesso ao tema / código).
 
-## 7. Relacionados
+## 7. Verificação do tema (11/07) — FEITA (export do tema)
+
+Analisado o export `theme_export__movegourmet...__11JUL2026-0829pm` (219 assets,
+143 sections, 106 snippets). Resultado:
+
+- **Tema-base: Dawn 15.3.0 (Shopify), Liquid clássico — NÃO headless.** Editável por
+  código no admin (Loja virtual > Temas > Editar código). O gate de CEP no tema é viável.
+- **Carrinho é PÁGINA (`/cart`), não drawer** (`cart_type: page`). Ponto de interceptação existe.
+- **Coleção NÃO usa a grade nativa do Dawn** — as seções nativas
+  (`main-collection-product-grid`, banner, carrossel) estão **desabilitadas**; quem
+  renderiza é uma seção sob medida **`grade-move5`** ("Grade Move 5", 1410 linhas).
+  Ela itera **server-side em Liquid** (`for product in collections[...].products`) e
+  põe **`data-product-id` em cada card** + add-to-cart via `/cart/add.js`. → o filtro
+  de região casa por `data-product-id` no cliente (bate com o endpoint do integrador).
+- **Camada de apps pesada** plugada no `theme.liquid`: page-builders **Beae, EComposer,
+  LayoutHub, PageFly** (home/produto podem ser montados por eles, não pelo Dawn),
+  **Appstle (assinaturas)** e **GTM**. O gate tem que carregar global (no `theme.liquid`)
+  e a QA precisa cobrir também as telas montadas por builder.
+- **NÃO existe** nenhum campo de CEP / calculadora de frete custom hoje (só o campo
+  padrão de endereço na conta). Terreno limpo, sem conflito.
+
+### ACHADO QUE MUDA O PLANO: checkout é **Yampi** (não é o Shopify nativo)
+O `theme.liquid` injeta o `YampiSnippet`: na página `/cart` ele pega o `cart.json`,
+manda pra API do Yampi (`api.dooki.com.br/v2/public/shopify/cart`), limpa o carrinho
+Shopify e **redireciona pro checkout hospedado do Yampi**. Consequências:
+1. **Camada 4 do plano (Shopify Function validando o checkout) NÃO roda** — o checkout
+   não é do Shopify. A trava-dura tem que ficar **antes do handoff pro Yampi**, ou seja
+   na própria página `/cart` (validar região e bloquear o botão antes do redirect),
+   e/ou usar restrição por região/CEP no painel do próprio Yampi (a checar).
+2. O filtro de catálogo tem que ser **client-side via endpoint do integrador**
+   (`catalogo-regiao?cep=`), escondendo cards por `data-product-id` — confirma as
+   camadas 2/3 e **descarta** filtro puramente server-side em Liquid (a região vive no
+   `product_map`/Supabase, que o Liquid não consulta; e sem `write_products` não dá pra
+   gravar metafield/tag de região no Shopify).
+
+**Revisão do desenho:** camadas 1–3 seguem como planejado. Camada 4 muda de "Shopify
+Function" para "trava na página /cart + (a validar) config de região no Yampi".
+**Próximo passo real:** mockup do gate de CEP pra o JG aprovar, e checar no painel do
+Yampi se há restrição por região/CEP nativa.
+
+## 8. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
 - Projeto guarda-chuva: [[project_move_gourmet]].
 - Handoff da reconciliação: `RECONCILIACAO-CATALOGO-HANDOFF.md` (mesma pasta).
