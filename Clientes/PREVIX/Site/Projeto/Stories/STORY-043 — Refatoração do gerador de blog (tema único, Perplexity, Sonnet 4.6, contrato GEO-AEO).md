@@ -3,7 +3,7 @@ id: STORY-043
 titulo: "Refatoração do gerador de blog: tema único, pesquisa Perplexity, redação Claude Sonnet 4.6 em contrato GEO/AEO e mapeador determinístico para site.posts (contexto Grupo Previx)"
 fase: 6
 modulo: "Blog/CMS · Geração de Conteúdo IA"
-status: implementado
+status: concluído
 prioridade: alta
 agente_responsavel: "@dev"
 criado: 2026-07-11
@@ -277,7 +277,7 @@ Gatilhos reais de fallback (testáveis): erro HTTP do modelo de pesquisa, timeou
 - [x] CA23. Invariante de publicação e camadas: `draft.status` sempre `rascunho`; a geração nunca publica. A GERAÇÃO é restrita a `admin-previx`/`admin-site`/`editor-blog` com JWT validado na edge (auth.getUser). A ESCRITA da linha é client-side no `PostEditor`, no schema `site`, sob RLS do usuário (não service role). A service role da edge só LÊ contexto e grava `site.audit_log`.
 - [x] CA24. Tipagem de CTA no validate-post: declarar `cta_titulo?`/`cta_texto?` na interface `PostPayload` (validate-post/index.ts:84-96), que hoje lê esses campos em :178-179 sem declará-los (erro latente em TS strict). Coberto por `npm run typecheck`.
 - [x] CA25. Input mínimo do usuário: o `GerarPostModal` gera a partir SÓ do tema (mais categoria); briefing e URLs de referência permanecem opcionais. O rascunho sai 100% preenchido (todos os campos que a página renderiza estão populados, inclusive `imagem_capa`) sem edição manual obrigatória.
-- [ ] CA26. (QA pós-deploy) Validação ao vivo: gerar um post real a partir de um TEMA sem estatística prévia no banco (ex.: um serviço da Previx no segmento corporativo/logística), confirmar que o Perplexity trouxe fontes reais (ou que o fallback rodou), que o mapeador produziu um draft completo no shape de `site.posts` com `geo_meta` e `imagem_capa` populados, que o cliente salvou o rascunho em `site.posts`, e que ao abrir no PostEditor o `validate-post` retorna sem erros duros (inclusive faq >= 4; warnings de estatística aceitáveis).
+- [x] CA26. (validado ao vivo por JG em 11/07 — geração real deu certo) Validação ao vivo: gerar um post real a partir de um TEMA sem estatística prévia no banco (ex.: um serviço da Previx no segmento corporativo/logística), confirmar que o Perplexity trouxe fontes reais (ou que o fallback rodou), que o mapeador produziu um draft completo no shape de `site.posts` com `geo_meta` e `imagem_capa` populados, que o cliente salvou o rascunho em `site.posts`, e que ao abrir no PostEditor o `validate-post` retorna sem erros duros (inclusive faq >= 4; warnings de estatística aceitáveis).
 
 ## Implementação
 
