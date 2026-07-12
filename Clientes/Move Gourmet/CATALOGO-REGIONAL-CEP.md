@@ -110,25 +110,86 @@ Shopify e **redireciona pro checkout hospedado do Yampi**. Consequências:
    `product_map`/Supabase, que o Liquid não consulta; e sem `write_products` não dá pra
    gravar metafield/tag de região no Shopify).
 
-**Revisão do desenho:** camadas 1–3 seguem como planejado. Camada 4 muda de "Shopify
-Function" para "trava na página /cart".
+> ⚠️ **As conclusões acima sobre a "camada 4" e o "filtro client-side obrigatório"
+> foram CORRIGIDAS na seção 8** (auditoria adversarial de 11/07). Leia a 8 antes de agir.
 
-### Yampi tem restrição por CEP nativa? SIM, mas é global (não por produto)
-Verificado na doc do Yampi (não deu pra ver o painel da loja — não estamos logados no
-Yampi e não digito senha). Recurso **"Restrição de regiões para entrega"** em
-Configurações > Logística > Gerenciar:
-- É uma **blocklist global de faixas de CEP** que a loja NÃO atende. Bloqueia no
-  carrinho e no checkout com mensagem, impedindo criar o pedido.
-- **NÃO é por produto.** Não dá pra dizer "produto X só BA, produto Y nacional". É tudo
-  ou nada pra loja inteira. Frete do Yampi também é por loja/carrinho, não por produto.
-- **Conclusão:** o Yampi NÃO resolve o catálogo regional por produto. Serve só como
-  **rede de segurança grossa** pra CEPs que NENHUM CD atende (que no nosso desenho já
-  cai no catálogo nacional). A diferenciação por produto/região continua tendo que ser
-  **antes do Yampi**, no tema (gate na entrada + filtro da vitrine + trava no /cart).
+## 8. REVISÃO PROFUNDA — auditoria adversarial (11/07)
 
-**Próximo passo real:** mockup do gate de CEP pra o JG aprovar o visual antes de codar.
+Rodada uma auditoria adversarial (11 agentes: investigadores lendo os arquivos reais do
+tema + docs oficiais Shopify/Yampi, refutadores por achado, síntese). Corrigiu erros
+materiais da primeira passada (que era rasa).
 
-## 8. Relacionados
+### 8.1 O que a análise rasa errou
+- **A vitrine NÃO é só a coleção.** O mesmo produto aparece server-side em 8+ superfícies:
+  coleção (`grade-move5`), carrossel da home (`carousel-produtos-2`), **carrossel de upsell
+  DENTRO do `/cart`**, grades de kits (`kits-move-grid`/`kits-move2` — só handle, sem
+  `data-product-id`), busca `/search` (`card-product`), **busca preditiva** (dropdown AJAX,
+  só handle no href), e a **PDP por URL direta `/products/{handle}`** (não tem card pra
+  esconder). Chaves divergentes → o filtro precisaria casar por **id E handle**, e mesmo
+  assim há apps opacos (Searchanise, PageFly, beae, bundler, Appstle) renderizando fora do
+  controle do tema. Um filtro só na grade da coleção era ilusão de cobertura.
+- **`products_limit=50` na grade** (`collection.json`): só ≤50 cards vão ao DOM; o filtro
+  client-side nem enxerga o resto. Paginação é toda no cliente.
+- **"Filtro tem que ser client-side" estava ERRADO.** Filtro client-side é **UX, não trava**
+  — qualquer um fura com URL direto `/products/{handle}` ou um POST em `/cart/add.js` (que o
+  Shopify não deixa o tema/app bloquear). Existe caminho server-side sem `write_products`
+  (App Proxy + a API de Frete do Yampi, abaixo).
+
+### 8.2 O chokepoint real (que faltava): API de Frete do Yampi
+O achado "Yampi só tem blocklist global" estava certo no detalhe e **errado na conclusão**.
+Além da blocklist global (Config > Logística), o Yampi tem **Frete por API** (Config >
+Logística > Novo frete > modalidade API): no checkout, o Yampi faz um POST pro endpoint do
+**nosso integrador** com **`zipcode` de destino + array de `skus` do carrinho** (id,
+product_id, sku, dimensões, peso) e espera de volta um array `quotes` (timeout 4s).
+Docs: [help 6067727](https://help.yampi.com.br/pt-BR/articles/6067727-como-configurar-o-frete-por-api)
+· [docs.yampi API de frete](https://docs.yampi.com.br/api-reference/logistica-api-de-frete/introduction).
+
+Isso é **exatamente** o gargalo que falta: **server-side + sabe a região do produto (lookup
+dos SKUs no `product_map`) + sabe o CEP + pode RECUSAR a compra** (devolvendo `quotes: []`).
+É a única trava-dura por-produto/por-CEP possível neste stack, e ela vive DENTRO do checkout
+Yampi. A conclusão anterior ("sem enforcement possível porque a Shopify Function não roda")
+estava incompleta.
+
+⚠️ **Pilar NÃO CONFIRMADO — exige teste ao vivo antes de codar:** que `quotes: []` de fato
+**impede finalizar** a compra (comportamento plausível e padrão de e-commerce, mas não está
+escrito na doc). É o passo 1 abaixo.
+
+### 8.3 Arquitetura corrigida — defesa em profundidade ancorada na API de Frete
+Camadas, da mais fraca (UX) à mais forte (trava):
+1. **CEP obrigatório na entrada** → cookie/localStorage `mg_cep`+`mg_regiao` (o tema já usa
+   localStorage: beae, smi-header). UX + insumo das camadas abaixo.
+2. **Filtro de vitrine em TODAS as superfícies** (grade, carrosséis, kits, busca, preditiva),
+   por id E handle, alimentado por **App Proxy** que lê o `product_map` (server-side, sem
+   `write_products`). Cosmético, mas coerente.
+3. **Guard server-side na PDP** (`main-product.liquid`): esconde o bloco de compra se o
+   produto não é da região. Fecha o `/products/{handle}` direto pro usuário comum.
+4. **API de Frete do Yampi = a trava-dura.** O integrador cruza SKUs×CEP no `product_map` e
+   devolve `quotes: []` (ou recusa carrinho misto) quando há item fora de área. É o backstop
+   que cobre até os apps opacos, porque age por baixo, no pagamento.
+5. **Blocklist global do Yampi** só pra CEPs fora de BA∪SP totalmente não atendidos.
+
+**App Proxy é o cérebro (fonte de verdade da região, lê Supabase); a API de Frete é o músculo
+(retém a compra).** App Proxy sozinho não retém pagamento; filtro client-side sozinho é UX.
+
+⚠️ **Regra operacional:** NUNCA usar "Frete customizado por produto" do Yampi nesta loja —
+ele bypassa a API de Frete/planilha de CEP e abre buraco de região.
+
+### 8.4 Ainda NÃO CONFIRMADO (teste ao vivo)
+- `quotes: []` bloqueia finalizar no Yampi (pilar da arquitetura).
+- Atributos do cart Shopify sobrevivem ao handoff Yampi? (por isso a API de Frete deve
+  derivar região dos próprios SKUs, não de `cart.attributes`).
+- Superfícies de app opacas (Searchanise/PageFly/beae/Appstle) — quanto o filtro de UI vaza.
+- Escopos exatos do app do integrador e o `product_map` (não verificados neste ambiente).
+
+### 8.5 Próximo passo concreto (mudou)
+Antes de qualquer código ou mockup: **teste de mesa na conta Yampi ao vivo** —
+(1) ativar Frete por API apontando pra um endpoint stub do integrador; (2) stub devolve
+`quotes: []` pra um SKU + CEP de SP, cotação normal caso contrário; (3) adicionar o SKU ao
+carrinho, ir ao checkout com CEP de SP e observar se finaliza. Se bloquear → segue a
+arquitetura 8.3. Se não → reabrir a decisão de checkout com o JG (trocar Yampi pelo checkout
+nativo + Validation Function é decisão de negócio). Depois disso, mockup do gate de CEP.
+
+## 9. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
 - Projeto guarda-chuva: [[project_move_gourmet]].
 - Handoff da reconciliação: `RECONCILIACAO-CATALOGO-HANDOFF.md` (mesma pasta).
