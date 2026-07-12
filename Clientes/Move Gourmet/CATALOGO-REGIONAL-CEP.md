@@ -327,13 +327,25 @@ Testado via Admin API (token do integrador) + admin da loja. Evidências:
 próximo passo real é decidir construir a function como feature spec'da no repo (com a reinstalação
 dos escopos de validation + resolver o ambiente de CLI/Node).
 
-### 10.7 Escopos de validation solicitados (12/07) — pendente reinstall
-Criada e ativada a versão **`movegourmetv4-validations`** no Dev Dashboard, adicionando
-`read_validations` + `write_validations` aos 8 escopos (aditivo). Estado: config atualizada, mas a
-instalação da loja ainda tem os 8 antigos — **`read/write_validations` pendentes até o JG reinstalar
-o app** (mesma dança do write_products). Após reinstalar, confirmar via `access_scopes.json`.
-Escopos totais alvo (10): read/write_products, read/write_inventory, read_locations, read_orders,
-read/write_merchant_managed_fulfillment_orders, read/write_validations.
+### 10.7 Escopos de validation (12/07) — ✅ CONCEDIDOS
+Criada e ativada a versão **`movegourmetv4-validations`** no Dev Dashboard (+`read_validations`
++`write_validations`, aditivo). JG reinstalou o app → confirmado via `access_scopes.json`:
+**read_validations + write_validations concedidos** ✅. Query `validations` que antes dava erro de
+escopo **agora funciona** (0 validações ativas, sem erro) → API de validation plenamente acessível
+no plano Grow. Smoke test OK (shop/produto/3 locations). Fluxo A/B saudável.
+
+**Escopos finais do app (10):** read/write_products · read/write_inventory · read_locations ·
+read_orders · read/write_merchant_managed_fulfillment_orders · read/write_validations.
+
+**Rota Function agora 100% destravada do lado de permissões/plataforma.** Falta só a ENGENHARIA:
+1. Escrever a validation function (extensão Wasm) — lê `cart.lines.merchandise.product.metafield
+   custom.regiao` + CEP de entrega; erro (bloqueio) se item fora de região; defensiva (sem metafield
+   = allow). No repo, como feature spec'da.
+2. Deploy via Shopify CLI — ⚠️ gargalo: CLI ausente + Node 25 (quer 18/20/22) + auth interativa na
+   org. Precisa de ambiente adequado.
+3. `validationCreate` referenciando a function + testar com produto de teste (região BA) e checkout
+   CEP SP → esperar bloqueio; depois desativar.
+4. Job de sync `product_map → metafield custom.regiao` (usa o write_products já concedido).
 
 ## 11. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
