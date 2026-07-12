@@ -347,7 +347,16 @@ read_orders · read/write_merchant_managed_fulfillment_orders · read/write_vali
    CEP SP → esperar bloqueio; depois desativar.
 4. Job de sync `product_map → metafield custom.regiao` (usa o write_products já concedido).
 
+## 10.8 EPIC ABERTA NO REPO (12/07)
+Feature spec'da e commitada (7737831): **`specs/0009-catalogo-regional-cep/`** no repo
+`integradormovegourmet` (product/domain/design/spec/tasks — 11 AC, 12 stories). É a fonte da verdade
+de implementação daqui pra frente; este doc do vault vira o registro de decisão/validação de
+plataforma. Também no repo: `docs/ROADMAP.md` (Fase 4 / epic 0009) + 6 termos novos no `docs/glossary.md`.
+Próximo passo de execução: começar por S1 (modelo de região + domínio) — não depende de bloqueio; os
+bloqueios (Move classificar, CLI/Node p/ Function, mockup, acesso ao tema) estão marcados 🔒 no `tasks.md`.
+
 ## 11. Relacionados
+- Feature/spec no repo: `specs/0009-catalogo-regional-cep/` (Trivia-Growth/integradormovegourmet).
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
 - Projeto guarda-chuva: [[project_move_gourmet]].
 - Handoff da reconciliação: `RECONCILIACAO-CATALOGO-HANDOFF.md` (mesma pasta).
