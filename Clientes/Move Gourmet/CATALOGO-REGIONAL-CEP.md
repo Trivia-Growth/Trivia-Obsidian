@@ -274,6 +274,24 @@ premissas antes de escolher.
 - Confirmar se dá pra registrar Carrier Service próprio no plano Grow (rota alternativa).
 - Escopo: decidir adicionar `write_products` ao app (destrava metafield + reconciliação por API).
 
+### 10.5 EXECUÇÃO write_products (11/07, autorizada pelo JG) — ✅ CONCLUÍDO
+Feito no Dev Dashboard (`dev.shopify.com/dashboard/173761009/apps/392324775937`): criada e ativada
+a versão **`movegourmetv3-write-products`** adicionando `write_products` aos 7 escopos (aditivo, o
+resto da config preservado: app_url=example.com, webhooks 2026-07, embedded).
+
+**Pegadinha resolvida:** a nova versão NÃO re-concede sozinha — os escopos ficam presos ao que a
+instalação aprovou. Como o app usa client_credentials e não tem redirect URL, não há tela de
+"atualizar permissões" (só "Desinstalar" no menu). **Solução: o JG desinstalou + reinstalou o app**
+(11/07). Confirmado via API: `access_scopes.json` agora inclui **write_products** ✅; escopos totais =
+read/write_products, read/write_inventory, read_locations, read_orders, read/write_merchant_managed_fulfillment_orders.
+Smoke test do token novo OK (lê produtos, shop=Move Gourmet) — Fluxo A/B saudável, reinstall não quebrou nada.
+
+**Lição p/ o futuro (mudar escopo deste app):** editar escopos = nova versão no Dev Dashboard +
+**desinstalar/reinstalar** na loja (breve gap no Fluxo A/B). Não há re-consent sem reinstalar.
+
+**Destravou:** (1) rota **Function** agora é possível (gravar metafield `custom.regiao` por produto);
+(2) a reconciliação de catálogo passa a poder mudar título/tag/arquivar **por API** (não só CSV/manual).
+
 ### 10.3 Lição registrada
 Duas análises minhas (checkout Yampi, e a arquitetura da API de Frete) foram construídas em cima de
 **código do tema sem checar o estado de runtime**. O tema tem MUITO código morto de apps já
