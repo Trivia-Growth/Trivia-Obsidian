@@ -96,7 +96,17 @@ Analisado o export `theme_export__movegourmet...__11JUL2026-0829pm` (219 assets,
 - **NÃO existe** nenhum campo de CEP / calculadora de frete custom hoje (só o campo
   padrão de endereço na conta). Terreno limpo, sem conflito.
 
-### ACHADO QUE MUDA O PLANO: checkout é **Yampi** (não é o Shopify nativo)
+> 🛑 **CORREÇÃO 11/07 (verificado ao vivo) — o Yampi NÃO está ativo. A premissa "checkout é
+> Yampi" abaixo está ERRADA (era código morto no tema).** Confirmado em 3 níveis: (1) Yampi não
+> está na lista de apps instalados; (2) a própria API do Yampi responde `{"data":{"active":false}}`
+> pra este shop (`api.dooki.com.br/v2/public/shopify/status?shop=movegourmet.com.br`) — que é o
+> mesmo flag que o snippet usa em `YampiSnippet.liquid:67` (`if(!resp.active){ não faz nada }`);
+> (3) teste ao vivo: adicionei item, fui ao checkout e caiu em
+> `movegourmet.com.br/checkouts/cn/...` = **checkout NATIVO do Shopify**, sem redirect pro Yampi.
+> **O checkout é o nativo do Shopify.** Ver §10 pra a arquitetura corrigida (Shopify Function volta
+> a ser viável). Mantido o texto abaixo riscado como registro do erro.
+
+### ~~ACHADO QUE MUDA O PLANO: checkout é Yampi~~ (FALSO — código morto, ver correção acima)
 O `theme.liquid` injeta o `YampiSnippet`: na página `/cart` ele pega o `cart.json`,
 manda pra API do Yampi (`api.dooki.com.br/v2/public/shopify/cart`), limpa o carrinho
 Shopify e **redireciona pro checkout hospedado do Yampi**. Consequências:
@@ -189,7 +199,54 @@ carrinho, ir ao checkout com CEP de SP e observar se finaliza. Se bloquear → s
 arquitetura 8.3. Se não → reabrir a decisão de checkout com o JG (trocar Yampi pelo checkout
 nativo + Validation Function é decisão de negócio). Depois disso, mockup do gate de CEP.
 
-## 9. Relacionados
+> ⚠️ A §8 inteira presume que o checkout é Yampi. **Isso foi refutado ao vivo (ver §10).** O que
+> a §8 acertou e continua valendo: (a) produto aparece em 8+ superfícies, não só a coleção; (b)
+> filtro client-side é UX, não trava; (c) App Proxy como fonte de verdade da região. O que MORRE
+> da §8: tudo que depende da "API de Frete do Yampi" como trava — o Yampi não está ativo.
+
+## 10. CORREÇÃO FINAL — checkout é NATIVO do Shopify (Yampi é código morto)
+
+Verificado ao vivo em 11/07 (a pedido do JG, que não achou o Yampi na lista de apps):
+- **Yampi não está instalado** (lista de apps: Appstle, Flow, integrador Movegourmet, Melhor
+  Envio, Ticket Spot, Attrac, BOGOS, Delivery & Pickup, SendWILL, Retentionly, e apps de section).
+- **API do Yampi diz inativo:** `GET api.dooki.com.br/v2/public/shopify/status?shop=movegourmet.com.br`
+  → `{"data":{"active":false,"skip_cart":false,...}}`. É o mesmo flag que `YampiSnippet.liquid:67`
+  usa; com `active:false` o snippet não faz nada.
+- **Checkout ao vivo:** adicionei item → `/checkout` caiu em `movegourmet.com.br/checkouts/cn/...`
+  = **checkout nativo do Shopify**. Sem redirect pro Yampi.
+
+**Consequência: o checkout é o nativo do Shopify → a Shopify Cart & Checkout Validation Function
+É viável** (era a "camada 4" original, que eu tinha descartado por causa do Yampi fantasma).
+
+### 10.1 Arquitetura corrigida (checkout nativo)
+1. **CEP obrigatório na entrada** (cookie/localStorage `mg_cep`+`mg_regiao`) — UX.
+2. **Filtro de vitrine em TODAS as superfícies** (grade, carrosséis, kits, busca, preditiva),
+   por id E handle, alimentado por **App Proxy** lendo o `product_map` — UX coerente.
+3. **Guard server-side na PDP** (`main-product.liquid`) — fecha o `/products/{handle}` direto.
+4. **Shopify Cart & Checkout Validation Function = a trava-dura.** No checkout nativo, a função lê
+   o endereço/CEP de entrega + a **região do produto** e bloqueia finalizar se houver item fora de
+   área. É a trava nativa, robusta, sem gambiarra de frete.
+   - ⚠️ **Restrição real da Function:** ela é WASM determinística, **sem acesso a rede** — não
+     consulta o Supabase. A região do produto precisa estar **em metafield do produto** (input da
+     função). Gravar metafield exige escopo de escrita (write_products ou escopo de metafield) —
+     então o integrador precisa **espelhar `product_map` → metafield `custom.regiao`** (sync).
+     Isso reabre a questão do `write_products` que a §8 dizia estar bloqueada — checar o escopo
+     real do app "integrador Movegourmet".
+5. **Melhor Envio** (já instalado) faz o frete por CEP; a Function é a camada de bloqueio por região.
+
+### 10.2 Pergunta de negócio pro JG (decide a arquitetura)
+- **O Yampi está definitivamente fora, ou é uma migração pela metade / plano futuro?** Se pretendem
+  (re)ativar o Yampi, a arquitetura muda de volta pra API de Frete (§8.3). Se é checkout nativo pra
+  ficar, seguimos §10.1 (Shopify Function). **Confirmar antes de desenhar qualquer coisa.**
+- Confirmar o escopo do app "integrador Movegourmet" (tem/pode ter write_products/metafields?).
+
+### 10.3 Lição registrada
+Duas análises minhas (checkout Yampi, e a arquitetura da API de Frete) foram construídas em cima de
+**código do tema sem checar o estado de runtime**. O tema tem MUITO código morto de apps já
+desinstalados (beae, pagefly, layouthub, ecomposer, yampi). **Regra: antes de concluir "a loja usa
+X", confirmar no app store instalado + comportamento ao vivo, não só no código do tema.**
+
+## 11. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
 - Projeto guarda-chuva: [[project_move_gourmet]].
 - Handoff da reconciliação: `RECONCILIACAO-CATALOGO-HANDOFF.md` (mesma pasta).
