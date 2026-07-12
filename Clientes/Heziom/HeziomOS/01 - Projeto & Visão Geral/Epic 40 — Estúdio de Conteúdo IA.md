@@ -207,3 +207,21 @@ Branch `feat/40-estudio-conteudo` (7 commits, push de backup no GitHub, **sem PR
 **Estado dos testes:** 388 deno + 238 vitest + typecheck + biome — tudo verde.
 
 **Bloqueios (JG):** ① exportar `ANTHROPIC_API_KEY` ou `OPENROUTER_API_KEY` p/ rodar as baterias vivas (gate de RELEASE do motor, não de dev); ② mockups das telas (40.3/40.4/40.8/40.10/40.13/42.2); ③ sessão de DNA da Editora + fichas de 2-3 livros; ④ template do Amazon Vendor (42.4).
+
+---
+
+## ✅ Épico COMPLETO em código — 11/07/2026 (aguarda só validação viva do JG)
+
+Branch `feat/40-estudio-conteudo`: **22 commits, push feito, SEM PR** (abre com OK do JG). Nada em produção ainda.
+
+**Full-stack pronto:**
+- **Motor** (40.1/40.2/40.5/40.6/40.7): banco + edge de geração + prompt editorial + guardrails + goldens.
+- **Provider**: OpenRouter com a chave JÁ do sistema (decisão do JG) — zero config nova em prod. Anthropic nativo é fallback.
+- **Pontes** (40.9 pesquisa Perplexity, 40.15 Helena, 40.16 e-mail): lançamento ativo vira munição de venda da Helena ao vivo; post de e-mail vira campanha draft.
+- **Imagem** (40.11 ADR 0025 + 40.12 edge + 40.13 UI): catálogo plugável (Nano Banana Pro/Flash, Seedream), custo por imagem na tela.
+- **Ficha Mestre** (42.1 banco + 42.2 aba Book Info): cadastro rico nível Amazon Vendor, herdado pelos lançamentos.
+- **6 telas de UI**: Marcas & DNA, Lançamentos, Estúdio (streaming), Calendário (grade+kanban), Imagem, Book Info — mockups aprovados pelo JG antes de codar.
+
+**Qualidade:** 3 ciclos de revisão adversarial multi-agente (44+34+11 agentes) → **35 achados confirmados, todos corrigidos**. Bateria RLS em PG isolado (32/32 + 5/5 + RPCs). 274 vitest + deno + typecheck + biome verdes. **Security Gate: PASS** (`docs/security/gates/security-gate-epic40.md`) + runbook.
+
+**Pendências do JG (validação viva, não bloqueiam merge do código):** ① chave `OPENROUTER_API_KEY` p/ as baterias vivas + bench de imagem; ② sessão de DNA real da Editora + 2-3 lançamentos + fichas de livro; ③ E2E logado no preview; ④ autorizar o PR; ⑤ rotacionar os 3 PATs `sbp_` expostos; ⑥ template do Amazon Vendor (42.4).

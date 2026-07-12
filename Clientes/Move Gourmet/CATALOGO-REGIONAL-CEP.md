@@ -234,11 +234,45 @@ Verificado ao vivo em 11/07 (a pedido do JG, que não achou o Yampi na lista de 
      real do app "integrador Movegourmet".
 5. **Melhor Envio** (já instalado) faz o frete por CEP; a Function é a camada de bloqueio por região.
 
-### 10.2 Pergunta de negócio pro JG (decide a arquitetura)
-- **O Yampi está definitivamente fora, ou é uma migração pela metade / plano futuro?** Se pretendem
-  (re)ativar o Yampi, a arquitetura muda de volta pra API de Frete (§8.3). Se é checkout nativo pra
-  ficar, seguimos §10.1 (Shopify Function). **Confirmar antes de desenhar qualquer coisa.**
-- Confirmar o escopo do app "integrador Movegourmet" (tem/pode ter write_products/metafields?).
+### 10.2 Decisão do JG + verificação no admin (11/07)
+**JG confirmou: checkout nativo do Shopify é pra ficar.** (Yampi fora — reconfirmado: aparece como
+app legado "Não instalado" na página de apps personalizados.) Verificado manualmente no admin:
+
+- **Plano: Grow** ($468/ano) — NÃO é Plus. As Cart & Checkout Validation Functions **não têm
+  banner de "Plus only"** na doc (diferente das checkout UI extensions), e as fontes indicam que
+  rodam em planos não-Plus — **muito provavelmente disponível no Grow, a confirmar num deploy real**
+  (docs [cart-checkout-validation](https://shopify.dev/docs/api/functions/latest/cart-and-checkout-validation)).
+- **Escopos do app "integrador Movegourmet" (consulta autoritativa via API, `oauth/access_scopes.json`):**
+  `read_products, write_inventory, read_inventory, read_locations, read/write_merchant_managed_fulfillment_orders,
+  read_orders`. **NÃO tem `write_products`.** (Cuidado: o admin mostra "Produtos: Editar ✓", mas isso é
+  o `write_inventory` agrupado sob "Produtos" na visão grossa — a API confirma que write de produto
+  NÃO existe.) A premissa original ("sem write_products") estava certa.
+
+### 10.3 O blocker real da arquitetura nativa: metafield precisa de write_products
+A Shopify Function é **WASM sem acesso a rede** → ela lê a região do produto de um **metafield**
+(input da função). Gravar metafield de produto exige **`write_products`**, que o integrador **não
+tem**. Então a arquitetura §10.1 pressupõe **adicionar `write_products` ao app** (mudança de escopo
++ re-consentimento da Fernanda; o app já teve escopos atualizados 1× em 02/07) e um job que espelha
+`product_map → metafield custom.regiao`. Bônus: com write_products, a reconciliação também passa a
+poder mudar título/tag/arquivar por API (hoje é manual/CSV).
+
+**Caminho alternativo SEM write_products — Carrier Service (frete nativo):** um "shipping rate
+provider" custom recebe itens + CEP de destino e devolve as tarifas; devolver **zero tarifas** pra
+carrinho fora de região impede finalizar (mesma lógica que a API de Frete do Yampi, mas nativa, e o
+endpoint É do integrador, então tem acesso a rede e lê o `product_map` direto — sem metafield/sem
+write_products). ⚠️ Frete calculado por transportadora custom historicamente depende de plano
+(Advanced+ ou add-on anual) — o Melhor Envio já usa isso, então a capacidade pode existir; **a
+confirmar** se dá pra adicionar um carrier service próprio no plano Grow.
+
+**Duas rotas de enforcement nativo, a decidir:** (a) **Validation Function** (precisa write_products
++ sync de metafield; bloqueia com mensagem clara) vs (b) **Carrier Service** (sem write_products, lê
+Supabase direto; bloqueia por "sem frete"; depende de plano permitir carrier custom). Testar as duas
+premissas antes de escolher.
+
+### 10.4 Pendências de verificação (antes de desenhar)
+- Deploy de teste de uma Validation Function no plano Grow → confirma disponibilidade.
+- Confirmar se dá pra registrar Carrier Service próprio no plano Grow (rota alternativa).
+- Escopo: decidir adicionar `write_products` ao app (destrava metafield + reconciliação por API).
 
 ### 10.3 Lição registrada
 Duas análises minhas (checkout Yampi, e a arquitetura da API de Frete) foram construídas em cima de
