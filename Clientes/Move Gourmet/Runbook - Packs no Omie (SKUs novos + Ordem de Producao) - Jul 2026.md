@@ -61,7 +61,7 @@ real; aí sim trazer pro Omie **direito** (registrar compra + consumo). A unidad
 o estoque precisa refletir.
 
 ## Backup / como reverter
-- Estado ANTES salvo em `Omie - Backup packs (antes das OPs) - Jul 2026.json` (saldos + receitas).
+- Estado ANTES salvo em `dados/Omie - Backup packs (antes das OPs) - Jul 2026.json` (saldos + receitas).
 - SKUs antigos **intactos como backup** (PRD00766/767 inativos; PRD00770/752 ativos — **inativar depois**).
 - Reverter uma OP: Omie `ReverterOrdemProducao` (devolve as unidades, tira os packs).
 - Reverter o mapa: reapontar `product_map` pros SKUs antigos.

@@ -50,18 +50,44 @@ desde: 2026-06-24
 
 ## Documentos e Notas
 
+**Estado vivo do desenvolvimento** (não duplicar aqui — só ponteiro):
+- Repo `Trivia-Growth/integradormovegourmet` (local: `~/Documents/Obsidian/Github/Move Gourmet`) →
+  `docs/STATE.md` é a memória de trabalho viva (o que foi feito, próximo passo, bloqueios).
+  `docs/ROADMAP.md` + `specs/000N-*/` são o backlog e as features entregues.
+
+**Catálogo regional por CEP (em planejamento):**
+- [[CATALOGO-REGIONAL-CEP]] ← Opção A definida (gate de CEP + catálogo por região), tema
+  verificado (Dawn, checkout é Yampi), aguardando mockup do gate
+
+**Reconciliação de catálogo (Omie × integrador × Shopify, em andamento desde 08/07):**
+- [[RECONCILIACAO-CATALOGO-HANDOFF]] ← ponteiro pro handoff real (`docs/reconciliacao-catalogo/HANDOFF.md` no repo)
+- [[Conferencia de estoque - devolutiva Nat - Jul 2026]]
+- [[Relatorio - Atualizacao do Sistema e Estoque - Jul 2026]]
+- `dados/Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx` ← planilha original do de-para (30 alta, 10 revisar, 7 kit); base p/ o `product_map`
+- `dados/` ← demais exports/planilhas de trabalho da reconciliação (CSVs do Shopify, backups Omie)
+
+**Runbooks:**
+- [[Runbook - Go-live do Integrador (Supabase) - Jul 2026]]
+- [[Runbook - Packs no Omie (SKUs novos + Ordem de Producao) - Jul 2026]]
+
+**Fundação do integrador (histórico da construção):**
+- [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento inicial + plano de ação estoque
+- [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica original
+- [[Achado - SKUs Shopify x Omie - Jul 2026]] ← achado que motivou o integrador próprio (Hub casa por SKU, sem GID)
+- [[Modelo de Sincronização de Estoque (regra oficial) - Jul 2026]] ← regra por tipo de item (final/variante/kit)
+- [[Integrador - Status de Construção - Jul 2026]] ← diário da construção até o Fluxo A (histórico; estado atual está no `docs/STATE.md` do repo)
+
+**Onboarding/diagnóstico inicial (24-30/06, histórico):**
 - [[Credenciais - Move Gourmet]]
 - [[Diagnóstico Shopify - Jun 2026]]
-- [[Problema - Pagamentos sem provedor principal]]
-- [[Problema - Omie sem Local de Estoque SP]] *(achado original refutado — ver nota abaixo)*
-- [[Omie - Mapeamento Estoque - Jul 2026]] ← levantamento atual + plano de ação estoque
-- [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]] ← spec técnica p/ construir o integrador Omie↔Shopify multi-CD
-- [[Achado - SKUs Shopify x Omie - Jul 2026]] ← 🚨 bloqueador dos SKUs + diagnóstico verificado no Hub (03/07: Hub casa por SKU, sem GID; nosso integrador dispensa a limpeza)
-- `Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx` ← planilha p/ a Nat confirmar o de-para (30 alta, 10 revisar, 7 kit); base p/ o `product_map`
-- [[Modelo de Sincronização de Estoque (regra oficial) - Jul 2026]] ← regra por tipo de item (final/variante/kit); kits = estoque próprio, ingrediente nunca é produto (verificado 03/07)
-- [[Integrador - Status de Construção - Jul 2026]] ← diário do que foi construído + onde paramos (Fluxo A pronto)
+- [[Diagnóstico Appstle - Jun 2026]]
 - [[Configuração Frete Shopify - Jun 2026]] ← frete, perfis, retirada em loja (concluído)
+- [[Problema - Pagamentos sem provedor principal]] *(resolvido 24/06)*
+- [[Problema - Omie sem Local de Estoque SP]] *(achado original refutado — ver nota abaixo)*
 - [[Proposta Comercial - Correção Shopify e Omie]]
+- [[Solução YOUMOVE — Business Premium]]
+
+**Relatórios entregues:** ver `relatorios/` (Relatório Técnico Jun/2026, HTML+PDF).
 
 ---
 
@@ -73,7 +99,7 @@ desde: 2026-06-24
 
 - [x] Corrigir falha ativa nos pagamentos - ver [[Problema - Pagamentos sem provedor principal]] *(resolvido 24/06 - Fernanda)*
 - [~] Consolidar apps Omie: desativar "Omie Move Gourmet", manter apenas "Omie Shopify" *(01/07: confirmado com PROVA definitiva via Hub que "Omie Shopify" é o app vivo e "Omie Move Gourmet" é seguro remover — falta só executar a remoção, ver [[Omie - Mapeamento Estoque - Jul 2026]])*
-- [~] Split de estoque Salvador×SP *(02/07: decidido construir integrador próprio — Fluxo A PRONTO no código e provado no real; ver [[Integrador - Status de Construção - Jul 2026]]. Bloqueio agora é a correção dos SKUs no Shopify pelo cliente, ver [[Achado - SKUs Shopify x Omie - Jul 2026]])*
+- [x] Split de estoque Salvador×SP *(resolvido via integrador próprio — Fluxo A em produção desde a primeira semana de julho, sincronizando os 2 CDs; ver `docs/STATE.md` no repo)*
 - [x] Adicionar localização SP às tarifas de frete *(01/07: consolidado num único "Perfil Geral" com origens Salvador+SP, ver [[Configuração Frete Shopify - Jun 2026]])*
 - [x] Adicionar tarifa de frete na zona Bahia do Perfil Geral *(01/07: Bahia incluída na zona Norte/Nordeste do Perfil Geral)*
 
@@ -112,39 +138,29 @@ desde: 2026-06-24
 | 2026-07-02 | Construção do integrador próprio (repo `integradormovegourmet`, padrão Trivia) | Backlog de 8 épicos; fundação + banco Supabase |
 | 2026-07-02 | Cruzamento de SKU Omie×Shopify (via API) | 🚨 Achado crítico: só 9/124 casam; 97 sem SKU |
 | 2026-07-02 | Token Shopify resolvido (client_credentials) + Fluxo A construído | ✅ Sync de estoque por CD PRONTO no código, provado no real (shadow + write @idempotent) |
+| 2026-07-02/11 | Integrador completo: Fluxo A+B em produção, painel no ar, reconciliação de catálogo, Padrão OS v3 instalado | ✅ — detalhe dia-a-dia no `docs/STATE.md` do repo (não duplicado aqui) |
 
 ---
 
 ## Próxima Sessão
 
-> **DECISÃO 02/07: construir integrador próprio Omie↔Shopify multi-CD e colocar em produção.**
-> O Hub é single-location (não resolve o split). Spec técnica completa + certificada via API em
-> [[Integrador Estoque Multi-CD - Especificação Técnica - Jul 2026]].
+> **Esta seção descrevia o arranque do projeto (02-03/07) e ficou desatualizada — muito já foi
+> entregue desde então.** Estado vivo agora é o `docs/STATE.md` do repo. Resumo do que mudou desde
+> a última atualização desta seção:
+> - Token Shopify obtido, integrador construído e **em produção**: Fluxo A (sync de estoque
+>   multi-CD) e Fluxo B (gravação de pedido no Omie, com fix de desconto) rodando.
+> - Cruzamento de SKU concluído + reconciliação de catálogo completa (descontinuados, kits,
+>   produtos novos) — ver [[RECONCILIACAO-CATALOGO-HANDOFF]].
+> - Padrão OS v3 completo instalado no repo (squad `trivia-os`, hook de autoridade de push —
+>   **push direto revogado, agora exclusivo do `@devops`**).
+> - Painel do integrador no ar: https://movegourmet.netlify.app.
+> - Projeto novo em planejamento: [[CATALOGO-REGIONAL-CEP]] (catálogo por CEP, ainda sem código).
 
-> 🚨 **ACHADO CRÍTICO (02/07) — SKUs do Shopify:** cruzamento real Omie×Shopify mostrou que a
-> loja tem **124 variantes, 97 (78%) SEM SKU** e só **9 casam** com os 1.432 do Omie. Os SKUs do
-> Shopify são códigos curtos que não batem com os do Omie. **Isso bloqueia qualquer sincronização
-> por SKU** (nossa e provavelmente a do próprio Hub). **Ação do cliente:** preencher o campo SKU
-> dos produtos no Shopify com o `codigo` do Omie. É pré-requisito para o integrador funcionar.
-> Detalhe completo + listas + texto pronto pra Fernanda em [[Achado - SKUs Shopify x Omie - Jul 2026]].
-
-**Fila de execução (produção):**
-- [x] **Repo bootstrapado** (02/07): `Trivia-Growth/integradormovegourmet`, padrão Trivia (TRIVIAIOX v5). Local: `~/Documents/Obsidian/Github/Move Gourmet`
-- [x] **Padrão OS v3 aplicado** (02/07): scaffold base (esteira SDD), `docs/PROJECT.md` com identidade + 11 invariantes de domínio, exemplos de comissão do scaffold removidos
-- [x] **Spec da Fase 0 escrita** (02/07): `specs/0001-poc-sync-estoque` (product+design+spec 5 AC+domain+tasks); eval:spec verde. Tasks 1–4 (domínio/config/cliente Omie/mapa) não dependem do token
-- [x] **Backlog completo criado** (02/07): `docs/ROADMAP.md` + 8 épicos (`specs/0001`–`0008`) em 4 fases (validação → Fluxo A estoque → Fluxo B pedido → operação); eval:spec verde em todos
-- [ ] Obter token da Admin API do Shopify via **Dev Dashboard → instalar app na loja** (apps legados desativados pela Shopify em 01/01/2026; não mexer no "Omie Shopify" do Hub) — destrava tasks 5–7 + cruzamento de SKU
-- [x] **Supabase provisionado** (02/07): ref `lygxygsjxbpfqujvydxf` — destrava o épico 0002 (fundação/banco)
-- [ ] `npm install` no repo p/ ligar os gates/hooks (husky trava sem deps → commits com `--no-verify` até lá)
-- [ ] ⚠️ **Rotacionar o Management PAT do Supabase (`sbp_`)** exposto no chat 02/07 (token de conta inteira)
-- [ ] Cruzamento de SKU Omie `cCodigo` ↔ Shopify `variant.sku` (lado Omie já extraído: 1.432 SKUs)
-- [ ] Mapear a etapa de faturamento no Kanban da Omie (vistos "60"/"70", não "50")
-- [ ] Fase 0 (PoC leitura+escrita) → Fase 1 (sync de estoque, cutover do Hub via Strangler Fig)
-- [ ] Excluir/rotacionar o app OAuth criado por engano (client secret `shpss_` exposto no chat 02/07)
-
-**Pendências paralelas:**
-- Configurar Melhor Envio com CEP de SP como origem para pedidos de SP
-- Remover app legado "Omie Move Gourmet" (já confirmado seguro — só falta executar)
-- Rotacionar credenciais Omie (APP_KEY/APP_SECRET) expostas no chat durante a auditoria
-- Ajustar no Omie o saldo -1 do `PMUND PASTEL DE BACALHAU` em SP
-- Verificar se o Appstle portal do cliente está ativo com troca de produtos habilitada
+**Pendências conhecidas (não duplicar detalhe — ver fonte):**
+- Rotacionar tokens expostos em chat (Supabase `sbp_`, Netlify `nfp_`, Omie APP_KEY/SECRET) —
+  lista completa e atual no `docs/STATE.md` do repo.
+- Itens manuais do Shopify aguardando a Nat (gramatura Mini Brownie, sucos naturais, possível
+  duplicata) — `docs/reconciliacao-catalogo/acoes_manuais_shopify.md` no repo.
+- Melhor Envio com CEP de SP como origem para pedidos de SP.
+- Rotacionar credenciais Omie (APP_KEY/APP_SECRET) expostas durante a auditoria de junho.
+- Verificar se o Appstle portal do cliente está ativo com troca de produtos habilitada.

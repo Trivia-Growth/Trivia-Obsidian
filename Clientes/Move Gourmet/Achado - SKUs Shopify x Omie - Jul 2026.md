@@ -95,7 +95,7 @@ estoque.
 óbvios. Com o de-para confirmado carregado no `product_map`, o Fluxo A roda de verdade.
 
 ### Planilha gerada para a Nat (03/07) ✅
-Arquivo: **`Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx`** (nesta pasta). 4 abas: Leia-me,
+Arquivo: **`Move Gourmet - De-Para Omie x Shopify (para Nat).xlsx`** (em `dados/`). 4 abas: Leia-me,
 1. DE-PARA (revisar), 2. Catálogo Shopify completo (124 variantes, com REF, SKU atual e estoque por
 location), 3. Catálogo Omie (50, com saldo Salvador/SP). A Nat trabalha só no Excel, sem exportar
 nada. Placar do palpite automático (matcher por raridade de termo + tamanho/pacote + colisão):
