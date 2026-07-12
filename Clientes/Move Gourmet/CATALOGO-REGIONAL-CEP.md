@@ -298,6 +298,43 @@ Duas análises minhas (checkout Yampi, e a arquitetura da API de Frete) foram co
 desinstalados (beae, pagefly, layouthub, ecomposer, yampi). **Regra: antes de concluir "a loja usa
 X", confirmar no app store instalado + comportamento ao vivo, não só no código do tema.**
 
+## 10.6 TESTE DA ROTA FUNCTION (12/07) — VIÁVEL no plano Grow ✅ (elegibilidade)
+Testado via Admin API (token do integrador) + admin da loja. Evidências:
+- **Plano:** `shop.plan.displayName = "Shopify"` (marketing "Grow"), `shopifyPlus = false`.
+- **`shopifyFunctions` (query) FUNCIONA** no plano não-Plus (retorna vazio — nenhuma function
+  instalada ainda). Sem erro de plano.
+- **`validations` (query) dá erro de ESCOPO, não de plano:** "Required access: `read_validations`
+  access scope". Isso é a prova: se validation function fosse Plus-only, a API responderia erro de
+  plano/feature, não de escopo. → o recurso existe neste plano; falta só o app ter os escopos de
+  validation.
+- **Loja no checkout MODERNO** (Settings > Checkout mostra "Configurações [Novo]" = Checkout
+  Extensibility, não `checkout.liquid` legado) — pré-requisito das validation functions. ✅
+
+**Conclusão:** a rota da Function é elegível no Grow. Falta, pra usar de fato:
+1. Adicionar escopos **`read_validations` + `write_validations`** ao app (mesma dança: nova versão
+   no Dev Dashboard + reinstalar na loja — breve gap no Fluxo A/B).
+2. **Construir a validation function** (extensão do app, Wasm Rust/JS) no repo — tarefa de
+   implementação spec'da, não hack de navegador. Lê `cart.lines.merchandise.product.metafield
+   custom.regiao` + CEP de entrega; bloqueia se item fora de região. **Defensivo:** produto SEM
+   metafield de região → nunca bloqueia (cliente real intacto).
+3. **Deploy via Shopify CLI** — ⚠️ CLI NÃO está instalada nesta máquina e o Node é 25 (o CLI quer
+   18/20/22); deploy de function precisa de auth interativa na org do Dev Dashboard (login por
+   navegador). É o gargalo prático do deploy.
+4. **Ativar** a validation (`validationCreate`) + testar com metafield de região num produto de
+   teste (BA) e checkout com CEP de SP → esperar bloqueio; depois desativar.
+
+**Nada foi deployado/ativado** (não há function instalada; risco de produção zero até aqui). O
+próximo passo real é decidir construir a function como feature spec'da no repo (com a reinstalação
+dos escopos de validation + resolver o ambiente de CLI/Node).
+
+### 10.7 Escopos de validation solicitados (12/07) — pendente reinstall
+Criada e ativada a versão **`movegourmetv4-validations`** no Dev Dashboard, adicionando
+`read_validations` + `write_validations` aos 8 escopos (aditivo). Estado: config atualizada, mas a
+instalação da loja ainda tem os 8 antigos — **`read/write_validations` pendentes até o JG reinstalar
+o app** (mesma dança do write_products). Após reinstalar, confirmar via `access_scopes.json`.
+Escopos totais alvo (10): read/write_products, read/write_inventory, read_locations, read_orders,
+read/write_merchant_managed_fulfillment_orders, read/write_validations.
+
 ## 11. Relacionados
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
 - Projeto guarda-chuva: [[project_move_gourmet]].
