@@ -45,19 +45,19 @@ Login do helpdesk: conta da Heziom (`atendimento@editoraheziom.com.br`).
 
 ## 2. Dados de identificação do app (para o corpo do chamado)
 
-| Campo | Valor |
-|---|---|
-| **Nome do aplicativo** | **Heziom OS** |
-| **Consumer Key** | *(não expor — em `Credenciais.secret.md` local do HeziomOS / env Netlify `TRAY_CONSUMER_KEY`)* |
-| **Consumer Secret** | *(idem — `TRAY_CONSUMER_SECRET`)* |
-| **Ticket de origem das chaves** | **#1615764** (15/04/2026) |
-| **Empresa / integrador** | Editora Heziom (com fins lucrativos) |
-| **E-mail de contato** | `atendimento@editoraheziom.com.br` |
-| **Loja de teste (homologação)** | ID **1501119** — `https://loja-s.tray.com.br/adm/login.php?loja=1501119` |
-| **api_host da loja de teste** | `lojatesteintegracaotray.commercesuite.com.br` |
-| **Loja de produção (cutover)** | **www.editoraheziom.com.br** — store ID **1345958** |
-| **URL de callback / notificação (webhook prod)** | `https://api.editoraheziom.com.br/webhooks/tray` |
-| **Finalidade do app** | Integrar a loja Tray ao **Meta Conversions API** (rastrear compras server-side) + sincronizar catálogo/estoque/pedidos com o **Literarius** (ERP) via HeziomOS |
+| Campo                                            | Valor                                                                                                                                                          |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Nome do aplicativo**                           | **Heziom OS**                                                                                                                                                  |
+| **Consumer Key**                                 | *(não expor — em `Credenciais.secret.md` local do HeziomOS / env Netlify `TRAY_CONSUMER_KEY`)*                                                                 |
+| **Consumer Secret**                              | *(idem — `TRAY_CONSUMER_SECRET`)*                                                                                                                              |
+| **Ticket de origem das chaves**                  | **#1615764** (15/04/2026)                                                                                                                                      |
+| **Empresa / integrador**                         | Editora Heziom (com fins lucrativos)                                                                                                                           |
+| **E-mail de contato**                            | `atendimento@editoraheziom.com.br`                                                                                                                             |
+| **Loja de teste (homologação)**                  | ID **1501119** — `https://loja-s.tray.com.br/adm/login.php?loja=1501119`                                                                                       |
+| **api_host da loja de teste**                    | `lojatesteintegracaotray.commercesuite.com.br`                                                                                                                 |
+| **Loja de produção (cutover)**                   | **www.editoraheziom.com.br** — store ID **1345958**                                                                                                            |
+| **URL de callback / notificação (webhook prod)** | `https://api.editoraheziom.com.br/webhooks/tray`                                                                                                               |
+| **Finalidade do app**                            | Integrar a loja Tray ao **Meta Conversions API** (rastrear compras server-side) + sincronizar catálogo/estoque/pedidos com o **Literarius** (ERP) via HeziomOS |
 
 > Nunca colar os valores de Consumer Key/Secret nem tokens no chamado além do necessário — a Tray já os tem vinculados ao app pelo ticket #1615764. Basta citar o **nome do app** e o **número do ticket**.
 
