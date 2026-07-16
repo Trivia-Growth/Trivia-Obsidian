@@ -55,9 +55,15 @@ desde: 2026-06-24
   `docs/STATE.md` é a memória de trabalho viva (o que foi feito, próximo passo, bloqueios).
   `docs/ROADMAP.md` + `specs/000N-*/` são o backlog e as features entregues.
 
-**Catálogo regional por CEP (em planejamento):**
-- [[CATALOGO-REGIONAL-CEP]] ← Opção A definida (gate de CEP + catálogo por região), tema
-  verificado (Dawn, checkout é Yampi), aguardando mockup do gate
+**Catálogo regional por CEP (🟢 deployado e testado ao vivo, INERTE; go-live segurado, 13/07):**
+- [[CATALOGO-REGIONAL-CEP]] ← tudo (dados + tema + Function + App Proxy) **DEPLOYADO e INATIVO**.
+  Classificação por estoque (regra do JG: `NACIONAL` só com saldo nos 2 CDs → **~62/82 viraram BA, a Nat
+  precisa confirmar**) aplicada + metafields sincronizados. **Tema v3 testado AO VIVO no rascunho** (filtro
+  BA×SP, guard PDP, aviso de disponibilidade, atributo de carrinho — tudo passou, 0 erros). **Function 6/6
+  no runtime Wasm real** + e2e adversarial (21 agentes). App `integrador Movegourmet` (Dev Dashboard):
+  versão **-6 LIVE** (Function INATIVA + App Proxy), versão **-7 staged** (checkout ext auto-fill do CEP,
+  não liberada). **Nada customer-facing.** Go-live segurado (ordem: Nat confirma → publica tema → ativa
+  Function → libera -7): passo-a-passo em `runbooks/catalogo-regional.md` (seção GO-LIVE) e §12.1.
 
 **Reconciliação de catálogo (Omie × integrador × Shopify, em andamento desde 08/07):**
 - [[RECONCILIACAO-CATALOGO-HANDOFF]] ← ponteiro pro handoff real (`docs/reconciliacao-catalogo/HANDOFF.md` no repo)
@@ -154,7 +160,7 @@ desde: 2026-06-24
 > - Padrão OS v3 completo instalado no repo (squad `trivia-os`, hook de autoridade de push —
 >   **push direto revogado, agora exclusivo do `@devops`**).
 > - Painel do integrador no ar: https://movegourmet.netlify.app.
-> - Projeto novo em planejamento: [[CATALOGO-REGIONAL-CEP]] (catálogo por CEP, ainda sem código).
+> - Catálogo regional por CEP (0009): 5/12 stories EM PROD (13/07) — ver [[CATALOGO-REGIONAL-CEP]] §12.
 
 **Pendências conhecidas (não duplicar detalhe — ver fonte):**
 - Rotacionar tokens expostos em chat (Supabase `sbp_`, Netlify `nfp_`, Omie APP_KEY/SECRET) —

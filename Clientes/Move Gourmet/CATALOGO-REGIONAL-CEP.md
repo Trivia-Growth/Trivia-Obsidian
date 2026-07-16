@@ -355,6 +355,62 @@ plataforma. Também no repo: `docs/ROADMAP.md` (Fase 4 / epic 0009) + 6 termos n
 Próximo passo de execução: começar por S1 (modelo de região + domínio) — não depende de bloqueio; os
 bloqueios (Move classificar, CLI/Node p/ Function, mockup, acesso ao tema) estão marcados 🔒 no `tasks.md`.
 
+## 12. IMPLEMENTAÇÃO + MERGE EM PROD (13/07)
+Implementadas e **mergeadas** (origin/main `3791c0c`, CI verde, migrations aplicadas), cada uma com
+verificação adversarial multiagente. **5 das 12 EM PRODUÇÃO** + **S9 e S12 com código** (shadow, deploy 🔒):
+- **S1** modelo de região — migration `product_map.regioes` + domínio puro `regiaoDeCep`/`produtoVisivelPara`.
+- **S3+S4** metafield `custom.regiao` — definição idempotente + job de sync `product_map → metafield` (shadow).
+- **S5** App Proxy `catalogo-regiao` — `GET ?cep=` → produtos visíveis; + coluna `shopify_handle` + backfill.
+- **S10** gestão no painel — coluna Região (chips/lote, só operador) + edge `painel-op-regiao` com
+  auditoria. Mockup aprovado pelo JG + e2e ao vivo no painel demo.
+- **S9** Validation Function de checkout (**"o pilar"** — trava-dura que impede finalizar a compra de item
+  fora da área): caso de uso puro `validar-carrinho-regiao` (reusa o MESMO domínio, INV-4 por REUSO — sem
+  port Rust; SPEC_DEVIATION registrado) + extensão `validacao-regiao` (adaptador, graphql sem PII,
+  README-runbook de deploy/ativação/kill-switch). Código + 16 testes; **deploy 🔒** (Shopify CLI, S0).
+- **S12** flag `REGIONAL_CATALOG_V1` (master kill-switch da vitrine, default `off`=dark) + runbook
+  operacional `runbooks/catalogo-regional.md` (desligar cada trava, reclassificar, cobertura, rollout).
+- **S11** roteiro e2e (`specs/0009-*/e2e-roteiro.md`, por AC + adversarial ADV-1..8) + **revisão
+  adversarial de completude** do epic (workflow 4 lentes, 11 achados, 1 confirmado). Fechou 2 lacunas de
+  teste: o adaptador da Function não tinha teste (estava fora do glob do vitest) → +10 testes; e o teste
+  da assinatura do App Proxy era tautológico → +2 vetores de resposta conhecida. Go-live registrado no
+  runbook: agendar `sync-regiao` como cron; classificar todas as variantes de um produto.
+
+Revisão de merge (deploy-safety/segurança/regressão): regressão limpa; 2 achados corrigidos antes de
+subir — `catalogo-regiao` passou a exigir **assinatura do App Proxy** (fail-closed) + memoização
+anti-DoS; `painel-estoque` com fallback na janela de deploy. CI destravado corrigindo a `audit-esteira`.
+
+**S2 classificação — DECISÃO DO JG (13/07): regra de estoque.** Minha análise técnica dizia que estoque
+não serve (Salvador é a fábrica; classificar por estoque esconde industrializados nacionais de SP/Brasil)
+e recomendei natureza do produto. **O JG optou pela regra de estoque assim mesmo: `NACIONAL` só com saldo
+nos 2 CDs; só Salvador→BA; só SP→SP; zero→BA.** Aplicada sobre o estoque real por CD; 6 produtos
+multi-variante harmonizados. **Resultado: ~15 NACIONAL / ~62 BA / ~5 SP.** ⚠️ ~62/82 viraram BA — a **Nat
+PRECISA confirmar** antes do go-live (senão a maioria some de SP/nacional). Detalhe: bloco "DECISÃO 13/07"
+em `docs/reconciliacao-catalogo/classificacao-regiao-proposta.md`.
+
+### 12.1 ROLLOUT EXECUTADO (13/07 tarde) — tudo INERTE, nada customer-facing
+
+- **Metafields sincronizados** (`sync-regiao --exec`): 67 produtos, 0 conflitos/erros; leitura confirmada.
+- **e2e adversarial** (Workflow 21 agentes): 7 confirmados. Núcleo 100%. 2 ALTOS = decisão de produto
+  (gate CEP × CEP de entrega do checkout; metafield product-level não representa por-variante). 2 médios
+  de tema corrigidos (buracos na grade, carrossel). **Function 6/6 no runtime Wasm real** + 227 testes.
+- **DEPLOY FEITO** no app **`integrador Movegourmet`** (Dev Dashboard; reusou o app do integrador — `config
+  link` preservou os escopos do Fluxo A/B): **versão `-6` LIVE = Function `validacao-regiao` (INATIVA) +
+  App Proxy `/apps/catalogo-regiao`.** Fluxo A/B intacto pós-deploy. Extensão reestruturada pro build
+  oficial (`@shopify/shopify_function@2`), reusa o domínio (INV-4).
+- **Tema v3** (zip `...FINAL-v3...`, reimportado como rascunho id `163727442156`): fixes do e2e + **Opção 2**
+  (aviso de disponibilidade no gate/PDP) + **Opção 3** (CEP vira atributo do carrinho `mg_cep`). **TESTADO
+  AO VIVO no preview do rascunho — gate, filtro BA×SP, PDP (bloqueio + aviso), atributo de carrinho: TUDO
+  PASSOU, 0 erros no console.** Yampi já tinha sido removido; toggle default OFF.
+- **Checkout UI Extension `mg-preencher-cep`** (Preact, auto-fill do CEP no checkout + banner de mismatch):
+  construída, API validada campo a campo nos tipos 2026-04, **deploy `--no-release` → versão `-7` STAGED
+  (não liberada).** Inerte até o tema regional ir ao ar (só age com `mg_cep`); teste e2e real só no go-live.
+
+**🔒 GO-LIVE SEGURADO** — passo-a-passo (quem roda o quê, comandos, kill-switches) no runbook
+`runbooks/catalogo-regional.md` (seção "GO-LIVE"). Ordem: Nat confirma classificação → publicar tema v3 →
+ativar Function → liberar `-7` → (opcional) edge no Supabase. **NÃO ativar a Function antes do tema
+publicado** (a loja ao vivo mostra tudo e o checkout barraria sem aviso ao cliente). Fonte viva: bloco
+"0009 ROLLOUT" em `docs/STATE.md`. **Rotacionar** token de automação `atkn_...37e` + `sbp_`/`nfp_`/Omie.
+
 ## 11. Relacionados
 - Feature/spec no repo: `specs/0009-catalogo-regional-cep/` (Trivia-Growth/integradormovegourmet).
 - Reconciliação de catálogo em andamento: [[project_movegourmet_reconciliacao]].
