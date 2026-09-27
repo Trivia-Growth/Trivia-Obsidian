@@ -1,5 +1,11 @@
 # Proposta de Parceria
-### Trívia × Leandro Solla · Psicologia
+
+> [!warning] SUPERADO em 31/08/2026
+> O acordo vigente é **R$ 1.590,00/mês, apenas gestão de tráfego pago**. As cortesias descritas aqui (site institucional, CRM e feed orgânico por 3 meses) e o fee de R$ 2.500 **não valem mais**: foram renegociados.
+> Referência válida: `Clientes › CLI-011 - Leandro Sola › 00 Contexto › Serviços Contratados.md` (vault OneDrive) e a minuta em `_Confidencial (Sócios) › Contratos e Propostas por Cliente › Leandro Sola › 01 Contrato`.
+> Este documento fica como registro histórico da negociação.
+
+### Trívia × Leandro Sola · Psicologia
 
 > Documento client-facing. Base: [[01 - Plano e Escopo do Projeto]] e [[02 - Estrutura de Precos]].
 > 15/06/2026.
@@ -104,4 +110,4 @@ Vamos pra cima. 🚀
 
 ---
 
-*Trívia · Parceria com Leandro Solla · Junho/2026*
+*Trívia · Parceria com Leandro Sola · Junho/2026*

@@ -2,7 +2,7 @@
 title: OpenClaw — Trívia Studio
 tags: [index, openclaw, trivia]
 created: 2026-04-17
-updated: 2026-06-05
+updated: 2026-08-16
 ---
 
 # OpenClaw — Sistema de Agentes Trívia Studio
@@ -10,7 +10,7 @@ updated: 2026-06-05
 Gateway de agentes de IA rodando em `srv1544969`. Quatro agentes especializados cobrem orquestração, operação de agência, vendas e customer success — sobre Microsoft Teams e WhatsApp, com captura integral de mensagens no Supabase, tarefas persistentes com disparo automático e escalonamento por SLA de horas úteis.
 
 **Versão OpenClaw:** v2026.4.8
-**Última auditoria do vault:** 05/06/2026
+**Última auditoria do vault:** 16/08/2026 (via terminal do painel; ver [[2026-08-16-Auditoria-Config]] — incidente de auth ativo em 2 crons)
 
 ## Navegação rápida
 
@@ -41,6 +41,7 @@ Gateway de agentes de IA rodando em `srv1544969`. Quatro agentes especializados 
 | [[Grupos-WhatsApp]] | 15 grupos ativos com IDs |
 | [[Grupos-Teams]] | Grupos e canais Teams com IDs |
 | [[Arquivos-Criticos]] | Mapa de arquivos-chave do sistema |
+| [OpenClaw-Framework.html](OpenClaw-Framework.html) | Framework destilado (sem dado de cliente) para mentoria, identidade visual Trívia |
 
 ## Histórico de decisões
 
@@ -52,3 +53,4 @@ Gateway de agentes de IA rodando em `srv1544969`. Quatro agentes especializados 
 - [[2026-04-14-Reducao-Crons]]
 - [[2026-04-17-Sales-Head-Coach]]
 - [[2026-04-27-Sistema-Tarefas]]
+- [[2026-08-16-Auditoria-Config]]

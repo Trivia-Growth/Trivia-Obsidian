@@ -51,7 +51,7 @@ graph LR
 | Host | `192.168.18.10:1433` |
 | Database | `Literarius` |
 | Usuário | `acessoExterno` (read-only) |
-| REST API | `http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest` |
+| REST API | `http://<IP-PUBLICO>:<PORTA>/LiterariusAPI.dll/datasnap/rest` | 🔒 (endereço mascarado 06/08/2026 — ver [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]])
 | Auth REST | HTTP Basic + Header `USER_LITERARIUS` |
 
 ### Números

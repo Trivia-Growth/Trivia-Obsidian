@@ -14,7 +14,7 @@
 | Exterior "não cobra tão alto" | Exterior cobra **o MESMO** (R$ 1.800/mês ≈ 220–240 €/mês). Acessível lá (mínimo Europa ~1.300 €, média ~2.000 €) |
 | Foco genérico "exterior" | Foco é **EUROPA** (Itália, Inglaterra, Alemanha, França, Irlanda). EUA é secundário |
 
-**Nome:** transcrição e CNPJ usam **"Leandro Sola"** (CNPJ: *Leandro Sola Bernardino, serviços de psicologia limitada*). WhatsApp mostrava "Solla". A pasta está "Solas". → confirmar grafia correta.
+**Nome:** grafia CONFIRMADA = **Leandro Sola** (um L só). CNPJ: *Leandro Sola Bernardino, serviços de psicologia limitada*; Instagram @psicologo.leandrosola. (Antes havia divergência de grafia no material, já padronizada para Sola.)
 
 ---
 
@@ -81,7 +81,7 @@
    - **Avulso maior, mensal menor** (por sessão), alargando a diferença para empurrar o pacote.
    - Criar um **plano trimestral** (condição melhor ainda que o mensal).
    - *Objetivo: previsibilidade e mitigar o delay de reposição.*
-2. **Pesquisa e análise de branding:** decidir se **tudo fica sob a marca "Leandro Sola"** ou se **cria-se um nome próprio para a clínica**.
+2. **Pesquisa e análise de branding:** ✅ feita em 08/08 (pesquisa de marketing com dados, 6 frentes) — ver [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]]. Decisão: **marca endossada/híbrida**, não "tudo num nome só".
 3. **Faturamento 100% pela clínica (CNPJ):**
    - Pagar **R$ 180/hora** de consulta ao psicólogo e **cobrar R$ 250** do paciente.
    - **Piso de preço dos psicólogos da clínica:** não pode ser **< 50% da consulta individual do Leandro** (avulso R$ 500 → **mínimo R$ 250**), porque os psicólogos precisam passar autoridade.
@@ -93,8 +93,9 @@
 ## ❓ Pendências / próximos passos
 
 - [ ] JG volta com **o plano de início** (prometido no fim da reunião).
-- [ ] Confirmar grafia do nome (Sola × Solla × Solas).
-- [ ] Definir **nome/identidade** da marca pessoal (ele não pensou ainda; quer usar o próprio nome).
+- [x] Grafia confirmada: **Leandro Sola** (um L só).
+- [x] **[08/08] Modelo de marca decidido** (pesquisa de dados, ver [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]]): marca endossada — **"Leandro Sola"** para ele pessoalmente (captação internacional, Instagram, Meta Ads) + **nome institucional próprio** para a clínica (ele entra como fundador/selo de autoridade, não como nome legal dos associados).
+- [ ] Definir o **nome institucional da clínica** (string ainda em aberto — só o modelo foi decidido, não o nome).
 - [ ] Resolver **contábil/trabalhista** do modelo de clínica (Leandro consulta a colega da clínica de fono).
 - [ ] Rever a **proposta comercial** (a atual é pré-reunião): incorporar Meta Ads, foco Europa, modelo de contratação PJ dos psicólogos e o sistema de seleção.
 - [ ] Decidir se o **sistema de processo seletivo de psicólogos** entra como módulo (Fase 2 ou serviço à parte).

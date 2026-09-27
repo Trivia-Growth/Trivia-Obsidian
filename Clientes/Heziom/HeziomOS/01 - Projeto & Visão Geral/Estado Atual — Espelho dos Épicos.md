@@ -1,7 +1,7 @@
 ---
 tipo: espelho
 status: vivo
-data: 2026-07-11
+data: 2026-07-24
 fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomos
 ---
 
@@ -20,7 +20,7 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
 | E3 | Design System & Frontend Shell | ✅ Concluído |
 | E4 | Auth & Onboarding | ✅ Concluído |
 | E5 | Migração Flowbiz → HeziomOS | 🔄 ~90% (80.098 contatos + 166 templates migrados; falta credenciais Meta/Google Ads — Story 5.6) |
-| E6 | Atendimento + Vendas Omnichannel | ✅ Onda 3 fechada 24/06 (15/15); ativação operacional Meta em andamento |
+| E6 | Atendimento + Vendas Omnichannel | ✅ Onda 3 fechada 24/06 (15/15). **24/07: atendimento fechado de ponta a ponta** — menu 1× por conversa (6.42), atendente atribuído na hora por área/carga (26.9), e a identidade de telefone corrigida: **26.731 contatos** ganharam o código do país (6.40), **189 conversas** recuperadas (6.38), porta de entrada fechada e **212 cadastros repetidos removidos** (com e-mails errados corrigidos). Tudo em produção e verificado com cliente real. Os 189 telefones restantes ficam como estão, por decisão (pessoas distintas dividindo número). Ver [[Epic 26 — Cutover do Número Oficial e a Chave de Telefone]] |
 | E7 | Literarius BFF & LGPD | 🔄 Em progresso (7.1/7.2 Done) |
 | E8 | Resolução de Débito Técnico | 🔄 Reaberto |
 | E9 | Atendimento como Módulo Próprio | ✅ Concluído (em prod) |
@@ -159,3 +159,44 @@ fonte_de_verdade: docs/epics/README.md e docs/stories/BACKLOG.md no repo heziomo
   fixo em > 20260727110000); E42 (42.1/42.2) antes da 40.4; caminho crítico p/ o 1º post:
   40.1 (spike provider/streaming — CA1 flags já feito) ‖ 40.2 (migração `crm.content_*`) →
   40.5 → 40.6 → 40.7 → 40.8.
+
+## Atualização 2026-07-24 — Atendimento no número oficial fechado de ponta a ponta (E26 + identidade de telefone)
+
+O cutover do **+55 11 94498-6855** foi executado em 23/07. O dia 24/07 fechou as duas pontas que
+apareceram quando a triagem passou a ser nossa — as duas **já existiam** e só ficaram visíveis
+agora. Tudo em produção e verificado com cliente real, não em teste.
+
+- **Menu se repetia a cada mensagem (6.42, PR #453).** A trava contra inscrição duplicada no
+  fluxo só valia enquanto o fluxo estava "em andamento" — mas boas-vindas + menu terminam em
+  segundos, então todo inbound re-disparava. Efeito colateral de tirarmos a espera de 15 min no
+  dia anterior. Agora: 1 menu por conversa. **Confirmado:** cliente mandou 5 mensagens, recebeu 1.
+- **Clique no menu não chamava atendente (26.9, PR #455).** Eram 6 travas em série (o fluxo só
+  anotava a área; quem distribuía era outra parte, sob demanda, permissão de gestor, e a regra de
+  distribuição estava desligada). Agora o fluxo atribui na hora **por área + carga** — é o desenho
+  da 26.8 com o disparo automático. **Confirmado:** 5 atribuições, 100% na área correta; está
+  equilibrando um desvio antigo de ~4× entre atendentes. Security Gate PASS.
+- **CRM não reconhecia clientes que já tinha (6.40/6.38/6.41 + guarda de entrada).** Causa raiz
+  das 608 conversas sem dono: contatos importados sem o código do país (`11998809405`) nunca
+  casavam com o que o WhatsApp entrega (`5511998809405`). **26.731 contatos corrigidos**,
+  **189 conversas recuperadas**, e a porta de entrada fechada (contato novo já nasce certo).
+  Intocados de propósito: 5.246 telefones de mentira, 1.266 estrangeiros, 899 compartilhados.
+  Tudo reversível. **A revisão de segurança reprovou a 1ª versão** e evitou expor 26.731
+  telefones publicamente (detalhe de configuração do banco) — corrigido antes de executar.
+- **Prova de fechamento:** das conversas criadas no dia, 33 de 33 nasceram com cliente vinculado;
+  nenhum contato novo nasceu sem código do país; e os 2.165 que sobraram sem código são
+  **exatamente** a soma do que decidimos não tocar.
+- **Cadastros repetidos: 212 removidos** em 6 rodadas, sem perder compras nem histórico (tudo
+  transferido para o cadastro que ficou, com cópia de segurança para desfazer). O achado que
+  guiou o trabalho: **não era tudo duplicata**. A identidade foi confirmada por nome completo
+  idêntico + CPF não-contraditório + e-mail pessoal igual; e o **CPF foi decisivo para NÃO juntar**
+  (85 casos com CPFs diferentes e válidos = pessoas diferentes, incluindo pai e filho `MANOEL` /
+  `MANOEL ... JUNIOR`). De quebra, **15 e-mails com erro de digitação no provedor foram corrigidos**
+  (`gmail.con`, `hotmaul.com`, `iclood.com`...).
+- **Ficam como estão (decisão, não pendência):** 189 telefones com mais de um cadastro — 85 com
+  CPFs distintos, 11 igreja+pessoa, 60 com só o primeiro nome (risco de irmãs: `Tatiane` com
+  e-mail de `Talita`), ~33 telefones de casa/empresa. Só ligar para o cliente resolveria.
+- **Também aberto:** 419 conversas antigas sem cliente na base (JG optou por não criar cadastros)
+  e cancelar a Unnichat após período de estabilidade.
+
+Detalhe executivo em [[Epic 26 — Cutover do Número Oficial e a Chave de Telefone]].
+Fonte viva no repo: `docs/HANDOFF-2026-07-24-pos-cutover.md`, runbooks RB-19/20/21.

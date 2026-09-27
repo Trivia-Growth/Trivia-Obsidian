@@ -276,3 +276,61 @@ Kanban de faturamento da Omie; (4) Fase 0 → Fase 1 com cutover do Hub (Strangl
 - [ ] Verificar se a sync do Hub ainda está ativa (último pedido visto: 15/06/2026)
 - [ ] Remover app legado "Omie Move Gourmet" (confirmado seguro; não é urgente)
 - [ ] Rotacionar credenciais da API Omie expostas no chat (APP_KEY 3323795676201)
+
+---
+
+## ⚠️ Limites da API do Omie — como consultar saldo sem derrubar o acesso (26/07/2026)
+
+Aprendido na prática ao repor estoque em 26/07. **Dois guardas diferentes**, com efeitos bem
+distintos.
+
+### 1. Bloqueio global de ~30 minutos (`MISUSE_API_PROCESS`)
+
+`ListarPosEstoque` devolve **no máximo 50 itens por página** — ignora `nRegPorPagina` maior. Com
+~1.464 produtos, são **30 páginas por depósito**. Varrer os dois CDs (60 requisições, mesmo com
+450 ms de intervalo) dispara:
+
+```
+ERROR: API bloqueada por consumo indevido. Tente novamente em 1762 segundos.
+```
+
+Nesse estado **nada passa** — nem leitura, nem inclusão de ajuste. Perde-se meia hora.
+
+**Regra:** só varrer o catálogo inteiro quando o objetivo for realmente o catálogo inteiro (e aí
+com paciência). Para poucos produtos, **nunca varrer**.
+
+### 2. Consulta por produto — o caminho certo e barato (~190 ms)
+
+```
+POST https://app.omie.com.br/api/v1/estoque/consulta/
+{ "call": "PosicaoEstoque",
+  "param": [{ "id_prod": 9530718889, "data": "26/07/2026", "codigo_local_estoque": 3390627692 }] }
+```
+
+⚠️ **Os campos da resposta são minúsculos e sem prefixo** — fogem do padrão `nSaldo`/`nCMC` do
+resto da API. Passar o nome errado devolve `undefined` **sem erro**, silenciosamente:
+
+```json
+{ "saldo": 0, "cmc": 121.630725, "pendente": 2, "reservado": 0, "fisico": 0, "estoque_minimo": 0 }
+```
+
+- `saldo` — saldo contábil no depósito
+- `cmc` — **custo médio contábil**, obrigatório para lançar ajuste
+- `pendente` — unidades comprometidas em pedidos ainda não faturados
+- `fisico` / `reservado` — físico e reservado
+
+### 3. Nunca lançar ajuste sem o `cmc`
+
+`IncluirAjusteEstoque` exige o campo `valor`. Mandar `0` ou `undefined` **zera a valorização** do
+item no estoque — estrago contábil silencioso. O script de ajuste deve **abortar** se o `cmc` não
+vier, em vez de assumir zero.
+
+### 4. Guarda de repetição (`REDUNDANT`) — inofensivo
+
+```
+ERROR: Consumo redundante detectado. Aguarde 35 segundos para tentar novamente (REDUNDANT).
+```
+
+Dispara ao consultar o **mesmo produto** duas vezes em poucos segundos — típico de rodar um
+teste a seco e logo depois a execução real. **Não é bloqueio global:** basta esperar ~50 s e
+repetir só o item que falhou. Aconteceu com o Chocomove 20cm em 26/07 e foi resolvido assim.

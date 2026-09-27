@@ -56,7 +56,7 @@ Contexto de origem: [[Execucao-CDQ-Bulk-Upload-2026-06-02]] — auditoria CDQ de
 
 ### 1. Literarius (ERP Master)
 
-**Via:** `PUT /TProdutoController/Produto` · API `200.187.66.71:1983`
+**Via:** `PUT /TProdutoController/Produto` · API `<IP-PUBLICO>:<PORTA>` 🔒 (endereço mascarado 06/08/2026 — ver [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]])
 
 #### Aba Geral
 

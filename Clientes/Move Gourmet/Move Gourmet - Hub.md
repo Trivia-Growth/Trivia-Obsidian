@@ -55,15 +55,15 @@ desde: 2026-06-24
   `docs/STATE.md` é a memória de trabalho viva (o que foi feito, próximo passo, bloqueios).
   `docs/ROADMAP.md` + `specs/000N-*/` são o backlog e as features entregues.
 
-**Catálogo regional por CEP (🟢 deployado e testado ao vivo, INERTE; go-live segurado, 13/07):**
-- [[CATALOGO-REGIONAL-CEP]] ← tudo (dados + tema + Function + App Proxy) **DEPLOYADO e INATIVO**.
-  Classificação por estoque (regra do JG: `NACIONAL` só com saldo nos 2 CDs → **~62/82 viraram BA, a Nat
-  precisa confirmar**) aplicada + metafields sincronizados. **Tema v3 testado AO VIVO no rascunho** (filtro
-  BA×SP, guard PDP, aviso de disponibilidade, atributo de carrinho — tudo passou, 0 erros). **Function 6/6
-  no runtime Wasm real** + e2e adversarial (21 agentes). App `integrador Movegourmet` (Dev Dashboard):
-  versão **-6 LIVE** (Function INATIVA + App Proxy), versão **-7 staged** (checkout ext auto-fill do CEP,
-  não liberada). **Nada customer-facing.** Go-live segurado (ordem: Nat confirma → publica tema → ativa
-  Function → libera -7): passo-a-passo em `runbooks/catalogo-regional.md` (seção GO-LIVE) e §12.1.
+**Catálogo regional por CEP (🟢 EM PRODUÇÃO 17/07; regra "só BA e SP" + verificado ao vivo 20/07):**
+- [[CATALOGO-REGIONAL-CEP]] ← tudo (dados + tema + Function + App Proxy) **NO AR e ATIVO**.
+  **Regra vigente: só Salvador (BA) e São Paulo (SP) — NACIONAL desconsiderado.** CEP fora da área vê o
+  gate "Ainda não entregamos na sua região" com "Tentar outro CEP" ou "Ver o site mesmo assim" (catálogo
+  completo, entrega barrada no checkout). Validation Function `131334380` `enabled:true`. **Verificado ao
+  vivo 20/07:** gate 7/7 + checkout bloqueia Curitiba / libera Salvador (frete R$25). Código do gate
+  versionado no repo em `theme/catalogo-regional/`. Detalhe/receitas: §13–§15 e `runbooks/catalogo-regional.md`.
+  ⚠️ Novo 20/07: integrador passou a **escrever saldo no Omie** (`IncluirAjusteEstoque` tipo SLD) —
+  contagem física da Fernanda lançada; ~91 itens sem SKU + fotos + produtos inexistentes ficam com a Move.
 
 **Reconciliação de catálogo (Omie × integrador × Shopify, em andamento desde 08/07):**
 - [[RECONCILIACAO-CATALOGO-HANDOFF]] ← ponteiro pro handoff real (`docs/reconciliacao-catalogo/HANDOFF.md` no repo)
@@ -131,6 +131,10 @@ desde: 2026-06-24
 
 | Data | Atividade | Resultado |
 |---|---|---|
+| 2026-07-26 | **Descoberto Shopify Flow que despublica produto sem estoque** | Explica a pendência "ativos não publicados"; zero falso tirava item da loja **e dos anúncios FB/IG/Google** — ver [[Automacao Shopify Flow - despublica produto sem estoque - Jul 2026]] |
+| 2026-07-26 | Margem de segurança ganhou **piso de 1** (unidade e caixa) | 6 produtos com mercadoria voltaram à venda; PR #6 em prod |
+| 2026-07-26 | 51 fotos de produto publicadas + curadoria de capa | 17 produtos sem foto caíram para 3; 1 duplicata removida |
+| 2026-07-26 | Reposição no Omie a partir da planilha + reversão da Empada | 4 ajustes SLD conferidos; **a "contagem" da Move era o nosso próprio relatório** |
 | 2026-06-24 | Auditoria técnica completa do Shopify | Diagnóstico gerado |
 | 2026-06-24 | Diagnóstico de integração Omie | 2 apps conflitantes identificados |
 | 2026-06-24 | Diagnóstico de pagamentos | Provedor principal ausente identificado |
@@ -145,6 +149,8 @@ desde: 2026-06-24
 | 2026-07-02 | Cruzamento de SKU Omie×Shopify (via API) | 🚨 Achado crítico: só 9/124 casam; 97 sem SKU |
 | 2026-07-02 | Token Shopify resolvido (client_credentials) + Fluxo A construído | ✅ Sync de estoque por CD PRONTO no código, provado no real (shadow + write @idempotent) |
 | 2026-07-02/11 | Integrador completo: Fluxo A+B em produção, painel no ar, reconciliação de catálogo, Padrão OS v3 instalado | ✅ — detalhe dia-a-dia no `docs/STATE.md` do repo (não duplicado aqui) |
+| 2026-07-24/25 | **Estoque travado — duas causas independentes, ambas corrigidas** | ✅ (1) SKU por depósito: a Move mantinha o mesmo produto em SKUs diferentes por CD (Salvador na unidade, SP na caixa `PMCX`), duas linhas brigando pelo mesmo item de inventário → **zerava produto com estoque**. Consolidado no Omie. (2) **Buffer de 5% apagava a última caixa de todo kit** — 8 caixas destravadas, 8/8 verificadas no Shopify. Ver [[Modelo de Sincronização de Estoque (regra oficial) - Jul 2026]] |
+| 2026-07-25 | Contagem física devolvida pela Fernanda lançada no Omie (Bem Casado Red, Empada de Frango, Trufas) | ✅ 4 ajustes, site 9/19/2/2. ⚠️ **Planilha não move o site — só o Omie move.** Dois itens estavam **negativos** no Omie (−40 e −20) = produção vendida sem entrada lançada. Corrigimos o número, não o processo |
 
 ---
 
@@ -163,6 +169,25 @@ desde: 2026-06-24
 > - Catálogo regional por CEP (0009): 5/12 stories EM PROD (13/07) — ver [[CATALOGO-REGIONAL-CEP]] §12.
 
 **Pendências conhecidas (não duplicar detalhe — ver fonte):**
+- 🟠 **Mapear as outras automações (Flows) da loja.** Um Flow despublicava produtos sem ninguém do
+  lado técnico saber; podem existir outros mexendo em preço, tag ou coleção — risco de atribuir
+  efeito de automação a erro humano ou a bug nosso.
+- 🟠 **Contagem física de verdade continua faltando.** O que a Move mandou como contagem (24/07 e a
+  planilha `OMIE x SHOPIFY.xlsx`) é **leitura do nosso próprio relatório** — os 3 números batem
+  célula por célula. Enquanto não houver contagem de prateleira, o Omie está se espelhando.
+- ⚠️ **`PRD00678` (unidade da Empada de Frango) com 33 pendentes contra 7 em estoque** após a
+  reversão de 26/07. Conferir se são pedidos reais a faturar.
+- **3 produtos publicados sem foto:** Bolo de Chocolate com DL 15cm e 20cm, Torta de Frango G.
+  Falta a pasta de fotos (a "Bolo de Chocolate C/ Brigadeiro" não tem produto correspondente).
+- ✅ **RESOLVIDO 26/07 (sozinho):** a CI voltou a criar jobs — era intermitência do GitHub, não
+  política da org. Não precisa mais do `admin:org`. Segue reprovando por SEC-006 (`npm audit`).
+  ~~🔴 A CI do repo não está verificando nada desde 25/07:~~ o workflow falha criando **0 jobs**,
+  então nem `gitleaks` nem `npm audit` rodam. Não é billing nem o arquivo de workflow (ambos
+  descartados com dado). Suspeita: política de Actions da **organização** — **precisa do JG**, exige
+  `admin:org`. Registrado como SEC-007 no `docs/SECURITY_DEBT.md` do repo.
+- **Do lado da Move (processo, não código):** lançar produção **na unidade** (`PRD…`), nunca no SKU
+  do kit — lançar no kit não muda o site. Saldo negativo na unidade = produção não lançada.
+- Contagem física pendente de 3 kits ainda esgotados e **11 produtos no ar sem foto**.
 - Rotacionar tokens expostos em chat (Supabase `sbp_`, Netlify `nfp_`, Omie APP_KEY/SECRET) —
   lista completa e atual no `docs/STATE.md` do repo.
 - Itens manuais do Shopify aguardando a Nat (gramatura Mini Brownie, sucos naturais, possível

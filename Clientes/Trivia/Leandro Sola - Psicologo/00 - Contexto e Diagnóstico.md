@@ -1,4 +1,4 @@
-# Leandro Solla — Psicólogo (Contexto e Diagnóstico)
+# Leandro Sola — Psicólogo (Contexto e Diagnóstico)
 
 > Nota de contexto criada em 15/06/2026 a partir da 1ª conversa de WhatsApp (texto + 6 áudios transcritos).
 > Cliente potencial do serviço de tráfego pago + ecossistema completo (Trívia).
@@ -66,11 +66,11 @@ Ver detalhamento em [[01 - Plano e Escopo do Projeto]].
 1. **LGPD + CFP (Conselho Federal de Psicologia):** prontuário e transcrição de sessões são **dados sensíveis de saúde**. Exige consentimento explícito, armazenamento seguro, psicólogo como responsável pelo prontuário. Tratar como **diferencial**, não letra miúda.
 2. **Transparência da IA** — alinhar antes de prometer.
 3. **Verba de tráfego** — separar claramente verba de mídia × honorário.
-4. **Nome/marca** indefinido — afeta site e tráfego.
+4. ~~Nome/marca indefinido~~ — **[08/08] modelo decidido** (marca endossada: pessoal + institucional). Ver [[05 - Reuniao Diagnostico 03-07]] e [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]]. Falta só o nome institucional da clínica em si.
 
 ## 9. Perguntas em aberto (fechar com Leandro)
 
-- [ ] Nome/marca da clínica ("Bela Vista" ainda vale?) e marca pessoal × clínica.
+- [x] **[08/08]** Marca pessoal × clínica: decidido modelo endossado (ver [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]]). Falta só batizar o nome institucional da clínica.
 - [ ] Verba mensal real **em mídia** (separada do fee).
 - [ ] Nicho prioritário do início: só exterior ou exterior + clínica local em paralelo?
 - [ ] Meta de pacientes/mês.
@@ -89,5 +89,5 @@ Ver detalhamento em [[01 - Plano e Escopo do Projeto]].
 ---
 
 ### Anexos / fontes
-- Conversa original (texto + áudios): `~/Downloads/WhatsApp Chat - Leandro Solla.zip`
+- Conversa original (texto + áudios): `~/Downloads/WhatsApp Chat - Leandro Sola.zip`
 - 6 áudios de JG transcritos via Whisper (pré-atendimento IA, transcrição de sessões, mapeamento, site institucional).

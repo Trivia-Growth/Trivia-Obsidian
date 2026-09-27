@@ -1,7 +1,31 @@
 # Literarius API — Documentação de Referência
 
+> ## 🔴 SUPERSEDIDO EM 06/08/2026 — leia primeiro [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]]
+>
+> Aquele documento mediu API **e** SQL Server ao vivo em produção e **refuta sete afirmações** que
+> ainda circulam aqui e no bloco de 04/07 abaixo. Onde os dois divergirem, **o de 06/08 vence**.
+>
+> O que caiu, em uma linha cada:
+> 1. **A rota deste documento está errada.** `/Parceiro/` e afins dão erro 500 do IIS. A forma real
+>    é `/T{Entidade}Controller/{Metodo}/`.
+> 2. **O título financeiro NÃO sai inteiro pela API.** 6 linhas de rateio corrompidas matam páginas
+>    inteiras do contas a pagar — até 1.000 dos 3.973 títulos somem, conforme o tamanho da página.
+> 3. **A regra de custo do ERP É reaproveitável** (`fRetornaCustoProduto` é função de tabela; a
+>    permissão é SELECT, não EXECUTE).
+> 4. `?size=N` existe e funciona até 5.000; `?size=0` devolve **200** com `sucess:false`, não 500.
+> 5. `?dataAlt=` **filtra sim em Parceiro** — e aceita lixo em silêncio, devolvendo a base inteira.
+> 6. **A baixa não levanta o `dataAlt` do título:** sync incremental por data nunca vê pagamento.
+> 7. A única porta de alimentação em massa não é a API: é o `IntegraLojaURL` da `ConfiguracaoGeral`.
+>
+> ⚠️ **Incidente de segurança aberto:** `/TUsuarioController/Usuario` devolve as senhas dos 19
+> usuários do ERP em texto legível, sobre HTTP sem TLS, com a credencial somente-leitura. **Não
+> chame esse endpoint.** Detalhe e ação no documento novo.
+
 > Documentado em 2026-05-18 via chamadas exploratórias. Atualizado 2026-05-19 (duplo-check).  
-> Base URL: `http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest`
+> Base URL: `http://<IP-PUBLICO>:<PORTA>/LiterariusAPI.dll/datasnap/rest` — 🔒 **endereço mascarado
+> em 06/08/2026**, enquanto o incidente de senha em texto legível estiver aberto. Onde encontrar o
+> valor real e por que ele saiu daqui: ver a seção "Por que o endereço da API está mascarado" em
+> [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]].
 
 > ## ✅ VALIDAÇÃO EMPÍRICA COMPLETA — 2026-07-04 (~80 chamadas read-only, throttle 250–300ms)
 > Corrige afirmações abaixo que ficaram desatualizadas. **Onde este bloco contradisser o resto do
@@ -653,4 +677,4 @@ A API retorna campos adicionais além dos documentados nos PDFs originais (ex: `
 - Documentação original PDFs: pasta `APIs/`
 - Data da última verificação em produção: **2026-05-18** (controllers 1–5)
 - TTituloFinanceiroController: **anunciado 15/05/2026** — ainda não testado (aguardando validação)
-- Ambiente: produção (`200.187.66.71:1983`)
+- Ambiente: produção (endereço mascarado — ver nota no topo)

@@ -16,7 +16,7 @@ atualizado: 2026-06-15
 
 > O Customer cross-channel precisa cruzar **3 fontes** por CPF/CNPJ: Tray (D2C — STORY-017), Flowbiz (histórico — STORY-016) e **Literarius (B2B)**. O Literarius é o ERP da Heziom e a fonte dos **~47.000 parceiros B2B** (igrejas, livrarias, distribuidoras) e do **histórico de pedidos offline**. Sem ele, o "unificado" fica só com o D2C.
 
-**Acesso:** REST API (`http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest`, HTTP Basic + header `USER_LITERARIUS`) **e** SQL Server read-only (`192.168.18.10:1433`, user `acessoExterno`) via sync Deno na rede Heziom. Esta story é **read-only** (criar pedido B2B via `PUT /PedidoVenda` fica no epic Comercial 2.3).
+**Acesso:** REST API (`http://<IP-PUBLICO>:<PORTA>/LiterariusAPI.dll/datasnap/rest`, HTTP Basic + header `USER_LITERARIUS`) **e** SQL Server read-only (`192.168.18.10:1433`, user `acessoExterno`) via sync Deno na rede Heziom. Esta story é **read-only** (criar pedido B2B via `PUT /PedidoVenda` fica no epic Comercial 2.3). 🔒 (endereço mascarado 06/08/2026 — ver [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]])
 
 ## Spec de Referência
 - [[Mapa Completo de APIs e Capacidades]] (Literarius: TParceiroController, TPedidoVendaController, TipoCliente)

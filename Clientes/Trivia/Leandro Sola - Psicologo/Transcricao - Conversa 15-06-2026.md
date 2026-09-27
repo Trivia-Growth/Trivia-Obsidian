@@ -1,6 +1,6 @@
 # Transcrição — Conversa WhatsApp (15/06/2026)
 
-> Conversa de prospecção entre João Novais (JG) e Leandro Solla.
+> Conversa de prospecção entre João Novais (JG) e Leandro Sola.
 > Texto literal + transcrição dos 6 áudios de JG (Whisper). Fonte preservada para referência.
 
 ---

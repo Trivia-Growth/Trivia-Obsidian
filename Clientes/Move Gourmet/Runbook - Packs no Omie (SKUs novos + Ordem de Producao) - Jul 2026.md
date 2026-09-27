@@ -7,7 +7,7 @@ tags:
   - estoque
 cliente: Move Gourmet
 data: 2026-07-05
-status: vigente
+status: SUPERADO em 25/07/2026 — não seguir o processo de OP (ver bloco 🛑 no corpo)
 ---
 
 # Runbook — Packs (pastel/empada 6un) no Omie: SKUs novos + Ordem de Produção
@@ -45,7 +45,43 @@ backup** — sem puxadinho no integrador para cadastro/processo errado.
 
 **3. `product_map` reapontado** para os SKUs novos (os 3 packs antigos desligados do sync).
 
-## Processo para a Move manter (o "como deve ser")
+## 🛑 PARE — este processo NÃO vale mais (revisto em 25/07/2026)
+
+**Rodar a Ordem de Produção como descrito abaixo DERRUBA o estoque do site.** O integrador mudou
+entre 08 e 11/07: ele calcula a caixa a partir da **unidade** e **ignora o saldo próprio do pacote**
+(ver [[Modelo de Sincronização de Estoque (regra oficial) - Jul 2026]] e o ADR-0004 no repo).
+
+Efeito real de concluir uma OP hoje: sobe `+N` num saldo que **ninguém lê** e baixa `6×N` do saldo
+que o site **realmente usa** → o produto **encolhe ou some da loja**, mesmo com a mercadoria pronta.
+
+**Saldos travados nesse limbo em 25/07 (Salvador) — saldo próprio do pacote que o site não enxerga:**
+
+| Pack | Saldo próprio (invisível) | Unidade | Site mostra |
+|---|---|---|---|
+| `KMOVE-PASTFRANGO-6` | 34 cx | 34 un | 5 cx |
+| `KMOVE-EMPBACALHAU-6` | 27 cx | 27 un | 4 cx |
+| `KMOVE-EMPFRANGO-6` | 21 cx | 126 un | 19 cx |
+| `KMOVE-PASTBACALHAU-6` | 10 cx | 23 un | 3 cx |
+
+⚠️ **Empada de Bacalhau e Pastel de Frango têm unidade e pacote com o MESMO número** (27/27 e 34/34)
+— tem cara de mesmo valor digitado nos dois lugares, não de contagem independente.
+
+⚠️ **Risco de contagem dupla:** em 25/07 lancei `PRD00678` (unidade da Empada de Frango) em **126 un**
+a partir do "21" informado pela Fernanda. O pacote tem **21** de saldo próprio — provável que o "21"
+dela fosse esse número do Omie, não contagem de unidades soltas. Se as 21 caixas existem
+empacotadas, o Omie hoje conta 126 un **+** 21 cx = 252 empadas para um físico de 126.
+
+**A DEFINIR COM A MOVE antes de qualquer correção** (é dado fiscal e depende do físico):
+esses saldos de pacote são **caixa fechada na câmara** ou **fantasma de OP**? Conforme a resposta,
+ou se zera o pacote (o físico está na unidade) ou se zera a unidade (o físico está empacotado).
+**Não corrigir no chute** — apaga estoque real ou infla estoque inexistente.
+
+**Enquanto não decidirem:** lançar produção **só na UNIDADE** (`PRD…`), por entrada/contagem normal.
+Não concluir OP nesses 4 SKUs.
+
+---
+
+## ~~Processo para a Move manter (o "como deve ser")~~ — SUPERADO, ver bloco acima
 **Sempre que montarem um lote de N pacotes de pastel/empada:**
 1. Omie → **Produção → Ordem de Produção → Incluir**.
 2. Produto = o SKU do pacote (`KMOVE-...`); Quantidade a produzir = **N**.
@@ -53,6 +89,8 @@ backup** — sem puxadinho no integrador para cadastro/processo errado.
 4. A unidade (PMUND) é reposta por contagem/entrada normal da produção (como já fazem).
 
 > Regra de ouro: **o site vende o pacote; o pacote sai da unidade.** Nunca vender a unidade solta no site.
+> ⚠️ A segunda metade dessa regra continua certa (o pacote sai da unidade) — o que mudou é **quem
+> alimenta o site**: hoje é a unidade, não o saldo do pacote.
 
 ## Ingredientes (recomendação)
 Ingrediente (massa, recheio, requeijão, gema) **não entra no controle de estoque do Omie por ora** —

@@ -1,6 +1,6 @@
 # Mensagem de WhatsApp — Retorno + convite p/ reunião (Leandro)
 
-> Para JG enviar ao Leandro, acompanhando a apresentação ([[Leandro Solla - Proposta Parceria (Apresentação)]]).
+> Para JG enviar ao Leandro, acompanhando a apresentação ([[Leandro Sola - Proposta Parceria (Apresentação)]]).
 > Estratégia: teaser curto + convite para reunião de apresentação. Sem travessões. 16/06/2026.
 
 ---

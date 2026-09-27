@@ -1,4 +1,4 @@
-# Plano e Escopo do Projeto — Leandro Solla
+# Plano e Escopo do Projeto — Leandro Sola
 
 > Plano completo do ecossistema. Contexto e diagnóstico em [[00 - Contexto e Diagnóstico]].
 > Criado em 15/06/2026. Status: rascunho interno (pré-proposta).
@@ -38,7 +38,7 @@ Cada pilar alimenta o próximo: anúncio → lead → IA agenda → vira pacient
 - **Por quê:** autoridade e percepção de valor para público frio/morno (JG validou no áudio; Leandro topou). Mesmo sendo online, precisa de presença que sustente o ticket alto.
 - **Escopo:** site institucional enxuto — posicionamento, autoridade (prova social: atende pacientes de médicos famosos), abordagem/método, depoimentos, FAQ, CTA para agendamento.
 - **Stack sugerida:** Padrão Trívia (React + deploy estático / Netlify). SEO básico para nome próprio.
-- **Decisão pendente:** marca pessoal "Leandro Solla" × marca da clínica (nome indefinido).
+- **[08/08] Decidido** (pesquisa de dados — ver [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]]): site pessoal sob **"Leandro Sola"**, para a captação internacional dele. A clínica (associados) ganha nome institucional próprio, ainda a definir, com Leandro como fundador/selo de autoridade dentro dela.
 
 ### 1.2 Landing Pages por público
 - **LP A — Brasileiros no exterior** (foco inicial): dor de "terapia em português, no meu fuso, de onde eu estiver". Pré-qualifica por país/fuso. Captura → agente IA.
@@ -154,7 +154,8 @@ Cada pilar alimenta o próximo: anúncio → lead → IA agenda → vira pacient
 
 ## Perguntas a fechar antes da proposta final
 
-- [ ] Marca: pessoal ("Leandro Solla") × clínica (nome indefinido, "Bela Vista" não vale mais).
+- [x] **[08/08]** Modelo de marca: endossado — pessoal ("Leandro Sola") para ele + institucional (nome ainda a definir) para a clínica. Ver [[07 - Pesquisa de Branding (Marca Pessoal x Clinica)]].
+- [ ] Nome institucional da clínica (a string em si ainda não foi definida).
 - [ ] Verba mensal **em mídia** (separada do fee).
 - [ ] Nicho prioritário: só exterior ou exterior + clínica local em paralelo?
 - [ ] Meta de pacientes/mês (dimensiona campanha).

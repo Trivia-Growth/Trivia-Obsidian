@@ -177,6 +177,7 @@ Mapa central do projeto **HeziomOS**. Use o Graph View para visualizar as conex�
 
 - [[Monorepo — Estrutura e Setup]] — blueprint do monorepo `heziomos`: estrutura de pastas, deploy isolado por app, Supabase schema único, TRIVIAIOX, comandos git subtree
 - [[STORY-013 — Setup Monorepo heziomos]] — story de implementação do monorepo (backlog)
+- [[Sync Literarius — Deploy no VMAPP01 e Incidente de Julho]] — **julho e setembro/2026**: por que o sync parava (conta pessoal; depois banco recusando tudo com o vigia dizendo "ok"), o **Épico 84** (o sync diz a verdade: código de saída, NÃO RODA × RODA MAS FALHA), a nota 48181 e (tarefa amarrada à conta pessoal do JG; a Intelinove revoga o admin e o Windows para de disparar em silêncio), o que foi corrigido em 30/07 e **o que rodar quando parar de novo** — o diagnóstico funciona sem admin
 - [[Prompt — Clonar Módulo de Atendimento (novo OS)]] — 🆕 prompt de handoff para portar o inbox de Atendimento (conversas WhatsApp + IA) para outro OS: arquitetura, inventário de arquivos, ordem com gates e regras invioláveis (verify_jwt, RLS, sem realtime)
 
 ---

@@ -1,8 +1,9 @@
 ---
 titulo: Catálogo Regional por CEP (Move Gourmet) — Definições e Plano
 data: 2026-07-11
+atualizado: 2026-07-17
 autor: Trívia Digital
-status: DEFINIDO — a abrir como feature; nada codado ainda
+status: EM PRODUÇÃO (go-live 17/07) — gate + filtro + fora-de-área + trava no checkout + barra de frete no ar e verificados. Ver §13.
 ---
 
 # Catálogo Regional por CEP — Move Gourmet
@@ -410,6 +411,125 @@ em `docs/reconciliacao-catalogo/classificacao-regiao-proposta.md`.
 ativar Function → liberar `-7` → (opcional) edge no Supabase. **NÃO ativar a Function antes do tema
 publicado** (a loja ao vivo mostra tudo e o checkout barraria sem aviso ao cliente). Fonte viva: bloco
 "0009 ROLLOUT" em `docs/STATE.md`. **Rotacionar** token de automação `atkn_...37e` + `sbp_`/`nfp_`/Omie.
+
+## 13. GO-LIVE E MELHORIAS (17/07) — EM PRODUÇÃO
+
+Do "aplicar a classificação" ao catálogo regional inteiro no ar, tudo verificado ao vivo em `movegourmet.com.br`.
+
+### 13.1 Classificação aplicada
+- Nat/Fernanda devolveram a planilha. Régua do JG: "tudo que tem em SP também tem na BA" e **desmarcar NACIONAL por ora** (só entregam Salvador/BA e São Paulo).
+- Planilha gerada só com **ativos+rascunho COM SKU (62 produtos)**, 3 colunas BA/SP/NACIONAL. Entregue em `~/Downloads/MoveGourmet-classificacao-regiao-Nat-Fernanda.xlsx`.
+- Gravado em `product_map.regioes` + metafield `custom.regiao` (via `sync-regiao --exec`), verificado ao vivo: **23 BA+SP · 36 BA · 0 NACIONAL**.
+- Pegadinha resolvida: alinhei 9 variantes-unidade que conflitavam com o SKU do kit (metafield é product-level; sync recusa variantes divergentes).
+- **Dois "ativo" diferentes:** status do Shopify ≠ `product_map.ativo`. **Empada de Bacalhau e Suco de uva** estavam descontinuados no integrador mas ativos no site; JG mandou **reativar** (voltaram como BA).
+
+### 13.2 Limpeza de catálogo
+- **14 produtos ativos SEM SKU arquivados** (via `productUpdate status:ARCHIVED`, temos write_products): 5 duplicatas/sazonais (Torta Frango Redonda 1,8kg = dup de PRD00080; Quiche 4 Queijos Damascos 1,9kg = dup de PRD00614; Torta Chiffon "-" = dup de PRD00910/PRD01178; Torta Baunilha FV + Natalina) + 7 embalagens/caixas + 2 add-ons de app (Gift Wrapping, Shipping Protection). Achado: as versões G/redonda boas já existiam com SKU; as sem-SKU eram só duplicata de catálogo.
+
+### 13.3 Go-live (as 3 camadas ligadas)
+- **Validation Function** ativada: `validationCreate functionHandle:"validacao-regiao", enable:true, blockOnFailure:false` (fail-open) → validation id `131334380`. Trava-dura do checkout no ar.
+- **Flag `REGIONAL_CATALOG_V1=on`** no Supabase (Management API; project ref `lygxygsjxbpfqujvydxf`). ⚠️ Token `sbp_f515…d058` exposto no chat → **ROTACIONAR**.
+- **Bug de handles corrigido** (o e2e pegou): App Proxy devolvia handle antigo ≠ handle vivo → escondia produto de BA da própria BA. Rodei `backfill-handle-shopify --exec` (78) + corrigi 8 por variant/sku vivo.
+- **Verificação confiável = teste de FALSO-POSITIVO** (paginação/carrossel só escondem, nunca mostram a mais): cliente SP com **0 produtos só-BA visíveis** → filtro correto. App Proxy: BA 69 / SP 23 / Rio(NACIONAL) 0.
+
+### 13.4 Tema v4 (2 melhorias + a barra de frete)
+Publicado por **reimport** do export `~/Downloads/movegourmet-catalogo-regional-FINAL-v3-13jul2026/` (zip `movegourmet-tema-v4-17jul2026.zip`).
+- **Barra de frete grátis** no carrinho (`sections/main-cart-items.liquid`): Liquid dentro do `.js-contents` → recalcula sozinho no re-render do Dawn (sem JS de cálculo). "Faltam R$ X para frete grátis" + barra + verde "Você garantiu o frete grátis" ao passar de R$220. Valor editável (setting `frete_gratis_valor`, default 220). **R$220 vale BA e SP** (confirmado JG; tarifa Shopify "Entrega Move Gourmet · Grátis a partir de R$220" nas 2 zonas).
+- **Mensagem de fora de área** (`assets/mg-regiao.js`+`.css`): região sem catálogo (ex.: NACIONAL) mostra "Ainda não entregamos na sua região" no lugar da grade vazia. **Melhoria 17/07:** esconde também contador/ordenação/paginação/filtros (`.section-grade-move5.mg-empty-region`), reverte quando há produtos.
+
+### 13.5 PEGADINHA DO REIMPORT (lição)
+Reimport reverte o `settings_data.json` para o do export. O primeiro reimport **derrubou a feature** (os toggles `mg_regional_enabled`/`mg_use_app_proxy` voltaram ao default OFF de 13/07). JG religou no editor. **Corrigi os defaults dos 2 para `true` no export** (`config/settings_schema.json`), então reimports futuros já sobem ligados. **Lição: reimport de tema reverte settings pós-export; sempre checar/religar toggles depois, ou corrigir defaults antes.** Para iterar sem essa dor, a opção de adicionar `read/write_themes` ao app (eu publico direto + verifico, sem reimport) segue de pé.
+
+### 13.6 Verificação final ao vivo (tudo OK)
+Gate obrigatório abre sem CEP · SP: 0 falsos-positivos + tem produtos SP · Rio: só o recado de fora de área (contador/paginação escondidos) · BA: tudo volta ao normal · barra de frete recalcula sozinha e vira verde ≥R$220.
+
+### 13.7 Pendências
+- **Rotacionar** `sbp_f515…d058` (+ `atkn_…37e`, `nfp_`, Omie da reconciliação).
+- **7 produtos ACTIVE mas NÃO publicados no Online Store** (PDP 404): pão de parmesão, empada de frango, empada de bacalhau, brownie 8un, bem casado red, torta de costela G, torta de frango G. Decidir com a Move: publicar ou não.
+- Comunicado à Fernanda enviado (resumo do go-live).
+
+## 14. VERIFICAÇÃO PRÉ-DIVULGAÇÃO + PLANILHAS + FULFILLMENT (18/07)
+
+### 14.1 Teste de checkout ao vivo (o que faltava provar end-to-end)
+Antes da Move divulgar, testei a jornada real no checkout nativo (sem finalizar pagamento):
+- **Produto BA + endereço de Salvador → LIBERA:** aparece "Forma de frete: Entrega Move Gourmet R$ 25,00"
+  e chega no pagamento. A trava NÃO barra pedido válido da região.
+- **Mesmo produto + endereço de São Paulo → BLOQUEIA:** "O produto em seu carrinho não está disponível
+  para entrega em seu local." Como SP tem zona de frete própria, o bloqueio é da Validation Function, não
+  falta de frete. **Trava do checkout funciona nos dois sentidos.**
+- **Mobile:** gate + filtro + barra de frete OK no 375px. **Zero erros de console.**
+
+### 14.2 Auditoria de dados (workflow 4 agentes)
+- **Vitrine navegável LIMPA:** 0 produtos ACTIVE+publicados sem `custom.regiao` (ligar o filtro não some
+  nenhum produto navegável). Metafields batem 100% com o `product_map`. Config da trava saudável
+  (`enabled:true`, `fail-open`).
+- **Achados abertos (decisão da Move, não travam):** (a) **7 produtos ACTIVE mas NÃO publicados no Online
+  Store** (PDP 404, invisíveis no site): pão de queijo parmesão, bem casado red, empada frango, empada
+  bacalhau, brownie 8un, torta costela G, torta frango G; (b) **~1.361 linhas `product_map` NACIONAL** só
+  do Omie (sem handle/variant → fora da vitrine; higiene antes de ligar ao Shopify); (c) **8 brindes de
+  Páscoa UNLISTED sem região** — a lógica defensiva (sem metafield = nunca bloqueia) já cobre.
+
+### 14.3 Planilhas entregues à Move
+- `~/Downloads/MoveGourmet-catalogo-completo-17jul2026.xlsx` — 108 produtos (ativos/rascunho/não
+  listado/arquivado) com região, preço, estoque total, publicado, handle.
+- `~/Downloads/MoveGourmet-estoque-por-CD-17jul2026.xlsx` — 136 SKUs com estoque físico por local
+  (Salvador / São Paulo / Shopping Barra), total, região e coluna **"Sob encomenda"** (CONTINUE vende a
+  zero; DENY para). Achado: 22 SKUs ativos em 0 no Salvador que PARAM a zero = efetivamente indisponíveis.
+
+### 14.4 CORREÇÃO sobre fulfillment por CD (importante)
+Eu havia dito "SP não expede" com base em `Location.shipsInventory=false`. **`shipsInventory` é campo
+DEPRECIADO** — a doc do Shopify diz "todos os locais com endereço válido já podem expedir". O que vale é
+`fulfillsOnlineOrders`, que **já está `true` nos 3 locais**, inclusive SP (Rua Dr João Toniolo). Ou seja,
+**o CD de SP já está apto a expedir pedidos online** — não há botão de "ligar" a fazer no nível do local.
+Que um pedido de SP saia de SP depende da **roteirização** (SP ter o estoque do item + prioridade de
+local), que é admin-side; o app do integrador só tem `read_locations` (sem escrita). Recomendado: fazer um
+pedido-teste com endereço de SP e ver em Pedidos qual local o Shopify atribuiu; se vier Salvador, acertar a
+prioridade de locais no admin.
+
+### 14.5 Pendências
+- **Rotacionar** `sbp_f515…d058` (usado pra ligar a flag) + `atkn_…37e`, `nfp_`, Omie.
+- Move decide os **7 não publicados**; (opcional) limpar as linhas NACIONAL Omie-only e acertar prioridade
+  de local pro SP.
+
+## 15. AJUSTE "SÓ BA E SP" NO GATE + CONTAGEM NO OMIE (20/07) — verificado ao vivo
+
+### 15.1 Gate do tema: fora de área agora bloqueia claro (não "Nacional" silencioso)
+A Fernanda testou Curitiba e o site "logava normal" — o CEP fora de área virava NACIONAL, o gate
+fechava e a pessoa via os produtos sem região (parecia site quebrado). Corrigido em `mg-regiao.js` +
+`mg-cep-gate.liquid` (agora versionados no repo em `theme/catalogo-regional/`):
+- CEP fora de BA/SP → 2º passo do gate: **"Ainda não entregamos na sua região"** com **"Tentar outro
+  CEP"** (não grava, gate reabre) ou **"Ver o site mesmo assim"** (grava `NACIONAL`, mostra o
+  **catálogo completo** e a entrega segue barrada no checkout). Pílula rotula "fora da área".
+- Publicado (zip `~/Downloads/movegourmet-catalogo-regional-FINAL-v4-20jul2026.zip`). Diff vs tema
+  17/07 = **só os 2 arquivos do gate** — sem regressão de frete grátis/settings.
+- **Testado ao vivo (Claude no navegador):** gate 7/7 cenários + checkout e2e (produto BA + CEP
+  Curitiba → BLOQUEIA "produto não disponível para entrega no seu local"; + CEP Salvador → LIBERA,
+  frete R$25). Validation id `131334380` `enabled:true` confirmado.
+
+### 15.2 Contagem física 13/07 lançada no Omie (integrador passou a ESCREVER no Omie)
+Antes o integrador só lia o Omie. Passo novo: `POST estoque/ajuste/` → `IncluirAjusteEstoque` com
+`tipo:"SLD"` (saldo ABSOLUTO por CD; sem idempotência → conferir por releitura). Casar nome↔SKU pelo
+`product_map`, restrito aos SKUs do Shopify. Aplicados em Salvador: 22 confirmados + Coxinha Fumeiro
+C/8 (=26, resolveu o conflito C/4×C/8 usando o pacote do site) + 2 tortas ambíguas resolvidas pro
+produto PUBLICADO (Torta Retangular de Costela=1, Mini Torta de Frango=2). Itens urgentes empurrados
+direto no Shopify (`inventorySetQuantities`) → **Bem Casado Red e Coxinha Fumeiro ficaram disponíveis
+no site**. Receita completa no runbook `catalogo-regional.md` §D.
+
+### 15.3 Achado: PDF/Omie têm SKUs de BISTRÔ que não estão no site
+Explica por que a maioria dos 120 itens do PDF não batia. Comparativo passou a restringir aos 87 SKUs
+do Shopify. Planilha "para preencher" com a Fernanda: `~/Downloads/MoveGourmet_contagem_13jul_para_preencher.xlsx`.
+Fica com a Move (grupo WhatsApp "Shopify-Omie Movegourmet"): ~91 itens sem SKU + 17 produtos sem foto
+(14 ativos+publicados aparecem sem imagem) + 6 produtos citados que não existem no site.
+
+### 15.4 Handoff ao time da Move (20/07) — FEITO
+No grupo WhatsApp explicamos: como o sistema funciona (site segue o Omie por SKU; contagem física no
+Omie = fonte da verdade), as responsabilidades deles e o **como proceder**. Entregue a planilha-mãe
+`~/Downloads/MoveGourmet_catalogo_completo_Shopify_Omie_20jul2026.xlsx` (1 linha/produto: status,
+publicado, foto, SKU, estoque Shopify E Omie por CD lado a lado, situação no Omie colorida, ação
+sugerida + aba Resumo). **Placar que virou gestão da Move:** 17 sem foto · 5 ativos não publicados ·
+36 SKU não vinculado no Omie · 15 publicados+ativos sem estoque. Instrução dada: vincular o SKU do Omie
+no campo SKU do Shopify (vermelhos) → fotos → publicar o que estiver pronto. **Nossa entrega fechou**
+(feature no ar + verificada + lista + passo-a-passo); daqui é operação/cadastro deles.
 
 ## 11. Relacionados
 - Feature/spec no repo: `specs/0009-catalogo-regional-cep/` (Trivia-Growth/integradormovegourmet).

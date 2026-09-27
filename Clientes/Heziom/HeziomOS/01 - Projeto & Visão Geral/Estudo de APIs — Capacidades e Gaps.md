@@ -14,7 +14,7 @@ criado: 2026-05-18
 ## 1. APIs Disponíveis — Resumo de Capacidades
 
 ### 1.1 Literarius API (ERP)
-- **Base URL:** `http://200.187.66.71:1983/LiterariusAPI.dll/datasnap/rest`
+- **Base URL:** `http://<IP-PUBLICO>:<PORTA>/LiterariusAPI.dll/datasnap/rest` 🔒 (endereço mascarado 06/08/2026 — ver [[Literarius — Mapa Completo da API e do Banco (2026-08-06)]])
 - **Auth:** HTTP Basic + header `USER_LITERARIUS`
 - **Acesso:** Produção ativo, credenciais em mãos
 - **Paginação:** Não existe — retorna todos os registros sem ID. **Crítico para uso em volume.**

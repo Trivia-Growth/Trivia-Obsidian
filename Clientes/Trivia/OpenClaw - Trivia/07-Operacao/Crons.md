@@ -2,10 +2,14 @@
 title: Crons — Jobs Automáticos
 tags: [crons, jobs, operacao, schedule]
 created: 2026-04-17
-updated: 2026-06-05
+updated: 2026-08-16
 ---
 
 # Jobs Automáticos
+
+## Estado atual (16/08/2026)
+
+Dois jobs com 66 falhas consecutivas de auth (`agencia-head-rotina-horaria`, `sales-head-julia-rotina-horaria`) e dois estourando timeout (`agencia-head-resumo-07h`, `sales-head-resumo-julia-07h`). Ver [[2026-08-16-Auditoria-Config]] para detalhe e ações pendentes.
 
 ## Regra crítica: crons de script → crontab do sistema, não OpenClaw
 
@@ -21,11 +25,11 @@ Arquivo: `/root/.openclaw/cron/jobs.json` (hot-reload). Listar com `openclaw cro
 
 | ID | Nome | Schedule (BRT) | Agente | Estado | Função |
 |----|------|---------------|--------|--------|--------|
-| `93e915fa` | `agencia-head-resumo-07h` | 07h seg-sex | jimmy-agencia-head | enabled | Relatório por cliente + SLA publicação integrado |
-| `8b74152b` | `agencia-head-rotina-horaria` | 10h, 14h, 18h seg-sex | jimmy-agencia-head | enabled | SLA check + cobranças (HEARTBEAT_OK se OK) |
+| `93e915fa` | `agencia-head-resumo-07h` | 07h **segunda** (semanal, era seg-sex) | jimmy-agencia-head | enabled (timeout) | Relatório por cliente + SLA publicação integrado |
+| `8b74152b` | `agencia-head-rotina-horaria` | 10h, 14h, 18h seg-sex | jimmy-agencia-head | enabled (falhando: auth) | SLA check + cobranças (HEARTBEAT_OK se OK) |
 | `9918d77d` | `agencia-head-sla-publicacoes` | 13h seg-sex | jimmy-agencia-head | **disabled** | Integrado ao resumo-07h |
-| `6dcf3cc2` | `sales-head-resumo-julia-07h` | 07h seg-sex | jimmy-sales-head | enabled | Relatório coaching Julia |
-| `b8f21c3a` | `sales-head-julia-rotina-horaria` | 10h, 14h, 17h seg-sex | jimmy-sales-head | enabled | Rotina pipeline (HEARTBEAT_OK se OK) |
+| `6dcf3cc2` | `sales-head-resumo-julia-07h` | 07h **segunda** (semanal, era seg-sex) | jimmy-sales-head | enabled (timeout) | Relatório coaching Julia |
+| `b8f21c3a` | `sales-head-julia-rotina-horaria` | 10h, 14h, 17h seg-sex | jimmy-sales-head | enabled (falhando: auth) | Rotina pipeline (HEARTBEAT_OK se OK) |
 
 Sessão de execução (todos): `agent:jimmy-<head>:main`. `delivery.mode: none`.
 
